@@ -1,0 +1,182 @@
+[
+  {
+    "output": "screenshots/REF-030.jpg",
+    "source": "encoded-assets/screenshots/REF-030.jpg.b64",
+    "sha256": "3f1b182d81de2f4ec39ab454bf4a13df6d86bcbd234fe96062731fcd03387808",
+    "bytes": 54640
+  },
+  {
+    "output": "screenshots/REF-027.jpg",
+    "source": "encoded-assets/screenshots/REF-027.jpg.b64",
+    "sha256": "2e6bc641a762646a06fc9b1c73f5c3a7802eea1ac4e802a644e82b8cb845c4b5",
+    "bytes": 110579
+  },
+  {
+    "output": "screenshots/REF-036.jpg",
+    "source": "encoded-assets/screenshots/REF-036.jpg.b64",
+    "sha256": "1ffac752cd1b990b1dd58f930259e8525e7c19841d0de62b379f79d18a4734c4",
+    "bytes": 90803
+  },
+  {
+    "output": "screenshots/REF-003.jpg",
+    "source": "encoded-assets/screenshots/REF-003.jpg.b64",
+    "sha256": "d6741adab1e667babe836843057b5793da89ab3c7b420a7ed7a27e074397e9b7",
+    "bytes": 100385
+  },
+  {
+    "output": "screenshots/REF-031.jpg",
+    "source": "encoded-assets/screenshots/REF-031.jpg.b64",
+    "sha256": "f397071fb7fa8dece6175d6bef58f79961726c9a34e440f3a50b1d2d35204f32",
+    "bytes": 73244
+  },
+  {
+    "output": "screenshots/REF-023.jpg",
+    "source": "encoded-assets/screenshots/REF-023.jpg.b64",
+    "sha256": "251abee408c944684c717e81c77af3f2203aaafa6aacffc4730d85cae1c740e2",
+    "bytes": 100087
+  },
+  {
+    "output": "screenshots/REF-026.jpg",
+    "source": "encoded-assets/screenshots/REF-026.jpg.b64",
+    "sha256": "495c8e137df82c8d23da9d8b58939ae4c6672b06858374ad5e6742b62eb76116",
+    "bytes": 106728
+  },
+  {
+    "output": "screenshots/REF-009.jpg",
+    "source": "encoded-assets/screenshots/REF-009.jpg.b64",
+    "sha256": "aa3005e0d770e2c1b4cf1065187ae5618f1751af801f7ec6faaad88f34087810",
+    "bytes": 118876
+  },
+  {
+    "output": "screenshots/REF-013.jpg",
+    "source": "encoded-assets/screenshots/REF-013.jpg.b64",
+    "sha256": "5459648a4fea3849e1043a28333e7ad136675017f471612f5bf60b4e8231f803",
+    "bytes": 154795
+  },
+  {
+    "output": "screenshots/REF-022.jpg",
+    "source": "encoded-assets/screenshots/REF-022.jpg.b64",
+    "sha256": "46d8f4e6c2804dfe9dce91d0ca8666dbcc91c16fcf67c7ed6d315093a63378df",
+    "bytes": 52611
+  },
+  {
+    "output": "screenshots/REF-015.jpg",
+    "source": "encoded-assets/screenshots/REF-015.jpg.b64",
+    "sha256": "4f1613d758c5918eda74eab38e2b7c82ffb82b04d26494a0c6c86dab595ddb8d",
+    "bytes": 71955
+  },
+  {
+    "output": "screenshots/REF-037.jpg",
+    "source": "encoded-assets/screenshots/REF-037.jpg.b64",
+    "sha256": "305e2a75c46b0378642eb98b0a1a656ede383d75c24d3d4244633149f44f250a",
+    "bytes": 84029
+  },
+  {
+    "output": "screenshots/REF-025.jpg",
+    "source": "encoded-assets/screenshots/REF-025.jpg.b64",
+    "sha256": "f28a4b4eee69cc9ec8f47578ec24608f536781d3fd28ad32bea5bd83dc5897dc",
+    "bytes": 121017
+  },
+  {
+    "output": "screenshots/REF-024.jpg",
+    "source": "encoded-assets/screenshots/REF-024.jpg.b64",
+    "sha256": "036723b0bf5cb37ee09ac79696c536d96120e4ca289f0bff11232c3fd70265bb",
+    "bytes": 163844
+  },
+  {
+    "output": "screenshots/REF-004.jpg",
+    "source": "encoded-assets/screenshots/REF-004.jpg.b64",
+    "sha256": "a6f55a64158a59beaf6dc59ca0764dfeea5636eabaa7cad7b8f8c0da9f316a1d",
+    "bytes": 184524
+  },
+  {
+    "output": "screenshots/REF-029.jpg",
+    "source": "encoded-assets/screenshots/REF-029.jpg.b64",
+    "sha256": "5aa86346197298e0809602c69ef3765d79dc8f880c9e810fd67ae91930bed0e9",
+    "bytes": 87014
+  },
+  {
+    "output": "screenshots/REF-028.jpg",
+    "source": "encoded-assets/screenshots/REF-028.jpg.b64",
+    "sha256": "7a01d491b171458eaade249030d6f3534a83a446e5fbf69870894bf700418c3d",
+    "bytes": 68103
+  },
+  {
+    "output": "screenshots/REF-059.jpg",
+    "source": "encoded-assets/screenshots/REF-059.jpg.b64",
+    "sha256": "d8c2d0879cc06040d9cfeeff1be1f2a0317a276c26d668c45599a6d0fce4567e",
+    "bytes": 42741
+  },
+  {
+    "output": "screenshots/REF-041.jpg",
+    "source": "encoded-assets/screenshots/REF-041.jpg.b64",
+    "sha256": "1c52ff3d4b37f43aba31aa48de9f20d95485308f530336fbedd05c2709d348b6",
+    "bytes": 135176
+  },
+  {
+    "output": "screenshots/REF-035.jpg",
+    "source": "encoded-assets/screenshots/REF-035.jpg.b64",
+    "sha256": "b7b0f3d8d6734f6e43da1e23bdea48cfc0965e571231b87e08b647b471ba94b3",
+    "bytes": 123858
+  },
+  {
+    "output": "previews/REF-049/assets/anton-latin-400-normal-Byf51wtH.woff2",
+    "source": "encoded-assets/previews/REF-049/assets/anton-latin-400-normal-Byf51wtH.woff2.b64",
+    "sha256": "d0fa07ff63dd60cbc0e2f58e29c802dca2a5ae0276c999f59c6111ab7bbaec3b",
+    "bytes": 18612
+  },
+  {
+    "output": "previews/REF-049/assets/barlow-condensed-latin-500-normal-BgYH2mbd.woff2",
+    "source": "encoded-assets/previews/REF-049/assets/barlow-condensed-latin-500-normal-BgYH2mbd.woff2.b64",
+    "sha256": "460f141ec8f6c9a1516bfd2bd9fe71656246d7a9d04a0955faf53158d8970c4c",
+    "bytes": 21424
+  },
+  {
+    "output": "previews/REF-049/assets/barlow-condensed-latin-600-normal-DepVgxBB.woff2",
+    "source": "encoded-assets/previews/REF-049/assets/barlow-condensed-latin-600-normal-DepVgxBB.woff2.b64",
+    "sha256": "215a93c696f442034a46fbb382958f753fda60e30490683aeea6b235fcbb2b66",
+    "bytes": 22308
+  },
+  {
+    "output": "previews/REF-049/assets/barlow-latin-500-normal-C1h8hMer.woff",
+    "source": "encoded-assets/previews/REF-049/assets/barlow-latin-500-normal-C1h8hMer.woff.b64",
+    "sha256": "1034267b215d256e3453114832e745d342815a3ff22c629288c6d2e1f9dcfa51",
+    "bytes": 19516
+  },
+  {
+    "output": "previews/REF-049/assets/barlow-latin-400-normal-fsAxiSwU.woff",
+    "source": "encoded-assets/previews/REF-049/assets/barlow-latin-400-normal-fsAxiSwU.woff.b64",
+    "sha256": "7376a9d87b48a86bb0ca067d00a994d65bb171c66f126be40ec647ebbe3e0ee7",
+    "bytes": 19584
+  },
+  {
+    "output": "previews/REF-049/assets/barlow-condensed-latin-500-normal-HIEiP5Ov.woff",
+    "source": "encoded-assets/previews/REF-049/assets/barlow-condensed-latin-500-normal-HIEiP5Ov.woff.b64",
+    "sha256": "a5c197a36d650b8bd6b153976aeb31f1ddd9e75f75e4165a6f3eb1e25f50ada6",
+    "bytes": 18600
+  },
+  {
+    "output": "previews/REF-049/assets/barlow-latin-400-normal-qiz4-Cze.woff2",
+    "source": "encoded-assets/previews/REF-049/assets/barlow-latin-400-normal-qiz4-Cze.woff2.b64",
+    "sha256": "b0a8ad37ac45f5fb22ced461576db72e44e295107aad7a9c8a7a4bad728fd03b",
+    "bytes": 22196
+  },
+  {
+    "output": "previews/REF-049/assets/barlow-latin-500-normal-BPAOfeC8.woff2",
+    "source": "encoded-assets/previews/REF-049/assets/barlow-latin-500-normal-BPAOfeC8.woff2.b64",
+    "sha256": "cd759df8ef9efc98fee14307b4eb5ba27f08b1f8f2f3ad2872432e25c89907a8",
+    "bytes": 22008
+  },
+  {
+    "output": "previews/REF-049/assets/anton-latin-400-normal-AUNGEG_V.woff",
+    "source": "encoded-assets/previews/REF-049/assets/anton-latin-400-normal-AUNGEG_V.woff.b64",
+    "sha256": "8b71c21962cd08b95fc2186386b121d853de5f7e02db382ed329c5a80a04c4d1",
+    "bytes": 15632
+  },
+  {
+    "output": "previews/REF-049/assets/barlow-condensed-latin-600-normal-BFJEwTuo.woff",
+    "source": "encoded-assets/previews/REF-049/assets/barlow-condensed-latin-600-normal-BFJEwTuo.woff.b64",
+    "sha256": "02e9d2ca2e9af5d8dbdfd30c4a5aa59632205901e9045140b559a44d361d8a46",
+    "bytes": 18892
+  }
+]

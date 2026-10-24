@@ -1,0 +1,4 @@
+GSAP 3.15.0
+Package license field: Standard 'no charge' license: https://gsap.com/standard-license.
+Package homepage: https://gsap.com
+Original package source comments are retained by the build.

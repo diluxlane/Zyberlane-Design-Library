@@ -1,0 +1,182 @@
+[
+  {
+    "repo": "Portfolio2",
+    "status": "built",
+    "commit": "5ea19735f09187577eb050c493a7a4a989cbcdfd",
+    "output": "/workspace/scratch/151b9218b481/research/builds/Portfolio2/dist",
+    "commands": [
+      "npm ci --ignore-scripts (completed by previous research worker)",
+      "node node_modules/typescript/bin/tsc -b",
+      "node node_modules/vite/bin/vite.js build --config preview.vite.config.mjs"
+    ],
+    "compatibilityAdjustments": [
+      "Isolated preview.vite.config.mjs retains the original plugin pipeline, sets base to ./, and disables publicDir copying.",
+      "No application source, design, dependencies or media were rewritten.",
+      "Generated runtime bundles and dependency license notices only; original public images/videos are intentionally omitted and must use the parent\u2019s pinned-source fallback.",
+      "Parent must prefix root-relative public media URLs when placing output beneath its REF path."
+    ],
+    "errors": [],
+    "warnings": [],
+    "visualStatus": "Not browser-verified by this build worker. Do not label Working until rendered media and behavior are checked.",
+    "generatedFiles": [
+      {
+        "path": "index.html",
+        "size": 1154,
+        "sha256": "417b0e4afe780fb7056c2a152c3a61871916a5084ba3750e72853d0801f1fb7b"
+      },
+      {
+        "path": "assets/index-CTnkOBZ2.js",
+        "size": 297385,
+        "sha256": "b8fffef61a9f1fa939503d8f87d873409f54230e9fd6351c9ef84d73e61cace0"
+      },
+      {
+        "path": "assets/index-BRxu3NvX.css",
+        "size": 14228,
+        "sha256": "1a47b374cda4eab67fdda4b212294182fea2055c9adfe9417bea181205df5720"
+      },
+      {
+        "path": "licenses/react-LICENSE",
+        "size": 1086,
+        "sha256": "52412d7bc7ce4157ea628bbaacb8829e0a9cb3c58f57f99176126bc8cf2bfc85"
+      },
+      {
+        "path": "licenses/motion-utils-LICENSE.md",
+        "size": 1100,
+        "sha256": "1bf0dc3f7727723e5a032ed12164a47cf92c05204cb1a3485f123c24e2833ed1"
+      },
+      {
+        "path": "licenses/framer-motion-LICENSE.md",
+        "size": 1078,
+        "sha256": "5ff46083b88563822b0560dd6221ab89d2f74bc97a52d4c97a75020fd62c6f32"
+      },
+      {
+        "path": "licenses/lucide-react-LICENSE",
+        "size": 880,
+        "sha256": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc"
+      },
+      {
+        "path": "licenses/motion-dom-LICENSE.md",
+        "size": 1100,
+        "sha256": "1bf0dc3f7727723e5a032ed12164a47cf92c05204cb1a3485f123c24e2833ed1"
+      },
+      {
+        "path": "licenses/react-dom-LICENSE",
+        "size": 1086,
+        "sha256": "52412d7bc7ce4157ea628bbaacb8829e0a9cb3c58f57f99176126bc8cf2bfc85"
+      }
+    ]
+  },
+  {
+    "repo": "streetfighter",
+    "status": "built",
+    "commit": "731f07c2afccc8046081e2f887e06b22ec61f787",
+    "output": "/workspace/scratch/151b9218b481/research/builds/streetfighter/dist",
+    "commands": [
+      "npm ci --ignore-scripts (completed by previous research worker)",
+      "node node_modules/vite/bin/vite.js build --config preview.vite.config.mjs"
+    ],
+    "compatibilityAdjustments": [
+      "Isolated preview.vite.config.mjs retains the original plugin pipeline, sets base to ./, and disables publicDir copying.",
+      "No application source, design, dependencies or media were rewritten.",
+      "Generated runtime bundles and dependency license notices only; original public images/videos are intentionally omitted and must use the parent\u2019s pinned-source fallback.",
+      "Parent must prefix root-relative public media URLs when placing output beneath its REF path."
+    ],
+    "errors": [],
+    "warnings": [
+      "Vite leaves /media/texture/concrete.jpg and /media/texture/grain.png as unresolved runtime URLs, as expected with publicDir disabled."
+    ],
+    "visualStatus": "Not browser-verified by this build worker. Do not label Working until rendered media and behavior are checked.",
+    "generatedFiles": [
+      {
+        "path": "index.html",
+        "size": 20423,
+        "sha256": "0e35cc070cdc64335142bdb87d559cbe2770483b45431ff7603b0ee239f38ed3"
+      },
+      {
+        "path": "assets/index-pggiiAj3.css",
+        "size": 38105,
+        "sha256": "ebd9d07b84fa8b718aef67622155f031b2c58f30a8a91de093d5a8477c803460"
+      },
+      {
+        "path": "assets/barlow-latin-400-normal-qiz4-Cze.woff2",
+        "size": 22196,
+        "sha256": "b0a8ad37ac45f5fb22ced461576db72e44e295107aad7a9c8a7a4bad728fd03b"
+      },
+      {
+        "path": "assets/anton-latin-400-normal-AUNGEG_V.woff",
+        "size": 15632,
+        "sha256": "8b71c21962cd08b95fc2186386b121d853de5f7e02db382ed329c5a80a04c4d1"
+      },
+      {
+        "path": "assets/barlow-condensed-latin-600-normal-DepVgxBB.woff2",
+        "size": 22308,
+        "sha256": "215a93c696f442034a46fbb382958f753fda60e30490683aeea6b235fcbb2b66"
+      },
+      {
+        "path": "assets/barlow-latin-500-normal-C1h8hMer.woff",
+        "size": 19516,
+        "sha256": "1034267b215d256e3453114832e745d342815a3ff22c629288c6d2e1f9dcfa51"
+      },
+      {
+        "path": "assets/anton-latin-400-normal-Byf51wtH.woff2",
+        "size": 18612,
+        "sha256": "d0fa07ff63dd60cbc0e2f58e29c802dca2a5ae0276c999f59c6111ab7bbaec3b"
+      },
+      {
+        "path": "assets/barlow-condensed-latin-600-normal-BFJEwTuo.woff",
+        "size": 18892,
+        "sha256": "02e9d2ca2e9af5d8dbdfd30c4a5aa59632205901e9045140b559a44d361d8a46"
+      },
+      {
+        "path": "assets/barlow-condensed-latin-500-normal-BgYH2mbd.woff2",
+        "size": 21424,
+        "sha256": "460f141ec8f6c9a1516bfd2bd9fe71656246d7a9d04a0955faf53158d8970c4c"
+      },
+      {
+        "path": "assets/barlow-condensed-latin-500-normal-HIEiP5Ov.woff",
+        "size": 18600,
+        "sha256": "a5c197a36d650b8bd6b153976aeb31f1ddd9e75f75e4165a6f3eb1e25f50ada6"
+      },
+      {
+        "path": "assets/index-RMqJ9Ht5.js",
+        "size": 171835,
+        "sha256": "68a9124f46dcdfe97be6eefe1c4ecf7b9c3d4e4ce209aa32bd7cb69ba8bd6521"
+      },
+      {
+        "path": "assets/barlow-latin-400-normal-fsAxiSwU.woff",
+        "size": 19584,
+        "sha256": "7376a9d87b48a86bb0ca067d00a994d65bb171c66f126be40ec647ebbe3e0ee7"
+      },
+      {
+        "path": "assets/barlow-latin-500-normal-BPAOfeC8.woff2",
+        "size": 22008,
+        "sha256": "cd759df8ef9efc98fee14307b4eb5ba27f08b1f8f2f3ad2872432e25c89907a8"
+      },
+      {
+        "path": "licenses/@fontsource-barlow-LICENSE",
+        "size": 6014,
+        "sha256": "4877e0c1b66f0b16cc3ebc4801c4def24c06252f618b9229428b20c7387aa0c0"
+      },
+      {
+        "path": "licenses/@fontsource-barlow-condensed-LICENSE",
+        "size": 6167,
+        "sha256": "046ee27d8bddc6b6ee08eee53c96dbf3ec1f6df561644e018507dd8ffcb11d31"
+      },
+      {
+        "path": "licenses/gsap-package-license.txt",
+        "size": 195,
+        "sha256": "7c3afb992beb250410e06c8e522d90909a5cd26d00062d440bf8a8a1dec9e11a"
+      },
+      {
+        "path": "licenses/@fontsource-anton-LICENSE",
+        "size": 4390,
+        "sha256": "9267baca92b7a7ce9db6dd9e6cc32c9fe3ddf1ac96e421d5f87c5746b9089d6a"
+      },
+      {
+        "path": "licenses/lenis-LICENSE",
+        "size": 1096,
+        "sha256": "bba15b1137346a73ed8c35e7f20961a69e0ed842d956a50339240c3e7b08c089"
+      }
+    ]
+  }
+]

@@ -1,0 +1,121 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": null,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    },
+    {
+      "source": "/previews/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/previews/REF-049/:path*",
+      "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/streetfighter/731f07c2afccc8046081e2f887e06b22ec61f787/public/:path*"
+    },
+    {
+      "source": "/previews/REF-039/:path*",
+      "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/Portfolio2/5ea19735f09187577eb050c493a7a4a989cbcdfd/public/:path*"
+    },
+    {
+      "source": "/previews/REF-010/:path*",
+      "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/cinematic-portofilo/e61ebf780d63c8941469e070fe08bd7d261495f4/:path*"
+    },
+    {
+      "source": "/previews/REF-014/:path*",
+      "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/Ghost-Rider-/902e1d77b45dcce9ae00abb03b4260b84d289c7b/:path*"
+    },
+    {
+      "source": "/previews/REF-016/:path*",
+      "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/gireesh-portfolio/a2c8e272acae355c20b25ed4a1593a8aa506d6ad/:path*"
+    },
+    {
+      "source": "/previews/REF-017/:path*",
+      "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/GIRL/50109f5af3a48b534d517be161c1d2a10c61061a/:path*"
+    },
+    {
+      "source": "/previews/REF-019/:path*",
+      "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/greenportfolio/b6d5a3e8d3e5bbd5377e189b787b0b74d2aa2e68/dist/:path*"
+    },
+    {
+      "source": "/previews/REF-021/:path*",
+      "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/hidden/baf9df48bfe40f140c12ad199e90b1efc8076bb5/:path*"
+    },
+    {
+      "source": "/previews/REF-032/:path*",
+      "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/Mahira/d824a9118458d29b837b03ffe6119e8ab9863391/:path*"
+    },
+    {
+      "source": "/previews/REF-042/:path*",
+      "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/radhimaa/46a0b294b11a0ce53b357f8e64d48953e01f7d85/:path*"
+    },
+    {
+      "source": "/previews/REF-045/:path*",
+      "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/Shinchan/e2b52fceb0cc75d8d7302280842cbf96a5684e22/:path*"
+    },
+    {
+      "source": "/previews/REF-046/:path*",
+      "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/siaara/32a276ed3fd6d3f7d744f1fd8342732deddf2920/:path*"
+    },
+    {
+      "source": "/previews/REF-047/:path*",
+      "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/Software-Developer/560e9e90ee7b4b1d31570805943586289399ea42/:path*"
+    },
+    {
+      "source": "/previews/REF-048/:path*",
+      "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/stepai/f833f3dc883c5d5dff3765cb91b1d0012b28d5b8/dist/:path*"
+    },
+    {
+      "source": "/previews/REF-050/:path*",
+      "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/Telangana-tech/dd287d579d6888df7162151c9a2ba695e54d8514/dist/:path*"
+    },
+    {
+      "source": "/previews/REF-051/:path*",
+      "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/Teseract-creative-studious/410cb57732c537382afc8f2497dca7558f0139c9/teseract-website/dist/:path*"
+    },
+    {
+      "source": "/previews/REF-053/:path*",
+      "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/vara-studio/dd84c6fa739d302a35b5541d39ad6932f6f863a1/dist/:path*"
+    },
+    {
+      "source": "/previews/REF-054/:path*",
+      "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/varasaree/02801fe8037d9a8f08f43ddce91be6c1df26fab0/dist/:path*"
+    },
+    {
+      "source": "/reference/:id",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/inventory",
+      "destination": "/index.html"
+    }
+  ]
+}

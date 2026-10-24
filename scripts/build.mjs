@@ -1,0 +1,21 @@
+import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+import { preparePreviews } from './prepare-previews.mjs';
+import { restoreBinaryAssets } from './restore-binary-assets.mjs';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const output=path.join(root,'dist');
+const catalogue=JSON.parse(await readFile(path.join(root,'data/catalogue.json'),'utf8'));
+if(new Set(catalogue.references.map(r=>r.id)).size!==catalogue.references.length)throw new Error('Duplicate reference IDs');
+await mkdir(output,{recursive:true});
+for(const entry of await readdir(output))await rm(path.join(output,entry),{recursive:true,force:true});
+await cp(path.join(root,'src'),output,{recursive:true});await cp(path.join(root,'public'),output,{recursive:true});
+await restoreBinaryAssets(root,output);
+await preparePreviews(root,output);
+await mkdir(path.join(output,'data'),{recursive:true});await cp(path.join(root,'data/catalogue.json'),path.join(output,'data/catalogue.json'));
+const html=await readFile(path.join(output,'index.html'),'utf8');
+await writeFile(path.join(output,'404.html'),html);
+await writeFile(path.join(output,'robots.txt'),'User-agent: *\nDisallow: /\n');
+await mkdir(path.join(output,'inventory'),{recursive:true});await writeFile(path.join(output,'inventory/index.html'),html);
+for(const ref of catalogue.references){const dir=path.join(output,'reference',ref.id.toLowerCase());await mkdir(dir,{recursive:true});await writeFile(path.join(dir,'index.html'),html);}
+console.log(`Built ${catalogue.references.length} reference routes, inventory, static gallery and ${catalogue.references.filter(r=>r.previewType==='local').length} central previews.`);

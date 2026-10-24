@@ -1,0 +1,131 @@
+[
+  {
+    "id": "REF-010",
+    "repo": "cinematic-portofilo",
+    "changes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-010/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-014",
+    "repo": "Ghost-Rider-",
+    "changes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-014/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-016",
+    "repo": "gireesh-portfolio",
+    "changes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-016/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-017",
+    "repo": "GIRL",
+    "changes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-017/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-019",
+    "repo": "greenportfolio",
+    "changes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-019/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-021",
+    "repo": "hidden",
+    "changes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-021/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered.",
+      "Replaced optional service configuration with empty exports in this isolated copy. Firebase uses the source’s local demo fallback; Google Maps uses its keyless embed. No credentials are copied or integrations enabled."
+    ]
+  },
+  {
+    "id": "REF-032",
+    "repo": "Mahira",
+    "changes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-032/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-042",
+    "repo": "radhimaa",
+    "changes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-042/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-045",
+    "repo": "Shinchan",
+    "changes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-045/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-046",
+    "repo": "siaara",
+    "changes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-046/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-047",
+    "repo": "Software-Developer",
+    "changes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-047/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-048",
+    "repo": "stepai",
+    "changes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-048/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-050",
+    "repo": "Telangana-tech",
+    "changes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-050/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-051",
+    "repo": "Teseract-creative-studious",
+    "changes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-051/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-053",
+    "repo": "vara-studio",
+    "changes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-053/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-054",
+    "repo": "varasaree",
+    "changes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-054/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  }
+]

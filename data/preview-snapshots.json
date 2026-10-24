@@ -1,0 +1,2028 @@
+[
+  {
+    "id": "REF-010",
+    "repo": "cinematic-portofilo",
+    "commit": "e61ebf780d63c8941469e070fe08bd7d261495f4",
+    "sourceRoot": "",
+    "files": [
+      {
+        "path": "index.html",
+        "relative": "index.html",
+        "sha": "2d2b790a1b1f61a5fd926aeb7eacac3f2edd913d"
+      },
+      {
+        "path": "src/main.js",
+        "relative": "src/main.js",
+        "sha": "fae4ebfa467ba0801fa28db68334633caf712bd5"
+      },
+      {
+        "path": "src/gl/shaders3.js",
+        "relative": "src/gl/shaders3.js",
+        "sha": "bb404f23bc414d6b767789e89b7d6465bfab9c0a"
+      },
+      {
+        "path": "src/gl/shaders6.js",
+        "relative": "src/gl/shaders6.js",
+        "sha": "3647c21273f766a967a244f3ea42bc09245dac45"
+      },
+      {
+        "path": "src/lib/ease.js",
+        "relative": "src/lib/ease.js",
+        "sha": "49806a1c6dffb2735d930f69b7bde4ddadcb6e10"
+      },
+      {
+        "path": "src/lib/mat4.js",
+        "relative": "src/lib/mat4.js",
+        "sha": "ceca9e647f0b86d82eabc299e2fb6139d6aba15a"
+      },
+      {
+        "path": "src/gl/shaders2.js",
+        "relative": "src/gl/shaders2.js",
+        "sha": "36b0be250318bc2c60960c0e463fcb2d82c87045"
+      },
+      {
+        "path": "public/years/meta.json",
+        "relative": "public/years/meta.json",
+        "sha": "c31e13d368304b807960f4e5fb769db3c7c728ea"
+      },
+      {
+        "path": "public/fin/fin.json",
+        "relative": "public/fin/fin.json",
+        "sha": "ece9a47c0d5da3124a179d09f92a26679228e7bc"
+      },
+      {
+        "path": "src/gl/stage.js",
+        "relative": "src/gl/stage.js",
+        "sha": "aa6763fa610b477070a3bff5d2487bce8fa3f84e"
+      },
+      {
+        "path": "public/media/manifest.json",
+        "relative": "public/media/manifest.json",
+        "sha": "2a992f85b8217202a73389cf4b469f0c0024e9c0"
+      },
+      {
+        "path": "src/gl/shaders4.js",
+        "relative": "src/gl/shaders4.js",
+        "sha": "dc679ae7b24af7313d9b9b0a76092f1c9a2c0660"
+      },
+      {
+        "path": "src/scene/furniture.js",
+        "relative": "src/scene/furniture.js",
+        "sha": "b0363c109243ad331585051a63cad93b18381f96"
+      },
+      {
+        "path": "src/lib/clip.js",
+        "relative": "src/lib/clip.js",
+        "sha": "ea05526f2266d5d9188e82855c7347574c26425d"
+      },
+      {
+        "path": "public/projects/layout4.json",
+        "relative": "public/projects/layout4.json",
+        "sha": "9edccecd7f3a4b6d0aa72ee1293bfc57a86ea512"
+      },
+      {
+        "path": "src/gl/shaders.js",
+        "relative": "src/gl/shaders.js",
+        "sha": "28576443cb44df0f20617ca394cf29a32a5b6972"
+      },
+      {
+        "path": "src/scene/type.js",
+        "relative": "src/scene/type.js",
+        "sha": "e96964224e4331c4a4b9a9799a47f3647426812a"
+      },
+      {
+        "path": "src/scene/timeline.js",
+        "relative": "src/scene/timeline.js",
+        "sha": "202dfa0ea7230c957cb230bb56d536e29455a934"
+      },
+      {
+        "path": "src/scene2/particles.js",
+        "relative": "src/scene2/particles.js",
+        "sha": "3da8b49de28c9235e0fa2c62ab941e28bb487d37"
+      },
+      {
+        "path": "src/gl/renderer.js",
+        "relative": "src/gl/renderer.js",
+        "sha": "96e6e3537a635840cd4a03be5f6cf4c797edaa47"
+      },
+      {
+        "path": "src/scene3/chrono.js",
+        "relative": "src/scene3/chrono.js",
+        "sha": "aeeb93508dd61dc81a27e6ff369b166b32c5c480"
+      },
+      {
+        "path": "src/scene3/layout3.js",
+        "relative": "src/scene3/layout3.js",
+        "sha": "1a201ff2730e7adbd7aff52603c1e502a35ded11"
+      },
+      {
+        "path": "src/scene2/cards.js",
+        "relative": "src/scene2/cards.js",
+        "sha": "56bc8724aa480ea882bbad9c1bc4c45f4ae8ca94"
+      },
+      {
+        "path": "src/styles/app.css",
+        "relative": "src/styles/app.css",
+        "sha": "cf321844eeebdda16331007eb152676d5a7bafcb"
+      },
+      {
+        "path": "src/styles/chrono.css",
+        "relative": "src/styles/chrono.css",
+        "sha": "1a6103bae494b3a1b8ee800efea35581afe9820d"
+      },
+      {
+        "path": "src/scene2/universe.js",
+        "relative": "src/scene2/universe.js",
+        "sha": "63c1d3050493db83a00a269b1c28d758a648d54c"
+      },
+      {
+        "path": "src/scene2/boot2.js",
+        "relative": "src/scene2/boot2.js",
+        "sha": "0441e88a10c73778479459104128312beea92351"
+      },
+      {
+        "path": "src/scene/layout.js",
+        "relative": "src/scene/layout.js",
+        "sha": "6c979267afc2e0490315efc2f5dcd24b8a876f76"
+      },
+      {
+        "path": "src/scene3/timeline3.js",
+        "relative": "src/scene3/timeline3.js",
+        "sha": "970cbde37fd92e4877f719301e950a2ec1a82a5d"
+      },
+      {
+        "path": "src/scene2/timeline2.js",
+        "relative": "src/scene2/timeline2.js",
+        "sha": "350e990b5b84208557c6887fc42557d1b052d442"
+      },
+      {
+        "path": "src/scene3/boot3.js",
+        "relative": "src/scene3/boot3.js",
+        "sha": "2e29ace6c4190a4a50ae3858fc056f618d7cdb1d"
+      },
+      {
+        "path": "src/scene4/layout4.js",
+        "relative": "src/scene4/layout4.js",
+        "sha": "7f0b59f43f1f701ed047952628c1f9390811259f"
+      },
+      {
+        "path": "src/scene2/ribbon.js",
+        "relative": "src/scene2/ribbon.js",
+        "sha": "e94dd03bf1822b2a2b09c354a75cb876c3511c62"
+      },
+      {
+        "path": "src/scene4/gallery.js",
+        "relative": "src/scene4/gallery.js",
+        "sha": "e85aded985ccd296adbab03b42dc356069faff7b"
+      },
+      {
+        "path": "src/scene4/boot4.js",
+        "relative": "src/scene4/boot4.js",
+        "sha": "1d7cd5b691d3deb40d77a01a6403d69bd36a9605"
+      },
+      {
+        "path": "src/scene4/timeline4.js",
+        "relative": "src/scene4/timeline4.js",
+        "sha": "8657c4f9f2c7832f5ced728a88f1f7ee98c3f0fa"
+      },
+      {
+        "path": "src/scene6/finale.js",
+        "relative": "src/scene6/finale.js",
+        "sha": "0d210d0f479520da966eea9ef53479938c5b3725"
+      },
+      {
+        "path": "src/scene6/timeline6.js",
+        "relative": "src/scene6/timeline6.js",
+        "sha": "c36365ea956b0472bdfe1529addbbabe74f00f8c"
+      },
+      {
+        "path": "src/styles/universe.css",
+        "relative": "src/styles/universe.css",
+        "sha": "bbd24c349f3dd59f4396513a2be3699caa60851e"
+      },
+      {
+        "path": "src/scene6/boot6.js",
+        "relative": "src/scene6/boot6.js",
+        "sha": "c034f5790b3efa32053f2bb0d34a0e61420e7cde"
+      },
+      {
+        "path": "src/styles/projects.css",
+        "relative": "src/styles/projects.css",
+        "sha": "ccaae27355a7fdecf627309fe03745b221f947bf"
+      },
+      {
+        "path": "src/styles/finale.css",
+        "relative": "src/styles/finale.css",
+        "sha": "f9db384dec7f11baf3df141354057c2155a5d344"
+      }
+    ],
+    "topNames": [
+      ".claude",
+      ".gitignore",
+      "Blank Screen.jpg",
+      "Footer image.jpg",
+      "Gireesh  video 2.mp4",
+      "Gireesh typo.jpg",
+      "Gireesh video 1.mp4",
+      "Gireesh video 3.mov",
+      "Header.jpg",
+      "Man_walking_and_smoking_cigarette_202609051235.mp4",
+      "README.md",
+      "all the dots.jpg",
+      "assets_src",
+      "docs",
+      "footer 2nd image.jpg",
+      "index.html",
+      "main refrence.jpg",
+      "public",
+      "section 2 image.jpg",
+      "section 2 refrence video.mp4",
+      "section 3 image.jpg",
+      "section 4 image.jpg",
+      "section 5 main refrence.jpg",
+      "src",
+      "tools",
+      "welcome to my world.jpg"
+    ],
+    "compatibilityNotes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-010/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-014",
+    "repo": "Ghost-Rider-",
+    "commit": "902e1d77b45dcce9ae00abb03b4260b84d289c7b",
+    "sourceRoot": "",
+    "files": [
+      {
+        "path": "index.html",
+        "relative": "index.html",
+        "sha": "145e0a70fa1b47fbda307233a9134d2ca42f1e42"
+      },
+      {
+        "path": "js/main.js",
+        "relative": "js/main.js",
+        "sha": "b44fd40d44e315796ab3be8651ab3d82ed286654"
+      },
+      {
+        "path": "styles/main.css",
+        "relative": "styles/main.css",
+        "sha": "782904e9c8b56b175428262d8c8893ee10885598"
+      },
+      {
+        "path": "js/atmos.js",
+        "relative": "js/atmos.js",
+        "sha": "dbe7d36a7cd51e673a0a9077f64a3a2c81b3a74c"
+      },
+      {
+        "path": "js/audio.js",
+        "relative": "js/audio.js",
+        "sha": "b9d3f5b2896805169c78db340a813c073e269eff"
+      },
+      {
+        "path": "js/bike.js",
+        "relative": "js/bike.js",
+        "sha": "680a7231be9f72e08c04da51830a072e1d4f51fc"
+      },
+      {
+        "path": "js/becoming.js",
+        "relative": "js/becoming.js",
+        "sha": "77e8a4a6fa8c590ecdbbfc3963472e1ae5c5ab79"
+      },
+      {
+        "path": "js/fire.js",
+        "relative": "js/fire.js",
+        "sha": "9b87191f13cd518b07fdabc4e3b89d7836468504"
+      },
+      {
+        "path": "js/film.js",
+        "relative": "js/film.js",
+        "sha": "aa5f69c2b9af64a34a2272e94b61815b465c7120"
+      },
+      {
+        "path": "js/gallery.js",
+        "relative": "js/gallery.js",
+        "sha": "816d23c45bd075c9976cf524ce28b99456dc140f"
+      },
+      {
+        "path": "js/ride.js",
+        "relative": "js/ride.js",
+        "sha": "1621b7c648494fbf9f5379e911b55aed497c08ea"
+      },
+      {
+        "path": "js/scroll.js",
+        "relative": "js/scroll.js",
+        "sha": "b0b8425154d6d4616626d816d785543ac2718f63"
+      },
+      {
+        "path": "js/frames.js",
+        "relative": "js/frames.js",
+        "sha": "ff65dd455f3d126fa17d469bceabf91cc859b89e"
+      },
+      {
+        "path": "js/gl.js",
+        "relative": "js/gl.js",
+        "sha": "9919d3373e0ae47f836717d3519ad6874a5f6eba"
+      },
+      {
+        "path": "js/reveal.js",
+        "relative": "js/reveal.js",
+        "sha": "d1acda584cf9339d00db559c769cb9c6b60b950f"
+      },
+      {
+        "path": "vercel.json",
+        "relative": "vercel.json",
+        "sha": "e42de3a49aa08bed900abd6d0f78fdd8730fe6b7"
+      }
+    ],
+    "topNames": [
+      ".claude",
+      ".gitignore",
+      ".vercelignore",
+      "1st video phase 2 .mov",
+      "Bike Transition (2).mov",
+      "Bike video.mp4",
+      "DOCUMENTATION.md",
+      "Ghost Rider intro.mp4",
+      "Image 1.jpg",
+      "Image 2.jpg",
+      "Image 3.jpg",
+      "Image 4.jpg",
+      "Image 5.jpg",
+      "Image 6.jpg",
+      "Image 8.jpg",
+      "README.md",
+      "Ryan Gosling.jpg",
+      "Video 1.MOV",
+      "Video 2.MOV",
+      "Video 4.MOV",
+      "assets",
+      "eight.jpg",
+      "five.jpg",
+      "four.jpg",
+      "index.html",
+      "js",
+      "nine.jpg",
+      "one.jpg",
+      "seven.jpg",
+      "six.jpg",
+      "start.bat",
+      "styles",
+      "three.jpg",
+      "two.jpg",
+      "vercel.json",
+      "video 3.mov"
+    ],
+    "compatibilityNotes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-014/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-016",
+    "repo": "gireesh-portfolio",
+    "commit": "a2c8e272acae355c20b25ed4a1593a8aa506d6ad",
+    "sourceRoot": "",
+    "files": [
+      {
+        "path": "css/style.css",
+        "relative": "css/style.css",
+        "sha": "49a28c68b303827b789585f249a9c26e7b44bc43"
+      },
+      {
+        "path": "index.html",
+        "relative": "index.html",
+        "sha": "64ea5584cb1d3274f36493855edccc5eeb68aaa9"
+      },
+      {
+        "path": "js/main.js",
+        "relative": "js/main.js",
+        "sha": "bc0ff64a59edb08bbed74ccf3476b9a8b6ce3d00"
+      },
+      {
+        "path": "js/universe.js",
+        "relative": "js/universe.js",
+        "sha": "f6ef7b38c22999f1644661f812c71927b77048e5"
+      }
+    ],
+    "topNames": [
+      ".gitignore",
+      ".nojekyll",
+      "README.md",
+      "assets",
+      "css",
+      "index.html",
+      "js"
+    ],
+    "compatibilityNotes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-016/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-017",
+    "repo": "GIRL",
+    "commit": "50109f5af3a48b534d517be161c1d2a10c61061a",
+    "sourceRoot": "",
+    "files": [
+      {
+        "path": "fin.css",
+        "relative": "fin.css",
+        "sha": "1aa47c8a3611610b29666548e7f262564a5fb100"
+      },
+      {
+        "path": "hero.css",
+        "relative": "hero.css",
+        "sha": "a5ebd9aebc307d3f3a1d598ac78f11cd96d467ee"
+      },
+      {
+        "path": "index.html",
+        "relative": "index.html",
+        "sha": "bd138b5d0efaa388f8a748faec9266463a435878"
+      },
+      {
+        "path": "archive/README.txt",
+        "relative": "archive/README.txt",
+        "sha": "42d818ca6ee35da3804792e4cf47d139eaab3df6"
+      },
+      {
+        "path": "behind/README.txt",
+        "relative": "behind/README.txt",
+        "sha": "20cef5bc88e1b0039aee47eeee9003cf279718b6"
+      },
+      {
+        "path": "behind.css",
+        "relative": "behind.css",
+        "sha": "f649a05efdd37526998641a8008d51ffa1ae8a3f"
+      },
+      {
+        "path": "folio.css",
+        "relative": "folio.css",
+        "sha": "5f23677f56a71978b474d632ab0da23ff7299faa"
+      },
+      {
+        "path": "fin.js",
+        "relative": "fin.js",
+        "sha": "fb441a716f9e875f55e61eb366cc8bd6ed9b9d6c"
+      },
+      {
+        "path": "behind.js",
+        "relative": "behind.js",
+        "sha": "056f5a4e585fad6bc3681f7fab35ace11dd5a94f"
+      },
+      {
+        "path": "looks.js",
+        "relative": "looks.js",
+        "sha": "e6c54e5b3c7a7140210c684543f07cee288582cd"
+      },
+      {
+        "path": "hero.js",
+        "relative": "hero.js",
+        "sha": "6905a29aebfcb5580344f87ef33898b6bcc1b3dc"
+      },
+      {
+        "path": "projects/README.txt",
+        "relative": "projects/README.txt",
+        "sha": "4adf1edac73fcf89686a28d6415fdc06b8c521aa"
+      },
+      {
+        "path": "looks/README.txt",
+        "relative": "looks/README.txt",
+        "sha": "0d4fd260fa28f917067eb514c6ab9db3a4ce7fc3"
+      },
+      {
+        "path": "space.js",
+        "relative": "space.js",
+        "sha": "f993428e2ede0e43284efd998f4eb199b0382913"
+      },
+      {
+        "path": "story.js",
+        "relative": "story.js",
+        "sha": "2b61bfd19d86a46c138af83d19c0ab455fe3fca2"
+      },
+      {
+        "path": "folio.js",
+        "relative": "folio.js",
+        "sha": "1c645f45e425e4be8f2463a6d2e9950635501dae"
+      },
+      {
+        "path": "story/README.txt",
+        "relative": "story/README.txt",
+        "sha": "4f8ab63c830782913df164e49f62bce160c36a88"
+      },
+      {
+        "path": "story.css",
+        "relative": "story.css",
+        "sha": "8d88a252535c79fd367d654ede9b300ec2cb4703"
+      },
+      {
+        "path": "space.css",
+        "relative": "space.css",
+        "sha": "bfa2b9be79a93dc13e699cc2838bf092407874ea"
+      },
+      {
+        "path": "looks.css",
+        "relative": "looks.css",
+        "sha": "6a27aa14b930039f74178a7a59b40444e9514ce1"
+      }
+    ],
+    "topNames": [
+      ".claude",
+      ".gitattributes",
+      ".gitignore",
+      ".probe",
+      ".shots",
+      "ACTUAL REFRENCE.jpg",
+      "ALL THE TEXTS.jpg",
+      "BACKGROUNF IMG.jpg",
+      "ENIGMA.md",
+      "GIRL IMAGE.jpg",
+      "README.md",
+      "REFRENCE IMAGE FOR SECTION 2.jpg",
+      "Section 3 refrence.jpeg",
+      "Section 4 refrence.jpg",
+      "Section 5 refrence.jpg",
+      "TITTLE.jpg",
+      "archive",
+      "behind",
+      "behind.css",
+      "behind.js",
+      "fin.css",
+      "fin.js",
+      "folio.css",
+      "folio.js",
+      "fonts",
+      "hero.css",
+      "hero.js",
+      "image to add 10.jpg",
+      "image to add 11.jpg",
+      "image to add 2.jpg",
+      "image to add 3.jpg",
+      "image to add 4.jpg",
+      "image to add 5.jpg",
+      "image to add 6.jpg",
+      "image to add 7.jpg",
+      "image to add 8.jpg",
+      "image to add 9.jpg",
+      "image to add one.jpg",
+      "index.html",
+      "looks",
+      "looks.css",
+      "looks.js",
+      "projects",
+      "section 6 refrence.jpg",
+      "space.css",
+      "space.js",
+      "story",
+      "story.css",
+      "story.js"
+    ],
+    "compatibilityNotes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-017/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-019",
+    "repo": "greenportfolio",
+    "commit": "b6d5a3e8d3e5bbd5377e189b787b0b74d2aa2e68",
+    "sourceRoot": "dist/",
+    "files": [
+      {
+        "path": "dist/app.js",
+        "relative": "app.js",
+        "sha": "2d0876e6d2b978a128fa4e9aaff118a07886e6fc"
+      },
+      {
+        "path": "dist/expanded.css",
+        "relative": "expanded.css",
+        "sha": "0163b2ab11807cced05e1bfc8eb2793b6a1a9687"
+      },
+      {
+        "path": "dist/index.html",
+        "relative": "index.html",
+        "sha": "7568a070638e14a67c32ec7046517e7a23fba793"
+      },
+      {
+        "path": "dist/styles.css",
+        "relative": "styles.css",
+        "sha": "ae2162b4957eb2b8abf8c97f6f5f94f81ab35cef"
+      },
+      {
+        "path": "dist/projects/daylight.html",
+        "relative": "projects/daylight.html",
+        "sha": "73635a81478178a12db0c0bb97c86e57bb14e54e"
+      },
+      {
+        "path": "dist/projects/forme.html",
+        "relative": "projects/forme.html",
+        "sha": "6a79f3dab97d3c5bd52bbbf550184fcf7f6fb79c"
+      },
+      {
+        "path": "dist/projects/sonar.html",
+        "relative": "projects/sonar.html",
+        "sha": "16990c19583a3d6400481ae5fae75629543b54cf"
+      },
+      {
+        "path": "dist/work.html",
+        "relative": "work.html",
+        "sha": "719b26d37fe003049f4d95ed0fd9250b21ea2caa"
+      },
+      {
+        "path": "dist/about.html",
+        "relative": "about.html",
+        "sha": "22cb24251940a597b3b20b1fe9cd44d83d98de68"
+      }
+    ],
+    "topNames": [
+      "about.html",
+      "app.js",
+      "assets",
+      "expanded.css",
+      "index.html",
+      "projects",
+      "styles.css",
+      "work.html"
+    ],
+    "compatibilityNotes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-019/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-021",
+    "repo": "hidden",
+    "commit": "baf9df48bfe40f140c12ad199e90b1efc8076bb5",
+    "sourceRoot": "",
+    "files": [
+      {
+        "path": "app.js",
+        "relative": "app.js",
+        "sha": "48c2afa9a0a519929a3fdd43241321e042b73cb2"
+      },
+      {
+        "path": "fonts.css",
+        "relative": "fonts.css",
+        "sha": "3d74096144059433900a9629e24fa80cf5f5d8d9"
+      },
+      {
+        "path": "index.html",
+        "relative": "index.html",
+        "sha": "f04d4aec526827ae5002b90e2c29a477ba940fe0"
+      },
+      {
+        "path": "experience.css",
+        "relative": "experience.css",
+        "sha": "1b7ac371cdfa1b40fa162339a85d9d5e40bd8472"
+      },
+      {
+        "path": "FILE-MANIFEST.json",
+        "relative": "FILE-MANIFEST.json",
+        "sha": "f76667b489314ff3bff7c652a4267581408f40b5"
+      },
+      {
+        "path": "catalogue.js",
+        "relative": "catalogue.js",
+        "sha": "a39e4b8c04380bb5a4555ff70c7d00889380969c"
+      },
+      {
+        "path": "experience.js",
+        "relative": "experience.js",
+        "sha": "66cc802fd633a57e1e3417935f7957c3127d9b22"
+      },
+      {
+        "path": "logic.js",
+        "relative": "logic.js",
+        "sha": "70de72b40f23e66b9a98b4d543da6769638c58fe"
+      },
+      {
+        "path": "maps.js",
+        "relative": "maps.js",
+        "sha": "c7455264828111156f04eed73d5985dce3c756ae"
+      },
+      {
+        "path": "styles.css",
+        "relative": "styles.css",
+        "sha": "279ec266d65f5e6a71df101bd8eec56c9a424289"
+      },
+      {
+        "path": "references/original-film/manifest.json",
+        "relative": "references/original-film/manifest.json",
+        "sha": "1d3537d21354b1991f27c4f6924039a29c96d40c"
+      },
+      {
+        "path": "platform.js",
+        "relative": "platform.js",
+        "sha": "0541596fa597b407bb623ba927de338965d35794"
+      },
+      {
+        "path": "START-HERE.txt",
+        "relative": "START-HERE.txt",
+        "sha": "ca58cc89304f39c14f6c423d74ddf0eba50d2577"
+      },
+      {
+        "path": "site-data.js",
+        "relative": "site-data.js",
+        "sha": "57bf03d622453553948d7c7cafcdd9e74b579367"
+      },
+      {
+        "path": "source/catalogue.json",
+        "relative": "source/catalogue.json",
+        "sha": "59fdef857db0d67d46ae214315cfb2a3376467c5"
+      },
+      {
+        "path": "reference-layout.css",
+        "relative": "reference-layout.css",
+        "sha": "1bf583522663aca89c5f99f92621aa96aaff23d6"
+      },
+      {
+        "path": "store.js",
+        "relative": "store.js",
+        "sha": "a787b4986f57c1a3aec0f7e2d554c37136e907bf"
+      },
+      {
+        "path": "platform.css",
+        "relative": "platform.css",
+        "sha": "e2b17cde2794a6167c074c67ec78757d5f6c50a0"
+      },
+      {
+        "path": "references/Pasted text(20261008-175213).txt",
+        "relative": "references/Pasted text(20261008-175213).txt",
+        "sha": "c979e3ed1a45cad4aa8332e507e6749bdf88b76f"
+      },
+      {
+        "path": "scenes.js",
+        "relative": "scenes.js",
+        "sha": "c840b6571d826b9ce142c9e1f39ac0af8b548ec3"
+      },
+      {
+        "path": "source/image-resolution-audit.json",
+        "relative": "source/image-resolution-audit.json",
+        "sha": "bca3c14d26eaa5ad5eb794d16e7ccd773489465f"
+      },
+      {
+        "path": "story.css",
+        "relative": "story.css",
+        "sha": "8eb8dad4f6cba02b1d73fae4eeb46612c31e01e4"
+      },
+      {
+        "path": "source/reference-image-audit.json",
+        "relative": "source/reference-image-audit.json",
+        "sha": "09065e2307b9b158e32c3094383eb3f67cb75a6e"
+      }
+    ],
+    "topNames": [
+      ".nojekyll",
+      "FILE-MANIFEST.json",
+      "FIREBASE-SETUP.md",
+      "README.md",
+      "START-HERE.txt",
+      "app.js",
+      "assets",
+      "catalogue.js",
+      "experience.css",
+      "experience.js",
+      "firebase-config.js",
+      "firestore.rules",
+      "fonts.css",
+      "index.html",
+      "logic.js",
+      "maps-config.js",
+      "maps.js",
+      "platform.css",
+      "platform.js",
+      "reference-layout.css",
+      "references",
+      "scenes.js",
+      "site-data.js",
+      "source",
+      "store.js",
+      "story.css",
+      "styles.css"
+    ],
+    "compatibilityNotes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-021/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered.",
+      "Replaced optional service configuration with empty exports in this isolated copy. Firebase uses the source’s local demo fallback; Google Maps uses its keyless embed. No credentials are copied or integrations enabled."
+    ]
+  },
+  {
+    "id": "REF-032",
+    "repo": "Mahira",
+    "commit": "d824a9118458d29b837b03ffe6119e8ab9863391",
+    "sourceRoot": "",
+    "files": [
+      {
+        "path": "cart.html",
+        "relative": "cart.html",
+        "sha": "0efd083d5b1471bd685f87d2835b9b60d41b43d6"
+      },
+      {
+        "path": "category.html",
+        "relative": "category.html",
+        "sha": "410239b048c08198f175d3876ef17ee08a89524e"
+      },
+      {
+        "path": "checkout.html",
+        "relative": "checkout.html",
+        "sha": "ca07bb8ffd2c5076c12d46b6ce505da2ad4df077"
+      },
+      {
+        "path": "css/auth.css",
+        "relative": "css/auth.css",
+        "sha": "6ecd614b5e5b34690194e22812e19ddaff58beba"
+      },
+      {
+        "path": "css/shop.css",
+        "relative": "css/shop.css",
+        "sha": "745603e676beab14e9ada6d6532ada34f077aec7"
+      },
+      {
+        "path": "css/styles.css",
+        "relative": "css/styles.css",
+        "sha": "dc9bffe110e9d1ef5a27c59f4b6932082092ef46"
+      },
+      {
+        "path": "email-preview.html",
+        "relative": "email-preview.html",
+        "sha": "bdf7d7f9c85ee95b1918f1e5207c4e07781d4514"
+      },
+      {
+        "path": "email/order-confirmation.html",
+        "relative": "email/order-confirmation.html",
+        "sha": "af8f632cc0750c5be281dec0881280088631cf05"
+      },
+      {
+        "path": "explore.html",
+        "relative": "explore.html",
+        "sha": "e32e42dc635f3b2214f4748837e70ec84cfe1952"
+      },
+      {
+        "path": "index.html",
+        "relative": "index.html",
+        "sha": "47c9eecc7694de226d9861a9a232d898ab306f18"
+      },
+      {
+        "path": "js/auth.js",
+        "relative": "js/auth.js",
+        "sha": "d20f52d30c40e824aa726d10ce3360b46cbfedbe"
+      },
+      {
+        "path": "js/emblem-data.js",
+        "relative": "js/emblem-data.js",
+        "sha": "a1835721235101f7823a910fc6f899095b123b50"
+      },
+      {
+        "path": "js/main.js",
+        "relative": "js/main.js",
+        "sha": "7d2cf1baed0e959529dea867e1cf3e50934bc7f5"
+      },
+      {
+        "path": "js/shop-data.js",
+        "relative": "js/shop-data.js",
+        "sha": "1aa9d1185b6b40a4cf18328cc85112cecc82c5df"
+      },
+      {
+        "path": "js/shop.js",
+        "relative": "js/shop.js",
+        "sha": "e418ce71fb624c2954ab45f9b76483a3fbe274ec"
+      },
+      {
+        "path": "login.html",
+        "relative": "login.html",
+        "sha": "0799f3c601387a97c68620f1a8cb31908eb4430c"
+      },
+      {
+        "path": "order.html",
+        "relative": "order.html",
+        "sha": "31f8a9b9360b61a45f97f54d49293b680d489221"
+      },
+      {
+        "path": "product.html",
+        "relative": "product.html",
+        "sha": "b058b8de7f51df44e808a810fdb4fadc8554ee39"
+      },
+      {
+        "path": "shop.html",
+        "relative": "shop.html",
+        "sha": "05a383de37d388c40729f4f540821c2de149ebba"
+      },
+      {
+        "path": "signup.html",
+        "relative": "signup.html",
+        "sha": "e1c0c41f19a43277b73686d308bbd56622a21d1e"
+      },
+      {
+        "path": "track.html",
+        "relative": "track.html",
+        "sha": "2bb26d330401377331dd040e5954b0ff73554096"
+      }
+    ],
+    "topNames": [
+      ".claude",
+      ".gitignore",
+      "0110A52F-9872-4BAE-ACCD-3F05D57AEBD0.PNG",
+      "244612C9-0AD2-49ED-8392-3EAD6F39A4C9.PNG",
+      "254101D5-D719-4458-AF40-5AD9D1E3DB23.PNG",
+      "39F8D27A-1851-4913-9ACF-64B793BCA6F2.PNG",
+      "421E899E-BB14-4007-A5F1-ECC873FCCE1E.PNG",
+      "AC59D726-33BE-4600-BAEF-0A79C45D8862.PNG",
+      "C034FF5B-E383-48F0-B013-BBEFAF430381.PNG",
+      "E329AE49-C1F4-4EAE-8595-ABCC67C89058.PNG",
+      "Explore the collection.PNG",
+      "Footer.PNG",
+      "Logo Animation sequences.PNG",
+      "README.md",
+      "Section 2 refrence.PNG",
+      "Section 4 refrence image.PNG",
+      "Section 5 Refrence imge.PNG",
+      "Women's hero section.PNG",
+      "assets",
+      "cart.html",
+      "category.html",
+      "checkout.html",
+      "css",
+      "desktop login and sigup.PNG",
+      "email",
+      "email-preview.html",
+      "explore.html",
+      "index.html",
+      "js",
+      "login.html",
+      "loginsign mobile → Mobile Login & Sign Up references.PNG",
+      "logo main.jpeg",
+      "men's hero section.PNG",
+      "menu.PNG",
+      "new arrivals background.PNG",
+      "order.html",
+      "product.html",
+      "scence 1.PNG",
+      "section 3 refrence image.PNG",
+      "shop.html",
+      "signup.html",
+      "track.html",
+      "trust  benefits.PNG",
+      "visual refrence.PNG"
+    ],
+    "compatibilityNotes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-032/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-042",
+    "repo": "radhimaa",
+    "commit": "46a0b294b11a0ce53b357f8e64d48953e01f7d85",
+    "sourceRoot": "",
+    "files": [
+      {
+        "path": "assets/css/hero.css",
+        "relative": "assets/css/hero.css",
+        "sha": "9893fef5aa1f7ed3afc9ecce97f484ff41f7d59c"
+      },
+      {
+        "path": "assets/css/sky.css",
+        "relative": "assets/css/sky.css",
+        "sha": "ed59bc9ab7efde483e9a3a8581d6b9f2c6958177"
+      },
+      {
+        "path": "assets/css/finale.css",
+        "relative": "assets/css/finale.css",
+        "sha": "ff7fd16da15d51403c9358e2517c0fe2be870274"
+      },
+      {
+        "path": "assets/css/memory.css",
+        "relative": "assets/css/memory.css",
+        "sha": "814d312ee6143ff1f4ffcd6f1b85cefc1f233f49"
+      },
+      {
+        "path": "index.html",
+        "relative": "index.html",
+        "sha": "7a686352d71263afa41a844adab9a8bad98656cb"
+      },
+      {
+        "path": "assets/js/bloom.js",
+        "relative": "assets/js/bloom.js",
+        "sha": "cb0bc285e8206fa03897b03fa97cd2d3aeb52447"
+      },
+      {
+        "path": "assets/css/rain.css",
+        "relative": "assets/css/rain.css",
+        "sha": "7b75876767f0c4cc7a838caa9d89782cc62ba5f6"
+      },
+      {
+        "path": "assets/css/sunrise.css",
+        "relative": "assets/css/sunrise.css",
+        "sha": "4eba72ec2a5b9664d780ef7ea2d27018dd4e0ebd"
+      },
+      {
+        "path": "assets/js/finale.js",
+        "relative": "assets/js/finale.js",
+        "sha": "78a3d8c443d7e2f26e274a22fdb51ae1fab4b402"
+      },
+      {
+        "path": "assets/js/lumen.js",
+        "relative": "assets/js/lumen.js",
+        "sha": "61df1e4f9e19a225f4d717896ff45f564e886d76"
+      },
+      {
+        "path": "assets/js/petals.js",
+        "relative": "assets/js/petals.js",
+        "sha": "977fb4fe5b01e47cba0930bb10c7ff507c49b589"
+      },
+      {
+        "path": "assets/js/hero.js",
+        "relative": "assets/js/hero.js",
+        "sha": "8758bac4a90dad900e314e00da0de6651176713f"
+      },
+      {
+        "path": "assets/js/sky.js",
+        "relative": "assets/js/sky.js",
+        "sha": "607ebef1b69a13cb6850616739fe93ce3c635f2a"
+      },
+      {
+        "path": "assets/js/sunrise.js",
+        "relative": "assets/js/sunrise.js",
+        "sha": "07d398e9ae97e31f6b0149d3b99291abcff86c60"
+      },
+      {
+        "path": "assets/js/rain.js",
+        "relative": "assets/js/rain.js",
+        "sha": "ef896c8f67874920c746b05d430e6dc685847e24"
+      },
+      {
+        "path": "assets/js/scrub.js",
+        "relative": "assets/js/scrub.js",
+        "sha": "1a83bc1c417ba2b3b989217c375ce2099366aee3"
+      },
+      {
+        "path": "assets/js/memory.js",
+        "relative": "assets/js/memory.js",
+        "sha": "43d2300a61e6a42441a23a33f324daeb118ff7f0"
+      },
+      {
+        "path": "assets/js/wings.js",
+        "relative": "assets/js/wings.js",
+        "sha": "9d7f4321cf8accd94fc0b84af64c855d9c447f25"
+      }
+    ],
+    "topNames": [
+      ".claude",
+      ".gitignore",
+      "Hero Tiitle new.jpg",
+      "Hero tittle.jpg",
+      "README.md",
+      "SETUP.md",
+      "assets",
+      "hero refrence.jpg",
+      "index.html",
+      "tools"
+    ],
+    "compatibilityNotes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-042/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-045",
+    "repo": "Shinchan",
+    "commit": "e2b52fceb0cc75d8d7302280842cbf96a5684e22",
+    "sourceRoot": "",
+    "files": [
+      {
+        "path": "css/styles.css",
+        "relative": "css/styles.css",
+        "sha": "c51c5c1a4bc880f2bd771a62fcb7c19fa4fca557"
+      },
+      {
+        "path": "index.html",
+        "relative": "index.html",
+        "sha": "cc8745888bf052d9794cf472dc18ce5fd81f24cb"
+      },
+      {
+        "path": "js/main.js",
+        "relative": "js/main.js",
+        "sha": "a6e659ce2f10adf0d9a8773c6bca8fb8553f71ed"
+      },
+      {
+        "path": "js/cast-data.js",
+        "relative": "js/cast-data.js",
+        "sha": "16179af2abf393dbbb77236e7e03e1f17beaad6e"
+      },
+      {
+        "path": "js/rig.js",
+        "relative": "js/rig.js",
+        "sha": "272d5bf30d3705f88197988b1b42cffdeddd15a0"
+      },
+      {
+        "path": "video-tools/package.json",
+        "relative": "video-tools/package.json",
+        "sha": "65811bcf9fcc98594abef431eafc41dc9010c23c"
+      },
+      {
+        "path": "video-tools/serve.mjs",
+        "relative": "video-tools/serve.mjs",
+        "sha": "bb474d718c89053883fdeca5c18a3f207ff377a5"
+      },
+      {
+        "path": "js/cast.js",
+        "relative": "js/cast.js",
+        "sha": "daa4153118c5600df0c47b15c03459cff8b36ae1"
+      },
+      {
+        "path": "video-tools/package-lock.json",
+        "relative": "video-tools/package-lock.json",
+        "sha": "5d914e69a7ffcf9d7ca21f3cc829efd15377ac1c"
+      },
+      {
+        "path": "video-tools/stage.html",
+        "relative": "video-tools/stage.html",
+        "sha": "a5d98ce2aeecf88a64688e0f19c2fb30267572fa"
+      },
+      {
+        "path": "js/rig-data.js",
+        "relative": "js/rig-data.js",
+        "sha": "2b22fb7192004bf5e6f2842f9207ab2a2c6ad7f7"
+      },
+      {
+        "path": "video-tools/record.mjs",
+        "relative": "video-tools/record.mjs",
+        "sha": "7825558e44b201a5b3ed09f9bff9715383baf212"
+      },
+      {
+        "path": "js/flowers.js",
+        "relative": "js/flowers.js",
+        "sha": "5c9f90c3a124630086e9f68eba04d2ba99b43a58"
+      }
+    ],
+    "topNames": [
+      ".gitignore",
+      "README.md",
+      "assets",
+      "css",
+      "index.html",
+      "js",
+      "shinchan-showcase.mp4",
+      "video-tools"
+    ],
+    "compatibilityNotes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-045/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-046",
+    "repo": "siaara",
+    "commit": "32a276ed3fd6d3f7d744f1fd8342732deddf2920",
+    "sourceRoot": "",
+    "files": [
+      {
+        "path": "css/base.css",
+        "relative": "css/base.css",
+        "sha": "96dc948606e9513e4590efc3b9c82a90368767e7"
+      },
+      {
+        "path": "css/hero.css",
+        "relative": "css/hero.css",
+        "sha": "5381693b9cd1f2284b56f18df914487589ac5d63"
+      },
+      {
+        "path": "account.html",
+        "relative": "account.html",
+        "sha": "a50381a1680bf7e336ca3d359f1936eadd9c7c9a"
+      },
+      {
+        "path": "index.html",
+        "relative": "index.html",
+        "sha": "e25ee7d9110747c473faaafb274c7760947d77f2"
+      },
+      {
+        "path": "cart.html",
+        "relative": "cart.html",
+        "sha": "bbe984d4aefaf55cace31562eecf8dd244f79ddf"
+      },
+      {
+        "path": "collections.html",
+        "relative": "collections.html",
+        "sha": "5ae5fb657022bd3471ffcbb5a928466d32d1fb26"
+      },
+      {
+        "path": "best-sellers.html",
+        "relative": "best-sellers.html",
+        "sha": "5dfdad0bc99db21076d305664552d3e84a3216dd"
+      },
+      {
+        "path": "color.html",
+        "relative": "color.html",
+        "sha": "a564004fa75518a86de3d21c2740571a98f3fa12"
+      },
+      {
+        "path": "css/contact.css",
+        "relative": "css/contact.css",
+        "sha": "0060a25801c02f467eb8475d131fa79140b6836a"
+      },
+      {
+        "path": "js/main.js",
+        "relative": "js/main.js",
+        "sha": "0ac439e900fae983555f907f57149dc7a8c3f993"
+      },
+      {
+        "path": "contact.html",
+        "relative": "contact.html",
+        "sha": "1da85d9d9ff08fd2311e3dc1b8655b405dd6de31"
+      },
+      {
+        "path": "css/intro.css",
+        "relative": "css/intro.css",
+        "sha": "29681255be4441be66d80a5793bb57571f02b9e5"
+      },
+      {
+        "path": "checkout.html",
+        "relative": "checkout.html",
+        "sha": "85915b144a10d712416e627bd94bd0e3d0539faf"
+      },
+      {
+        "path": "css/section2.css",
+        "relative": "css/section2.css",
+        "sha": "a7eb004f17ceaf8cf55720ed1463134a259e36ce"
+      },
+      {
+        "path": "css/section3.css",
+        "relative": "css/section3.css",
+        "sha": "1892853d14ecc5f773ba30462514f4cd10ea4760"
+      },
+      {
+        "path": "css/section4.css",
+        "relative": "css/section4.css",
+        "sha": "6626eddedd417c240e46c36b900b5bd97241ae5a"
+      },
+      {
+        "path": "css/section5.css",
+        "relative": "css/section5.css",
+        "sha": "355f4edd31123020476e0d2596e9c63762b040f7"
+      },
+      {
+        "path": "js/contact.js",
+        "relative": "js/contact.js",
+        "sha": "2b913c4c52526668d4835e7b0b25cd80442d21a7"
+      },
+      {
+        "path": "css/commerce.css",
+        "relative": "css/commerce.css",
+        "sha": "123511f89b0e5e486c5201621b37dbd27eb8e37e"
+      },
+      {
+        "path": "js/commerce.js",
+        "relative": "js/commerce.js",
+        "sha": "d5fc01440ceb2959ada1020cd372840b03075fad"
+      },
+      {
+        "path": "js/i18n.js",
+        "relative": "js/i18n.js",
+        "sha": "2307e7a6a4accffe30150b531a4eec7a8128cd8b"
+      },
+      {
+        "path": "js/search.js",
+        "relative": "js/search.js",
+        "sha": "ab5fc70d4c68704ad1f768475492418e2fd2591c"
+      },
+      {
+        "path": "js/scroll.js",
+        "relative": "js/scroll.js",
+        "sha": "ee0478c6c8287e02681c42be7236090fb39107a9"
+      },
+      {
+        "path": "js/fabric.js",
+        "relative": "js/fabric.js",
+        "sha": "9c15e5af3e2031e65fb81f757ed9cfbbf0922d84"
+      },
+      {
+        "path": "js/section3.js",
+        "relative": "js/section3.js",
+        "sha": "c138a3a62515668074d852469f53803a10a43044"
+      },
+      {
+        "path": "js/intro.js",
+        "relative": "js/intro.js",
+        "sha": "7808ce2edda4102bdcd39a74f14d963299f0fcf0"
+      },
+      {
+        "path": "js/section5.js",
+        "relative": "js/section5.js",
+        "sha": "930045feadc7f1d07d37036aefff956e93397370"
+      },
+      {
+        "path": "js/products.js",
+        "relative": "js/products.js",
+        "sha": "9d503141f128122343124539c148e6c982a4ae58"
+      },
+      {
+        "path": "js/section4.js",
+        "relative": "js/section4.js",
+        "sha": "f86f598bf961f9e443120f4437ff429df3b642cb"
+      },
+      {
+        "path": "js/trail.js",
+        "relative": "js/trail.js",
+        "sha": "388e5133d3e60f36047e08e1d9e8d3dab8abcf0a"
+      },
+      {
+        "path": "js/store.js",
+        "relative": "js/store.js",
+        "sha": "ba51d1e8e0fe2f86790398186d755d72d730b1f6"
+      },
+      {
+        "path": "js/vendor/ScrollTrigger.min.js",
+        "relative": "js/vendor/ScrollTrigger.min.js",
+        "sha": "cceb2b91a810a354ef79eaf2974548115e25b371"
+      },
+      {
+        "path": "js/vendor/gsap.min.js",
+        "relative": "js/vendor/gsap.min.js",
+        "sha": "14dd0a4853b3801f10d6bfb19798bd431b5e5841"
+      },
+      {
+        "path": "js/vendor/lenis.min.js",
+        "relative": "js/vendor/lenis.min.js",
+        "sha": "e8ae14375cf02fc2cb3a74e0ee6bc4777aa8bda3"
+      },
+      {
+        "path": "login.html",
+        "relative": "login.html",
+        "sha": "02f97c0097b4183a907b693f91d3b7352c1a0d8b"
+      },
+      {
+        "path": "js/spotlight.js",
+        "relative": "js/spotlight.js",
+        "sha": "abde2a9a0068b08e8ad67f542800fbade2bb78c4"
+      },
+      {
+        "path": "product.html",
+        "relative": "product.html",
+        "sha": "50763dfee6760317239f2c6bbf9b71882daee10e"
+      },
+      {
+        "path": "js/section2.js",
+        "relative": "js/section2.js",
+        "sha": "b9efc61c7b2a55e8a44e866dc4874cc49250b309"
+      },
+      {
+        "path": "signup.html",
+        "relative": "signup.html",
+        "sha": "9467444a116788c5c3819dc0630b777065423d62"
+      },
+      {
+        "path": "new-arrivals.html",
+        "relative": "new-arrivals.html",
+        "sha": "2bb81480e267bd56ae79a436f0e32f3b181757fb"
+      },
+      {
+        "path": "wishlist.html",
+        "relative": "wishlist.html",
+        "sha": "62e0c3eb6efb04f22b994c51120845fec984ab83"
+      },
+      {
+        "path": "order.html",
+        "relative": "order.html",
+        "sha": "2ac1614155a27a3f3fd01d084c969dd1ff0b5801"
+      }
+    ],
+    "topNames": [
+      ".gitignore",
+      "README.md",
+      "account.html",
+      "assets",
+      "best-sellers.html",
+      "cart.html",
+      "checkout.html",
+      "collections.html",
+      "color.html",
+      "contact page.jpg",
+      "contact.html",
+      "css",
+      "hero section.jpg",
+      "index.html",
+      "js",
+      "kota doria",
+      "login.html",
+      "logo  1st.jpg",
+      "lotus embroider",
+      "lotus sequin",
+      "mangalagiri sarees",
+      "new-arrivals.html",
+      "order.html",
+      "partywear sarees",
+      "product.html",
+      "section  5 refrence imaage.jpg",
+      "section 2 refrence.jpg",
+      "section 3 refrence image.jpg",
+      "section 4 refrence imaage.jpg",
+      "signup.html",
+      "sunflower mul cotton",
+      "tools",
+      "tulip mul cotton",
+      "wishlist.html"
+    ],
+    "compatibilityNotes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-046/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-047",
+    "repo": "Software-Developer",
+    "commit": "560e9e90ee7b4b1d31570805943586289399ea42",
+    "sourceRoot": "",
+    "files": [
+      {
+        "path": "index.html",
+        "relative": "index.html",
+        "sha": "d1964ecffd40e23ac861280dd7d76cf882be96ba"
+      },
+      {
+        "path": "script.js",
+        "relative": "script.js",
+        "sha": "337c85c90eded8a73651d669ba90bb25c194b647"
+      },
+      {
+        "path": "styles.css",
+        "relative": "styles.css",
+        "sha": "b99b40fdb912039fa75263c786adbe8aae56fe71"
+      },
+      {
+        "path": "content.js",
+        "relative": "content.js",
+        "sha": "eb80754a4084aec8869eeb28f6e012098ecfe791"
+      }
+    ],
+    "topNames": [
+      ".claude",
+      ".gitignore",
+      "GUIDE.md",
+      "README.md",
+      "assets",
+      "content.js",
+      "index.html",
+      "references",
+      "script.js",
+      "styles.css"
+    ],
+    "compatibilityNotes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-047/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-048",
+    "repo": "stepai",
+    "commit": "f833f3dc883c5d5dff3765cb91b1d0012b28d5b8",
+    "sourceRoot": "dist/",
+    "files": [
+      {
+        "path": "dist/app.js",
+        "relative": "app.js",
+        "sha": "e160a0cb8759ceb21ceac2a33b5275d9ddbdf7ab"
+      },
+      {
+        "path": "dist/index.html",
+        "relative": "index.html",
+        "sha": "d5cb28328a3aa4a3d350c71e4406c3262a60b37e"
+      },
+      {
+        "path": "dist/live.css",
+        "relative": "live.css",
+        "sha": "32313cb903a4e62b14fb684ceb52397e788a0031"
+      },
+      {
+        "path": "dist/live/explorer.js",
+        "relative": "live/explorer.js",
+        "sha": "1eccaf1a7f529af3a3d6b6a96976f815ba147c5d"
+      },
+      {
+        "path": "dist/styles.css",
+        "relative": "styles.css",
+        "sha": "a6f5245830086795315f70dc46874c351ecf77a6"
+      },
+      {
+        "path": "dist/content.json",
+        "relative": "content.json",
+        "sha": "2a2c7bd26e0de6a085280c561ca0a8c0f8e8146e"
+      },
+      {
+        "path": "dist/live/finale.js",
+        "relative": "live/finale.js",
+        "sha": "3786c3e89aca942f4a30a30456ac18460ad4deea"
+      },
+      {
+        "path": "dist/live/flood.js",
+        "relative": "live/flood.js",
+        "sha": "e665dab32962879324334aba5806a8e6fbbd7172"
+      },
+      {
+        "path": "dist/live/footer.js",
+        "relative": "live/footer.js",
+        "sha": "74d3c104630163c7574d24e750c90ff7f7ad13f3"
+      },
+      {
+        "path": "dist/live/index.js",
+        "relative": "live/index.js",
+        "sha": "c70fa158778fb5bead0157d136e36d83d869350b"
+      },
+      {
+        "path": "dist/live/util.js",
+        "relative": "live/util.js",
+        "sha": "b878eaa3e189c58388d8d419887201a0826847c2"
+      },
+      {
+        "path": "dist/live/inbox.js",
+        "relative": "live/inbox.js",
+        "sha": "f647579e23ca8902b20e4083a1035b5f6e571334"
+      },
+      {
+        "path": "dist/live/header.js",
+        "relative": "live/header.js",
+        "sha": "306501015f64292fe8d088d1b579fc96e1c14695"
+      },
+      {
+        "path": "dist/live/video.js",
+        "relative": "live/video.js",
+        "sha": "d79209fc9181dbd3bc87f86c092d36578b2055d4"
+      },
+      {
+        "path": "dist/live/workflow.js",
+        "relative": "live/workflow.js",
+        "sha": "75515d9f6e029da6bd9bc15b1f0daf2b3ff3efda"
+      },
+      {
+        "path": "dist/data.js",
+        "relative": "data.js",
+        "sha": "59ce4d7e36368ab62327453aa18c868c82d20cd6"
+      },
+      {
+        "path": "dist/motion.css",
+        "relative": "motion.css",
+        "sha": "e833540c1fa8402056982cd929f9becb6b7a2102"
+      },
+      {
+        "path": "dist/motion.js",
+        "relative": "motion.js",
+        "sha": "c262cbb4df3adc0e8b8cc8c5103f52e3ad38e51d"
+      }
+    ],
+    "topNames": [
+      "app.js",
+      "assets",
+      "content.json",
+      "data.js",
+      "index.html",
+      "live",
+      "live.css",
+      "motion.css",
+      "motion.js",
+      "styles.css"
+    ],
+    "compatibilityNotes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-048/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-050",
+    "repo": "Telangana-tech",
+    "commit": "dd287d579d6888df7162151c9a2ba695e54d8514",
+    "sourceRoot": "dist/",
+    "files": [
+      {
+        "path": "dist/app.js",
+        "relative": "app.js",
+        "sha": "af41ae0c1644a07b84ab031aea9dbed0722590ee"
+      },
+      {
+        "path": "dist/index.html",
+        "relative": "index.html",
+        "sha": "d08d770bb17bc352c6b3b6272213f47ad5124223"
+      },
+      {
+        "path": "dist/styles.css",
+        "relative": "styles.css",
+        "sha": "edae791d9ac67ba03ca6ebf87e3915ad37729033"
+      },
+      {
+        "path": "dist/assets/Manrope-OFL.txt",
+        "relative": "assets/Manrope-OFL.txt",
+        "sha": "e271172a9ed0cddc895aabb6509f1c7d880b492d"
+      },
+      {
+        "path": "dist/assets/official/provenance.json",
+        "relative": "assets/official/provenance.json",
+        "sha": "8be5c3224f3ed39cd278219f4c18c6ef3d38f4d0"
+      }
+    ],
+    "topNames": [
+      "app.js",
+      "assets",
+      "index.html",
+      "styles.css"
+    ],
+    "compatibilityNotes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-050/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-051",
+    "repo": "Teseract-creative-studious",
+    "commit": "410cb57732c537382afc8f2497dca7558f0139c9",
+    "sourceRoot": "teseract-website/dist/",
+    "files": [
+      {
+        "path": "teseract-website/dist/index.html",
+        "relative": "index.html",
+        "sha": "1f87e96446225efcb983786d8c3de486c0dc5812"
+      },
+      {
+        "path": "teseract-website/dist/404.html",
+        "relative": "404.html",
+        "sha": "c4303e98c4863663d94df7b4767530f44ddb2d4c"
+      },
+      {
+        "path": "teseract-website/dist/assets/chat/chat.css",
+        "relative": "assets/chat/chat.css",
+        "sha": "0a9e9f5b14058c9395746e29a7a377c27eeea090"
+      },
+      {
+        "path": "teseract-website/dist/assets/chat/chat.js",
+        "relative": "assets/chat/chat.js",
+        "sha": "d3adc09f3d802b0fea5b6a96a5418e15e992ec71"
+      },
+      {
+        "path": "teseract-website/dist/assets/chat-kb.json",
+        "relative": "assets/chat-kb.json",
+        "sha": "db0c23777a5bcce6663eeb3c86a4f42413ad258d"
+      },
+      {
+        "path": "teseract-website/dist/llms.txt",
+        "relative": "llms.txt",
+        "sha": "5cd78f25e933750ec885b0663eaa1032be7e1619"
+      },
+      {
+        "path": "teseract-website/dist/privacy/index.html",
+        "relative": "privacy/index.html",
+        "sha": "6a764ec08907d1ef81dc6acb6690421ccd9efdc5"
+      },
+      {
+        "path": "teseract-website/dist/client-stories/index.html",
+        "relative": "client-stories/index.html",
+        "sha": "74059a4176230eacea43cdf2795950a688e7a815"
+      },
+      {
+        "path": "teseract-website/dist/404/index.html",
+        "relative": "404/index.html",
+        "sha": "535ee8017e944e0d774039e98934cf85b5ed10c7"
+      },
+      {
+        "path": "teseract-website/dist/projects/aeroskys-careers/index.html",
+        "relative": "projects/aeroskys-careers/index.html",
+        "sha": "ad5fde0e77e2d428e8a953e390ad66782d48f634"
+      },
+      {
+        "path": "teseract-website/dist/projects/aaradhya/index.html",
+        "relative": "projects/aaradhya/index.html",
+        "sha": "7109851fcfb561faf9fff550c5faa3d978530f8e"
+      },
+      {
+        "path": "teseract-website/dist/projects/aeroskys/index.html",
+        "relative": "projects/aeroskys/index.html",
+        "sha": "5ecd149d5d440a1a3909c4efe22d4961a9e27f6b"
+      },
+      {
+        "path": "teseract-website/dist/app.js",
+        "relative": "app.js",
+        "sha": "78e25d055fe642ea83b526cf5ec0d07da36e30e5"
+      },
+      {
+        "path": "teseract-website/dist/projects/derlin-haus/index.html",
+        "relative": "projects/derlin-haus/index.html",
+        "sha": "4c60c0530fb3ff5044891fcd20584fde87664aca"
+      },
+      {
+        "path": "teseract-website/dist/projects/geetha-jewellers/index.html",
+        "relative": "projects/geetha-jewellers/index.html",
+        "sha": "c048c65723169eca59e7acaa35d188f4f794ee72"
+      },
+      {
+        "path": "teseract-website/dist/our-approach/index.html",
+        "relative": "our-approach/index.html",
+        "sha": "fa7e140c6154d715dae2ffebd63346efc65c5083"
+      },
+      {
+        "path": "teseract-website/dist/projects/hidden-stories/index.html",
+        "relative": "projects/hidden-stories/index.html",
+        "sha": "67a2bc491a2939347d99c029d8070d835f43365e"
+      },
+      {
+        "path": "teseract-website/dist/projects/livecv/index.html",
+        "relative": "projects/livecv/index.html",
+        "sha": "5c3db2e864ff17f1a1eb703de7bec6576d83cb2a"
+      },
+      {
+        "path": "teseract-website/dist/contact/index.html",
+        "relative": "contact/index.html",
+        "sha": "d17026754da948c767aa309f505f5040af4ab237"
+      },
+      {
+        "path": "teseract-website/dist/projects/gireesh-cinematic/index.html",
+        "relative": "projects/gireesh-cinematic/index.html",
+        "sha": "9dd536003285a042674537040b01cec0e44d7ee4"
+      },
+      {
+        "path": "teseract-website/dist/projects/one-piece/index.html",
+        "relative": "projects/one-piece/index.html",
+        "sha": "be17b21a31daae5440697137aa7651e113936079"
+      },
+      {
+        "path": "teseract-website/dist/projects/gireesh-portfolio/index.html",
+        "relative": "projects/gireesh-portfolio/index.html",
+        "sha": "debd84ea0bf07bf596b5d799f79a3fdd562cb89d"
+      },
+      {
+        "path": "teseract-website/dist/projects/san-media/index.html",
+        "relative": "projects/san-media/index.html",
+        "sha": "2af1bbc873eed529370e2783ba262df66cd774e2"
+      },
+      {
+        "path": "teseract-website/dist/projects/emberpost/index.html",
+        "relative": "projects/emberpost/index.html",
+        "sha": "aa2950ee28aa8615bdc19196c2c71cd9b9d17e62"
+      },
+      {
+        "path": "teseract-website/dist/projects/ines-morrow/index.html",
+        "relative": "projects/ines-morrow/index.html",
+        "sha": "5f40c05eb9f564dd8050e2b072787be8351bef19"
+      },
+      {
+        "path": "teseract-website/dist/projects/aivinci/index.html",
+        "relative": "projects/aivinci/index.html",
+        "sha": "55ff090ea0ef133a96c87b58626d57fd53ccc9da"
+      },
+      {
+        "path": "teseract-website/dist/projects/saanjh/index.html",
+        "relative": "projects/saanjh/index.html",
+        "sha": "13a95f686420da0dd627c4564e2ba2d84781e796"
+      },
+      {
+        "path": "teseract-website/dist/projects/gireesh-desk/index.html",
+        "relative": "projects/gireesh-desk/index.html",
+        "sha": "bc698a5656859e10048d122ddf5623e5d8213cd5"
+      },
+      {
+        "path": "teseract-website/dist/projects/siaara/index.html",
+        "relative": "projects/siaara/index.html",
+        "sha": "d114c630cbc9b2730eedda2b25a1343b905c6cc7"
+      },
+      {
+        "path": "teseract-website/dist/projects/maren-holt/index.html",
+        "relative": "projects/maren-holt/index.html",
+        "sha": "7b1ea30cbb72bc121a5bd7f5cfec153f527ebc4b"
+      },
+      {
+        "path": "teseract-website/dist/projects/thenga/index.html",
+        "relative": "projects/thenga/index.html",
+        "sha": "417dbe7e11d2cffbebb9200155f1d434819c5371"
+      },
+      {
+        "path": "teseract-website/dist/projects/sedile/index.html",
+        "relative": "projects/sedile/index.html",
+        "sha": "fb645ab07fa9b1d46be15f1255e1aaeac5ceda62"
+      },
+      {
+        "path": "teseract-website/dist/projects/vantline/index.html",
+        "relative": "projects/vantline/index.html",
+        "sha": "44fda822bd8842549dd43b311e079c259f9a4e47"
+      },
+      {
+        "path": "teseract-website/dist/projects/mahira-select/index.html",
+        "relative": "projects/mahira-select/index.html",
+        "sha": "cd090de3ecc7819bd2dcfd4d308a8e2987f25945"
+      },
+      {
+        "path": "teseract-website/dist/projects/sagewell/index.html",
+        "relative": "projects/sagewell/index.html",
+        "sha": "010408e1da36e4fe1cb1b8b05277d69755b5adbd"
+      },
+      {
+        "path": "teseract-website/dist/projects/tavra/index.html",
+        "relative": "projects/tavra/index.html",
+        "sha": "45849b82c4f38d49b95e646aa97c745fb1b7ce90"
+      },
+      {
+        "path": "teseract-website/dist/robots.txt",
+        "relative": "robots.txt",
+        "sha": "1f53798bb4fe33c86020be7f10c44f29486fd190"
+      },
+      {
+        "path": "teseract-website/dist/projects/vynk/index.html",
+        "relative": "projects/vynk/index.html",
+        "sha": "d9a53e5775d727b1604cdfcd359e5e2146f5e7b7"
+      },
+      {
+        "path": "teseract-website/dist/projects/tidings/index.html",
+        "relative": "projects/tidings/index.html",
+        "sha": "f2cc49d84ecd0d43c9cfc20db043a906a13b65a5"
+      },
+      {
+        "path": "teseract-website/dist/projects/vesper/index.html",
+        "relative": "projects/vesper/index.html",
+        "sha": "b942418133f15b77a6b24c64c9e04d17494dc697"
+      },
+      {
+        "path": "teseract-website/dist/terms/index.html",
+        "relative": "terms/index.html",
+        "sha": "652028167475a85c37c08c1a403756da59e04818"
+      },
+      {
+        "path": "teseract-website/dist/styles.css",
+        "relative": "styles.css",
+        "sha": "7cd8be26d960e7e7dc1361ba4c882b9d28e1bbc1"
+      },
+      {
+        "path": "teseract-website/dist/projects/velora/index.html",
+        "relative": "projects/velora/index.html",
+        "sha": "0d0805b82a2d283fab0a43c6f242478bf6eedea6"
+      },
+      {
+        "path": "teseract-website/dist/who-we-are/index.html",
+        "relative": "who-we-are/index.html",
+        "sha": "11176cf6249f815c86734a96661dd189a74eab69"
+      },
+      {
+        "path": "teseract-website/dist/work/index.html",
+        "relative": "work/index.html",
+        "sha": "b312a53b953d7923d1fa34c961810981ed8ca2f1"
+      },
+      {
+        "path": "teseract-website/dist/projects/vyrn/index.html",
+        "relative": "projects/vyrn/index.html",
+        "sha": "d31abbe7e965251a016b164a77bf7f16e9778464"
+      },
+      {
+        "path": "teseract-website/dist/what-we-create/index.html",
+        "relative": "what-we-create/index.html",
+        "sha": "18301a6abb49858c73706e1ec66ca3f3de03020e"
+      }
+    ],
+    "topNames": [
+      "404",
+      "404.html",
+      "app.js",
+      "assets",
+      "client-stories",
+      "contact",
+      "index.html",
+      "llms.txt",
+      "our-approach",
+      "privacy",
+      "projects",
+      "robots.txt",
+      "styles.css",
+      "terms",
+      "what-we-create",
+      "who-we-are",
+      "work"
+    ],
+    "compatibilityNotes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-051/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-053",
+    "repo": "vara-studio",
+    "commit": "dd84c6fa739d302a35b5541d39ad6932f6f863a1",
+    "sourceRoot": "dist/",
+    "files": [
+      {
+        "path": "dist/app.js",
+        "relative": "app.js",
+        "sha": "3c53bc7e38dee54f2c32810fd797a482d4a309cd"
+      },
+      {
+        "path": "dist/index.html",
+        "relative": "index.html",
+        "sha": "d4277a09c70aee057ab8bceebdc4fe76b5535eaa"
+      },
+      {
+        "path": "dist/styles.css",
+        "relative": "styles.css",
+        "sha": "471feefd27340b05c669f9478c0f4d00f2da89f7"
+      },
+      {
+        "path": "dist/catalog.js",
+        "relative": "catalog.js",
+        "sha": "c4e21a2c7cc48d73efe871adf977bfc53f1aa8bc"
+      },
+      {
+        "path": "dist/denim-art.js",
+        "relative": "denim-art.js",
+        "sha": "9d2c19f4577ed4bbfa18f27c54f5b6dc5c64f0f3"
+      },
+      {
+        "path": "dist/ornaments.js",
+        "relative": "ornaments.js",
+        "sha": "cc8ef4a0803c233cb5b878863c1080778722d367"
+      },
+      {
+        "path": "dist/ribbon-geometry.js",
+        "relative": "ribbon-geometry.js",
+        "sha": "edb0b1df656c9b1045f078a28cdd98da3b752902"
+      },
+      {
+        "path": "dist/interactions.js",
+        "relative": "interactions.js",
+        "sha": "dfe0de8716532e803543f24c95e154af04117d50"
+      },
+      {
+        "path": "dist/motion.js",
+        "relative": "motion.js",
+        "sha": "1659566dfa5915312c75e0164dee9524813410eb"
+      }
+    ],
+    "topNames": [
+      "app.js",
+      "catalog.js",
+      "denim-art.js",
+      "index.html",
+      "interactions.js",
+      "motion.js",
+      "ornaments.js",
+      "ribbon-geometry.js",
+      "styles.css"
+    ],
+    "compatibilityNotes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-053/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  },
+  {
+    "id": "REF-054",
+    "repo": "varasaree",
+    "commit": "02801fe8037d9a8f08f43ddce91be6c1df26fab0",
+    "sourceRoot": "dist/",
+    "files": [
+      {
+        "path": "dist/app.js",
+        "relative": "app.js",
+        "sha": "af6e3da806c16b93e4ea14598c9ce39a8bd17c49"
+      },
+      {
+        "path": "dist/index.html",
+        "relative": "index.html",
+        "sha": "88ba14b0c8e1e650d75c04a4cd0f5c4bf7335ac8"
+      },
+      {
+        "path": "dist/styles.css",
+        "relative": "styles.css",
+        "sha": "0e52ce6e02477b886f633a26064ffe106897f461"
+      },
+      {
+        "path": "dist/assets/LICENSE-Latin-Modern.txt",
+        "relative": "assets/LICENSE-Latin-Modern.txt",
+        "sha": "a35b48abfbcf11463dc60619976c9ed0b8e46875"
+      },
+      {
+        "path": "dist/catalog.js",
+        "relative": "catalog.js",
+        "sha": "a2d2ea2edfc02a2842f6b838fa96d607a61e3fb4"
+      },
+      {
+        "path": "dist/assets/LICENSE-Nimbus-Sans.txt",
+        "relative": "assets/LICENSE-Nimbus-Sans.txt",
+        "sha": "5f22ef0e895961c286d04830a37c10ca79d93500"
+      },
+      {
+        "path": "dist/motion.js",
+        "relative": "motion.js",
+        "sha": "0cdb136ad4464e4e27e63fd0eefb594817f8e50c"
+      },
+      {
+        "path": "dist/ribbon-geometry.js",
+        "relative": "ribbon-geometry.js",
+        "sha": "edb0b1df656c9b1045f078a28cdd98da3b752902"
+      }
+    ],
+    "topNames": [
+      "app.js",
+      "assets",
+      "catalog.js",
+      "index.html",
+      "motion.js",
+      "ribbon-geometry.js",
+      "styles.css"
+    ],
+    "compatibilityNotes": [
+      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-054/.",
+      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
+    ]
+  }
+]

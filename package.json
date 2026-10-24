@@ -1,0 +1,12 @@
+{
+  "name": "zyberlane-design-library",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Internal catalogue of authorized website design references, separate from Zyberlane production.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/catalogue.test.mjs"
+  },
+  "engines": { "node": ">=22" }
+}
