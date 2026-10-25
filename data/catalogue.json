@@ -1179,7 +1179,11 @@
       ],
       "assetNotes": "32 files; 11.9 MB in current tree (includes development/reference files, not a page-transfer estimate).",
       "previewCandidates": [],
-      "notes": [],
+      "notes": [
+        "Could not obtain a representative rendered-design screenshot in this browser. No loading-screen thumbnail or fabricated substitute is supplied.",
+        "Published title Book My Design is consistent with index.html; this is not a stale or mismatched deployment.",
+        "No source code or remote settings were changed to bypass the loader or enable WebGL."
+      ],
       "sourceEvidence": [
         "README.md",
         "css/style.css",
@@ -1190,16 +1194,18 @@
       "id": "REF-016",
       "repository": "https://github.com/gireeshkumarreddy/gireesh-portfolio",
       "commit": "a2c8e272acae355c20b25ed4a1593a8aa506d6ad",
-      "preview": "/previews/REF-016/",
+      "preview": null,
       "thumbnail": null,
       "status": "Unavailable",
-      "previewReason": "Centralized static preview prepared; browser verification is pending.",
+      "previewReason": "Book My Design matches the inspected source title and underlying Reel/Universe/Capabilities DOM, but the visible page remains behind the 100% The Reel loading overlay. Console reports THREE.WebGLRenderer Error creating WebGL context in this cloud browser.",
       "frameworkShort": "Static HTML / JS",
       "previewType": "local",
       "compatibilityNotes": [
         "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-016/.",
         "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
-      ]
+      ],
+      "visualEvidence": "Book My Design matches the inspected source title and underlying Reel/Universe/Capabilities DOM, but the visible page remains behind the 100% The Reel loading overlay. Console reports THREE.WebGLRenderer Error creating WebGL context in this cloud browser.",
+      "checkedAt": "2026-10-24"
     },
     {
       "name": "GIRL",
@@ -3384,7 +3390,8 @@
       "notes": [
         "Do not activate the reference creator’s enquiry endpoint or submit real enquiries.",
         "No inbox delivery verification is claimed.",
-        "No appointment, enquiry or email action was submitted; backend delivery unverified."
+        "No appointment, enquiry or email action was submitted; backend delivery unverified.",
+        "Actual browser viewport capture; no appointment, enquiry, email or contact action was submitted."
       ],
       "sourceEvidence": [
         "README.md",
@@ -3398,15 +3405,15 @@
       "repository": "https://github.com/gireeshkumarreddy/REDDY",
       "commit": "b34e7a4a9e7fa503720378824a9026b9c4f77559",
       "preview": "https://gireeshuiux.vercel.app/",
-      "thumbnail": null,
+      "thumbnail": "/screenshots/REF-043.jpg",
       "status": "Working",
-      "previewReason": "Rendered visual identity verified in the browser. Prototype backend limitations still apply.",
+      "previewReason": "Rendered orange portrait hero, GIREESH headline, UX/UI Product Designer identity and g. navigation match inspected source.",
       "frameworkShort": "Static HTML / JS",
       "previewCandidate": "https://gireeshuiux.vercel.app",
       "previewType": "external",
       "checkedAt": "2026-10-24",
-      "visualEvidence": "Orange-lit portrait hero with GIREESH headline, UX/UI identity and black g. navigation; page matches the inspected orange portfolio source.",
-      "screenshotNote": "Actual browser viewport capture. No appointment, enquiry or email action was submitted; backend delivery unverified."
+      "visualEvidence": "Rendered orange portrait hero, GIREESH headline, UX/UI Product Designer identity and g. navigation match inspected source.",
+      "screenshotNote": "Actual creator-hosted preview captured in the browser. Rendered orange portrait hero, GIREESH headline, UX/UI Product Designer identity and g. navigation match inspected source."
     },
     {
       "name": "Sedile",
@@ -3473,7 +3480,9 @@
         "Checkout is simulated; no payment or email is sent.",
         "BASE_PATH is an optional build setting used for GitHub Pages.",
         "Preserve fallback images and the ?nogl option.",
-        "Visual experience verified. Checkout remains a simulated design journey; no purchase attempted."
+        "Visual experience verified. Checkout remains a simulated design journey; no purchase attempted.",
+        "Visual layout and static fallback verified. Full interactive 3D remains unverified in this cloud browser because WebGL context creation fails. This is an environment limitation, not proof the original site fails on a normal browser.",
+        "No cart, account or purchase action was submitted."
       ],
       "sourceEvidence": [
         "index.html",
@@ -3489,15 +3498,15 @@
       "repository": "https://github.com/gireeshkumarreddy/Sedile",
       "commit": "c495b180a5e8a86d2707e9a3fb8b7fbe0bcbe782",
       "preview": "https://gireeshkumarreddy.github.io/Sedile/",
-      "thumbnail": null,
-      "status": "Working",
-      "previewReason": "Rendered visual identity verified in the browser. Prototype backend limitations still apply.",
+      "thumbnail": "/screenshots/REF-044.jpg",
+      "status": "Partial",
+      "previewReason": "The white Office Chair Finder showroom, navigation and surrounding chair images render correctly. Cloud browser console reports THREE.WebGLRenderer Error creating WebGL context, so the live 3D engine could not be verified; captured fallback chair imagery.",
       "frameworkShort": "React / Vite",
       "previewCandidate": "https://gireeshkumarreddy.github.io/Sedile/",
       "previewType": "external",
       "checkedAt": "2026-10-24",
-      "visualEvidence": "Sedile rendered as a white chair showroom with freestanding chair models around the Office Chair Finder heading; product and finder navigation present.",
-      "screenshotNote": "Actual browser viewport capture. Visual experience verified. Checkout remains a simulated design journey; no purchase attempted."
+      "visualEvidence": "The white Office Chair Finder showroom, navigation and surrounding chair images render correctly. Cloud browser console reports THREE.WebGLRenderer Error creating WebGL context, so the live 3D engine could not be verified; captured fallback chair imagery.",
+      "screenshotNote": "Actual creator-hosted preview captured in the browser. The white Office Chair Finder showroom, navigation and surrounding chair images render correctly. Cloud browser console reports THREE.WebGLRenderer Error creating WebGL context, so the live 3D engine could not be verified; captured fallback chair imagery."
     },
     {
       "name": "Shinchan",

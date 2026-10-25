@@ -178,5 +178,17 @@
     "source": "encoded-assets/previews/REF-049/assets/barlow-condensed-latin-600-normal-BFJEwTuo.woff.b64",
     "sha256": "02e9d2ca2e9af5d8dbdfd30c4a5aa59632205901e9045140b559a44d361d8a46",
     "bytes": 18892
+  },
+  {
+    "output": "screenshots/REF-043.jpg",
+    "source": "encoded-assets/screenshots/REF-043.jpg.b64",
+    "sha256": "a083463c864ccfa7fd91516df1b9535fd0d1e4f1e5ca1d8b4f9a20334a2c0594",
+    "bytes": 71626
+  },
+  {
+    "output": "screenshots/REF-044.jpg",
+    "source": "encoded-assets/screenshots/REF-044.jpg.b64",
+    "sha256": "d5075a371ab4595f902c753065e75c8acf26d0c7691549ea52381b51e4909e11",
+    "bytes": 55147
   }
 ]

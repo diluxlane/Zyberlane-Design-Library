@@ -1,6 +1,7 @@
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
+import { rewritePreviewPaths } from './preview-paths.mjs';
 
 // Original source is restored read-only at the pinned commit, not maintained as
 // hundreds of duplicated application components or a separate Git history.
@@ -30,13 +31,7 @@ export async function preparePreviews(root,output){
    const {snapshot:s,file}=tasks[cursor++];
    if(!/^[a-f0-9]{40}$/.test(s.commit)||file.relative.startsWith('.')||file.relative.split('/').includes('..'))throw new Error('Invalid preview manifest path');
    let content=await original(s,file);const base=`/previews/${s.id}/`;
-   const tops=new Set([...s.topNames,...s.topNames.map(x=>x.replace(/\.html$/,''))]);
-   content=content.replace(/(["'`(=])\/(?!\/)([^"'`)\s<>]*)/g,(match,prefix,url)=>{
-    let first=url.split('/')[0].split('?')[0].split('#')[0];
-    try{first=decodeURIComponent(first);}catch{return match;}
-    if(!url||tops.has(first)||url.startsWith(s.repo+'/'))return prefix+base+(url.startsWith(s.repo+'/')?url.slice(s.repo.length+1):url);
-    return match;
-   });
+   content=rewritePreviewPaths(content,s);
    if(file.relative.endsWith('.html'))content=content.replace(/<base\b[^>]*>/gi,'').replace(/(<head\b[^>]*>)/i,`$1\n<base href="${base}">`);
    const destination=path.join(output,'previews',s.id,file.relative);await mkdir(path.dirname(destination),{recursive:true});await writeFile(destination,content);
   }
