@@ -148,11 +148,21 @@
       "id": "REF-002",
       "repository": "https://github.com/gireeshkumarreddy/-paradise",
       "commit": "0629e251e3615531e6e107b6ec782ecdac07b9a0",
-      "preview": null,
+      "preview": "/previews/REF-002/",
       "thumbnail": null,
-      "status": "Unavailable",
-      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
-      "frameworkShort": "Next.js / React"
+      "status": "Partial",
+      "previewReason": "Pinned source now builds into the existing centralized /previews/ host. This remains Partial until the rendered design and media are browser-verified.",
+      "frameworkShort": "Next.js / React",
+      "previewType": "local",
+      "buildVerified": true,
+      "preparedPreview": "/previews/REF-002/",
+      "buildCheckedAt": "2026-10-27T11:03:10.476Z",
+      "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
+      "compatibilityNotes": [
+        "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
+        "Next image optimization is disabled only for this static reference export so original public assets can remain on the pinned source fallback.",
+        "Removed 602 byte-identical public asset copies from the generated output; the existing host can request those files from the immutable source commit instead."
+      ]
     },
     {
       "name": "a-small-idea",
@@ -377,11 +387,20 @@
       "id": "REF-005",
       "repository": "https://github.com/gireeshkumarreddy/Aivinci",
       "commit": "71da3bd5c831d5ed6afdeafd5eecbc0d4724824f",
-      "preview": null,
+      "preview": "/previews/REF-005/",
       "thumbnail": null,
-      "status": "Unavailable",
-      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
-      "frameworkShort": "React / Vite"
+      "status": "Partial",
+      "previewReason": "Pinned source now builds into the existing centralized /previews/ host. This remains Partial until the rendered design and media are browser-verified.",
+      "frameworkShort": "React / Vite",
+      "previewType": "local",
+      "buildVerified": true,
+      "preparedPreview": "/previews/REF-005/",
+      "buildCheckedAt": "2026-10-27T11:03:21.604Z",
+      "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
+      "compatibilityNotes": [
+        "Built the pinned original Vite frontend with a relative base and isolated _preview runtime bundle directory so it can run below the existing /previews/REF-NNN/ host path without colliding with original public assets.",
+        "Removed 81 byte-identical public asset copies from the generated output; the existing host can request those files from the immutable source commit instead."
+      ]
     },
     {
       "name": "alluarjun",
@@ -449,11 +468,21 @@
       "id": "REF-006",
       "repository": "https://github.com/gireeshkumarreddy/alluarjun",
       "commit": "c21e201f2e076e5c850b4e3128d339bdeef3f73f",
-      "preview": null,
+      "preview": "/previews/REF-006/",
       "thumbnail": null,
-      "status": "Unavailable",
-      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
-      "frameworkShort": "React / Vinext"
+      "status": "Partial",
+      "previewReason": "Pinned source now builds into the existing centralized /previews/ host. This remains Partial until the rendered design and media are browser-verified.",
+      "frameworkShort": "React / Vinext",
+      "previewType": "local",
+      "buildVerified": true,
+      "preparedPreview": "/previews/REF-006/",
+      "buildCheckedAt": "2026-10-27T11:03:45.888Z",
+      "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
+      "compatibilityNotes": [
+        "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
+        "Next image optimization is disabled only for this static reference export so original public assets can remain on the pinned source fallback.",
+        "Removed 26 byte-identical public asset copies from the generated output; the existing host can request those files from the immutable source commit instead."
+      ]
     },
     {
       "name": "AVENGERS-DOOMSDAY-",
@@ -527,11 +556,21 @@
       "id": "REF-007",
       "repository": "https://github.com/gireeshkumarreddy/AVENGERS-DOOMSDAY-",
       "commit": "b61cd6a7fdfa1dd2d639d425bf7f658a639c2a31",
-      "preview": null,
+      "preview": "/previews/REF-007/",
       "thumbnail": null,
-      "status": "Unavailable",
-      "previewReason": "Creator-listed Vercel deployment returns HTTP 402 (Payment Required). No working preview is claimed.",
-      "frameworkShort": "Next.js / React"
+      "status": "Partial",
+      "previewReason": "Pinned source now builds into the existing centralized /previews/ host. This remains Partial until the rendered design and media are browser-verified.",
+      "frameworkShort": "Next.js / React",
+      "previewType": "local",
+      "buildVerified": true,
+      "preparedPreview": "/previews/REF-007/",
+      "buildCheckedAt": "2026-10-27T11:04:05.497Z",
+      "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
+      "compatibilityNotes": [
+        "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
+        "Next image optimization is disabled only for this static reference export so original public assets can remain on the pinned source fallback.",
+        "Removed 27 byte-identical public asset copies from the generated output; the existing host can request those files from the immutable source commit instead."
+      ]
     },
     {
       "name": "Bahubali",
@@ -596,11 +635,21 @@
       "id": "REF-008",
       "repository": "https://github.com/gireeshkumarreddy/Bahubali",
       "commit": "fd6a72c43356e4d5f443b60c088972f36be4b35f",
-      "preview": null,
+      "preview": "/previews/REF-008/",
       "thumbnail": null,
-      "status": "Unavailable",
-      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
-      "frameworkShort": "Next.js / React"
+      "status": "Partial",
+      "previewReason": "Pinned source now builds into the existing centralized /previews/ host. This remains Partial until the rendered design and media are browser-verified.",
+      "frameworkShort": "Next.js / React",
+      "previewType": "local",
+      "buildVerified": true,
+      "preparedPreview": "/previews/REF-008/",
+      "buildCheckedAt": "2026-10-27T11:04:28.323Z",
+      "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
+      "compatibilityNotes": [
+        "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
+        "Next image optimization is disabled only for this static reference export so original public assets can remain on the pinned source fallback.",
+        "Removed 1292 byte-identical public asset copies from the generated output; the existing host can request those files from the immutable source commit instead."
+      ]
     },
     {
       "name": "CHERRY",
@@ -899,11 +948,21 @@
       "id": "REF-012",
       "repository": "https://github.com/gireeshkumarreddy/Enigma",
       "commit": "c604469013b00d1fe098c07cf1c3996b160b4bc0",
-      "preview": null,
+      "preview": "/previews/REF-012/",
       "thumbnail": null,
-      "status": "Unavailable",
-      "previewReason": "Source is a partial paper-portfolio implementation; the README lists several sections as unfinished. No working build was verified.",
-      "frameworkShort": "Next.js / React"
+      "status": "Partial",
+      "previewReason": "Pinned source now builds into the existing centralized /previews/ host. This remains Partial until the rendered design and media are browser-verified.",
+      "frameworkShort": "Next.js / React",
+      "previewType": "local",
+      "buildVerified": true,
+      "preparedPreview": "/previews/REF-012/",
+      "buildCheckedAt": "2026-10-27T11:04:52.582Z",
+      "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
+      "compatibilityNotes": [
+        "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
+        "Next image optimization is disabled only for this static reference export so original public assets can remain on the pinned source fallback.",
+        "Removed 20 byte-identical public asset copies from the generated output; the existing host can request those files from the immutable source commit instead."
+      ]
     },
     {
       "name": "geetha",
@@ -1598,11 +1657,21 @@
       "id": "REF-020",
       "repository": "https://github.com/gireeshkumarreddy/HABU-",
       "commit": "6e4254a96dc6b0648765ddd1e8099f875b1a1f8a",
-      "preview": null,
+      "preview": "/previews/REF-020/",
       "thumbnail": null,
-      "status": "Unavailable",
-      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
-      "frameworkShort": "Next.js / React"
+      "status": "Partial",
+      "previewReason": "Pinned source now builds into the existing centralized /previews/ host. This remains Partial until the rendered design and media are browser-verified.",
+      "frameworkShort": "Next.js / React",
+      "previewType": "local",
+      "buildVerified": true,
+      "preparedPreview": "/previews/REF-020/",
+      "buildCheckedAt": "2026-10-27T11:05:28.469Z",
+      "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
+      "compatibilityNotes": [
+        "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
+        "Next image optimization is disabled only for this static reference export so original public assets can remain on the pinned source fallback.",
+        "Removed 8 byte-identical public asset copies from the generated output; the existing host can request those files from the immutable source commit instead."
+      ]
     },
     {
       "name": "hidden",
@@ -2618,11 +2687,20 @@
       "id": "REF-033",
       "repository": "https://github.com/gireeshkumarreddy/mamitha-baiju",
       "commit": "74d3fd3cb522438f4d8c9fe4e13edec90a0c672b",
-      "preview": null,
+      "preview": "/previews/REF-033/",
       "thumbnail": null,
-      "status": "Unavailable",
-      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
-      "frameworkShort": "React / Vite"
+      "status": "Partial",
+      "previewReason": "Pinned source now builds into the existing centralized /previews/ host. This remains Partial until the rendered design and media are browser-verified.",
+      "frameworkShort": "React / Vite",
+      "previewType": "local",
+      "buildVerified": true,
+      "preparedPreview": "/previews/REF-033/",
+      "buildCheckedAt": "2026-10-27T11:05:37.497Z",
+      "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
+      "compatibilityNotes": [
+        "Built the pinned original Vite frontend with a relative base and isolated _preview runtime bundle directory so it can run below the existing /previews/REF-NNN/ host path without colliding with original public assets.",
+        "Removed 50 byte-identical public asset copies from the generated output; the existing host can request those files from the immutable source commit instead."
+      ]
     },
     {
       "name": "Minimalistic",
@@ -2689,11 +2767,19 @@
       "id": "REF-034",
       "repository": "https://github.com/gireeshkumarreddy/Minimalistic",
       "commit": "13d1cc16aaeb4677988570b64e4412c8ce95c130",
-      "preview": null,
+      "preview": "/previews/REF-034/",
       "thumbnail": null,
-      "status": "Unavailable",
-      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
-      "frameworkShort": "React / Vite"
+      "status": "Partial",
+      "previewReason": "Pinned source now builds into the existing centralized /previews/ host. This remains Partial until the rendered design and media are browser-verified.",
+      "frameworkShort": "React / Vite",
+      "previewType": "local",
+      "buildVerified": true,
+      "preparedPreview": "/previews/REF-034/",
+      "buildCheckedAt": "2026-10-27T11:05:53.048Z",
+      "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
+      "compatibilityNotes": [
+        "Built the pinned original Vite frontend with a relative base and isolated _preview runtime bundle directory so it can run below the existing /previews/REF-NNN/ host path without colliding with original public assets."
+      ]
     },
     {
       "name": "mundaka-surf-academy",
@@ -3026,11 +3112,21 @@
       "id": "REF-038",
       "repository": "https://github.com/gireeshkumarreddy/pk",
       "commit": "9458e8d8a9c2d29c9574d91dd668b27db47c821d",
-      "preview": null,
+      "preview": "/previews/REF-038/",
       "thumbnail": null,
-      "status": "Unavailable",
-      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
-      "frameworkShort": "Next.js / React"
+      "status": "Partial",
+      "previewReason": "Pinned source now builds into the existing centralized /previews/ host. This remains Partial until the rendered design and media are browser-verified.",
+      "frameworkShort": "Next.js / React",
+      "previewType": "local",
+      "buildVerified": true,
+      "preparedPreview": "/previews/REF-038/",
+      "buildCheckedAt": "2026-10-27T11:06:15.285Z",
+      "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
+      "compatibilityNotes": [
+        "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
+        "Next image optimization is disabled only for this static reference export so original public assets can remain on the pinned source fallback.",
+        "Removed 26 byte-identical public asset copies from the generated output; the existing host can request those files from the immutable source commit instead."
+      ]
     },
     {
       "name": "Portfolio2",
@@ -3192,11 +3288,21 @@
       "id": "REF-040",
       "repository": "https://github.com/gireeshkumarreddy/Priya",
       "commit": "04b9f9c473b99b3c959de529e21b760760bf9376",
-      "preview": null,
+      "preview": "/previews/REF-040/",
       "thumbnail": null,
-      "status": "Unavailable",
-      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
-      "frameworkShort": "React / Vinext"
+      "status": "Partial",
+      "previewReason": "Pinned source now builds into the existing centralized /previews/ host. This remains Partial until the rendered design and media are browser-verified.",
+      "frameworkShort": "React / Vinext",
+      "previewType": "local",
+      "buildVerified": true,
+      "preparedPreview": "/previews/REF-040/",
+      "buildCheckedAt": "2026-10-27T11:06:37.998Z",
+      "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
+      "compatibilityNotes": [
+        "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
+        "Next image optimization is disabled only for this static reference export so original public assets can remain on the pinned source fallback.",
+        "Removed 25 byte-identical public asset copies from the generated output; the existing host can request those files from the immutable source commit instead."
+      ]
     },
     {
       "name": "R-VERIE-A-Waking-Dream",
@@ -4235,11 +4341,21 @@
       "id": "REF-052",
       "repository": "https://github.com/gireeshkumarreddy/thenga",
       "commit": "0291e5c9ef6b406609864dcb635efa70592aafb5",
-      "preview": null,
+      "preview": "/previews/REF-052/",
       "thumbnail": null,
-      "status": "Unavailable",
-      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
-      "frameworkShort": "React / Vinext"
+      "status": "Partial",
+      "previewReason": "Pinned source now builds into the existing centralized /previews/ host. This remains Partial until the rendered design and media are browser-verified.",
+      "frameworkShort": "React / Vinext",
+      "previewType": "local",
+      "buildVerified": true,
+      "preparedPreview": "/previews/REF-052/",
+      "buildCheckedAt": "2026-10-27T11:07:03.387Z",
+      "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
+      "compatibilityNotes": [
+        "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
+        "Next image optimization is disabled only for this static reference export so original public assets can remain on the pinned source fallback.",
+        "Removed 14 byte-identical public asset copies from the generated output; the existing host can request those files from the immutable source commit instead."
+      ]
     },
     {
       "name": "vara-studio",
@@ -4482,11 +4598,21 @@
       "id": "REF-055",
       "repository": "https://github.com/gireeshkumarreddy/velora",
       "commit": "c73f218c9ce74d96610f196e5bd60ee5604ddd58",
-      "preview": null,
+      "preview": "/previews/REF-055/",
       "thumbnail": null,
-      "status": "Unavailable",
-      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
-      "frameworkShort": "React / Vinext"
+      "status": "Partial",
+      "previewReason": "Pinned source now builds into the existing centralized /previews/ host. This remains Partial until the rendered design and media are browser-verified.",
+      "frameworkShort": "React / Vinext",
+      "previewType": "local",
+      "buildVerified": true,
+      "preparedPreview": "/previews/REF-055/",
+      "buildCheckedAt": "2026-10-27T11:07:26.135Z",
+      "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
+      "compatibilityNotes": [
+        "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
+        "Next image optimization is disabled only for this static reference export so original public assets can remain on the pinned source fallback.",
+        "Removed 11 byte-identical public asset copies from the generated output; the existing host can request those files from the immutable source commit instead."
+      ]
     },
     {
       "name": "VISITE",
@@ -4560,11 +4686,21 @@
       "id": "REF-056",
       "repository": "https://github.com/gireeshkumarreddy/VISITE",
       "commit": "e65b808f10cb58d2a2ffdfa36ae8908fbe5dce04",
-      "preview": null,
+      "preview": "/previews/REF-056/",
       "thumbnail": null,
-      "status": "Unavailable",
-      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
-      "frameworkShort": "React / Vinext"
+      "status": "Partial",
+      "previewReason": "Pinned source now builds into the existing centralized /previews/ host. This remains Partial until the rendered design and media are browser-verified.",
+      "frameworkShort": "React / Vinext",
+      "previewType": "local",
+      "buildVerified": true,
+      "preparedPreview": "/previews/REF-056/",
+      "buildCheckedAt": "2026-10-27T11:07:48.764Z",
+      "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
+      "compatibilityNotes": [
+        "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
+        "Next image optimization is disabled only for this static reference export so original public assets can remain on the pinned source fallback.",
+        "Removed 10 byte-identical public asset copies from the generated output; the existing host can request those files from the immutable source commit instead."
+      ]
     },
     {
       "name": "vistaRail",
@@ -4639,11 +4775,21 @@
       "id": "REF-057",
       "repository": "https://github.com/gireeshkumarreddy/vistaRail",
       "commit": "a87c6af7f07a29856b76b2973796bbaee25a1566",
-      "preview": null,
+      "preview": "/previews/REF-057/",
       "thumbnail": null,
-      "status": "Unavailable",
-      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
-      "frameworkShort": "Next.js / React"
+      "status": "Partial",
+      "previewReason": "Pinned source now builds into the existing centralized /previews/ host. This remains Partial until the rendered design and media are browser-verified.",
+      "frameworkShort": "Next.js / React",
+      "previewType": "local",
+      "buildVerified": true,
+      "preparedPreview": "/previews/REF-057/",
+      "buildCheckedAt": "2026-10-27T11:08:04.676Z",
+      "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
+      "compatibilityNotes": [
+        "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
+        "Next image optimization is disabled only for this static reference export so original public assets can remain on the pinned source fallback.",
+        "Removed 2 byte-identical public asset copies from the generated output; the existing host can request those files from the immutable source commit instead."
+      ]
     },
     {
       "name": "VYRN",
