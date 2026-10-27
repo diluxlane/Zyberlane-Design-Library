@@ -33,3 +33,11 @@ Preview code is reference material. Do not supply real account/payment/contact i
 Catalogue tests cover ID uniqueness/stability, inventory completeness, repository URL mapping, composed filters, search, sorting, copied project identity and screenshot/status invariants. Browser QA covers the gallery, direct detail routes, ID copy, categories, empty state and a 390-pixel iframe viewport. Reference previews receive individual screenshot/status evidence; they are not audited as production commerce or booking systems.
 
 Vercel Authentication must remain enabled for all environments. Repository visibility is a separate GitHub setting. No custom domains, production DNS or existing project environment variables are needed.
+
+## Preview compatibility verification
+
+The build restores 300 immutable source text files across 16 static snapshots, in addition to two original Vite builds. URL adaptation preserves JavaScript regex literals and SVG syntax; root-fragment links stay within the corresponding reference. REF-016 includes its original 946 KB data module, verified against its Git blob checksum. No design logic was replaced.
+
+`npm run dev` serves the built output for local QA and mirrors the exact pinned asset rewrites. The internal QA environment may require staging the same public asset bytes locally when its streaming proxy cannot reach them. These media are QA-only; the deployed architecture still uses immutable rewrites.
+
+The October 25 deployed visual inspection was followed by an October 27 recovery check after workspace maintenance. Vercel Authentication remained enabled; the later anonymous browser correctly reached sign-in. An authenticated post-update browser check must be recorded separately from local QA and build success.

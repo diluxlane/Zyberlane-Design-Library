@@ -85,7 +85,7 @@
       "preview": null,
       "thumbnail": null,
       "status": "Unavailable",
-      "previewReason": "Source inspected; no verified live preview is available in this release.",
+      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
       "frameworkShort": "Next.js / React"
     },
     {
@@ -151,7 +151,7 @@
       "preview": null,
       "thumbnail": null,
       "status": "Unavailable",
-      "previewReason": "Source inspected; no verified live preview is available in this release.",
+      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
       "frameworkShort": "Next.js / React"
     },
     {
@@ -380,7 +380,7 @@
       "preview": null,
       "thumbnail": null,
       "status": "Unavailable",
-      "previewReason": "Source inspected; no verified live preview is available in this release.",
+      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
       "frameworkShort": "React / Vite"
     },
     {
@@ -452,7 +452,7 @@
       "preview": null,
       "thumbnail": null,
       "status": "Unavailable",
-      "previewReason": "Source inspected; no verified live preview is available in this release.",
+      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
       "frameworkShort": "React / Vinext"
     },
     {
@@ -599,7 +599,7 @@
       "preview": null,
       "thumbnail": null,
       "status": "Unavailable",
-      "previewReason": "Source inspected; no verified live preview is available in this release.",
+      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
       "frameworkShort": "Next.js / React"
     },
     {
@@ -1579,7 +1579,7 @@
       "preview": null,
       "thumbnail": null,
       "status": "Unavailable",
-      "previewReason": "Source inspected; no verified live preview is available in this release.",
+      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
       "frameworkShort": "Next.js / React"
     },
     {
@@ -2589,7 +2589,7 @@
       "preview": null,
       "thumbnail": null,
       "status": "Unavailable",
-      "previewReason": "Source inspected; no verified live preview is available in this release.",
+      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
       "frameworkShort": "React / Vite"
     },
     {
@@ -2660,7 +2660,7 @@
       "preview": null,
       "thumbnail": null,
       "status": "Unavailable",
-      "previewReason": "Source inspected; no verified live preview is available in this release.",
+      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
       "frameworkShort": "React / Vite"
     },
     {
@@ -2997,7 +2997,7 @@
       "preview": null,
       "thumbnail": null,
       "status": "Unavailable",
-      "previewReason": "Source inspected; no verified live preview is available in this release.",
+      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
       "frameworkShort": "Next.js / React"
     },
     {
@@ -3158,7 +3158,7 @@
       "preview": null,
       "thumbnail": null,
       "status": "Unavailable",
-      "previewReason": "Source inspected; no verified live preview is available in this release.",
+      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
       "frameworkShort": "React / Vinext"
     },
     {
@@ -4026,18 +4026,19 @@
       ],
       "tags": [
         "Studio",
-        "White",
+        "Dark",
+        "White typography",
         "Red",
         "Rounded panels",
         "Multi-page"
       ],
-      "description": "A design/development studio site built around oversized editorial statements, rounded service panels and a full-screen menu. The inspected built homepage is light with red accents, while the README still describes an earlier black theme.",
+      "description": "A black editorial studio site with oversized white statements, red accents, rounded service panels and a full-screen menu. Ticker galleries and a separate Work directory stage its project imagery.",
       "designCharacteristics": [
         "Helvetica Neue with self-hosted Inter Tight fallback",
-        "Oversized studio statements and rounded panels",
+        "Oversized white studio statements on black",
+        "Rounded service panels with red accents",
         "Ticker galleries and coverflow-style project presentation",
-        "Case-study pages and service directory",
-        "Red accent over the current light built surface"
+        "Case-study pages, Work directory and full-screen navigation"
       ],
       "notableInteractions": [
         "Smooth desktop/tablet scroll",
@@ -4062,9 +4063,9 @@
       "assetNotes": "Snapshot contains 3693 media/font/model files (880.8 MB); full repository snapshot is 894.2 MB. Counts include source and documentation media where present.",
       "previewCandidates": [],
       "notes": [
-        "Use the current built source as visual truth; README theme notes are stale.",
         "The full repository is large and contains backups, brand kits and original media; only teseract-website/dist is needed for a static preview.",
-        "Do not treat source studio projects, metrics or claims as Zyberlane work."
+        "Do not treat source studio projects, metrics or claims as Zyberlane work.",
+        "Pinned built CSS and rendered homepage confirm a black/white/red palette."
       ],
       "sourceEvidence": [
         "teseract-website/README.md",
@@ -4161,7 +4162,7 @@
       "preview": null,
       "thumbnail": null,
       "status": "Unavailable",
-      "previewReason": "Source inspected; no verified live preview is available in this release.",
+      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
       "frameworkShort": "React / Vinext"
     },
     {
@@ -4399,7 +4400,7 @@
       "preview": null,
       "thumbnail": null,
       "status": "Unavailable",
-      "previewReason": "Source inspected; no verified live preview is available in this release.",
+      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
       "frameworkShort": "React / Vinext"
     },
     {
@@ -4477,7 +4478,7 @@
       "preview": null,
       "thumbnail": null,
       "status": "Unavailable",
-      "previewReason": "Source inspected; no verified live preview is available in this release.",
+      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
       "frameworkShort": "React / Vinext"
     },
     {
@@ -4556,7 +4557,7 @@
       "preview": null,
       "thumbnail": null,
       "status": "Unavailable",
-      "previewReason": "Source inspected; no verified live preview is available in this release.",
+      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
       "frameworkShort": "Next.js / React"
     },
     {
@@ -8825,18 +8826,19 @@
       ],
       "tags": [
         "Studio",
-        "White",
+        "Dark",
+        "White typography",
         "Red",
         "Rounded panels",
         "Multi-page"
       ],
-      "description": "A design/development studio site built around oversized editorial statements, rounded service panels and a full-screen menu. The inspected built homepage is light with red accents, while the README still describes an earlier black theme.",
+      "description": "A black editorial studio site with oversized white statements, red accents, rounded service panels and a full-screen menu. Ticker galleries and a separate Work directory stage its project imagery.",
       "designCharacteristics": [
         "Helvetica Neue with self-hosted Inter Tight fallback",
-        "Oversized studio statements and rounded panels",
+        "Oversized white studio statements on black",
+        "Rounded service panels with red accents",
         "Ticker galleries and coverflow-style project presentation",
-        "Case-study pages and service directory",
-        "Red accent over the current light built surface"
+        "Case-study pages, Work directory and full-screen navigation"
       ],
       "notableInteractions": [
         "Smooth desktop/tablet scroll",
@@ -8861,9 +8863,9 @@
       "assetNotes": "Snapshot contains 3693 media/font/model files (880.8 MB); full repository snapshot is 894.2 MB. Counts include source and documentation media where present.",
       "previewCandidates": [],
       "notes": [
-        "Use the current built source as visual truth; README theme notes are stale.",
         "The full repository is large and contains backups, brand kits and original media; only teseract-website/dist is needed for a static preview.",
-        "Do not treat source studio projects, metrics or claims as Zyberlane work."
+        "Do not treat source studio projects, metrics or claims as Zyberlane work.",
+        "Pinned built CSS and rendered homepage confirm a black/white/red palette."
       ],
       "sourceEvidence": [
         "teseract-website/README.md",

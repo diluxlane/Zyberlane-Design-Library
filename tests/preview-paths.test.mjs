@@ -17,3 +17,8 @@ test('only complete known URL values receive a preview base',()=>{
  assert.ok(result.includes('src="/previews/REF-032/assets/a b.jpg"'));
  assert.ok(result.includes('url(/previews/REF-032/assets/paper.png)'));assert.doesNotThrow(()=>new vm.Script(result));
 });
+
+test('archive links keep home-page fragments inside the reference',()=>{
+ const result=rewritePreviewPaths('<a href="/#process">Process</a><a href="/?q=x">Home</a>',snapshot);
+ assert.ok(result.includes('href="/previews/REF-032/#process"'));assert.ok(result.includes('href="/previews/REF-032/?q=x"'));
+});

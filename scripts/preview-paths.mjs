@@ -6,7 +6,7 @@ export function rewritePreviewPaths(content,snapshot){
   if(!url.startsWith('/')||url.startsWith('//')||(!allowRoot&&url==='/'))return url;
   let first=url.slice(1).split('/')[0].split('?')[0].split('#')[0];
   try{first=decodeURIComponent(first);}catch{return url;}
-  if((allowRoot&&url==='/')||tops.has(first)||url.startsWith('/'+snapshot.repo+'/')){
+  if((allowRoot&&/^\/(?:[?#]|$)/.test(url))||tops.has(first)||url.startsWith('/'+snapshot.repo+'/')){
    const relative=url.startsWith('/'+snapshot.repo+'/')?url.slice(snapshot.repo.length+2):url.slice(1);
    return base+relative;
   }

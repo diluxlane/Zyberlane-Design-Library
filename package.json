@@ -6,7 +6,10 @@
   "description": "Internal catalogue of authorized website design references, separate from Zyberlane production.",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "test": "node --test tests/*.test.mjs"
+    "test": "node --test tests/*.test.mjs",
+    "dev": "node --use-env-proxy scripts/dev.mjs"
   },
-  "engines": { "node": "24.x" }
+  "engines": {
+    "node": "24.x"
+  }
 }

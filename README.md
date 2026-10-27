@@ -6,7 +6,7 @@ This repository and its `zyberlane-design-library` Vercel project are separate f
 
 ## Run and verify
 
-Requires Node 22 or newer. The gallery has no npm dependencies, database, runtime secrets, or homemade authentication.
+Requires Node 24 (matching the deployment runtime). The gallery has no npm dependencies, database, runtime secrets, or homemade authentication.
 
 ```sh
 npm test

@@ -404,6 +404,11 @@
         "path": "js/universe.js",
         "relative": "js/universe.js",
         "sha": "f6ef7b38c22999f1644661f812c71927b77048e5"
+      },
+      {
+        "path": "js/data.js",
+        "relative": "js/data.js",
+        "sha": "11851bc709b377702409096225728046927f5d7b"
       }
     ],
     "topNames": [
@@ -804,7 +809,7 @@
     "compatibilityNotes": [
       "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-021/.",
       "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered.",
-      "Replaced optional service configuration with empty exports in this isolated copy. Firebase uses the source’s local demo fallback; Google Maps uses its keyless embed. No credentials are copied or integrations enabled."
+      "Replaced optional service configuration with empty exports in this isolated copy. Firebase uses the source\u2019s local demo fallback; Google Maps uses its keyless embed. No credentials are copied or integrations enabled."
     ]
   },
   {
@@ -950,7 +955,7 @@
       "index.html",
       "js",
       "login.html",
-      "loginsign mobile → Mobile Login & Sign Up references.PNG",
+      "loginsign mobile \u2192 Mobile Login & Sign Up references.PNG",
       "logo main.jpeg",
       "men's hero section.PNG",
       "menu.PNG",
