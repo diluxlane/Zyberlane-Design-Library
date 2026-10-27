@@ -1,19 +1,23 @@
 {
-  "date": "2026-10-27T11:08:04.954Z",
+  "date": "2026-10-27T11:15:24.333Z",
   "sourceManifest": "data/framework-preview-candidates.json",
   "hostingModel": "One existing Zyberlane Design Reference Library Vercel project; generated previews are committed under public/previews and served as /previews/REF-NNN/.",
-  "built": 15,
-  "failed": 1,
+  "built": 16,
+  "failed": 0,
   "results": [
     {
       "id": "REF-001",
       "repo": "-Gireesh-Portfolio",
       "commit": "4133a153bd3c29894ee3794097ee6434c90107cc",
-      "strategy": "next",
-      "assetRoot": "public",
-      "startedAt": "2026-10-27T11:02:35.632Z",
-      "status": "failed",
-      "compatibilityAdjustments": [],
+      "strategy": "next-recovery",
+      "assetRoot": null,
+      "startedAt": "2026-10-27T11:10:41.431Z",
+      "status": "built",
+      "compatibilityAdjustments": [
+        "Marked 2 robots/sitemap metadata route(s) force-static inside the isolated export workspace so Next.js can statically export metadata endpoints; the creator repository is unchanged.",
+        "Wrapped the pinned Next.js source with an isolated static-export config using the existing /previews/REF-NNN base path; no separate deployment was created.",
+        "Kept the small original public asset set inside this preview output rather than introducing another hosting project or runtime dependency."
+      ],
       "assetEntries": [
         {
           "name": "file.svg",
@@ -42,8 +46,9 @@
       ],
       "packageManager": "npm",
       "install": "npm ci --ignore-scripts",
-      "error": "Error: /opt/hostedtoolcache/node/24.21.0/x64/bin/node exited with 1\n    at ChildProcess.<anonymous> (file:///home/runner/work/zyberlane-design-library/zyberlane-design-library/scripts/build-framework-previews.mjs:69:19)\n    at ChildProcess.emit (node:events:514:28)\n    at ChildProcess._handle.onexit (node:internal/child_process:295:12)",
-      "finishedAt": "2026-10-27T11:02:55.397Z"
+      "finishedAt": "2026-10-27T11:15:40.660Z",
+      "rewrittenFiles": 22,
+      "preview": "/previews/REF-001/"
     },
     {
       "id": "REF-002",
@@ -51,7 +56,7 @@
       "commit": "0629e251e3615531e6e107b6ec782ecdac07b9a0",
       "strategy": "next",
       "assetRoot": "public",
-      "startedAt": "2026-10-27T11:02:55.733Z",
+      "startedAt": "2026-10-27T11:10:59.430Z",
       "status": "built",
       "compatibilityAdjustments": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -68,7 +73,7 @@
       "install": "npm ci --ignore-scripts",
       "rewrittenFiles": 10,
       "preview": "/previews/REF-002/",
-      "finishedAt": "2026-10-27T11:03:10.476Z"
+      "finishedAt": "2026-10-27T11:11:12.153Z"
     },
     {
       "id": "REF-005",
@@ -76,7 +81,7 @@
       "commit": "71da3bd5c831d5ed6afdeafd5eecbc0d4724824f",
       "strategy": "vite",
       "assetRoot": "public",
-      "startedAt": "2026-10-27T11:03:10.653Z",
+      "startedAt": "2026-10-27T11:11:12.276Z",
       "status": "built",
       "compatibilityAdjustments": [
         "Built the pinned original Vite frontend with a relative base and isolated _preview runtime bundle directory so it can run below the existing /previews/REF-NNN/ host path without colliding with original public assets.",
@@ -128,7 +133,7 @@
       "install": "npm ci --ignore-scripts",
       "rewrittenFiles": 2,
       "preview": "/previews/REF-005/",
-      "finishedAt": "2026-10-27T11:03:21.604Z"
+      "finishedAt": "2026-10-27T11:11:22.344Z"
     },
     {
       "id": "REF-006",
@@ -136,7 +141,7 @@
       "commit": "c21e201f2e076e5c850b4e3128d339bdeef3f73f",
       "strategy": "next",
       "assetRoot": "public",
-      "startedAt": "2026-10-27T11:03:21.657Z",
+      "startedAt": "2026-10-27T11:11:22.388Z",
       "status": "built",
       "compatibilityAdjustments": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -173,7 +178,7 @@
       "install": "pnpm install --frozen-lockfile --ignore-scripts",
       "rewrittenFiles": 12,
       "preview": "/previews/REF-006/",
-      "finishedAt": "2026-10-27T11:03:45.888Z"
+      "finishedAt": "2026-10-27T11:11:42.897Z"
     },
     {
       "id": "REF-007",
@@ -181,7 +186,7 @@
       "commit": "b61cd6a7fdfa1dd2d639d425bf7f658a639c2a31",
       "strategy": "next",
       "assetRoot": "public",
-      "startedAt": "2026-10-27T11:03:47.132Z",
+      "startedAt": "2026-10-27T11:11:43.983Z",
       "status": "built",
       "compatibilityAdjustments": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -202,7 +207,7 @@
       "install": "npm ci --ignore-scripts",
       "rewrittenFiles": 6,
       "preview": "/previews/REF-007/",
-      "finishedAt": "2026-10-27T11:04:05.497Z"
+      "finishedAt": "2026-10-27T11:11:59.588Z"
     },
     {
       "id": "REF-008",
@@ -210,7 +215,7 @@
       "commit": "fd6a72c43356e4d5f443b60c088972f36be4b35f",
       "strategy": "next",
       "assetRoot": "public",
-      "startedAt": "2026-10-27T11:04:05.738Z",
+      "startedAt": "2026-10-27T11:11:59.773Z",
       "status": "built",
       "compatibilityAdjustments": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -255,7 +260,7 @@
       "install": "npm ci --ignore-scripts",
       "rewrittenFiles": 6,
       "preview": "/previews/REF-008/",
-      "finishedAt": "2026-10-27T11:04:28.323Z"
+      "finishedAt": "2026-10-27T11:12:20.554Z"
     },
     {
       "id": "REF-012",
@@ -263,7 +268,7 @@
       "commit": "c604469013b00d1fe098c07cf1c3996b160b4bc0",
       "strategy": "next",
       "assetRoot": "public",
-      "startedAt": "2026-10-27T11:04:28.583Z",
+      "startedAt": "2026-10-27T11:12:20.766Z",
       "status": "built",
       "compatibilityAdjustments": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -284,7 +289,7 @@
       "install": "npm ci --ignore-scripts",
       "rewrittenFiles": 6,
       "preview": "/previews/REF-012/",
-      "finishedAt": "2026-10-27T11:04:52.582Z"
+      "finishedAt": "2026-10-27T11:12:40.763Z"
     },
     {
       "id": "REF-020",
@@ -292,7 +297,7 @@
       "commit": "6e4254a96dc6b0648765ddd1e8099f875b1a1f8a",
       "strategy": "next",
       "assetRoot": "public",
-      "startedAt": "2026-10-27T11:04:52.718Z",
+      "startedAt": "2026-10-27T11:12:40.885Z",
       "status": "built",
       "compatibilityAdjustments": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -309,7 +314,7 @@
       "install": "npm ci --ignore-scripts",
       "rewrittenFiles": 6,
       "preview": "/previews/REF-020/",
-      "finishedAt": "2026-10-27T11:05:28.469Z"
+      "finishedAt": "2026-10-27T11:13:11.341Z"
     },
     {
       "id": "REF-033",
@@ -317,7 +322,7 @@
       "commit": "74d3fd3cb522438f4d8c9fe4e13edec90a0c672b",
       "strategy": "vite",
       "assetRoot": "public",
-      "startedAt": "2026-10-27T11:05:28.866Z",
+      "startedAt": "2026-10-27T11:13:11.689Z",
       "status": "built",
       "compatibilityAdjustments": [
         "Built the pinned original Vite frontend with a relative base and isolated _preview runtime bundle directory so it can run below the existing /previews/REF-NNN/ host path without colliding with original public assets.",
@@ -337,7 +342,7 @@
       "install": "npm ci --ignore-scripts",
       "rewrittenFiles": 2,
       "preview": "/previews/REF-033/",
-      "finishedAt": "2026-10-27T11:05:37.497Z"
+      "finishedAt": "2026-10-27T11:13:18.971Z"
     },
     {
       "id": "REF-034",
@@ -345,7 +350,7 @@
       "commit": "13d1cc16aaeb4677988570b64e4412c8ce95c130",
       "strategy": "vite",
       "assetRoot": null,
-      "startedAt": "2026-10-27T11:05:37.571Z",
+      "startedAt": "2026-10-27T11:13:19.036Z",
       "status": "built",
       "compatibilityAdjustments": [
         "Built the pinned original Vite frontend with a relative base and isolated _preview runtime bundle directory so it can run below the existing /previews/REF-NNN/ host path without colliding with original public assets."
@@ -355,7 +360,7 @@
       "install": "npm ci --ignore-scripts",
       "rewrittenFiles": 1,
       "preview": "/previews/REF-034/",
-      "finishedAt": "2026-10-27T11:05:53.048Z"
+      "finishedAt": "2026-10-27T11:13:32.128Z"
     },
     {
       "id": "REF-038",
@@ -363,7 +368,7 @@
       "commit": "9458e8d8a9c2d29c9574d91dd668b27db47c821d",
       "strategy": "next",
       "assetRoot": "public",
-      "startedAt": "2026-10-27T11:05:53.375Z",
+      "startedAt": "2026-10-27T11:13:32.400Z",
       "status": "built",
       "compatibilityAdjustments": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -396,7 +401,7 @@
       "install": "pnpm install --frozen-lockfile --ignore-scripts",
       "rewrittenFiles": 12,
       "preview": "/previews/REF-038/",
-      "finishedAt": "2026-10-27T11:06:15.285Z"
+      "finishedAt": "2026-10-27T11:13:50.875Z"
     },
     {
       "id": "REF-040",
@@ -404,7 +409,7 @@
       "commit": "04b9f9c473b99b3c959de529e21b760760bf9376",
       "strategy": "next",
       "assetRoot": "public",
-      "startedAt": "2026-10-27T11:06:16.384Z",
+      "startedAt": "2026-10-27T11:13:51.741Z",
       "status": "built",
       "compatibilityAdjustments": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -437,7 +442,7 @@
       "install": "pnpm install --frozen-lockfile --ignore-scripts",
       "rewrittenFiles": 13,
       "preview": "/previews/REF-040/",
-      "finishedAt": "2026-10-27T11:06:37.998Z"
+      "finishedAt": "2026-10-27T11:14:10.180Z"
     },
     {
       "id": "REF-052",
@@ -445,7 +450,7 @@
       "commit": "0291e5c9ef6b406609864dcb635efa70592aafb5",
       "strategy": "next",
       "assetRoot": "public",
-      "startedAt": "2026-10-27T11:06:39.112Z",
+      "startedAt": "2026-10-27T11:14:11.025Z",
       "status": "built",
       "compatibilityAdjustments": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -470,7 +475,7 @@
       "install": "pnpm install --frozen-lockfile --ignore-scripts",
       "rewrittenFiles": 15,
       "preview": "/previews/REF-052/",
-      "finishedAt": "2026-10-27T11:07:03.387Z"
+      "finishedAt": "2026-10-27T11:14:31.721Z"
     },
     {
       "id": "REF-055",
@@ -478,7 +483,7 @@
       "commit": "c73f218c9ce74d96610f196e5bd60ee5604ddd58",
       "strategy": "next",
       "assetRoot": "public",
-      "startedAt": "2026-10-27T11:07:04.471Z",
+      "startedAt": "2026-10-27T11:14:32.650Z",
       "status": "built",
       "compatibilityAdjustments": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -503,7 +508,7 @@
       "install": "pnpm install --frozen-lockfile --ignore-scripts",
       "rewrittenFiles": 13,
       "preview": "/previews/REF-055/",
-      "finishedAt": "2026-10-27T11:07:26.135Z"
+      "finishedAt": "2026-10-27T11:14:51.085Z"
     },
     {
       "id": "REF-056",
@@ -511,7 +516,7 @@
       "commit": "e65b808f10cb58d2a2ffdfa36ae8908fbe5dce04",
       "strategy": "next",
       "assetRoot": "public",
-      "startedAt": "2026-10-27T11:07:27.158Z",
+      "startedAt": "2026-10-27T11:14:52.012Z",
       "status": "built",
       "compatibilityAdjustments": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -544,7 +549,7 @@
       "install": "pnpm install --frozen-lockfile --ignore-scripts",
       "rewrittenFiles": 12,
       "preview": "/previews/REF-056/",
-      "finishedAt": "2026-10-27T11:07:48.764Z"
+      "finishedAt": "2026-10-27T11:15:10.503Z"
     },
     {
       "id": "REF-057",
@@ -552,7 +557,7 @@
       "commit": "a87c6af7f07a29856b76b2973796bbaee25a1566",
       "strategy": "next",
       "assetRoot": "public",
-      "startedAt": "2026-10-27T11:07:49.785Z",
+      "startedAt": "2026-10-27T11:15:11.373Z",
       "status": "built",
       "compatibilityAdjustments": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -569,7 +574,7 @@
       "install": "npm ci --ignore-scripts",
       "rewrittenFiles": 6,
       "preview": "/previews/REF-057/",
-      "finishedAt": "2026-10-27T11:08:04.676Z"
+      "finishedAt": "2026-10-27T11:15:24.136Z"
     }
   ],
   "intentionallyNotBuilt": [
@@ -593,5 +598,6 @@
       "id": "REF-058",
       "reason": "The complete storefront depends on Cloudflare Worker/D1 and optional Stripe merchant configuration. Do not activate production services for a reference preview."
     }
-  ]
+  ],
+  "ref001Recovery": "Static export succeeded after isolating robots/sitemap metadata as force-static; visual browser verification is still required."
 }

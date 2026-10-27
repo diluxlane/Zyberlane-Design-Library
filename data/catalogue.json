@@ -82,11 +82,21 @@
       "id": "REF-001",
       "repository": "https://github.com/gireeshkumarreddy/-Gireesh-Portfolio",
       "commit": "4133a153bd3c29894ee3794097ee6434c90107cc",
-      "preview": null,
+      "preview": "/previews/REF-001/",
       "thumbnail": null,
-      "status": "Unavailable",
-      "previewReason": "Implementation inspected; no existing live deployment was verified, and this framework/runtime has not been packaged into the centralized static preview release.",
-      "frameworkShort": "Next.js / React"
+      "status": "Partial",
+      "previewReason": "Pinned source now builds into the existing centralized /previews/ host. This remains Partial until the rendered design and media are browser-verified.",
+      "frameworkShort": "Next.js / React",
+      "previewType": "local",
+      "buildVerified": true,
+      "preparedPreview": "/previews/REF-001/",
+      "buildCheckedAt": "2026-10-27T11:15:40.660Z",
+      "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
+      "compatibilityNotes": [
+        "Marked 2 robots/sitemap metadata route(s) force-static inside the isolated export workspace so Next.js can statically export metadata endpoints; the creator repository is unchanged.",
+        "Wrapped the pinned Next.js source with an isolated static-export config using the existing /previews/REF-NNN base path; no separate deployment was created.",
+        "Kept the small original public asset set inside this preview output rather than introducing another hosting project or runtime dependency."
+      ]
     },
     {
       "name": "-paradise",
@@ -156,7 +166,7 @@
       "previewType": "local",
       "buildVerified": true,
       "preparedPreview": "/previews/REF-002/",
-      "buildCheckedAt": "2026-10-27T11:03:10.476Z",
+      "buildCheckedAt": "2026-10-27T11:11:12.153Z",
       "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
       "compatibilityNotes": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -395,7 +405,7 @@
       "previewType": "local",
       "buildVerified": true,
       "preparedPreview": "/previews/REF-005/",
-      "buildCheckedAt": "2026-10-27T11:03:21.604Z",
+      "buildCheckedAt": "2026-10-27T11:11:22.344Z",
       "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
       "compatibilityNotes": [
         "Built the pinned original Vite frontend with a relative base and isolated _preview runtime bundle directory so it can run below the existing /previews/REF-NNN/ host path without colliding with original public assets.",
@@ -476,7 +486,7 @@
       "previewType": "local",
       "buildVerified": true,
       "preparedPreview": "/previews/REF-006/",
-      "buildCheckedAt": "2026-10-27T11:03:45.888Z",
+      "buildCheckedAt": "2026-10-27T11:11:42.897Z",
       "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
       "compatibilityNotes": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -564,7 +574,7 @@
       "previewType": "local",
       "buildVerified": true,
       "preparedPreview": "/previews/REF-007/",
-      "buildCheckedAt": "2026-10-27T11:04:05.497Z",
+      "buildCheckedAt": "2026-10-27T11:11:59.588Z",
       "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
       "compatibilityNotes": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -643,7 +653,7 @@
       "previewType": "local",
       "buildVerified": true,
       "preparedPreview": "/previews/REF-008/",
-      "buildCheckedAt": "2026-10-27T11:04:28.323Z",
+      "buildCheckedAt": "2026-10-27T11:12:20.554Z",
       "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
       "compatibilityNotes": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -956,7 +966,7 @@
       "previewType": "local",
       "buildVerified": true,
       "preparedPreview": "/previews/REF-012/",
-      "buildCheckedAt": "2026-10-27T11:04:52.582Z",
+      "buildCheckedAt": "2026-10-27T11:12:40.763Z",
       "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
       "compatibilityNotes": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -1665,7 +1675,7 @@
       "previewType": "local",
       "buildVerified": true,
       "preparedPreview": "/previews/REF-020/",
-      "buildCheckedAt": "2026-10-27T11:05:28.469Z",
+      "buildCheckedAt": "2026-10-27T11:13:11.341Z",
       "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
       "compatibilityNotes": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -2695,7 +2705,7 @@
       "previewType": "local",
       "buildVerified": true,
       "preparedPreview": "/previews/REF-033/",
-      "buildCheckedAt": "2026-10-27T11:05:37.497Z",
+      "buildCheckedAt": "2026-10-27T11:13:18.971Z",
       "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
       "compatibilityNotes": [
         "Built the pinned original Vite frontend with a relative base and isolated _preview runtime bundle directory so it can run below the existing /previews/REF-NNN/ host path without colliding with original public assets.",
@@ -2775,7 +2785,7 @@
       "previewType": "local",
       "buildVerified": true,
       "preparedPreview": "/previews/REF-034/",
-      "buildCheckedAt": "2026-10-27T11:05:53.048Z",
+      "buildCheckedAt": "2026-10-27T11:13:32.128Z",
       "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
       "compatibilityNotes": [
         "Built the pinned original Vite frontend with a relative base and isolated _preview runtime bundle directory so it can run below the existing /previews/REF-NNN/ host path without colliding with original public assets."
@@ -3120,7 +3130,7 @@
       "previewType": "local",
       "buildVerified": true,
       "preparedPreview": "/previews/REF-038/",
-      "buildCheckedAt": "2026-10-27T11:06:15.285Z",
+      "buildCheckedAt": "2026-10-27T11:13:50.875Z",
       "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
       "compatibilityNotes": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -3296,7 +3306,7 @@
       "previewType": "local",
       "buildVerified": true,
       "preparedPreview": "/previews/REF-040/",
-      "buildCheckedAt": "2026-10-27T11:06:37.998Z",
+      "buildCheckedAt": "2026-10-27T11:14:10.180Z",
       "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
       "compatibilityNotes": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -4349,7 +4359,7 @@
       "previewType": "local",
       "buildVerified": true,
       "preparedPreview": "/previews/REF-052/",
-      "buildCheckedAt": "2026-10-27T11:07:03.387Z",
+      "buildCheckedAt": "2026-10-27T11:14:31.721Z",
       "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
       "compatibilityNotes": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -4606,7 +4616,7 @@
       "previewType": "local",
       "buildVerified": true,
       "preparedPreview": "/previews/REF-055/",
-      "buildCheckedAt": "2026-10-27T11:07:26.135Z",
+      "buildCheckedAt": "2026-10-27T11:14:51.085Z",
       "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
       "compatibilityNotes": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -4694,7 +4704,7 @@
       "previewType": "local",
       "buildVerified": true,
       "preparedPreview": "/previews/REF-056/",
-      "buildCheckedAt": "2026-10-27T11:07:48.764Z",
+      "buildCheckedAt": "2026-10-27T11:15:10.503Z",
       "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
       "compatibilityNotes": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",
@@ -4783,7 +4793,7 @@
       "previewType": "local",
       "buildVerified": true,
       "preparedPreview": "/previews/REF-057/",
-      "buildCheckedAt": "2026-10-27T11:08:04.676Z",
+      "buildCheckedAt": "2026-10-27T11:15:24.136Z",
       "verificationScope": "Pinned-source static build verified; browser rendering and hosted asset delivery still require visual verification.",
       "compatibilityNotes": [
         "Wrapped the pinned Next.js/Vinext-compatible source with an isolated static-export config using the existing /previews/REF-NNN base path; no source repository was modified.",

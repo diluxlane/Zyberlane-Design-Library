@@ -29,7 +29,7 @@ Discovery on 2026-10-24 found 68 accessible repositories. 59 contain a website i
 
 The gallery supports search, categories, preview-status filters, sorting, browser-local saved references, details, source links, ID copying and a copyable brief for a new independent project. `/inventory` records excluded repositories and reasons. `/reference/ref-014` resolves the permanent ID independently of the current display order.
 
-The October 27 catalogue records 33 working, 20 partial and 6 unavailable previews. Framework-generated partial previews are build-verified inside this repository but remain Partial until browser rendering and hosted asset delivery are visually verified.
+The October 27 catalogue records 33 working, 21 partial and 5 unavailable previews. Framework-generated partial previews are build-verified inside this repository but remain Partial until browser rendering and hosted asset delivery are visually verified.
 
 ### Framework preview expansion
 
