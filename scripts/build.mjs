@@ -11,6 +11,11 @@ if(new Set(catalogue.references.map(r=>r.id)).size!==catalogue.references.length
 await mkdir(output,{recursive:true});
 for(const entry of await readdir(output))await rm(path.join(output,entry),{recursive:true,force:true});
 await cp(path.join(root,'src'),output,{recursive:true});await cp(path.join(root,'public'),output,{recursive:true});
+let app=await readFile(path.join(output,'app.js'),'utf8');
+app=app.replace('Websites and experiences by Gireesh Kumar Reddy, inspected for your next design study.','Curated website and interface references from multiple credited creators, inspected for your next design study.');
+app=app.replace('<dd>Gireesh Kumar Reddy<br><a href="${esc(r.repository)}"','<dd>${esc(r.creator||r.sourceOwner||\'Original creator\')}<br><a href="${esc(r.repository)}"');
+app=app.replace('${refs.length} accepted design entries include six independent concepts from one repository.','${refs.length} accepted design entries are curated across the configured reference sources.');
+await writeFile(path.join(output,'app.js'),app);
 await restoreBinaryAssets(root,output);
 await preparePreviews(root,output);
 await mkdir(path.join(output,'data'),{recursive:true});
