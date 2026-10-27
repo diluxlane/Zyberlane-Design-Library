@@ -1,4 +1,4 @@
-name: Audit external design reference sources
+name: Sync Magicinmybones design references
 
 on:
   workflow_dispatch:
@@ -8,15 +8,21 @@ on:
     paths:
       - data/source-profiles.json
       - scripts/audit-source-profile.mjs
+      - scripts/build-authorized-central-previews.mjs
+      - scripts/capture-authorized-previews.mjs
       - .github/workflows/audit-reference-sources.yml
 
 permissions:
   contents: write
 
+concurrency:
+  group: magicinmybones-reference-sync
+  cancel-in-progress: false
+
 jobs:
-  audit:
+  sync:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 300
     steps:
       - name: Check out library
         uses: actions/checkout@v4
@@ -33,16 +39,53 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/audit-source-profile.mjs Magicinmybones
 
-      - name: Commit audited catalogue source
+      - name: Build authorized central previews
+        run: node scripts/build-authorized-central-previews.mjs data/sources/magicinmybones.json public/previews
+
+      - name: Validate library build before browser checks
+        run: |
+          npm test
+          npm run build
+
+      - name: Install browser verifier
+        run: |
+          npm install --no-save --ignore-scripts playwright@1.56.1
+          npx playwright@1.56.1 install --with-deps chromium
+
+      - name: Start local library
+        run: |
+          node scripts/dev.mjs --port 4173 > /tmp/zyberlane-reference-server.log 2>&1 &
+          echo $! > /tmp/zyberlane-reference-server.pid
+          for i in {1..60}; do
+            if curl --fail --silent http://127.0.0.1:4173/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/zyberlane-reference-server.log
+          exit 1
+
+      - name: Capture and verify preview thumbnails
+        run: node scripts/capture-authorized-previews.mjs data/sources/magicinmybones.json http://127.0.0.1:4173
+
+      - name: Stop local library
+        if: always()
+        run: |
+          if [ -f /tmp/zyberlane-reference-server.pid ]; then kill "$(cat /tmp/zyberlane-reference-server.pid)" || true; fi
+
+      - name: Rebuild final catalogue with verification metadata
+        run: |
+          npm test
+          npm run build
+
+      - name: Commit synchronized reference library
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/sources/magicinmybones.json
+          git add data/sources/magicinmybones.json public/previews public/screenshots vercel.json docs/magicinmybones-central-build-results.json docs/magicinmybones-visual-verification.json
           if git diff --cached --quiet; then
-            echo "No audit changes."
+            echo "No synchronized reference changes."
             exit 0
           fi
-          git commit -m "data: audit Magicinmybones design references"
+          git commit -m "data: sync Magicinmybones design references and previews"
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main
