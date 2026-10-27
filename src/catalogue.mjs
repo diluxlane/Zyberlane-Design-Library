@@ -4,7 +4,7 @@ export function searchReferences(references, {query='',category='All',status='Al
     if(category!=='All'&&!r.categories.includes(category))return false;
     if(status!=='All'&&r.status!==status)return false;
     if(savedOnly&&!saved.includes(r.id))return false;
-    const haystack=[r.id,r.title,r.repo,r.description,r.framework,r.complexity,...r.tags,...r.categories,...r.technologies,...r.suitableFor].join(' ').toLowerCase();
+    const haystack=[r.id,r.title,r.repo,r.creator,r.sourceOwner,r.description,r.framework,r.complexity,...r.tags,...r.categories,...r.technologies,...r.suitableFor].filter(Boolean).join(' ').toLowerCase();
     return terms.every(t=>haystack.includes(t));
   });
   return list.sort(sort==='name'?(a,b)=>a.title.localeCompare(b.title):sort==='ready'?(a,b)=>['Working','Partial','Unavailable'].indexOf(a.status)-['Working','Partial','Unavailable'].indexOf(b.status)||a.id.localeCompare(b.id):sort==='complexity'?(a,b)=>['Low','Medium','High'].indexOf(a.complexity)-['Low','Medium','High'].indexOf(b.complexity)||a.id.localeCompare(b.id):(a,b)=>a.id.localeCompare(b.id));
