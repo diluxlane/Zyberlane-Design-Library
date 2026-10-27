@@ -1,0 +1,13 @@
+{
+  "profiles": [
+    {
+      "owner": "Magicinmybones",
+      "label": "Magicinmybones",
+      "enabled": true,
+      "idStart": 60,
+      "output": "data/sources/magicinmybones.json",
+      "designOnly": true,
+      "mirrorPolicy": "licensed-only"
+    }
+  ]
+}
