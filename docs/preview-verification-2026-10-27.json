@@ -1,0 +1,793 @@
+{
+  "date": "2026-10-27",
+  "sourceBase": "e8a7e6bd679c0ea895147f74fb2775c94690f534",
+  "scope": "Local browser check; hosted delivery awaits authenticated verification.",
+  "environment": {
+    "browser": "Cloud Chrome",
+    "webgl": "Unavailable; original fallback behavior retained",
+    "media": "Exact public commit-pinned bytes staged locally and verified against Git blob checksums. Staged media are not committed or included in deployment source."
+  },
+  "gallery": {
+    "search": true,
+    "emptyState": true,
+    "savedReferences": true,
+    "directDetailRoute": true,
+    "copyId": true,
+    "copyProjectPrompt": true,
+    "statusFilter": true,
+    "viewportWidth": 390,
+    "contentWidth": 375,
+    "scrollWidth": 375,
+    "consoleErrors": 0
+  },
+  "references": [
+    {
+      "id": "REF-032",
+      "sourceCommit": "d824a9118458d29b837b03ffe6119e8ab9863391",
+      "route": "/previews/REF-032/",
+      "status": "Working",
+      "scope": "local",
+      "checkedAt": "2026-10-27T02:50:07.432Z",
+      "evidence": "Mahira Select gold-and-ivory storefront renders its original saree portrait, header logo, collection links and More Than Fashion hero without script errors.",
+      "media": {
+        "first": [
+          {
+            "ready": 0,
+            "src": "assets/women-clean.jpg?v=3",
+            "tag": "IMG",
+            "width": 1672
+          },
+          {
+            "ready": 0,
+            "src": "assets/s3-bg.jpg?v=1",
+            "tag": "IMG",
+            "width": 1536
+          },
+          {
+            "ready": 0,
+            "src": "assets/s3-sarees.jpg?v=5",
+            "tag": "IMG",
+            "width": 397
+          },
+          {
+            "ready": 0,
+            "src": "assets/s3-kurta.jpg?v=5",
+            "tag": "IMG",
+            "width": 397
+          }
+        ],
+        "loadedImages": 5,
+        "readyVideos": 0,
+        "total": 20
+      },
+      "errors": [],
+      "screenshot": "/screenshots/REF-032.jpg"
+    },
+    {
+      "id": "REF-019",
+      "sourceCommit": "b6d5a3e8d3e5bbd5377e189b787b0b74d2aa2e68",
+      "route": "/previews/REF-019/",
+      "status": "Working",
+      "scope": "local",
+      "checkedAt": "2026-10-27T02:50:16.278Z",
+      "evidence": "Green cutting-mat hero, Gireesh lettering, scissors, pencil, glasses and stationery render with the original imagery.",
+      "media": {
+        "first": [
+          {
+            "ready": 0,
+            "src": "assets/folder.webp",
+            "tag": "IMG",
+            "width": 500
+          },
+          {
+            "ready": 0,
+            "src": "assets/scissors.webp",
+            "tag": "IMG",
+            "width": 493
+          },
+          {
+            "ready": 0,
+            "src": "assets/glasses.webp",
+            "tag": "IMG",
+            "width": 527
+          },
+          {
+            "ready": 0,
+            "src": "assets/pencil.webp",
+            "tag": "IMG",
+            "width": 478
+          }
+        ],
+        "loadedImages": 10,
+        "readyVideos": 0,
+        "total": 13
+      },
+      "errors": [],
+      "screenshot": "/screenshots/REF-019.jpg"
+    },
+    {
+      "id": "REF-048",
+      "sourceCommit": "f833f3dc883c5d5dff3765cb91b1d0012b28d5b8",
+      "route": "/previews/REF-048/",
+      "status": "Working",
+      "scope": "local",
+      "checkedAt": "2026-10-27T02:50:22.694Z",
+      "evidence": "Steps AI blue-and-white hero, product navigation and original fan of ecommerce, WhatsApp, education and healthcare cards render.",
+      "media": {
+        "first": [
+          {
+            "ready": 0,
+            "src": "assets/brands/whatsapp.png",
+            "tag": "IMG",
+            "width": 300
+          },
+          {
+            "ready": 0,
+            "src": "assets/brands/instagram-icon.png",
+            "tag": "IMG",
+            "width": 300
+          },
+          {
+            "ready": 0,
+            "src": "assets/brands/messenger.png",
+            "tag": "IMG",
+            "width": 300
+          },
+          {
+            "ready": 0,
+            "src": "assets/industries/ecommerce.webp",
+            "tag": "IMG",
+            "width": 1254
+          }
+        ],
+        "loadedImages": 52,
+        "readyVideos": 0,
+        "total": 85
+      },
+      "errors": [],
+      "screenshot": "/screenshots/REF-048.jpg"
+    },
+    {
+      "id": "REF-050",
+      "sourceCommit": "dd287d579d6888df7162151c9a2ba695e54d8514",
+      "route": "/previews/REF-050/",
+      "status": "Working",
+      "scope": "local",
+      "checkedAt": "2026-10-27T02:50:38.608Z",
+      "evidence": "TGTS government-style masthead, leadership portraits, TELANGANA heading and original Secretariat hero render. This is a design concept.",
+      "media": {
+        "first": [
+          {
+            "ready": 0,
+            "src": "assets/official/telangana-emblem.png",
+            "tag": "IMG",
+            "width": 1000
+          },
+          {
+            "ready": 0,
+            "src": "assets/official/revanth-reddy.png",
+            "tag": "IMG",
+            "width": 250
+          },
+          {
+            "ready": 0,
+            "src": "assets/official/sridhar-babu.jpg",
+            "tag": "IMG",
+            "width": 262
+          },
+          {
+            "ready": 0,
+            "src": "assets/official/chairman-manne-sateesh-kumar.png",
+            "tag": "IMG",
+            "width": 217
+          }
+        ],
+        "loadedImages": 49,
+        "readyVideos": 0,
+        "total": 61
+      },
+      "errors": [],
+      "screenshot": "/screenshots/REF-050.jpg"
+    },
+    {
+      "id": "REF-051",
+      "sourceCommit": "410cb57732c537382afc8f2497dca7558f0139c9",
+      "route": "/previews/REF-051/",
+      "status": "Working",
+      "scope": "local",
+      "checkedAt": "2026-10-27T02:50:46.706Z",
+      "evidence": "TESERACT black-and-white studio hero, brand mark, project controls and original work imagery render.",
+      "media": {
+        "first": [
+          {
+            "ready": 0,
+            "src": "./assets/brand/logo-mark-3d-96.webp",
+            "tag": "IMG",
+            "width": 96
+          },
+          {
+            "ready": 0,
+            "src": "./assets/brand/logo-mark-3d-96.webp",
+            "tag": "IMG",
+            "width": 96
+          },
+          {
+            "ready": 0,
+            "src": "./assets/brand/logo-mark-3d-96.webp",
+            "tag": "IMG",
+            "width": 96
+          },
+          {
+            "ready": 0,
+            "src": "./assets/brand/logo-mark-3d-96.webp",
+            "tag": "IMG",
+            "width": 96
+          }
+        ],
+        "loadedImages": 81,
+        "readyVideos": 1,
+        "total": 140
+      },
+      "errors": [],
+      "screenshot": "/screenshots/REF-051.jpg"
+    },
+    {
+      "id": "REF-054",
+      "sourceCommit": "02801fe8037d9a8f08f43ddce91be6c1df26fab0",
+      "route": "/previews/REF-054/",
+      "status": "Working",
+      "scope": "local",
+      "checkedAt": "2026-10-27T02:50:56.901Z",
+      "evidence": "VĀRA saree-house curved portrait ribbon, navigation and original product photography render.",
+      "media": {
+        "first": [
+          {
+            "ready": 0,
+            "src": "assets/gold.webp",
+            "tag": "IMG",
+            "width": 1024
+          },
+          {
+            "ready": 0,
+            "src": "assets/green.webp",
+            "tag": "IMG",
+            "width": 1024
+          },
+          {
+            "ready": 0,
+            "src": "assets/blue.webp",
+            "tag": "IMG",
+            "width": 1024
+          },
+          {
+            "ready": 0,
+            "src": "assets/pink.webp",
+            "tag": "IMG",
+            "width": 1024
+          }
+        ],
+        "loadedImages": 34,
+        "readyVideos": 0,
+        "total": 34
+      },
+      "errors": [],
+      "screenshot": "/screenshots/REF-054.jpg"
+    },
+    {
+      "id": "REF-053",
+      "sourceCommit": "dd84c6fa739d302a35b5541d39ad6932f6f863a1",
+      "route": "/previews/REF-053/",
+      "status": "Partial",
+      "scope": "local",
+      "checkedAt": "2026-10-27T02:51:05.092Z",
+      "evidence": "The original VĀRA Studio code-only layout renders, but its source contains no required photographs or font assets. No imagery is fabricated or borrowed from the separate saree-house reference.",
+      "media": {
+        "first": [
+          {
+            "ready": 0,
+            "src": "assets/gold.webp",
+            "tag": "IMG",
+            "width": 0
+          },
+          {
+            "ready": 0,
+            "src": "assets/green.webp",
+            "tag": "IMG",
+            "width": 0
+          },
+          {
+            "ready": 0,
+            "src": "assets/blue.webp",
+            "tag": "IMG",
+            "width": 0
+          },
+          {
+            "ready": 0,
+            "src": "assets/pink.webp",
+            "tag": "IMG",
+            "width": 0
+          }
+        ],
+        "loadedImages": 0,
+        "readyVideos": 0,
+        "total": 34
+      },
+      "errors": [],
+      "screenshot": null
+    },
+    {
+      "id": "REF-047",
+      "sourceCommit": "560e9e90ee7b4b1d31570805943586289399ea42",
+      "route": "/previews/REF-047/",
+      "status": "Working",
+      "scope": "local",
+      "checkedAt": "2026-10-27T02:51:15.494Z",
+      "evidence": "Red-lit developer portrait, dark floating navigation, GIREESH title and notification render. Embedded third-party Spline scenes are outside this opening check.",
+      "media": {
+        "first": [
+          {
+            "ready": 0,
+            "src": "assets/hero-portrait.jpg",
+            "tag": "IMG",
+            "width": 1408
+          },
+          {
+            "ready": 0,
+            "src": "assets/hero-portrait.jpg",
+            "tag": "IMG",
+            "width": 1408
+          },
+          {
+            "ready": 0,
+            "src": "assets/aircraft.jpg",
+            "tag": "IMG",
+            "width": 538
+          },
+          {
+            "ready": 0,
+            "src": "assets/portrait.jpg",
+            "tag": "IMG",
+            "width": 476
+          }
+        ],
+        "loadedImages": 6,
+        "readyVideos": 0,
+        "total": 10
+      },
+      "errors": [],
+      "screenshot": "/screenshots/REF-047.jpg"
+    },
+    {
+      "id": "REF-046",
+      "sourceCommit": "32a276ed3fd6d3f7d744f1fd8342732deddf2920",
+      "route": "/previews/REF-046/",
+      "status": "Unavailable",
+      "scope": "local",
+      "checkedAt": "2026-10-27T02:51:27.916Z",
+      "evidence": "The SIAARA opening remains on a blank cream stage. Its intro throws Cannot read properties of null (reading state), consistent with the unavailable WebGL renderer. The original design is not replaced.",
+      "media": {
+        "first": [
+          {
+            "ready": 0,
+            "src": "assets/img/hero-clean.jpg",
+            "tag": "IMG",
+            "width": 1600
+          },
+          {
+            "ready": 0,
+            "src": "assets/img/line-florals.png",
+            "tag": "IMG",
+            "width": 233
+          },
+          {
+            "ready": 0,
+            "src": "assets/img/collection/pink.jpg",
+            "tag": "IMG",
+            "width": 222
+          },
+          {
+            "ready": 0,
+            "src": "assets/img/collection/orange.jpg",
+            "tag": "IMG",
+            "width": 242
+          }
+        ],
+        "loadedImages": 41,
+        "readyVideos": 0,
+        "total": 41
+      },
+      "errors": [
+        {
+          "message": "TypeError: Cannot read properties of null (reading 'state')\n    at startIntro ([local-preview]/previews/REF-046/js/intro.js:323:21)\n    at boot ([local-preview]/previews/REF-046/js/main.js:62:3)\n    at [local-preview]/previews/REF-046/js/main.js:206:3",
+          "source": "[local-preview]/previews/REF-046/js/intro.js"
+        }
+      ],
+      "screenshot": null
+    },
+    {
+      "id": "REF-045",
+      "sourceCommit": "e2b52fceb0cc75d8d7302280842cbf96a5684e22",
+      "route": "/previews/REF-045/",
+      "status": "Working",
+      "scope": "local",
+      "checkedAt": "2026-10-27T02:51:40.195Z",
+      "evidence": "Yellow Shin-chan opening, original character film, navigation and cartoon lettering render. The screenshot verifies the opening; pointer-driven 3D behavior is outside this check.",
+      "media": {
+        "first": [
+          {
+            "ready": 4,
+            "src": "assets/hero.mp4",
+            "tag": "VIDEO",
+            "width": 1920
+          },
+          {
+            "ready": 0,
+            "src": "assets/cast/family.webp",
+            "tag": "IMG",
+            "width": 736
+          },
+          {
+            "ready": 0,
+            "src": "assets/cast/group.webp",
+            "tag": "IMG",
+            "width": 735
+          },
+          {
+            "ready": 0,
+            "src": "assets/cast/kazama.webp",
+            "tag": "IMG",
+            "width": 340
+          }
+        ],
+        "loadedImages": 12,
+        "readyVideos": 2,
+        "total": 14
+      },
+      "errors": [],
+      "screenshot": "/screenshots/REF-045.jpg"
+    },
+    {
+      "id": "REF-017",
+      "sourceCommit": "50109f5af3a48b534d517be161c1d2a10c61061a",
+      "route": "/previews/REF-017/",
+      "status": "Working",
+      "scope": "local",
+      "checkedAt": "2026-10-27T02:52:57.986Z",
+      "evidence": "ENIGMA red-hat portrait, oversized red wordmark and model-portfolio navigation render with the original imagery.",
+      "media": {
+        "first": [
+          {
+            "ready": 0,
+            "src": "BACKGROUNF%20IMG.jpg",
+            "tag": "IMG",
+            "width": 1600
+          },
+          {
+            "ready": 0,
+            "src": "GIRL%20IMAGE.jpg",
+            "tag": "IMG",
+            "width": 1536
+          },
+          {
+            "ready": 0,
+            "src": "GIRL%20IMAGE.jpg",
+            "tag": "IMG",
+            "width": 1536
+          },
+          {
+            "ready": 0,
+            "src": "TITTLE.jpg",
+            "tag": "IMG",
+            "width": 1600
+          }
+        ],
+        "loadedImages": 41,
+        "readyVideos": 0,
+        "total": 68
+      },
+      "errors": [],
+      "screenshot": "/screenshots/REF-017.jpg"
+    },
+    {
+      "id": "REF-021",
+      "sourceCommit": "baf9df48bfe40f140c12ad199e90b1efc8076bb5",
+      "route": "/previews/REF-021/",
+      "status": "Partial",
+      "scope": "local",
+      "checkedAt": "2026-10-27T02:53:24.619Z",
+      "evidence": "Hidden Stories hospitality opening, interior film and navigation render. Optional service configuration stays empty and booking/account flows remain local demo material.",
+      "media": {
+        "first": [
+          {
+            "ready": 0,
+            "src": "./assets/brand-frame.webp",
+            "tag": "IMG",
+            "width": 1080
+          },
+          {
+            "ready": 4,
+            "src": "./assets/home-tour-1920.mp4",
+            "tag": "VIDEO",
+            "width": 1920
+          },
+          {
+            "ready": 0,
+            "src": "./assets/1600596542815-ffad4c1539a9-2400.webp",
+            "tag": "IMG",
+            "width": 0
+          },
+          {
+            "ready": 0,
+            "src": "./assets/bougainvillea-cascade.webp",
+            "tag": "IMG",
+            "width": 1400
+          }
+        ],
+        "loadedImages": 12,
+        "readyVideos": 1,
+        "total": 46
+      },
+      "errors": [],
+      "screenshot": "/screenshots/REF-021.jpg"
+    },
+    {
+      "id": "REF-010",
+      "sourceCommit": "e61ebf780d63c8941469e070fe08bd7d261495f4",
+      "route": "/previews/REF-010/",
+      "status": "Partial",
+      "scope": "local",
+      "checkedAt": "2026-10-27T02:53:32.927Z",
+      "evidence": "Distressed GIREESH typography, navigation and original video load. The WebGL-dependent walking figure and later 3D scenes could not be visually verified in this browser.",
+      "media": {
+        "first": [
+          {
+            "ready": 4,
+            "src": null,
+            "tag": "VIDEO",
+            "width": 1280
+          },
+          {
+            "ready": 0,
+            "src": "public/projects/person.png",
+            "tag": "IMG",
+            "width": 160
+          },
+          {
+            "ready": 0,
+            "src": null,
+            "tag": "IMG",
+            "width": 0
+          }
+        ],
+        "loadedImages": 1,
+        "readyVideos": 1,
+        "total": 3
+      },
+      "errors": [],
+      "screenshot": "/screenshots/REF-010.jpg"
+    },
+    {
+      "id": "REF-014",
+      "sourceCommit": "902e1d77b45dcce9ae00abb03b4260b84d289c7b",
+      "route": "/previews/REF-014/",
+      "status": "Partial",
+      "scope": "local",
+      "checkedAt": "2026-10-27T02:53:46.033Z",
+      "evidence": "Flaming-skull video, Spirit of Vengeance typography and chapter structure render through the original static fallback. The WebGL fire/reveal effect could not be verified in this browser.",
+      "media": {
+        "first": [
+          {
+            "ready": 4,
+            "src": "assets/video/skull-loop.mp4",
+            "tag": "VIDEO",
+            "width": 1280
+          },
+          {
+            "ready": 0,
+            "src": "assets/img/portrait.jpg",
+            "tag": "IMG",
+            "width": 1179
+          },
+          {
+            "ready": 4,
+            "src": "assets/video/skull-loop.mp4",
+            "tag": "VIDEO",
+            "width": 1280
+          },
+          {
+            "ready": 4,
+            "src": "blob:http://terminal.local:4173/3e819812-6558-49ca-9cf7-1656266b2b29",
+            "tag": "VIDEO",
+            "width": 1180
+          }
+        ],
+        "loadedImages": 37,
+        "readyVideos": 11,
+        "total": 55
+      },
+      "errors": [],
+      "screenshot": "/screenshots/REF-014.jpg"
+    },
+    {
+      "id": "REF-016",
+      "sourceCommit": "a2c8e272acae355c20b25ed4a1593a8aa506d6ad",
+      "route": "/previews/REF-016/",
+      "status": "Unavailable",
+      "scope": "local",
+      "checkedAt": "2026-10-27T02:54:00.492Z",
+      "evidence": "The original Book My Design opening remains behind The Reel loading screen; the console reports THREE.WebGLRenderer Error creating WebGL context. No usable rendered preview is claimed.",
+      "media": {
+        "first": [
+          {
+            "ready": 0,
+            "src": "assets/img/reel-poster.jpg",
+            "tag": "IMG",
+            "width": 1920
+          },
+          {
+            "ready": 0,
+            "src": "assets/video/reel.mp4",
+            "tag": "VIDEO",
+            "width": 0
+          },
+          {
+            "ready": 0,
+            "src": "assets/img/ring-reel.jpg",
+            "tag": "IMG",
+            "width": 0
+          },
+          {
+            "ready": 0,
+            "src": "assets/img/ring-glass.jpg",
+            "tag": "IMG",
+            "width": 640
+          }
+        ],
+        "loadedImages": 12,
+        "readyVideos": 0,
+        "total": 26
+      },
+      "errors": [
+        {
+          "message": "THREE.WebGLRenderer: A WebGL context could not be created. Reason:  Could not create a WebGL context, VENDOR = 0xffff, DEVICE = 0xffff, GL_VENDOR = Disabled, GL_RENDERER = Disabled, Sandboxed = yes, Optimus = no, AMD switchable = no, Reset notification strategy = 0x0000, ErrorMessage = BindToCurrentSequence failed: .",
+          "source": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"
+        },
+        {
+          "message": "THREE.WebGLRenderer: A WebGL context could not be created. Reason:  Could not create a WebGL context, VENDOR = 0xffff, DEVICE = 0xffff, GL_VENDOR = Disabled, GL_RENDERER = Disabled, Sandboxed = yes, Optimus = no, AMD switchable = no, Reset notification strategy = 0x0000, ErrorMessage = BindToCurrentSequence failed: .",
+          "source": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"
+        },
+        {
+          "message": "THREE.WebGLRenderer: Error creating WebGL context.",
+          "source": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"
+        }
+      ],
+      "screenshot": null
+    },
+    {
+      "id": "REF-042",
+      "sourceCommit": "46a0b294b11a0ce53b357f8e64d48953e01f7d85",
+      "route": "/previews/REF-042/",
+      "status": "Working",
+      "scope": "local",
+      "checkedAt": "2026-10-27T02:54:17.312Z",
+      "evidence": "Radhimaa golden title, dark cinematic hero and all six original scene videos load. The captured opening includes the original film and header.",
+      "media": {
+        "first": [
+          {
+            "ready": 4,
+            "src": null,
+            "tag": "VIDEO",
+            "width": 1920
+          },
+          {
+            "ready": 0,
+            "src": "assets/img/title-radhimaa.png",
+            "tag": "IMG",
+            "width": 1583
+          },
+          {
+            "ready": 0,
+            "src": "assets/img/logo-p.png",
+            "tag": "IMG",
+            "width": 175
+          },
+          {
+            "ready": 4,
+            "src": "assets/video/memory-desktop-2x.mp4",
+            "tag": "VIDEO",
+            "width": 2160
+          }
+        ],
+        "loadedImages": 3,
+        "readyVideos": 6,
+        "total": 9
+      },
+      "errors": [],
+      "screenshot": "/screenshots/REF-042.jpg"
+    },
+    {
+      "id": "REF-049",
+      "sourceCommit": "731f07c2afccc8046081e2f887e06b22ec61f787",
+      "route": "/previews/REF-049/",
+      "status": "Working",
+      "scope": "local",
+      "checkedAt": "2026-10-27T02:55:15.926Z",
+      "evidence": "Street Fighter start becomes enabled after media loads. Press Start opens the original DHAILSM film with lifebars and arcade framing; sound was switched off.",
+      "media": {
+        "first": [
+          {
+            "ready": 0,
+            "src": "/previews/REF-049/media/texture/brush-red.png",
+            "tag": "IMG",
+            "width": 1800
+          },
+          {
+            "ready": 0,
+            "src": "/previews/REF-049/media/texture/brush-red.png",
+            "tag": "IMG",
+            "width": 1800
+          },
+          {
+            "ready": 4,
+            "src": "/previews/REF-049/media/video/intro-1920.mp4",
+            "tag": "VIDEO",
+            "width": 1920
+          },
+          {
+            "ready": 4,
+            "src": "/previews/REF-049/media/video/logo-1920.mp4",
+            "tag": "VIDEO",
+            "width": 1920
+          }
+        ],
+        "loadedImages": 7,
+        "readyVideos": 2,
+        "total": 22
+      },
+      "errors": [],
+      "screenshot": "/screenshots/REF-049.jpg"
+    },
+    {
+      "id": "REF-039",
+      "sourceCommit": "5ea19735f09187577eb050c493a7a4a989cbcdfd",
+      "route": "/previews/REF-039/",
+      "status": "Working",
+      "scope": "local",
+      "checkedAt": "2026-10-27T02:55:58.810Z",
+      "evidence": "Dark product-designer portfolio renders its original portrait, oversized greeting, navigation and contact control without script errors.",
+      "media": {
+        "first": [
+          {
+            "ready": 0,
+            "src": "/previews/REF-039/images/hero/portrait.webp",
+            "tag": "IMG",
+            "width": 1450
+          },
+          {
+            "ready": 0,
+            "src": "/previews/REF-039/images/marquee/01-space-voyage.webp",
+            "tag": "IMG",
+            "width": 0
+          },
+          {
+            "ready": 0,
+            "src": "/previews/REF-039/images/marquee/02-codenest.webp",
+            "tag": "IMG",
+            "width": 0
+          },
+          {
+            "ready": 0,
+            "src": "/previews/REF-039/images/marquee/03-vex-ventures.webp",
+            "tag": "IMG",
+            "width": 0
+          }
+        ],
+        "loadedImages": 35,
+        "readyVideos": 0,
+        "total": 74
+      },
+      "errors": [],
+      "screenshot": "/screenshots/REF-039.jpg"
+    }
+  ]
+}
