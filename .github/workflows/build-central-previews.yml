@@ -1,0 +1,102 @@
+name: Build centralized framework previews
+
+on:
+  push:
+    branches:
+      - codex/expand-central-previews-20261027
+    paths:
+      - data/framework-preview-candidates.json
+      - scripts/build-framework-previews.mjs
+      - scripts/recover-ref001-static-export.mjs
+      - scripts/apply-framework-preview-results.mjs
+      - .github/workflows/build-central-previews.yml
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build pinned reference frontends
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - name: Check out preview branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Use Node 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Build isolated static previews
+        run: >-
+          node scripts/build-framework-previews.mjs
+          --output .generated/framework-previews
+          --results .generated/framework-preview-results.json
+
+      - name: Recover REF-001 metadata-only export blocker
+        run: >-
+          node scripts/recover-ref001-static-export.mjs
+          --output .generated/framework-previews
+          --results .generated/framework-preview-results.json
+
+      - name: Upload generated previews
+        uses: actions/upload-artifact@v4
+        with:
+          name: centralized-framework-previews
+          path: |
+            .generated/framework-previews
+            .generated/framework-preview-results.json
+          if-no-files-found: error
+          retention-days: 2
+
+  commit:
+    name: Commit successful previews to the library
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - name: Check out preview branch
+        uses: actions/checkout@v4
+        with:
+          ref: codex/expand-central-previews-20261027
+          fetch-depth: 0
+
+      - name: Use Node 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: centralized-framework-previews
+          path: .generated
+
+      - name: Apply successful builds
+        run: >-
+          node scripts/apply-framework-preview-results.mjs
+          --generated .generated/framework-previews
+          --results .generated/framework-preview-results.json
+
+      - name: Validate catalogue and static library build
+        run: |
+          npm test
+          npm run build
+
+      - name: Commit generated central previews
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/previews data/catalogue.json vercel.json README.md docs/framework-preview-build-results-2026-10-27.json
+          if git diff --cached --quiet; then
+            echo "No successful new preview outputs to commit."
+            exit 0
+          fi
+          git commit -m "Add centralized framework preview builds [preview-build]"
+          git push origin HEAD:codex/expand-central-previews-20261027

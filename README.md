@@ -29,7 +29,11 @@ Discovery on 2026-10-24 found 68 accessible repositories. 59 contain a website i
 
 The gallery supports search, categories, preview-status filters, sorting, browser-local saved references, details, source links, ID copying and a copyable brief for a new independent project. `/inventory` records excluded repositories and reasons. `/reference/ref-014` resolves the permanent ID independently of the current display order.
 
-The October 27 catalogue records 33 working, 5 partial and 21 unavailable previews. All 18 prepared central previews were checked locally; 15 have new actual browser captures. The central checks used exact original media staged locally because the managed preview proxy could not stream some immutable upstream assets. They do not establish that the protected deployment's media rewrites work. Each central entry states this scope; `docs/preview-verification-2026-10-27.json` preserves the observations and limits. Creator-hosted entries retain their earlier check dates.
+The October 27 catalogue records 33 working, 21 partial and 5 unavailable previews. Framework-generated partial previews are build-verified inside this repository but remain Partial until browser rendering and hosted asset delivery are visually verified.
+
+### Framework preview expansion
+
+Framework-only references are prebuilt from immutable creator commits in GitHub Actions, then the generated static runtime is committed under `public/previews/REF-NNN/`. The existing Vercel project only serves those committed files; no additional Vercel projects or separate reference deployments are created. Original public media stays in the creator repository and is requested through the same commit-pinned fallback rewrite pattern already used by the central previews. Builds run with dependency install scripts disabled and a sanitized child-process environment. A successful build is marked Partial until browser QA verifies the rendered identity and media.
 
 ## Preview architecture
 
