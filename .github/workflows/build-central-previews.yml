@@ -7,6 +7,7 @@ on:
     paths:
       - data/framework-preview-candidates.json
       - scripts/build-framework-previews.mjs
+      - scripts/recover-ref001-static-export.mjs
       - scripts/apply-framework-preview-results.mjs
       - .github/workflows/build-central-previews.yml
 
@@ -32,6 +33,12 @@ jobs:
       - name: Build isolated static previews
         run: >-
           node scripts/build-framework-previews.mjs
+          --output .generated/framework-previews
+          --results .generated/framework-preview-results.json
+
+      - name: Recover REF-001 metadata-only export blocker
+        run: >-
+          node scripts/recover-ref001-static-export.mjs
           --output .generated/framework-previews
           --results .generated/framework-preview-results.json
 
