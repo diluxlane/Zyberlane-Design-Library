@@ -29,6 +29,8 @@ Discovery on 2026-10-24 found 68 accessible repositories. 59 contain a website i
 
 The gallery supports search, categories, preview-status filters, sorting, browser-local saved references, details, source links, ID copying and a copyable brief for a new independent project. `/inventory` records excluded repositories and reasons. `/reference/ref-014` resolves the permanent ID independently of the current display order.
 
+The October 27 catalogue records 33 working, 5 partial and 21 unavailable previews. All 18 prepared central previews were checked locally; 15 have new actual browser captures. The central checks used exact original media staged locally because the managed preview proxy could not stream some immutable upstream assets. They do not establish that the protected deployment's media rewrites work. Each central entry states this scope; `docs/preview-verification-2026-10-27.json` preserves the observations and limits. Creator-hosted entries retain their earlier check dates.
+
 ## Preview architecture
 
 One gallery repository and one Vercel project. Existing creator-hosted URLs are retained only after visual verification. Compatible static sites and two original Vite builds are served below `/previews/REF-NNN/`.
@@ -43,7 +45,7 @@ The new Vercel project has Vercel Authentication enabled for **all deployments**
 
 The owner's supplied permission covers this design-reference workflow. It does not establish a blanket license to every third-party font, image, video, trademark, or dependency. Preserve existing notices and check project-specific terms for future adaptations.
 
-Repository visibility is controlled in GitHub settings separately from Vercel protection. The connected GitHub interface cannot change it; verify the repository is private if the catalogue/source itself must be confidential.
+The owner has chosen to keep this GitHub repository public. Its source, catalogue and committed screenshots are publicly readable. Vercel Authentication protects the hosted library independently; never treat repository content as confidential or commit credentials.
 
 ## Future projects
 
