@@ -1,58 +1,113 @@
 # Zyberlane Design Reference Library
 
-An internal website-design selection tool for Dilux. Referenced work belongs to **Gireesh Kumar Reddy and its credited creators**. These projects are design-study references, not Zyberlane client work.
+An internal design-study and website-reference catalogue maintained for **Zyberlane** and Dilux.
 
-This repository and its `zyberlane-design-library` Vercel project are separate from Zyberlane production, client repositories, and the creator's repositories. No custom production domain is used.
+**Live library:** https://zyberlane-design-library.vercel.app
 
-## Run and verify
+> The hosted library may require Vercel Authentication. The public GitHub repository and the protected hosted interface have different access boundaries.
 
-Requires Node 24 (matching the deployment runtime). The gallery has no npm dependencies, database, runtime secrets, or homemade authentication.
+## Overview
 
-```sh
+This project is a standalone reference and selection tool for studying permitted website designs, layouts and implementation patterns. It is **not** the Zyberlane production website, not a client project, and not a claim that the referenced designs were created by Zyberlane.
+
+Referenced work belongs to **Gireesh Kumar Reddy and the respective credited creators/rightsholders**. The library exists to organize authorized design references and centralized previews for study and future independent implementation work.
+
+## Live Site and Deployment
+
+- **Vercel:** https://zyberlane-design-library.vercel.app
+- **Hosting model:** one gallery repository and one Vercel project
+- **Runtime/build:** Node.js 24
+- **Database:** none
+- **Runtime secrets:** none required by the gallery itself
+
+The hosted library uses Vercel Authentication for deployment access. `noindex` is an indexing hint only and is not treated as access control.
+
+## Run and Verify
+
+```bash
 npm test
 npm run build
 ```
 
-Publish the generated `dist/` using the included `vercel.json`. Managed local preview uses `sites-preview start "$PWD"` with an ignored `.openai/hosting.json` selecting `dist` as `static.directory`.
+For local development:
 
-## Catalogue
+```bash
+npm run dev
+```
 
-- `data/catalogue.json` contains the accepted references and the complete source inventory.
-- `data/reference-registry.json` is the permanent ID mapping. **Append IDs; never renumber or reuse them**, including if a reference is removed later.
-- `data/preview-manifest.json` records mirrored text paths and their source pins.
-- `data/preview-snapshots.json` tells the build which immutable public source files to restore, including their Git blob checksums.
-- `encoded-assets/` retains exact screenshot/font bytes in Base64 for connector transport; the build decodes them to ordinary JPEG/font files and verifies SHA-256 checksums. This does not generate, redraw, or alter the screenshots.
-- `docs/preview-compatibility.json` documents compatibility changes to centralized static previews.
-- `docs/build-results.json` records the two additional original frontend builds.
+The project builds the catalogue and centralized static previews from the maintained source inventory.
 
-The maintained library now contains 63 inventoried repositories. 54 contain a website implementation, including variants/redirects. 49 repository implementations are accepted; the six distinct landing-concepts sites receive separate IDs, making 54 catalogue entries. README-only claims are not treated as complete sites. Source classification and visual preview status are separate fields.
+## Catalogue Architecture
 
-The gallery supports search, categories, preview-status filters, sorting, browser-local saved references, details, source links, ID copying and a copyable brief for a new independent project. `/inventory` records excluded repositories and reasons. `/reference/ref-014` resolves the permanent ID independently of the current display order.
+- `data/catalogue.json` — accepted references and source inventory
+- `data/reference-registry.json` — permanent reference IDs; append only, never renumber or reuse
+- `data/preview-manifest.json` — mirrored text paths and source pins
+- `data/preview-snapshots.json` — immutable source restoration metadata and Git blob checksums
+- `encoded-assets/` — exact encoded screenshot/font bytes used for transport and checksum verification
+- `docs/preview-compatibility.json` — documented compatibility changes for centralized previews
+- `docs/build-results.json` — recorded build results for additional frontend references
+- `public/previews/` — committed centralized preview output where applicable
 
-The October 27 catalogue records 33 working and 21 partial previews, with no unavailable entries retained in the library. Framework-generated partial previews are build-verified inside this repository but remain Partial until browser rendering and hosted asset delivery are visually verified.
+The maintained library currently inventories 63 repositories. Fifty-four contain a website implementation, including variants and redirects. Forty-nine repository implementations are accepted; six distinct landing-concept sites receive separate IDs, producing 54 catalogue entries.
 
-### Framework preview expansion
+README-only claims are not treated as complete website implementations. Source classification and visual-preview status are tracked separately.
 
-Framework-only references are prebuilt from immutable creator commits in GitHub Actions, then the generated static runtime is committed under `public/previews/REF-NNN/`. The existing Vercel project only serves those committed files; no additional Vercel projects or separate reference deployments are created. Original public media stays in the creator repository and is requested through the same commit-pinned fallback rewrite pattern already used by the central previews. Builds run with dependency install scripts disabled and a sanitized child-process environment. A successful build is marked Partial until browser QA verifies the rendered identity and media.
+## Library Features
 
-## Preview architecture
+The interface supports:
 
-One gallery repository and one Vercel project. Existing creator-hosted URLs are retained only after visual verification. Compatible static sites and two original Vite builds are served below `/previews/REF-NNN/`.
+- Search and category filtering
+- Preview-status filtering
+- Sorting
+- Browser-local saved references
+- Source and preview links
+- Permanent reference IDs
+- Details and source metadata
+- Copyable project/reference briefs
+- Inventory views for excluded references and reasons
 
-The build restores original static source files from their immutable public commits and verifies Git blob checksums. It uses a local ignored cache when available. Large visual assets stay in the original public repositories. Vercel fallback rewrites request exact pinned commits; no secret, authenticated source access, production database or creator deployment is needed. Local HTML/CSS/JS has only documented URL-prefix/base adjustments. Dependency licenses and source notices remain with the copies. Every retained reference has at least a working or build-verified partial preview.
+The October 27 catalogue records 33 working and 21 partial previews, with no unavailable entries retained in the maintained library. Framework-generated previews remain marked **Partial** until browser rendering and hosted asset delivery are visually verified.
 
-Do not run the creator's deployment scripts, import their `.env` files, activate their contact/commerce integrations, or push to their repositories. Optional Hidden Stories service config is empty in this copy; it uses the original code's demo/keyless fallbacks.
+## Framework Preview Expansion
 
-## Privacy and permission
+Framework-only references can be prebuilt from immutable creator commits in GitHub Actions. Generated static runtime files are committed under `public/previews/REF-NNN/` and served by the existing Vercel project; additional Vercel projects are not created for individual references.
 
-The new Vercel project has Vercel Authentication enabled for **all deployments**. Do not disable protection to test it. The library uses `noindex` as an indexing hint, not as access control. Creator-hosted preview links are outside this protection and retain their own access settings.
+Original public media can remain in the creator repository and be requested through commit-pinned fallback rewrites. Build processes use sanitized environments and dependency-install safeguards. A successful build alone does not prove visual equivalence.
 
-The owner's supplied permission covers this design-reference workflow. It does not establish a blanket license to every third-party font, image, video, trademark, or dependency. Preserve existing notices and check project-specific terms for future adaptations.
+## Preview and Source Integrity
 
-The owner has chosen to keep this GitHub repository public. Its source, catalogue and committed screenshots are publicly readable. Vercel Authentication protects the hosted library independently; never treat repository content as confidential or commit credentials.
+Compatible static sites and selected verified frontend builds are served under centralized `/previews/REF-NNN/` routes.
 
-## Future projects
+The build restores original static source files from immutable public commits and verifies source checksums. Local HTML, CSS and JavaScript changes are limited to documented compatibility adjustments such as path/base handling.
 
-Select a reference, copy its ID/source link or project brief, then create a **new independent repository**. Never turn this library into a client site, replace a reference with a client identity, or integrate it into zyberlane.com.
+Do not:
 
-To refresh: inspect the original repository read-only, record a new source commit, recheck previews and screenshots, and update that reference without changing its ID. If a future reference cannot produce a usable preview, remove it from the maintained library rather than substituting a generated image or claiming it is working.
+- Run a reference creator's deployment scripts
+- Import their `.env` files
+- Activate contact, commerce or production integrations
+- Push changes to creator repositories
+- Present reference work as Zyberlane client work
+- Replace a reference with a client identity inside this library
+
+## Permission, Credits and Rights
+
+The owner states that permission was obtained for this design-reference workflow. That permission does **not** establish a blanket license for every third-party font, image, video, trademark, dependency or other protected asset present in referenced projects.
+
+- Referenced project designs and source remain credited to their respective creators/rightsholders.
+- Third-party dependencies and assets retain their original licenses and terms.
+- Existing notices should be preserved when source material is mirrored or studied.
+- The library's catalogue, tooling and organizational layer do not transfer ownership of referenced work to Zyberlane.
+
+The GitHub repository is intentionally public. Do not commit credentials or material that must remain confidential.
+
+## Future Use
+
+Use the library to select a reference, record its source/ID and then create a **new independent project**. Future implementations should preserve appropriate attribution and should not imply that reference designs are original Zyberlane work.
+
+To refresh a reference, inspect the original source read-only, record a new immutable source commit, recheck previews and screenshots, and update the existing reference without changing its permanent ID.
+
+## Copyright and License
+
+No repository-wide license is intended to grant reuse rights over third-party referenced designs or assets.
+
+The library's own project-specific code and catalogue organization remain subject to the repository owner's rights, while referenced code, designs, fonts, media, trademarks and other third-party material remain subject to their respective owners and licenses.
