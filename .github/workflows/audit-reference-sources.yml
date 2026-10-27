@@ -10,6 +10,7 @@ on:
       - scripts/audit-source-profile.mjs
       - scripts/build-authorized-central-previews.mjs
       - scripts/capture-authorized-previews.mjs
+      - scripts/patch-multisource-ui.mjs
       - .github/workflows/audit-reference-sources.yml
 
 permissions:
@@ -42,6 +43,9 @@ jobs:
       - name: Build authorized central previews
         run: node scripts/build-authorized-central-previews.mjs data/sources/magicinmybones.json public/previews
 
+      - name: Apply multi-source library labels
+        run: node scripts/patch-multisource-ui.mjs
+
       - name: Validate library build before browser checks
         run: |
           npm test
@@ -49,8 +53,8 @@ jobs:
 
       - name: Install browser verifier
         run: |
-          npm install --no-save --ignore-scripts playwright@1.56.1
-          npx playwright@1.56.1 install --with-deps chromium
+          npm install --no-save --ignore-scripts playwright@1.64.1
+          npx playwright@1.64.1 install --with-deps chromium
 
       - name: Start local library
         run: |
@@ -80,7 +84,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/sources/magicinmybones.json public/previews public/screenshots vercel.json docs/magicinmybones-central-build-results.json docs/magicinmybones-visual-verification.json
+          git add data/sources/magicinmybones.json public/previews public/screenshots vercel.json src/app.js docs/magicinmybones-central-build-results.json docs/magicinmybones-visual-verification.json
           if git diff --cached --quiet; then
             echo "No synchronized reference changes."
             exit 0
