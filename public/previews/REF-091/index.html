@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="/previews/REF-091/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Highframe — Build the tools your team actually needs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0c0d0d;
+    --paper:#f4f3f0;
+    --lime:#c7ef6b;
+    --lime-deep:#b6e34f;
+    --green:#16331f;
+    --muted:rgba(255,255,255,.72);
+    --line:rgba(255,255,255,.16);
+    --maxw:1280px;
+    font-family:"Hanken Grotesk",system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:#000;color:#fff;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 40px}
+
+  /* ===== HERO ===== */
+  .hero{position:relative;min-height:700px;overflow:hidden;isolation:isolate}
+  .hero__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+  .hero__scrim{position:absolute;inset:0;z-index:-1;
+    background:
+      linear-gradient(90deg, rgba(8,9,9,.82) 0%, rgba(8,9,9,.55) 38%, rgba(8,9,9,.12) 64%, rgba(8,9,9,.45) 100%),
+      linear-gradient(180deg, rgba(8,9,9,.55) 0%, rgba(8,9,9,0) 22%, rgba(8,9,9,0) 70%, rgba(8,9,9,.85) 100%);
+  }
+
+  /* nav */
+  nav{position:relative;z-index:5}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:88px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:600;font-size:20px;letter-spacing:-.01em}
+  .brand svg{display:block}
+  .nav-links{display:flex;align-items:center;gap:34px}
+  .nav-links a{font-size:15.5px;font-weight:500;color:rgba(255,255,255,.88);display:flex;align-items:center;gap:5px;transition:color .15s}
+  .nav-links a:hover{color:#fff}
+  .nav-links .chev{opacity:.7}
+  .demo-btn{border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:10px 20px;font-size:15px;font-weight:500;color:#fff;transition:.18s;background:rgba(255,255,255,.04);white-space:nowrap}
+  .demo-btn:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.7)}
+
+  /* hero content */
+  .hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr);align-items:center}
+  .hero-copy{padding:78px 0 110px;max-width:620px;position:relative;z-index:4}
+  h1{font-family:"EB Garamond",Georgia,serif;font-size:62px;line-height:1.06;font-weight:400;letter-spacing:-.005em;color:#fff;text-wrap:balance}
+  .sub{margin-top:22px;font-family:"EB Garamond",Georgia,serif;font-size:22px;line-height:1.5;color:var(--muted);max-width:430px;font-weight:400}
+  .cta{display:flex;gap:14px;margin-top:38px;flex-wrap:wrap}
+  .btn{border-radius:999px;font-size:16px;font-weight:600;padding:15px 26px;cursor:pointer;border:none;transition:transform .15s, box-shadow .2s, background .18s}
+  .btn-primary{background:#f4f3f0;color:#121312;box-shadow:0 8px 30px rgba(0,0,0,.35)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,0,0,.45)}
+  .btn-ghost{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px);display:inline-flex;align-items:center;gap:9px}
+  .btn-ghost:hover{background:rgba(255,255,255,.16)}
+  .btn-ghost svg{opacity:.95}
+
+  /* dashboard float (off right edge of hero) */
+  .dash{position:absolute;top:var(--dash-y,90px);left:var(--dash-x,53%);width:var(--dash-w,720px);z-index:3;
+    border-radius:16px;overflow:hidden;
+    box-shadow:0 40px 90px -22px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.06);
+  }
+  .dash img{width:100%}
+
+  /* ===== FOOTER ===== */
+  footer{position:relative;background:#0a0c0b;border-radius:22px 22px 0 0;overflow:hidden;margin-top:-22px;border-top:1px solid rgba(255,255,255,.14)}
+  /* colorful light sitting BEHIND the glass */
+  footer::before{content:"";position:absolute;top:-60px;left:-8%;right:-8%;height:380px;z-index:0;
+    background:
+      radial-gradient(440px 240px at 18% 10%, rgba(232,160,205,1), transparent 68%),
+      radial-gradient(560px 280px at 52% -2%, rgba(168,214,128,1), transparent 70%),
+      radial-gradient(480px 260px at 84% 12%, rgba(90,170,118,1), transparent 70%);
+    filter:blur(20px);opacity:1;
+    -webkit-mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.5) 55%,transparent 95%);mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.5) 55%,transparent 95%);}
+  /* frosted glass layer that diffuses the light above */
+  footer::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    -webkit-backdrop-filter:blur(60px) saturate(135%);backdrop-filter:blur(60px) saturate(135%);
+    background:linear-gradient(180deg, rgba(14,17,15,.34) 0%, rgba(10,12,11,.6) 60%, rgba(10,12,11,.78) 100%);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.18);
+    border-radius:22px 22px 0 0;}
+  footer .wrap{position:relative;z-index:1}
+  .foot-top{display:grid;grid-template-columns:1.1fr 1fr 1fr 1.5fr;gap:30px;padding:72px 0 64px}
+  .fcol h4{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.45);font-weight:600;margin-bottom:22px}
+  .fcol ul{list-style:none;display:flex;flex-direction:column;gap:14px}
+  .fcol a{font-size:16px;color:rgba(255,255,255,.82);font-weight:400;transition:color .15s}
+  .fcol a:hover{color:#fff}
+
+  .fbrand{padding-left:20px}
+  .fbrand .brand{font-size:23px;margin-bottom:20px}
+  .fbrand p{font-size:17px;line-height:1.5;color:rgba(255,255,255,.7);max-width:330px;margin-bottom:26px}
+  .waitlist{display:flex;align-items:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:6px 6px 6px 18px;max-width:380px;gap:10px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+  .waitlist .mail{display:flex;align-items:center;gap:10px;flex:1;color:rgba(255,255,255,.6)}
+  .waitlist input{flex:1;background:none;border:none;outline:none;color:#fff;font-size:15.5px;font-family:inherit}
+  .waitlist input::placeholder{color:rgba(255,255,255,.5)}
+  .waitlist button{background:var(--lime);color:#1a2410;border:none;border-radius:999px;padding:12px 22px;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s}
+  .waitlist button:hover{background:var(--lime-deep)}
+
+  .foot-bottom{border-top:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:space-between;padding:26px 0 38px;gap:20px}
+  .copy{font-size:14.5px;color:rgba(255,255,255,.55)}
+  .socials{display:flex;gap:22px;color:rgba(255,255,255,.6)}
+  .socials a{display:flex;transition:color .15s}
+  .socials a:hover{color:#fff}
+  .legal{display:flex;gap:28px}
+  .legal a{font-size:14.5px;color:rgba(255,255,255,.6);transition:color .15s}
+  .legal a:hover{color:#fff}
+
+  @media (max-width:1100px){
+    h1{font-size:54px}
+  }
+  @media (max-width:860px){
+    .wrap{padding:0 22px}
+    .nav-links{display:none}
+    h1{font-size:42px}
+    .hero{min-height:auto}
+    .hero-copy{padding:54px 0 30px;max-width:none}
+    .dash{position:relative;left:0;top:0;width:100%;margin:0 0 -2px;border-radius:14px}
+    .hero__scrim{background:linear-gradient(180deg,rgba(8,9,9,.5),rgba(8,9,9,.25) 40%,rgba(8,9,9,.7))}
+    .foot-top{grid-template-columns:1fr 1fr;gap:40px 24px}
+    .fbrand{grid-column:1/-1;padding-left:0}
+    .foot-bottom{flex-direction:column;align-items:flex-start;gap:18px}
+  }
+</style>
+</head>
+<body>
+
+<section class="hero" data-screen-label="Hero">
+  <video class="hero__video" autoplay muted loop playsinline poster="">
+    <source src="assets/hero-bg.mp4" type="video/mp4">
+  </video>
+  <div class="hero__scrim"></div>
+
+  <nav>
+    <div class="wrap nav-inner">
+      <a class="brand" href="#">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+          <circle cx="13" cy="13" r="12" stroke="#fff" stroke-width="1.6"/>
+          <path d="M13 5a8 8 0 1 1-5.66 2.34" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="13" cy="13" r="2.4" fill="#fff"/>
+        </svg>
+        Highframe
+      </a>
+      <div class="nav-links">
+        <a href="#">Product <svg class="chev" width="11" height="11" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></a>
+        <a href="#">Resources <svg class="chev" width="11" height="11" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></a>
+        <a href="#">Pricing</a>
+        <a href="#">Customers</a>
+        <a class="demo-btn" href="#">Book a demo</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1>Build the tools your team <em>actually</em> needs</h1>
+      <p class="sub">Turn any process into an intelligent form that routes data and triggers actions instantly.</p>
+      <div class="cta">
+        <button class="btn btn-primary">Get started for free</button>
+        <button class="btn btn-ghost">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M5 3.5v9l7-4.5-7-4.5z" fill="#fff"/></svg>
+          Watch demo
+        </button>
+      </div>
+    </div>
+    <div class="dash">
+      <img src="assets/dashboard.png" alt="DataFlow Orchestrator dashboard">
+    </div>
+  </div>
+</section>
+
+<footer data-screen-label="Footer">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="fcol">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#">Workflow builder</a></li>
+          <li><a href="#">AI automations</a></li>
+          <li><a href="#">Smart forms</a></li>
+          <li><a href="#">Data connections</a></li>
+          <li><a href="#">Internal apps</a></li>
+        </ul>
+      </div>
+      <div class="fcol">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Mobile</a></li>
+          <li><a href="#">Manifesto</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Docs</a></li>
+          <li><a href="#">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="fcol">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Customers</a></li>
+        </ul>
+      </div>
+      <div class="fbrand">
+        <div class="brand">
+          <svg width="28" height="28" viewBox="0 0 26 26" fill="none">
+            <circle cx="13" cy="13" r="12" stroke="#fff" stroke-width="1.6"/>
+            <path d="M13 5a8 8 0 1 1-5.66 2.34" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="13" cy="13" r="2.4" fill="#fff"/>
+          </svg>
+          Highframe
+        </div>
+        <p>Skip the dev queue. Build internal workflows, smart forms, and automations without code.</p>
+        <form class="waitlist" onsubmit="return false">
+          <span class="mail">
+            <svg width="17" height="17" viewBox="0 0 18 18" fill="none"><rect x="1.5" y="3.5" width="15" height="11" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M2.5 5l6.5 4.5L15.5 5" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
+            <input type="email" placeholder="Email">
+          </span>
+          <button type="submit">Sign up for waitlist</button>
+        </form>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="copy">© 2026&nbsp;&nbsp;Highframe. All rights reserved.</div>
+      <div class="socials">
+        <a href="#" aria-label="X"><svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor"><path d="M13.8 1.5h2.6l-5.7 6.5 6.7 8.9h-5.2l-4.1-5.4-4.7 5.4H.8l6.1-7-6.4-8.4h5.4l3.7 4.9 4.2-4.9zm-.9 13.8h1.4L5.2 2.9H3.7l9.2 12.4z"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor"><path d="M4.2 6.5H1.4V16h2.8V6.5zM2.8 1.5a1.6 1.6 0 100 3.2 1.6 1.6 0 000-3.2zM16.6 16h-2.8v-4.9c0-1.2-.4-2-1.5-2-.8 0-1.3.6-1.5 1.1-.1.2-.1.5-.1.8V16H7.9s.04-8.6 0-9.5h2.8v1.3c.4-.6 1-1.5 2.6-1.5 1.9 0 3.3 1.2 3.3 3.9V16z"/></svg></a>
+        <a href="#" aria-label="GitHub"><svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor"><path d="M9 1.2a7.8 7.8 0 00-2.5 15.2c.4.1.5-.2.5-.4v-1.4c-2.2.5-2.7-1-2.7-1-.3-.9-.8-1.2-.8-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.3.7.1-.5.3-.9.5-1.1-1.8-.2-3.6-.9-3.6-3.9 0-.9.3-1.6.8-2.1-.1-.2-.4-1 .1-2.1 0 0 .7-.2 2.2.8a7.5 7.5 0 014 0c1.5-1 2.2-.8 2.2-.8.5 1.1.2 1.9.1 2.1.5.5.8 1.2.8 2.1 0 3-1.8 3.7-3.6 3.9.3.3.6.8.6 1.6v2.4c0 .2.1.5.5.4A7.8 7.8 0 009 1.2z"/></svg></a>
+      </div>
+      <div class="legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div id="tweaks-root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "dashWidth": 670,
+  "dashX": 59,
+  "dashY": 55
+}/*EDITMODE-END*/;
+
+function applyDash(t){
+  const r = document.documentElement.style;
+  r.setProperty('--dash-w', t.dashWidth + 'px');
+  r.setProperty('--dash-x', t.dashX + '%');
+  r.setProperty('--dash-y', t.dashY + 'px');
+}
+
+function TweakApp(){
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  React.useEffect(() => { applyDash(t); }, [t]);
+  return (
+    <TweaksPanel>
+      <TweakSection label="Dashboard" />
+      <TweakSlider label="Size" value={t.dashWidth} min={420} max={980} step={10} unit="px"
+                   onChange={(v) => setTweak('dashWidth', v)} />
+      <TweakSlider label="Horizontal" value={t.dashX} min={30} max={72} step={1} unit="%"
+                   onChange={(v) => setTweak('dashX', v)} />
+      <TweakSlider label="Vertical" value={t.dashY} min={20} max={260} step={5} unit="px"
+                   onChange={(v) => setTweak('dashY', v)} />
+    </TweaksPanel>
+  );
+}
+
+// apply default (persisted) values immediately so the dash is positioned on load
+applyDash(TWEAK_DEFAULTS);
+
+ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<TweakApp />);
+</script>
+
+</body>
+</html>

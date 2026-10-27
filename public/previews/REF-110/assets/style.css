@@ -1,0 +1,377 @@
+
+/* ------------------------------------------------------------------
+   Fonts (local, offline)
+   Display + UI : Instrument Sans 400 / 500 / 600
+   Accent       : Instrument Serif Italic
+------------------------------------------------------------------ */
+@font-face{font-family:"Instrument Sans";font-style:normal;font-weight:400 700;font-stretch:75% 100%;font-display:block;src:url(instrument-sans.woff2) format("woff2")}
+@font-face{font-family:"Instrument Serif";font-style:italic;font-weight:400;font-display:block;src:url(instrument-serif-italic.woff2) format("woff2")}
+
+/* ------------------------------------------------------------------
+   Scale system
+   The layout is authored in the reference's own pixel grid (855 x 611).
+   --u is one reference pixel, resolved against the viewport, so every
+   measurement below is the measured value times --u.
+   Panels and anchors are viewport-relative (they always fill the screen);
+   only sizes/offsets scale with --u, so no viewport ever letterboxes.
+------------------------------------------------------------------ */
+:root{
+  --u: min(calc(100vw / 855), calc(100vh / 611));
+  --vh: 100vh;
+  --lime:#D7E99C;
+  --ink:#151615;
+  --ink-soft:#696C64;
+  --muted:#C3C4C1;
+  --card-dark:#2C3426;
+  --chip:#EFF2E9;
+  --cta:#BDE634;
+  --neg:#E5714D;
+  --visual-w: calc(100vw * 396.1 / 855);
+}
+@supports (height: 100dvh){
+  :root{ --u: min(calc(100vw / 855), calc(100dvh / 611)); --vh: 100dvh; }
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  background:var(--lime);
+  font-family:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-stretch:95%;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:geometricPrecision;
+  overflow:hidden;
+}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:calc(2 * var(--u)) solid #8DB21C;outline-offset:calc(2 * var(--u))}
+
+/* ------------------------------------------------------------------
+   Page shell — fills the viewport exactly (no top/bottom gutter)
+------------------------------------------------------------------ */
+.page{
+  position:relative;
+  width:100vw;
+  height:var(--vh);
+  background:#fff;
+  border-radius:calc(16 * var(--u));
+  overflow:hidden;
+}
+
+/* ---------- Left: photographic panel ---------- */
+.visual{
+  position:absolute;
+  left:calc(2.33 * var(--u));
+  top:calc(5.2 * var(--u));
+  bottom:calc(5 * var(--u));
+  width:var(--visual-w);
+  border-radius:calc(11 * var(--u));
+  overflow:hidden;
+  isolation:isolate;
+  background:#5f7a52;
+}
+.photo{
+  position:absolute;inset:0;
+  background:url(hero-photo.jpg) 50% 50% / cover no-repeat;
+}
+.dust{position:absolute;left:0;top:0;width:100%;height:auto;pointer-events:none}
+
+.cluster{
+  position:absolute;
+  left:calc(50% - calc(159.4 * var(--u)));
+  top:calc(calc(50.2 * var(--u)) + (100% - calc(600.8 * var(--u))) * 0.3);
+  width:calc(318.5 * var(--u));
+  height:calc(386.5 * var(--u));
+}
+.card{position:absolute;overflow:hidden}
+
+/* balance card */
+.balance{
+  left:calc(22.6 * var(--u));top:0;width:calc(190.6 * var(--u));height:calc(183.3 * var(--u));
+  background:var(--lime);
+  border-radius:calc(12 * var(--u));
+  z-index:1;
+}
+.balance .label{
+  position:absolute;left:calc(16.2 * var(--u));top:calc(19.4 * var(--u));
+  font-size:calc(8.2 * var(--u));line-height:1;font-weight:500;letter-spacing:0em;
+  color:#2B3220;text-transform:uppercase;white-space:nowrap;
+}
+.balance .amount{
+  position:absolute;left:calc(15.6 * var(--u));top:calc(40.7 * var(--u));
+  font-size:calc(29 * var(--u));line-height:1;font-weight:550;letter-spacing:-.025em;
+  color:#16200B;white-space:nowrap;font-variant-numeric:proportional-nums;
+}
+.balance .delta{
+  position:absolute;left:calc(16.4 * var(--u));top:calc(78.6 * var(--u));width:calc(80 * var(--u));height:calc(25 * var(--u));
+  display:flex;align-items:center;justify-content:center;
+  background:#fff;border-radius:calc(5 * var(--u));
+  font-size:calc(11 * var(--u));font-weight:500;letter-spacing:0em;color:#242722;white-space:nowrap;
+}
+.balance .more{
+  position:absolute;left:calc(15.9 * var(--u));top:calc(157.6 * var(--u));
+  font-size:calc(7.6 * var(--u));line-height:1;font-weight:500;letter-spacing:.01em;
+  color:#384224;text-transform:uppercase;white-space:nowrap;
+  padding-bottom:calc(2.4 * var(--u));padding-right:calc(5 * var(--u));
+  border-bottom:calc(1 * var(--u)) solid rgba(56,66,36,.55);
+}
+.balance .dot{
+  position:absolute;left:calc(174.4 * var(--u));top:calc(10.6 * var(--u));width:calc(6 * var(--u));height:calc(6 * var(--u));
+  border-radius:50%;background:#000;
+}
+
+/* glass transactions card */
+.glass{
+  left:calc(127.5 * var(--u));top:calc(148.6 * var(--u));width:calc(191 * var(--u));height:calc(238 * var(--u));
+  border-radius:calc(12 * var(--u));
+  z-index:2;
+  background:rgba(230,236,218,.56);
+  -webkit-backdrop-filter:blur(calc(14 * var(--u))) saturate(.8);
+  backdrop-filter:blur(calc(14 * var(--u))) saturate(.8);
+  box-shadow:inset 0 0 0 calc(1 * var(--u)) rgba(255,255,255,.18);
+}
+.tx{position:absolute;left:calc(8 * var(--u));right:calc(9.5 * var(--u));}
+.tx .name{
+  position:absolute;left:0;top:calc(1 * var(--u));width:calc(120 * var(--u));
+  font-size:calc(20 * var(--u));line-height:calc(22 * var(--u));font-weight:525;letter-spacing:-.01em;color:#1B2013;
+}
+.tx .when{
+  position:absolute;left:calc(.4 * var(--u));
+  font-size:calc(6 * var(--u));line-height:1;font-weight:500;letter-spacing:.04em;
+  color:#3C4336;text-transform:uppercase;white-space:nowrap;
+}
+.tx .amt{
+  position:absolute;right:0;height:calc(25 * var(--u));
+  display:flex;align-items:center;justify-content:center;
+  background:#EEF1E7;border-radius:calc(5 * var(--u));
+  font-size:calc(10.5 * var(--u));font-weight:500;letter-spacing:0em;color:#22261D;white-space:nowrap;
+}
+.tx .amt.neg{color:var(--neg)}
+.tx1{top:calc(13.2 * var(--u))} .tx1 .amt{top:calc(.8 * var(--u));width:calc(48 * var(--u))} .tx1 .when{top:calc(50.2 * var(--u))}
+.tx2{top:calc(89.2 * var(--u))} .tx2 .amt{top:calc(.8 * var(--u));width:calc(43 * var(--u))} .tx2 .when{top:calc(27.2 * var(--u))}
+.tx3{top:calc(141.2 * var(--u))} .tx3 .amt{top:calc(1.8 * var(--u));width:calc(33 * var(--u))}
+.tx2 .name{letter-spacing:-.022em}
+.tx3 .name{letter-spacing:.0325em;top:calc(4.5 * var(--u))} .tx3 .when{top:calc(28.2 * var(--u))}
+.rule{position:absolute;left:calc(9.5 * var(--u));right:calc(9.5 * var(--u));height:calc(1 * var(--u));background:rgba(255,255,255,.16)}
+.rule.r1{top:calc(78.6 * var(--u))} .rule.r2{top:calc(130.6 * var(--u))}
+.notice{
+  position:absolute;left:calc(10.5 * var(--u));top:calc(187 * var(--u));width:calc(171 * var(--u));height:calc(41 * var(--u));
+  background:#EFF2E9;border-radius:calc(6 * var(--u));
+}
+.notice p{
+  position:absolute;left:calc(7.4 * var(--u));top:calc(8.6 * var(--u));
+  font-size:calc(10.2 * var(--u));line-height:1;font-weight:450;letter-spacing:-.027em;color:#262A20;white-space:nowrap;
+}
+.notice a{
+  position:absolute;left:calc(7.1 * var(--u));top:calc(24.4 * var(--u));
+  font-size:calc(6.6 * var(--u));line-height:1;font-weight:500;letter-spacing:-.037em;color:#3B3E34;
+  text-transform:uppercase;white-space:nowrap;
+  padding-bottom:calc(2.4 * var(--u));border-bottom:calc(1 * var(--u)) solid rgba(59,62,52,.6);
+}
+
+/* virtual debit card */
+.vcard{
+  left:0;top:calc(209.6 * var(--u));width:calc(189 * var(--u));height:calc(127 * var(--u));
+  background:var(--card-dark);
+  border-radius:calc(11 * var(--u));
+  z-index:3;
+  color:#F1F3ED;
+}
+.vcard .meta{
+  position:absolute;left:calc(10.6 * var(--u));right:calc(11.8 * var(--u));top:calc(11.7 * var(--u));
+  display:flex;justify-content:space-between;
+  font-size:calc(9.6 * var(--u));line-height:1;font-weight:400;letter-spacing:-.03em;white-space:nowrap;
+}
+.vcard .mark{
+  position:absolute;left:calc(6.2 * var(--u));top:calc(72.6 * var(--u));
+  font-size:calc(52.8 * var(--u));line-height:1;font-weight:525;letter-spacing:-.031em;color:#EBF4D5;
+}
+
+/* greeting */
+.hey{
+  position:absolute;left:calc(34.9 * var(--u));bottom:calc(31 * var(--u));
+  color:#fff;font-weight:600;
+  font-size:calc(51 * var(--u));line-height:calc(49.5 * var(--u));letter-spacing:-.05em;
+}
+.hey em{
+  display:block;
+  font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-weight:400;
+  font-size:calc(61 * var(--u));letter-spacing:-.054em;margin-left:calc(2 * var(--u));margin-top:calc(-2.4 * var(--u));
+}
+
+/* ---------- Right: content panel ---------- */
+.side{
+  position:absolute;top:0;bottom:0;right:0;
+  left:calc(calc(2.33 * var(--u)) + var(--visual-w));
+}
+.topbar{position:absolute;left:0;right:0;top:0;height:calc(72 * var(--u))}
+.icon-btn{
+  position:absolute;top:calc(21 * var(--u));width:calc(29 * var(--u));height:calc(29 * var(--u));border-radius:calc(7 * var(--u));
+  display:grid;place-items:center;
+  transition:transform .2s ease, filter .2s ease;
+}
+.icon-btn:hover{transform:translateY(calc(-1 * var(--u)))}
+.menu{left:calc(18.6 * var(--u));background:var(--chip)}
+.menu svg{width:calc(11 * var(--u));height:calc(10 * var(--u));display:block}
+.account{right:calc(19 * var(--u));background:#242424;box-shadow:0 calc(1 * var(--u)) calc(2 * var(--u)) rgba(0,0,0,.12)}
+.account svg{width:calc(10 * var(--u));height:calc(12 * var(--u));display:block}
+.logo{
+  position:absolute;top:calc(21.6 * var(--u));left:50%;transform:translateX(calc(-50% - calc(8.2 * var(--u))));
+  font-size:calc(29.5 * var(--u));line-height:1;font-weight:550;letter-spacing:-.06em;color:#232921;
+}
+
+.hero{position:absolute;left:0;right:0;top:calc(50% - calc(141.94 * var(--u)));text-align:center}
+.hero h1{
+  position:absolute;left:0;right:0;top:calc(1 * var(--u));
+  font-weight:525;font-size:calc(54 * var(--u));line-height:calc(53 * var(--u));color:var(--ink);
+}
+.hero h1 .l1{display:block;letter-spacing:-.0437em}
+.hero h1 .l2{display:block;letter-spacing:-.030em}
+.hero h1 em{
+  display:block;margin-top:calc(-3.3 * var(--u));
+  font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-weight:400;
+  font-size:calc(61 * var(--u));line-height:calc(49 * var(--u));letter-spacing:-.05em;color:#161715;
+}
+.hero p{
+  position:absolute;left:50%;top:calc(183.2 * var(--u));transform:translateX(-50%);
+  width:calc(222 * var(--u));
+  font-size:calc(12.5 * var(--u));line-height:calc(15.5 * var(--u));font-weight:450;letter-spacing:-.01em;color:var(--ink-soft);
+}
+.cta{
+  position:absolute;left:50%;top:calc(253.44 * var(--u));transform:translateX(-50%);
+  width:calc(151 * var(--u));height:calc(45 * var(--u));border-radius:calc(9 * var(--u));
+  background:var(--cta);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 calc(9 * var(--u)) 0 calc(15.5 * var(--u));
+  font-size:calc(12 * var(--u));font-weight:500;letter-spacing:-.023em;color:#172F02;white-space:nowrap;
+  transition:filter .2s ease, transform .2s ease;
+}
+.cta:hover{filter:brightness(1.04) saturate(1.05)}
+.cta:hover .arrow svg{transform:translateX(calc(2 * var(--u)))}
+.cta .arrow{
+  width:calc(28 * var(--u));height:calc(29 * var(--u));border-radius:calc(5 * var(--u));background:#242424;
+  display:grid;place-items:center;flex:none;
+}
+.cta .arrow svg{width:calc(9 * var(--u));height:calc(8 * var(--u));display:block;transition:transform .2s ease}
+.perks{
+  position:absolute;left:0;right:0;bottom:calc(29.6 * var(--u));
+  display:flex;justify-content:center;align-items:center;gap:calc(11 * var(--u));
+  font-size:calc(12.4 * var(--u));line-height:1;font-weight:400;letter-spacing:.007em;color:var(--muted);white-space:nowrap;
+}
+.perks i{font-style:normal}
+
+/* ==================================================================
+   RESPONSIVE ARCHITECTURE
+   Desktop (base rules above) is locked. It stays active while
+     • the viewport is at least square (photo panel aspect ≥ ~0.47, so the
+       card cluster still fills its panel), and
+     • body copy (12.5u) stays ≥ 12px → width ≥ 821px and height ≥ 587px.
+   Below that, two alternate architectures take over.
+================================================================== */
+
+/* ---------- TABLET: content row above a landscape photo panel ----------
+   Active ≥ 614px wide whenever desktop isn't: 614px is where the tablet
+   composition (640 ref px wide) keeps body copy at ≥ 12px.
+   --u fits the whole composition (≈ 925 ref px tall) inside the viewport;
+   on short windows it floors at 0.96px and the page scrolls instead of
+   shrinking text. */
+@media (min-width: 614px) and (max-aspect-ratio: 999/1000),
+       (min-width: 614px) and (max-width: 820.98px),
+       (min-width: 614px) and (max-height: 586.98px){
+  :root{ --u: min(calc(100vw / 640), max(calc(100vh / 925), 0.96px)); }
+  @supports (height: 100dvh){
+    :root{ --u: min(calc(100vw / 640), max(calc(100dvh / 925), 0.96px)); }
+  }
+  body{overflow-y:auto}
+  .page{
+    width:auto;height:auto;min-height:var(--vh);
+    display:grid;grid-template-rows:calc(468 * var(--u)) minmax(calc(440 * var(--u)), 1fr);
+    padding:0 calc(5 * var(--u)) calc(5 * var(--u));
+  }
+  .side{position:relative;inset:auto;grid-row:1}
+  .menu{left:calc(13.6 * var(--u))}
+  .account{right:calc(14 * var(--u))}
+  .logo{transform:translateX(-50%)}
+  .hero{top:calc(98 * var(--u))}
+  .perks{bottom:calc(24 * var(--u))}
+
+  .visual{position:relative;inset:auto;width:auto;grid-row:2}
+  .photo{background-position:50% 32%}
+  /* greeting keeps its desktop anchor (bottom-left); the cluster is centred
+     in the space to its right, so the two never collide */
+  .cluster{
+    left:calc(calc(225 * var(--u)) + (100% - calc(543.5 * var(--u))) / 2);
+    top:calc(50% - calc(193.25 * var(--u)));
+  }
+}
+
+/* ---------- MOBILE: single flowing column ----------
+   Below 614px the tablet panel can't hold greeting + cluster side by side
+   at a readable scale. Content flows (no absolute stacking), type has
+   readable floors, and the photo panel is sized by its own content. */
+@media (max-width: 613.98px){
+  :root{ --u: min(1px, calc((100vw - 40px) / 330)); }
+  body{overflow-y:auto}
+  .page{
+    width:auto;height:auto;min-height:var(--vh);
+    display:flex;flex-direction:column;
+    padding:0 calc(5 * var(--u)) calc(5 * var(--u));
+  }
+  .side{
+    position:relative;inset:auto;order:1;
+    display:flex;flex-direction:column;align-items:center;
+    padding:0 16px;
+  }
+  .topbar{position:relative;align-self:stretch;margin:0 -16px}
+  .menu{left:calc(13.6 * var(--u))}
+  .account{right:calc(14 * var(--u))}
+  .logo{transform:translateX(-50%)}
+
+  .hero{
+    position:static;
+    display:flex;flex-direction:column;align-items:center;
+    padding-top:calc(40 * var(--u));
+  }
+  .hero h1{position:static}
+  .hero p{
+    position:static;transform:none;
+    width:auto;max-width:min(17.8em, 100%);
+    margin-top:calc(31.4 * var(--u));
+    font-size:max(calc(12.5 * var(--u)), 13.5px);line-height:1.24;
+  }
+  .cta{
+    position:static;transform:none;
+    width:auto;gap:calc(18 * var(--u));margin-top:calc(23.75 * var(--u));
+    font-size:max(calc(12 * var(--u)), 13px);
+  }
+  .perks{
+    position:static;
+    margin:calc(52 * var(--u)) 0 calc(26 * var(--u));
+    font-size:max(calc(12.4 * var(--u)), 12.5px);
+  }
+
+  /* the photo panel is its own scaled component: cards fill the width */
+  .visual{
+    --u: min(1.1px, calc((100vw - 52px) / 318.5));
+    position:relative;inset:auto;width:auto;order:2;
+    display:flex;flex-direction:column;align-items:center;
+    padding:calc(40 * var(--u)) 0 calc(31 * var(--u));
+  }
+  .cluster{position:relative;left:auto;top:auto;flex:none}
+  .hey{position:relative;left:auto;bottom:auto;align-self:flex-start;margin:calc(52 * var(--u)) 0 0 calc(30 * var(--u))}
+}
+
+/* ---------- touch ---------- */
+@media (hover: none){
+  .icon-btn:hover{transform:none}
+  .cta:hover{filter:none}
+  .cta:hover .arrow svg{transform:none}
+}
+@media (pointer: coarse){
+  /* invisible 44px hit area; the visible 29px button is unchanged */
+  .icon-btn::before{content:"";position:absolute;left:50%;top:50%;width:44px;height:44px;transform:translate(-50%,-50%)}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}

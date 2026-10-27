@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="/previews/REF-118/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fb5d10">
+<title>Nexora — Ideas Into Digital Experiences</title>
+<meta name="description" content="Nexora turns bold ideas into engaging, user-focused digital experiences: UI/UX design, AI &amp; automation and web development.">
+<style>
+@font-face{font-family:"Jost";src:url(assets/font-01.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:block}
+
+/* ───────────────────────── Design tokens ─────────────────────────
+   Everything below is authored in the 1546 × 1017 reference space.
+   --u converts one reference pixel into screen pixels.            */
+:root{
+  --white:#fff;
+  --glass-fill:rgba(255,255,255,.075);
+  --glass-line:rgba(255,255,255,.17);
+  --vh:1vh;
+  color-scheme:light;
+}
+@supports (height:100dvh){:root{--vh:1dvh}}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:#f95a14}
+body{font-family:"Jost",ui-sans-serif,system-ui,sans-serif;color:var(--white);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision;font-kerning:normal}
+a{color:inherit;text-decoration:none}
+ul{list-style:none;margin:0;padding:0}
+h1,p{margin:0;font-weight:inherit}
+img,svg{display:block}
+:focus-visible{outline:2px solid #fff;outline-offset:4px;border-radius:4px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ───────────────────────── Stage ───────────────────────── */
+.hero{
+  position:relative;width:100vw;height:calc(var(--vh)*100);overflow:hidden;isolation:isolate;
+  --uw:calc(100vw / 1546);
+  --uh:calc(var(--vh) * 100 / 1017);
+  --u:min(var(--uw), var(--uh));                    /* type & UI scale                    */
+  --wu:min(var(--uh), calc(var(--uw) * 1.12));      /* portrait scale: tracks height       */
+  --mu:min(var(--uw), calc(var(--uh) * 1.25));      /* watermark scale: tracks width       */
+}
+/* Base field: elliptical orange → vermilion falloff (fitted to the reference) */
+.bg{position:absolute;inset:0;z-index:0;
+  background:radial-gradient(96.656% 94.749% at 53.279% 21.632%,#fa5610 0%,#fc630e 20%,#fb630f 40%,#f95a14 60%,#fa4e15 80%,#f64b19 100%)}
+
+/* Four corner-anchored frames. Each is the full reference canvas scaled by --u
+   and pinned to one corner, so every child keeps its exact distance to the
+   edge it belongs to. At 1546×1017 all four frames coincide (pixel exact).   */
+.frame{position:absolute;width:calc(1546*var(--u));height:calc(1017*var(--u));z-index:4;pointer-events:none}
+.frame>*{pointer-events:auto}
+.tl{left:0;top:0}.tr{right:0;top:0}.bl{left:0;bottom:0}.br{right:0;bottom:0}
+.p{position:absolute;left:calc(var(--x)*var(--u));top:calc(var(--y)*var(--u))}
+.ln{position:relative;left:calc(var(--ldx)*var(--u));letter-spacing:calc((var(--ls) + var(--lls))*var(--u))}
+.t{font-size:calc(var(--fs)*var(--u));line-height:calc(var(--lh)*var(--u));letter-spacing:calc(var(--ls)*var(--u));font-weight:var(--fw);white-space:nowrap}
+
+/* ───────────────────────── Portrait + glow ───────────────────────── */
+.model{position:absolute;bottom:0;width:calc(694*var(--wu));height:calc(713*var(--wu));left:calc(50% - 328*var(--wu))}
+.glow{position:absolute;z-index:1;left:-48.602%;top:-57.587%;width:203.948%;height:207.181%;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(254,216,6,1) 0%,rgba(254,216,6,.871) 14.29%,rgba(254,216,6,.836) 28.57%,rgba(254,216,6,.517) 42.86%,rgba(254,216,6,.26) 57.14%,rgba(254,216,6,.1) 71.43%,rgba(254,216,6,.03) 85.71%,rgba(254,216,6,.004) 100%)}
+.model img{position:absolute;z-index:3;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 100%;user-select:none;-webkit-user-drag:none}
+
+/* ───────────────────────── Watermark ───────────────────────── */
+.mark{position:absolute;z-index:2;left:calc(50% - 773*var(--mu));top:calc(160*var(--u));width:calc(1546*var(--mu));height:calc(280*var(--mu));pointer-events:none}
+
+/* ───────────────────────── Header ───────────────────────── */
+.logo{left:calc(40*var(--u));top:calc(28*var(--u));width:calc(230*var(--u));height:calc(50*var(--u))}
+.logo svg{width:100%;height:100%}
+.nav a,.cta{transition:opacity .25s ease}
+.nav a:hover,.cta:hover{opacity:.78}
+.nav .on::after{content:"";position:absolute;left:calc(0.948*var(--u));top:calc(var(--uly)*var(--u));width:calc(52*var(--u));height:calc(1.6*var(--u));background:#fff;border-radius:calc(.5*var(--u))}
+.cta svg{position:absolute;left:calc(var(--ax)*var(--u));top:calc(var(--ay)*var(--u));width:calc(14*var(--u));height:calc(14*var(--u));overflow:visible}
+.menu-btn{display:none}
+
+/* ───────────────────────── Services + glass card ───────────────────────── */
+.card{position:absolute;left:calc(1051*var(--u));top:calc(725.2*var(--u));width:calc(441*var(--u));height:calc(195.5*var(--u));
+  border-radius:calc(8*var(--u));border:max(1px,calc(1*var(--u))) solid rgba(255,255,255,.115);
+  background:linear-gradient(90deg,rgba(255,255,255,.03),rgba(255,255,255,.085));
+  -webkit-backdrop-filter:blur(calc(40*var(--u)));backdrop-filter:blur(calc(40*var(--u)));
+  box-shadow:calc(1*var(--u)) calc(.5*var(--u)) calc(1.5*var(--u)) rgba(120,20,0,.09);transition:background-color .3s ease,transform .3s ease}
+.card:hover{background:linear-gradient(90deg,rgba(255,255,255,.07),rgba(255,255,255,.13))}
+.thumb{position:absolute;left:calc(13.5*var(--u));top:calc(11.3*var(--u));width:calc(184*var(--u));height:calc(166*var(--u));border-radius:calc(6*var(--u));overflow:hidden;background:#8b0a17}
+.thumb img{position:absolute;left:calc(-5*var(--u));top:0;width:calc(194*var(--u));height:calc(194*var(--u));max-width:none}
+.card .arrow{position:absolute;left:calc(var(--ax)*var(--u));top:calc(var(--ay)*var(--u));width:calc(14*var(--u));height:calc(14*var(--u));overflow:visible}
+
+/* ───────── Compact landscape (phones on their side, small laptops): readable minimums + menu ───────── */
+@media (max-width:980px) and (min-aspect-ratio:11/10), (max-height:600px) and (min-aspect-ratio:11/10){
+  .hero{--u:min(var(--uw), calc(var(--uh)*1.3))}
+  .nav,.cta{display:none}
+  .menu-btn{display:grid;left:auto;right:calc(50*var(--u));top:calc(28*var(--u));width:max(40px,calc(46*var(--u)));height:max(40px,calc(46*var(--u)))}
+  .sub{font-size:max(11px,calc(var(--fs)*var(--u)))}
+}
+
+/* ───────── Menu button + sheet (shared) ───────── */
+.menu-btn{place-items:center;position:absolute;z-index:6;border-radius:999px;border:1px solid var(--glass-line);background:var(--glass-fill);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);color:#fff;cursor:pointer;padding:0}
+.menu-btn span{display:block;width:44%;height:1.5px;background:#fff;border-radius:2px;box-shadow:0 6px 0 #fff;transform:translateY(-3px)}
+.sheet{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;justify-content:center;gap:clamp(14px,3.2vh,26px);padding:0 max(24px,7vw);
+  background:rgba(248,82,20,.55);-webkit-backdrop-filter:blur(28px) saturate(1.2);backdrop-filter:blur(28px) saturate(1.2);
+  opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s}
+.sheet.open{opacity:1;visibility:visible}
+.sheet a{font-size:clamp(30px,8.4vmin,56px);font-weight:400;letter-spacing:-.02em;line-height:1.05}
+.sheet a[aria-current]{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:8px}
+.sheet .go{margin-top:12px;font-size:clamp(17px,4.4vmin,22px);display:inline-flex;align-items:center;gap:10px;align-self:flex-start;padding:12px 20px;border-radius:999px;border:1px solid var(--glass-line);background:var(--glass-fill)}
+.sheet .x{position:absolute;top:max(16px,env(safe-area-inset-top));right:16px;width:44px;height:44px;border-radius:999px;border:1px solid var(--glass-line);background:var(--glass-fill);color:#fff;font:300 26px/1 Jost,sans-serif;cursor:pointer}
+
+/* ───────────────────────── Portrait / mobile composition ─────────────────────────
+   Re-flowed on a 390 × 844 grid. --m is one grid pixel; the portrait tracks the
+   viewport height so the screen is always filled edge to edge.                 */
+@media (max-aspect-ratio:11/10){
+  .hero{--m:min(calc(100vw/390), calc(var(--vh)*100/844), 1.9px);--u:var(--m)}
+  .frame{position:absolute;inset:0;width:auto;height:auto}
+  .p{left:auto;top:auto}
+  .t{white-space:normal}
+  .t br{display:none}
+  .ln{left:0;letter-spacing:inherit}
+  .nav,.cta{display:none}
+  .logo{left:calc(20*var(--m));top:calc(24*var(--m));width:calc(124*var(--m));height:calc(27*var(--m))}
+  .menu-btn{display:grid;right:calc(16*var(--m));top:calc(16*var(--m));width:calc(44*var(--m));height:calc(44*var(--m))}
+  .mark{left:calc(14*var(--m));top:calc(58*var(--m));width:calc(100vw - 28*var(--m));height:auto;aspect-ratio:1546/280}
+  .h1{left:calc(20*var(--m));right:calc(20*var(--m));top:calc(146*var(--m));font-size:calc(47*var(--m));line-height:calc(48*var(--m));letter-spacing:calc(-1.4*var(--m))}
+  .h1 br{display:block}
+  .sub{left:calc(20*var(--m));right:calc(40*var(--m));top:calc(252*var(--m));font-size:calc(15.5*var(--m));line-height:calc(23*var(--m));letter-spacing:0;max-width:calc(320*var(--m))}
+  .services{left:calc(20*var(--m));right:calc(20*var(--m));top:calc(312*var(--m));display:flex;flex-wrap:wrap;gap:calc(6*var(--m)) calc(8*var(--m))}
+  .services li{font-size:calc(12.5*var(--m));line-height:1;letter-spacing:.01em;padding:calc(7*var(--m)) calc(11*var(--m));border-radius:999px;border:1px solid var(--glass-line);background:var(--glass-fill);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+  .model{--mh:min(calc(var(--vh)*57), calc(560*var(--m)));height:var(--mh);width:calc(var(--mh)*694/713);left:calc(50% - var(--mh)*.5645)}
+  .card{left:calc(14*var(--m));right:calc(14*var(--m));top:auto;bottom:calc(14*var(--m));width:auto;height:calc(104*var(--m));border-radius:calc(14*var(--m));
+    -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);background:rgba(255,255,255,.1)}
+  .thumb{left:calc(8*var(--m));top:calc(8*var(--m));width:calc(96*var(--m));height:calc(86*var(--m));border-radius:calc(9*var(--m))}
+  .thumb img{left:calc(-3*var(--m));width:calc(102*var(--m));height:calc(102*var(--m))}
+  .card .lp{left:calc(118*var(--m));top:calc(14*var(--m));font-size:calc(13*var(--m));line-height:1}
+  .card .fin{left:calc(118*var(--m));bottom:calc(30*var(--m));font-size:calc(28*var(--m));line-height:1}
+  .card .date{left:calc(118*var(--m));bottom:calc(12*var(--m));font-size:calc(13*var(--m));line-height:1}
+  .card .arrow{left:auto;right:calc(14*var(--m));top:calc(14*var(--m));width:calc(12*var(--m));height:calc(12*var(--m))}
+}
+@media (max-aspect-ratio:11/10) and (min-width:600px){
+  .services{left:auto;right:calc(20*var(--m));top:calc(152*var(--m));flex-direction:column;align-items:flex-end;width:auto}
+  .h1{right:auto}
+}
+@media (prefers-reduced-motion:no-preference){
+  /* Editorial opening: identity, portrait, story, then proof of work. */
+  @keyframes nex-nav{from{opacity:0;translate:0 -7px}to{opacity:1;translate:0 0}}
+  @keyframes nex-portrait{from{opacity:0;translate:0 14px;scale:.985}to{opacity:1;translate:0 0;scale:1}}
+  @keyframes nex-title{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0)}}
+  @keyframes nex-detail{from{opacity:0;translate:0 8px}to{opacity:1;translate:0 0}}
+  @keyframes nex-card{from{opacity:0;translate:0 10px}to{opacity:1;translate:0 0}}
+  .logo{animation:nex-nav .6s cubic-bezier(.2,.8,.2,1) .04s backwards}
+  .nav li{animation:nex-nav .45s cubic-bezier(.2,.8,.2,1) backwards}
+  .nav li:nth-child(1){animation-delay:.12s}.nav li:nth-child(2){animation-delay:.17s}
+  .nav li:nth-child(3){animation-delay:.22s}.nav li:nth-child(4){animation-delay:.27s}
+  .nav li:nth-child(5){animation-delay:.32s}
+  .tr .cta,.menu-btn{animation:nex-nav .54s cubic-bezier(.2,.8,.2,1) .37s backwards}
+  .model img{animation:nex-portrait 1.12s cubic-bezier(.2,.75,.2,1) .16s backwards}
+  .h1{animation:nex-title .88s cubic-bezier(.18,.75,.2,1) .36s backwards}
+  .sub{animation:nex-detail .61s cubic-bezier(.2,.8,.2,1) .67s backwards}
+  .services li{animation:nex-detail .48s cubic-bezier(.2,.8,.2,1) backwards}
+  .services li:nth-child(1){animation-delay:.75s}.services li:nth-child(2){animation-delay:.83s}
+  .services li:nth-child(3){animation-delay:.91s}
+  .card{animation:nex-card .72s cubic-bezier(.2,.8,.2,1) .98s backwards}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+html.entry-complete :is(.logo,.nav li,.tr .cta,.menu-btn,.model img,.h1,.sub,.services li,.card){animation:none!important}
+</style>
+</head>
+<body>
+<main class="hero" id="top">
+  <div class="bg" aria-hidden="true"></div>
+
+  <div class="model">
+    <div class="glow" aria-hidden="true"></div>
+    <img src="assets/image-01.webp" alt="Portrait of a woman in red sunglasses and a red turtleneck" width="1237" height="1271" decoding="async" fetchpriority="high" draggable="false">
+  </div>
+
+  <svg class="mark" viewBox="0 160 1546 280" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="markFade" gradientUnits="userSpaceOnUse" x1="0" y1="174" x2="0" y2="430">
+        <stop offset="0" stop-color="#fff" stop-opacity=".16"/>
+        <stop offset=".14" stop-color="#fff" stop-opacity=".157"/>
+        <stop offset=".3" stop-color="#fff" stop-opacity=".146"/>
+        <stop offset=".45" stop-color="#fff" stop-opacity=".128"/>
+        <stop offset=".61" stop-color="#fff" stop-opacity=".1"/>
+        <stop offset=".69" stop-color="#fff" stop-opacity=".078"/>
+        <stop offset=".77" stop-color="#fff" stop-opacity=".062"/>
+        <stop offset=".84" stop-color="#fff" stop-opacity=".046"/>
+        <stop offset=".92" stop-color="#fff" stop-opacity=".032"/>
+        <stop offset="1" stop-color="#fff" stop-opacity=".014"/>
+      </linearGradient>
+      <mask id="markShape" maskUnits="userSpaceOnUse" x="0" y="160" width="1546" height="280"><g fill="#fff"><path d="M37 174 L41 174 L206 339 L206 174 L246 174 L246 430 L206 430 L206 397 L77 268 L77 430 L37 430Z"/><path d="M270 174 L456.5 174 L456.5 213.5 L270 213.5Z"/><path d="M270 282.5 L428.5 282.5 L428.5 321.5 L270 321.5Z"/><path d="M270 390.5 L456.5 390.5 L456.5 430 L270 430Z"/><path d="M485 174 L532.5 174 L721 430 L673.5 430Z"/><path d="M673.5 174 L721 174 L643 279.93 L619.25 247.68Z"/><path d="M563 324.07 L586.75 356.32 L532.5 430 L485 430Z"/><path d="M745 302A131.5 131.5 0 1 1 1008 302A131.5 131.5 0 1 1 745 302ZM784 302.5A92.5 92.5 0 1 0 969 302.5A92.5 92.5 0 1 0 784 302.5Z"/><path d="M1033 174L1155.5 174A79 79 0 0 1 1155.5 332L1033 332L1033 296.5L1155.5 296.5A42 42 0 0 0 1155.5 211L1033 211Z"/><path d="M1033 296.5 L1072 296.5 L1072 430 L1033 430Z"/><path d="M1112.13 312 L1160.13 312 L1236 430 L1188 430Z"/><path d="M1262 430 L1395 174 L1525 430 L1482.5 430 L1394.52 256.74 L1304.5 430Z"/></g></mask>
+    </defs>
+    <rect x="0" y="160" width="1546" height="280" fill="url(#markFade)" mask="url(#markShape)"/>
+  </svg>
+
+  <!-- top-left -->
+  <div class="frame tl">
+    <a class="p logo" href="#top" aria-label="Nexora — home">
+      <svg viewBox="40 28 230 50" aria-hidden="true" focusable="false"><g fill="#fff"><path d="M46.3 34.4 L46.3 34.4 L70 58.1 L70 34.4 L75.3 34.4 L75.3 70.8 L70 70.8 L70 66.3 L51.6 47.9 L51.6 70.8 L46.3 70.8Z"/><path d="M82.8 34.4 L107.7 34.4 L107.7 39.8 L82.8 39.8Z"/><path d="M82.8 50.2 L104.4 50.2 L104.4 55.4 L82.8 55.4Z"/><path d="M82.8 65.6 L107.7 65.6 L107.7 70.8 L82.8 70.8Z"/><path d="M113.6 34.4 L118.8 34.4 L147.4 70.8 L142.2 70.8Z"/><path d="M142.2 34.4 L147.4 34.4 L135.8 49.16 L133.2 45.85Z"/><path d="M125.6 55.53 L128.2 58.84 L118.8 70.8 L113.6 70.8Z"/><path d="M151.25 52.6A18.1 18.1 0 1 1 187.45 52.6A18.1 18.1 0 1 1 151.25 52.6ZM156.65 52.6A12.7 12.7 0 1 0 182.05 52.6A12.7 12.7 0 1 0 156.65 52.6Z"/><path d="M194.3 34.4L209.6 34.4A11.5 11.5 0 0 1 209.6 57.4L194.3 57.4L194.3 52.3L209.6 52.3A6.4 6.4 0 0 0 209.6 39.5L194.3 39.5Z"/><path d="M194.3 52.3 L199.3 52.3 L199.3 70.8 L194.3 70.8Z"/><path d="M205.04 54 L210.74 54 L222.5 70.8 L216.8 70.8Z"/><path d="M227.7 70.8 L245.3 34.4 L262.5 70.8 L257.2 70.8 L245.24 45.49 L233 70.8Z"/></g></svg>
+    </a>
+  </div>
+
+  <!-- top-right -->
+  <header class="frame tr">
+    <nav class="nav" aria-label="Primary">
+      <ul>
+        <li><a class="p t on" href="#top" aria-current="page" style="--x:878.052;--y:41.576;--fs:21;--lh:21;--ls:0.011;--fw:400;--uly:23.474">Home</a></li>
+        <li><a class="p t" href="#services" style="--x:964.177;--y:42.084;--fs:21;--lh:21;--ls:-0.429;--fw:400">Service</a></li>
+        <li><a class="p t" href="#work" style="--x:1061.317;--y:42.407;--fs:21;--lh:21;--ls:-0.491;--fw:400">Work</a></li>
+        <li><a class="p t" href="#about" style="--x:1141.204;--y:42.431;--fs:21;--lh:21;--ls:-0.601;--fw:400">About</a></li>
+        <li><a class="p t" href="#contact" style="--x:1226.177;--y:42.527;--fs:21;--lh:21;--ls:0.034;--fw:400">Contact</a></li>
+      </ul>
+    </nav>
+    <a class="p t cta" href="#contact" style="--x:1342.661;--y:42.825;--fs:21.4;--lh:21.4;--ls:-0.021;--fw:400;--ax:136.939;--ay:2.775">Start a Project<svg viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="square" aria-hidden="true"><path d="M1.2 12.8 13 1"/><path d="M3.3 1H13v9.7"/></svg></a>
+    <button class="p menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sheet"><span></span></button>
+  </header>
+
+  <!-- bottom-left -->
+  <section class="frame bl" aria-labelledby="headline">
+    <h1 id="headline" class="p t h1" style="--x:52.337;--y:648.938;--fs:85;--lh:81.7;--ls:-2.806;--fw:400"><span class="ln" style="--lls:0.152;--ldx:0.128">Ideas Into Digital</span><br><span class="ln" style="--lls:0.613;--ldx:1.152">Experiences</span></h1>
+    <p class="p t sub" style="--x:58.409;--y:833.601;--fs:23.5;--lh:33.3;--ls:-0.292;--fw:400"><span class="ln" style="--lls:-0.069;--ldx:-0.04">We turn bold ideas into engaging, user-</span><br><span class="ln" style="--lls:0.095;--ldx:-0.76">focused digital experiences.</span></p>
+  </section>
+
+  <!-- bottom-right -->
+  <aside class="frame br" aria-label="Services and latest work">
+    <ul class="p t services" id="services" style="--x:1269.322;--y:563.399;--fs:28.2;--lh:39.75;--ls:-0.189;--fw:400">
+      <li><span class="ln" style="--lls:-0.063;--ldx:0.357">UI/UX Design</span></li><li><span class="ln" style="--lls:-0.167;--ldx:0.688">AI &amp; Automation</span></li><li><span class="ln" style="--lls:0.157;--ldx:0.221">Web Development</span></li>
+    </ul>
+    <a class="card" href="#work" id="work" aria-label="Latest project: Finova, 22 August 2026">
+      <span class="thumb"><img src="assets/image-02.webp" alt="" width="640" height="640" decoding="async"></span>
+      <span class="p t lp" style="--x:211.948;--y:17.673;--fs:20.4;--lh:20.4;--ls:0.461;--fw:400">Latest Project</span>
+      <svg class="arrow" style="--ax:404.9;--ay:20.4" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="square" aria-hidden="true"><path d="M1.2 12.8 13 1"/><path d="M3.3 1H13v9.7"/></svg>
+      <strong class="p t fin" style="--x:211.998;--y:114.618;--fs:40.1;--lh:40.1;--ls:0.181;--fw:400">Finova</strong>
+      <time class="p t date" datetime="2026-08-22" style="--x:212.658;--y:161.126;--fs:19.8;--lh:19.8;--ls:-0.557;--fw:400">22 Aug 2026</time>
+    </a>
+  </aside>
+</main>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Menu">
+  <button class="x" type="button" aria-label="Close menu">&times;</button>
+  <a href="#top" aria-current="page">Home</a><a href="#services">Service</a><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a>
+  <a class="go" href="#contact">Start a Project <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="square" aria-hidden="true"><path d="M1.2 12.8 13 1"/><path d="M3.3 1H13v9.7"/></svg></a>
+</div>
+
+<script>
+(function(){
+  var btn=document.querySelector('.menu-btn'),sheet=document.getElementById('sheet'),x=sheet.querySelector('.x');
+  function set(o){sheet.classList.toggle('open',o);btn.setAttribute('aria-expanded',o);if(o)x.focus();else btn.focus();}
+  btn.addEventListener('click',function(){set(true)});
+  x.addEventListener('click',function(){set(false)});
+  sheet.addEventListener('click',function(e){if(e.target.closest('a'))set(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sheet.classList.contains('open'))set(false)});
+})();
+</script>
+<script>setTimeout(function(){document.documentElement.classList.add("entry-complete")},2300)</script>
+</body>
+</html>

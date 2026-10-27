@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-116/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MindEase — Feel Better Here</title>
+<meta name="description" content="Take care of your mental wellbeing with intelligent, compassionate AI support.">
+<meta name="theme-color" content="#0342b9">
+<style>
+/* Selawik — Microsoft's open-source, metric-compatible stand-in for Segoe UI (the reference face). Subset + embedded. */
+@font-face{font-family:"MindEase Sans";font-weight:300;font-style:normal;font-display:block;src:url(assets/font-01.woff2) format("woff2")}
+@font-face{font-family:"MindEase Sans";font-weight:400;font-style:normal;font-display:block;src:url(assets/font-02.woff2) format("woff2")}
+
+/* ------------------------------------------------------------------
+   Design tokens (sampled from the 1483 × 1061 reference)
+   ------------------------------------------------------------------ */
+:root{
+  --font:"MindEase Sans","Segoe UI",Selawik,"Segoe UI Web (West European)",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",Arial,sans-serif;
+  --sky-top:#0342b9;           /* graded sky, top edge  */
+  --white:#fff;
+  --ink:#050711;               /* paragraph copy        */
+  --ink-strong:#0f1117;        /* "100K+"               */
+  --ink-muted:#6d717a;         /* "Satisfied Client"    */
+  --btn-ghost-border:rgba(255,255,255,.95);
+  --chip-white:rgba(255,255,255,.965);   /* Get Started arrow tile  */
+  --cta-white:rgba(255,255,255,.988);    /* Talk To AI pill         */
+  --badge-white:rgba(255,255,255,.975);  /* ↗ badge on inset photo  */
+  --arc-a:rgba(255,255,255,.10);
+  --arc-b:rgba(255,255,255,.60);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--sky-top);color:var(--white)}
+body{font-family:var(--font);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision;font-kerning:normal}
+a{color:inherit;text-decoration:none}
+ul{list-style:none;margin:0;padding:0}
+h1,h2,p{margin:0;font-weight:400}
+img{display:block}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2px solid #fff;outline-offset:3px}
+
+/* ------------------------------------------------------------------
+   Shared component skins (geometry is set per layout below)
+   ------------------------------------------------------------------ */
+.hero{position:relative;overflow:hidden;isolation:isolate;background:var(--sky-top)}
+.hero__bg{position:absolute;z-index:-1;pointer-events:none}
+.hero__bg img{width:100%;height:100%;object-fit:cover}
+.logo{display:flex;align-items:center;color:#fff}
+.logo svg{display:block;flex:none}
+.logo span{font-weight:300;white-space:nowrap}
+.nav-links a{white-space:nowrap;transition:opacity .2s}
+.nav-links a:hover{opacity:.75}
+.btn-ghost{display:inline-flex;align-items:center;border:1px solid var(--btn-ghost-border);border-radius:3px;white-space:nowrap;color:#fff;transition:background-color .25s}
+.btn-ghost:hover{background:rgba(255,255,255,.08)}
+.tile{display:grid;place-items:center;flex:none}
+.tile svg{display:block}
+.btn-ghost .tile{background:var(--chip-white);color:#272828}
+.btn-solid{display:inline-flex;align-items:center;background:var(--cta-white);color:#000;white-space:nowrap;transition:transform .25s}
+.btn-solid:hover{transform:translateY(-1px)}
+.btn-solid .tile{background:#000;color:#fff}
+.menu-btn{display:grid;place-items:center;background:none;border:0;padding:0;color:#fff;cursor:pointer}
+.menu-btn svg{display:block}
+.goal{display:flex;align-items:center;white-space:nowrap;color:#fff}
+.goal i{flex:none;border-radius:50%;border:solid #fff;position:relative;display:block}
+.goal i::after{content:"";position:absolute;border-radius:50%;background:#fff}
+.display{color:#fff;font-weight:400;text-transform:uppercase;white-space:nowrap}
+.display__row{display:flex;align-items:flex-end}
+.inset{position:relative;display:block;overflow:hidden;flex:1 1 auto}
+.inset img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.inset:hover img{transform:scale(1.05)}
+.inset .badge{position:absolute;display:grid;place-items:center;background:var(--badge-white);color:#000}
+.proof p{color:var(--ink);white-space:nowrap}
+.social{display:flex;align-items:center}
+.avatars{display:flex}
+.avatars img{border-radius:50%;border:solid rgba(255,255,255,.92);object-fit:cover;position:relative}
+.social b{display:block;font-weight:400;color:var(--ink-strong);white-space:nowrap}
+.social small{display:block;color:var(--ink-muted);white-space:nowrap}
+
+/* Menu sheet (glass) — shared */
+.sheet{position:fixed;z-index:20;top:0;right:0;display:flex;flex-direction:column;gap:6px;padding:20px;min-width:min(280px,86vw);
+  background:rgba(8,52,170,.38);border:1px solid rgba(255,255,255,.28);backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);
+  box-shadow:0 24px 60px rgba(0,20,80,.35);border-radius:18px;margin:12px;transform:translateY(-8px) scale(.98);opacity:0;visibility:hidden;transition:.25s ease}
+.sheet.open{opacity:1;visibility:visible;transform:none}
+.sheet a{font-size:18px;padding:10px 12px;border-radius:10px;color:#fff}
+.sheet a:hover{background:rgba(255,255,255,.12)}
+.sheet .btn-solid{margin-top:8px;font-size:16px;padding:8px 8px 8px 14px;gap:24px;justify-content:space-between;border-radius:0}
+.sheet .btn-solid .tile{width:24px;height:24px}
+
+/* ==================================================================
+   1) STAGE LAYOUT — landscape screens ≥ 1000px.
+   Every value is the measured reference pixel × --u, where
+   --u = min(viewport-w / 1483, viewport-h / 1061).
+   Edges anchor to the viewport edges, the top band anchors to the top,
+   the bottom band to the bottom: no letterboxing, no blank bands,
+   at 1483 × 1061 it is the reference 1:1.
+   ================================================================== */
+@media (min-width:1000px) and (min-aspect-ratio:11/10) and (min-height:600px){
+  .hero{--u:min(calc(100vw / 1483), calc(100vh / 1061));height:100vh;width:100%}
+  @supports (height:100svh){.hero{--u:min(calc(100vw / 1483), calc(100svh / 1061));height:100svh}}
+  .hero__bg{inset:0}
+  .hero__bg img{object-position:30% 15%}
+  /* very wide screens crop the photo's own white fade off the bottom — restore it so the dark copy keeps its contrast */
+  @media (min-aspect-ratio:16/10){.hero__bg::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(236,243,255,.72) 0,rgba(236,243,255,.35) 18%,rgba(236,243,255,0) 40%)}}
+
+  .band-top,.band-bottom{position:absolute;left:0;right:0}
+  .band-top{top:0;height:calc(var(--u)*600)}
+  .band-bottom{bottom:0;height:calc(var(--u)*461)}           /* reference y 600 → 1061 */
+  .band-top>*,.band-bottom>*{position:absolute}
+
+  /* header */
+  .logo{left:calc(var(--u)*32);top:calc(var(--u)*30);height:calc(var(--u)*32);gap:0}
+  .logo svg{width:calc(var(--u)*36);height:calc(var(--u)*32)}
+  .logo span{position:absolute;left:calc(var(--u)*43.92);top:calc(var(--u)*2.49);font-size:calc(var(--u)*34.3);line-height:1;letter-spacing:-0.0723em}
+  .nav-links{left:0;right:0;top:0;height:0}
+  .nav-links a{position:absolute;top:calc(var(--u)*39.47);font-size:calc(var(--u)*16.9);line-height:1}
+  .nav-links a:nth-child(1){left:calc(50% + var(--u)*-190.7)}
+  .nav-links a:nth-child(2){left:calc(50% + var(--u)*-70.07)}
+  .nav-links a:nth-child(3){left:calc(50% + var(--u)*46.73)}
+  .actions{right:0;top:0;width:0;height:0}
+  .actions .btn-ghost{position:absolute;right:calc(var(--u)*135.4);top:calc(var(--u)*24.2);height:calc(var(--u)*45.0);
+     padding:0 calc(var(--u)*9.2) 0 calc(var(--u)*16.4);gap:calc(var(--u)*11.99);font-size:calc(var(--u)*17.2);line-height:1;letter-spacing:-0.0147em;border-width:calc(var(--u)*1)}
+  .actions .btn-ghost span{position:relative;top:calc(var(--u)*0.6)}
+  .actions .btn-ghost .tile{width:calc(var(--u)*25);height:calc(var(--u)*25);top:calc(var(--u)*-0.05);position:relative}
+  .actions .btn-ghost .tile svg{width:calc(var(--u)*11);height:calc(var(--u)*10)}
+  .menu-btn{position:absolute;right:calc(var(--u)*47);top:calc(var(--u)*39);width:calc(var(--u)*16);height:calc(var(--u)*16)}
+  .menu-btn svg{width:100%;height:100%}
+
+  /* goals (left arc) */
+  .goals{left:0;top:0;width:calc(var(--u)*260);height:calc(var(--u)*600)}
+  .goals svg.arc{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible}
+  .goal{position:absolute;font-size:calc(var(--u)*18.5);line-height:1;letter-spacing:-0.0045em}
+  .goal i{position:absolute;width:calc(var(--u)*19.6);height:calc(var(--u)*19.6);border-width:calc(var(--u)*1.4)}
+  .goal i::after{inset:calc(var(--u)*2.0)}
+  .goal:nth-child(1){left:calc(var(--u)*121.3);top:calc(var(--u)*137.55)}
+  .goal:nth-child(2){left:calc(var(--u)*66.3);top:calc(var(--u)*329.55)}
+  .goal:nth-child(3){left:calc(var(--u)*119.3);top:calc(var(--u)*521.55)}
+  .goal:nth-child(1) i{left:calc(var(--u)*-34.5);top:calc(var(--u)*-0.95)}
+  .goal:nth-child(2) i{left:calc(var(--u)*-36.0);top:calc(var(--u)*-0.7)}
+  .goal:nth-child(3) i{left:calc(var(--u)*-35.5);top:calc(var(--u)*-0.45)}
+
+  /* intro (headline + CTA), anchored to the viewport centre line */
+  .intro{left:calc(50% + var(--u)*113.44);top:calc(var(--u)*198.55)}
+  .intro h1{font-size:calc(var(--u)*44.2);line-height:calc(var(--u)*47.5);letter-spacing:-0.01em;white-space:nowrap}
+  .intro h1 .l1{letter-spacing:-.0088em}
+  .intro h1 .l2{display:inline-block;margin-left:calc(var(--u)*0.52);letter-spacing:-.0136em}
+  .intro h1 .l3{letter-spacing:-.0078em}
+  .intro .btn-solid{position:absolute;left:calc(var(--u)*0.8);top:calc(var(--u)*174.35);height:calc(var(--u)*42.5);
+     padding:0 calc(var(--u)*9.3) 0 calc(var(--u)*12.91);gap:calc(var(--u)*38.98);font-size:calc(var(--u)*17.5);line-height:1;letter-spacing:0em}
+  .intro .btn-solid span{position:relative;top:calc(var(--u)*0.54)}
+  .intro .btn-solid .tile{width:calc(var(--u)*25);height:calc(var(--u)*25);position:relative;top:calc(var(--u)*-0.45)}
+  .intro .btn-solid .tile svg{width:calc(var(--u)*12);height:calc(var(--u)*11)}
+
+  /* display type — own unit --ud: on wide screens it grows with the width, but never so much
+     that the type climbs into the top band (cap = free height ÷ 332.65 design px); bottom-anchored */
+  @supports (height:100svh){.display{--ud:min(calc(100vw / 1483), calc((100svh - var(--u) * 714) / 332.65)) !important}}
+  .display{--ud:min(calc(100vw / 1483), calc((100vh - var(--u) * 714) / 332.65));left:calc(var(--u)*31.6);right:calc(var(--u)*30.07);bottom:calc(var(--u)*124.2);display:flex;flex-direction:column;gap:calc(var(--ud)*16.65)}
+  .display__row{position:relative}
+  .display__row--1{font-size:calc(var(--ud)*146);line-height:1;justify-content:space-between}
+  .display__row--1 .w1{letter-spacing:-0.0139em}
+  .display__row--1 .w2{letter-spacing:-0.016em}
+  .inset{align-self:flex-start;height:calc(var(--ud)*104.3);margin:calc(var(--ud)*25.15) calc(var(--ud)*6.6) 0 calc(var(--ud)*8.25);flex:1 1 calc(var(--ud)*300);min-width:calc(var(--ud)*300)}
+  .inset .badge{right:calc(var(--ud)*17.2);top:50%;width:calc(var(--ud)*34.9);height:calc(var(--ud)*34.3);margin-top:calc(var(--ud)*-17.25)}
+  .inset .badge svg{width:calc(var(--ud)*13);height:calc(var(--ud)*13)}
+  .display__row--2{align-self:flex-end;margin-right:calc(var(--u)*1.14);font-size:calc(var(--ud)*170);line-height:1;letter-spacing:-0.0288em}
+
+  /* proof (bottom-left) */
+  .proof{left:calc(var(--u)*31.57);top:calc(var(--u)*264.75)}
+  .proof p{font-size:calc(var(--u)*16.7);line-height:calc(var(--u)*22.5);letter-spacing:0em}
+  .social{position:absolute;left:calc(var(--u)*0.43);top:calc(var(--u)*99.95)}
+  .avatars img{width:calc(var(--u)*38.6);height:calc(var(--u)*38.6);border-width:calc(var(--u)*2)}
+  .avatars img+img{margin-left:calc(var(--u)*-12.1)}
+  .social div{position:absolute;left:calc(var(--u)*0);top:0}
+  .social b{position:absolute;top:calc(var(--u)*2.27);left:calc(var(--u)*100.24);font-size:calc(var(--u)*16.9);line-height:1;letter-spacing:0em}
+  .social small{position:absolute;top:calc(var(--u)*27.31);left:calc(var(--u)*100.43);font-size:calc(var(--u)*14.6);line-height:1;letter-spacing:-0.0147em}
+  .goals ul{display:contents}
+  .proof p,.social b,.intro .btn-solid span{-webkit-text-stroke:calc(var(--u)*0.2) currentColor}
+  .stage{display:none}
+}
+
+/* ==================================================================
+   2) FLOW LAYOUT — phones, tablets (portrait & landscape), short/narrow
+   windows. Fluid type, fills the viewport (min-height: 100svh) with the
+   sky colour continuing seamlessly above the photograph, so there is
+   never an empty band at the top or bottom.
+   ================================================================== */
+@media not all and (min-width:1000px) and (min-aspect-ratio:11/10) and (min-height:600px){
+  .hero{--pad:clamp(16px,4.2vw,40px);min-height:100vh;min-height:100svh;display:grid;
+    grid-template-rows:auto auto auto minmax(var(--stage),1fr) auto auto;
+    --stage:clamp(190px,min(56vw,44svh),440px);
+    padding:max(env(safe-area-inset-top),calc(var(--pad)*.9)) var(--pad) max(env(safe-area-inset-bottom),calc(var(--pad)*1.1));
+    row-gap:clamp(14px,3.4vw,28px)}
+  .band-top,.band-bottom{display:contents}
+  .hero__bg{left:0;right:0;bottom:0;grid-row:3 / -1;position:relative;margin:calc(-1 * clamp(40px,10vw,120px)) calc(-1 * var(--pad)) calc(-1 * max(env(safe-area-inset-bottom),calc(var(--pad)*1.1)));
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 clamp(60px,14vw,160px));mask-image:linear-gradient(to bottom,transparent 0,#000 clamp(60px,14vw,160px));grid-column:1}
+  .hero__bg img{position:absolute;inset:0;object-position:28% 8%}
+  .hero>*{grid-column:1}
+  .band-top>*,.band-bottom>*{grid-column:1}
+
+  /* header row */
+  .logo,.nav-links,.actions{grid-row:1}
+  .logo{gap:clamp(8px,1.4vw,12px);align-self:center;justify-self:start}
+  .logo svg{width:clamp(28px,5vw,36px);height:auto;aspect-ratio:36/32}
+  .logo span{font-size:clamp(26px,4.6vw,34px);letter-spacing:-.072em;line-height:1}
+  .nav-links{display:none;justify-self:center;align-self:center;gap:clamp(20px,3.6vw,42px);font-size:clamp(15px,1.9vw,17px)}
+  .actions{justify-self:end;align-self:center;display:flex;align-items:center;gap:clamp(14px,3vw,34px)}
+  .actions .btn-ghost{height:clamp(38px,5.2vw,44px);padding:0 9px 0 clamp(12px,2vw,17px);gap:clamp(8px,1.4vw,12px);font-size:clamp(14px,1.9vw,17px);letter-spacing:-.015em}
+  .actions .btn-ghost .tile{width:clamp(22px,3vw,25px);height:clamp(22px,3vw,25px)}
+  .actions .btn-ghost .tile svg{width:11px;height:10px}
+  .menu-btn{width:24px;height:24px}
+  .menu-btn svg{width:16px;height:16px}
+  @media (min-width:720px){.nav-links{display:flex}}
+  @media (max-width:419px){.actions .btn-ghost span{display:none}.actions .btn-ghost{padding:0 7px;height:38px;border:1px solid var(--btn-ghost-border)}}
+
+  /* intro */
+  .intro{grid-row:2;padding-top:clamp(18px,6vw,56px);display:flex;flex-direction:column;align-items:flex-start;gap:clamp(18px,3.4vw,28px)}
+  .intro h1{font-size:clamp(30px,7.6vw,52px);line-height:1.075;letter-spacing:-.009em;max-width:15ch}
+  .intro h1 br{display:none}
+  @media (min-width:560px){.intro h1 br{display:inline}.intro h1{max-width:none;white-space:nowrap}}
+  .intro .btn-solid{height:clamp(40px,5.4vw,44px);padding:0 8px 0 clamp(12px,1.8vw,14px);gap:clamp(28px,5vw,42px);font-size:clamp(16px,2vw,18px)}
+  .intro .btn-solid .tile{width:25px;height:25px}
+  .intro .btn-solid .tile svg{width:12px;height:11px}
+
+  /* goals — horizontal dashed trail */
+  .goals{grid-row:3;position:relative;align-self:start;z-index:1}
+  .goals ul{display:flex;flex-wrap:wrap;gap:12px var(--g);position:relative}
+  .goals svg.arc{display:none}
+  .goals ul{--g:clamp(16px,4vw,40px)}
+  .goal{position:relative}
+  .goal:not(:last-child)::after{content:"";position:absolute;left:calc(100% + 6px);width:calc(var(--g) - 12px);top:50%;border-top:1px dashed rgba(255,255,255,.55)}
+  .goal{gap:9px;font-size:clamp(14px,3.7vw,18.5px);letter-spacing:-.004em;line-height:20px;padding-right:2px}
+  .goal i{width:19.6px;height:19.6px;border-width:1.4px}
+  .goal i::after{inset:2px}
+  @media (max-width:559px){.goal:not(:last-child)::after{display:none}}
+
+  /* stage (where the portrait breathes) */
+  .stage{grid-row:4;min-height:var(--stage)}
+
+  /* display type */
+  .display{grid-row:5;--fs:min(calc((100vw - 2 * var(--pad)) / 5.62),150px);font-size:var(--fs);line-height:1;letter-spacing:-.016em;display:flex;flex-direction:column;gap:calc(var(--fs) * .14)}
+  .display__row{gap:calc(var(--fs) * .07)}
+  .display__row--1{flex-wrap:wrap;row-gap:calc(var(--fs) * .14)}
+  .display__row--1 .w1{flex-basis:100%;letter-spacing:-.014em}
+  .display__row--1 .w2{letter-spacing:-.016em}
+  .inset{order:2;height:calc(var(--fs) * .714);margin-bottom:calc(var(--fs) * 0.005);min-width:0}
+  .display__row--1 .w2{order:3}
+  .inset .badge{right:calc(var(--fs) * .118);top:50%;width:calc(var(--fs) * .237);height:calc(var(--fs) * .235);transform:translateY(-50%)}
+  .inset .badge svg{width:calc(var(--fs) * .09);height:calc(var(--fs) * .09)}
+  .display__row--2{letter-spacing:-.0288em;justify-content:flex-start}
+  @media (min-width:640px){
+    .display{--fs:min(calc((100vw - 2 * var(--pad)) / 9.74),146px)}
+    .display__row--1 .w1{flex-basis:auto}
+    .display__row--1 .inset{order:0}
+    .display__row--1 .w2{order:0}
+    .display__row--2{justify-content:flex-end;font-size:1.164em}
+  }
+
+  /* proof */
+  .proof{grid-row:6;display:flex;flex-direction:column;gap:clamp(18px,4vw,30px)}
+  .proof p{font-size:clamp(15px,3.9vw,16.7px);line-height:1.347;white-space:normal;max-width:24em}
+  .proof p br{display:none}
+  @media (max-width:420px){.proof p br{display:inline}}
+  .social{gap:11px}
+  .avatars img{width:38.6px;height:38.6px;border-width:2px}
+  .avatars img+img{margin-left:-11.9px}
+  .social b{font-size:17px;line-height:1.2}
+  .social small{font-size:14.6px;line-height:1.3}
+  @media (min-width:640px){.proof{flex-direction:row;align-items:flex-end;justify-content:space-between}}
+}
+@media (prefers-reduced-motion:no-preference){
+  /* The photograph is the still stage; two typographic beats carry the opening. */
+  @keyframes mind-nav{from{opacity:0;translate:0 -6px}to{opacity:1;translate:0 0}}
+  @keyframes mind-type{from{opacity:0;clip-path:inset(0 0 100% 0);translate:0 9px}to{opacity:1;clip-path:inset(0);translate:0 0}}
+  @keyframes mind-detail{from{opacity:0;translate:0 7px}to{opacity:1;translate:0 0}}
+  @keyframes mind-inset{from{opacity:0}to{opacity:1}}
+  .logo{animation:mind-nav .6s cubic-bezier(.2,.8,.2,1) .04s backwards}
+  .nav-links a{animation:mind-nav .46s cubic-bezier(.2,.8,.2,1) backwards}
+  .nav-links a:nth-child(1){animation-delay:.13s}.nav-links a:nth-child(2){animation-delay:.19s}
+  .nav-links a:nth-child(3){animation-delay:.25s}
+  .actions{animation:mind-nav .54s cubic-bezier(.2,.8,.2,1) .31s backwards}
+  .intro h1{animation:mind-type .86s cubic-bezier(.16,.82,.22,1) .24s backwards}
+  .intro .btn-solid{animation:mind-detail .55s cubic-bezier(.2,.8,.2,1) .65s backwards}
+  .goals .goal{animation:mind-detail .5s cubic-bezier(.2,.8,.2,1) backwards}
+  .goals .goal:nth-child(1){animation-delay:.38s}.goals .goal:nth-child(2){animation-delay:.49s}
+  .goals .goal:nth-child(3){animation-delay:.6s}
+  .display__row--1 .w1{animation:mind-type .82s cubic-bezier(.16,.82,.22,1) .76s backwards}
+  .display__row--1 .w2{animation:mind-type .76s cubic-bezier(.16,.82,.22,1) 1.01s backwards}
+  .display__row--2{animation:mind-type .88s cubic-bezier(.16,.82,.22,1) 1.08s backwards}
+  .inset{animation:mind-inset .62s cubic-bezier(.2,.8,.2,1) .91s backwards}
+}
+@media (min-width:900px) and (prefers-reduced-motion:no-preference){
+  .proof p{animation:mind-detail .54s cubic-bezier(.2,.8,.2,1) 1.05s backwards}
+  .proof .social{animation:mind-detail .54s cubic-bezier(.2,.8,.2,1) 1.18s backwards}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+html.entry-complete :is(.logo,.nav-links a,.actions,.intro h1,.intro .btn-solid,.goals .goal,.display__row--1 .w1,.display__row--1 .w2,.display__row--2,.inset,.proof p,.proof .social){animation:none!important}
+</style>
+</head>
+<body>
+<main class="hero" id="top">
+  <div class="hero__bg" aria-hidden="true"><img src="assets/image-01.webp" alt="" fetchpriority="high" decoding="async"></div>
+
+  <div class="band-top">
+    <a class="logo" href="#top" aria-label="MindEase home">
+      <svg viewBox="0 0 36 32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path fill="currentColor" stroke="none" fill-rule="evenodd" d="M11.60 32.10C11.08 31.90 10.90 31.53 11.00 30.81C11.03 30.59 11.06 28.89 11.07 27.03L11.09 23.66L10.94 23.33C10.78 22.96 10.29 22.47 9.90 22.28C9.60 22.13 7.94 22.09 5.76 22.18C3.27 22.28 2.86 22.14 2.56 21.10C2.22 19.95 1.98 19.64 1.07 19.20C0.35 18.84 0.19 18.65 0.33 18.30C0.47 17.97 0.77 17.88 1.73 17.88C2.16 17.88 2.69 17.84 2.90 17.80C3.42 17.71 3.72 17.77 3.98 18.03C4.29 18.34 4.26 18.54 3.88 18.97C3.35 19.55 3.39 19.83 4.05 20.17C4.53 20.42 4.82 20.43 5.91 20.25C6.32 20.18 6.81 20.12 7.00 20.12C7.46 20.12 7.83 19.95 7.94 19.69C8.08 19.35 7.92 19.13 7.27 18.75C6.53 18.31 6.32 18.13 5.87 17.58C5.34 16.93 5.24 16.74 5.21 16.33C5.16 15.77 5.29 15.59 5.92 15.28C6.73 14.88 6.88 14.69 6.87 14.02C6.87 13.50 6.74 13.25 6.28 12.89C5.81 12.52 5.60 12.43 5.03 12.37C4.43 12.31 4.36 12.28 4.06 11.97C3.32 11.20 4.51 10.05 5.49 10.59C6.38 11.07 6.52 11.12 6.90 11.12C7.54 11.12 7.95 10.81 7.85 10.41C7.79 10.17 6.87 9.30 6.34 8.99C5.49 8.48 5.00 7.87 5.00 7.32C5.00 6.39 5.68 5.81 6.55 6.00C6.90 6.08 7.03 6.16 7.53 6.60C7.74 6.77 8.03 7.00 8.19 7.09C8.34 7.19 8.62 7.40 8.79 7.57C8.97 7.73 9.30 7.96 9.53 8.09C9.75 8.22 10.07 8.43 10.22 8.57C10.38 8.70 10.68 8.93 10.90 9.08C11.11 9.22 11.67 9.70 12.14 10.14C13.23 11.16 13.47 11.27 14.05 11.00C14.44 10.82 14.56 10.55 14.42 10.11C14.26 9.63 13.98 9.21 13.65 8.98C13.49 8.87 13.20 8.65 13.00 8.49C12.80 8.34 12.45 8.10 12.22 7.97C11.99 7.85 11.63 7.58 11.42 7.39C11.21 7.20 10.89 6.93 10.71 6.80C10.36 6.54 9.72 5.66 9.49 5.15C9.34 4.81 9.31 4.10 9.43 3.75C9.64 3.11 10.40 2.82 11.04 3.13C11.38 3.29 11.63 3.61 11.91 4.23C12.03 4.50 12.19 4.78 12.26 4.86C12.73 5.36 13.72 5.04 13.85 4.34C13.89 4.12 13.87 3.77 13.77 2.74C13.70 1.95 14.03 1.34 14.65 1.15C15.29 0.97 15.78 1.08 16.04 1.48C16.15 1.64 16.15 1.88 16.16 4.81C16.16 7.81 16.17 8.00 16.29 8.50C16.59 9.69 16.90 10.38 17.24 10.61C17.52 10.79 17.65 10.79 18.05 10.59C18.74 10.25 19.07 9.75 19.26 8.78C19.34 8.34 19.38 3.54 19.31 2.09C19.28 1.50 19.29 1.45 19.45 1.18C19.74 0.68 20.33 0.44 20.73 0.65C20.95 0.76 21.35 1.19 21.45 1.43C21.49 1.52 21.54 2.17 21.56 3.00C21.60 4.58 21.65 4.79 22.06 5.01C22.70 5.35 23.31 5.00 24.16 3.79C24.46 3.37 24.67 3.13 24.89 2.99C25.42 2.65 25.90 2.76 26.13 3.27C26.29 3.62 26.29 3.64 26.00 4.82C25.70 6.01 25.67 6.52 25.87 6.96C26.27 7.87 26.91 7.75 27.86 6.59C28.17 6.22 29.08 5.50 29.41 5.37C29.86 5.20 30.64 5.65 31.00 6.27C31.20 6.62 31.25 7.13 31.12 7.48C31.04 7.71 29.86 8.87 29.42 9.15C29.03 9.40 28.41 10.03 28.32 10.25C28.22 10.54 28.38 10.79 28.79 10.98C29.23 11.18 29.93 11.23 31.03 11.14C32.39 11.03 32.84 11.18 33.19 11.85C33.50 12.45 33.30 13.02 32.46 13.87C31.97 14.35 31.84 14.62 31.65 15.43C31.46 16.23 31.63 16.83 32.18 17.33C32.60 17.71 32.86 17.75 34.53 17.68C35.32 17.65 35.56 17.74 35.78 18.13C36.01 18.56 35.79 18.88 34.98 19.29C34.29 19.63 33.77 19.71 33.49 19.52C32.70 18.98 32.30 18.65 32.15 18.43C31.85 17.99 31.53 17.92 30.86 18.12C30.20 18.33 29.31 19.24 29.31 19.70C29.31 20.13 29.58 20.45 30.06 20.62C30.46 20.75 31.18 20.77 31.69 20.66C32.92 20.38 33.09 20.39 33.29 20.77C33.59 21.35 33.24 21.98 32.51 22.19C32.19 22.28 30.98 22.26 29.59 22.16C27.88 22.03 27.21 22.12 26.41 22.59C26.09 22.78 25.79 23.14 25.64 23.51C25.50 23.88 25.45 28.26 25.56 30.01C25.65 31.34 25.62 31.50 25.28 31.80C24.88 32.16 24.57 32.18 22.91 32.00C22.29 31.93 22.15 31.93 21.59 32.03C20.58 32.22 20.21 32.22 19.88 32.05C19.33 31.75 19.35 31.86 19.30 29.23C19.20 23.31 19.17 16.27 19.24 15.46C19.39 13.77 19.07 13.13 18.08 13.13C17.40 13.12 17.05 13.34 16.75 13.94C16.50 14.42 16.47 14.78 16.59 15.56C16.78 16.79 16.81 17.77 16.75 22.56C16.71 25.16 16.68 28.23 16.66 29.39C16.63 31.79 16.63 31.78 16.13 32.04C15.76 32.24 15.35 32.23 14.76 32.03C14.05 31.78 13.74 31.77 13.19 31.97C12.61 32.17 11.94 32.23 11.60 32.10ZM22.66 22.73C22.83 22.58 22.98 22.29 23.32 21.48C23.91 20.05 23.94 19.93 23.94 18.66C23.94 17.71 23.95 17.57 24.07 17.33C24.41 16.63 25.26 16.65 25.57 17.35C25.66 17.55 25.71 17.85 25.74 18.50C25.80 19.50 25.89 19.69 26.29 19.69C26.55 19.69 26.73 19.47 26.97 18.90C27.36 17.97 28.60 15.70 28.86 15.42C29.10 15.16 30.04 14.37 30.38 14.14C30.88 13.80 30.96 13.67 30.99 13.20C31.01 12.84 30.99 12.75 30.86 12.56C30.59 12.16 30.28 12.10 29.50 12.31C28.54 12.57 28.52 12.57 27.96 12.47C27.49 12.38 27.40 12.38 27.06 12.46C26.45 12.62 25.75 13.02 25.09 13.59C24.89 13.77 24.62 13.98 24.50 14.06C24.04 14.38 23.11 15.31 22.66 15.91C21.87 16.95 21.76 17.58 21.73 21.10L21.72 22.55L21.90 22.75C22.15 23.00 22.37 23.00 22.66 22.73ZM13.87 21.90C14.09 21.61 14.12 21.34 14.13 19.00C14.15 16.07 14.13 15.96 13.36 14.78C13.14 14.44 12.82 14.03 12.66 13.88C12.50 13.72 12.25 13.43 12.11 13.23C11.74 12.69 10.74 11.67 10.39 11.48C9.33 10.91 8.72 11.48 8.97 12.81C9.09 13.45 9.09 13.73 8.93 14.16C8.62 15.06 8.73 15.68 9.32 16.44C9.49 16.66 9.79 17.08 9.97 17.36C10.47 18.11 10.68 18.16 11.13 17.62C11.34 17.36 11.42 17.31 11.60 17.31C12.14 17.31 12.22 17.81 11.78 18.47C11.46 18.95 11.41 19.15 11.49 19.46C11.57 19.75 12.15 20.57 12.53 20.94C12.69 21.09 12.94 21.37 13.08 21.56C13.49 22.12 13.64 22.19 13.87 21.90ZM22.65 11.99C22.74 11.94 23.10 11.59 23.45 11.22C24.27 10.33 24.53 9.82 24.49 9.23C24.42 8.37 23.82 7.79 23.10 7.90C22.55 7.99 22.26 8.13 21.98 8.44C21.18 9.33 20.80 11.20 21.30 11.81C21.54 12.10 22.25 12.20 22.65 11.99Z"/><path d="M14.05 31.6V22.6M22.55 31.6V24.4" stroke="#0b4bc8" stroke-width="1.25" stroke-linecap="butt" opacity=".42"/>
+      </svg>
+      <span>MINDEASE</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#ai-therapy">AI Therapy</a><a href="#resources">Resources</a><a href="#contact">Contact</a>
+    </nav>
+
+    <div class="actions">
+      <a class="btn-ghost" href="#get-started"><span>Get Started</span><i class="tile" aria-hidden="true"><svg viewBox="0 0 11 10" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="square"><path d="M.7 5H9.8M5.8 1l4 4-4 4"/></svg></i></a>
+      <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sheet">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="2" cy="2" r="2"/><circle cx="8" cy="2" r="2"/><circle cx="14" cy="2" r="2"/><circle cx="2" cy="8" r="2"/><circle cx="8" cy="8" r="2"/><circle cx="14" cy="8" r="2"/><circle cx="2" cy="14" r="2"/><circle cx="8" cy="14" r="2"/><circle cx="14" cy="14" r="2"/></svg>
+      </button>
+    </div>
+
+    <div class="goals">
+      <svg class="arc" viewBox="0 0 260 600" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="arcFade" gradientUnits="userSpaceOnUse" x1="0" y1="146.59" x2="0" y2="529.67">
+            <stop offset="0" stop-color="#fff" stop-opacity=".10"/><stop offset=".5" stop-color="#fff" stop-opacity=".62"/><stop offset="1" stop-color="#fff" stop-opacity=".10"/>
+          </linearGradient>
+        </defs>
+        <path d="M90.31 157.22A355.5 355.5 0 0 0 40.44 326.15M40.40 351.15A355.5 355.5 0 0 0 89.02 519.00" fill="none" stroke="url(#arcFade)" stroke-width="1.15" stroke-dasharray="5.5 3.5"/>
+      </svg>
+      <ul aria-label="What MindEase helps with">
+        <li class="goal"><i></i>Improve sleep</li>
+        <li class="goal"><i></i>Build Confidence</li>
+        <li class="goal"><i></i>Manage stress</li>
+      </ul>
+    </div>
+
+    <section class="intro" aria-labelledby="headline">
+      <h1 id="headline"><span class="l1">Boost Emotional</span> <br><span class="l2">Wellbeing Through</span> <br><span class="l3">Healthier Daily Dabits</span></h1>
+      <a class="btn-solid" href="#chat"><span>Talk To AI</span><i class="tile" aria-hidden="true"><svg viewBox="0 0 12 11" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="square"><path d="M.8 5.5H10.8M6.6 1.3l4.2 4.2-4.2 4.2"/></svg></i></a>
+    </section>
+  </div>
+
+  <div class="stage" aria-hidden="true"></div>
+
+  <div class="band-bottom">
+    <h2 class="display" aria-label="Feel better here, guided by AI">
+      <span class="display__row display__row--1" aria-hidden="true"><span class="w1">Feel Better</span><a class="inset" href="#retreats" tabindex="-1"><img src="assets/image-02.webp" alt="" loading="eager" decoding="async"><span class="badge"><svg viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="M1.6 11.4 11.2 1.8M3.8 1.6h7.6v7.6"/></svg></span></a><span class="w2">Here</span></span>
+      <span class="display__row display__row--2" aria-hidden="true">Guided By AI</span>
+    </h2>
+
+    <div class="proof">
+      <p>Take care of your mental<br> wellbeing with intelligent,<br> compassionate AI support.</p>
+      <div class="social">
+        <span class="avatars"><img src="assets/image-03.webp" alt=""><img src="assets/image-04.webp" alt=""><img src="assets/image-05.webp" alt=""></span>
+        <div><b>100K+</b><small>Satisfied Client</small></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<nav class="sheet" id="sheet" aria-label="Menu">
+  <a href="#ai-therapy">AI Therapy</a><a href="#resources">Resources</a><a href="#contact">Contact</a>
+  <a class="btn-solid" href="#chat"><span>Talk To AI</span><i class="tile" aria-hidden="true"><svg viewBox="0 0 12 11" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="square"><path d="M.8 5.5H10.8M6.6 1.3l4.2 4.2-4.2 4.2"/></svg></i></a>
+</nav>
+<script>
+(function(){
+  var b=document.querySelector('.menu-btn'),s=document.getElementById('sheet');
+  function set(o){s.classList.toggle('open',o);b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Close menu':'Open menu')}
+  b.addEventListener('click',function(e){e.stopPropagation();set(!s.classList.contains('open'))});
+  document.addEventListener('click',function(e){if(!s.contains(e.target))set(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();
+</script>
+<script>setTimeout(function(){document.documentElement.classList.add("entry-complete")},2300)</script>
+</body>
+</html>

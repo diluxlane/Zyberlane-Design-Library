@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-103/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LA Consulting</title>
+<meta name="description" content="LA Consulting — legal studio for creatives.">
+<script>
+// Set the first frame before CSS paints. The fallback restores the page if startup fails.
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.documentElement.classList.add('entrance-prep');
+  window.entranceFallback = setTimeout(() => {
+    document.documentElement.classList.remove('entrance-prep');
+  }, 5000);
+}
+</script>
+<style>
+/* ---------- Local fonts ---------- */
+@font-face{font-family:"Anton";src:url(assets/anton.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:"Roboto Condensed";src:url(assets/roboto-condensed.woff2) format("woff2");font-weight:100 900;font-display:block}
+@font-face{font-family:"Big Shoulders Display";src:url(assets/big-shoulders-display.woff2) format("woff2");font-weight:900;font-display:block}
+@font-face{font-family:"Permanent Marker";src:url(assets/permanent-marker.woff2) format("woff2");font-weight:400;font-display:block}
+
+/* ---------- Design tokens (all measured on the 1672×941 reference) ---------- */
+:root{
+  --ref-w:1672; --ref-h:941;
+  --bg:#011C11;             /* darkest corner of the texture, used behind the image */
+  --ink:#FEFEFE;            /* headline white, sampled 253.8 avg */
+  --nav-ink:#FFFFFF;
+  --rule:rgba(240,245,245,.62); /* nav divider, 1px, sampled ~#949fa0 over #001a10 */
+  --graffiti:#9AE49F;       /* graffiti core, sampled rgb(154,228,159) */
+  --graffiti-glow:#2BC94F;
+  /* --u: one reference pixel. Fit-to-width or fit-to-height, whichever is smaller */
+  --u:min(calc(100vw / 1672), calc(100svh / 941));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--ink)}
+body{overflow:hidden;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
+a{color:inherit;text-decoration:none}
+
+/* ---------- Hero shell: always exactly one viewport, no blank bands ---------- */
+.hero{
+  position:relative; width:100vw; height:100vh; height:100svh; overflow:hidden; isolation:isolate;
+  background:var(--bg) url(assets/background.webp) center / cover no-repeat;
+}
+
+/* ---------- Stage: horizontally centred column, 1672u wide, full height ---------- */
+.stage{position:absolute; top:0; bottom:0; left:50%; width:calc(1672 * var(--u)); transform:translateX(-50%)}
+
+/* NAV — text x: 63 / 360 / 649 / 950 / 1177 / 1491 ; right edge 1615 ; cap-top 46, cap 21px */
+.nav{
+  position:absolute; z-index:3;
+  left:calc(63 * var(--u)); right:calc(58 * var(--u));
+  top:calc(var(--nav-top, 44.2) * var(--u));
+  display:flex; align-items:center; justify-content:space-between;
+  font:700 calc(28.77 * var(--u))/1 "Roboto Condensed", "Arial Narrow", sans-serif;
+  letter-spacing:calc(-0.82 * var(--u));
+  text-transform:uppercase; color:var(--nav-ink); white-space:nowrap;
+}
+.nav a{flex:none; transition:opacity .2s; letter-spacing:calc((var(--ls, 0) - .82) * var(--u))}
+.nav a:hover,.nav a:focus-visible{opacity:.7}
+/* rules: 20px gap each side, lengths 143/142/136/130/152 → used as flex weights */
+.nav i{display:block; height:max(1px, calc(1.4 * var(--u))); background:var(--rule);
+  margin:0 calc(var(--mr) * var(--u)) 0 calc(var(--ml) * var(--u)); flex:0 1 calc(var(--w) * var(--u)); min-width:calc(12 * var(--u));
+  transform:translateY(calc(var(--rule-dy, -2) * var(--u)))}
+
+/* TITLE — Anton 288.6px; flat caps 91→339 (248px), round caps 88→342; ink 63→1610.
+   Each glyph is pinned to its measured ink box: left edge + horizontal scale (see --x / --sx). */
+.title{
+  position:absolute; z-index:1; left:0; right:0; top:0; height:0;
+  font:400 calc(288.6 * var(--u))/1 "Anton", Impact, sans-serif; color:var(--ink);
+}
+.title b{position:absolute; top:calc(73.14 * var(--u)); left:calc(var(--x) * var(--u));
+  font-weight:400; transform:scaleX(var(--sx)); transform-origin:0 0; white-space:pre}
+
+/* ---------- Bottom group: platform + tagline. Grows into any spare height ---------- */
+.group{
+  position:absolute; z-index:2; left:0; right:0; bottom:0;
+  height:calc(100svh - 342 * var(--u));  /* = 599u on a 16:9 screen */
+  container-type:size; pointer-events:none;
+}
+.group-inner{
+  /* g: one reference px inside the group. Equals u at 16:9, scales up on taller screens, capped by width */
+  --g:min(calc(100cqh / 599), calc(100cqw / 1010));
+  position:absolute; inset:0;
+}
+/* PLATFORM — asset scaled 0.613 → 886.4px wide, left 413, bottom edge 778 (162.9 from bottom). Image carries an extra hoist chain above the crop, revealed only on tall/portrait screens */
+.plat{
+  position:absolute; left:calc(50% + 20.2 * var(--g)); bottom:calc(162.9 * var(--g));
+  width:calc(886.4 * var(--g)); aspect-ratio:1446 / 1685; transform:translateX(-50%);
+}
+.plat img{position:absolute; inset:0; width:100%; height:100%; display:block;
+  /* desktop: rows above the reference crop stay hidden; 122-row fade like the original chains */
+  -webkit-mask-image:linear-gradient(to bottom, transparent var(--fade-start, 30.86%), #000 var(--fade-end, 38.12%));
+          mask-image:linear-gradient(to bottom, transparent var(--fade-start, 30.86%), #000 var(--fade-end, 38.12%));}
+.plat svg{position:absolute; inset:0; width:100%; height:100%; overflow:visible}
+
+/* TAGLINE — Big Shoulders Display 900, caps 767→822 and 834→888, line pitch 67, centre x≈861 */
+.tag{
+  position:absolute; left:calc(50% + 25 * var(--g)); transform:translateX(-50%);
+  bottom:calc(var(--tag-bottom, 44) * var(--g));
+  text-align:center; white-space:nowrap; text-transform:uppercase;
+  font:900 calc(66.5 * var(--g))/calc(67 * var(--g)) "Big Shoulders Display", "Anton", sans-serif;
+  letter-spacing:calc(0.2 * var(--g)); color:var(--ink);
+}
+.tag span{display:block; letter-spacing:calc(var(--ls, .2) * var(--g)); transform:translateX(calc(var(--dx, 0) * var(--g)))}
+
+/* Only the opening frame uses these states; the original styles return on completion. */
+.entrance-prep .nav,.entrance-prep .plat img,.entrance-prep .tag span{opacity:0}
+.entrance-prep .title b,.entrance-prep .tag span{clip-path:inset(100% 0 0 0)}
+.entrance-prep .plat svg{clip-path:inset(0 100% 0 0)}
+@media (prefers-reduced-motion: reduce){
+  .entrance-prep .nav,.entrance-prep .plat img,.entrance-prep .tag span{opacity:1}
+  .entrance-prep .title b,.entrance-prep .tag span,.entrance-prep .plat svg{clip-path:none}
+}
+
+/* ---------- Portrait / phone: re-flowed, still edge-to-edge, still one screen ---------- */
+@media (max-aspect-ratio: 1/1){
+  :root{--m:calc(100vw / 390)}
+  .stage{left:0; width:100%; transform:none; display:flex; flex-direction:column;
+    padding:calc(max(18px, env(safe-area-inset-top)) ) 16px calc(max(22px, env(safe-area-inset-bottom)))}
+  .nav{position:relative; left:auto; right:auto; top:auto; order:1;
+    display:grid; grid-template-columns:auto 1fr auto 1fr auto; row-gap:12px; align-items:center;
+    font-size:clamp(13px, calc(15 * var(--m)), 26px); letter-spacing:-0.02em}
+  .nav i{margin:0 clamp(8px, 2.6vw, 18px); min-width:0; height:1px}
+  .nav i.br{display:none}
+  .nav a:nth-of-type(4){grid-column:1}
+  .title{position:relative; top:auto; order:2; margin-top:clamp(14px, 4vw, 32px);
+    font-size:min(calc((100vw - 32px) / 4.27), 17svh); line-height:.86; letter-spacing:-0.0046em; white-space:normal}
+  .title{height:auto; left:auto; right:auto; text-align:center}
+  .title span{display:block; white-space:nowrap}
+  .title b{position:static; transform:none; display:inline}
+  .group{position:relative; order:3; flex:1 1 auto; height:auto; min-height:0;
+    margin-top:calc(-0.55 * min(calc((100vw - 32px) / 4.27), 17svh)); /* let chains rise behind the title */
+    left:auto; right:auto; bottom:auto}
+  .group-inner{--g:min(calc(100cqw / 690), calc(100cqh / 760))}
+  .plat{bottom:calc(150 * var(--g)); left:50%; --fade-start:0%; --fade-end:16%}
+  .tag{left:50%; bottom:0; font-size:calc(70 * var(--g)); line-height:calc(70 * var(--g))}
+}
+</style>
+</head>
+<body>
+<main class="hero">
+  <div class="stage">
+    <nav class="nav" aria-label="Primary">
+      <a href="#about">About us</a><i style="--w:143;--ml:20;--mr:20"></i>
+      <a href="#services">Services</a><i style="--w:142;--ml:20;--mr:19"></i>
+      <a href="#cases" style="--ls:.125">Our cases</a><i class="br" style="--w:136;--ml:19;--mr:19"></i>
+      <a href="#blog" style="--ls:.33">Blog</a><i style="--w:130;--ml:19;--mr:19"></i>
+      <a href="#contacts" style="--ls:-.29">Contacts</a><i style="--w:152;--ml:21;--mr:22"></i>
+      <a href="#vacancies" style="--ls:-.75">Vacancies</a>
+    </nav>
+    <h1 class="title" aria-label="LA Consulting"><span aria-hidden="true"><b style="--x:51.25;--sx:1.0771">L</b><b style="--x:174.94;--sx:1.0231">A</b></span> <span aria-hidden="true"><b style="--x:375.85;--sx:1.0244">C</b><b style="--x:512.00;--sx:1.0080">O</b><b style="--x:647.27;--sx:0.9834">N</b><b style="--x:782.95;--sx:1.0162">S</b><b style="--x:911.87;--sx:1.0245">U</b><b style="--x:1044.78;--sx:1.0277">L</b><b style="--x:1150.00;--sx:1.0080">T</b><b style="--x:1258.62;--sx:1.0500">I</b><b style="--x:1323.46;--sx:1.0571">N</b><b style="--x:1471.64;--sx:1.0486">G</b></span></h1>
+    <div class="group">
+      <div class="group-inner">
+        <div class="plat">
+          <img src="assets/platform.webp" alt="Workers standing on a rusted platform suspended by chains" width="1446" height="1685" decoding="async">
+          <svg viewBox="0 -520 1446 1685" aria-hidden="true" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="gfill" x1="300" y1="0" x2="1400" y2="0" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#3E9E55"/><stop offset=".2" stop-color="#9AE49F"/><stop offset="1" stop-color="#A4ECAA"/>
+              </linearGradient>
+              <filter id="glow" x="-10%" y="-40%" width="120%" height="180%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="7" result="b"/>
+                <feFlood flood-color="#2BC94F" flood-opacity=".5"/>
+                <feComposite in2="b" operator="in" result="g"/>
+                <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="7" result="n"/>
+                <feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -2.2 2.05" result="nm"/>
+                <feComposite in="SourceGraphic" in2="nm" operator="in" result="core"/>
+                <feMerge><feMergeNode in="g"/><feMergeNode in="core"/></feMerge>
+              </filter>
+              <path id="rim" d="M 300 880 C 500 858, 760 852, 960 866 S 1262 905, 1368 958"/>
+            </defs>
+            <text filter="url(#glow)" font-family="Permanent Marker" font-size="134" fill="url(#gfill)" stroke="url(#gfill)" stroke-width="1" textLength="1090" lengthAdjust="spacingAndGlyphs">
+              <textPath href="#rim">CA SANE 2HU ZICHUWM</textPath>
+            </text>
+          </svg>
+        </div>
+        <p class="tag"><span style="--ls:.07;--dx:-2">Legal studio for</span><span style="--dx:1">creatives</span></p>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const root = document.documentElement;
+  if (!root.classList.contains('entrance-prep')) return;
+
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const animations = [];
+  let complete = false;
+  const finish = () => {
+    if (complete) return;
+    complete = true;
+    root.classList.remove('entrance-prep');
+    animations.forEach(animation => animation.cancel());
+    reducedMotion.removeEventListener('change', onPreferenceChange);
+    clearTimeout(window.entranceFallback);
+  };
+  const onPreferenceChange = () => {
+    if (reducedMotion.matches) finish();
+  };
+  reducedMotion.addEventListener('change', onPreferenceChange);
+
+  const play = (element, frames, delay, duration, easing) => {
+    animations.push(element.animate(frames, {
+      delay, duration, easing, fill: 'both'
+    }));
+  };
+
+  const start = () => {
+    if (complete || reducedMotion.matches) return finish();
+
+    play(document.querySelector('.nav'), [
+      {opacity: 0, transform: 'translateY(-6px)'},
+      {opacity: 1, transform: 'none'}
+    ], 100, 490, 'cubic-bezier(.22,1,.36,1)');
+
+    document.querySelectorAll('.title b').forEach((glyph, index) => {
+      const delay = index < 2 ? 100 + index * 70 : 260 + (index - 2) * 42;
+      play(glyph, [
+        {clipPath: 'inset(100% 0 0 0)'},
+        {clipPath: 'inset(0 0 0 0)'}
+      ], delay, 790, 'cubic-bezier(.19,1,.22,1)');
+    });
+
+    play(document.querySelector('.plat img'), [
+      {opacity: 0}, {opacity: 1}
+    ], 620, 830, 'cubic-bezier(.25,.8,.25,1)');
+
+    play(document.querySelector('.plat svg'), [
+      {clipPath: 'inset(0 100% 0 0)'},
+      {clipPath: 'inset(0 0 0 0)'}
+    ], 920, 810, 'cubic-bezier(.22,1,.36,1)');
+
+    document.querySelectorAll('.tag span').forEach((line, index) => {
+      play(line, [
+        {opacity: 0, clipPath: 'inset(100% 0 0 0)'},
+        {opacity: 1, clipPath: 'inset(0 0 0 0)'}
+      ], 1270 + index * 130, 570, 'cubic-bezier(.22,1,.36,1)');
+    });
+
+    Promise.all(animations.map(animation => animation.finished)).then(finish, finish);
+  };
+
+  // Wait briefly for the authored fonts and hero image so the reveal has no font swap.
+  const image = document.querySelector('.plat img');
+  let readinessTimeout;
+  const readiness = Promise.all([
+    document.fonts.ready,
+    image.decode().catch(() => {})
+  ]);
+  Promise.race([
+    readiness,
+    new Promise(resolve => { readinessTimeout = setTimeout(resolve, 1200); })
+  ]).then(() => {
+    clearTimeout(readinessTimeout);
+    try { start(); } catch { finish(); }
+  }, finish);
+})();
+</script>
+</body>
+</html>

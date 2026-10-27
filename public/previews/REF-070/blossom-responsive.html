@@ -1,0 +1,1242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-070/">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="light only">
+  <title>Blossom — AI Growth Platform</title>
+  <script>
+    (() => {
+      const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduceMotion && 'animate' in Element.prototype) {
+        document.documentElement.classList.add('entrance-pending');
+        window.__blossomEntranceFailsafe = setTimeout(() => {
+          document.documentElement.classList.remove('entrance-pending');
+        }, 3500);
+      }
+    })();
+  </script>
+  <style>
+    :root {
+      --paper: #f7faff;
+      --ink: #24272a;
+      --muted: #6c7075;
+      --blue: #0872d1;
+      --page-inline: clamp(24px, 2.832vw, 58px);
+      --page-top: clamp(32px, 4.59vw, 94px);
+      --page-bottom: clamp(36px, 4.64vw, 95px);
+      --panel-gap: clamp(12px, .83vw, 17px);
+      --panel-inset: clamp(24px, 3.027vw, 62px);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+      background: var(--paper);
+    }
+
+    body {
+      height: auto;
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .viewport {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow: clip;
+      background:
+        radial-gradient(ellipse 720px 560px at 18% 12%, rgba(237, 246, 255, .98), transparent 75%),
+        radial-gradient(ellipse 620px 540px at 82% 15%, rgba(235, 242, 250, .9), transparent 80%),
+        linear-gradient(110deg, #fbfeff 0%, #f4f8fd 48%, #f9fcff 100%);
+    }
+
+    .stage {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow: clip;
+      background:
+        radial-gradient(ellipse 720px 560px at 18% 12%, rgba(237, 246, 255, .98), transparent 75%),
+        radial-gradient(ellipse 620px 540px at 82% 15%, rgba(235, 242, 250, .9), transparent 80%),
+        linear-gradient(110deg, #fbfeff 0%, #f4f8fd 48%, #f9fcff 100%);
+      color: var(--ink);
+    }
+
+    .stage-content {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: var(--page-top) var(--page-inline) var(--page-bottom);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 370px);
+      grid-template-areas:
+        "feature menu"
+        "divider divider"
+        "hero copy"
+        "panels panels";
+      grid-template-rows: auto auto auto minmax(360px, 1fr);
+      align-content: start;
+      align-items: start;
+      column-gap: clamp(28px, 4vw, 82px);
+    }
+
+    .feature-chip {
+      position: relative;
+      grid-area: feature;
+      justify-self: start;
+      width: 117px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(36, 53, 66, .16);
+      background: rgba(251, 253, 255, .22);
+      color: #292d30;
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .menu-mark {
+      position: relative;
+      grid-area: menu;
+      justify-self: end;
+      width: 108px;
+      height: 34px;
+    }
+
+    .menu-mark span {
+      position: absolute;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #1682d3 0%, #075895 35%, #172127 100%);
+      border-radius: 2px 0 0 2px;
+    }
+
+    .menu-mark span:nth-child(1) {
+      top: 0;
+      width: 49px;
+    }
+
+    .menu-mark span:nth-child(2) {
+      top: 15px;
+      width: 74px;
+    }
+
+    .menu-mark span:nth-child(3) {
+      top: 30px;
+      width: 108px;
+    }
+
+    .divider {
+      position: relative;
+      grid-area: divider;
+      width: 100%;
+      height: 6px;
+      margin-top: clamp(24px, 1.904vw, 39px);
+      background: linear-gradient(90deg, #7bc2ef 0%, #73b1db 18%, #587887 55%, #354047 100%);
+      opacity: .9;
+    }
+
+    .hero-title {
+      position: relative;
+      grid-area: hero;
+      justify-self: start;
+      margin: clamp(30px, 2.1vw, 43px) 0 0;
+      color: #202326;
+      font-size: clamp(32px, 2.735vw, 56px);
+      font-weight: 400;
+      line-height: 1.28;
+      letter-spacing: -.0455em;
+    }
+
+    .hero-title .line {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .hero-title .line-one {
+      display: flex;
+      align-items: baseline;
+      column-gap: .39em;
+    }
+
+    .hero-title .line-two {
+      color: #64686c;
+      letter-spacing: -.0714em;
+    }
+
+    .selected-phrase {
+      position: relative;
+      display: inline-block;
+      color: #0871d0;
+      letter-spacing: -.0491em;
+    }
+
+    .selection-frame {
+      position: absolute;
+      left: -.18em;
+      right: -.18em;
+      top: -.16em;
+      bottom: -.125em;
+      border: 1px solid rgba(17, 113, 201, .18);
+      pointer-events: none;
+    }
+
+    .selection-frame i {
+      position: absolute;
+      width: clamp(4px, .125em, 7px);
+      height: clamp(4px, .125em, 7px);
+      background: #0873cf;
+    }
+
+    .selection-frame i:nth-child(1) { left: -.0625em; top: -.0625em; }
+    .selection-frame i:nth-child(2) { right: -.0625em; top: -.0625em; }
+    .selection-frame i:nth-child(3) { left: -.0625em; bottom: -.0625em; }
+    .selection-frame i:nth-child(4) { right: -.0625em; bottom: -.0625em; }
+
+    .hero-copy {
+      position: relative;
+      grid-area: copy;
+      justify-self: end;
+      width: min(100%, 370px);
+      margin: clamp(28px, 2vw, 41px) 0 0;
+      color: #6d7175;
+      font-size: clamp(16px, 1.123vw, 23px);
+      font-weight: 400;
+      line-height: 1.18;
+      letter-spacing: -.5px;
+    }
+
+    .panels {
+      position: relative;
+      grid-area: panels;
+      width: 100%;
+      height: auto;
+      min-height: 360px;
+      max-height: 790px;
+      align-self: stretch;
+      margin-top: clamp(40px, 3.174vw, 65px);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--panel-gap);
+    }
+
+    .panel {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+    }
+
+    .panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+      opacity: .13;
+      mix-blend-mode: soft-light;
+      background:
+        repeating-radial-gradient(circle at 23% 18%, rgba(255,255,255,.8) 0 1px, transparent 1px 4px),
+        repeating-linear-gradient(117deg, transparent 0 2px, rgba(9, 19, 29, .15) 3px, transparent 4px 7px);
+      background-size: 7px 9px, 11px 13px;
+    }
+
+    .panel-ask::before {
+      background:
+        radial-gradient(ellipse 285px 170px at 92% 0%, rgba(218, 91, 57, .96) 0%, rgba(220, 113, 77, .78) 45%, transparent 79%),
+        radial-gradient(ellipse 360px 315px at 92% 30%, rgba(238, 226, 203, .96) 0%, rgba(226, 210, 186, .72) 55%, transparent 83%),
+        radial-gradient(ellipse 330px 235px at 99% 69%, rgba(166, 35, 28, .98) 0%, rgba(130, 29, 29, .72) 48%, transparent 82%),
+        radial-gradient(ellipse 360px 360px at 7% 30%, rgba(74, 135, 148, .98) 0%, rgba(91, 145, 147, .62) 45%, transparent 78%),
+        radial-gradient(ellipse 610px 270px at 48% 100%, rgba(9, 57, 84, .99) 0%, rgba(10, 54, 81, .94) 57%, transparent 88%),
+        linear-gradient(180deg, #c3cdc7 0%, #d8d6c4 29%, #b49b86 49%, #5b3d3e 67%, #0d3e5b 100%);
+    }
+
+    .panel-workflow::before {
+      background:
+        radial-gradient(ellipse 390px 285px at 50% 2%, rgba(220, 194, 169, .99) 0%, rgba(210, 180, 156, .74) 51%, transparent 83%),
+        radial-gradient(ellipse 345px 395px at 0% 22%, rgba(187, 104, 84, .98) 0%, rgba(151, 76, 70, .78) 50%, transparent 82%),
+        radial-gradient(ellipse 330px 250px at 0% 72%, rgba(202, 70, 37, .98) 0%, rgba(151, 39, 31, .75) 49%, transparent 82%),
+        radial-gradient(ellipse 355px 340px at 99% 20%, rgba(195, 204, 188, .98) 0%, rgba(145, 173, 163, .68) 54%, transparent 82%),
+        radial-gradient(ellipse 340px 320px at 100% 71%, rgba(17, 76, 102, .98) 0%, rgba(8, 50, 76, .81) 55%, transparent 83%),
+        radial-gradient(ellipse 330px 185px at 51% 100%, rgba(8, 13, 29, .99) 0%, rgba(14, 22, 38, .86) 54%, transparent 86%),
+        radial-gradient(ellipse 430px 260px at 10% 100%, rgba(105, 31, 28, .98) 0%, rgba(129, 42, 33, .77) 52%, transparent 84%),
+        linear-gradient(155deg, #a56f64 0%, #d8bea6 30%, #aeb8ae 53%, #164d65 76%, #0a3552 100%);
+    }
+
+    .panel-growth::before {
+      background:
+        radial-gradient(ellipse 390px 270px at 93% 0%, rgba(3, 17, 38, .99) 0%, rgba(4, 29, 53, .84) 55%, transparent 85%),
+        radial-gradient(ellipse 385px 350px at 0% 37%, rgba(172, 190, 185, .99) 0%, rgba(116, 159, 161, .82) 49%, transparent 81%),
+        radial-gradient(ellipse 355px 330px at 100% 29%, rgba(27, 88, 111, .98) 0%, rgba(12, 65, 91, .76) 54%, transparent 83%),
+        radial-gradient(ellipse 350px 290px at 100% 69%, rgba(193, 202, 189, .99) 0%, rgba(195, 184, 158, .76) 51%, transparent 83%),
+        radial-gradient(ellipse 380px 250px at 0% 72%, rgba(208, 44, 22, .99) 0%, rgba(161, 31, 28, .8) 53%, transparent 84%),
+        radial-gradient(ellipse 365px 190px at 52% 100%, rgba(116, 28, 23, .99) 0%, rgba(126, 29, 25, .9) 58%, transparent 87%),
+        radial-gradient(ellipse 385px 260px at 100% 100%, rgba(218, 91, 54, .99) 0%, rgba(190, 65, 41, .79) 54%, transparent 83%),
+        linear-gradient(180deg, #08243f 0%, #0b4f68 34%, #8fa9a3 56%, #a13931 78%, #7b1d19 100%);
+    }
+
+    .product-card {
+      position: absolute;
+      overflow: hidden;
+      background: rgba(255, 255, 255, .985);
+      border: 1px solid rgba(231, 234, 238, .75);
+      box-shadow: 0 6px 16px rgba(11, 28, 41, .13), 0 0 0 1px rgba(255,255,255,.35) inset;
+      color: #4b4f53;
+    }
+
+    .ask-card {
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(var(--card-scale, 1));
+      transform-origin: center;
+      width: 509px;
+      height: 422px;
+      border-radius: 18px;
+      box-shadow: 0 3px 8px rgba(11, 28, 41, .055), 0 0 0 1px rgba(255,255,255,.42) inset;
+    }
+
+    .ask-card-header {
+      position: absolute;
+      left: 33px;
+      right: 32px;
+      top: 34px;
+      height: 67px;
+    }
+
+    .eyebrow {
+      color: #757a7e;
+      font-size: 17px;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: -.2px;
+    }
+
+    .ask-card h2,
+    .workflow-card h2 {
+      margin: 9px 0 0;
+      color: #0873d3;
+      font-size: 36px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -1.7px;
+    }
+
+    .ask-card h2 {
+      color: #0873d3;
+      font-size: 36px;
+      font-weight: 400;
+      letter-spacing: -.7px;
+    }
+
+    .ask-card .eyebrow {
+      font-size: 14px;
+      font-weight: 400;
+      color: #737373;
+      letter-spacing: -.25px;
+    }
+
+    .mini-integrations {
+      position: absolute;
+      right: 0;
+      top: 2px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 0 7px;
+      border-radius: 5px;
+      background: rgba(247, 250, 253, .8);
+      color: #0c78cf;
+    }
+
+    .mini-integrations svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+      stroke: currentColor;
+      stroke-width: 1.7;
+    }
+
+    .ask-input {
+      position: absolute;
+      left: 36px;
+      top: 166px;
+      width: 437px;
+      height: 110px;
+      padding: 18px 12px;
+      border: 1px solid rgba(226, 230, 233, .66);
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 8px 18px rgba(28, 42, 55, .10), 0 2px 5px rgba(28, 42, 55, .065);
+    }
+
+    .ask-input p {
+      margin: 0;
+      color: #565656;
+      font-size: 21px;
+      font-weight: 400;
+      letter-spacing: -.63px;
+    }
+
+    .ask-controls {
+      position: absolute;
+      left: 14px;
+      right: 13px;
+      bottom: 12px;
+      height: 29px;
+      display: flex;
+      align-items: center;
+    }
+
+    .round-button {
+      width: 27px;
+      height: 27px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #edf0f2;
+      border-radius: 50%;
+      background: #fff;
+      color: #586067;
+      font-size: 18px;
+      line-height: 1;
+      box-shadow: 0 2px 5px rgba(19,36,48,.06);
+    }
+
+    .round-button svg {
+      width: 13px;
+      height: 13px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.45;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .model-pill {
+      height: 28px;
+      margin-left: 5px;
+      padding: 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border: 1px solid #edf0f2;
+      border-radius: 15px;
+      background: #fff;
+      color: #585858;
+      font-size: 13px;
+      font-weight: 400;
+      box-shadow: 0 2px 5px rgba(19,36,48,.05);
+    }
+
+    .model-pill .chevron {
+      width: 5px;
+      height: 5px;
+      margin: -3px 0 0 1px;
+      border-right: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      transform: rotate(45deg);
+      opacity: .7;
+    }
+
+    .send-button {
+      margin-left: auto;
+      color: #117ccf;
+      background: #f5faff;
+      border-color: transparent;
+      font-size: 15px;
+    }
+
+    .prompt-pills {
+      position: absolute;
+      left: 36px;
+      right: 33px;
+      top: 310px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px 11px;
+    }
+
+    .prompt-pill {
+      height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 13px;
+      border-radius: 19px;
+      background: #fff;
+      color: #4b4b4b;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: -.35px;
+      white-space: nowrap;
+      border: 1px solid rgba(235, 238, 240, .92);
+      box-shadow: 0 4px 11px rgba(20, 37, 49, .12);
+    }
+
+    .prompt-pill.primary {
+      flex-basis: 266px;
+      color: #fff;
+      font-size: 15px;
+      letter-spacing: 0;
+      border-color: #0874d5;
+      background: linear-gradient(180deg, #1585e1 0%, #0069c9 100%);
+      box-shadow: 0 5px 10px rgba(4, 91, 171, .24);
+    }
+
+    .prompt-pill:nth-child(2) { width: 218px; }
+    .prompt-pill:nth-child(3) { width: 190px; }
+
+    .workflow-card {
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(var(--card-scale, 1));
+      transform-origin: center;
+      width: 510px;
+      height: 510px;
+      border-radius: 18px;
+      padding: 0 12px 13px;
+      border-color: rgba(235, 238, 241, .72);
+      box-shadow: 0 5px 14px rgba(19, 35, 47, .085), 0 13px 30px rgba(19, 35, 47, .055), 0 0 0 1px rgba(255,255,255,.45) inset;
+    }
+
+    .card-brandbar {
+      position: relative;
+      height: 61px;
+      border-bottom: 1.25px solid #0068e9;
+    }
+
+    .card-brandbar .brand-logo {
+      position: absolute;
+      left: 14px;
+      top: 26px;
+      width: 20px;
+      height: 20px;
+    }
+
+    .brand-word {
+      position: absolute;
+      right: 18px;
+      top: 31px;
+      color: #0873d3;
+      font-size: 13px;
+      font-weight: 400;
+    }
+
+    .workflow-copy {
+      height: 109px;
+      padding: 29.5px 12.5px 0;
+    }
+
+    .workflow-card .eyebrow {
+      color: #73777b;
+      font-size: 13.5px;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    .workflow-card h2 {
+      margin-top: 4.5px;
+      font-size: 34px;
+      font-weight: 400;
+      color: #0873d3;
+      letter-spacing: -1.1px;
+    }
+
+    .workflow-chart {
+      width: calc(100% + 3.7px);
+      height: 328px;
+      margin-left: -3.2px;
+      display: block;
+      overflow: hidden;
+      border-radius: 13px;
+      background: linear-gradient(180deg, #016bdc 0%, #0163cc 20%, #015cba 40%, #0255a9 60%, #024e99 80%, #03498c 100%);
+    }
+
+    .workflow-chart .trace {
+      fill: url(#workflowStroke);
+      filter: none;
+    }
+
+    .growth-card {
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(var(--card-scale, 1));
+      transform-origin: center;
+      width: 509px;
+      height: 540px;
+      border-radius: 18px;
+      padding: 12px 12px 0;
+      text-align: center;
+      border-color: rgba(241, 243, 245, .72);
+      box-shadow: 0 2px 6px rgba(11, 28, 41, .06), 0 0 0 1px rgba(255,255,255,.42) inset;
+    }
+
+    .growth-chart {
+      position: relative;
+      height: 364px;
+      overflow: hidden;
+      border-radius: 12px;
+      background:
+        radial-gradient(ellipse 58% 66% at 37% 55%, rgba(226, 243, 255, .34) 0%, rgba(207, 234, 255, .18) 45%, transparent 75%),
+        linear-gradient(135deg, #69b1ff 0%, #78b9ff 28%, #9bcdff 57%, #e2f0ff 100%);
+      box-shadow: 0 0 0 1px rgba(57, 133, 206, .05) inset;
+    }
+
+    .growth-chart::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .35;
+      background: radial-gradient(ellipse 54% 50% at 33% 58%, rgba(255,255,255,.28), transparent 72%);
+    }
+
+    .bars {
+      position: absolute;
+      left: 30px;
+      right: 28px;
+      bottom: 0;
+      height: 308px;
+      display: flex;
+      align-items: flex-end;
+      z-index: 2;
+    }
+
+    .bars i {
+      flex: 1;
+      min-width: 0;
+      display: block;
+      border-radius: 0;
+    }
+
+    .bars i:nth-child(1) { height: 54px;  background: linear-gradient(180deg, #a5d6ff 0%, #a1d1fd 100%); }
+    .bars i:nth-child(2) { height: 78px;  background: linear-gradient(180deg, #a1d4ff 0%, #a3cef9 100%); }
+    .bars i:nth-child(3) { height: 106px; background: linear-gradient(180deg, #9cd1fd 0%, #a4cbf6 100%); }
+    .bars i:nth-child(4) { height: 133px; background: linear-gradient(180deg, #96cbfd 0%, #a2c6ef 100%); }
+    .bars i:nth-child(5) { height: 163px; background: linear-gradient(180deg, #8ec6f9 0%, #9fbfe5 100%); }
+    .bars i:nth-child(6) { height: 206px; background: linear-gradient(180deg, #71b6f7 0%, #85abd2 100%); }
+    .bars i:nth-child(7) { height: 242px; background: linear-gradient(180deg, #318fe8 0%, #3b6da2 100%); }
+    .bars i:nth-child(8) { height: 308px; background: linear-gradient(180deg, #0272e4 0%, #0058b2 50%, #013e7f 100%); }
+
+    .growth-card h2 {
+      margin: 25px 0 0;
+      color: #0873d3;
+      font-size: 36px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -1.05px;
+      -webkit-text-stroke: 0 currentColor;
+      position: relative;
+      top: 2px;
+    }
+
+    .growth-card p {
+      margin: 13px 0 0;
+      color: #797979;
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: -.29px;
+    }
+
+    .growth-brand {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      color: #0873d3;
+      font-size: 15px;
+      font-weight: 400;
+    }
+
+    .growth-brand .brand-logo {
+      position: static;
+      width: 20px;
+      height: 20px;
+    }
+
+    .grain-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 9;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: .05;
+      mix-blend-mode: multiply;
+    }
+
+    .entrance-pending .feature-chip,
+    .entrance-pending .menu-mark,
+    .entrance-pending .divider,
+    .entrance-pending .hero-title .line,
+    .entrance-pending .hero-copy,
+    .entrance-pending .product-card {
+      opacity: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .entrance-pending .feature-chip,
+      .entrance-pending .menu-mark,
+      .entrance-pending .divider,
+      .entrance-pending .hero-title .line,
+      .entrance-pending .hero-copy,
+      .entrance-pending .product-card {
+        opacity: 1 !important;
+        translate: none !important;
+        scale: none !important;
+        clip-path: none !important;
+      }
+    }
+
+    @media (max-width: 1180px) {
+      :root {
+        --page-inline: clamp(20px, 4vw, 44px);
+        --page-top: clamp(28px, 4.5vw, 54px);
+        --page-bottom: clamp(32px, 5vw, 60px);
+        --panel-gap: clamp(14px, 2vw, 22px);
+      }
+
+      .stage-content {
+        grid-template-columns: minmax(0, 1fr) minmax(220px, 320px);
+        grid-template-rows: auto auto auto auto;
+      }
+
+      .panels {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        height: auto;
+        min-height: 0;
+        max-height: none;
+      }
+
+      .panel {
+        height: auto;
+        min-height: 520px;
+        aspect-ratio: 633 / 790;
+      }
+
+      .panel-growth {
+        grid-column: 1 / -1;
+        width: 100%;
+        height: clamp(600px, 65vw, 790px);
+        aspect-ratio: auto;
+      }
+    }
+
+    @media (max-width: 820px) {
+      :root {
+        --page-inline: clamp(16px, 4.5vw, 30px);
+        --page-top: clamp(22px, 5vw, 38px);
+        --page-bottom: clamp(28px, 7vw, 48px);
+        --panel-gap: clamp(14px, 3vw, 20px);
+      }
+
+      .stage-content {
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+          "feature menu"
+          "divider divider"
+          "hero hero"
+          "copy copy"
+          "panels panels";
+        grid-template-rows: auto auto auto auto auto;
+        column-gap: 20px;
+      }
+
+      .feature-chip {
+        width: 104px;
+        height: 38px;
+        font-size: 20px;
+      }
+
+      .menu-mark {
+        width: 82px;
+        height: 29px;
+      }
+
+      .menu-mark span:nth-child(1) { width: 39px; }
+      .menu-mark span:nth-child(2) { top: 12px; width: 58px; }
+      .menu-mark span:nth-child(3) { top: 25px; width: 82px; }
+
+      .divider {
+        height: 4px;
+        margin-top: clamp(20px, 4vw, 30px);
+      }
+
+      .hero-title {
+        margin-top: clamp(24px, 5vw, 34px);
+        font-size: clamp(30px, 7.1vw, 46px);
+      }
+
+      .hero-copy {
+        justify-self: start;
+        width: 100%;
+        margin-top: clamp(20px, 4vw, 28px);
+        font-size: clamp(16px, 3.2vw, 20px);
+      }
+
+      .panels {
+        grid-template-columns: minmax(0, 1fr);
+        margin-top: clamp(30px, 7vw, 48px);
+      }
+
+      .panel,
+      .panel-growth {
+        grid-column: auto;
+        width: 100%;
+        height: clamp(480px, 110vw, 790px);
+        min-height: 0;
+        aspect-ratio: auto;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .hero-title {
+        font-size: clamp(27px, 7.6vw, 33px);
+      }
+
+      .hero-copy br {
+        display: none;
+      }
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <main class="viewport" aria-labelledby="page-title">
+    <section class="stage" aria-label="Blossom features showcase">
+      <div class="stage-content">
+        <div class="feature-chip">Features</div>
+
+        <div class="menu-mark" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </div>
+
+        <div class="divider" aria-hidden="true"></div>
+
+        <h1 class="hero-title" id="page-title">
+          <span class="line line-one"><span>The</span><span class="selected-phrase">AI Growth<span class="selection-frame" aria-hidden="true"><i></i><i></i><i></i><i></i></span></span><span>Platform</span></span>
+          <span class="line line-two">for SaaS Teams.</span>
+        </h1>
+
+        <p class="hero-copy">Blossom runs your product data, finds<br>revenue opportunity and runs the right<br>play, automatically</p>
+
+        <section class="panels" aria-label="Product capabilities">
+          <article class="panel panel-ask" aria-labelledby="ask-title">
+            <div class="product-card ask-card">
+              <header class="ask-card-header">
+                <div class="eyebrow">Ask your data</div>
+                <h2 id="ask-title">Anything</h2>
+                <div class="mini-integrations" aria-label="Connected integrations">
+                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.4c2.1 0 3.2 1.4 3.2 3.2 1.8 0 3.2 1.1 3.2 3.2 0 1.8-1.4 3.2-3.2 3.2 0 2.1-1.1 3.2-3.2 3.2-1.8 0-3.2-1.4-3.2-3.2-1.8 0-3.2-1.1-3.2-3.2 0-1.8 1.4-3.2 3.2-3.2 0-1.8 1.4-3.2 3.2-3.2z" stroke="none"/><circle cx="10" cy="8.8" r="2.25" fill="#fff" stroke="none"/></svg>
+                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.2v15.6M3.25 6.1l13.5 7.8M3.25 13.9l13.5-7.8M6.1 3.25l7.8 13.5M13.9 3.25l-7.8 13.5" fill="none" stroke-linecap="round"/></svg>
+                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.2a7.8 7.8 0 00-2.5 15.2c.4.1.5-.2.5-.4v-1.5c-2.2.5-2.7-.9-2.7-.9-.4-.9-.9-1.1-.9-1.1-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-1.8-.2-3.7-.9-3.7-4a3.1 3.1 0 01.8-2.2 2.9 2.9 0 01.1-2.2s.7-.2 2.3.8a8.1 8.1 0 014.2 0c1.6-1 2.3-.8 2.3-.8a2.9 2.9 0 01.1 2.2 3.1 3.1 0 01.8 2.2c0 3.1-1.9 3.8-3.7 4 .3.3.5.8.5 1.5V17c0 .2.1.5.5.4A7.8 7.8 0 0010 2.2z" stroke="none"/></svg>
+                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M4 10h12" fill="none"/></svg>
+                </div>
+              </header>
+
+              <div class="ask-input">
+                <p>Which trials will convert this week?</p>
+                <div class="ask-controls">
+                  <div class="round-button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3.5v9M3.5 8h9"/></svg></div>
+                  <div class="model-pill">GPT 4.0 <span class="chevron" aria-hidden="true"></span></div>
+                  <div class="round-button send-button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 12.5v-9M4.6 6.9L8 3.5l3.4 3.4"/></svg></div>
+                </div>
+              </div>
+
+              <div class="prompt-pills" aria-label="Suggested prompts">
+                <div class="prompt-pill primary">Which trials will convert this week?</div>
+                <div class="prompt-pill">Why did churn spike in May?</div>
+                <div class="prompt-pill">Who's ready to upgrade?</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel panel-workflow" aria-labelledby="workflow-title">
+            <div class="product-card workflow-card">
+              <div class="card-brandbar">
+                <svg class="brand-logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10l5 8-5 8H7l-5-8z" fill="none" stroke="#0067e5" stroke-width="5" stroke-linejoin="round"/></svg>
+                <span class="brand-word">BLOSSOM</span>
+              </div>
+
+              <div class="workflow-copy">
+                <div class="eyebrow">Workflows that</div>
+                <h2 id="workflow-title">Build Themselves</h2>
+              </div>
+
+              <svg class="workflow-chart" viewBox="0 0 1131 765" preserveAspectRatio="none" aria-label="Automated workflow growth chart">
+                <defs>
+                  <linearGradient id="chartGlow" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#016bdc"/>
+                    <stop offset=".2" stop-color="#0163cc"/>
+                    <stop offset=".4" stop-color="#015cba"/>
+                    <stop offset=".6" stop-color="#0255a9"/>
+                    <stop offset=".8" stop-color="#024e99"/>
+                    <stop offset="1" stop-color="#03498c"/>
+                  </linearGradient>
+                  <linearGradient id="workflowStroke" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#d4edff" stop-opacity="1"/>
+                    <stop offset=".18" stop-color="#c9e6ff" stop-opacity=".98"/>
+                    <stop offset=".55" stop-color="#91cafa" stop-opacity=".75"/>
+                    <stop offset="1" stop-color="#5ba7ed" stop-opacity=".08"/>
+                  </linearGradient>
+                  <filter id="workflowLineGlow" x="-150%" y="-15%" width="400%" height="130%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="3.2" result="blur"/>
+                    <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0.14  0 0 1 0 0.34  0 0 0 .22 0" result="glow"/>
+                    <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+                  </filter>
+                </defs>
+                <rect width="1131" height="765" fill="url(#chartGlow)"/>
+                <g id="workflow-lines"></g>
+              </svg>
+            </div>
+          </article>
+
+          <article class="panel panel-growth" aria-labelledby="growth-title">
+            <div class="product-card growth-card">
+              <div class="growth-chart" aria-label="Rising revenue retention bars">
+                <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+              <h2 id="growth-title">Growth Cultivated</h2>
+              <p>Average net revenue retention across 28,000+ teams</p>
+              <div class="growth-brand">
+                <svg class="brand-logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10l5 8-5 8H7l-5-8z" fill="none" stroke="#0873d3" stroke-width="5" stroke-linejoin="round"/></svg>
+                <span>BLOSSOM</span>
+              </div>
+            </div>
+          </article>
+        </section>
+      </div>
+
+      <svg class="grain-overlay" viewBox="0 0 2048 1317" preserveAspectRatio="none" aria-hidden="true">
+        <filter id="paperGrain" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency=".69" numOctaves="4" seed="8" stitchTiles="stitch"/>
+          <feColorMatrix type="saturate" values="0"/>
+          <feComponentTransfer>
+            <feFuncR type="linear" slope=".8" intercept=".15"/>
+            <feFuncG type="linear" slope=".8" intercept=".15"/>
+            <feFuncB type="linear" slope=".8" intercept=".15"/>
+            <feFuncA type="table" tableValues="0 .8"/>
+          </feComponentTransfer>
+        </filter>
+        <rect width="2048" height="1317" filter="url(#paperGrain)" fill="#8a9298"/>
+      </svg>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const panels = [...document.querySelectorAll('.panel')];
+
+      const fitCards = () => {
+        panels.forEach((panel) => {
+          const card = panel.querySelector('.product-card');
+          const panelWidth = panel.clientWidth;
+          const panelHeight = panel.clientHeight;
+          const cardWidth = card.offsetWidth;
+          const cardHeight = card.offsetHeight;
+          const requestedInset = Math.min(
+            62,
+            Math.max(22, panelWidth * .098)
+          );
+          const availableWidth = Math.max(1, panelWidth - (requestedInset * 2));
+          const availableHeight = Math.max(1, panelHeight - (requestedInset * 2));
+          const cardScale = Math.min(
+            1,
+            availableWidth / cardWidth,
+            availableHeight / cardHeight
+          );
+
+          panel.style.setProperty('--card-scale', cardScale.toFixed(6));
+        });
+      };
+
+      const playEntrance = () => {
+        const root = document.documentElement;
+        const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        clearTimeout(window.__blossomEntranceFailsafe);
+
+        if (reduceMotion || !root.classList.contains('entrance-pending')) {
+          root.classList.remove('entrance-pending');
+          return;
+        }
+
+        const animations = [];
+        const animate = (element, keyframes, options) => {
+          if (!element) return;
+          animations.push(element.animate(keyframes, {
+            fill: 'both',
+            ...options
+          }));
+        };
+        const settleEase = 'cubic-bezier(.16, 1, .3, 1)';
+        const revealEase = 'cubic-bezier(.22, 1, .36, 1)';
+        const compactMotion = matchMedia('(max-width: 820px)').matches;
+        const typeTravel = compactMotion ? '10px' : '16px';
+        const cardTravel = compactMotion ? '8px' : '14px';
+
+        animate(document.querySelector('.feature-chip'), [
+          { opacity: 0, translate: '0 -8px' },
+          { opacity: 1, translate: '0 0' }
+        ], { duration: 560, delay: 80, easing: settleEase });
+
+        animate(document.querySelector('.menu-mark'), [
+          { opacity: 0, translate: '0 -7px' },
+          { opacity: 1, translate: '0 0' }
+        ], { duration: 560, delay: 130, easing: settleEase });
+
+        animate(document.querySelector('.divider'), [
+          { opacity: .35, scale: '.04 1', transformOrigin: '0 50%' },
+          { opacity: .9, scale: '1 1', transformOrigin: '0 50%' }
+        ], { duration: 880, delay: 160, easing: revealEase });
+
+        document.querySelectorAll('.hero-title .line').forEach((line, index) => {
+          animate(line, [
+            {
+              opacity: 0,
+              translate: `0 ${typeTravel}`,
+              clipPath: 'inset(100% -5% -20% -5%)'
+            },
+            {
+              opacity: 1,
+              translate: '0 0',
+              clipPath: 'inset(-20% -5% -20% -5%)'
+            }
+          ], {
+            duration: 840,
+            delay: 340 + (index * 120),
+            easing: revealEase
+          });
+        });
+
+        animate(document.querySelector('.hero-copy'), [
+          { opacity: 0, translate: '0 10px' },
+          { opacity: 1, translate: '0 0' }
+        ], { duration: 660, delay: 640, easing: settleEase });
+
+        const visibleCards = [...document.querySelectorAll('.product-card')]
+          .filter((card) => {
+            const bounds = card.getBoundingClientRect();
+            return bounds.top < window.innerHeight && bounds.bottom > 0;
+          });
+
+        visibleCards.forEach((card, index) => {
+          const cardStart = 900 + (index * 110);
+          const within = (selector) => card.querySelector(selector);
+          const revealUp = (element, delay, distance = '7px', duration = 520) => {
+            animate(element, [
+              { opacity: 0, translate: `0 ${distance}` },
+              { opacity: 1, translate: '0 0' }
+            ], { duration, delay, easing: settleEase });
+          };
+
+          animate(card, [
+            {
+              opacity: 0,
+              translate: `0 ${cardTravel}`,
+              scale: '.985',
+              clipPath: 'inset(3% round 22px)'
+            },
+            {
+              opacity: 1,
+              translate: '0 0',
+              scale: '1',
+              clipPath: 'inset(0 round 18px)'
+            }
+          ], {
+            duration: 820,
+            delay: cardStart,
+            easing: settleEase
+          });
+
+          if (card.classList.contains('ask-card')) {
+            revealUp(within('.ask-card-header .eyebrow'), cardStart + 100, '6px', 480);
+            revealUp(within('.ask-card-header h2'), cardStart + 155, '8px', 560);
+
+            animate(within('.mini-integrations'), [
+              { opacity: 0, scale: '.94', transformOrigin: '100% 50%' },
+              { opacity: 1, scale: '1', transformOrigin: '100% 50%' }
+            ], { duration: 520, delay: cardStart + 210, easing: settleEase });
+
+            animate(within('.ask-input'), [
+              {
+                opacity: 0,
+                translate: '0 8px',
+                clipPath: 'inset(0 100% 0 0 round 12px)'
+              },
+              {
+                opacity: 1,
+                translate: '0 0',
+                clipPath: 'inset(0 0 0 0 round 12px)'
+              }
+            ], { duration: 700, delay: cardStart + 300, easing: revealEase });
+
+            revealUp(within('.ask-input p'), cardStart + 430, '5px', 480);
+            revealUp(within('.ask-controls'), cardStart + 500, '5px', 500);
+
+            card.querySelectorAll('.prompt-pill').forEach((pill, pillIndex) => {
+              animate(pill, [
+                { opacity: 0, translate: '0 7px', scale: '.96' },
+                { opacity: 1, translate: '0 0', scale: '1' }
+              ], {
+                duration: 520,
+                delay: cardStart + 640 + (pillIndex * 80),
+                easing: settleEase
+              });
+            });
+          }
+
+          if (card.classList.contains('workflow-card')) {
+            animate(within('.card-brandbar'), [
+              { opacity: 0, clipPath: 'inset(0 100% 0 0)' },
+              { opacity: 1, clipPath: 'inset(0 0 0 0)' }
+            ], { duration: 720, delay: cardStart + 80, easing: revealEase });
+
+            revealUp(within('.workflow-copy .eyebrow'), cardStart + 230, '6px', 460);
+            revealUp(within('.workflow-copy h2'), cardStart + 285, '8px', 580);
+
+            animate(within('.workflow-chart'), [
+              {
+                opacity: 0,
+                clipPath: 'inset(0 0 100% 0 round 13px)'
+              },
+              {
+                opacity: 1,
+                clipPath: 'inset(0 0 0 0 round 13px)'
+              }
+            ], { duration: 780, delay: cardStart + 380, easing: revealEase });
+
+            animate(within('#workflow-lines'), [
+              { opacity: 0, translate: '0 12px' },
+              { opacity: 1, translate: '0 0' }
+            ], { duration: 850, delay: cardStart + 560, easing: settleEase });
+          }
+
+          if (card.classList.contains('growth-card')) {
+            animate(within('.growth-chart'), [
+              {
+                opacity: 0,
+                clipPath: 'inset(100% 0 0 0 round 12px)'
+              },
+              {
+                opacity: 1,
+                clipPath: 'inset(0 0 0 0 round 12px)'
+              }
+            ], { duration: 760, delay: cardStart + 80, easing: revealEase });
+
+            card.querySelectorAll('.bars i').forEach((bar, barIndex) => {
+              animate(bar, [
+                { opacity: .18, scale: '1 .06', transformOrigin: '50% 100%' },
+                { opacity: 1, scale: '1 1', transformOrigin: '50% 100%' }
+              ], {
+                duration: 650,
+                delay: cardStart + 290 + (barIndex * 70),
+                easing: settleEase
+              });
+            });
+
+            revealUp(within('h2'), cardStart + 760, '8px', 580);
+            revealUp(within('p'), cardStart + 850, '6px', 500);
+            revealUp(within('.growth-brand'), cardStart + 930, '5px', 520);
+          }
+        });
+
+        // Non-visible cards are never entrance targets; they remain static when
+        // reached by normal scrolling. WAAPI effects protect visible targets as
+        // the pending class is removed, preventing a flash of final content.
+        root.classList.remove('entrance-pending');
+        root.classList.add('entrance-running');
+
+        Promise.allSettled(animations.map((animation) => animation.finished))
+          .then(() => {
+            animations.forEach((animation) => animation.cancel());
+            root.classList.remove('entrance-running');
+            root.classList.add('entrance-complete');
+          });
+      };
+
+      const buildWorkflowChart = () => {
+        const ns = 'http://www.w3.org/2000/svg';
+        const primary = document.getElementById('workflow-lines');
+
+        const measuredSegments = [[19,82,4,150],[19,373,4,150],[19,669,4,150],[52,50,4,150],[52,340,4,150],[52,635,4,150],[86,20,4,150],[86,308,4,150],[86,601,4,150],[120,-18,4,150],[120,277,4,150],[120,568,4,150],[154,-51,4,150],[154,244,4,150],[154,537,4,150],[190,-86,4,150],[190,212,4,150],[190,504,4,150],[224,-113,4,150],[224,179,4,150],[224,471,4,150],[224,735,4,150],[256,147,4,150],[256,438,4,150],[256,703,4,150],[290,113,4,150],[290,406,4,150],[290,669,4,150],[324,82,4,150],[324,373,4,150],[324,636,4,150],[360,50,4,150],[360,340,4,150],[360,602,4,150],[392,20,4,150],[392,308,4,150],[392,569,4,150],[427,-15,4,150],[427,277,4,150],[427,537,4,150],[460,-49,4,150],[460,245,4,150],[460,504,4,150],[492,-83,4,150],[492,212,4,150],[492,471,4,150],[526,-116,4,150],[526,180,4,150],[526,438,4,150],[562,147,4,150],[562,406,4,150],[596,-117,4,150],[596,179,4,150],[596,438,4,150],[628,-84,4,150],[628,211,4,150],[628,471,4,150],[662,-53,4,150],[662,243,4,150],[662,503,4,150],[696,-20,4,150],[696,276,4,150],[696,536,4,150],[729,20,4,150],[729,308,4,150],[729,568,4,150],[765,50,4,150],[765,340,4,150],[765,602,4,150],[799,82,4,150],[799,373,4,150],[799,635,4,150],[834,113,4,150],[834,406,4,150],[834,669,4,150],[867,146,4,150],[867,438,4,150],[867,703,4,150],[901,-122,4,150],[901,179,4,150],[901,471,4,150],[901,735,4,150],[935,-87,4,150],[935,211,4,150],[935,503,4,150],[969,-52,4,150],[969,243,4,150],[969,535,4,150],[1006,-18,4,150],[1006,276,4,150],[1006,568,4,150],[1041,20,4,150],[1041,308,4,150],[1041,601,4,150],[1075,50,4,150],[1075,340,4,150],[1075,635,4,150],[1107,82,4,150],[1107,373,4,150],[1107,669,4,150]];
+
+        measuredSegments.forEach(([x, y, width, height]) => {
+          const renderedWidth = 3;
+          const segment = document.createElementNS(ns, 'rect');
+          segment.setAttribute('x', x + ((width - renderedWidth) / 2));
+          segment.setAttribute('y', y);
+          segment.setAttribute('width', renderedWidth);
+          segment.setAttribute('height', height);
+          segment.setAttribute('rx', renderedWidth / 2);
+          segment.setAttribute('class', 'trace');
+          primary.appendChild(segment);
+        });
+      };
+
+      buildWorkflowChart();
+      fitCards();
+      requestAnimationFrame(() => requestAnimationFrame(playEntrance));
+
+      let resizeFrame = 0;
+      const scheduleFitCards = () => {
+        cancelAnimationFrame(resizeFrame);
+        resizeFrame = requestAnimationFrame(fitCards);
+      };
+
+      window.addEventListener('resize', scheduleFitCards, { passive: true });
+      window.addEventListener('orientationchange', scheduleFitCards, { passive: true });
+      window.visualViewport?.addEventListener('resize', scheduleFitCards, { passive: true });
+
+      if ('ResizeObserver' in window) {
+        const cardFitObserver = new ResizeObserver(scheduleFitCards);
+        panels.forEach((panel) => cardFitObserver.observe(panel));
+      }
+    })();
+  </script>
+</body>
+</html>

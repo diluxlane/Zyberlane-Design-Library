@@ -1,0 +1,60 @@
+/* The mountain image and its wash stay completely still. */
+@keyframes valta-quiet {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes valta-type {
+  from { opacity: 0; clip-path: inset(100% 0 0); transform: translateY(12px); }
+  to { opacity: 1; clip-path: inset(0); transform: none; }
+}
+@keyframes valta-card {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0); }
+}
+@keyframes valta-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+html.entry-motion .nav__logo,
+html.entry-motion .nav__links,
+html.entry-motion .nav__auth {
+  animation: valta-quiet .55s cubic-bezier(.22,1,.36,1) both;
+}
+html.entry-motion .nav__logo { animation-delay: .04s; }
+html.entry-motion .nav__links { animation-delay: .12s; }
+html.entry-motion .nav__auth { animation-delay: .18s; }
+html.entry-motion .hero__title span {
+  animation: valta-type .82s cubic-bezier(.19,1,.22,1) both;
+}
+html.entry-motion .hero__title span:first-child { animation-delay: .21s; }
+html.entry-motion .hero__title span:last-child { animation-delay: .39s; }
+html.entry-motion .stats li {
+  animation: valta-quiet .55s cubic-bezier(.22,1,.36,1) both;
+}
+html.entry-motion .stats li:nth-child(1) { animation-delay: .68s; }
+html.entry-motion .stats li:nth-child(2) { animation-delay: .76s; }
+html.entry-motion .stats li:nth-child(3) { animation-delay: .84s; }
+html.entry-motion .hero__lede {
+  animation: valta-type .70s cubic-bezier(.19,1,.22,1) .88s both;
+}
+html.entry-motion .cta {
+  animation: valta-quiet .65s cubic-bezier(.22,1,.36,1) 1.11s both;
+}
+html.entry-motion .card {
+  animation: valta-card .88s cubic-bezier(.19,1,.22,1) 1.04s both;
+}
+html.entry-motion .origin,
+html.entry-motion .scroll {
+  animation: valta-fade .45s cubic-bezier(.22,1,.36,1) 1.30s both;
+}
+
+@media (max-width:599.98px) {
+  html.entry-motion .hero__title {
+    animation: valta-type .91s cubic-bezier(.19,1,.22,1) .23s both;
+  }
+  html.entry-motion .hero__title span { animation: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.entry-motion * { animation: none !important; }
+}

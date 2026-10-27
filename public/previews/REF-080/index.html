@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-080/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#020d29">
+<script>
+/* Entrance, step 1 of 2 — runs before first paint. Puts the foreground in its
+   start pose so the final frame never flashes. Skipped for reduced motion.
+   Fail-safe: if the entrance has not started within 3s, show everything. */
+(function(h){try{
+  if(!h.animate||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  h.classList.add('is-entering');
+  setTimeout(function(){h.classList.remove('is-entering')},3000);
+}catch(e){}})(document.documentElement);
+</script>
+<title>Effortless Crypto Control</title>
+<style>
+@font-face{font-family:'Host Grotesk';font-style:normal;font-weight:400;font-display:block;src:url(assets/host-grotesk-400.woff2) format('woff2');}
+@font-face{font-family:'Host Grotesk';font-style:normal;font-weight:500;font-display:block;src:url(assets/host-grotesk-500.woff2) format('woff2');}
+@font-face{font-family:'Host Grotesk';font-style:normal;font-weight:700;font-display:block;src:url(assets/host-grotesk-700.woff2) format('woff2');}
+@font-face{font-family:'Host Grotesk';font-style:normal;font-weight:800;font-display:block;src:url(assets/host-grotesk-800.woff2) format('woff2');}
+
+/* ==========================================================================
+   Effortless Crypto Control — hero
+   Reference frame: 2048 x 1437 px. Every desktop value below is a measured
+   reference pixel multiplied by --u (one reference pixel on screen).
+   ========================================================================== */
+:root{
+  --navy:#020d29;            /* page background, sampled at the frame edges */
+  --vh:100vh;
+  --ink:#0a0a0a;             /* button label / arrow */
+  --sub:rgba(222,240,255,.73);       /* hero sub-copy */
+  --desc:rgba(207,246,255,.65);     /* feature descriptions */
+  --h1-grad:linear-gradient(180deg,rgb(240,246,253) 8.3%,rgb(203,209,219) 25.17%,rgb(163,174,192) 42.05%,rgb(125,136,153) 58.22%,rgb(76,89,108) 75.09%,rgb(29,45,70) 91.97%);
+  --glass:rgba(170,186,190,.35);
+  --art:url(assets/hero-art.webp);
+  --gutter:clamp(20px,calc(4vw + 4px),48px);   /* stacked layouts: outer margin */
+}
+@supports (height:100dvh){:root{--vh:100dvh}}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--navy)}
+body{
+  font-family:'Host Grotesk',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  color:#fff;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  text-rendering:geometricPrecision;
+  -webkit-text-size-adjust:100%;text-size-adjust:100%;
+}
+img{display:block}
+a{color:inherit;text-decoration:none}
+
+/* ---------- shell (stacked layouts: tablet + mobile) ----------
+   The artwork is the hero's own background, sized from the sphere:
+   sphere = 52.22% of the asset width, centred at 49.66%, cropped at the
+   bottom exactly like the design. Being a background it is clipped by
+   the box itself, so nothing overflows and no overflow:hidden is needed. */
+.hero{
+  --sph:min(88vw,46svh,680px);          /* visible sphere diameter */
+  --bgw:calc(var(--sph) / 0.5222);
+  position:relative;isolation:isolate;
+  min-height:100vh;min-height:100svh;width:100%;
+  display:flex;flex-direction:column;align-items:center;
+  padding-bottom:env(safe-area-inset-bottom);
+  background:var(--art) no-repeat,var(--navy);
+  background-size:var(--bgw) auto,auto;
+  /* centre-aligned (50%) puts the asset centre mid-screen; the sphere sits at
+     49.66% of the asset, so nudge by 0.34% of its width */
+  background-position:left calc(50% + var(--bgw) * 0.0034) bottom calc(var(--bgw) * -0.04245),0 0;
+}
+.hero__bg{display:none}
+
+.top{
+  position:relative;width:100%;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:max(clamp(28px,6.5svh,84px),calc(env(safe-area-inset-top) + 16px))
+          max(var(--gutter),env(safe-area-inset-right)) 0
+          max(var(--gutter),env(safe-area-inset-left));
+  /* the copy column is a size container: everything inside scales from the
+     width it really has (no scrollbar / safe-area / gutter surprises) */
+  container:copy / inline-size;
+  flex:1 0 auto;
+}
+/* spare height (tall portrait screens) is shared out instead of pooling in
+   one empty band: a little above the copy, more above the sphere so the
+   glow keeps breathing room — the same rhythm as the desktop frame */
+.top::before,.top::after{content:"";flex:1 1 0;min-height:0}
+.top::after{flex-grow:1.6}
+
+/* ---------- avatar stack ---------- */
+.avatars{
+  --s:calc(clamp(40px,min(12.5cqi,9svh),58px) / 72);
+  position:relative;flex:none;
+  width:calc(285.44 * var(--s));height:calc(72 * var(--s));
+}
+.av{
+  position:absolute;top:0;width:calc(72 * var(--s));height:calc(72 * var(--s));
+  border-radius:50%;overflow:hidden;transform:scale(0.99);
+  border:calc(2.9 * var(--s)) solid #fff;
+  background:#3a4458 center/cover no-repeat;background-origin:border-box;
+}
+.av img{position:absolute;inset:calc(-2.9 * var(--s));width:calc(72 * var(--s));height:calc(72 * var(--s));object-fit:cover}
+.av:nth-child(1){left:calc(0 * var(--s))}
+.av:nth-child(2){left:calc(56.89 * var(--s))}
+.av:nth-child(3){left:calc(113.82 * var(--s))}
+.av:nth-child(4){left:calc(156.41 * var(--s))}
+.av--more{
+  left:calc(213.44 * var(--s));border:0;
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(calc(4 * var(--s)));
+  backdrop-filter:blur(calc(4 * var(--s)));
+  display:grid;place-items:center;
+  font-size:calc(17.07 * var(--s));font-weight:500;line-height:1;letter-spacing:0em;color:#fff;
+  font-variant-numeric:lining-nums;
+}
+.av--more span{transform:translate(calc(-0.8 * var(--s)),calc(0 * var(--s)))}
+
+/* ---------- headline ---------- */
+.title{
+  /* widest line ("CRYPTO CONTROL") is 8.84em wide: size from the copy width,
+     and from the height too so short landscape windows still fit */
+  --h1:min(calc(100cqi / 8.9),104px,10.5svh);
+  margin-top:calc(var(--h1) * 0.18);
+  font-size:var(--h1);font-weight:800;line-height:1;letter-spacing:0em;
+  font-kerning:none;
+  text-transform:uppercase;white-space:nowrap;
+  background:var(--h1-grad);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+}
+.title span{display:block}
+
+.lede{
+  margin-top:clamp(14px,2.4svh,24px);max-width:36ch;text-wrap:balance;
+  font-size:clamp(15px,min(4.2cqi,4.6svh),20px);font-weight:300;line-height:1.28;letter-spacing:0em;
+  color:var(--sub);
+}
+.br-d{display:none}
+.nw{white-space:nowrap}
+
+/* ---------- call to action ---------- */
+.cta{
+  --s:calc(clamp(44px,13cqi,54px) / 70);   /* never below a 44px touch target */
+  margin-top:clamp(18px,3.4svh,36px);
+  display:flex;width:max-content;align-items:center;gap:calc(0.5 * var(--s));
+}
+.cta__label,.cta__icon{
+  height:calc(70 * var(--s));border-radius:999px;background:#fff;color:var(--ink);
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:transform .25s ease,background-color .25s ease;
+}
+.cta__label{
+  min-width:calc(226 * var(--s));padding:0 calc(27 * var(--s));
+  font-size:calc(22.76 * var(--s));font-weight:500;letter-spacing:0em;line-height:1;white-space:nowrap;
+}
+.cta__label span{transform:translateY(calc(0.8 * var(--s)))}
+.cta__icon{width:calc(70 * var(--s))}
+.cta__icon svg{width:calc(70 * var(--s));height:calc(70 * var(--s))}
+@media (hover:hover){.cta:hover .cta__icon{transform:translateX(calc(4 * var(--s)))}}
+.cta:focus-visible{outline:2px solid #7fd6ff;outline-offset:4px;border-radius:999px}
+
+/* ---------- features ----------
+   Desktop frames the sphere with a left-aligned group and a right-aligned
+   group. The stacked layouts keep that mirror and let the copy width decide
+   how the four items are arranged (container queries below). */
+.feats{
+  width:100%;max-width:1040px;
+  margin-top:clamp(22px,5svh,64px);
+  display:grid;grid-template-columns:repeat(2,minmax(0,360px));
+  justify-content:space-between;column-gap:clamp(16px,5cqi,48px);
+  text-align:left;
+}
+.feats__col{display:flex;flex-direction:column;gap:clamp(18px,2.8svh,32px)}
+.feats__col--r{text-align:right}
+.feat h3{
+  font-size:clamp(13.5px,min(3.4cqi,4.2svh),19px);font-weight:800;line-height:1.1;letter-spacing:-0.005em;
+  text-transform:uppercase;color:#fff;text-wrap:balance;
+}
+.feat p{
+  margin-top:.5em;
+  font-size:clamp(12.5px,min(3.1cqi,3.6svh),15px);font-weight:400;line-height:1.3;letter-spacing:0em;
+  color:var(--desc);text-wrap:balance;
+}
+
+/* landscape screens are height-bound: once the copy column can hold four
+   columns of ~150px (every title still in two lines) the items go into one
+   row, still mirrored — left group left-aligned, right group right-aligned.
+   Portrait screens have height to spare and keep the 2x2 framing. */
+@media (orientation:landscape){
+  @container copy (min-width:680px){
+    .feats{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:clamp(24px,3cqi,40px)}
+    .feats__col{display:contents}
+  }
+}
+/* very narrow phones: two columns can no longer hold the titles in two
+   lines, so the items stack, centred like the rest of the copy */
+@container copy (max-width:265px){
+  .feats{grid-template-columns:minmax(0,1fr);row-gap:clamp(18px,2.8svh,32px);text-align:center}
+  .feats__col--r{text-align:center}
+}
+
+/* landscape screens below the desktop composition are height-bound: the
+   headline and sphere size a touch more from height, so the hero still fits */
+@media (orientation:landscape){
+  .hero{--sph:min(88vw,42svh,680px)}
+  .title{--h1:min(calc(100cqi / 8.9),104px,9.2svh)}
+}
+
+/* sphere room: takes whatever height is left so the artwork always sits on
+   the bottom edge; never less than the visible part of the sphere */
+.sphere-room{flex:none;width:100%;height:calc(var(--sph) * .5)}
+
+/* ==========================================================================
+   DESKTOP / LANDSCAPE — reference geometry, width-first
+   --u  = one reference pixel. Width drives the scale: the 2048x1437 frame
+          spans the full viewport width, so no empty side bands on 16:10,
+          16:9 or 3:2 screens. Height only takes over on very wide screens
+          (wider than ~1.8:1) where the copy would otherwise not fit.
+   The frame has three elastic zones that absorb a shorter viewport
+   (--d = how many px the frame is too tall):
+          25% from the space above the avatars   (134 -> min ~59)
+          30% from the gap between CTA and sphere (210 -> min ~120)
+          45% from how much of the sphere is shown (crop more at bottom)
+   --ex = spare height on taller screens; 45% goes above the copy, the rest
+          falls between the CTA and the sphere, so no bare band appears.
+   At the reference ratio both are 0 and the layout is the reference 1:1.
+   ========================================================================== */
+@media (min-width:1000px) and (min-aspect-ratio:5/4){
+  html,body{height:100%;overflow:hidden}
+  .hero{
+    --u:min(calc(100vw / 2048),calc(var(--vh) / 1137));
+    --ex:max(0px,calc(var(--vh) - var(--u) * 1437));
+    --d:max(0px,calc(var(--u) * 1437 - var(--vh)));
+    height:var(--vh);min-height:var(--vh);display:block;padding:0;
+    overflow:hidden;               /* full-viewport stage: the artwork is cropped by design */
+    background:var(--navy);
+  }
+  .hero__bg{
+    display:block;position:absolute;z-index:-1;pointer-events:none;
+    background:var(--art) 0 0/100% 100% no-repeat;
+    width:calc(2035.4 * var(--u));height:calc(1526.4 * var(--u));
+    left:calc(50% + (8 - 1024) * var(--u));
+    bottom:calc(-86.4 * var(--u) - var(--d) * .45);
+  }
+  .top::before,.top::after{content:none}
+  .top{
+    position:static;display:block;container-type:normal;flex:none;
+    /* copy column is centred on x = 1017.5 of the frame (6.5 px left of centre) */
+    padding:calc(135.14 * var(--u) + var(--ex) * .45 - var(--d) * .25) calc(13 * var(--u)) 0 0;
+  }
+  .avatars{--s:var(--u);margin:0 auto}
+  .title{
+    --h1:calc(142.5 * var(--u));
+    margin-top:calc(27.51 * var(--u));
+    line-height:calc(142.22 * var(--u));
+  }
+  .lede{
+    max-width:none;margin:calc(29.0 * var(--u)) auto 0;white-space:nowrap;text-wrap:wrap;
+    font-size:max(calc(28.44 * var(--u)),14px);line-height:max(calc(34.13 * var(--u)),1.2em);
+  }
+  .br-d{display:inline}
+  .cta{--s:var(--u);margin:calc(28.5 * var(--u)) auto 0}
+  .cta__label{font-size:max(calc(22.76 * var(--u)),13px)}
+
+  .feats{position:static;max-width:none;margin:0;display:block}
+  .feats__col{position:absolute;width:calc(345 * var(--u));gap:calc(56.35 * var(--u))}
+  /* side columns keep the reference edge gutters (8% of the width) */
+  .feats__col--l{left:calc(100% * 163.5 / 2048);bottom:calc(266.05 * var(--u) - var(--d) * .45)}
+  .feats__col--r{right:calc(100% * (2048 - 1871.5) / 2048);bottom:calc(265.5 * var(--u) - var(--d) * .45)}
+  /* below ~1235px wide the type floors engage; line-height may not fall
+     under the font size there (at reference scale these maxima are inert) */
+  .feat h3{font-size:max(calc(28.75 * var(--u)),14px);line-height:max(calc(34.13 * var(--u)),1.15em);text-wrap:wrap}
+  .feat p{
+    margin-top:calc(13.9 * var(--u));
+    font-size:max(calc(19.91 * var(--u)),12px);line-height:max(calc(24 * var(--u)),1.2em);
+    text-wrap:wrap;
+  }
+  .sphere-room{display:none}
+}
+/* touch screens in the desktop composition (e.g. tablets in landscape):
+   keep the CTA at least 44px tall; mouse-driven desktops are unaffected */
+@media (min-width:1000px) and (min-aspect-ratio:5/4) and (pointer:coarse){
+  .cta{--s:max(var(--u),calc(44px / 70))}
+}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ---------- entrance (plays once on load, then the page is static) ----------
+   .is-entering  start pose, set in <head> before first paint
+   .is-animating line masks, only while the timeline runs
+   The background artwork is never part of it. */
+.is-entering .avatars,.is-entering .lede,.is-entering .cta__label,.is-entering .cta__icon,
+.is-entering .feat h3,.is-entering .feat p{opacity:0}
+.is-entering .ln__in{translate:0 105%}
+.is-entering .ln,.is-animating .ln{overflow:hidden}
+/* while the lines move, each carries its own half of the headline gradient so
+   its lighting travels with it; at rest the single original gradient returns */
+.is-entering .title,.is-animating .title{background:none}
+.is-entering .ln__in,.is-animating .ln__in{
+  background:var(--h1-grad) 0 0/100% 200% no-repeat;
+  -webkit-background-clip:text;background-clip:text;
+}
+.is-entering .ln + .ln .ln__in,.is-animating .ln + .ln .ln__in{background-position:0 100%}
+</style>
+</head>
+<body>
+<main class="hero">
+  <div class="hero__bg" aria-hidden="true"></div>
+
+  <section class="top" aria-labelledby="hero-title">
+    <div class="avatars" role="img" aria-label="Joined by 12 people">
+      <span class="av"><img src="assets/avatar-1.jpg" alt=""></span>
+      <span class="av"><img src="assets/avatar-2.jpg" alt=""></span>
+      <span class="av"><img src="assets/avatar-3.jpg" alt=""></span>
+      <span class="av"><img src="assets/avatar-4.jpg" alt=""></span>
+      <span class="av av--more"><span>+8</span></span>
+    </div>
+
+    <h1 class="title" id="hero-title"><span class="ln"><span class="ln__in">Effortless</span></span><span class="ln"><span class="ln__in">Crypto Control</span></span></h1>
+
+    <p class="lede">Manage, trade, and explore crypto effortlessly with a secure and intuitive<br class="br-d"> Web3 platform.</p>
+
+    <a class="cta" href="#get-started" aria-label="Get started now">
+      <span class="cta__label"><span>Get started now</span></span>
+      <span class="cta__icon" aria-hidden="true">
+        <svg viewBox="0 0 70 70" fill="none"><path d="M25 35H43.7M36.2 27.5L43.7 35L36.2 42.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </a>
+
+    <div class="feats">
+      <div class="feats__col feats__col--l">
+        <article class="feat"><h3>Secure wallet integration</h3><p>Manage your crypto safely in one place.</p></article>
+        <article class="feat"><h3>Seamless trading</h3><p>Buy, sell, and swap crypto with ease.</p></article>
+      </div>
+      <div class="feats__col feats__col--r">
+        <article class="feat"><h3>DeFi tools</h3><p>Access decentralized finance tools directly <span class="nw">in-app.</span></p></article>
+        <article class="feat"><h3><span class="nw">Real-time</span> insights</h3><p>Stay informed with live market data and analytics.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <div class="sphere-room" aria-hidden="true"></div>
+</main>
+<script>
+/* Entrance, step 2 of 2 — one master timeline on the Web Animations API.
+   Every tween is transform/opacity only, uses fill:"backwards" (holds its start
+   pose until its moment), and leaves no fill behind: when it ends the element
+   is simply back on its authored styles. When the last tween ends, all
+   animations are cancelled and the helper classes removed — nothing keeps
+   running. It runs once per page load. */
+(function(){
+  var html=document.documentElement, started=false;
+  if(!html.classList.contains('is-entering')) return;
+
+  function run(){
+    if(started) return; started=true;
+    var $=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
+    var one=function(s){return document.querySelector(s)};
+    var EXPO='cubic-bezier(0.16,1,0.3,1)',     // arrivals: fast start, long settle
+        QUINT='cubic-bezier(0.22,1,0.36,1)';    // smaller supporting moves
+    // stacked tablet/mobile layouts: same language, a little tighter
+    var stacked=!matchMedia('(min-width:1000px) and (min-aspect-ratio:5/4)').matches;
+    var T=stacked?0.88:1;
+    var anims=[];
+    function tween(el,from,to,at,dur,ease){
+      if(!el) return;
+      anims.push(el.animate([from,to],{delay:at*T*1000,duration:dur*T*1000,easing:ease,fill:'backwards'}));
+    }
+
+    /* 0.00  stage: background, glow and sphere are already there, untouched */
+
+    /* 0.12  social proof — the stack unrolls left to right behind a pill-shaped
+       wipe (the CTA's shape), revealing each circle in the order they overlap.
+       Animated as one group: the circles themselves are never touched. */
+    tween(one('.avatars'),
+      {opacity:0,translate:'0 10%',clipPath:'inset(-15% 100% -15% -15% round 999px)'},
+      {opacity:1,translate:'0 0',clipPath:'inset(-15% -15% -15% -15% round 999px)'},0.12,0.95,EXPO);
+
+    /* 0.24  headline — each line rises out of its own mask, line two a beat later */
+    $('.ln__in').forEach(function(el,i){
+      tween(el,{translate:'0 105%'},{translate:'0 0'},0.24+i*0.11,1.1,EXPO);
+    });
+
+    /* 0.66  supporting copy — short soft rise while the headline is still settling */
+    tween(one('.lede'),{opacity:0,translate:'0 0.7em'},{opacity:1,translate:'0 0'},0.66,0.9,EXPO);
+
+    /* 0.90  call to action — the pill settles, then the arrow docks in the direction it points */
+    tween(one('.cta__label'),{opacity:0,translate:'0 22%',scale:'0.97'},{opacity:1,translate:'0 0',scale:'1'},0.9,0.85,EXPO);
+    tween(one('.cta__icon'),{opacity:0,translate:'-26% 0'},{opacity:1,translate:'0 0'},1.0,0.85,EXPO);
+
+    /* 1.06  features — they frame the sphere, so they arrive last, in visual rows:
+       mirrored items together, title then description. Rows are read from the
+       live layout, so desktop, 2x2 and one-row arrangements all stay coherent. */
+    var feats=$('.feat').map(function(el){var r=el.getBoundingClientRect();return {el:el,top:r.top,cx:r.left+r.width/2}});
+    var rowTops=[];
+    feats.sort(function(a,b){return a.top-b.top}).forEach(function(f){
+      var lh=parseFloat(getComputedStyle(f.el.querySelector('h3')).fontSize)*1.5;
+      var row=rowTops.findIndex(function(t){return Math.abs(t-f.top)<lh});
+      if(row<0){rowTops.push(f.top);row=rowTops.length-1}
+      // within a row, items nearer the centre (the sphere's axis) lead slightly
+      var spread=Math.abs(f.cx-innerWidth/2)/(innerWidth/2);
+      var at=1.06+row*0.12+spread*0.05;
+      tween(f.el.querySelector('h3'),{opacity:0,translate:'0 0.6em'},{opacity:1,translate:'0 0'},at,0.8,QUINT);
+      tween(f.el.querySelector('p'),{opacity:0,translate:'0 0.8em'},{opacity:1,translate:'0 0'},at+0.07,0.8,QUINT);
+    });
+
+    // all start poses are now held by the animations: swap the CSS pose for the masks
+    html.classList.add('is-animating');
+    html.classList.remove('is-entering');
+
+    Promise.all(anims.map(function(a){return a.finished})).then(function(){
+      anims.forEach(function(a){a.cancel()});   // nothing left on the timeline
+      html.classList.remove('is-animating');      // masks off; final frame = the design
+    },function(){html.classList.remove('is-animating')});
+  }
+
+  // start once the embedded fonts are ready (so line masks wrap real glyphs);
+  // never wait more than 600ms for them
+  var ready=document.fonts&&document.fonts.ready?Promise.race([document.fonts.ready,new Promise(function(r){setTimeout(r,600)})]):Promise.resolve();
+  ready.then(function(){requestAnimationFrame(run)});
+})();
+</script>
+</body>
+</html>

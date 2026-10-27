@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-095/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#030303">
+<title>Insight AI — Sign up</title>
+<script>
+  // Set the first-frame state before the page is painted. Without JavaScript,
+  // or with reduced motion enabled, the original static page is shown.
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('entrance');
+  }
+</script>
+<style>
+/* Inter (variable, wght + opsz axes) — hosted locally so the file works offline */
+@font-face {
+  font-family: "Inter Embedded";
+  src: url(asset/inter-embedded.woff2) format("woff2");
+  font-weight: 100 900; font-style: normal; font-display: block;
+}
+
+/* ------------------------------------------------------------------
+   Scaling architecture
+   Every measurement is authored in reference pixels (1580 x 996) and
+   multiplied by --u (screen px per reference px). Desktop / landscape:
+   --u = min(vw/1580, vh/996) so the composition keeps its exact
+   proportions; the lighting layers are full-bleed and anchored to the
+   edges / content column, so no viewport ever shows an empty band.
+   ------------------------------------------------------------------ */
+:root {
+  --u: min(calc(100vw / 1580), calc(100dvh / 996));
+  --vh: 100dvh;
+  --bg: #030303;
+  /* centre line of the content column: main area centre + 3px offset */
+  --cx: calc(50vw + calc(42.4 * var(--u)));
+  /* top of the content frame (reference y = 200) stays centred vertically */
+  --frame-top: calc(var(--vh) / 2 - calc(298 * var(--u)));
+  --font: "Inter Embedded", Inter, "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+@supports not (height: 100dvh) { :root { --vh: 100vh; --u: min(calc(100vw / 1580), calc(100vh / 996)); } }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: var(--bg); overflow: hidden; }
+body { font-family: var(--font); color: #fff; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision; font-synthesis: none; }
+button, input { font: inherit; color: inherit; background: none; border: 0; outline: 0; }
+button { cursor: pointer; }
+svg { display: block; overflow: visible; }
+
+.app { position: fixed; inset: 0; overflow: hidden; background: var(--bg); isolation: isolate; }
+
+/* ---------------- lighting ---------------- */
+.light { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.left-glow { position: absolute; left: 0; width: calc(340 * var(--u));
+  top: calc(var(--vh) / 2 + calc(-798 * var(--u))); height: calc(1600 * var(--u));
+  background: linear-gradient(to right, rgba(255,255,255,0.1139) 0, rgba(255,255,255,0.1235) calc(40 * var(--u)), rgba(255,255,255,0.104) calc(80 * var(--u)), rgba(255,255,255,0.0941) calc(100 * var(--u)), rgba(255,255,255,0.0835) calc(120 * var(--u)), rgba(255,255,255,0.0706) calc(140 * var(--u)), rgba(255,255,255,0.0574) calc(160 * var(--u)), rgba(255,255,255,0.0428) calc(180 * var(--u)), rgba(255,255,255,0.0305) calc(200 * var(--u)), rgba(255,255,255,0.0177) calc(220 * var(--u)), rgba(255,255,255,0.0088) calc(240 * var(--u)), rgba(255,255,255,0.0008) calc(270 * var(--u)), rgba(255,255,255,0) calc(300 * var(--u)), rgba(255,255,255,0) calc(340 * var(--u)));
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1864) 18.75%, rgba(0,0,0,0.2707) 21.875%, rgba(0,0,0,0.3935) 25%, rgba(0,0,0,0.4861) 28.125%, rgba(0,0,0,0.5709) 31.25%, rgba(0,0,0,0.6831) 34.375%, rgba(0,0,0,0.7959) 37.5%, rgba(0,0,0,0.8942) 40.625%, rgba(0,0,0,0.9608) 43.75%, rgba(0,0,0,0.9825) 46.875%, rgba(0,0,0,0.9196) 50%, rgba(0,0,0,0.7809) 53.125%, rgba(0,0,0,0.6412) 56.25%, rgba(0,0,0,0.5005) 59.375%, rgba(0,0,0,0.3519) 62.5%, rgba(0,0,0,0.1927) 65.625%, rgba(0,0,0,0.095) 68.75%, rgba(0,0,0,0.0458) 71.875%, rgba(0,0,0,0.0107) 75%, rgba(0,0,0,0) 78.125%, rgba(0,0,0,0) 81.25%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1864) 18.75%, rgba(0,0,0,0.2707) 21.875%, rgba(0,0,0,0.3935) 25%, rgba(0,0,0,0.4861) 28.125%, rgba(0,0,0,0.5709) 31.25%, rgba(0,0,0,0.6831) 34.375%, rgba(0,0,0,0.7959) 37.5%, rgba(0,0,0,0.8942) 40.625%, rgba(0,0,0,0.9608) 43.75%, rgba(0,0,0,0.9825) 46.875%, rgba(0,0,0,0.9196) 50%, rgba(0,0,0,0.7809) 53.125%, rgba(0,0,0,0.6412) 56.25%, rgba(0,0,0,0.5005) 59.375%, rgba(0,0,0,0.3519) 62.5%, rgba(0,0,0,0.1927) 65.625%, rgba(0,0,0,0.095) 68.75%, rgba(0,0,0,0.0458) 71.875%, rgba(0,0,0,0.0107) 75%, rgba(0,0,0,0) 78.125%, rgba(0,0,0,0) 81.25%, rgba(0,0,0,0) 100%); }
+/* the beam rig: reference y -80 maps to -80u, reference y 232 maps to the heading,
+   so on taller screens the light stretches down to the content instead of leaving a gap */
+.beam { position: absolute; left: 0; right: 0; top: calc(-80 * var(--u));
+  height: calc((var(--frame-top) + calc(112 * var(--u))) * 2.435897); }
+.halo { position: absolute; left: calc(var(--cx) + calc(-392.4 * var(--u))); width: calc(800 * var(--u));
+  top: 0; height: 100%;
+  background: linear-gradient(to right, rgba(255,255,255,0.0063) 0%, rgba(255,255,255,0.0091) 5%, rgba(255,255,255,0.0143) 10%, rgba(255,255,255,0.0244) 15%, rgba(255,255,255,0.036) 20%, rgba(255,255,255,0.0489) 25%, rgba(255,255,255,0.0667) 30%, rgba(255,255,255,0.0896) 35%, rgba(255,255,255,0.0916) 40%, rgba(255,255,255,0.123) 45%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.105) 55%, rgba(255,255,255,0.097) 60%, rgba(255,255,255,0.0789) 65%, rgba(255,255,255,0.0621) 70%, rgba(255,255,255,0.0445) 75%, rgba(255,255,255,0.0331) 80%, rgba(255,255,255,0.0218) 85%, rgba(255,255,255,0.0128) 90%, rgba(255,255,255,0.0089) 95%, rgba(255,255,255,0.0063) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.3975) 0%, rgba(0,0,0,0.3975) 10.526%, rgba(0,0,0,0.5409) 15.789%, rgba(0,0,0,0.6976) 21.053%, rgba(0,0,0,0.8792) 26.316%, rgba(0,0,0,0.9406) 31.579%, rgba(0,0,0,0.9786) 36.842%, rgba(0,0,0,0.9883) 42.105%, rgba(0,0,0,0.9616) 47.368%, rgba(0,0,0,0.9169) 52.632%, rgba(0,0,0,0.7815) 57.895%, rgba(0,0,0,0.6456) 63.158%, rgba(0,0,0,0.4789) 68.421%, rgba(0,0,0,0.3355) 73.684%, rgba(0,0,0,0.2307) 78.947%, rgba(0,0,0,0.1299) 84.211%, rgba(0,0,0,0.0925) 89.474%, rgba(0,0,0,0.0676) 94.737%, rgba(0,0,0,0.0042) 100%); mask-image: linear-gradient(to bottom, rgba(0,0,0,0.3975) 0%, rgba(0,0,0,0.3975) 10.526%, rgba(0,0,0,0.5409) 15.789%, rgba(0,0,0,0.6976) 21.053%, rgba(0,0,0,0.8792) 26.316%, rgba(0,0,0,0.9406) 31.579%, rgba(0,0,0,0.9786) 36.842%, rgba(0,0,0,0.9883) 42.105%, rgba(0,0,0,0.9616) 47.368%, rgba(0,0,0,0.9169) 52.632%, rgba(0,0,0,0.7815) 57.895%, rgba(0,0,0,0.6456) 63.158%, rgba(0,0,0,0.4789) 68.421%, rgba(0,0,0,0.3355) 73.684%, rgba(0,0,0,0.2307) 78.947%, rgba(0,0,0,0.1299) 84.211%, rgba(0,0,0,0.0925) 89.474%, rgba(0,0,0,0.0676) 94.737%, rgba(0,0,0,0.0042) 100%); }
+.cone { position: absolute; }
+.cone::before { content: ""; position: absolute; inset: 0; }
+
+    .cone-0 { left: calc(var(--cx) + calc(-22.771 * var(--u))); width: calc(30.769 * var(--u));
+      top: 0; height: 68.4211%; filter: blur(calc(10.134 * var(--u))); }
+    .cone-0::before { clip-path: polygon(43.658% 0, 56.342% 0, 100% 100%, 0 100%);
+      background: linear-gradient(to bottom, rgba(255,255,255,0.995) 0%, rgba(255,255,255,0) 7.692%, rgba(255,255,255,0) 15.385%, rgba(255,255,255,0.1338) 23.077%, rgba(255,255,255,0.5042) 30.769%, rgba(255,255,255,0.4618) 38.462%, rgba(255,255,255,0.3669) 46.154%, rgba(255,255,255,0.3613) 53.846%, rgba(255,255,255,0.2161) 61.538%, rgba(255,255,255,0.2066) 69.231%, rgba(255,255,255,0.116) 76.923%, rgba(255,255,255,0.0548) 84.615%, rgba(255,255,255,0.0304) 92.308%, rgba(255,255,255,0) 100%); }
+    .cone-1 { left: calc(var(--cx) + calc(-93.707 * var(--u))); width: calc(169.91 * var(--u));
+      top: 0; height: 68.4211%; filter: blur(calc(20.586 * var(--u))); }
+    .cone-1::before { clip-path: polygon(49.706% 0, 50.294% 0, 100% 100%, 0 100%);
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 7.692%, rgba(255,255,255,0) 15.385%, rgba(255,255,255,0.0135) 23.077%, rgba(255,255,255,0.1525) 30.769%, rgba(255,255,255,0.1009) 38.462%, rgba(255,255,255,0.1741) 46.154%, rgba(255,255,255,0.2516) 53.846%, rgba(255,255,255,0.3278) 61.538%, rgba(255,255,255,0.2953) 69.231%, rgba(255,255,255,0.2416) 76.923%, rgba(255,255,255,0.0969) 84.615%, rgba(255,255,255,0.0616) 92.308%, rgba(255,255,255,0.0254) 100%); }
+
+/* ---------------- rail ---------------- */
+.rail { position: absolute; left: 0; top: 0; bottom: 0; width: calc(77 * var(--u)); z-index: 2; }
+.rail::after { content: ""; position: absolute; top: 0; bottom: 0; left: calc(77 * var(--u)); width: max(1px, calc(1 * var(--u)));
+  background: rgba(56,56,56,.75); }
+.logo { position: absolute; left: calc(13.8 * var(--u)); top: calc(21.7 * var(--u)); width: calc(44 * var(--u)); height: calc(40 * var(--u)); color: #fff; }
+.logo path { fill: none; stroke: currentColor; stroke-width: 3.64; stroke-linejoin: round; }
+
+.glass-key { position: absolute; left: calc(15.9 * var(--u)); width: calc(45 * var(--u)); height: calc(45 * var(--u));
+  border-radius: calc(10 * var(--u)); display: grid; place-items: center; color: #fff;
+  background: var(--k-glow), var(--k-base);
+  -webkit-backdrop-filter: blur(calc(12 * var(--u))); backdrop-filter: blur(calc(12 * var(--u)));
+  transition: transform .2s ease, filter .2s ease; }
+.glass-key::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: max(1px, calc(1 * var(--u)));
+  background: var(--k-rim);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); pointer-events: none; }
+.key-new { --k-base: rgb(28,28,28); --k-glow: radial-gradient(ellipse 38.9% 27.1% at 50% 0%, rgba(255,255,255,0.3028), rgba(255,255,255,0)), radial-gradient(ellipse 43.0% 24.9% at 50% 100%, rgba(255,255,255,0.2141), rgba(255,255,255,0)); --k-rim: radial-gradient(ellipse 30.7% 50.0% at 50% 100%, rgba(255,255,255,0.2815), rgba(255,255,255,0)); }
+.key-user { --k-base: rgb(28,28,28); --k-glow: radial-gradient(ellipse 40.0% 26.4% at 50% 0%, rgba(255,255,255,0.2658), rgba(255,255,255,0)), radial-gradient(ellipse 41.3% 26.3% at 50% 100%, rgba(255,255,255,0.3454), rgba(255,255,255,0)); --k-rim: radial-gradient(ellipse 31.6% 50.0% at 50% 0%, rgba(255,255,255,0.2872), rgba(255,255,255,0)); }
+.glass-key:hover { filter: brightness(1.18); }
+.glass-key:active { transform: scale(.96); }
+.key-new { top: calc(85.5 * var(--u)); }
+.key-user { bottom: calc(25.5 * var(--u));  }
+
+.nav-ico { position: absolute; left: calc(26 * var(--u)); width: calc(24 * var(--u)); height: calc(24 * var(--u)); color: #ffffff;
+  display: block; border-radius: calc(8 * var(--u)); transition: color .2s ease; }
+.nav-ico svg { width: 100%; height: 100%; }
+.nav-ico .s { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.nav-ico:hover { color: #fff; }
+.ico-doc { top: calc(155.6 * var(--u)); margin-left: calc(-0.3 * var(--u)); }
+.ico-compass { top: calc(213.9 * var(--u)); margin-left: calc(-0.3 * var(--u)); }
+.ico-grid { top: calc(273 * var(--u)); margin-left: calc(0.47 * var(--u)); }
+.ico-chart { top: calc(332 * var(--u)); margin-left: calc(-0.47 * var(--u)); }
+.ico-more { top: calc(389.8 * var(--u)); margin-left: calc(-0.38 * var(--u)); }
+
+.dots circle { fill: currentColor; }
+
+/* ---------------- auth column ---------------- */
+.auth { position: absolute; z-index: 1; left: calc(var(--cx) - calc(209.8 * var(--u))); width: calc(419.6 * var(--u));
+  top: var(--frame-top); height: calc(600 * var(--u)); }
+.t { position: absolute; left: 50%; white-space: nowrap; line-height: 1; transform: translateX(-50%); }
+h1.t { font-weight: 500; font-size: calc(36 * var(--u)); letter-spacing: calc(-0.08 * var(--u));
+  font-variation-settings: "opsz" 32; color: #fff; text-align: center; line-height: calc(55 * var(--u)); margin-left: calc(-0.55 * var(--u));
+  top: calc(18.921 * var(--u)); }
+h1.t span { display: block; }
+.sub { font-weight: 500; font-size: calc(17.6 * var(--u)); letter-spacing: calc(-0.17 * var(--u));
+  font-variation-settings: "opsz" 17.6; color: #fff; margin-left: calc(0.85 * var(--u));
+  top: calc(144.906 * var(--u)); }
+.sub a { color: inherit; text-decoration: none; position: relative; }
+.sub a::after { content: ""; position: absolute; left: 0; right: 0;
+  top: calc(18.794 * var(--u)); height: max(1px, calc(1 * var(--u))); background: currentColor; }
+
+.btn { position: absolute; left: 0; width: 100%; display: flex; align-items: center; justify-content: center;
+  border-radius: calc(12 * var(--u)); white-space: nowrap; transition: transform .18s ease, background-color .18s ease, filter .18s ease; }
+.btn:active { transform: scale(.985); }
+.btn-light { height: calc(58.5 * var(--u)); background: #fefefe; color: #000;
+  box-shadow: inset 0 0 0 1px #fff, inset 0 1px 3px rgba(0,0,0,.05), inset 3px 0 4px -1px rgba(0,0,0,.05), inset -2px 0 3px -1px rgba(0,0,0,.03); }
+.btn-light:hover { filter: brightness(.97); }
+.btn-light .lbl { font-weight: 500; font-size: calc(14.6 * var(--u)); letter-spacing: 0;
+  font-variation-settings: "opsz" 14.6; line-height: 1; }
+.btn-apple { top: calc(209.5 * var(--u)); padding-left: calc(4.2 * var(--u)); padding-right: 0; }
+.btn-google { top: calc(282.25 * var(--u)); padding-left: calc(2.7 * var(--u)); padding-right: 0; }
+.btn svg { flex: none; fill: currentColor; }
+.apple-ico { width: calc(17.1 * var(--u)); height: calc(21 * var(--u)); margin-right: calc(16.5 * var(--u)); transform: translate(calc(-0.4 * var(--u)), calc(-0.4 * var(--u))); }
+.google-ico { width: calc(18.6 * var(--u)); height: calc(19.1 * var(--u)); margin-right: calc(16.5 * var(--u)); transform: translate(calc(0.4 * var(--u)), calc(-0.1 * var(--u))); }
+.btn-apple .lbl { transform: translate(calc(-0.7 * var(--u)), calc(1.6 * var(--u))); }
+.btn-google .lbl { transform: translate(calc(-0.3 * var(--u)), calc(1.2 * var(--u))); }
+
+.divider { position: absolute; left: 0; width: 100%; top: calc(369.9 * var(--u)); height: max(1px, calc(1 * var(--u)));
+  background: linear-gradient(to right, rgba(255,255,255,.025) 0, rgba(255,255,255,.025) calc(9.5 * var(--u)), rgba(255,255,255,.068) calc(9.5 * var(--u))); }
+
+.field { position: absolute; left: 0; width: 100%; top: calc(400 * var(--u)); height: calc(59 * var(--u)); border-radius: calc(12 * var(--u));
+  background: rgba(255,255,255,.118); border: max(1px, calc(1 * var(--u))) solid rgba(255,255,255,.24);
+  -webkit-backdrop-filter: blur(calc(16 * var(--u))) saturate(120%); backdrop-filter: blur(calc(16 * var(--u))) saturate(120%);
+  transition: border-color .2s ease, box-shadow .2s ease; }
+.field:focus-within { border-color: rgba(255,255,255,.34); box-shadow: 0 0 0 calc(3 * var(--u)) rgba(255,255,255,.06); }
+.field svg { position: absolute; left: calc(12.5 * var(--u)); top: calc(16.2 * var(--u)); width: calc(24 * var(--u)); height: calc(24 * var(--u)); color: rgba(255,255,255,.95); }
+.field svg path { fill: none; stroke: currentColor; stroke-width: 1.65; stroke-linecap: round; stroke-linejoin: round; }
+.field input { position: absolute; inset: 0; width: 100%; padding: 0 calc(16 * var(--u)) 0 calc(48.9 * var(--u));
+  font-weight: 420; font-size: calc(13.35 * var(--u)); letter-spacing: 0;
+  font-variation-settings: "opsz" 13.35; color: #fff; caret-color: #fff; line-height: 1;
+  padding-top: calc(0.6 * var(--u)); }
+.field input::placeholder { color: #d6d6d6; opacity: 1; }
+
+.btn-dim { top: calc(478.55 * var(--u)); height: calc(58.25 * var(--u)); background: rgba(255,255,255,.102); color: #a0a0a0;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.016);
+  -webkit-backdrop-filter: blur(calc(16 * var(--u))); backdrop-filter: blur(calc(16 * var(--u))); }
+.btn-dim .lbl { font-weight: 430; font-size: calc(13.6 * var(--u)); letter-spacing: 0;
+  font-variation-settings: "opsz" 13.6; line-height: 1; transform: translate(calc(0.75 * var(--u)), calc(1 * var(--u))); }
+.btn-dim.ready { background: rgba(255,255,255,.92); color: #000; }
+
+.close { font-weight: 470; font-size: calc(17.8 * var(--u)); letter-spacing: calc(-0.15 * var(--u));
+  font-variation-settings: "opsz" 17.8; color: #fff; margin-left: calc(-0.25 * var(--u));
+  top: calc(577.034 * var(--u)); padding: 0; }
+.close:hover { opacity: .75; }
+
+:focus-visible { outline: max(2px, calc(2 * var(--u))) solid rgba(255,255,255,.55); outline-offset: calc(3 * var(--u)); }
+
+/* ------------------------------------------------------------------
+   Portrait / narrow screens: the 1580x996 frame would shrink the form
+   below a usable size, so the same components reflow. The rail becomes
+   a top bar (logo + profile) and a bottom glass dock (navigation); the
+   form column fills the width. Unit: 1 reference px = width/470.
+   ------------------------------------------------------------------ */
+@media (max-aspect-ratio: 1/1) {
+  :root {
+    --u: min(calc(100vw / 470), 1.25px);
+    --cx: 50vw;
+    --frame-top: max(calc(84 * var(--u)), calc(var(--vh) / 2 - calc(330 * var(--u))));
+  }
+  html, body { height: auto; min-height: 100%; overflow-x: hidden; overflow-y: auto; }
+  .app { position: relative; min-height: var(--vh); height: max(var(--vh), calc(var(--frame-top) + calc(760 * var(--u)))); }
+  .left-glow { top: calc(-200 * var(--u)); }
+  .rail { position: absolute; inset: 0; width: auto; pointer-events: none; }
+  .rail > * { pointer-events: auto; }
+  .rail::after { display: none; }
+  .logo { left: calc(14 * var(--u)); top: max(calc(6 * var(--u)), env(safe-area-inset-top)); }
+  .key-new { top: max(calc(13 * var(--u)), env(safe-area-inset-top)); left: auto; right: calc(80 * var(--u)); }
+  .key-user { top: max(calc(13 * var(--u)), env(safe-area-inset-top)); bottom: auto; left: auto; right: calc(20 * var(--u)); }
+  .dock { position: fixed; left: 50%; transform: translateX(-50%); bottom: max(calc(16 * var(--u)), env(safe-area-inset-bottom));
+    width: calc(300 * var(--u)); height: calc(56 * var(--u)); border-radius: calc(18 * var(--u));
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08);
+    -webkit-backdrop-filter: blur(16px) saturate(140%); backdrop-filter: blur(16px) saturate(140%);
+    box-shadow: 0 10px 30px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.08); }
+  .dock .nav-ico { top: calc(16 * var(--u)); }
+  .ico-doc { left: calc(26 * var(--u)); } .ico-compass { left: calc(84 * var(--u)); } .ico-grid { left: calc(142 * var(--u)); }
+  .ico-chart { left: calc(200 * var(--u)); } .ico-more { left: calc(252 * var(--u)); top: calc(16 * var(--u)); }
+}
+/* Short landscape screens (phones on their side): keep the desktop composition
+   but never shrink below a legible scale; the page scrolls instead. */
+@media (min-aspect-ratio: 1001/1000) and (max-height: 600px) {
+  :root {
+    --u: max(min(calc(100vw / 1580), calc(var(--vh) / 996)), min(calc(100vw / 1200), 0.75px));
+    --frame-top: max(calc(var(--vh) / 2 - calc(298 * var(--u))), calc(22px - calc(32 * var(--u))));
+  }
+  html, body { height: auto; min-height: 100%; overflow-x: hidden; overflow-y: auto; }
+  .app { position: relative; min-height: var(--vh); height: max(var(--vh), calc(var(--frame-top) + calc(616 * var(--u))), calc(470 * var(--u))); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* One opening sequence. The light and all background layers stay fixed. */
+@media (prefers-reduced-motion: no-preference) {
+  .entrance .rail .logo {
+    animation: entrance-rail .48s cubic-bezier(.22, 1, .36, 1) .06s both;
+  }
+  .entrance .rail .key-new,
+  .entrance .rail .key-user,
+  .entrance .rail .nav-ico {
+    animation: entrance-rail .54s cubic-bezier(.22, 1, .36, 1) .19s both;
+  }
+  .entrance h1.t span {
+    animation: entrance-title .84s cubic-bezier(.16, 1, .3, 1) both;
+  }
+  .entrance h1.t span:first-child { animation-delay: .31s; }
+  .entrance h1.t span:last-child { animation-delay: .45s; }
+  .entrance .sub {
+    animation: entrance-copy .58s cubic-bezier(.22, 1, .36, 1) .76s both;
+  }
+  .entrance .btn-apple {
+    animation: entrance-control .68s cubic-bezier(.22, 1, .36, 1) .94s both;
+  }
+  .entrance .btn-google {
+    animation: entrance-control .68s cubic-bezier(.22, 1, .36, 1) 1.07s both;
+  }
+  .entrance .divider {
+    animation: entrance-rule .48s cubic-bezier(.22, 1, .36, 1) 1.17s both;
+  }
+  .entrance .field {
+    animation: entrance-control .68s cubic-bezier(.22, 1, .36, 1) 1.30s both;
+  }
+  .entrance .btn-dim {
+    animation: entrance-control .68s cubic-bezier(.22, 1, .36, 1) 1.42s both;
+  }
+  .entrance .close {
+    animation: entrance-copy .48s cubic-bezier(.22, 1, .36, 1) 1.66s both;
+  }
+  @media (max-aspect-ratio: 1/1) {
+    .entrance .rail .nav-ico { animation: none; }
+    .entrance .rail .dock {
+      animation: entrance-dock .54s cubic-bezier(.22, 1, .36, 1) .19s both;
+    }
+  }
+}
+@keyframes entrance-rail {
+  from { opacity: 0; translate: -5px 0; }
+  to { opacity: 1; translate: none; }
+}
+@keyframes entrance-dock {
+  from { opacity: 0; translate: 0 7px; }
+  to { opacity: 1; translate: none; }
+}
+@keyframes entrance-title {
+  from { opacity: .55; clip-path: inset(0 0 100% 0); translate: 0 11px; }
+  to { opacity: 1; clip-path: inset(0 0 0 0); translate: none; }
+}
+@keyframes entrance-copy {
+  from { opacity: 0; translate: 0 6px; }
+  to { opacity: 1; translate: none; }
+}
+@keyframes entrance-control {
+  from { opacity: 0; translate: 0 9px; }
+  to { opacity: 1; translate: none; }
+}
+@keyframes entrance-rule {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="light" aria-hidden="true">
+    <div class="left-glow"></div>
+    <div class="beam">
+      <div class="halo"></div>
+      <div class="cone cone-0"></div>
+      <div class="cone cone-1"></div>
+    </div>
+  </div>
+
+  <aside class="rail" aria-label="Primary">
+    <a class="logo" href="#" aria-label="Insight AI home"><svg viewBox="0 0 44 40"><path d="M38.00 31.21A1.93 1.93 0 0 1 41.07 29.65L50.52 36.63A1.93 1.93 0 0 1 49.72 40.08L27.18 44.24A1.93 1.93 0 0 0 26.26 47.60L34.95 55.16A1.93 1.93 0 0 0 38.15 53.69Z" transform="translate(-14 -22)"/></svg></a>
+    <button class="glass-key key-new" type="button" aria-label="New chat">
+      <svg viewBox="0 0 24 24" style="width:calc(24 * var(--u));height:calc(24 * var(--u));transform:translate(calc(-0.2 * var(--u)),calc(0.95 * var(--u)))"><path d="M12 4.6V19.4M4.6 12H19.4" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round"/></svg>
+    </button>
+    <nav class="dock">
+      <a class="nav-ico ico-doc" href="#" aria-label="Library"><svg viewBox="0 0 24 24"><g class="s"><path d="M18.88 10.4V5.4a3 3 0 0 0-3-3H6.35a3 3 0 0 0-3 3v12.66a3 3 0 0 0 3 3h3.95"/>
+      <path d="M7.65 6.75h6.05M7.65 10.6h2.05"/><circle cx="15.83" cy="16.75" r="4.65"/>
+      <path d="M15.25 17.35l1.35-1.3" stroke-width="1.6"/></g></svg></a>
+      <a class="nav-ico ico-compass" href="#" aria-label="Discover"><svg viewBox="0 0 24 24"><g class="s"><circle cx="11.9" cy="12.45" r="9.3"/>
+      <path d="M5.2 17.2L9.15 10.35L16.7 7.3L12.65 14.2Z"/></g></svg></a>
+      <a class="nav-ico ico-grid" href="#" aria-label="Apps"><svg viewBox="0 0 24 24"><g class="s"><rect x="2.5" y="3.05" width="7.45" height="7.6" rx="3.1"/><rect x="13.5" y="3.05" width="7.5" height="7.7" rx="3.1"/>
+      <rect x="2.5" y="14.4" width="7.45" height="7.2" rx="3.1"/><rect x="13.5" y="14.4" width="7.5" height="7.2" rx="3.1"/></g></svg></a>
+      <a class="nav-ico ico-chart" href="#" aria-label="Analytics"><svg viewBox="0 0 24 24"><g class="s"><path d="M3.33 14.35V19.95M8.9 12.15V19.95M14.83 13.0V19.95M20.4 9.95V19.95"/>
+      <path d="M3.1 10.8L7.45 7.15L12.5 9.65L19.6 3.3"/><path d="M17.3 2.95H20.35V6.0"/></g></svg></a>
+      <a class="nav-ico ico-more" href="#" aria-label="More"><svg class="dots" viewBox="0 0 24 24"><circle cx="5.78" cy="12.5" r="1.75"/><circle cx="11.95" cy="12.5" r="1.75"/><circle cx="18.34" cy="12.5" r="1.75"/></svg></a>
+    </nav>
+    <button class="glass-key key-user" type="button" aria-label="Account">
+      <svg viewBox="0 0 24 24" style="width:calc(24 * var(--u));height:calc(24 * var(--u));transform:translate(0,calc(-0.15 * var(--u)))"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11.93" cy="9.0" r="4.58"/><path d="M4.35 19.9C4.35 16.4 7.75 14.15 11.9 14.15S19.45 16.4 19.45 19.9"/></g></svg>
+    </button>
+  </aside>
+
+  <main class="auth" role="main">
+    <h1 class="t"><span>Sign up below to unlock the</span><span>full potential of Insight AI.</span></h1>
+    <p class="t sub">By continuing, you agree to our <a href="#">privacy policy</a>.</p>
+
+    <button class="btn btn-light btn-apple" type="button">
+      <svg class="apple-ico" viewBox="2.225 0 19.55 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
+      <span class="lbl">Continue with Apple</span>
+    </button>
+    <button class="btn btn-light btn-google" type="button">
+      <svg class="google-ico" viewBox="-0.193 -0.5 24.386 25" aria-hidden="true"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z" stroke="currentColor" stroke-width="1.0" stroke-linejoin="round"/></svg>
+      <span class="lbl">Continue with Google</span>
+    </button>
+
+    <div class="divider" role="separator"></div>
+
+    <label class="field">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.6 4.65H18.1a2.95 2.95 0 0 1 2.95 2.95v9.8a2.95 2.95 0 0 1-2.95 2.95H5.6a2.95 2.95 0 0 1-2.95-2.95V7.6A2.95 2.95 0 0 1 5.6 4.65Z"/><path d="M5.35 8.45L11.65 12.45L18.3 8.3"/></svg>
+      <input type="email" name="email" placeholder="enter your mail" autocomplete="email" aria-label="Email address">
+    </label>
+
+    <button class="btn btn-dim" type="button" disabled><span class="lbl">Continue with email</span></button>
+    <button class="t close" type="button">Close</button>
+  </main>
+</div>
+<script>
+  // The last reveal completes the sequence; remove all animation rules so
+  // every foreground element returns to its original authored style.
+  (function () {
+    if (!document.documentElement.classList.contains('entrance')) return;
+    var last = document.querySelector('.close');
+    var timeout = setTimeout(finish, 2600);
+    last.addEventListener('animationend', finish, { once: true });
+    function finish() {
+      clearTimeout(timeout);
+      last.removeEventListener('animationend', finish);
+      document.documentElement.classList.remove('entrance');
+    }
+  })();
+
+  // enable the email CTA once the address looks valid
+  (function () {
+    var input = document.querySelector('.field input'), cta = document.querySelector('.btn-dim');
+    input.addEventListener('input', function () {
+      var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim());
+      cta.disabled = !ok; cta.classList.toggle('ready', ok);
+    });
+  })();
+</script>
+</body>
+</html>

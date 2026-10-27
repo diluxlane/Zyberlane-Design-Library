@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-145/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06070b">
+<title>Suttere — Crypto Financial Solutions</title>
+<script>
+/* Set the initial state before the page paints; static content remains visible
+   when scripting is unavailable or reduced motion is requested. */
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.documentElement.classList.add('entry-pending');
+  window.suttereEntryFallback=setTimeout(function(){
+    document.documentElement.classList.remove('entry-pending','entry-playing');
+  },4000);
+}
+</script>
+<style>
+/* ==========================================================================
+   Suttere hero — precision build
+   Reference frame : 1440 × 816 design px (= 791 × 448 screenshot × 1.82048)
+
+   Responsive architecture — breakpoints come from where the layout actually
+   fails, not from device widths:
+     DESKTOP  frame layout, every size in --u (1 design px). --u never drops
+              below .875px, so 12u nav type stays at or above 10.5px.
+     N  < 994px   the nav no longer fits at that floor (links → actions
+                  clearance falls under 2x the link gap) -> glass menu.
+     F  < 994px, portrait/square, or < 540px tall -> flow composition
+                  (the frame needs 540px for the copy to clear the cue, and a
+                  landscape box for the dome to read).
+     M  < 584px   the designed two-line headline would drop under 36px ->
+                  balanced free-wrapping copy.
+   ========================================================================== */
+
+@font-face{font-family:"Poppins";font-weight:300;font-style:normal;font-display:block;src:url(assets/poppins-300.woff2) format("woff2")}
+@font-face{font-family:"Poppins";font-weight:400;font-style:normal;font-display:block;src:url(assets/poppins-400.woff2) format("woff2")}
+@font-face{font-family:"Poppins";font-weight:500;font-style:normal;font-display:block;src:url(assets/poppins-500.woff2) format("woff2")}
+@font-face{font-family:"Inter Display";font-weight:300;font-style:normal;font-display:block;src:url(assets/inter-display-300.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-weight:500;font-style:normal;font-display:block;src:url(assets/inter-500.woff2) format("woff2")}
+
+:root{
+  /* ---- colour tokens (sampled from reference) ---- */
+  --c-page:#05070b;                 /* plate edge colour (asset top row)      */
+  --c-veil:rgba(15,16,20,.30);      /* dark veil over the plate               */
+  --c-text:#ffffff;
+  --c-link:#9c9da1;                 /* inactive nav links                     */
+  --c-sub:#ffffff;                  /* sub-headline                           */
+  --c-pill-bg:rgba(182,111,194,.28);
+  --c-pill-bd:rgba(214,170,224,.10);
+  --c-pill-tx:#ecdff1;
+  --c-coin-fill:rgba(255,236,255,.04);
+  --c-coin-bd:rgba(255,255,255,.13);
+  --c-home-bg:rgba(166,104,156,.42);
+  --c-home-ic:#d7a3d1;
+  --g-h1:linear-gradient(90deg,#dc94a9 0%,#e9bccb 8%,#fbeef3 18%,#fff 23%,#fff 80%,#eeebf8 83.5%,#bfbae4 91%,#8a81ca 100%);
+
+  /* ---- scale system ---- */
+  --vh:100vh;
+  --u:max(min(calc(100vw / 1440), calc(var(--vh) / 816)), .875px);   /* .875 -> 10.5px nav type floor */
+  --axis:calc(50% - 3.5 * var(--u));          /* measured layout axis (716.5 / 1440) */
+
+  /* ---- background plate (1672 × 941 asset) ---- */
+  --sw:min(max(100vw, calc(var(--vh) * 1.759)), calc(var(--vh) * 2.03));
+  --sh:calc(var(--sw) * 0.562799);            /* 941 / 1672 */
+  --stage-top:calc(var(--vh) - var(--sh) * 0.99562);
+  --sphere-top:calc(var(--stage-top) + var(--sh) * 0.34219);
+
+  /* ---- shared layout tokens ---- */
+  --gx:clamp(20px, 4vw, 40px);                 /* outer gutter outside the frame */
+  --nav-pt:max(env(safe-area-inset-top), 18px);
+  --nav-h:calc(86 * var(--u));
+}
+@supports (height:100svh){ :root{ --vh:100svh; } }
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--c-page)}
+body{
+  color:var(--c-text);
+  font-family:"Poppins",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  text-rendering:geometricPrecision;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+svg{display:block}
+:focus-visible{outline:2px solid #b98ad6;outline-offset:3px}
+
+/* =============================== HERO ==================================== */
+.hero{
+  position:relative;
+  width:100%;
+  height:var(--vh);
+  overflow:hidden;overflow:clip;          /* the plate bleeds past the frame by design */
+  isolation:isolate;
+  background:var(--c-page);
+}
+
+/* ---- plate: sphere + rays (exact asset), anchored bottom-centre ---- */
+.stage{
+  position:absolute;z-index:0;
+  left:50%;top:var(--stage-top);
+  width:var(--sw);height:var(--sh);
+  transform:translateX(-50%);
+  pointer-events:none;
+}
+.stage__img{
+  position:absolute;inset:0;width:100%;height:100%;
+  background:url(assets/hero-background.webp) center/100% 100% no-repeat;
+}
+/* ultra-wide: plate is capped, so feather its side edges into the page */
+@media (min-aspect-ratio:203/100){
+  .stage__img{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 6%,#000 94%,transparent 100%);
+                      mask-image:linear-gradient(90deg,transparent 0,#000 6%,#000 94%,transparent 100%)}
+}
+.veil{position:absolute;inset:0;z-index:1;background:var(--c-veil);pointer-events:none}
+
+/* ---- coins (glass chips riding the rays; positioned in plate space) ---- */
+.coins{position:absolute;z-index:2;left:50%;top:var(--stage-top);width:var(--sw);height:var(--sh);transform:translateX(-50%);pointer-events:none}
+.coin{
+  --cr:calc(17 * var(--u));
+  position:absolute;
+  /* ride the plate's rays (positions in plate space) but never leave the
+     viewport when the plate is cropped (16:10, 4:3, 5:4 ...) */
+  left:clamp(calc((var(--sw) - 100vw) / 2 + var(--cr) + 4 * var(--u)), calc(var(--px) * 100%), calc((var(--sw) + 100vw) / 2 - var(--cr) - 4 * var(--u)));
+  top:calc(var(--py) * 100%);
+  width:calc(2 * var(--cr));height:calc(2 * var(--cr));
+  margin:calc(-1 * var(--cr)) 0 0 calc(-1 * var(--cr));
+  border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--c-coin-fill);
+  -webkit-backdrop-filter:blur(calc(6 * var(--u)));backdrop-filter:blur(calc(6 * var(--u)));
+  box-shadow:inset 0 0 calc(10 * var(--u)) rgba(196,120,200,.06);
+}
+.coin::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;
+  padding:max(1px, calc(1 * var(--u)));
+  background:linear-gradient(115deg,rgba(255,255,255,.09) 0%,rgba(255,255,255,.07) 45%,rgba(226,166,240,.34) 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+          mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+}
+.coin svg{width:calc(24 * var(--u));height:calc(24 * var(--u))}
+.coin--btc {--px:.0898;--py:.3736;--k:0}
+.coin--eth {--px:.0166;--py:.6168;--k:1}
+.coin--bnb {--px:.9413;--py:.3274;--k:0}
+.coin--usdt{--px:.9281;--py:.8207;--k:1}
+/* …and never into the copy column (896u headline box + 12u air either side of the axis) */
+.coin--btc,.coin--eth{left:clamp(calc((var(--sw) - 100vw) / 2 + var(--cr) + 4 * var(--u)), calc(var(--px) * 100%), calc((var(--sw) - 100vw) / 2 + 50vw - 462 * var(--u) - var(--cr)))}
+.coin--bnb,.coin--usdt{left:clamp(calc((var(--sw) - 100vw) / 2 + 50vw + 455 * var(--u) + var(--cr)), calc(var(--px) * 100%), calc((var(--sw) + 100vw) / 2 - var(--cr) - 4 * var(--u)))}
+
+/* =============================== NAV ===================================== */
+.nav{position:absolute;z-index:10;inset:0 0 auto 0;height:calc(86 * var(--u))}
+.brand{
+  position:absolute;left:calc(20.4 * var(--u));top:calc(29.1 * var(--u));
+  display:flex;align-items:center;gap:calc(6.2 * var(--u));
+}
+.brand svg{width:calc(25 * var(--u));height:calc(28 * var(--u))}
+.brand span{
+  font-family:"Inter",system-ui,sans-serif;font-weight:500;
+  font-size:calc(23 * var(--u));line-height:1;letter-spacing:calc(-0.15 * var(--u));
+  color:#ffffff;
+  transform:translateY(calc(1.2 * var(--u)));
+}
+.links{
+  position:absolute;top:calc(32.5 * var(--u));
+  left:calc(var(--axis) - 249.1 * var(--u));
+  display:flex;align-items:center;gap:calc(29.8 * var(--u));
+  margin:0;padding:0;list-style:none;
+  font-size:calc(12 * var(--u));line-height:calc(22 * var(--u));
+}
+.links a{color:var(--c-link);transition:color .2s}
+.links .is-active{display:flex;align-items:center;gap:calc(8.6 * var(--u));color:#fff;font-weight:500}
+.home-ic{
+  width:calc(22 * var(--u));height:calc(22 * var(--u));border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--c-home-bg);
+  box-shadow:inset 0 0 0 max(.6px,calc(.9 * var(--u))) rgba(232,170,222,.22);
+}
+.home-ic svg{width:calc(14 * var(--u));height:calc(14 * var(--u))}
+
+.actions{
+  position:absolute;top:calc(24 * var(--u));right:calc(30.2 * var(--u));
+  display:flex;align-items:center;
+}
+.lang{display:flex;align-items:center;gap:calc(5 * var(--u));margin-right:calc(23 * var(--u));
+  font-size:calc(11 * var(--u));line-height:1;color:#fff;font-weight:500;letter-spacing:calc(.1 * var(--u))}
+.lang .globe{width:calc(16.5 * var(--u));height:calc(16.5 * var(--u))}
+.lang .chev{width:calc(7.5 * var(--u));height:calc(7.5 * var(--u));margin-left:calc(-1 * var(--u))}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  height:calc(38 * var(--u));border-radius:999px;
+  font-size:calc(15 * var(--u));line-height:1;white-space:nowrap;
+  transition:transform .2s, background-color .2s, box-shadow .2s;
+}
+.btn--light{width:calc(88 * var(--u));background:#fff;color:#0c0c0e}
+.btn--glass{
+  width:calc(76 * var(--u));margin-left:calc(7 * var(--u));
+  color:#ffffff;
+  background:rgba(255,255,255,.085);
+  border:max(1px,calc(1 * var(--u))) solid rgba(255,255,255,.62);
+  -webkit-backdrop-filter:blur(calc(10 * var(--u)));backdrop-filter:blur(calc(10 * var(--u)));
+}
+.menu{display:contents}                     /* desktop: links + actions sit in the bar */
+.burger{display:none}
+
+@media (hover:hover){
+  .links a:hover{color:#fff}
+  .btn:hover{transform:translateY(-1px)}
+  .cta:hover{transform:translateY(-1px);box-shadow:0 calc(8 * var(--u)) calc(30 * var(--u)) rgba(190,120,255,.25)}
+}
+
+/* =============================== COPY ==================================== */
+.copy{
+  position:absolute;z-index:5;
+  left:var(--axis);
+  top:max(calc(150 * var(--u)), calc(var(--sphere-top) - 89.8 * var(--u)));
+  transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  width:max-content;
+}
+.pill{
+  display:inline-flex;align-items:center;gap:calc(4.5 * var(--u));
+  height:calc(28.4 * var(--u));padding:0 calc(9.6 * var(--u)) 0 calc(9 * var(--u));
+  border-radius:999px;
+  background:var(--c-pill-bg);
+  box-shadow:inset 0 0 0 max(.5px,calc(.8 * var(--u))) var(--c-pill-bd);
+  -webkit-backdrop-filter:blur(calc(12 * var(--u)));backdrop-filter:blur(calc(12 * var(--u)));
+  font-size:calc(11 * var(--u));line-height:1;color:var(--c-pill-tx);
+}
+.pill svg{width:calc(9 * var(--u));height:calc(10 * var(--u))}
+h1{
+  margin:calc(19.6 * var(--u)) 0 0;
+  font-family:"Inter Display","Inter",system-ui,sans-serif;font-weight:300;
+  font-size:calc(60 * var(--u));line-height:calc(71 * var(--u));
+  letter-spacing:calc(-0.9 * var(--u));
+  background:var(--g-h1);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+}
+h1 .l{display:block;white-space:nowrap}
+h1 .l + .l{word-spacing:calc(1 * var(--u))}
+.sub{
+  margin:calc(13.9 * var(--u)) 0 0;
+  font-size:calc(15.32 * var(--u));line-height:calc(21.8 * var(--u));
+  color:var(--c-sub);
+}
+.sub .l{display:block;white-space:nowrap}
+.cta{
+  margin-top:calc(33.3 * var(--u));
+  display:inline-flex;align-items:center;gap:calc(11 * var(--u));
+  height:calc(37.5 * var(--u));padding:0 calc(15 * var(--u)) 0 calc(16 * var(--u));
+  border-radius:999px;background:#fff;color:#141416;
+  font-size:calc(15 * var(--u));line-height:1;white-space:nowrap;
+  transition:transform .2s, box-shadow .2s;
+}
+.cta svg{width:calc(13 * var(--u));height:calc(13 * var(--u))}
+
+/* ============================ SCROLL CUE ================================= */
+.cue{
+  position:absolute;z-index:5;left:var(--axis);bottom:calc(57.8 * var(--u));
+  transform:translateX(-50%);
+  width:calc(240 * var(--u));height:calc(44 * var(--u));
+}
+.cue__ring{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible}
+.cue__mouse{position:absolute;left:50%;top:calc(.9 * var(--u));transform:translateX(-50%);width:calc(18 * var(--u));height:calc(27 * var(--u))}
+.cue__chev{position:absolute;left:50%;top:calc(36.6 * var(--u));transform:translateX(-50%);width:calc(14.6 * var(--u));height:calc(9.3 * var(--u))}
+.cue__ring text{font-family:"Poppins";font-weight:500;font-size:12.6px;letter-spacing:.2px;fill:#f4f4f5}
+
+/* ======================================================================
+   N — NAVIGATION  (< 994px)
+   Logo stays as is; the same .links / .actions elements move out of the
+   bar into a floating glass panel built from the site's own surfaces
+   (Log In glass, coin rims, 999px pills). No duplicated markup.
+   ====================================================================== */
+@media (max-width:993.98px){
+  :root{--nav-h:calc(var(--nav-pt) + 44px)}
+  .nav{
+    --u:1px;
+    position:relative;inset:auto;height:auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:var(--nav-pt) var(--gx) 0;
+  }
+  .brand{position:static}
+  .burger{
+    display:grid;place-items:center;width:44px;height:44px;border-radius:999px;
+    background:rgba(255,255,255,.085);
+    border:1px solid rgba(255,255,255,.62);
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  }
+  .burger svg{width:18px;height:18px;overflow:visible}
+  .burger path{transition:transform .22s ease;transform-box:fill-box;transform-origin:center}
+  .nav[data-open="true"] .burger .b1{transform:translateY(3px) rotate(45deg)}
+  .nav[data-open="true"] .burger .b2{transform:translateY(-3px) rotate(-45deg)}
+
+  .menu{
+    display:block;position:absolute;z-index:20;
+    top:calc(var(--nav-pt) + 54px);right:var(--gx);
+    width:min(360px, calc(100% - 2 * var(--gx)));
+    padding:10px;border-radius:24px;
+    background:rgba(18,14,24,.62);
+    border:1px solid rgba(255,255,255,.12);
+    -webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2);
+    box-shadow:0 20px 60px rgba(0,0,0,.45), inset 0 0 0 1px rgba(226,166,240,.05);
+    transform-origin:top right;
+    opacity:0;visibility:hidden;transform:translateY(-8px) scale(.98);
+    transition:opacity .22s ease, transform .22s ease, visibility 0s linear .22s;
+  }
+  .nav[data-open="true"] .menu{opacity:1;visibility:visible;transform:none;transition:opacity .22s ease, transform .22s ease, visibility 0s}
+
+  .links{
+    position:static;flex-direction:column;align-items:stretch;gap:2px;
+    font-size:15px;line-height:20px;
+  }
+  .links a{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 12px;border-radius:14px}
+  .links .is-active{background:rgba(255,255,255,.06)}
+  .home-ic{width:24px;height:24px}
+  .home-ic svg{width:13px;height:13px}
+
+  .actions{
+    position:static;gap:8px;
+    margin-top:8px;padding:10px 2px 2px;
+    border-top:1px solid rgba(255,255,255,.08);
+  }
+  .lang{min-height:44px;margin:0;padding:0 8px 0 6px;font-size:13px;gap:6px}
+  .lang .globe{width:16px;height:16px}
+  .lang .chev{width:8px;height:8px;margin-left:-2px}
+  .actions .btn{flex:1;width:auto;height:44px;margin:0;font-size:15px}
+}
+/* N on short landscape screens: the same menu, laid out as a 2-column
+   grid so the whole panel stays inside the viewport */
+@media (max-width:993.98px) and (orientation:landscape) and (max-height:539.98px){
+  .menu{width:min(520px, calc(100% - 2 * var(--gx)));top:calc(var(--nav-pt) + 50px)}
+  .links{display:grid;grid-template-columns:1fr 1fr;gap:2px 6px}
+  .links a{min-height:42px}
+}
+
+/* ======================================================================
+   F — FLOW COMPOSITION  (< 994px, portrait/square, or < 540px tall)
+   Same layers, re-anchored: nav → copy in document flow, plate bottom-
+   anchored, cue pinned to the bottom edge, coins kept in quiet zones.
+   Widths come from the hero itself (container units), not 100vw.
+   ====================================================================== */
+@media (max-width:993.98px), (orientation:portrait), (max-height:539.98px){
+  .hero{height:auto;min-height:var(--vh);display:flex;flex-direction:column;container-type:inline-size}
+  .hero > *{
+    --W:100cqi;
+    --sh:calc(var(--sw) * 0.562799);
+  }
+  .nav{position:relative;inset:auto}
+
+  .stage{
+    top:auto;bottom:0;height:auto;aspect-ratio:1672 / 941;
+    transform:translate(-50%, .438%);
+  }
+  /* the plate's top edge sits mid-screen here: dissolve the rays into the sky */
+  .stage__img{-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 16%);mask-image:linear-gradient(180deg,transparent 0,#000 16%)}
+
+  .copy{
+    --u:1px;--axis:50%;
+    position:relative;z-index:5;left:auto;top:auto;transform:none;width:auto;
+    flex:1 0 auto;
+  }
+  h1{font-size:var(--F);line-height:1.183;letter-spacing:-.015em}
+  h1 .l + .l{word-spacing:.0167em}
+  .cta{height:44px;padding:0 19px 0 21px}
+
+  .cue{--u:1px;--axis:50%;bottom:max(env(safe-area-inset-bottom), 20px)}
+
+  .coins{--u:1px;left:0;top:0;width:100%;height:100%;transform:none}
+  .coin{
+    left:clamp(calc(var(--cr) + 8px), calc(50% + (var(--px) - .5) * var(--sw)), calc(100% - var(--cr) - 8px));
+    top:clamp(calc(var(--nav-h) + var(--cr) + 8px + var(--k) * (2 * var(--cr) + 8px)),
+              calc(100% - var(--sh) * .99562 + var(--py) * var(--sh)),
+              calc(100% - var(--cr) - 8px - (1 - var(--k)) * (2 * var(--cr) + 8px)));
+  }
+}
+
+/* ---- F · landscape: plate covers, copy centred over the dome, coins ride
+        the rays inside side bands that the headline is sized to leave free */
+@media (orientation:landscape) and (max-width:993.98px), (orientation:landscape) and (max-height:539.98px){
+  .hero > *{
+    --sw:max(var(--W), calc(var(--vh) * 1.7768));
+    --band:calc(2 * 17px + 22px);
+    /* 52.5px = the desktop headline at its .875 floor, so crossing 994px is seamless */
+    --F:min(52.5px, calc((var(--W) - 2 * var(--band)) / 14.9));
+  }
+  .copy{
+    justify-content:center;
+    padding:clamp(20px, 5vh, 64px) var(--band) clamp(88px, calc(var(--sh) * .2), 30vh);
+  }
+  .coin--btc,.coin--eth{left:clamp(calc(var(--cr) + 8px), calc(50% + (var(--px) - .5) * var(--sw)), calc(50% - min(var(--F) * 7.45, 50% - var(--band)) - var(--cr) - 10px))}
+  .coin--bnb,.coin--usdt{left:clamp(calc(50% + min(var(--F) * 7.45, 50% - var(--band)) + var(--cr) + 10px), calc(50% + (var(--px) - .5) * var(--sw)), calc(100% - var(--cr) - 8px))}
+}
+/* short landscape (phones on their side): tighter rhythm, nothing removed */
+@media (orientation:landscape) and (max-height:539.98px){
+  /* headline sized by whichever runs out first: width beside the coin bands,
+     or the height left after the fixed stack (nav, pill, sub, CTA, cue = 292px) */
+  .hero > *{--F:max(28px, min(44px, calc((var(--W) - 2 * var(--band)) / 14.9), calc((var(--vh) - 292px) / 2.366)))}
+  .copy{padding-top:8px;padding-bottom:76px}
+  .pill{height:26px}
+  h1{margin-top:10px}
+  .sub{margin-top:8px}
+  .cta{margin-top:14px}
+}
+
+/* ---- F · portrait: the dome rises from the bottom
+        edge; copy hangs from the nav with a sky band whose height is known,
+        so coins can sit in it and in the bottom corners beside the cue */
+@media (orientation:portrait){
+  .hero > *{
+    --sw:max(calc(var(--W) * 1.85), calc(var(--vh) * 1.45));
+    --F:min(60px, calc((var(--W) - 2 * var(--gx)) / 14.9));
+    --sky:clamp(58px, calc(var(--vh) * .13 - 20px), 170px);
+  }
+  .copy{justify-content:flex-start;padding:var(--sky) var(--gx) 120px}
+  .coin--bnb {left:86%;top:calc(var(--nav-h) + var(--sky) * .38)}
+  .coin--btc {left:14%;top:calc(var(--nav-h) + var(--sky) * .62)}
+  .coin--eth {left:12%;top:calc(100% - 150px)}
+  .coin--usdt{left:88%;top:calc(100% - 84px)}
+}
+
+/* ======================================================================
+   M — MOBILE COPY  (< 584px)
+   Headline and sub-line drop their designed breaks and wrap in balanced
+   lines so the headline stays dominant instead of shrinking below 36px.
+   ====================================================================== */
+@media (max-width:583.98px) and (orientation:portrait){
+  .hero > *{--sw:max(calc(var(--W) * 1.85), calc(var(--vh) * 1.3))}
+  /* 30px floor keeps "Investment Challenge" on one line at 320px */
+  h1{font-size:clamp(30px, 9.4cqi, 44px)}
+}
+@media (max-width:583.98px){
+  h1{line-height:1.14;letter-spacing:-.02em;max-width:12em}
+  h1 .l,.sub .l{display:inline;white-space:normal}
+  h1 .l + .l::before,.sub .l + .l::before{content:" "}
+  h1,.sub{text-wrap:balance}
+  h1{margin-top:18px}
+  .sub{font-size:14.5px;line-height:1.5;max-width:30em;margin-top:14px}
+  .cta{margin-top:24px}
+  .coins{--u:.88px}
+}
+
+/* One entrance timeline. The background plate and veil never change. */
+.entry-pending :is(.brand,.links,.actions,.burger,.pill,h1,.sub,.cta,.coin,.cue){opacity:0}
+.entry-playing .brand{animation:entry-nav .58s cubic-bezier(.2,.7,.2,1) .04s backwards}
+.entry-playing .links{animation:entry-nav .55s cubic-bezier(.2,.7,.2,1) .13s backwards}
+.entry-playing .actions,.entry-playing .burger{animation:entry-nav .55s cubic-bezier(.2,.7,.2,1) .2s backwards}
+.entry-playing .pill{animation:entry-support .52s cubic-bezier(.2,.7,.2,1) .28s backwards}
+.entry-playing h1{animation:entry-type 1.02s cubic-bezier(.16,1,.3,1) .43s backwards}
+.entry-playing .sub{animation:entry-support .62s cubic-bezier(.2,.7,.2,1) .94s backwards}
+.entry-playing .cta{animation:entry-support .62s cubic-bezier(.2,.7,.2,1) 1.17s backwards}
+.entry-playing .coin{animation:entry-coin .7s cubic-bezier(.2,.7,.2,1) 1.02s backwards}
+.entry-playing .coin--eth,.entry-playing .coin--usdt{animation-delay:1.14s}
+.entry-playing .cue{animation:entry-cue .5s cubic-bezier(.2,.7,.2,1) 1.52s backwards}
+@media (max-width:993.98px){
+  .entry-pending .links,.entry-pending .actions{opacity:1}
+  .entry-playing .links,.entry-playing .actions{animation:none}
+}
+
+@keyframes entry-nav{
+  from{opacity:0;transform:translateY(-6px)}
+  to{opacity:1;transform:none}
+}
+@keyframes entry-support{
+  from{opacity:0;transform:translateY(9px)}
+  to{opacity:1;transform:none}
+}
+@keyframes entry-type{
+  from{opacity:0;clip-path:inset(0 0 100% 0);transform:translateY(12px)}
+  to{opacity:1;clip-path:inset(0 0 0 0);transform:none}
+}
+@keyframes entry-coin{
+  from{opacity:0;transform:scale(.94)}
+  to{opacity:1;transform:none}
+}
+@keyframes entry-cue{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .entry-pending :is(.brand,.links,.actions,.burger,.pill,h1,.sub,.cta,.coin,.cue){opacity:1}
+}
+</style>
+</head>
+<body>
+<main class="hero">
+  <div class="stage" aria-hidden="true"><div class="stage__img"></div></div>
+  <div class="veil" aria-hidden="true"></div>
+
+  <div class="coins" aria-hidden="true">
+    <span class="coin coin--btc">
+      <svg viewBox="0 0 20 20" fill="none"><path d="M6.2 4.6h5.1c2 0 3.2 1 3.2 2.6 0 1.1-.6 1.9-1.6 2.2 1.3.3 2.2 1.3 2.2 2.6 0 1.9-1.4 3-3.6 3H6.2V4.6Zm2.3 1.9v2.6h2.4c1 0 1.5-.5 1.5-1.3s-.5-1.3-1.5-1.3H8.5Zm0 4.3v2.9h2.6c1.1 0 1.7-.55 1.7-1.45 0-.9-.6-1.45-1.7-1.45H8.5Z" fill="#fff"/><path d="M8.3 2.6v2.2M10.9 2.6v2.2M8.3 14.8V17M10.9 14.8V17" stroke="#fff" stroke-width="1.55"/></svg>
+    </span>
+    <span class="coin coin--eth">
+      <svg viewBox="0 0 20 20"><defs><linearGradient id="eg" x1=".2" y1="0" x2=".8" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#f6d8f8"/><stop offset="1" stop-color="#d27ee3"/></linearGradient></defs><path d="M10 1.6 4.6 10.4 10 13.6l5.4-3.2L10 1.6Z" fill="url(#eg)"/><path d="M10 14.7 4.6 11.5 10 18.6l5.4-7.1-5.4 3.2Z" fill="#fff"/><path d="M10 7.9 4.6 10.4 10 13.6l5.4-3.2L10 7.9Z" fill="#b95bd0" opacity=".75"/></svg>
+    </span>
+    <span class="coin coin--bnb">
+      <svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="1.35" stroke-linejoin="round" stroke-linecap="round"><path d="M10 2.2 16.6 6v8L10 17.8 3.4 14V6L10 2.2Z"/><path d="M6.6 4.1 10 6l3.4-1.9M3.4 9.9 6.8 11.8v3.9M16.6 9.9 13.2 11.8v3.9M10 6v3.4l-3.2 2.4M10 9.4l3.2 2.4"/><circle cx="10" cy="10.2" r="1.5" fill="#fff" stroke="none"/></svg>
+    </span>
+    <span class="coin coin--usdt">
+      <svg viewBox="0 0 20 20" fill="none"><path d="M4.4 4h11.2v2.7h-4.2v10h-2.8v-10H4.4V4Z" fill="#fff"/><path d="M2.6 9.6c1.6 1 4.2 1.5 7.4 1.5s5.8-.5 7.4-1.5" stroke="#fff" stroke-width="1.35" stroke-linecap="round"/></svg>
+    </span>
+  </div>
+
+  <header class="nav" data-open="false">
+    <a class="brand" href="#" aria-label="Suttere home">
+      <svg viewBox="0 0 25 28" overflow="visible" aria-hidden="true"><g fill="#fff"><path d="M18.6 2.6h6.1L7.7 17.6H1.6Z"/><path d="M17 11.4h6.1L5.9 26.6H-.2Z"/></g></svg>
+      <span>Suttere</span>
+    </a>
+    <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-menu">
+      <svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path class="b1" d="M3 6h12"/><path class="b2" d="M3 12h12"/></svg>
+    </button>
+    <nav class="menu" id="site-menu" aria-label="Primary">
+      <ul class="links">
+        <li><a class="is-active" href="#" aria-current="page"><span class="home-ic"><svg viewBox="0 0 14 14" fill="none" stroke="var(--c-home-ic)" stroke-width="1.25" stroke-linejoin="round" stroke-linecap="round"><path d="M2 6.3c0-.5.2-.9.6-1.2l3.6-2.9c.5-.4 1.1-.4 1.6 0l3.6 2.9c.4.3.6.7.6 1.2v4.6c0 .9-.7 1.5-1.5 1.5H3.5c-.8 0-1.5-.6-1.5-1.5V6.3Z"/><path d="M5.6 12.3V9.6c0-.4.3-.7.7-.7h1.4c.4 0 .7.3.7.7v2.7" stroke-width="1.05"/></svg></span>Home</a></li>
+        <li><a href="#">Invest</a></li>
+        <li><a href="#">Communit</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">For business</a></li>
+        <li><a href="#">Membership</a></li>
+      </ul>
+      <div class="actions">
+        <button class="lang" type="button" aria-label="Language: English">
+          <svg class="globe" viewBox="0 0 16 16" fill="none" stroke="#f2f2f3" stroke-width="1.25"><circle cx="8" cy="8" r="6.6"/><ellipse cx="8" cy="8" rx="2.9" ry="6.6"/><path d="M2.2 5.6h11.6M2.2 10.4h11.6"/></svg>
+          <span>EN</span>
+          <svg class="chev" viewBox="0 0 8 8" fill="none" stroke="#f2f2f3" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M1.6 3 4 5.3 6.4 3"/></svg>
+        </button>
+        <a class="btn btn--light" href="#">Sign un</a>
+        <a class="btn btn--glass" href="#">Log In</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="copy">
+    <span class="pill"><svg viewBox="0 0 25 28" aria-hidden="true"><g fill="#efe4f2"><path d="M18.6 2.6h6.1L7.7 17.6H1.6Z"/><path d="M17 11.4h6.1L5.9 26.6H-.2Z"/></g></svg>Revolutionizing Crypto Finance</span>
+    <h1><span class="l">Innovative Crypto Financial Solutions</span><span class="l">For Any Investment Challenge</span></h1>
+    <p class="sub"><span class="l">We Don’t Just Focus On Investments, We Cover Your Entire</span><span class="l">Financial Ecosystem, From Budgeting To Retirement.</span></p>
+    <a class="cta" href="#">Get Started<svg viewBox="0 0 13 13" fill="none" stroke="#141416" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 6.5h10M7.3 2.3l4.2 4.2-4.2 4.2"/></svg></a>
+  </section>
+
+  <div class="cue" aria-hidden="true">
+    <svg class="cue__ring" viewBox="0 0 240 44">
+      <defs>
+        <path id="ring" d="M -74.4 140.35 A 224.5 224.5 0 0 1 314.4 140.35"/>
+        <linearGradient id="ringfade" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".2" stop-color="#fff" stop-opacity=".95"/><stop offset=".9" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+        <mask id="ringmask"><rect x="-20" y="-20" width="280" height="90" fill="url(#ringfade)"/></mask>
+      </defs>
+      <g mask="url(#ringmask)">
+        <text text-anchor="middle"><textPath href="#ring" startOffset="156.7">USDT</textPath></text>
+        <text text-anchor="middle"><textPath href="#ring" startOffset="322.9">ETH</textPath></text>
+      </g>
+    </svg>
+    <svg class="cue__mouse" viewBox="0 0 18 27" fill="none" stroke="#e4e4e6" stroke-width="1.05"><rect x=".9" y=".9" width="16.2" height="25.2" rx="8.1"/><path d="M9 4.3v5.6" stroke-linecap="round"/></svg>
+    <svg class="cue__chev" viewBox="0 0 14.6 9.3" fill="none" stroke="#e9e9ea" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><path d="M2.4 1 7.3 4.3 12.2 1M2.4 4.8 7.3 8.1l4.9-3.3"/></svg>
+  </div>
+</main>
+
+<script>
+/* Menu behaviour only — layout is pure CSS. */
+(function(){
+  var nav=document.querySelector('.nav'), btn=nav.querySelector('.burger'), menu=document.getElementById('site-menu');
+  var collapsed=window.matchMedia('(max-width:993.98px)');
+  function isOpen(){return nav.dataset.open==='true';}
+  function set(open, focusFirst){
+    nav.dataset.open=open; btn.setAttribute('aria-expanded',open);
+    btn.setAttribute('aria-label',open?'Close menu':'Open menu');
+    if(open&&focusFirst){var f=menu.querySelector('a,button'); if(f) setTimeout(function(){f.focus({preventScroll:true});},30);}
+  }
+  btn.addEventListener('click',function(e){ set(!isOpen(), e.detail===0); });          /* keyboard activation moves focus in */
+  menu.addEventListener('click',function(e){ if(collapsed.matches && e.target.closest('a')) set(false); });
+  document.addEventListener('click',function(e){ if(isOpen() && !nav.contains(e.target)) set(false); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape' && isOpen()){ set(false); btn.focus(); } });
+  nav.addEventListener('focusout',function(e){ if(isOpen() && e.relatedTarget && !nav.contains(e.relatedTarget)) set(false); });
+  (collapsed.addEventListener?collapsed.addEventListener('change',onBp):collapsed.addListener(onBp));
+  function onBp(e){ if(!e.matches) set(false); }
+})();
+
+/* Start only after the first composition is ready, then remove every entrance
+   animation declaration when the final cue has settled. */
+(function(){
+  var root=document.documentElement;
+  if(!root.classList.contains('entry-pending')) return;
+  var begun=false, startTimer;
+  function begin(){
+    if(begun || !root.classList.contains('entry-pending')) return;
+    begun=true;
+    clearTimeout(startTimer);
+    requestAnimationFrame(function(){root.classList.replace('entry-pending','entry-playing');});
+  }
+  var loaded=new Promise(function(resolve){
+    if(document.readyState==='complete') resolve();
+    else window.addEventListener('load',resolve,{once:true});
+  });
+  Promise.all([loaded,document.fonts.ready]).then(begin,begin);
+  startTimer=setTimeout(begin,1400);
+  document.querySelector('.cue').addEventListener('animationend',function(e){
+    if(e.animationName==='entry-cue'){
+      root.classList.remove('entry-playing');
+      clearTimeout(window.suttereEntryFallback);
+    }
+  });
+})();
+</script>
+</body>
+</html>

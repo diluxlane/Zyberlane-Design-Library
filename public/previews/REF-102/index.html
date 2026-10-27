@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-102/">
+<script>
+(()=>{if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+const root=document.documentElement;
+root.classList.add('entry-active');
+window.setTimeout(()=>root.classList.remove('entry-active'),2600);
+})();
+</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kora AI — Scale Operations, Not Headcount</title>
+<style>
+@font-face{font-family:'Inter';font-weight:400;font-style:normal;font-display:block;src:url(assets/font-01.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-weight:500;font-style:normal;font-display:block;src:url(assets/font-02.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-weight:600;font-style:normal;font-display:block;src:url(assets/font-03.woff2) format('woff2')}
+@font-face{font-family:'Newsreader';font-weight:400;font-style:normal;font-display:block;src:url(assets/font-04.woff2) format('woff2')}
+@font-face{font-family:'Geist Mono';font-weight:400;font-style:normal;font-display:block;src:url(assets/font-05.woff2) format('woff2')}
+
+/* ==========================================================================
+   Kora AI — hero
+   Architecture
+   - The page is authored on a 944px design canvas (the reference width).
+     Every measurement below is a reference pixel.
+   - ≥ 720px viewports: the canvas is zoomed to the viewport width
+     (--z = viewport / 944) so proportions are preserved exactly. The canvas
+     is never shorter than the viewport: the product window grows downward
+     and reveals more of the dashboard, so there is no empty band at the
+     bottom (or top) on tall screens.
+   - < 720px viewports: the canvas reflows into a native mobile layout and
+     the product window is shown as a scaled preview that runs to the page edge.
+   ========================================================================== */
+:root{
+  --z:1;                 /* canvas zoom, set by the sizing script */
+  --stage-h:712px;       /* canvas height in design px, set by the sizing script */
+  --ink:#ffffff;
+  --muted:rgba(255,255,255,.80);
+  --nav:rgba(255,255,255,.90);
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --serif:'Newsreader','Iowan Old Style','Georgia',serif;
+  --mono:'Geist Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
+  /* product window palette (sampled) */
+  --win:#191b1b; --well:#0f1110; --panel:#171717; --card:#191b1b;
+  --card-line:#242625; --tile:#1e1e1e; --ctrl:#282828; --line:#262626;
+  --t1:#f1f3f2; --t2:#a6a8a7; --t3:#6d6f6f;
+  --plate:url("assets/image-01.jpg");
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+html{background:#26120b;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden;background:#26120b}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+svg{display:block;flex:none}
+
+/* ---------- canvas ---------- */
+.stage{
+  position:relative;width:944px;min-height:var(--stage-h);
+  zoom:var(--z);overflow:hidden;isolation:isolate;
+  background:var(--plate) center top/944px auto no-repeat,#26120b;
+}
+/* film grain + specks, drawn procedurally so it stays crisp at any zoom */
+.stage::before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:var(--grain,.095);mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 1 0  0 0 0 1 0  0 0 0 1 0  0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:120px 120px;
+}
+
+/* ---------- announcement bar ---------- */
+.announce{
+  position:absolute;left:48px;top:8px;width:848px;height:33px;z-index:3;
+  display:flex;align-items:center;justify-content:center;gap:0;
+  border-radius:8px;
+  background:linear-gradient(90deg,#262422 0%,#22201f 22%,#1d1d1b 36%,#191a17 50%,#161614 64%,#121313 82%,#0f1110 92%,#0f1110 100%);
+  box-shadow:0 0 0 1px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.03),0 6px 18px -6px rgba(0,0,0,.45);
+  font-size:10.65px;line-height:1;letter-spacing:-.005em;white-space:nowrap;
+}
+.badge{display:inline-flex;align-items:center;justify-content:center;height:19px;width:35px;border-radius:4px;background:rgba(255,255,255,.16);box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);font-size:9.2px;font-weight:500;color:#f5f4f3;letter-spacing:.01em;margin-right:7px}
+.announce .msg{color:#fcfbfb;font-weight:400;position:relative;top:2px}
+.announce .more{display:inline-flex;align-items:center;margin-left:4px;position:relative;top:2px;color:#f1d9d6;font-weight:600}
+.announce .more svg{margin-left:6px}
+
+/* ---------- nav ---------- */
+.nav{position:absolute;left:0;top:53px;width:944px;height:31px;z-index:3}
+.brand{position:absolute;left:52px;top:6px;display:flex;align-items:center;gap:5px;font-size:15.2px;font-weight:500;letter-spacing:-.02em;color:#fff}
+.links{position:absolute;left:318px;top:0;height:31px;display:flex;align-items:center;font-size:10.4px;color:var(--nav);letter-spacing:-.003em}
+.links a{display:flex;align-items:center;margin-right:23.8px}
+.links a:last-child{margin-right:0}
+.links .chev{margin-left:9px;opacity:.85}
+.links a:nth-child(4){margin-right:26.5px}
+.signin{position:absolute;left:841px;top:1px;width:55px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:10.6px;color:#fff;letter-spacing:-.005em;
+  background:rgba(255,255,255,.075);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.09),inset 0 0 0 1px rgba(255,255,255,.07),0 4px 12px -4px rgba(0,0,0,.25);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.menu{display:none}
+
+/* ---------- hero ---------- */
+.hero{position:absolute;left:74px;top:148px;z-index:2}
+.pill{display:flex;width:max-content;align-items:center;height:20px;padding:0 11px 0 12px;border-radius:999px;font-size:9.05px;font-weight:500;letter-spacing:-.005em;color:#ecedee;
+  background:linear-gradient(180deg,rgba(28,28,30,.22),rgba(12,12,14,.30));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.11),inset 0 0 0 1px rgba(255,255,255,.06),0 3px 10px -2px rgba(0,0,0,.35);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.pill b{font-weight:400;margin-left:.3em;background:linear-gradient(90deg,#e8e2d5 0%,#d8c6a2 22%,#dbbd8d 48%,#d9ab80 72%,#dea077 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1{margin-top:17px;margin-left:1px;font-family:var(--serif);font-weight:400;font-size:43.3px;line-height:48px;letter-spacing:-.028em;word-spacing:-1px;
+  background:linear-gradient(35deg,#fff 0%,#fff 52%,#fdf6f5 58%,#fde6e0 66%,#fcdbd2 73%,#fbcebf 80%,#f8c3b3 88%,#f3b29e 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  font-optical-sizing:auto}
+h1 span{display:block}
+.lede{margin-top:9px;margin-left:0;font-size:10.8px;line-height:16px;color:#cdd1dc;letter-spacing:-.002em}
+.cta{display:flex;gap:8px;margin-top:26px}
+.btn{height:35px;display:inline-flex;align-items:center;justify-content:center;border-radius:6px;font-size:10.7px;letter-spacing:-.005em;white-space:nowrap}
+.btn-primary{width:94px;color:#fff;font-weight:500;
+  background:linear-gradient(180deg,#f3ab80 0%,#e98f63 14%,#e47b4f 28%,#e06b44 42%,#df623d 55%,#e35d36 68%,#ea5b2d 82%,#f05825 96%);
+  box-shadow:inset 0 1px 0 rgba(255,231,214,.55),inset 0 -1px 0 rgba(255,150,120,.45),0 6px 16px -4px rgba(240,90,40,.45)}
+.btn-primary svg{margin-left:9px}
+.btn-ghost{width:95px;color:#f4f4f6;
+  background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.085));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),inset 0 0 0 1px rgba(255,255,255,.07),0 4px 14px -4px rgba(0,0,0,.3);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+
+/* ---------- product window ---------- */
+.window{position:absolute;left:75px;top:422px;width:808px;bottom:-14px;z-index:2;border-radius:12px;background:var(--win);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.05),0 0 0 1px rgba(0,0,0,.35),0 -10px 40px -10px rgba(0,0,0,.35);overflow:hidden}
+.lights{position:absolute;left:90.5px;top:435px;display:flex;gap:8px}
+.window .lights{left:15.5px;top:13px}
+.lights i{width:8px;height:8px;border-radius:50%;display:block}
+.lights i:nth-child(1){background:#f48b71}.lights i:nth-child(2){background:#d8d498}.lights i:nth-child(3){background:#96dd9d}
+.well{position:absolute;left:8px;right:8px;top:33px;bottom:0;background:var(--well);border-radius:8px 8px 0 0;display:flex}
+.side{width:153px;flex:none;padding:0 11px 0 6px;font-size:8px;color:#b9bbba}
+.side-head{height:36px;display:flex;align-items:center;padding:0 0 0 6px;border-bottom:1px solid #1b1e1d;margin:0 -3px 0 0}
+.side-head .mark{width:13px;height:13px;border-radius:3px;background:#2a2c2b;display:flex;align-items:center;justify-content:center;margin-right:6px}
+.side-head strong{font-size:8.75px;font-weight:600;color:#f3f4f4;letter-spacing:-.01em}
+.side-head .tog{margin-left:auto;color:#8a8c8c}
+.side-label{font-family:var(--mono);font-size:6.5px;letter-spacing:.06em;color:#7b7d7d;padding:0 0 0 7px;height:12px;display:flex;align-items:center}
+.side-label.l1{margin-top:7px}
+.side nav{display:flex;flex-direction:column;gap:2.67px;margin:5.5px 0 0}
+.side nav.n2{margin-top:6px}
+.side nav a{height:18px;display:flex;align-items:center;gap:5px;padding:0 6px 0 7px;border-radius:5px;font-size:7.5px;color:#b4b6b5;letter-spacing:-.003em}
+.side nav a svg{color:#b8baba}
+.side nav a.on{background:#2b2b29;color:#f4f5f5;font-weight:500;box-shadow:inset 0 0 0 1px rgba(255,255,255,.03)}
+.side nav a .count{margin-left:auto;width:13px;height:11px;border-radius:3px;background:#272929;display:flex;align-items:center;justify-content:center;font-size:6.5px;color:#a9abab}
+.side .grp2{margin-top:8.5px}
+.main{position:absolute;left:153px;right:7px;top:5px;bottom:0;background:var(--panel);border-radius:7px 7px 0 0;box-shadow:inset 0 0 0 1px #1d201f;overflow:hidden}
+.bar{height:39px;display:flex;align-items:center;padding:1px 13px 0 14px;border-bottom:1px solid var(--line)}
+.bar .title{display:flex;align-items:center;gap:6px;font-size:7.5px;font-weight:600;color:#eef0ef;letter-spacing:-.003em}
+.bar .tools{margin-left:auto;display:flex;align-items:center;gap:6px}
+.ctrl{height:21px;border-radius:5px;background:var(--ctrl);box-shadow:inset 0 0 0 1px rgba(255,255,255,.05);display:flex;align-items:center;font-size:8px;color:#d6d8d8}
+.search{width:137px;padding:0 8px;gap:6px;color:#6d6f6f;font-size:7.25px}
+.search svg{color:#b3b5b5}
+.bell{width:22px;justify-content:center;position:relative}
+.bell::after{content:"";position:absolute;right:6px;top:5px;width:3px;height:3px;border-radius:50%;background:#e6a1aa}
+.import{width:53px;justify-content:center;gap:5px;color:#e6e8e8;font-size:9.1px}
+.deploy{width:84px;justify-content:center;gap:6px;font-size:8.7px;background:#ececec;color:#151716;font-weight:500;box-shadow:0 1px 2px rgba(0,0,0,.4)}
+.filters{height:41px;display:flex;align-items:center;padding:0 18px 0 18px;margin-top:17px;height:22px}
+.filters .ctrl{background:#1f1f1f;padding:0 8px 0 7px;gap:8px;font-size:8.6px;color:#e3e5e5;box-shadow:none}
+.filters .f2{margin-left:5.5px}
+.view{margin-left:auto;display:flex;background:#1f1f1f;border-radius:6px;height:22px;width:47px;padding:2px}
+.view span{flex:1;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#9a9c9c}
+.view span.on{background:#2d2e2b;color:#d2d3d2;box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
+.grid{display:grid;grid-template-columns:repeat(3,191px);column-gap:11px;row-gap:11px;padding:13px 0 0 18px}
+.agent{height:118px;border-radius:7px;background:var(--card);box-shadow:inset 0 0 0 1px var(--card-line);padding:11.5px 9px 0 9px;display:flex;flex-direction:column}
+.agent .top{display:flex;align-items:center;height:22px}
+.agent .ico{width:22px;height:22px;border-radius:5px;background:#363735;display:flex;align-items:center;justify-content:center;color:#d8dad9;margin-right:6.5px}
+.agent h3{font-size:8.75px;font-weight:500;color:#eceeed;letter-spacing:-.005em;line-height:11px}
+.agent .dept{font-size:6.5px;color:#7c7e7e;line-height:9px;margin-top:2px}
+.stats{display:grid;grid-template-columns:53px 53px 53px;column-gap:7px;margin-top:10.5px}
+.stat{height:36px;border-radius:4px;background:var(--tile);padding:6px 0 0 5px}
+.stat small{display:block;font-size:6.5px;color:#9a9c9c;line-height:8px}
+.stat strong{display:block;font-size:10.75px;font-weight:400;color:#eceeed;margin-top:4px;line-height:12px;letter-spacing:-.01em}
+.run{display:inline-flex;align-items:center;gap:4.5px;margin-top:-1.5px;height:15px;width:43px;padding:0 0 0 5px;border-radius:4px;background:#1e2621;color:#4a8b74;font-size:6.6px}
+.run i{width:3.5px;height:3.5px;border-radius:.8px;background:#78c99d;display:block}
+.agent .foot{margin-top:auto;height:28px;border-top:1px solid #1e201f;display:flex;align-items:center;font-size:6.5px;color:#8a8c8c;gap:5px}
+.agent .foot svg:last-child{margin-left:auto;color:#d0d2d2}
+
+/* ---------- mobile: < 720px ---------- */
+@media (max-width:719.98px){
+  .stage{width:100%;zoom:1;min-height:100svh;min-height:100vh;background:var(--plate) 24% -30px/auto 780px no-repeat,#26120b;display:flex;flex-direction:column}
+  .announce{position:relative;left:auto;top:auto;margin:10px 12px 0;width:auto;height:auto;min-height:34px;padding:7px 10px;flex-wrap:wrap;white-space:normal;justify-content:center;row-gap:4px;text-align:center;font-size:11.5px;line-height:1.35;background:linear-gradient(90deg,#262422,#161614 60%,#0f1110)}
+  .announce .opt{display:none}
+  .nav{position:relative;left:auto;top:auto;width:auto;height:auto;margin:14px 16px 0;display:flex;align-items:center}
+  .brand{position:static}
+  .links{display:none}
+  .signin{position:static;margin-left:auto;width:auto;padding:0 14px;height:34px;font-size:13px}
+  .menu{display:flex;align-items:center;justify-content:center;width:34px;height:34px;margin-left:8px;border-radius:8px;background:rgba(255,255,255,.075);box-shadow:inset 0 1px 0 rgba(255,255,255,.16),inset 0 0 0 1px rgba(255,255,255,.07);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+  .hero{position:relative;left:auto;top:auto;padding:0 20px;margin-top:clamp(40px,9vh,72px)}
+  .pill{height:26px;font-size:12.5px;padding:0 13px}
+  h1{font-size:clamp(40px,12.4vw,56px);line-height:1.08;margin-top:18px}
+  .lede{font-size:15px;line-height:1.5;margin-top:16px;max-width:30em}
+  .lede br{display:none}
+  .cta{margin-top:26px;gap:10px}
+  .btn{height:46px;font-size:15px;border-radius:9px;flex:1;width:auto}
+  .window{position:relative;left:auto;top:auto;bottom:auto;margin:44px 0 0 16px;width:808px;height:auto;min-height:440px;zoom:var(--mz,.58);flex:1 0 auto;border-radius:12px 12px 0 0}
+}
+@media (max-width:359.98px){ .cta{flex-direction:column} }
+@media (prefers-reduced-motion:no-preference){ .btn,.signin,.links a{transition:filter .2s,opacity .2s} .btn:hover,.signin:hover{filter:brightness(1.08)} .links a:hover{opacity:1;color:#fff} }
+
+/* One opening sequence; the class is removed when it finishes. */
+@media (prefers-reduced-motion:no-preference){
+@keyframes entry-nav{from{opacity:0;transform:translate3d(0,6px,0)}to{opacity:1;transform:none}}
+@keyframes entry-opacity{from{opacity:0}to{opacity:1}}
+@keyframes entry-soft{from{opacity:0;transform:translate3d(0,9px,0)}to{opacity:1;transform:none}}
+@keyframes entry-type{from{opacity:0;transform:translate3d(0,12px,0);clip-path:inset(0 0 100% 0)}to{opacity:1;transform:none;clip-path:inset(0)}}
+@keyframes entry-visual{from{opacity:0;clip-path:inset(10% 0 0 0)}to{opacity:1;clip-path:inset(0)}}
+
+html.entry-active .announce{animation:entry-nav .46s cubic-bezier(.2,.75,.25,1) .02s both}
+html.entry-active .nav .brand{animation:entry-nav .5s cubic-bezier(.2,.75,.25,1) .12s both}
+html.entry-active .nav .links,html.entry-active .nav .signin,html.entry-active .nav .menu{animation:entry-nav .52s cubic-bezier(.2,.75,.25,1) .23s both}
+html.entry-active .hero .pill{animation:entry-soft .48s cubic-bezier(.2,.75,.25,1) .38s both}
+html.entry-active .hero h1{animation:entry-type .98s cubic-bezier(.16,1,.3,1) .51s both}
+html.entry-active .hero .lede{animation:entry-soft .62s cubic-bezier(.2,.75,.25,1) .87s both}
+html.entry-active .hero .btn-primary{animation:entry-soft .55s cubic-bezier(.2,.75,.25,1) 1.08s both}
+html.entry-active .hero .btn-ghost{animation:entry-soft .55s cubic-bezier(.2,.75,.25,1) 1.17s both}
+html.entry-active .window{animation:entry-visual .9s cubic-bezier(.16,1,.3,1) 1.12s both}
+}
+</style>
+</head>
+<body>
+<main class="stage" id="stage">
+  <div class="announce" role="note">
+    <span class="badge">NEW</span>
+    <span class="msg">Introducing AI Workforce Studio<span class="opt"> — Build and deploy AI employees in minutes.</span></span>
+    <a class="more" href="#">Learn More <svg width="7" height="7" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 5h8M5.5 1.5 9 5l-3.5 3.5"/></svg></a>
+  </div>
+
+  <header class="nav">
+    <a class="brand" href="#" aria-label="Kora AI home">
+      <svg width="15" height="16" viewBox="0 0 15 16" aria-hidden="true" style="position:relative;left:-1px;top:-1px"><defs><mask id="km"><rect width="15" height="16" fill="#fff"/><path d="M2.8 3.9v1.1L15 3.7V1z M-1 10.1v1.3L15 4.1V2.4z M3.4 12.9l1 .9L15 6.9V4.1z" fill="#000"/></mask></defs><rect width="15" height="16" fill="#fff" mask="url(#km)"/></svg>
+      Kora AI
+    </a>
+    <nav class="links" aria-label="Primary">
+      <a href="#">Product</a><a href="#">Industries</a><a href="#">Pricing</a>
+      <a href="#">Resources<svg class="chev" width="7" height="5" viewBox="0 0 7 5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1.2 3.5 3.7 6 1.2"/></svg></a>
+      <a href="#">Company</a>
+    </nav>
+    <a class="signin" href="#">Sign In</a>
+    <button class="menu" aria-label="Open menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"><path d="M2.5 5h11M2.5 11h11"/></svg></button>
+  </header>
+
+  <section class="hero">
+    <span class="pill">Meet<b>Your AI Workforce</b></span>
+    <h1><span>Scale Operations,</span><span>Not Headcount.</span></h1>
+    <p class="lede">Deploy AI workers to run workflows and <br>collaborate nonstop from one workspace.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#">Start Free <svg width="7" height="7" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 6.5 6.5 1.5M2.5 1.5h4v4"/></svg></a>
+      <a class="btn btn-ghost" href="#">Book a Demo</a>
+    </div>
+  </section>
+
+  <div class="window" aria-label="Kora AI dashboard preview">
+    <div class="lights"><i></i><i></i><i></i></div>
+    <div class="well">
+      <aside class="side">
+        <div class="side-head">
+          <span class="mark"><svg width="8" height="8.5" viewBox="0 0 15 16"><defs><mask id="km2"><rect width="15" height="16" fill="#fff"/><path d="M2.8 3.9v1.1L15 3.7V1z M-1 10.1v1.3L15 4.1V2.4z M3.4 12.9l1 .9L15 6.9V4.1z" fill="#000"/></mask></defs><rect width="15" height="16" fill="#cfd0d0" mask="url(#km2)"/></svg></span>
+          <strong>Kora AI</strong>
+          <svg class="tog" width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1"><rect x="1.5" y="1.5" width="9" height="9" rx="2"/><path d="M4.5 1.5v9"/></svg>
+        </div>
+        <div class="side-label l1">MAIN</div>
+        <nav>
+          <a href="#"><svg width="8" height="8" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M1.8 5.4 6 2l4.2 3.4v4.4a.8.8 0 0 1-.8.8H2.6a.8.8 0 0 1-.8-.8z"/><path d="M4.5 10.6V8h3v2.6"/></svg>Dashboard</a>
+          <a href="#" class="on"><svg width="8" height="8" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4.6" width="8" height="5.6" rx="1.6"/><path d="M6 4.6V2.4M4.6 7.2h.01M7.4 7.2h.01"/><circle cx="6" cy="1.9" r=".6"/></svg>Agent Employees</a>
+          <a href="#"><svg width="8" height="8" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M7.2 1.4H3.2a.9.9 0 0 0-.9.9v7.4a.9.9 0 0 0 .9.9h5.6a.9.9 0 0 0 .9-.9V3.9z"/><path d="M7 1.4v2.7h2.7"/></svg>Tasks</a>
+          <a href="#"><svg width="8" height="8" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M10.2 7.2a.9.9 0 0 1-.9.9H4l-2.2 2.1V2.7a.9.9 0 0 1 .9-.9h6.6a.9.9 0 0 1 .9.9z"/></svg>Inbox<span class="count">4</span></a>
+        </nav>
+        <div class="side-label grp2">OPERATIONS</div>
+        <nav class="n2">
+          <a href="#"><svg width="8" height="8" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10.2V6.4M4.7 10.2V3.2M7.3 10.2V5.2M10 10.2V2"/></svg>Analytics</a>
+          <a href="#"><svg width="8" height="8" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 2.4h3a1.5 1.5 0 0 1 1.5 1.5v6.3a1.2 1.2 0 0 0-1.2-1.2H1.5zM10.5 2.4h-3A1.5 1.5 0 0 0 6 3.9v6.3a1.2 1.2 0 0 1 1.2-1.2h3.3z"/></svg>Knowledge</a>
+          <a href="#"><svg width="8" height="8" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="2.3" cy="6" r=".9"/><path d="M3.2 6h2.3M5.5 2.8h2V9.2h-2M5.5 6h2"/><rect x="7.6" y="1.6" width="2.6" height="2.4" rx=".5"/><rect x="7.6" y="4.8" width="2.6" height="2.4" rx=".5"/><rect x="7.6" y="8" width="2.6" height="2.4" rx=".5"/></svg>Integrations</a>
+          <a href="#"><svg width="8" height="8" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2.4" y="2.2" width="7.2" height="8.6" rx="1"/><path d="M4.4 1.3h3.2v1.8H4.4z"/></svg>Reports</a>
+          <a href="#"><svg width="8" height="8" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1.4 9.8 2.8v3c0 2.4-1.6 4-3.8 4.9C3.8 9.8 2.2 8.2 2.2 5.8v-3z"/></svg>Governance</a>
+          <a href="#"><svg width="8" height="8" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="1.6"/><path d="M6 1.3v1.4M6 9.3v1.4M1.3 6h1.4M9.3 6h1.4M2.7 2.7l1 1M8.3 8.3l1 1M2.7 9.3l1-1M8.3 3.7l1-1"/></svg>Settings</a>
+        </nav>
+      </aside>
+      <section class="main">
+        <div class="bar">
+          <div class="title"><svg width="8" height="8" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4.6" width="8" height="5.6" rx="1.6"/><path d="M6 4.6V2.4M4.6 7.2h.01M7.4 7.2h.01"/><circle cx="6" cy="1.9" r=".6"/></svg>Agent Employees</div>
+          <div class="tools">
+            <div class="ctrl search"><svg width="8" height="8" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><circle cx="5.3" cy="5.3" r="3.8"/><path d="m8.2 8.2 2.6 2.6"/></svg>Search AI employees...</div>
+            <div class="ctrl bell"><svg width="8" height="8" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5V5.2a3 3 0 0 1 6 0v3.3l1 1H2z M5 10.8h2"/></svg></div>
+            <div class="ctrl import"><svg width="7" height="7" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M5 1.5v7M1.5 5h7"/></svg>Import</div>
+            <div class="ctrl deploy"><svg width="8" height="8" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.4 1.6c1.4-.4 2.6-.3 3 .1.4.4.5 1.6.1 3L7.2 8 4 4.8z M4 4.8 2.1 4.6 1 5.7l2.2.9 M7.2 8l.2 1.9-1.1 1.1-.9-2.2 M3.3 8.7l-1.6 1.6"/></svg>Deploy Agent</div>
+          </div>
+        </div>
+        <div class="filters">
+          <div class="ctrl">All Department <svg width="6" height="4" viewBox="0 0 7 5" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1.2 3.5 3.7 6 1.2"/></svg></div>
+          <div class="ctrl f2">All Status <svg width="6" height="4" viewBox="0 0 7 5" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1.2 3.5 3.7 6 1.2"/></svg></div>
+          <div class="view"><span class="on"><svg width="7" height="7" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="1" y="1" width="8" height="8" rx="2"/><path d="M5 1v8M5 5h4"/></svg></span><span><svg width="7" height="7" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><path d="M3.5 2.5h5M3.5 5h5M3.5 7.5h5M1.3 2.5h.2M1.3 5h.2M1.3 7.5h.2"/></svg></span></div>
+        </div>
+        <div class="grid">
+          <article class="agent"><div class="top"><span class="ico"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4.6" width="8" height="5.6" rx="1.6"/><path d="M6 4.6V2.4M4.6 7.2h.01M7.4 7.2h.01"/><circle cx="6" cy="1.9" r=".6"/></svg></span><div><h3>Research Agent</h3><p class="dept">Dept. Strategy</p></div></div>
+            <div class="stats"><div class="stat"><small>Tasks today</small><strong>12</strong></div><div class="stat"><small>Completion</small><strong>87%</strong></div><div class="stat"><small>Status</small><span class="run"><i></i>Running</span></div></div>
+            <div class="foot"><svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.6V6l1.4.9"/></svg>2 min ago<svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6.6 2.6 10 6 6.6 9.4"/></svg></div></article>
+          <article class="agent"><div class="top"><span class="ico"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4.6" width="8" height="5.6" rx="1.6"/><path d="M6 4.6V2.4M4.6 7.2h.01M7.4 7.2h.01"/><circle cx="6" cy="1.9" r=".6"/></svg></span><div><h3>Sales Agent</h3><p class="dept">Dept. Sales</p></div></div>
+            <div class="stats"><div class="stat"><small>Tasks today</small><strong>26</strong></div><div class="stat"><small>Completion</small><strong>94%</strong></div><div class="stat"><small>Status</small><span class="run"><i></i>Running</span></div></div>
+            <div class="foot"><svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.6V6l1.4.9"/></svg>5 min ago<svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6.6 2.6 10 6 6.6 9.4"/></svg></div></article>
+          <article class="agent"><div class="top"><span class="ico"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4.6" width="8" height="5.6" rx="1.6"/><path d="M6 4.6V2.4M4.6 7.2h.01M7.4 7.2h.01"/><circle cx="6" cy="1.9" r=".6"/></svg></span><div><h3>Support Agent</h3><p class="dept">Dept. Support</p></div></div>
+            <div class="stats"><div class="stat"><small>Tasks today</small><strong>18</strong></div><div class="stat"><small>Completion</small><strong>96%</strong></div><div class="stat"><small>Status</small><span class="run"><i></i>Running</span></div></div>
+            <div class="foot"><svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.6V6l1.4.9"/></svg>3 min ago<svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6.6 2.6 10 6 6.6 9.4"/></svg></div></article>
+          <article class="agent"><div class="top"><span class="ico"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4.6" width="8" height="5.6" rx="1.6"/><path d="M6 4.6V2.4M4.6 7.2h.01M7.4 7.2h.01"/><circle cx="6" cy="1.9" r=".6"/></svg></span><div><h3>Operations Agent</h3><p class="dept">Dept. Operations</p></div></div>
+            <div class="stats"><div class="stat"><small>Tasks today</small><strong>31</strong></div><div class="stat"><small>Completion</small><strong>91%</strong></div><div class="stat"><small>Status</small><span class="run"><i></i>Running</span></div></div>
+            <div class="foot"><svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.6V6l1.4.9"/></svg>1 min ago<svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6.6 2.6 10 6 6.6 9.4"/></svg></div></article>
+          <article class="agent"><div class="top"><span class="ico"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4.6" width="8" height="5.6" rx="1.6"/><path d="M6 4.6V2.4M4.6 7.2h.01M7.4 7.2h.01"/><circle cx="6" cy="1.9" r=".6"/></svg></span><div><h3>Finance Agent</h3><p class="dept">Dept. Finance</p></div></div>
+            <div class="stats"><div class="stat"><small>Tasks today</small><strong>9</strong></div><div class="stat"><small>Completion</small><strong>98%</strong></div><div class="stat"><small>Status</small><span class="run"><i></i>Running</span></div></div>
+            <div class="foot"><svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.6V6l1.4.9"/></svg>8 min ago<svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6.6 2.6 10 6 6.6 9.4"/></svg></div></article>
+          <article class="agent"><div class="top"><span class="ico"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4.6" width="8" height="5.6" rx="1.6"/><path d="M6 4.6V2.4M4.6 7.2h.01M7.4 7.2h.01"/><circle cx="6" cy="1.9" r=".6"/></svg></span><div><h3>Executive Assistant</h3><p class="dept">Dept. Executive</p></div></div>
+            <div class="stats"><div class="stat"><small>Tasks today</small><strong>22</strong></div><div class="stat"><small>Completion</small><strong>95%</strong></div><div class="stat"><small>Status</small><span class="run"><i></i>Running</span></div></div>
+            <div class="foot"><svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.6V6l1.4.9"/></svg>just now<svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6.6 2.6 10 6 6.6 9.4"/></svg></div></article>
+          <article class="agent"><div class="top"><span class="ico"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4.6" width="8" height="5.6" rx="1.6"/><path d="M6 4.6V2.4M4.6 7.2h.01M7.4 7.2h.01"/><circle cx="6" cy="1.9" r=".6"/></svg></span><div><h3>Legal Agent</h3><p class="dept">Dept. Legal</p></div></div>
+            <div class="stats"><div class="stat"><small>Tasks today</small><strong>7</strong></div><div class="stat"><small>Completion</small><strong>99%</strong></div><div class="stat"><small>Status</small><span class="run"><i></i>Running</span></div></div>
+            <div class="foot"><svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.6V6l1.4.9"/></svg>12 min ago<svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6.6 2.6 10 6 6.6 9.4"/></svg></div></article>
+          <article class="agent"><div class="top"><span class="ico"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4.6" width="8" height="5.6" rx="1.6"/><path d="M6 4.6V2.4M4.6 7.2h.01M7.4 7.2h.01"/><circle cx="6" cy="1.9" r=".6"/></svg></span><div><h3>People Ops Agent</h3><p class="dept">Dept. HR</p></div></div>
+            <div class="stats"><div class="stat"><small>Tasks today</small><strong>15</strong></div><div class="stat"><small>Completion</small><strong>93%</strong></div><div class="stat"><small>Status</small><span class="run"><i></i>Running</span></div></div>
+            <div class="foot"><svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.6V6l1.4.9"/></svg>4 min ago<svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6.6 2.6 10 6 6.6 9.4"/></svg></div></article>
+          <article class="agent"><div class="top"><span class="ico"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4.6" width="8" height="5.6" rx="1.6"/><path d="M6 4.6V2.4M4.6 7.2h.01M7.4 7.2h.01"/><circle cx="6" cy="1.9" r=".6"/></svg></span><div><h3>Marketing Agent</h3><p class="dept">Dept. Marketing</p></div></div>
+            <div class="stats"><div class="stat"><small>Tasks today</small><strong>24</strong></div><div class="stat"><small>Completion</small><strong>89%</strong></div><div class="stat"><small>Status</small><span class="run"><i></i>Running</span></div></div>
+            <div class="foot"><svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.6V6l1.4.9"/></svg>6 min ago<svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6.6 2.6 10 6 6.6 9.4"/></svg></div></article>
+          <article class="agent"><div class="top"><span class="ico"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4.6" width="8" height="5.6" rx="1.6"/><path d="M6 4.6V2.4M4.6 7.2h.01M7.4 7.2h.01"/><circle cx="6" cy="1.9" r=".6"/></svg></span><div><h3>Data Analyst</h3><p class="dept">Dept. Analytics</p></div></div>
+            <div class="stats"><div class="stat"><small>Tasks today</small><strong>19</strong></div><div class="stat"><small>Completion</small><strong>97%</strong></div><div class="stat"><small>Status</small><span class="run"><i></i>Running</span></div></div>
+            <div class="foot"><svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.6V6l1.4.9"/></svg>2 min ago<svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6.6 2.6 10 6 6.6 9.4"/></svg></div></article>
+          <article class="agent"><div class="top"><span class="ico"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4.6" width="8" height="5.6" rx="1.6"/><path d="M6 4.6V2.4M4.6 7.2h.01M7.4 7.2h.01"/><circle cx="6" cy="1.9" r=".6"/></svg></span><div><h3>Procurement Agent</h3><p class="dept">Dept. Operations</p></div></div>
+            <div class="stats"><div class="stat"><small>Tasks today</small><strong>11</strong></div><div class="stat"><small>Completion</small><strong>92%</strong></div><div class="stat"><small>Status</small><span class="run"><i></i>Running</span></div></div>
+            <div class="foot"><svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.6V6l1.4.9"/></svg>9 min ago<svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6.6 2.6 10 6 6.6 9.4"/></svg></div></article>
+          <article class="agent"><div class="top"><span class="ico"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4.6" width="8" height="5.6" rx="1.6"/><path d="M6 4.6V2.4M4.6 7.2h.01M7.4 7.2h.01"/><circle cx="6" cy="1.9" r=".6"/></svg></span><div><h3>IT Helpdesk Agent</h3><p class="dept">Dept. IT</p></div></div>
+            <div class="stats"><div class="stat"><small>Tasks today</small><strong>34</strong></div><div class="stat"><small>Completion</small><strong>95%</strong></div><div class="stat"><small>Status</small><span class="run"><i></i>Running</span></div></div>
+            <div class="foot"><svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.6V6l1.4.9"/></svg>1 min ago<svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6.6 2.6 10 6 6.6 9.4"/></svg></div></article>
+          <article class="agent"><div class="top"><span class="ico"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4.6" width="8" height="5.6" rx="1.6"/><path d="M6 4.6V2.4M4.6 7.2h.01M7.4 7.2h.01"/><circle cx="6" cy="1.9" r=".6"/></svg></span><div><h3>Recruiting Agent</h3><p class="dept">Dept. People</p></div></div>
+            <div class="stats"><div class="stat"><small>Tasks today</small><strong>13</strong></div><div class="stat"><small>Completion</small><strong>94%</strong></div><div class="stat"><small>Status</small><span class="run"><i></i>Running</span></div></div>
+            <div class="foot"><svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.6V6l1.4.9"/></svg>7 min ago<svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6.6 2.6 10 6 6.6 9.4"/></svg></div></article>
+          <article class="agent"><div class="top"><span class="ico"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4.6" width="8" height="5.6" rx="1.6"/><path d="M6 4.6V2.4M4.6 7.2h.01M7.4 7.2h.01"/><circle cx="6" cy="1.9" r=".6"/></svg></span><div><h3>Compliance Agent</h3><p class="dept">Dept. Legal</p></div></div>
+            <div class="stats"><div class="stat"><small>Tasks today</small><strong>6</strong></div><div class="stat"><small>Completion</small><strong>100%</strong></div><div class="stat"><small>Status</small><span class="run"><i></i>Running</span></div></div>
+            <div class="foot"><svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.6V6l1.4.9"/></svg>15 min ago<svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6.6 2.6 10 6 6.6 9.4"/></svg></div></article>
+          <article class="agent"><div class="top"><span class="ico"><svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4.6" width="8" height="5.6" rx="1.6"/><path d="M6 4.6V2.4M4.6 7.2h.01M7.4 7.2h.01"/><circle cx="6" cy="1.9" r=".6"/></svg></span><div><h3>Customer Success Agent</h3><p class="dept">Dept. Support</p></div></div>
+            <div class="stats"><div class="stat"><small>Tasks today</small><strong>28</strong></div><div class="stat"><small>Completion</small><strong>96%</strong></div><div class="stat"><small>Status</small><span class="run"><i></i>Running</span></div></div>
+            <div class="foot"><svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4.4"/><path d="M6 3.6V6l1.4.9"/></svg>2 min ago<svg width="7" height="7" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h8M6.6 2.6 10 6 6.6 9.4"/></svg></div></article>
+
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+<script>
+/* Sizing: zoom the 944px canvas to the viewport width and make it at least
+   one viewport tall (in design px) so there is never a blank band. */
+(function(){
+  var W=944,H=712,BP=720,root=document.documentElement;
+  function fit(){
+    var vw=root.clientWidth||innerWidth, vh=innerHeight;
+    if(vw>=BP){
+      var z=vw/W;
+      root.style.setProperty('--z',z);
+      root.style.setProperty('--stage-h',Math.max(H,vh/z)+'px');
+    }else{
+      root.style.setProperty('--z',1);
+      root.style.setProperty('--mz',Math.max(.5,Math.min(.8,(vw-16)/808)));
+    }
+  }
+  fit();addEventListener('resize',fit,{passive:true});
+  if(window.visualViewport)visualViewport.addEventListener('resize',fit,{passive:true});
+})();
+</script>
+</body>
+</html>

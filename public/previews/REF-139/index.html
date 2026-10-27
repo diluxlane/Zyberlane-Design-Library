@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-139/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Smart Pricing</title>
+<style>
+/* ── Inter (subset, served from local assets) ───────────── */
+@font-face{font-family:"Inter";font-weight:100 900;font-style:normal;font-display:block;src:url(assets/inter-subset.woff2) format("woff2")}
+
+/* ── Design tokens ─────────────────────────────────────────────────────────
+   The reference is an 811 × 567 frame. Every dimension below is written in
+   reference pixels and multiplied by --u (one reference pixel expressed in
+   real CSS pixels). The page is real, reflowing layout — not a transformed
+   bitmap — so there is no ghost box, no scrollbar artefact and no blank band.
+   ────────────────────────────────────────────────────────────────────────── */
+:root{
+  --bg:#0a0a0a;
+  --card:rgba(255,255,255,.029);       /* composites to #101010 over --bg   */
+  --card-hi:rgba(255,255,255,.0245);   /* featured card: #0f0f0f            */
+  --ink:#ffffff;
+  --ink-t:rgba(255,255,255,.92);            /* plan name                         */
+  --ink-2:#bfbfbf;               /* subtitle                          */
+  --ink-3:#747474;              /* feature list                      */
+  --ink-4:#7a7a7a;              /* "Features" label                  */
+  --rule:#2d2d2d;
+  /* Every layout is a frame of --W × --H reference px. --u fits that frame
+     inside the viewport on BOTH axes, so the composition can never be taller
+     or wider than the screen: no scrollbar in any mode. Whichever axis has
+     slack is absorbed by the flexible spacers (.sp / 1fr tracks), so there
+     is never an empty band either. Desktop frame = the 811 × 567 reference. */
+  --W:811; --H:567;
+  --u:min(calc(100vw / var(--W)), calc(100vh / var(--H)));
+  --u:min(calc(100vw / var(--W)), calc(100dvh / var(--H)));
+  --vh:100vh; --vh:100dvh;
+  --blob-y:0; --glow-y:0;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);min-height:100%}
+body{
+  font-family:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  text-rendering:geometricPrecision;
+  font-feature-settings:"kern" 1;
+  font-optical-sizing:none;
+}
+/* Full-bleed shell: clips the ambient glow so it can never create scroll
+   or extra height, whatever the viewport. */
+.page{position:relative;min-height:var(--vh);overflow:hidden;overflow:clip}
+
+/* ── Stage: the 811-wide frame, centred, full viewport height ───────────── */
+.stage{
+  position:relative;
+  width:calc(var(--W) * var(--u));
+  min-height:var(--vh);
+  margin:0 auto;
+  display:flex;flex-direction:column;
+  isolation:isolate;
+}
+/* Flexible spacers: at the reference aspect ratio they are exactly their
+   measured size; any extra height is shared between them in proportion, so
+   the composition breathes instead of leaving an empty band. */
+.sp{flex:var(--g) 1 calc(var(--g) * var(--u))}
+.sp-top{--g:45.5}
+.sp-mid{--g:38}
+.sp-bot{--g:42}
+
+/* ── Ambient glow (page) ───────────────────────────────────────────────── */
+.glow{
+  position:absolute;z-index:-1;pointer-events:none;
+  left:0;top:0;width:calc(var(--W) * var(--u));height:calc(567 * var(--u));
+  overflow:visible;
+}
+.glow svg{position:absolute;overflow:visible;
+  /* anchored to the frame's top-right corner in every layout */
+  left:calc((300 - 811 + var(--W)) * var(--u));top:calc((-300 + var(--glow-y)) * var(--u));
+  width:calc(800 * var(--u));height:calc(900 * var(--u))}
+
+/* line / numeral wrappers used by the entrance masks (layout-neutral) */
+.ln,.ln > span{display:block}
+.pm{display:block}
+
+/* ── Header ────────────────────────────────────────────────────────────── */
+.head{padding-left:calc(42.3 * var(--u))}
+.head h1{
+  font-weight:415;font-variation-settings:"opsz" 14;
+  font-size:calc(36.8 * var(--u));
+  line-height:calc(39 * var(--u));
+  letter-spacing:-0.028em;
+}
+.head p{
+  font-weight:400;font-variation-settings:"opsz" 14;
+  margin-top:calc(13.5 * var(--u));
+  font-size:calc(11 * var(--u));
+  line-height:calc(14 * var(--u));
+  letter-spacing:-0.033em;
+  color:var(--ink-2);
+}
+
+/* ── Cards ─────────────────────────────────────────────────────────────── */
+.plans{
+  display:grid;
+  grid-template-columns:repeat(3, calc(237.8 * var(--u)));
+  column-gap:calc(6.6 * var(--u));
+  padding-left:calc(42.4 * var(--u));
+  list-style:none;
+}
+.plan{
+  position:relative;
+  height:calc(336 * var(--u));
+  border-radius:calc(6 * var(--u));
+  background:var(--card);
+  -webkit-backdrop-filter:blur(calc(24 * var(--u))) saturate(140%);
+  backdrop-filter:blur(calc(24 * var(--u))) saturate(140%);
+  box-shadow:0 calc(1 * var(--u)) calc(2 * var(--u)) rgba(255,255,255,.012);
+  overflow:hidden;
+  isolation:isolate;
+  display:flex;flex-direction:column;
+  padding:0 calc(10.6 * var(--u));
+}
+.plan.featured{background:var(--card-hi)}
+/* the card's light-and-indigo bloom: a fixed 237.8 × 336 artwork anchored to
+   the card's top-left (identical to the reference card on desktop) */
+.plan > svg.blob{position:absolute;left:0;top:calc(var(--blob-y) * var(--u));
+  width:calc(237.8 * var(--u));height:calc(336 * var(--u));
+  overflow:visible;z-index:-1;pointer-events:none}
+
+.plan h2{color:var(--ink-t);
+  font-variation-settings:"opsz" 14;
+  margin-top:calc(51.5 * var(--u));
+  font-weight:400;
+  font-size:calc(11 * var(--u));
+  line-height:calc(14 * var(--u));
+  letter-spacing:-0.01em;
+}
+.price{
+  margin-top:calc(7 * var(--u));
+  display:flex;align-items:baseline;
+  white-space:nowrap;
+}
+.price b{
+  font-weight:400;font-variation-settings:"opsz" 14;
+  font-size:calc(37 * var(--u));
+  line-height:calc(36 * var(--u));
+  letter-spacing:-0.05em;
+}
+.price > span{
+  color:rgba(255,255,255,.72);
+  font-variation-settings:"opsz" 14;
+  margin-left:calc(0.5 * var(--u));
+  position:relative;top:calc(0.2 * var(--u));
+  font-weight:400;
+  font-size:calc(10.5 * var(--u));
+  letter-spacing:0.01em;
+}
+
+.features-label{
+  font-weight:400;font-variation-settings:"opsz" 14;
+  margin-top:calc(32.1 * var(--u));
+  display:flex;align-items:center;
+  gap:calc(6.5 * var(--u));
+  font-size:calc(9.4 * var(--u));
+  line-height:calc(12 * var(--u));
+  letter-spacing:-0.05em;
+  color:var(--ink-4);
+  white-space:nowrap;
+}
+.features-label::before,.features-label::after{
+  content:"";flex:1;height:max(1px, calc(1 * var(--u)));background:var(--rule);
+  margin-bottom:calc(2 * var(--u));
+}
+.features{
+  list-style:none;
+  margin-top:calc(12.2 * var(--u));
+  display:grid;row-gap:calc(5 * var(--u));
+}
+.features li{
+  font-weight:400;font-variation-settings:"opsz" 14;
+  display:flex;align-items:center;
+  gap:calc(5.3 * var(--u));
+  font-size:calc(8.5 * var(--u));
+  line-height:calc(13 * var(--u));
+  letter-spacing:-0.078em;
+  color:var(--ink-3);
+  white-space:nowrap;
+}
+.tick{
+  flex:none;position:relative;top:calc(-2 * var(--u));
+  width:calc(13 * var(--u));height:calc(13 * var(--u));
+  margin-left:calc(0.5 * var(--u));
+  border-radius:50%;
+  /* frosted disc + hairline rim that picks up the indigo glow top-right / bottom-left */
+  background:
+    radial-gradient(120% 120% at 30% 25%, #191919 0%, #171717 55%, #161616 100%) padding-box,
+    conic-gradient(from 0deg, rgba(255,255,255,.035) 0deg, rgba(80,50,255,.34) 45deg, rgba(255,255,255,.03) 110deg,
+                   rgba(255,255,255,.02) 170deg, rgba(80,50,255,.32) 228deg, rgba(255,255,255,.03) 290deg, rgba(255,255,255,.035) 360deg) border-box;
+  border:calc(1 * var(--u)) solid transparent;
+}
+.tick svg{position:absolute;inset:calc(-1 * var(--u));width:calc(100% + 2 * var(--u));height:calc(100% + 2 * var(--u));overflow:visible}
+
+.cta{
+  margin-top:auto;
+  margin-bottom:calc(18 * var(--u));
+  margin-left:calc(1 * var(--u));
+  position:relative;display:flex;align-items:center;justify-content:center;
+  width:calc(215 * var(--u));height:calc(34 * var(--u));
+  border-radius:999px;
+  border:max(1px, calc(1 * var(--u))) solid #141414;
+  background:transparent;
+  color:#f2f2f2;
+  font-variation-settings:"opsz" 14;
+  font:500 calc(11 * var(--u))/1 "Inter",ui-sans-serif,system-ui,sans-serif;
+  letter-spacing:0.018em;
+  padding-right:calc(1 * var(--u));
+  text-decoration:none;cursor:pointer;appearance:none;-webkit-appearance:none;
+  transition:background-color .25s ease,border-color .25s ease,transform .25s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+/* bottom light-edge: a soft highlight that sits on the pill's base border
+   (row 1) and bleeds faintly below it (row 2) */
+.cta::after,.cta::before{
+  content:"";position:absolute;left:26%;right:26%;pointer-events:none;
+  height:max(1px, calc(1 * var(--u)));
+  background:linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,var(--a)) 50%, rgba(255,255,255,0) 100%);
+}
+.cta::after{bottom:calc(-1 * var(--u));--a:0.3}
+.cta::before{bottom:calc(-2 * var(--u));--a:0.1;left:30%;right:30%}
+.cta:hover{background:rgba(255,255,255,.04);border-color:#222}
+.cta:focus-visible{outline:2px solid #5b4bff;outline-offset:3px}
+.featured .cta{background:#323232;border-color:#303030}
+.featured .cta::after{--a:0.3;left:27%;right:27%}
+.featured .cta::before{--a:0}
+.featured .cta:hover{background:#3a3a3a}
+
+/* ══ Responsive architecture ═══════════════════════════════════════════════
+   The desktop rules above are the locked reference. Each layout below only
+   swaps the frame (--W × --H) and re-arranges the SAME elements; component
+   styling (cards, glows, ticks, pills, type, colours) is never redefined.
+
+   Which layout wins is decided by the space, not by device names. For every
+   frame the readable scale is u = min(vw / W, vh / H); a layout takes over
+   only from the aspect ratio where it gives a larger u than the one before
+   it, i.e. where the previous layout would start shrinking the type:
+
+     desktop 811 × 567    aspect ≥ 1.09    (3 cards in a row, header on top)
+     tablet  566.2 × 742.6 aspect < 1.09   (2 × 2: header shares the grid)
+     phone   330 × 573    aspect < 1.09 and narrower than 680px
+     short   654 × 312    aspect ≥ 1.09 and shorter than 560px (phone landscape)
+
+   Crossover desktop ↔ tablet: vw/811 = vh/742.6, i.e. aspect ≈ 1.09.
+   Desktop monitors (≥ 560px tall, aspect ≥ 1.09) never leave the desktop
+   layout, so the reference design is untouched there.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Tablet: 2 × 2 grid ─────────────────────────────────────────────────────
+   Three cards side by side would shrink the feature text below ~8px on a
+   portrait tablet. Instead the header takes the first cell of a two-column
+   grid, so reading order stays header → Starter → Growth → Enterprise and
+   every card keeps its exact desktop proportions. */
+@media (max-aspect-ratio: 109/100){
+  :root{ --W:566.2; --H:742.6; }
+  .stage{
+    display:grid;
+    grid-template-columns:calc(42 * var(--u)) calc(237.8 * var(--u)) calc(6.6 * var(--u)) calc(237.8 * var(--u)) calc(42 * var(--u));
+    grid-template-rows:minmax(calc(32 * var(--u)), 1fr) calc(336 * var(--u)) calc(6.6 * var(--u)) calc(336 * var(--u)) minmax(calc(32 * var(--u)), 1fr);
+  }
+  .sp-top{grid-area:1 / 1 / 2 / -1}
+  .sp-mid{display:none}
+  .sp-bot{grid-area:5 / 1 / 6 / -1}
+  .plans{display:contents}
+  .head{grid-area:2 / 2 / 3 / 3;align-self:end;padding:0 0 calc(12 * var(--u)) calc(1 * var(--u))}
+  .head h1{font-size:calc(31.5 * var(--u));line-height:calc(33.5 * var(--u))}
+  .head p{margin-top:calc(12 * var(--u))}
+  .plan:nth-child(1){grid-area:2 / 4 / 3 / 5}
+  .plan:nth-child(2){grid-area:4 / 2 / 5 / 3}
+  .plan:nth-child(3){grid-area:4 / 4 / 5 / 5}
+}
+
+/* ── Compact card (shared by both phone layouts) ──────────────────────────
+   Three full-height cards cannot fit a phone screen in either orientation.
+   Each card therefore turns its tall column into two columns — plan, price
+   and button on the left, the feature list on the right. Every element and
+   every type size stays exactly as on desktop; only the arrangement changes. */
+@media (max-aspect-ratio: 109/100) and (max-width: 679.98px),
+       (min-aspect-ratio: 109/100) and (max-height: 559.98px){
+  :root{ --blob-y:-40; }
+  .plan{
+    height:auto;
+    display:grid;
+    grid-template-columns:calc(92 * var(--u)) 1fr;
+    grid-template-rows:auto auto 1fr;
+    grid-template-areas:"title label" "price list" "cta list";
+    column-gap:calc(10 * var(--u));
+    padding:calc(12 * var(--u)) calc(10.6 * var(--u));
+  }
+  /* the Growth bloom is a full-width band: lift it so it crowns the card
+     instead of running through the "Features" label */
+  .plan.featured{--blob-y:-64}
+  .plan h2{grid-area:title;margin-top:0}
+  .price{grid-area:price;margin-top:calc(4 * var(--u))}
+  .features-label{grid-area:label;margin-top:calc(1 * var(--u))}
+  .features{grid-area:list;margin-top:calc(8 * var(--u))}
+  .cta{grid-area:cta;align-self:end;margin:0;width:100%;height:calc(30 * var(--u))}
+}
+
+/* ── Phone portrait: one column ───────────────────────────────────────────
+   Below 680px the 2 × 2 grid would push the feature text under ~10px (its
+   scale is vw / 566.2); a single column of compact cards keeps it larger. */
+@media (max-aspect-ratio: 109/100) and (max-width: 679.98px){
+  :root{ --W:330; --H:573; }
+  .stage{display:flex}
+  .sp-top{--g:24}.sp-mid{display:block;--g:18}.sp-bot{--g:16}
+  .head,.plan:nth-child(n){grid-area:auto}
+  .head{padding:0 calc(14 * var(--u));align-self:auto}
+  .head h1{font-size:calc(32 * var(--u));line-height:calc(34 * var(--u))}
+  .head p{margin-top:calc(10 * var(--u))}
+  .plans{display:grid;grid-template-columns:1fr;row-gap:calc(8 * var(--u));padding:0 calc(14 * var(--u))}
+}
+
+/* ── Short screens (phone landscape): 2 × 2 of compact cards ──────────────
+   When the screen is wider than it is tall but shorter than 560px, the
+   desktop frame becomes height-bound and its type shrinks fast. The tablet
+   idea — header in the first cell of a 2 × 2 grid — combined with the
+   compact cards fits the same content into a 654 × 312 frame, roughly
+   1.4× larger than the desktop frame on the same screen. Desktop monitors
+   (≥ 560px tall) never reach this layout. */
+@media (min-aspect-ratio: 109/100) and (max-height: 559.98px){
+  /* the corner glow is lifted so its white core stays above the Starter card
+     (the frame is too short for it to sit in open space as on desktop) */
+  :root{ --W:654; --H:312; --glow-y:-118; }
+  .stage{
+    display:grid;
+    grid-template-columns:calc(20 * var(--u)) calc(302 * var(--u)) calc(10 * var(--u)) calc(302 * var(--u)) calc(20 * var(--u));
+    grid-template-rows:minmax(calc(20 * var(--u)), 1fr) calc(131 * var(--u)) calc(10 * var(--u)) calc(131 * var(--u)) minmax(calc(20 * var(--u)), 1fr);
+  }
+  .sp-top{grid-area:1 / 1 / 2 / -1}
+  .sp-mid{display:none}
+  .sp-bot{grid-area:5 / 1 / 6 / -1}
+  .plans{display:contents}
+  .head{grid-area:2 / 2 / 3 / 3;align-self:center;padding:0 calc(4 * var(--u)) 0 calc(1 * var(--u))}
+  .head h1{font-size:calc(30 * var(--u));line-height:calc(32 * var(--u))}
+  .head p{margin-top:calc(8 * var(--u))}
+  .plan:nth-child(1){grid-area:2 / 4 / 3 / 5}
+  .plan:nth-child(2){grid-area:4 / 2 / 5 / 3}
+  .plan:nth-child(3){grid-area:4 / 4 / 5 / 5}
+}
+
+@media (prefers-reduced-motion: reduce){ .cta{transition:none} }
+
+/* ══ Entrance (runs once on load, then removes itself) ═════════════════════
+   html.intro   — set synchronously in <head> only when JS runs and motion is
+                  allowed; holds the pre-entrance state so nothing flashes.
+                  It is removed the moment the timeline takes over, and a
+                  failsafe removes it after 3s, so content can never stay
+                  hidden if the script fails.
+   html.entering — masks that exist only while the sequence plays.
+   ══════════════════════════════════════════════════════════════════════════ */
+html.entering .plan{transform-origin:50% 0}
+html.entering .ln{clip-path:inset(-0.35em -0.6em -0.3em -0.6em)}
+html.entering .price b{clip-path:inset(-0.3em -0.5em -0.3em -0.5em)}
+html.intro .ln > span,
+html.intro .pm{transform:translateY(135%)}
+html.intro .head p,
+html.intro .plan,
+html.intro .plan h2,
+html.intro .price > span,
+html.intro .features-label > span,
+html.intro .features li,
+html.intro .cta{opacity:0}
+html.intro .features-label::before,
+html.intro .features-label::after{transform:scaleX(0)}
+.features-label::before{transform-origin:100% 50%}
+.features-label::after{transform-origin:0 50%}
+
+</style>
+<script>
+/* Opt in to the entrance only when it can actually run; otherwise the page
+   simply renders static. */
+(function(){try{var d=document.documentElement;
+  if(!('animate' in d) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  d.classList.add('intro','entering');
+  setTimeout(function(){d.classList.remove('intro')},3000);
+}catch(e){}})();
+</script>
+</head>
+<body>
+<div class="page">
+<main class="stage">
+  <div class="glow" aria-hidden="true"><svg viewBox="0 0 800 900" preserveAspectRatio="xMidYMin slice" xmlns="http://www.w3.org/2000/svg"><defs><filter id="pgf0" filterUnits="userSpaceOnUse" x="-600" y="-600" width="2000" height="2100" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="9.61"/></filter><filter id="pgf1" filterUnits="userSpaceOnUse" x="-600" y="-600" width="2000" height="2100" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="27.44"/></filter><filter id="pgf2" filterUnits="userSpaceOnUse" x="-600" y="-600" width="2000" height="2100" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="25.00"/></filter><filter id="pgf3" filterUnits="userSpaceOnUse" x="-600" y="-600" width="2000" height="2100" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="32.12"/></filter><filter id="pgf4" filterUnits="userSpaceOnUse" x="-600" y="-600" width="2000" height="2100" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="30.33"/></filter></defs><ellipse cx="794.79" cy="274.71" rx="646.07" ry="108.31" transform="rotate(2.67 794.79 274.71)" fill="rgb(240,255,67)" fill-opacity="1.000" filter="url(#pgf0)"/><ellipse cx="315.03" cy="317.27" rx="143.91" ry="50.59" transform="rotate(8.85 315.03 317.27)" fill="rgb(56,35,255)" fill-opacity="0.860" filter="url(#pgf1)"/><ellipse cx="1034.53" cy="420.00" rx="90.00" ry="70.00" transform="rotate(-20.00 1034.53 420.00)" fill="rgb(75,60,225)" fill-opacity="0.900" filter="url(#pgf2)"/><ellipse cx="521.28" cy="355.75" rx="159.38" ry="81.91" transform="rotate(-22.72 521.28 355.75)" fill="rgb(46,26,255)" fill-opacity="1.000" filter="url(#pgf3)"/><ellipse cx="487.52" cy="337.92" rx="62.80" ry="83.86" transform="rotate(18.91 487.52 337.92)" fill="rgb(255,255,235)" fill-opacity="1.000" filter="url(#pgf4)"/></svg></div>
+
+  <div class="sp sp-top"></div>
+  <header class="head">
+    <h1><span class="ln"><span>Smart pricing for</span></span><span class="ln"><span>every stage</span></span></h1>
+    <p>Find the perfect balance of features, performance, and affordability.</p>
+  </header>
+  <div class="sp sp-mid"></div>
+
+  <ul class="plans" role="list">
+    <li class="plan">
+      <svg class="blob" viewBox="0 0 237.8 336" preserveAspectRatio="xMidYMin slice" xmlns="http://www.w3.org/2000/svg"><defs><filter id="c0f0" filterUnits="userSpaceOnUse" x="-600" y="-600" width="1437.8" height="1536" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="8.33"/></filter><filter id="c0f1" filterUnits="userSpaceOnUse" x="-600" y="-600" width="1437.8" height="1536" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="10.30"/></filter><filter id="c0f2" filterUnits="userSpaceOnUse" x="-600" y="-600" width="1437.8" height="1536" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="10.59"/></filter><filter id="c0f3" filterUnits="userSpaceOnUse" x="-600" y="-600" width="1437.8" height="1536" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="14.58"/></filter></defs><ellipse cx="244.41" cy="-35.31" rx="192.02" ry="103.18" transform="rotate(-11.08 244.41 -35.31)" fill="rgb(14,0,194)" fill-opacity="1.000" filter="url(#c0f0)"/><ellipse cx="97.59" cy="23.16" rx="52.76" ry="20.04" transform="rotate(30.45 97.59 23.16)" fill="rgb(25,0,255)" fill-opacity="1.000" filter="url(#c0f1)"/><ellipse cx="130.43" cy="-67.94" rx="52.74" ry="97.49" transform="rotate(23.09 130.43 -67.94)" fill="rgb(191,185,255)" fill-opacity="1.000" filter="url(#c0f2)"/><ellipse cx="209.65" cy="6.08" rx="46.00" ry="108.11" transform="rotate(90.00 209.65 6.08)" fill="rgb(209,209,204)" fill-opacity="1.000" filter="url(#c0f3)"/></svg>
+      <h2>Starter Plan</h2>
+      <p class="price"><b><span class="pm">19$</span></b><span>/month</span></p>
+      <p class="features-label"><span>Features</span></p>
+      <ul class="features" role="list">
+        <li><span class="tick"><svg viewBox="0 0 13 13" aria-hidden="true"><path d="M3.6 7.3 L5.3 8.3 L8.2 5.2" fill="none" stroke="#b4b4b8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Standard email support</li>
+        <li><span class="tick"><svg viewBox="0 0 13 13" aria-hidden="true"><path d="M3.6 7.3 L5.3 8.3 L8.2 5.2" fill="none" stroke="#b4b4b8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Basic analytics dashboard</li>
+        <li><span class="tick"><svg viewBox="0 0 13 13" aria-hidden="true"><path d="M3.6 7.3 L5.3 8.3 L8.2 5.2" fill="none" stroke="#b4b4b8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Limited automation actions</li>
+        <li><span class="tick"><svg viewBox="0 0 13 13" aria-hidden="true"><path d="M3.6 7.3 L5.3 8.3 L8.2 5.2" fill="none" stroke="#b4b4b8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>1 project/workspace included</li>
+        <li><span class="tick"><svg viewBox="0 0 13 13" aria-hidden="true"><path d="M3.6 7.3 L5.3 8.3 L8.2 5.2" fill="none" stroke="#b4b4b8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Essential tools for basic workflow management</li>
+      </ul>
+      <button class="cta" type="button" aria-label="Get started with the Starter Plan">Get Started</button>
+    </li>
+    <li class="plan featured">
+      <svg class="blob" viewBox="0 0 237.8 336" preserveAspectRatio="xMidYMin slice" xmlns="http://www.w3.org/2000/svg"><defs><filter id="c1f0" filterUnits="userSpaceOnUse" x="-600" y="-600" width="1437.8" height="1536" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="8.54"/></filter><filter id="c1f1" filterUnits="userSpaceOnUse" x="-600" y="-600" width="1437.8" height="1536" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="8.33"/></filter><filter id="c1f2" filterUnits="userSpaceOnUse" x="-600" y="-600" width="1437.8" height="1536" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="12.81"/></filter><filter id="c1f3" filterUnits="userSpaceOnUse" x="-600" y="-600" width="1437.8" height="1536" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="13.32"/></filter><filter id="c1f4" filterUnits="userSpaceOnUse" x="-600" y="-600" width="1437.8" height="1536" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="11.97"/></filter><filter id="c1f5" filterUnits="userSpaceOnUse" x="-600" y="-600" width="1437.8" height="1536" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="60.00"/></filter><filter id="c1f6" filterUnits="userSpaceOnUse" x="-600" y="-600" width="1437.8" height="1536" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="4.75"/></filter></defs><ellipse cx="293.57" cy="-60.07" rx="1600.00" ry="147.59" transform="rotate(2.93 293.57 -60.07)" fill="rgb(14,0,149)" fill-opacity="1.000" filter="url(#c1f0)"/><ellipse cx="204.16" cy="46.89" rx="41.37" ry="172.04" transform="rotate(-70.28 204.16 46.89)" fill="rgb(17,0,187)" fill-opacity="1.000" filter="url(#c1f1)"/><ellipse cx="17.32" cy="-64.36" rx="505.80" ry="112.23" transform="rotate(4.60 17.32 -64.36)" fill="rgb(182,181,195)" fill-opacity="1.000" filter="url(#c1f2)"/><ellipse cx="195.34" cy="-1.53" rx="98.88" ry="35.91" transform="rotate(42.73 195.34 -1.53)" fill="rgb(195,194,199)" fill-opacity="1.000" filter="url(#c1f3)"/><ellipse cx="9.02" cy="-4.46" rx="1600.00" ry="25.42" transform="rotate(-3.01 9.02 -4.46)" fill="rgb(255,255,255)" fill-opacity="1.000" filter="url(#c1f4)"/><ellipse cx="454.46" cy="114.89" rx="1600.00" ry="22.51" transform="rotate(-3.19 454.46 114.89)" fill="rgb(17,8,9)" fill-opacity="0.120" filter="url(#c1f5)"/><ellipse cx="23.34" cy="67.87" rx="98.37" ry="6.15" transform="rotate(-4.49 23.34 67.87)" fill="rgb(102,85,255)" fill-opacity="0.280" filter="url(#c1f6)"/></svg>
+      <h2>Growth Plan</h2>
+      <p class="price"><b><span class="pm">29$</span></b><span>/month</span></p>
+      <p class="features-label"><span>Features</span></p>
+      <ul class="features" role="list">
+        <li><span class="tick"><svg viewBox="0 0 13 13" aria-hidden="true"><path d="M3.6 7.3 L5.3 8.3 L8.2 5.2" fill="none" stroke="#b4b4b8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Priority customer support</li>
+        <li><span class="tick"><svg viewBox="0 0 13 13" aria-hidden="true"><path d="M3.6 7.3 L5.3 8.3 L8.2 5.2" fill="none" stroke="#b4b4b8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Integrations with popular apps</li>
+        <li><span class="tick"><svg viewBox="0 0 13 13" aria-hidden="true"><path d="M3.6 7.3 L5.3 8.3 L8.2 5.2" fill="none" stroke="#b4b4b8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Advanced automation workflows</li>
+        <li><span class="tick"><svg viewBox="0 0 13 13" aria-hidden="true"><path d="M3.6 7.3 L5.3 8.3 L8.2 5.2" fill="none" stroke="#b4b4b8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Detailed analytics &amp; performance insights</li>
+        <li><span class="tick"><svg viewBox="0 0 13 13" aria-hidden="true"><path d="M3.6 7.3 L5.3 8.3 L8.2 5.2" fill="none" stroke="#b4b4b8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Unlimited projects and team collaboration</li>
+      </ul>
+      <button class="cta" type="button" aria-label="Get started with the Growth Plan">Get Started</button>
+    </li>
+    <li class="plan">
+      <svg class="blob" viewBox="0 0 237.8 336" preserveAspectRatio="xMidYMin slice" xmlns="http://www.w3.org/2000/svg"><defs><filter id="c2f0" filterUnits="userSpaceOnUse" x="-600" y="-600" width="1437.8" height="1536" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="8.95"/></filter><filter id="c2f1" filterUnits="userSpaceOnUse" x="-600" y="-600" width="1437.8" height="1536" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="10.33"/></filter><filter id="c2f2" filterUnits="userSpaceOnUse" x="-600" y="-600" width="1437.8" height="1536" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="12.80"/></filter><filter id="c2f3" filterUnits="userSpaceOnUse" x="-600" y="-600" width="1437.8" height="1536" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="14.85"/></filter><filter id="c2f4" filterUnits="userSpaceOnUse" x="-600" y="-600" width="1437.8" height="1536" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="9.67"/></filter></defs><ellipse cx="24.18" cy="-23.77" rx="164.35" ry="94.21" transform="rotate(10.36 24.18 -23.77)" fill="rgb(21,0,255)" fill-opacity="1.000" filter="url(#c2f0)"/><ellipse cx="129.71" cy="-48.83" rx="82.06" ry="51.63" transform="rotate(-80.25 129.71 -48.83)" fill="rgb(255,255,255)" fill-opacity="1.000" filter="url(#c2f1)"/><ellipse cx="-14.74" cy="-4.18" rx="148.27" ry="58.17" transform="rotate(7.34 -14.74 -4.18)" fill="rgb(192,192,191)" fill-opacity="1.000" filter="url(#c2f2)"/><ellipse cx="85.87" cy="-33.03" rx="83.69" ry="17.00" transform="rotate(-40.32 85.87 -33.03)" fill="rgb(255,255,255)" fill-opacity="1.000" filter="url(#c2f3)"/><ellipse cx="194.93" cy="-12.09" rx="22.37" ry="95.38" transform="rotate(61.68 194.93 -12.09)" fill="rgb(28,0,255)" fill-opacity="0.220" filter="url(#c2f4)"/></svg>
+      <h2>Enterprise Plan</h2>
+      <p class="price"><b><span class="pm">49$</span></b><span>/month</span></p>
+      <p class="features-label"><span>Features</span></p>
+      <ul class="features" role="list">
+        <li><span class="tick"><svg viewBox="0 0 13 13" aria-hidden="true"><path d="M3.6 7.3 L5.3 8.3 L8.2 5.2" fill="none" stroke="#b4b4b8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Dedicated account manager</li>
+        <li><span class="tick"><svg viewBox="0 0 13 13" aria-hidden="true"><path d="M3.6 7.3 L5.3 8.3 L8.2 5.2" fill="none" stroke="#b4b4b8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Enterprise-level security &amp; controls</li>
+        <li><span class="tick"><svg viewBox="0 0 13 13" aria-hidden="true"><path d="M3.6 7.3 L5.3 8.3 L8.2 5.2" fill="none" stroke="#b4b4b8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>API access and custom integrations</li>
+        <li><span class="tick"><svg viewBox="0 0 13 13" aria-hidden="true"><path d="M3.6 7.3 L5.3 8.3 L8.2 5.2" fill="none" stroke="#b4b4b8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Custom workflows and advanced rules</li>
+        <li><span class="tick"><svg viewBox="0 0 13 13" aria-hidden="true"><path d="M3.6 7.3 L5.3 8.3 L8.2 5.2" fill="none" stroke="#b4b4b8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Unlimited team members with admin controls</li>
+      </ul>
+      <button class="cta" type="button" aria-label="Get started with the Enterprise Plan">Get Started</button>
+    </li>
+  </ul>
+  <div class="sp sp-bot"></div>
+</main>
+</div>
+<script>
+/* ── Master entrance timeline ──────────────────────────────────────────────
+   One sequence, played once per page load, built on the Web Animations API
+   (no dependency, works offline). Times are in ms from the first frame.
+
+     0   page, background and corner glow are already in place (never move)
+     80  headline — line 1 rises out of its mask, line 2 follows (+90)
+     500 subtitle fades up as the headline settles
+     640 cards rise and settle, 1 → 2 → 3 (+110 each), surface first
+         +260 plan name · +300 price rises from its mask · +460 /month
+         +420 the rules draw outward from "Features" · +520 label
+         +560 feature rows, 45ms apart · +760 button settles
+    ≈2.3s everything has landed; all animations are cancelled and the masks
+         removed, leaving exactly the static page — nothing keeps moving.  */
+(function(){
+  var d = document.documentElement;
+  if (!d.classList.contains('intro')) return;
+
+  function run(){
+    var stage = document.querySelector('.stage');
+    var W = parseFloat(getComputedStyle(d).getPropertyValue('--W')) || 811;
+    var u = stage.getBoundingClientRect().width / W;          // 1 reference px
+    var compact = matchMedia('(max-aspect-ratio: 109/100) and (max-width: 679.98px), (min-aspect-ratio: 109/100) and (max-height: 559.98px)').matches;
+
+    var EXPO  = 'cubic-bezier(0.16, 1, 0.3, 1)';   // decisive start, long soft landing
+    var QUART = 'cubic-bezier(0.25, 1, 0.5, 1)';   // supporting content
+    var INOUT = 'cubic-bezier(0.65, 0, 0.35, 1)';  // drawn lines
+    var anims = [];
+    function play(el, frames, dur, delay, ease, pseudo){
+      if (!el) return;
+      var o = {duration: dur, delay: delay, easing: ease, fill: 'both'};
+      if (pseudo) o.pseudoElement = pseudo;
+      anims.push(el.animate(frames, o));
+    }
+    function lift(px){ return [{opacity: 0, transform: 'translateY(' + (px * u) + 'px)'}, {opacity: 1, transform: 'none'}]; }
+    var rise = [{transform: 'translateY(135%)'}, {transform: 'none'}];
+
+    // 1 — headline: the first thing read, revealed line by line from a mask
+    document.querySelectorAll('.head .ln > span').forEach(function(l, i){
+      play(l, rise, 1000, 80 + i * 90, EXPO);
+    });
+    // 2 — supporting copy, already moving while the headline lands
+    play(document.querySelector('.head p'), lift(10), 800, 500, QUART);
+
+    // 3 — cards, in reading order; each surface first, then what it holds
+    var gap = compact ? 80 : 110;
+    document.querySelectorAll('.plan').forEach(function(c, i){
+      var t = 640 + i * gap;
+      // the glass surface rises and settles from its top edge (where its
+      // light sits); transform + opacity only, so the blurred glass and the
+      // bloom are never repainted mid-flight
+      play(c, [
+        {opacity: 0, transform: 'translateY(' + 18 * u + 'px)'},
+        {opacity: 1, offset: 0.45},
+        {opacity: 1, transform: 'none'}
+      ], 1100, t, EXPO);
+      play(c.querySelector('h2'), lift(8), 700, t + 260, QUART);
+      play(c.querySelector('.pm'), rise, 900, t + 300, EXPO);
+      play(c.querySelector('.price > span'), lift(4), 600, t + 460, QUART);
+      var lab = c.querySelector('.features-label');
+      play(lab, [{transform: 'scaleX(0)'}, {transform: 'none'}], 800, t + 420, INOUT, '::before');
+      play(lab, [{transform: 'scaleX(0)'}, {transform: 'none'}], 800, t + 420, INOUT, '::after');
+      play(lab.querySelector('span'), lift(4), 500, t + 520, QUART);
+      c.querySelectorAll('.features li').forEach(function(li, k){
+        // on phones the list arrives as one block: calmer on a small screen
+        play(li, lift(compact ? 5 : 6), 600, t + (compact ? 520 : 560 + k * 45), QUART);
+      });
+      play(c.querySelector('.cta'), [
+        {opacity: 0, transform: 'translateY(' + 6 * u + 'px)'},
+        {opacity: 1, transform: 'none'}
+      ], 700, t + 760, EXPO);
+    });
+
+    // Every start state is now held by the animations themselves (fill: both),
+    // so the CSS pre-state can go in the same frame — no flash, no gap.
+    d.classList.remove('intro');
+
+    Promise.all(anims.map(function(a){ return a.finished; })).then(function(){
+      anims.forEach(function(a){ a.cancel(); });   // back to the authored styles
+      d.classList.remove('entering');              // masks gone: fully static
+      // Chrome keeps the cards' in-flight rasters after a transform animation,
+      // leaving ±1-level edge differences. Re-attaching the cards within this
+      // same task (no frame is painted in between) re-rasters them, so the
+      // resting frame is bit-for-bit the static design. Focus is preserved.
+      var focused = document.activeElement;
+      document.querySelectorAll('.plan').forEach(function(c){
+        c.style.display = 'none'; void c.offsetHeight; c.removeAttribute('style');
+      });
+      if (focused && focused !== document.activeElement && focused.focus) focused.focus({preventScroll: true});
+    }, function(){ d.classList.remove('intro', 'entering'); });
+  }
+
+  var go = function(){ requestAnimationFrame(run); };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(go, go); else go();
+})();
+</script>
+</body>
+</html>

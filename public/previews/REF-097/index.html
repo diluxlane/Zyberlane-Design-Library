@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="/previews/REF-097/">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Design your next room — Landing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+@font-face{
+  font-family:"Neue Montreal";
+  src:url("https://res.cloudinary.com/dgupuutfn/raw/upload/v1780915678/NeueMontreal-Regular_dvwini.woff2") format("woff2");
+  font-weight:400;
+}
+
+@font-face{
+  font-family:"Neue Montreal";
+  src:url("https://res.cloudinary.com/dgupuutfn/raw/upload/v1780915677/NeueMontreal-Medium_wsydin.woff2") format("woff2");
+  font-weight:500;
+}
+
+@font-face{
+  font-family:"Neue Montreal";
+  src:url("https://res.cloudinary.com/dgupuutfn/raw/upload/v1780915677/NeueMontreal-Bold_by7rap.woff2") format("woff2");
+  font-weight:700;
+}
+</style>
+<style>
+  :root{
+    --bg:#fbfaf8;
+    --ink:#16140f;
+    --muted:#6f6a60;
+    --glow:rgba(214,178,134,.20);     /* warm sand light wash */
+    --glow-2:rgba(176,196,188,.14);   /* faint cool counter-tone */
+    --grain:.5;                        /* texture strength */
+    /* --font:"Helvetica Neue",Helvetica,Arial,sans-serif; */
+    --font:"Neue Montreal", sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;overflow:hidden;}
+  body{
+  background-color:var(--bg);
+  background-image:url("https://res.cloudinary.com/dgupuutfn/image/upload/v1780913982/lightbg_eggyqz.png");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+
+  font-family:var(--font);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  transition:background-color .6s ease,color .6s ease;
+}
+  /* Fine film-grain / paper texture overlay */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.86' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:220px 220px;
+    opacity:var(--grain);
+    mix-blend-mode:soft-light;
+  }
+  body.is-night{
+  /* --bg:#141416; */
+  --ink:#ffffff;
+  --muted:#c7c2b7;
+  --glow:rgba(231,180,133,.10);
+  --glow-2:rgba(120,130,150,.10);
+  --grain:.4;
+
+  background-image:
+    url("https://res.cloudinary.com/dgupuutfn/image/upload/v1780916033/int_dark_bg_mwah3i.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+  /* Slow crossfade for the room renders when switching day/night */
+  .direct-card__photo,
+  .direct3-photo,
+  .direct3-mask__img,
+  .direct4-photo{
+    transition:opacity 3s ease;
+  }
+
+  .wrap{
+    width:100%;
+    max-width:1760px;
+    margin:0 auto;
+    padding:clamp(20px,3.2vw,44px) clamp(16px,2.4vw,40px) clamp(56px,7vw,100px);
+    transform-origin:top center;
+    position:relative;
+  }
+
+  .theme-toggle{
+    position:absolute;
+    top:clamp(12px,1.6vw,24px);
+    right:clamp(12px,1.6vw,24px);
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:var(--ink);
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.08em;
+    line-height:1;
+    text-transform:uppercase;
+    user-select:none;
+  }
+  .theme-toggle__label{
+    display:inline-block;
+    padding-top:1px;          /* optical centering of the caps against the switch */
+  }
+  .theme-toggle__switch{
+    position:relative;
+    flex:none;
+    width:58px;
+    height:32px;
+    padding:0;
+    border:0;
+    border-radius:999px;
+    background:#ded8ce;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);
+    cursor:pointer;
+    transition:background-color .25s ease, box-shadow .25s ease;
+  }
+  .theme-toggle__switch:focus-visible{
+    outline:2px solid var(--ink);
+    outline-offset:3px;
+  }
+  .theme-toggle__switch::after{
+    content:"";
+    position:absolute;
+    top:4px;
+    left:4px;
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:#fffdf9;
+    box-shadow:0 3px 8px rgba(0,0,0,.16);
+    transition:transform .25s ease, background-color .25s ease;
+  }
+  body.is-night .theme-toggle__switch{
+    background:#2a2a2a;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);
+  }
+  body.is-night .theme-toggle__switch::after{
+    transform:translateX(26px);
+    background:#ffffff;
+  }
+
+  /* ---- Heading block ---- */
+  .head{
+    text-align:center;
+    max-width:880px;
+    margin:0 auto clamp(40px,5vw,72px);
+  }
+  /* .head h1{
+    font-weight:700;
+    letter-spacing:-0.018em;
+    line-height:1.04;
+    font-size:clamp(24px,3.8vw,48px);
+  } */
+   .head h1{
+  font-family:"Neue Montreal", sans-serif;
+  font-weight:300;
+  letter-spacing:-0.01em;
+  line-height:1.02;
+  font-size:clamp(28px,4vw,56px);
+}
+  .head p{
+    margin:clamp(18px,2vw,28px) auto 0;
+    max-width:560px;
+    color:var(--muted);
+    font-weight:500;
+    line-height:1.5;
+    font-size:clamp(12px,1.05vw,15px);
+    text-wrap:pretty;
+    font-family:"Neue Montreal", sans-serif;
+font-weight:200;
+  }
+
+  /* ---- Card row ---- */
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:clamp(12px,1.2vw,20px);
+    align-items:stretch;
+  }
+  .card-frame{
+    aspect-ratio:319 / 404;       /* preserved exactly from each section */
+    border-radius:clamp(18px,1.7vw,28px);
+    overflow:hidden;
+    background:#0e0d0c;
+    box-shadow:0 36px 70px -34px rgba(28,18,8,.42), 0 4px 14px -8px rgba(0,0,0,.18);
+  }
+  .card-frame iframe{
+    width:100%;
+    height:100%;
+    border:0;
+    display:block;
+    border-radius:inherit;
+  }
+
+  .direct-card{
+    position:relative;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#1a1714;
+    isolation:isolate;
+  }
+  .direct-card__artboard{
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:660px;
+    height:836px;
+    border-radius:30px;
+    overflow:hidden;
+    background:#1a1714;
+    isolation:isolate;
+    container-type:inline-size;
+    transform:translate(-50%,-50%) scale(var(--direct-scale,1));
+    transform-origin:center center;
+  }
+  .direct-card__photo{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:50% 42%;
+    z-index:0;
+  }
+  .direct-card__grade{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background:
+      linear-gradient(to top, rgba(8,6,4,.94) 0%, rgba(8,6,4,.72) 14%, rgba(8,6,4,.18) 30%, rgba(8,6,4,0) 46%),
+      linear-gradient(to bottom, rgba(40,28,14,.30) 0%, rgba(40,28,14,0) 22%);
+    pointer-events:none;
+  }
+  .direct-note{
+    position:absolute;
+    z-index:4;
+    top:4%;
+    left:7%;
+    width:34.5%;
+    height:18%;
+    background:#efe8da;
+    color:#211d18;
+    border-radius:12px;
+    padding:4.4% 5.2%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    transform:rotate(-1.2deg);
+    box-shadow:0 18px 34px -16px rgba(0,0,0,.55);
+  }
+  .direct-note__tape{
+    position:absolute;
+    top:-7px;
+    left:-10px;
+    width:52px;
+    height:24px;
+    background:linear-gradient(135deg,rgba(255,255,255,.72),rgba(255,255,255,.34));
+    transform:rotate(-43deg);
+    border-radius:3px;
+    box-shadow:0 2px 6px rgba(0,0,0,.12);
+  }
+  .direct-note__head{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-weight:600;
+    letter-spacing:.1px;
+    white-space:nowrap;
+    font-size:clamp(12px,3.2cqw,20px);
+  }
+  .direct-note__head svg{width:1em;height:1em;flex:none;}
+  .direct-note__rule{
+    height:1px;
+    background:#cfc6b4;
+    margin:5% 0;
+    border:0;
+  }
+  .direct-note__body{
+    font-weight:500;
+    line-height:1.32;
+    color:#2c2620;
+    font-size:clamp(12px,3.2cqw,20px);
+  }
+  .direct-bubble{
+    position:absolute;
+    z-index:4;
+    top:29%;
+    left:27.5%;
+    width:54.5%;
+    height:11.5%;
+    background:#e7b485;
+    color:#2a1808;
+    font-weight:700;
+    line-height:1.24;
+    border-radius:18px;
+    padding:3.4% 6%;
+    display:flex;
+    align-items:center;
+    box-shadow:0 16px 30px -14px rgba(0,0,0,.5);
+    font-size:clamp(12px,3.4cqw,22px);
+  }
+  .direct-bubble::after{
+    content:"";
+    position:absolute;
+    left:14%;
+    bottom:-9px;
+    width:24px;
+    height:24px;
+    background:#e7b485;
+    border-radius:0 0 6px 0;
+    transform:rotate(45deg);
+  }
+  .direct-cursor{
+    position:absolute;
+    z-index:5;
+    top:45.5%;
+    left:45%;
+    width:7%;
+    filter:drop-shadow(0 3px 5px rgba(0,0,0,.4));
+  }
+  .direct-nametag{
+    position:absolute;
+    z-index:5;
+    top:49%;
+    left:51%;
+    background:#9789f5;
+    color:#fff;
+    font-weight:700;
+    padding:.5em 1em;
+    border-radius:999px;
+    font-size:clamp(13px,2.6cqw,19px);
+    box-shadow:0 10px 22px -10px rgba(74,58,180,.7);
+  }
+  .direct-footer{
+    position:absolute;
+    z-index:4;
+    left:6.2%;
+    right:6.2%;
+    bottom:5.4%;
+    color:#fff;
+  }
+  .direct-footer__head{
+    display:flex;
+    align-items:center;
+    gap:3%;
+    margin-bottom:3.2%;
+  }
+  .direct-footer__icon{
+    flex:none;
+    width:9.6%;
+    aspect-ratio:1;
+    background:#e7b485;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#241608;
+  }
+  .direct-footer__icon svg{width:52%;height:52%;}
+  .direct-footer__title{
+    font-weight:700;
+    line-height:1.05;
+    letter-spacing:-.6px;
+    white-space:nowrap;
+    font-size:clamp(18px,5.6cqw,36px);
+  }
+  .direct-footer__desc{
+    color:#d7d2c9;
+    font-weight:500;
+    line-height:1.28;
+    max-width:100%;
+    font-size:clamp(13px,4.2cqw,27px);
+  }
+
+  /* ---- Card 02 : inlined Section 2 (same 660 x 836 artboard) ---- */
+  .direct2-grade{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background:
+      linear-gradient(to top, rgba(8,6,4,.92) 0%, rgba(8,6,4,.6) 13%, rgba(8,6,4,.1) 28%, rgba(8,6,4,0) 42%),
+      linear-gradient(to bottom, rgba(20,14,8,.34) 0%, rgba(20,14,8,0) 20%);
+    pointer-events:none;
+  }
+  .direct2-glass{
+    position:absolute;
+    z-index:3;
+    left:8%;
+    top:6%;
+    width:86.5%;
+    border-radius:26px;
+    padding:5% 6% 5.2%;
+    background:rgba(38,33,28,.46);
+    backdrop-filter:blur(22px) saturate(120%);
+    -webkit-backdrop-filter:blur(22px) saturate(120%);
+    border:1px solid rgba(255,255,255,.16);
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.08);
+  }
+  .direct2-glass__title{
+    color:#ffffff;
+    font-weight:700;
+    letter-spacing:-.3px;
+    line-height:1.1;
+    font-size:clamp(15px,4.2cqw,27px);
+  }
+  .direct2-glass__sub{
+    color:#b9b2a6;
+    font-weight:500;
+    margin-top:1.6%;
+    line-height:1.2;
+    font-size:clamp(11px,3.1cqw,20px);
+  }
+  .direct2-glass__rule{
+    height:1px;
+    background:rgba(255,255,255,.16);
+    border:0;
+    margin:5% 0;
+  }
+  .direct2-stats{
+    display:grid;
+    grid-template-columns:1fr 1px 1fr;
+    column-gap:7%;
+    align-items:start;
+  }
+  .direct2-stats__div{background:rgba(255,255,255,.16);align-self:stretch;}
+  .direct2-stat__label{
+    color:#ffffff;
+    font-weight:600;
+    margin-bottom:6.5%;
+    line-height:1;
+    font-size:clamp(11px,3.1cqw,20px);
+  }
+  .direct2-progress{
+    display:flex;
+    align-items:center;
+    gap:4%;
+  }
+  .direct2-progress__track{
+    display:flex;
+    gap:3.4%;
+    flex:1;
+  }
+  .direct2-progress__seg{
+    height:6.5cqw;
+    max-height:9px;
+    flex:1;
+    border-radius:999px;
+    background:rgba(255,255,255,.18);
+  }
+  .direct2-progress__seg.is-on{background:#e7b485;}
+  .direct2-progress__pct{
+    color:#ffffff;
+    font-weight:600;
+    flex:none;
+    font-size:clamp(11px,3.1cqw,20px);
+  }
+  .direct2-stat__small{
+    color:#b9b2a6;
+    font-weight:500;
+    margin-bottom:3%;
+    line-height:1.1;
+    font-size:clamp(10px,2.9cqw,18px);
+  }
+  .direct2-stat__accent{
+    color:#e7b485;
+    font-weight:600;
+    line-height:1.1;
+    font-size:clamp(11px,3.2cqw,20px);
+  }
+  .direct2-ov__label{
+    color:#ffffff;
+    font-weight:600;
+    margin-bottom:5.5%;
+    line-height:1;
+    font-size:clamp(11px,3.1cqw,20px);
+  }
+  .direct2-ov{
+    display:grid;
+    grid-template-columns:1fr 1px 1fr 1px 1fr;
+    column-gap:5.4%;
+    align-items:start;
+  }
+  .direct2-ov__div{background:rgba(255,255,255,.16);align-self:stretch;}
+  .direct2-ov__cell{display:flex;flex-direction:column;}
+  .direct2-ov__icon{
+    color:#e7b485;
+    margin-bottom:8%;
+  }
+  .direct2-ov__icon svg{width:13.5cqw;max-width:34px;height:auto;display:block;}
+  .direct2-ov__name{
+    color:#ffffff;
+    font-weight:600;
+    line-height:1.1;
+    margin-bottom:4%;
+    font-size:clamp(10px,2.85cqw,18px);
+  }
+  .direct2-ov__val{
+    color:#b9b2a6;
+    font-weight:500;
+    line-height:1.1;
+    font-size:clamp(9px,2.7cqw,17px);
+  }
+
+  /* ---- Card 03 : inlined Section 3 (same 660 x 836 artboard) ---- */
+  .direct3-photo{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:50% 38%;
+    z-index:0;
+  }
+  .direct3-grade{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background:linear-gradient(to top,
+      rgba(8,7,6,.96) 0%,
+      rgba(8,7,6,.86) 14%,
+      rgba(8,7,6,.35) 26%,
+      rgba(8,7,6,0) 38%);
+    pointer-events:none;
+  }
+  .direct3-dim{
+    position:absolute;
+    z-index:4;
+    top:7%;
+    left:27.5%;
+    width:46%;
+    display:flex;
+    align-items:center;
+    gap:3.5%;
+    color:#e9eaec;
+    filter:drop-shadow(0 1px 2px rgba(0,0,0,.6));
+  }
+  .direct3-dim__cap{width:1px;height:11px;background:currentColor;flex:none;opacity:.92;}
+  .direct3-dim__line{flex:1;height:1px;background:currentColor;opacity:.8;}
+  .direct3-dim__val{
+    flex:none;
+    font-weight:500;
+    letter-spacing:.2px;
+    line-height:1;
+    white-space:nowrap;
+    font-size:clamp(10px,2.7cqw,17px);
+  }
+  .direct3-sel{
+    position:absolute;
+    z-index:5;
+    top:22.5%;
+    left:19.5%;
+    width:62.5%;
+    height:45.5%;
+  }
+  .direct3-sel__box{
+    position:absolute;
+    inset:0;
+    border:2px dashed #9ee437;
+    border-radius:2px;
+    box-shadow:0 0 14px -2px rgba(158,228,55,.45);
+  }
+  .direct3-sel__handle{
+    position:absolute;
+    width:13px;
+    height:13px;
+    background:#aef241;
+    border-radius:3px;
+    box-shadow:0 0 12px 1px rgba(158,228,55,.85),0 0 4px rgba(255,255,255,.6) inset;
+    transform:translate(-50%,-50%);
+  }
+  .direct3-sel__handle.tl{top:0;left:0;}
+  .direct3-sel__handle.tr{top:0;left:100%;}
+  .direct3-sel__handle.bl{top:100%;left:0;}
+  .direct3-sel__handle.br{top:100%;left:100%;}
+  .direct3-sel__tag{
+    position:absolute;
+    top:62%;
+    left:100%;
+    transform:translate(-46%,-50%);
+    background:#aef241;
+    color:#1f3a07;
+    font-weight:700;
+    letter-spacing:.2px;
+    line-height:1;
+    padding:.62em .82em;
+    border-radius:9px;
+    white-space:nowrap;
+    box-shadow:0 6px 16px -6px rgba(158,228,55,.7),0 0 0 1px rgba(0,0,0,.04);
+    font-size:clamp(12px,3.3cqw,21px);
+  }
+  .direct3-mask{
+    position:absolute;
+    z-index:7;
+    overflow:hidden;
+    pointer-events:none;
+  }
+  .direct3-mask__img{
+    position:absolute;
+    object-fit:cover;
+    object-position:50% 38%;
+  }
+  .direct3-footer{
+    position:absolute;
+    z-index:4;
+    left:7%;
+    right:7%;
+    bottom:5.6%;
+    color:#ffffff;
+  }
+  .direct3-footer__head{
+    display:flex;
+    align-items:center;
+    gap:4%;
+    margin-bottom:3.4%;
+  }
+  .direct3-footer__icon{
+    flex:none;
+    width:9.6%;
+    aspect-ratio:1;
+    background:#f2a83a;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#1c1205;
+    box-shadow:0 10px 24px -10px rgba(242,168,58,.6);
+  }
+  .direct3-footer__icon svg{width:54%;height:54%;}
+  .direct3-footer__title{
+    font-weight:700;
+    line-height:1.02;
+    letter-spacing:-.8px;
+    white-space:nowrap;
+    font-size:clamp(18px,5.6cqw,36px);
+  }
+  .direct3-footer__desc{
+    color:#9a9ca1;
+    font-weight:500;
+    line-height:1.32;
+    max-width:100%;
+    font-size:clamp(13px,4.2cqw,27px);
+  }
+
+  /* ---- Card 04 : inlined Section 4 (same 660 x 836 artboard) ---- */
+  .direct4-photo{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:50% 32%;
+    z-index:0;
+  }
+  .direct4-grade{
+    position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      linear-gradient(to top,
+        rgba(14,11,8,.97) 0%,
+        rgba(14,11,8,.93) 16%,
+        rgba(16,12,9,.72) 30%,
+        rgba(16,12,9,.30) 44%,
+        rgba(16,12,9,0) 58%),
+      linear-gradient(to bottom, rgba(20,15,10,.45) 0%, rgba(20,15,10,0) 16%);
+  }
+  .direct4-panel{
+    position:absolute;
+    z-index:5;
+    top:3.5%;
+    left:6%;
+    width:34%;
+    background:linear-gradient(150deg, rgba(58,52,45,.62), rgba(34,30,26,.52));
+    backdrop-filter:blur(22px) saturate(1.1);
+    -webkit-backdrop-filter:blur(22px) saturate(1.1);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:5cqw;
+    box-shadow:0 24px 50px -22px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.10);
+    padding:3% 3.4% 2.6%;
+    color:#f3ede3;
+    container-type:inline-size;
+  }
+  .direct4-panel__head{
+    display:flex;
+    align-items:center;
+    gap:3.5%;
+    font-weight:600;
+    letter-spacing:.2px;
+    margin-bottom:6%;
+    white-space:nowrap;
+    font-size:clamp(14px,10.2cqw,21px);
+  }
+  .direct4-panel__head svg{width:1.05em;height:1.05em;flex:none;color:#f0e7d8;}
+  .direct4-panel__row{
+    display:flex;
+    align-items:center;
+    gap:5%;
+    padding:5.5% 0;
+    border-top:1px solid rgba(255,255,255,.10);
+  }
+  .direct4-panel__row:first-of-type{border-top:0;padding-top:1%;}
+  .direct4-panel__thumb{
+    flex:none;
+    width:21%;
+    aspect-ratio:1;
+    border-radius:3cqw;
+    overflow:hidden;
+    background:#2a2620;
+    box-shadow:0 4px 10px -4px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.10);
+  }
+  .direct4-panel__thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+  .direct4-panel__txt{min-width:0;flex:1;white-space:nowrap;}
+  .direct4-panel__label{
+    color:#a7a097;
+    font-weight:500;
+    letter-spacing:.2px;
+    line-height:1.1;
+    margin-bottom:.28em;
+    font-size:clamp(11px,6.5cqw,16px);
+  }
+  .direct4-panel__value{
+    color:#f3ede3;
+    font-weight:600;
+    letter-spacing:.1px;
+    line-height:1.1;
+    display:flex;
+    align-items:center;
+    gap:5%;
+    white-space:nowrap;
+    font-size:clamp(12px,7.4cqw,18px);
+  }
+  .direct4-dots{display:flex;gap:.28em;flex:none;}
+  .direct4-panel__value--stack{flex-direction:column;align-items:flex-start;gap:.4em;}
+  .direct4-panel__value--stack .direct4-dots{margin-top:.1em;}
+  .direct4-dots i{width:.55em;height:.55em;border-radius:50%;display:block;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15);}
+  .direct4-swatches{
+    position:absolute;
+    z-index:4;
+    left:50%;
+    transform:translateX(-50%);
+    width:82.5%;
+    top:57.5%;
+  }
+  .direct4-swatches__row{
+    display:flex;
+    gap:6.2%;
+    align-items:flex-start;
+  }
+  .direct4-swatch{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:.62em;}
+  .direct4-swatch__tile{
+    width:13cqw;
+    height:13cqw;
+    max-width:100%;
+    border-radius:2.4cqw;
+    overflow:hidden;
+    background:#2a2620;
+    box-shadow:0 8px 18px -8px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.14);
+  }
+  .direct4-swatch__tile img{width:100%;height:100%;object-fit:cover;display:block;}
+  .direct4-swatch.is-selected .direct4-swatch__tile{
+    box-shadow:0 0 0 2.5px #e7b485, 0 0 22px -2px rgba(231,180,133,.7), inset 0 0 0 1px rgba(255,255,255,.18);
+  }
+  .direct4-swatch__name{
+    color:#d9d3c9;
+    font-weight:500;
+    letter-spacing:.2px;
+    line-height:1;
+    white-space:nowrap;
+    font-size:clamp(9px,2.5cqw,15px);
+  }
+  .direct4-swatch.is-selected .direct4-swatch__name{color:#e7b485;}
+  .direct4-cursor{
+    position:absolute;
+    z-index:6;
+    top:60.5%;
+    left:15%;
+    width:5.4%;
+    filter:drop-shadow(0 3px 5px rgba(0,0,0,.5));
+  }
+  .direct4-footer{
+    position:absolute;
+    z-index:4;
+    left:7%;
+    right:7%;
+    bottom:5.6%;
+    color:#ffffff;
+  }
+  .direct4-footer__head{
+    display:flex;
+    align-items:center;
+    gap:3.6%;
+    margin-bottom:3.4%;
+  }
+  .direct4-footer__icon{
+    flex:none;
+    width:9.6%;
+    aspect-ratio:1;
+    background:#e7b485;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#241608;
+    box-shadow:0 10px 24px -10px rgba(231,180,133,.6);
+  }
+  .direct4-footer__icon svg{width:52%;height:52%;}
+  .direct4-footer__title{
+    font-weight:700;
+    line-height:1.02;
+    letter-spacing:-.8px;
+    white-space:nowrap;
+    font-size:clamp(18px,5.6cqw,36px);
+  }
+  .direct4-footer__desc{
+    color:#cfc9bf;
+    font-weight:500;
+    line-height:1.3;
+    font-size:clamp(13px,4.2cqw,27px);
+  }
+
+  /* Material Icons sit inside the round footer badges */
+  .direct-footer__icon .material-icons,
+  .direct3-footer__icon .material-icons,
+  .direct4-footer__icon .material-icons{
+    font-size:clamp(15px,5.6cqw,34px);
+    line-height:1;
+  }
+
+  @media (max-width:920px){
+    /* Let the page scroll normally instead of scaling to fit the viewport */
+    html,body{height:auto;overflow-x:hidden;overflow-y:auto;}
+    .wrap{transform:none !important;}
+    .cards{grid-template-columns:repeat(2,1fr);gap:clamp(16px,3vw,24px);}
+  }
+  @media (max-width:540px){
+    .cards{grid-template-columns:1fr;max-width:380px;margin:0 auto;}
+    .theme-toggle{
+      position:static;
+      justify-content:flex-end;
+      margin-bottom:18px;
+    }
+  }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="theme-toggle">
+      <span class="theme-toggle__label">Night</span>
+      <button class="theme-toggle__switch" id="themeToggle" type="button" aria-label="Toggle night mode" aria-pressed="false"></button>
+    </div>
+    <header class="head">
+      <h1>Design your next room,<br/>live, with your studio.</h1>
+      <p>From the first sketch to the final finish, the whole design<br/>process stays connected on one shared canvas.</p>
+    </header>
+
+    <section class="cards">
+      <div class="card-frame" data-screen-label="Card 01">
+        <div class="direct-card" id="directCardOne">
+          <div class="direct-card__artboard" id="directCardOneArtboard">
+            <img class="direct-card__photo" id="directCardOnePhoto" src="https://res.cloudinary.com/dgupuutfn/image/upload/v1780913982/room_vy9koe.png" data-night-src="https://res.cloudinary.com/dgupuutfn/image/upload/v1780913982/room_night_rt10xm.png" alt="Living room interior" />
+            <div class="direct-card__grade"></div>
+
+            <div class="direct-note">
+              <span class="direct-note__tape"></span>
+              <div class="direct-note__head">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg>
+                <span>Layout Review</span>
+              </div>
+              <hr class="direct-note__rule" />
+              <div class="direct-note__body">Move sofa 18&rdquo; left<br/>for better flow.</div>
+            </div>
+
+            <div class="direct-bubble">Float the sofa toward the window?</div>
+
+            <svg class="direct-cursor" viewBox="0 0 24 28" fill="none">
+              <path d="M3 2 L3 22 L8.4 16.8 L12 26 L15.6 24.5 L11.9 15.6 L19 15 Z" fill="#fff" stroke="rgba(20,16,30,.45)" stroke-width="1.1" stroke-linejoin="round"/>
+            </svg>
+
+            <div class="direct-nametag">Jake</div>
+
+            <div class="direct-footer">
+              <div class="direct-footer__head">
+                <span class="direct-footer__icon" style="background:#4f86c6;color:#fff;box-shadow:0 10px 24px -10px rgba(79,134,198,.6);">
+                  <span class="material-icons">groups</span>
+                </span>
+                <div class="direct-footer__title">Design the room together</div>
+              </div>
+              <p class="direct-footer__desc">Pin ideas and nudge furniture with your studio on the same live canvas.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-frame" data-screen-label="Card 02">
+        <div class="direct-card" id="directCardTwo">
+          <div class="direct-card__artboard" id="directCardTwoArtboard">
+            <img class="direct-card__photo" src="https://res.cloudinary.com/dgupuutfn/image/upload/v1780913983/room2_pihyox.png" data-night-src="https://res.cloudinary.com/dgupuutfn/image/upload/v1780913982/room2_night_qc4qeq.png" alt="Living room interior" />
+            <div class="direct2-grade"></div>
+
+            <div class="direct2-glass">
+              <div class="direct2-glass__title">Living Room Collaboration</div>
+              <div class="direct2-glass__sub">Live workspace with your studio</div>
+
+              <hr class="direct2-glass__rule" />
+
+              <div class="direct2-stats">
+                <div class="direct2-stat">
+                  <div class="direct2-stat__label">Layout progress</div>
+                  <div class="direct2-progress">
+                    <div class="direct2-progress__track">
+                      <span class="direct2-progress__seg is-on"></span>
+                      <span class="direct2-progress__seg is-on"></span>
+                      <span class="direct2-progress__seg is-on"></span>
+                      <span class="direct2-progress__seg"></span>
+                    </div>
+                    <span class="direct2-progress__pct">75%</span>
+                  </div>
+                </div>
+                <div class="direct2-stats__div"></div>
+                <div class="direct2-stat">
+                  <div class="direct2-stat__label">Proposal status</div>
+                  <div class="direct2-stat__small">Current direction</div>
+                  <div class="direct2-stat__accent">Warm Minimal</div>
+                </div>
+              </div>
+
+              <hr class="direct2-glass__rule" />
+
+              <div class="direct2-ov__label">Design overview</div>
+              <div class="direct2-ov">
+                <div class="direct2-ov__cell">
+                  <span class="direct2-ov__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1.5"/><path d="M3 11h7"/><path d="M10 3v18"/><path d="M10 14h11"/><path d="M16 14v7"/></svg>
+                  </span>
+                  <div class="direct2-ov__name">Layout flow</div>
+                  <div class="direct2-ov__val">Optimized</div>
+                </div>
+                <div class="direct2-ov__div"></div>
+                <div class="direct2-ov__cell">
+                  <span class="direct2-ov__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3"/><path d="M3 13a2 2 0 0 1 2-2 2 2 0 0 1 2 2v3h10v-3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v5H3z"/><path d="M6 18v2"/><path d="M18 18v2"/></svg>
+                  </span>
+                  <div class="direct2-ov__name">Furniture fit</div>
+                  <div class="direct2-ov__val">92%</div>
+                </div>
+                <div class="direct2-ov__div"></div>
+                <div class="direct2-ov__cell">
+                  <span class="direct2-ov__icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="8" height="8" rx="1.6"/><rect x="13" y="3" width="8" height="8" rx="1.6"/><rect x="3" y="13" width="8" height="8" rx="1.6"/><rect x="13" y="13" width="8" height="8" rx="1.6"/></svg>
+                  </span>
+                  <div class="direct2-ov__name">Material palette</div>
+                  <div class="direct2-ov__val">Coordinated</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="direct-footer">
+              <div class="direct-footer__head">
+                <span class="direct-footer__icon" style="background:#3fae6b;color:#fff;box-shadow:0 10px 24px -10px rgba(63,174,107,.6);">
+                  <span class="material-icons">construction</span>
+                </span>
+                <div class="direct-footer__title">Build the room in real time</div>
+              </div>
+              <p class="direct-footer__desc">Move pieces, explore finishes, and align with your studio on one shared canvas.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-frame" data-screen-label="Card 03">
+        <div class="direct-card" id="directCardThree">
+          <div class="direct-card__artboard" id="directCardThreeArtboard">
+            <img class="direct3-photo" src="https://res.cloudinary.com/dgupuutfn/image/upload/v1780913986/room3_ix0ik9.png" data-night-src="https://res.cloudinary.com/dgupuutfn/image/upload/v1780913984/room3_night_u2hkfr.png" alt="Top-down living room layout" />
+            <div class="direct3-grade"></div>
+
+            <div class="direct3-sel">
+              <div class="direct3-sel__box"></div>
+              <span class="direct3-sel__handle tl"></span>
+              <span class="direct3-sel__handle tr"></span>
+              <span class="direct3-sel__handle bl"></span>
+              <span class="direct3-sel__handle br"></span>
+              <span class="direct3-sel__tag">8&prime; x 10&prime;</span>
+            </div>
+
+            <!-- Mask boxes: edit ONLY left/top/width/height below to move/resize.
+                 The inner photo auto-aligns via the script at the bottom of the page. -->
+            <div class="direct3-mask" style="left:29.3%;top:20.5%;width:39.5%;height:6.5%;">
+              <img class="direct3-mask__img" src="https://res.cloudinary.com/dgupuutfn/image/upload/v1780913986/room3_ix0ik9.png" data-night-src="https://res.cloudinary.com/dgupuutfn/image/upload/v1780913984/room3_night_u2hkfr.png" alt="" />
+            </div>
+            <div class="direct3-mask" style="left:17.5%;top:31.5%;width:4.5%;height:10%;">
+              <img class="direct3-mask__img" src="https://res.cloudinary.com/dgupuutfn/image/upload/v1780913986/room3_ix0ik9.png" data-night-src="https://res.cloudinary.com/dgupuutfn/image/upload/v1780913984/room3_night_u2hkfr.png" alt="" />
+            </div>
+            <div class="direct3-mask" style="left:17%;top:46%;width:3.5%;height:10.5%;">
+              <img class="direct3-mask__img" src="https://res.cloudinary.com/dgupuutfn/image/upload/v1780913986/room3_ix0ik9.png" data-night-src="https://res.cloudinary.com/dgupuutfn/image/upload/v1780913984/room3_night_u2hkfr.png" alt="" />
+            </div>
+
+            <div class="direct3-footer">
+              <div class="direct3-footer__head">
+                <span class="direct3-footer__icon" style="background:#f2a83a;color:#3a2406;box-shadow:0 10px 24px -10px rgba(242,168,58,.6);">
+                  <span class="material-icons">square_foot</span>
+                </span>
+                <div class="direct3-footer__title">Plan with real-world scale</div>
+              </div>
+              <p class="direct3-footer__desc">Place furniture, check dimensions,<br/>and visualize how everything fits.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-frame" data-screen-label="Card 04">
+        <div class="direct-card" id="directCardFour">
+          <div class="direct-card__artboard" id="directCardFourArtboard">
+            <img class="direct4-photo" src="https://res.cloudinary.com/dgupuutfn/image/upload/v1780913986/room4_r4tdal.png" data-night-src="https://res.cloudinary.com/dgupuutfn/image/upload/v1780913986/room4_night_gfmdal.png" alt="Warm organic living room" />
+            <div class="direct4-grade"></div>
+
+            <div class="direct4-panel">
+              <div class="direct4-panel__head">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.6 4.6L18 9l-4.4 1.4L12 15l-1.6-4.6L6 9l4.4-1.4z"/><path d="M19 14l.7 2.1L22 17l-2.3.9L19 20l-.7-2.1L16 17l2.3-.9z"/></svg>
+                <span>Style Preview</span>
+              </div>
+
+              <div class="direct4-panel__row">
+                <span class="direct4-panel__thumb"><img class="direct4-tex" src="assets/section4_textures/image.png" alt="" /></span>
+                <span class="direct4-panel__txt">
+                  <span class="direct4-panel__label">Palette</span>
+                  <span class="direct4-panel__value direct4-panel__value--stack">Warm Organic
+                    <span class="direct4-dots"><i style="background:#dcc6a2"></i><i style="background:#caa97c"></i><i style="background:#b8966a"></i><i style="background:#a8623a"></i></span>
+                  </span>
+                </span>
+              </div>
+
+              <div class="direct4-panel__row">
+                <span class="direct4-panel__thumb"><img class="direct4-tex" src="assets/section4_textures/image.png" alt="" /></span>
+                <span class="direct4-panel__txt">
+                  <span class="direct4-panel__label">Wall Finish</span>
+                  <span class="direct4-panel__value">Limestone</span>
+                </span>
+              </div>
+
+              <div class="direct4-panel__row">
+                <span class="direct4-panel__thumb"><img class="direct4-tex" src="assets/section4_textures/image.png" alt="" /></span>
+                <span class="direct4-panel__txt">
+                  <span class="direct4-panel__label">Sofa Fabric</span>
+                  <span class="direct4-panel__value">Natural Linen</span>
+                </span>
+              </div>
+
+              <div class="direct4-panel__row">
+                <span class="direct4-panel__thumb"><img class="direct4-tex" src="assets/section4_textures/image.png" alt="" /></span>
+                <span class="direct4-panel__txt">
+                  <span class="direct4-panel__label">Wood Tone</span>
+                  <span class="direct4-panel__value">European Oak</span>
+                </span>
+              </div>
+            </div>
+
+            <div class="direct4-swatches">
+              <div class="direct4-swatches__row">
+                <div class="direct4-swatch is-selected">
+                  <span class="direct4-swatch__tile"><img class="direct4-tex" src="assets/section4_textures/image.png" alt="" /></span>
+                  <span class="direct4-swatch__name">Warm Oak</span>
+                </div>
+                <div class="direct4-swatch">
+                  <span class="direct4-swatch__tile"><img class="direct4-tex" src="assets/section4_textures/image.png" alt="" /></span>
+                  <span class="direct4-swatch__name">Walnut</span>
+                </div>
+                <div class="direct4-swatch">
+                  <span class="direct4-swatch__tile"><img class="direct4-tex" src="assets/section4_textures/image.png" alt="" /></span>
+                  <span class="direct4-swatch__name">Natural Linen</span>
+                </div>
+                <div class="direct4-swatch">
+                  <span class="direct4-swatch__tile"><img class="direct4-tex" src="assets/section4_textures/image.png" alt="" /></span>
+                  <span class="direct4-swatch__name">Travertine</span>
+                </div>
+                <div class="direct4-swatch">
+                  <span class="direct4-swatch__tile"><img class="direct4-tex" src="assets/section4_textures/image.png" alt="" /></span>
+                  <span class="direct4-swatch__name">Sage Green</span>
+                </div>
+              </div>
+            </div>
+
+            <svg class="direct4-cursor" viewBox="0 0 24 28" fill="none">
+              <path d="M3 2 L3 22 L8.4 16.8 L12 26 L15.6 24.5 L11.9 15.6 L19 15 Z" fill="#fff" stroke="rgba(20,16,30,.45)" stroke-width="1.1" stroke-linejoin="round"/>
+            </svg>
+
+            <div class="direct4-footer">
+              <div class="direct4-footer__head">
+                <span class="direct4-footer__icon" style="background:#b06ad0;color:#fff;box-shadow:0 10px 24px -10px rgba(176,106,208,.6);">
+                  <span class="material-icons">palette</span>
+                </span>
+                <div class="direct4-footer__title">Explore finishes instantly</div>
+              </div>
+              <p class="direct4-footer__desc">Swap materials and compare palettes before deciding.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    (function(){
+      var body = document.body;
+      var toggle = document.getElementById('themeToggle');
+      var firstCard = document.getElementById('directCardOne');
+      var firstArtboard = document.getElementById('directCardOneArtboard');
+      var secondCard = document.getElementById('directCardTwo');
+      var secondArtboard = document.getElementById('directCardTwoArtboard');
+      var thirdCard = document.getElementById('directCardThree');
+      var thirdArtboard = document.getElementById('directCardThreeArtboard');
+      var fourthCard = document.getElementById('directCardFour');
+      var fourthArtboard = document.getElementById('directCardFourArtboard');
+
+      // Room photos that have a matching *_night.png variant in /assets.
+      // (Card 04's swatch/thumbnail images are external Unsplash URLs and are
+      // intentionally left out of the swap.)
+      var nightPhotoSelectors = [
+        '#directCardOneArtboard .direct-card__photo',
+        '#directCardTwoArtboard .direct-card__photo',
+        '#directCardThreeArtboard .direct3-photo',
+        '#directCardThreeArtboard .direct3-mask__img',
+        '#directCardFourArtboard .direct4-photo'
+      ];
+
+      function swapPhotos(isNight){
+        nightPhotoSelectors.forEach(function(sel){
+          document.querySelectorAll(sel).forEach(function(img){
+            var daySrc = img.dataset.daySrc || img.getAttribute('src').replace('_night.png', '.png');
+            if(!img.dataset.daySrc) img.dataset.daySrc = daySrc;
+            var nightSrc = img.dataset.nightSrc || daySrc.replace('.png', '_night.png');
+            var next = isNight ? nightSrc : daySrc;
+            if(next === img.getAttribute('src')) return;
+            // Fade out, swap once the new render is ready, then fade back in.
+            img.style.opacity = '0';
+            var reveal = function(){ img.style.opacity = '1'; img.removeEventListener('load', reveal); };
+            img.addEventListener('load', reveal);
+            img.src = next;
+          });
+        });
+      }
+
+      function setNightMode(isNight){
+        body.classList.toggle('is-night', isNight);
+        if(toggle) toggle.setAttribute('aria-pressed', String(isNight));
+        swapPhotos(isNight);
+        fitDirectCard();
+        fitLanding();
+      }
+
+      function fitArtboard(card, artboard){
+        if(!card || !artboard) return;
+        var scale = Math.min(card.clientWidth / 660, card.clientHeight / 836);
+        artboard.style.setProperty('--direct-scale', scale);
+      }
+
+      function fitDirectCard(){
+        fitArtboard(firstCard, firstArtboard);
+        fitArtboard(secondCard, secondArtboard);
+        fitArtboard(thirdCard, thirdArtboard);
+        fitArtboard(fourthCard, fourthArtboard);
+      }
+
+      function fitLanding(){
+        var wrap = document.querySelector('.wrap');
+        if(!wrap) return;
+        wrap.style.transform = 'none';
+        // On small screens the page scrolls normally — don't scale-to-fit.
+        if(window.innerWidth <= 920) return;
+        var width = wrap.offsetWidth;
+        var height = wrap.offsetHeight;
+        if(!width || !height) return;
+        var scale = Math.min(window.innerWidth / width, window.innerHeight / height, 1);
+        wrap.style.transform = 'scale(' + scale + ')';
+      }
+      if(toggle){
+        toggle.addEventListener('click', function(){
+          setNightMode(!body.classList.contains('is-night'));
+        });
+      }
+      window.addEventListener('resize', function(){
+        fitDirectCard();
+        fitLanding();
+      });
+      window.addEventListener('load', function(){
+        fitDirectCard();
+        fitLanding();
+      });
+      window.addEventListener('DOMContentLoaded', function(){
+        fitDirectCard();
+        fitLanding();
+      });
+      fitDirectCard();
+      fitLanding();
+    })();
+  </script>
+  <script>
+    // Card 03 masks: keep each window's photo slice aligned to the background.
+    // Edit only the left/top/width/height on the .direct3-mask divs above —
+    // the inner image is recomputed from those four numbers here.
+    (function(){
+      var masks = document.querySelectorAll('#directCardThreeArtboard .direct3-mask');
+      masks.forEach(function(m){
+        var x = parseFloat(m.style.left), y = parseFloat(m.style.top),
+            w = parseFloat(m.style.width), h = parseFloat(m.style.height);
+        var img = m.querySelector('.direct3-mask__img');
+        if(!img || !w || !h) return;
+        img.style.width  = (10000 / w) + '%';
+        img.style.height = (10000 / h) + '%';
+        img.style.left   = (-x / w * 100) + '%';
+        img.style.top    = (-y / h * 100) + '%';
+      });
+    })();
+
+    // Card 04: assign a random local texture to each panel thumb / swatch tile.
+ (function () {
+  var textures = [
+    'https://res.cloudinary.com/dgupuutfn/image/upload/v1780915396/text_1_nnp1pl.png',
+    'https://res.cloudinary.com/dgupuutfn/image/upload/v1780915394/text_2_cjb8hw.png',
+    'https://res.cloudinary.com/dgupuutfn/image/upload/v1780915395/text_3_z3l3bs.png',
+    'https://res.cloudinary.com/dgupuutfn/image/upload/v1780915393/text_4_xbmifm.png',
+    'https://res.cloudinary.com/dgupuutfn/image/upload/v1780915398/text_5_epk2mb.png',
+    'https://res.cloudinary.com/dgupuutfn/image/upload/v1780915398/text_6_pkwose.png',
+    'https://res.cloudinary.com/dgupuutfn/image/upload/v1780915399/text_7_wawh7x.png',
+    'https://res.cloudinary.com/dgupuutfn/image/upload/v1780915399/text_8_jlqcnu.png',
+    'https://res.cloudinary.com/dgupuutfn/image/upload/v1780915400/text_9_fytno2.png'
+  ];
+
+  document.querySelectorAll('#directCardFourArtboard .direct4-tex')
+    .forEach(function (img, index) {
+      img.src = textures[index];
+    });
+})();
+  </script>
+</body>
+</html>

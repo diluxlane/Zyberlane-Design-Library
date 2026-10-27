@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="/previews/REF-121/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Orbit — See beyond now</title>
+<meta name="description" content="Everything you need to discover, understand, and explore what is out there.">
+<style>
+/* ---------- Inter (variable, latin subset, embedded) ---------- */
+@font-face{
+  font-family:"InterVar";
+  font-style:normal;
+  font-weight:100 900;
+  font-display:block;
+  src:url(assets/fonts/inter-var.woff2) format("woff2");
+}
+
+/* ---------- Reference frame -------------------------------------
+   Every number below is a measured pixel value taken from the
+   reference render (1563 x 1006).  --u is "one reference pixel",
+   so the whole screen scales as one rigid unit.
+------------------------------------------------------------------ */
+:root{
+  --u: max( min(calc(100vw / 1563), calc(100vh / 460)), 0.80px );
+
+  --ink:        #ffffff;
+  --ink-mark:   rgba(255,255,255,.98);
+  --ink-nav:    rgba(255,255,255,.91);
+  --ink-sub:    rgba(255,255,255,.50);
+  --ink-pill:   rgba(255,255,255,.88);
+  --ink-dark:   #000000;
+
+  --hairline:   rgba(255,255,255,.98);
+  --glass-bg:   rgba(255,255,255,.12);
+  --glass-line: rgba(255,255,255,.15);
+
+  --r-btn: calc(10 * var(--u));
+}
+@supports (height:100dvh){ :root{ --u: max( min(calc(100vw / 1563), calc(100dvh / 460)), 0.80px ); } }
+@supports not (width: max(1px,1vw)){ :root{ --u: calc(100vw / 1563); } }
+
+*,*::before,*::after{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-optical-sizing:none;
+  background:#000;
+  color:var(--ink);
+  font-family:"InterVar","Inter","Helvetica Neue",Arial,system-ui,sans-serif;
+  font-feature-settings:"kern" 1,"calt" 1;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:geometricPrecision;
+  overflow:hidden;
+}
+
+/* ---------- Full-bleed frame: never letterboxes ---------- */
+.frame{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  background:#000;
+  isolation:isolate;
+}
+
+/* Artwork: width-driven (exactly as measured — 100% wide, flush to
+   the top edge, overflowing the bottom), but never shorter than the
+   viewport, so no blank band can appear at the top or bottom. */
+.sky{
+  position:absolute;
+  top:calc(-1.5 * var(--u)); left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  height:auto;
+  min-height:calc(100% + (1.5 * var(--u)));
+  object-fit:cover;
+  object-position:center top;
+  z-index:0;
+  pointer-events:none;
+  -webkit-user-select:none; user-select:none;
+}
+/* measured: artwork sits ~6% darker than the source file */
+.veil{
+  position:absolute; inset:0;
+  background:rgba(0,0,0,.06);
+  z-index:1; pointer-events:none;
+}
+
+/* ---------- Scaled content layer ---------- */
+.screen{
+  position:absolute;
+  top:0; left:50%;
+  transform:translateX(-50%);
+  width:calc(1563 * var(--u));
+  height:calc(1006 * var(--u));
+  z-index:2;
+}
+
+/* ================= HEADER ================= */
+.bar{
+  position:absolute;
+  z-index:3;
+  /* the stage is centred on the viewport, so the measured left edge of 286
+     inside a 1563-wide stage resolves to 50% - 495.5 units */
+  left:calc(50% - (495.5 * var(--u)));
+  top:calc(7.5 * var(--u));
+  width:calc(983.5 * var(--u));
+  height:calc(36.2 * var(--u));
+}
+
+.brand{
+  position:absolute; left:0; top:50%;
+  transform:translateY(-50%);
+  display:flex; align-items:center;
+  gap:calc(11.4 * var(--u));
+  text-decoration:none; color:var(--ink-mark);
+}
+.brand svg{
+  display:block;
+  width:calc(26.9 * var(--u));
+  height:calc(16.6 * var(--u));
+  overflow:visible;
+}
+.brand span{
+  font-variation-settings:'opsz' 22;
+  font-size:calc(17.5 * var(--u));
+  font-weight:550;
+  letter-spacing:0;
+  line-height:1;
+}
+
+.links{
+  position:absolute;
+  left:calc(353.8 * var(--u));
+  top:50%;
+  transform:translateY(-50%);
+  display:flex; align-items:center;
+  gap:calc(25.2 * var(--u));
+}
+.links a{
+  font-variation-settings:'opsz' 15;
+  color:var(--ink-nav);
+  text-decoration:none;
+  font-size:calc(11.9 * var(--u));
+  font-weight:450;
+  letter-spacing:calc(-0.30 * var(--u));
+  line-height:1;
+  white-space:nowrap;
+  transition:color .18s ease;
+}
+.links a:hover{ color:#fff; }
+
+.actions{
+  position:absolute; right:0; top:0;
+  display:flex; align-items:center;
+  gap:calc(7.8 * var(--u));
+}
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  border-radius:var(--r-btn);
+  text-decoration:none;
+  white-space:nowrap;
+  line-height:1;
+  border:0;
+  transition:background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+.btn.ghost{
+  background:transparent;
+  color:var(--ink);
+  border:calc(1 * var(--u)) solid var(--hairline);
+}
+.btn.solid{
+  background:#fff;
+  color:var(--ink-dark);
+}
+.btn.ghost:hover{ background:rgba(255,255,255,.10); }
+.btn.solid:hover{ background:#e9e9ea; }
+
+.bar .btn{
+  font-variation-settings:'opsz' 15;
+  height:calc(36.2 * var(--u));
+  line-height:calc(36.2 * var(--u));
+  font-size:calc(11.9 * var(--u));
+  font-weight:500;
+  letter-spacing:calc(-0.38 * var(--u));
+}
+.bar .ghost{ width:calc(85.5 * var(--u)); }
+.bar .solid{
+  width:calc(88.2 * var(--u));
+  font-size:calc(12.15 * var(--u));
+  font-weight:550;
+  letter-spacing:calc(-0.35 * var(--u));
+}
+
+/* ================= HERO ================= */
+.hero{
+  position:absolute;
+  left:calc(0.9 * var(--u)); right:calc(-0.9 * var(--u));
+  top:0;
+  text-align:center;
+}
+
+/* --- eyebrow pill --- */
+.pill{
+  position:absolute;
+  top:calc(129.6 * var(--u));
+  left:50%;
+  transform:translateX(-50%);
+  display:inline-flex; align-items:center;
+  width:calc(194.5 * var(--u));
+  height:calc(22.4 * var(--u));
+  padding-left:calc(4.0 * var(--u));
+  padding-right:calc(8.6 * var(--u));
+  border-radius:999px;
+  background:var(--glass-bg);
+  border:calc(1 * var(--u)) solid var(--glass-line);
+  -webkit-backdrop-filter:blur(calc(10 * var(--u)));
+  backdrop-filter:blur(calc(10 * var(--u)));
+  text-decoration:none;
+  white-space:nowrap;
+  transition:background-color .18s ease;
+}
+.pill:hover{ background:rgba(255,255,255,.17); }
+.chip{
+  font-variation-settings:'opsz' 14;
+  display:inline-flex; align-items:center; justify-content:center;
+  width:calc(33.3 * var(--u));
+  height:calc(14 * var(--u));
+  border-radius:999px;
+  background:#fff;
+  color:var(--ink-dark);
+  font-size:calc(10.2 * var(--u));
+  padding-top:calc(1.7 * var(--u));
+  font-weight:600;
+  letter-spacing:calc(-0.1 * var(--u));
+  line-height:1;
+}
+.pill-label{
+  font-variation-settings:'opsz' 15;
+  margin-left:calc(3.4 * var(--u));
+  position:relative; top:calc(1 * var(--u));
+  color:var(--ink-pill);
+  font-size:calc(12.4 * var(--u));
+  font-weight:450;
+  letter-spacing:calc(-0.48 * var(--u));
+  height:calc(22.4 * var(--u));
+  line-height:calc(22.4 * var(--u));
+}
+.pill svg{
+  display:block;
+  margin-left:auto;
+  width:calc(9.5 * var(--u));
+  height:calc(8 * var(--u));
+  color:rgba(255,255,255,.95);
+}
+
+/* --- headline --- */
+.hero h1{
+  position:absolute;
+  left:calc(0.6 * var(--u)); right:calc(-0.6 * var(--u));
+  top:calc(168.5 * var(--u));
+  margin:0;
+  font-size:calc(55 * var(--u));
+  font-weight:545;
+  font-variation-settings:'opsz' 32;
+  line-height:calc(56 * var(--u));
+  letter-spacing:calc(-0.76 * var(--u));
+  color:var(--ink);
+}
+
+/* Each line sits in its own mask. The extra bottom room clears the
+   descenders and is cancelled by an equal negative margin, so the block
+   occupies exactly the same 2 x 56u as the original <br> version. */
+.hero h1 .ln{
+  display:block;
+  overflow:hidden;
+  padding-bottom:calc(7 * var(--u));
+  margin-bottom:calc(-7 * var(--u));
+}
+.hero h1 .ln-i{ display:block; }
+
+/* --- sub-headline --- */
+.hero p{
+  font-variation-settings:'opsz' 20;
+  position:absolute;
+  left:50%;
+  transform:translateX(calc(-50% + (0.25 * var(--u))));
+  top:calc(292.6 * var(--u));
+  margin:0;
+  width:calc(700 * var(--u));
+  font-size:calc(15.7 * var(--u));
+  font-weight:400;
+  line-height:calc(24 * var(--u));
+  letter-spacing:calc(-0.05 * var(--u));
+  color:var(--ink-sub);
+}
+
+/* --- calls to action --- */
+.cta{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  top:calc(342.8 * var(--u));
+  display:flex; align-items:center;
+  gap:calc(9.9 * var(--u));
+}
+.cta .btn{
+  font-variation-settings:'opsz' 16;
+  height:calc(36.4 * var(--u));
+  line-height:calc(36.4 * var(--u));
+  padding-top:calc(2 * var(--u));
+  font-size:calc(13.3 * var(--u));
+  font-weight:480;
+  letter-spacing:calc(-0.34 * var(--u));
+}
+.cta .ghost{ width:calc(99.6 * var(--u)); }
+.cta .solid{ width:calc(96.4 * var(--u)); }
+
+/* ---------- mobile nav trigger (hidden on desktop) ---------- */
+.menu{
+  display:none;
+  width:calc(36.2 * var(--u));
+  height:calc(36.2 * var(--u));
+  align-items:center; justify-content:center;
+  border-radius:var(--r-btn);
+  border:calc(1 * var(--u)) solid rgba(255,255,255,.35);
+  background:transparent;
+  color:#fff;
+  cursor:pointer;
+  padding:0;
+}
+.menu svg{ width:55%; height:55%; display:block; }
+.menu:hover{ background:rgba(255,255,255,.10); }
+
+/* --- mobile menu sheet --- */
+.sheet{
+  display:none;
+  position:absolute;
+  top:calc(100% + (9 * var(--u)));
+  right:0;
+  min-width:calc(210 * var(--u));
+  padding:calc(10 * var(--u));
+  border-radius:calc(14 * var(--u));
+  background:rgba(18,18,20,.88);
+  border:calc(1 * var(--u)) solid var(--glass-line);
+  -webkit-backdrop-filter:blur(calc(18 * var(--u))) saturate(140%);
+  backdrop-filter:blur(calc(18 * var(--u))) saturate(140%);
+  box-shadow:0 calc(18 * var(--u)) calc(44 * var(--u)) rgba(0,0,0,.55);
+}
+.bar[data-open="true"] .sheet{ display:block; }
+.sheet a{
+  display:block;
+  padding:calc(9 * var(--u)) calc(10 * var(--u));
+  border-radius:calc(9 * var(--u));
+  color:var(--ink-nav);
+  text-decoration:none;
+  font-variation-settings:'opsz' 15;
+  font-size:calc(14 * var(--u));
+  font-weight:450;
+  letter-spacing:calc(-0.30 * var(--u));
+}
+.sheet a:hover{ background:rgba(255,255,255,.08); color:#fff; }
+.sheet .btn.solid{
+  display:flex;
+  width:100%;
+  height:calc(38 * var(--u));
+  margin-top:calc(8 * var(--u));
+  font-variation-settings:'opsz' 15;
+  font-size:calc(14 * var(--u));
+  font-weight:500;
+  letter-spacing:calc(-0.30 * var(--u));
+  color:var(--ink-dark);
+}
+
+/* ---------- a11y ---------- */
+a:focus-visible,button:focus-visible{
+  outline:2px solid #9b8cff;
+  outline-offset:3px;
+  border-radius:4px;
+}
+.sr{
+  position:absolute!important;width:1px;height:1px;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;
+}
+
+/* =================================================================
+   RESPONSIVE
+   The composition is one rigid unit, so the only thing that changes
+   is the size of that unit — plus the nav, which collapses once the
+   five links no longer fit.
+   ================================================================= */
+
+/* Tablet */
+@media (max-width: 1023px){
+  :root{ --u: calc(100vw / 900); }
+  .bar{
+    left:calc(4.2vw);
+    width:calc(91.6vw);
+  }
+  .links{ display:none; }
+  .menu{ display:inline-flex; }
+  .bar .solid{ display:none; }
+}
+
+/* Phone */
+@media (max-width: 640px){
+  :root{ --u: calc(100vw / 486); }
+  .bar{ left:5.2vw; width:89.6vw; }
+  .hero p{
+    width:min(calc(560 * var(--u)), 88vw);
+    line-height:calc(23 * var(--u));
+  }
+  .pill{ padding-right:calc(8 * var(--u)); }
+}
+
+/* Very small phones — let the headline breathe onto three lines */
+@media (max-width: 380px){
+  :root{ --u: calc(100vw / 470); }
+}
+
+/* Short phones in landscape */
+@media (max-width: 1023px) and (max-height: 520px){
+  :root{ --u: min(calc(100vw / 900), calc(100vh / 470)); }
+}
+
+/* Viewports far wider than the artwork: anchor it to the bottom edge so the
+   planet stays in frame (top-anchoring would show only its black upper band). */
+@media (min-aspect-ratio: 3/1){
+  .sky{
+    top:auto; bottom:0;
+    height:auto; min-height:0;
+    width:100%; min-width:100%;
+  }
+  /* the artwork now sits behind the copy, so add a scrim to hold contrast */
+  .veil{
+    background:linear-gradient(to bottom,
+      rgba(0,0,0,.82) 0%, rgba(0,0,0,.72) 55%, rgba(0,0,0,.18) 100%);
+  }
+}
+
+/* =================================================================
+   ENTRANCE
+   One timeline. Runs once on load, then the classes are removed and
+   nothing animated remains. The artwork is the stage and never moves;
+   only the foreground composition performs.
+   ================================================================= */
+@media (prefers-reduced-motion: no-preference){
+
+  :root{
+    --e-reveal: cubic-bezier(.18,.85,.26,1);
+    --e-soft:   cubic-bezier(.22,1,.36,1);
+    --e-nav:    cubic-bezier(.33,1,.68,1);
+    --rise:     calc(10 * var(--u));
+    --rise-lg:  calc(13 * var(--u));
+  }
+
+  /* opening frame */
+  .intro .brand,
+  .intro .links a,
+  .intro .actions > .btn,
+  .intro .actions > .menu,
+  .intro .pill,
+  .intro .hero p,
+  .intro .cta .btn{ opacity:0; }
+  .intro .ln-i{ transform:translate3d(0,115%,0); }
+  .intro .brand,
+  .intro .pill,
+  .intro .hero p,
+  .intro .ln-i,
+  .intro .cta .btn{ will-change:transform,opacity; }
+
+  @keyframes i-rise{
+    from{ opacity:0; transform:translate3d(0,var(--rise),0); }
+    to  { opacity:1; transform:none; }
+  }
+  @keyframes i-rise-cy{           /* element already centred with translateY(-50%) */
+    from{ opacity:0; transform:translateY(-50%) translate3d(0,var(--rise),0); }
+    to  { opacity:1; transform:translateY(-50%); }
+  }
+  @keyframes i-pill{              /* already centred with translateX(-50%) */
+    from{ opacity:0; transform:translateX(-50%) translate3d(0,var(--rise-lg),0) scale(.972); }
+    to  { opacity:1; transform:translateX(-50%); }
+  }
+  @keyframes i-sub{
+    from{ opacity:0; transform:translateX(calc(-50% + (0.25 * var(--u)))) translate3d(0,var(--rise-lg),0); }
+    to  { opacity:1; transform:translateX(calc(-50% + (0.25 * var(--u)))); }
+  }
+  @keyframes i-btn{
+    from{ opacity:0; transform:translate3d(0,var(--rise-lg),0) scale(.986); }
+    to  { opacity:1; transform:none; }
+  }
+  @keyframes i-line{
+    from{ transform:translate3d(0,115%,0); }
+    to  { transform:none; }
+  }
+
+  /* --- the timeline ------------------------------------------------
+     0.00  brand            0.26  pill
+     0.07  nav links        0.34  headline line 1
+     0.16  nav actions      0.48  headline line 2
+                            0.86  sub-headline
+                            1.00  CTA pair          -> ends 1.69s     */
+  .intro-play .brand{ animation:i-rise-cy .62s var(--e-nav) 0s both; }
+
+  .intro-play .links a{ animation:i-rise .55s var(--e-nav) both; }
+  .intro-play .links a:nth-child(1){ animation-delay:.070s; }
+  .intro-play .links a:nth-child(2){ animation-delay:.115s; }
+  .intro-play .links a:nth-child(3){ animation-delay:.160s; }
+  .intro-play .links a:nth-child(4){ animation-delay:.205s; }
+  .intro-play .links a:nth-child(5){ animation-delay:.250s; }
+
+  .intro-play .actions > .btn,
+  .intro-play .actions > .menu{ animation:i-rise .55s var(--e-nav) .215s both; }
+  .intro-play .actions > .ghost{ animation-delay:.160s; }
+
+  .intro-play .pill{ animation:i-pill .62s var(--e-soft) .26s both; }
+
+  .intro-play .ln:nth-child(1) .ln-i{ animation:i-line .95s var(--e-reveal) .34s both; }
+  .intro-play .ln:nth-child(2) .ln-i{ animation:i-line .95s var(--e-reveal) .48s both; }
+
+  .intro-play .hero p{ animation:i-sub .70s var(--e-soft) .86s both; }
+
+  .intro-play .cta .btn:nth-child(1){ animation:i-btn .62s var(--e-soft) 1.00s both; }
+  .intro-play .cta .btn:nth-child(2){ animation:i-btn .62s var(--e-soft) 1.07s both; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ transition:none!important; animation:none!important; }
+}
+</style>
+<script>
+/* Sets the opening frame before first paint, so nothing flashes.
+   Skipped entirely for reduced-motion users and when JS is off, in which
+   case the page simply renders in its finished state. The failsafe
+   guarantees content can never stay hidden. */
+(function(){
+  var m = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (m && m.matches) return;
+  var r = document.documentElement;
+  r.classList.add('intro');
+  setTimeout(function(){ r.classList.remove('intro','intro-play'); }, 5000);
+})();
+</script>
+</head>
+<body>
+<div class="frame">
+  <img class="sky" alt="" aria-hidden="true" decoding="async" src="assets/images/sky.webp">
+  <div class="veil"></div>
+
+  <header class="bar">
+    <a class="brand" href="#" aria-label="Orbit — home">
+      <svg viewBox="0 0 26.9 16.6" fill="none" aria-hidden="true">
+        <!-- far side of the ring -->
+        <ellipse cx="13.25" cy="8.4" rx="13.2" ry="2.9"
+                 transform="rotate(-25 13.25 8.4)"
+                 stroke="currentColor" stroke-width="1.25"/>
+        <!-- planet, sitting on a hairline gap that separates it from the ring -->
+        <circle cx="13.25" cy="8.4" r="8.8" fill="#000"/>
+        <circle cx="13.25" cy="8.4" r="8.1" fill="currentColor"/>
+        <!-- near side of the ring, crossing in front of the planet -->
+        <ellipse cx="13.25" cy="8.4" rx="13.2" ry="2.9"
+                 transform="rotate(-25 13.25 8.4)"
+                 stroke="#000" stroke-width="0.9"
+                 stroke-dasharray="28.2 28.2"/>
+        <ellipse cx="13.25" cy="8.4" rx="13.2" ry="2.9"
+                 transform="rotate(-25 13.25 8.4)"
+                 stroke="currentColor" stroke-width="1.25"
+                 stroke-dasharray="28.2 28.2"/>
+      </svg>
+      <span>Orbit</span>
+    </a>
+
+    <nav class="links" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact">Contact</a>
+      <a href="#blog">Blog</a>
+    </nav>
+
+    <div class="actions">
+      <a class="btn ghost" href="#try">Try for free</a>
+      <a class="btn solid" href="#demo">Get a demo</a>
+      <button class="menu" type="button" id="menu-btn"
+              aria-label="Menu" aria-expanded="false" aria-controls="menu-sheet">
+        <svg viewBox="0 0 20 14" fill="none" aria-hidden="true">
+          <path d="M0 1h20M0 7h20M0 13h20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <nav class="sheet" id="menu-sheet" aria-label="Menu">
+        <a href="#about">About</a>
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact">Contact</a>
+        <a href="#blog">Blog</a>
+        <a class="btn solid" href="#demo">Get a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="screen">
+
+    <main class="hero">
+      <a class="pill" href="#new">
+        <span class="chip">New</span>
+        <span class="pill-label">Go beyond the ordinary</span>
+        <svg viewBox="0 0 9.5 8" fill="none" aria-hidden="true">
+          <path d="M0.7 4H8.8M5.6 0.75 8.85 4 5.6 7.25"
+                stroke="currentColor" stroke-width="1.35"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+      <h1>
+        <span class="ln"><span class="ln-i">See beyond now</span></span>
+        <span class="ln"><span class="ln-i">Explore the stars</span></span>
+      </h1>
+
+      <p>Everything you need to discover, understand, and explore what is out there.</p>
+
+      <div class="cta">
+        <a class="btn ghost" href="#try">Try for free</a>
+        <a class="btn solid" href="#explore">Explore</a>
+      </div>
+    </main>
+  </div>
+</div>
+<script>
+/* ---- entrance: start once, then remove every trace of it ---- */
+(function () {
+  var r = document.documentElement;
+  if (!r.classList.contains('intro')) return;   // reduced motion, or already done
+
+  var started = false;
+  function start() {
+    if (started || !r.classList.contains('intro')) return;
+    started = true;
+    r.classList.add('intro-play');
+
+    var last = document.querySelector('.cta .btn:last-child');
+    var timer;
+    function finish(e) {
+      if (e && e.target !== last) return;
+      if (last) last.removeEventListener('animationend', finish);
+      clearTimeout(timer);
+      r.classList.remove('intro', 'intro-play');  // no animation, no will-change, nothing left
+    }
+    if (last) last.addEventListener('animationend', finish);
+    timer = setTimeout(finish, 3000);            // covers a backgrounded tab
+  }
+
+  // Hold for the embedded font so the masked lines never reveal a fallback face.
+  function go() { requestAnimationFrame(function () { requestAnimationFrame(start); }); }
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(go);
+    setTimeout(go, 700);
+  } else {
+    go();
+  }
+})();
+
+(function () {
+  var bar = document.querySelector('.bar');
+  var btn = document.getElementById('menu-btn');
+  function set(open) {
+    bar.dataset.open = open ? 'true' : 'false';
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
+  }
+  set(false);
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    set(bar.dataset.open !== 'true');
+  });
+  document.addEventListener('click', function (e) {
+    if (!bar.contains(e.target)) set(false);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') set(false);
+  });
+})();
+</script>
+</body>
+</html>

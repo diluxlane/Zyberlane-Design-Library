@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-079/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>E-commerce Dashboard</title>
+<script src="assets/entry.js"></script>
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/entry.css">
+</head>
+<body>
+<div class="app">
+  <header class="nav">
+    <nav class="tabs" aria-label="Primary">
+      <button class="tab on" aria-current="page">Overview</button>
+      <button class="tab">Products</button>
+      <button class="tab">Orders</button>
+      <button class="tab">Customers</button>
+    </nav>
+    <div class="nav-right">
+      <button class="bell" aria-label="Notifications">
+        <svg viewBox="0 0 21 26" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.2 18.6V11a7.3 7.3 0 0 1 14.6 0v7.6l2 2.4H1.2z"/><path d="M8 23.6c.6 1 1.4 1.4 2.5 1.4s1.9-.4 2.5-1.4"/></svg>
+      </button>
+      <div class="avatar"><img alt="Account" src="assets/images/image-2.png"></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="titlebar">
+      <h1>E-commerce Dashboard</h1>
+      <div class="actions">
+        <button class="btn btn-date">
+          <svg class="cal" viewBox="0 0 22 23" fill="none" stroke="#000" stroke-width="1.9" stroke-linecap="round"><rect x="1" y="3.2" width="20" height="18.8" rx="3.2"/><path d="M6.4 1v4.4M15.6 1v4.4M1 8.6h20"/><g fill="#000" stroke="none"><circle cx="6.2" cy="12.6" r="1.15"/><circle cx="11" cy="12.6" r="1.15"/><circle cx="15.8" cy="12.6" r="1.15"/><circle cx="6.2" cy="17" r="1.15"/><circle cx="11" cy="17" r="1.15"/><circle cx="15.8" cy="17" r="1.15"/></g></svg>
+          <span>Last 7 days</span>
+          <svg class="chev" viewBox="0 0 18 10" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l8 8 8-8"/></svg>
+        </button>
+        <button class="btn btn-add">
+          <svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M9 1v16M1 9h16"/></svg>
+          <span>Add Product</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="charts">
+      <article class="rev" aria-label="Total revenue">
+        <svg class="plot" viewBox="0 0 747 413" preserveAspectRatio="none" aria-hidden="true">
+          <polyline class="dash" points="66,280.5 121,304 153,260.5 210,260.5 238,225.5 309,304 425,304 470,219.5 519,219.5 586,294 641,219.5 674,245.5 725,245.5"/>
+          <polyline class="solid" points="66,263.5 88,263.5 149,231 221,287 272,263.5 346,263.5 379,279.5 460,279.5 496,251.5 570,251.5 628,296 665,279.5 725,279.5"/>
+        </svg>
+        <div class="rev-head">
+          <div>
+            <div class="label">Total revenue</div>
+            <div class="total">$12,548.32</div>
+          </div>
+          <div class="rev-tools">
+            <button class="glass range"><span>This week</span>
+              <svg viewBox="0 0 19 11" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1.2 1.2l8.3 8.3 8.3-8.3"/></svg></button>
+            <button class="glass open" aria-label="Open revenue">
+              <svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 16.5L16.5 1.5M5 1.5h11.5V13"/></svg></button>
+          </div>
+        </div>
+        <div class="ax ylab" style="top:40.92%">400</div>
+        <div class="ax ylab" style="top:53.14%">300</div>
+        <div class="ax ylab" style="top:64.40%">200</div>
+        <div class="ax ylab" style="top:75.54%">100</div>
+        <div class="ax ylab" style="top:86.92%">0</div>
+        <div class="ax xlab first" style="left:11.58%">Sep 28</div>
+        <div class="ax xlab" style="left:28.05%">Sep 29</div>
+        <div class="ax xlab" style="left:45.18%">Sep 30</div>
+        <div class="ax xlab" style="left:61.51%">Sep 31</div>
+        <div class="ax xlab" style="left:78.05%">Oct 01</div>
+        <div class="ax xlab last" style="left:94.44%">Oct 02</div>
+        <div class="tip">$6,832</div>
+        <div class="dot"></div>
+      </article>
+
+      <article class="status" aria-label="Orders by status">
+        <div class="card-head">
+          <h2>Orders by status</h2>
+          <div class="tools">
+            <button class="dbtn" aria-label="Pick dates"><svg class="i-cal" viewBox="0 0 21 23" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><rect x="1" y="3.2" width="19" height="18.8" rx="3.2"/><path d="M6 1v4.4M15 1v4.4M1 8.6h19"/><g fill="#fff" stroke="none"><circle cx="5.9" cy="12.6" r="1.1"/><circle cx="10.5" cy="12.6" r="1.1"/><circle cx="15.1" cy="12.6" r="1.1"/><circle cx="5.9" cy="17" r="1.1"/><circle cx="10.5" cy="17" r="1.1"/><circle cx="15.1" cy="17" r="1.1"/></g></svg></button>
+            <button class="dbtn" aria-label="Open orders"><svg class="i-arr" viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 16.5L16.5 1.5M5 1.5h11.5V13"/></svg></button>
+          </div>
+        </div>
+        <div class="bchart">
+          <div class="yax" aria-hidden="true">
+            <span style="--v:100">100</span><span style="--v:80">80</span><span style="--v:60">60</span>
+            <span style="--v:40">40</span><span style="--v:20">20</span><span style="--v:0">0</span>
+          </div>
+          <div class="bplot">
+            <div class="bar" style="--v:42"><b>42</b><i></i></div>
+            <div class="bar" style="--v:68"><b>68</b><i></i></div>
+            <div class="bar hi" style="--v:92"><b>92</b><i></i></div>
+            <div class="bar" style="--v:76"><b>76</b><i></i></div>
+            <div class="bar" style="--v:12"><b>12</b><i></i></div>
+          </div>
+          <div class="bcats"><span>Pending</span><span>Processing</span><span>Shipped</span><span>Delivered</span><span>Cancelled</span></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="kpis">
+      <article class="kpi">
+        <div class="kpi-top"><h3>Total orders</h3>
+          <div class="well"><svg viewBox="0 0 31 31" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.6 11.6V7a4.9 4.9 0 0 1 9.8 0v4.6"/><rect x="2.6" y="11.6" width="25.8" height="18.3" rx="4.6"/><circle cx="11.4" cy="17.4" r=".55" fill="#000"/><circle cx="19.6" cy="17.4" r=".55" fill="#000"/></svg></div></div>
+        <div class="val"><strong>248</strong><span>vs. last week</span></div>
+      </article>
+      <article class="kpi">
+        <div class="kpi-top"><h3>Average order value</h3>
+          <div class="well"><svg viewBox="0 0 31 31" fill="none" stroke="#000" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="15.5" cy="15.5" r="13.9"/><path d="M9.5 15.8l4.2 4.2 8-8.4"/></svg></div></div>
+        <div class="val"><strong>$50.61</strong><span>vs. last week</span></div>
+      </article>
+      <article class="kpi">
+        <div class="kpi-top"><h3>New customers</h3>
+          <div class="well"><svg viewBox="0 0 31 31" fill="none" stroke="#000" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="15.5" cy="8.2" r="6.9"/><path d="M2.6 29.9c.4-7.3 5.6-11.3 12.9-11.3s12.5 4 12.9 11.3"/></svg></div></div>
+        <div class="val"><strong>86</strong><span>vs. last week</span></div>
+      </article>
+      <article class="kpi">
+        <div class="kpi-top"><h3>Products in stock</h3>
+          <div class="well"><svg viewBox="0 0 31 31" fill="none" stroke="#000" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round"><path d="M15.5 1.3l11.4 6v14.8l-11.4 6.2-11.4-6.2V7.3z"/><path d="M4.1 7.3l11.4 6.2 11.4-6.2M15.5 13.5v14.8M9.8 4.3l11.3 6.1v4.3"/><path d="M7.4 15l2.2 1.2" stroke-width="1.8"/></svg></div></div>
+        <div class="val"><strong>142</strong><span>vs. last week</span></div>
+      </article>
+    </section>
+
+    <section class="orders">
+      <div class="orders-head">
+        <h2>Recent Orders</h2>
+        <button class="btn btn-filter"><span>Filter</span>
+          <svg viewBox="0 0 26 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"><path d="M1 5.2h7.4M15 5.2H25M1 19h9.4M17 19H25"/><circle cx="11.7" cy="5.2" r="3.3"/><circle cx="13.7" cy="19" r="3.3"/></svg></button>
+      </div>
+      <div class="table" role="table" aria-label="Recent orders">
+        <div class="tr thead" role="row">
+          <div role="columnheader">Order ID</div><div role="columnheader">Customer</div><div role="columnheader">Product</div>
+          <div role="columnheader">Amount</div><div role="columnheader">Status</div><div role="columnheader">Date</div>
+        </div>
+        <div class="tbody">
+          <div class="tr row" role="row">
+            <div class="c-id">#ORD-1042</div>
+            <div class="c-cust"><img alt="" src="assets/images/image-3.png"><div class="who"><div class="name">Omar Adas</div><div class="sub">omar.adas@gmail.com</div></div></div>
+            <div class="c-prod"><div class="name">Running Shoes</div><div class="sub">Qty: 1</div></div>
+            <div class="c-amt">299.56</div>
+            <div class="c-st"><span class="pill"><i></i>Delivered</span></div>
+            <div class="c-date">Oct 4, 2024</div>
+          </div>
+          <div class="tr row" role="row">
+            <div class="c-id">#ORD-1041</div>
+            <div class="c-cust"><span class="mono">LM</span><div class="who"><div class="name">Lina Morales</div><div class="sub">lina.morales@gmail.com</div></div></div>
+            <div class="c-prod"><div class="name">Wireless Earbuds</div><div class="sub">Qty: 2</div></div>
+            <div class="c-amt">158.00</div>
+            <div class="c-st"><span class="pill ship"><i></i>Shipped</span></div>
+            <div class="c-date">Oct 4, 2024</div>
+          </div>
+          <div class="tr row" role="row">
+            <div class="c-id">#ORD-1040</div>
+            <div class="c-cust"><span class="mono">JK</span><div class="who"><div class="name">James Keller</div><div class="sub">james.keller@gmail.com</div></div></div>
+            <div class="c-prod"><div class="name">Leather Backpack</div><div class="sub">Qty: 1</div></div>
+            <div class="c-amt">89.90</div>
+            <div class="c-st"><span class="pill proc"><i></i>Processing</span></div>
+            <div class="c-date">Oct 3, 2024</div>
+          </div>
+          <div class="tr row" role="row">
+            <div class="c-id">#ORD-1039</div>
+            <div class="c-cust"><span class="mono">AS</span><div class="who"><div class="name">Aisha Siddiqui</div><div class="sub">aisha.s@gmail.com</div></div></div>
+            <div class="c-prod"><div class="name">Smart Watch</div><div class="sub">Qty: 1</div></div>
+            <div class="c-amt">219.00</div>
+            <div class="c-st"><span class="pill pend"><i></i>Pending</span></div>
+            <div class="c-date">Oct 3, 2024</div>
+          </div>
+          <div class="tr row" role="row">
+            <div class="c-id">#ORD-1038</div>
+            <div class="c-cust"><span class="mono">DN</span><div class="who"><div class="name">Daniel Novak</div><div class="sub">d.novak@gmail.com</div></div></div>
+            <div class="c-prod"><div class="name">Cotton Hoodie</div><div class="sub">Qty: 3</div></div>
+            <div class="c-amt">117.45</div>
+            <div class="c-st"><span class="pill canc"><i></i>Cancelled</span></div>
+            <div class="c-date">Oct 2, 2024</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

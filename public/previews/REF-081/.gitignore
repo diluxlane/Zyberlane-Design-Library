@@ -1,0 +1,21 @@
+# Local tooling and editor state
+node_modules/
+.wrangler/
+.cache/
+.vscode/
+.idea/
+*.log
+
+# Local secrets
+.env
+.env.*
+!.env.example
+.dev.vars*
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local deployment staging
+dist/

@@ -1,0 +1,46 @@
+/* Initial states exist only until the one-time entrance finishes. */
+html.entry-pending .topbar,
+html.entry-pending .hero p,
+html.entry-pending .cta,
+html.entry-pending .perks,
+html.entry-pending .card,
+html.entry-pending .hey {
+  opacity: 0;
+}
+
+html.entry-pending .hero h1 > * {
+  opacity: 0;
+  clip-path: inset(100% 0 0 0);
+  translate: 0 .18em;
+}
+
+html.entry-pending .topbar { translate: 0 7px; }
+html.entry-pending .hero p { translate: 0 8px; }
+html.entry-pending .cta { translate: 0 9px; }
+html.entry-pending .card { translate: 0 12px; }
+html.entry-pending .hey {
+  clip-path: inset(100% 0 0 0);
+  translate: 0 10px;
+}
+
+/* Content outside the opening viewport is already at rest. */
+html.entry-pending .card.entry-skip,
+html.entry-pending .hey.entry-skip {
+  opacity: 1;
+  clip-path: none;
+  translate: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.entry-pending .topbar,
+  html.entry-pending .hero h1 > *,
+  html.entry-pending .hero p,
+  html.entry-pending .cta,
+  html.entry-pending .perks,
+  html.entry-pending .card,
+  html.entry-pending .hey {
+    opacity: 1;
+    clip-path: none;
+    translate: none;
+  }
+}

@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-112/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mentoxy — Smarter Mental Health, Powered by AI</title>
+<meta name="description" content="Get instant mental health insights, personalized advice, and virtual care, anytime, anywhere.">
+<script>
+// Set entrance states before the first paint, with a safety release if scripting fails later.
+if (window.matchMedia && !matchMedia('(prefers-reduced-motion: reduce)').matches && Element.prototype.animate) {
+  document.documentElement.classList.add('entrance-pending');
+  window.mentoxyEntranceFallback = setTimeout(function(){
+    document.documentElement.classList.remove('entrance-pending');
+  }, 4000);
+}
+</script>
+<style>
+/* ------------------------------------------------------------------
+   Fonts (embedded, latin subset) — works fully offline
+   Display: Brygada 1918 · Body/UI: Poppins · Nav: Urbanist
+------------------------------------------------------------------- */
+@font-face{font-family:"Brygada 1918";font-style:normal;font-weight:400;font-display:block;src:url(assets/brygada-1918.woff2) format("woff2")}
+@font-face{font-family:"Poppins";font-style:normal;font-weight:400;font-display:block;src:url(assets/poppins.woff2) format("woff2")}
+@font-face{font-family:"Urbanist";font-style:normal;font-weight:500;font-display:block;src:url(assets/urbanist.woff2) format("woff2")}
+
+/* ------------------------------------------------------------------
+   Scaling architecture
+   The composition is authored on a 1440 × 1032.2 design grid
+   (reference = 2048 × 1468 px, i.e. ×1.4222).
+   --u : one design pixel, resolved to real px at the stage.
+         Fit-to-viewport: the stage scales to whichever of width/height
+         is limiting, so the full composition is visible with no
+         letterbox bands; extra height is absorbed by flexible spacers.
+   --c : one card pixel (card authored at 412 wide). On desktop it
+         equals --u; in the compact layout it follows the card's own
+         width via container query units, so cards reflow freely while
+         their internals stay perfectly proportional.
+------------------------------------------------------------------- */
+@property --u{syntax:"<length>";inherits:true;initial-value:1px}
+@property --c{syntax:"<length>";inherits:true;initial-value:1px}
+
+:root{
+  --ink:#292929;
+  --ink-2:#232323;
+  --btn:#2b2b2b;
+  --white:#fff;
+  --page-bg:#f5f5f5;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--page-bg);
+  color:var(--ink);
+  font-family:"Poppins",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:geometricPrecision;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+img{display:block}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+.page{
+  container-type:inline-size;
+  position:relative;
+  min-height:100vh;
+  min-height:100svh;
+  background:var(--page-bg) url(assets/background.webp) center top / cover no-repeat;
+}
+
+/* =========================  DESKTOP STAGE  ========================= */
+.stage{
+  --u:max(min(100cqw / 1440, 100svh / 1032.2), 100cqw / 1440 * 0.72);
+  --c:var(--u);
+  position:relative;
+  width:calc(var(--u) * 1440);
+  max-width:100%;
+  margin:0 auto;
+  min-height:100vh;
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ---------- header ---------- */
+.nav{position:relative;height:calc(var(--u) * 80);flex:none}
+.brand{position:absolute;inset:0 auto auto 0;display:block;width:calc(var(--u) * 240);height:calc(var(--u) * 80);color:var(--ink)}
+.brand .logo{position:absolute;left:calc(var(--u) * 75.94);top:calc(var(--u) * 32.34);width:calc(var(--u) * 40.78);height:calc(var(--u) * 40.78);color:#2a2a2a}
+.brand .wordmark{position:absolute;left:calc(var(--u) * 123.7);top:calc(var(--u) * 37.4);font-family:"Brygada 1918",Georgia,serif;font-size:calc(var(--u) * 29.8);line-height:1;letter-spacing:-.01em;color:#202020;white-space:nowrap}
+.links{position:absolute;left:calc(var(--u) * 534.1);top:calc(var(--u) * 44.15);display:flex;gap:calc(var(--u) * 29.1);margin:0;padding:0;list-style:none}
+.links a{display:block;font-family:"Urbanist",system-ui,sans-serif;font-weight:500;font-size:calc(var(--u) * 17.3);line-height:1;color:#212121;white-space:nowrap;transition:opacity .2s}
+.links a:hover{opacity:.6}
+.links li:nth-child(3){margin-left:calc(var(--u) * .7)}
+.links li:nth-child(4){margin-left:calc(var(--u) * 2.1)}
+
+.btn{position:absolute;display:flex;align-items:center;border-radius:999px;background:var(--btn);color:var(--white);font-family:"Poppins",system-ui,sans-serif;font-weight:400;line-height:1;white-space:nowrap;transition:transform .25s ease,background .25s ease}
+.btn:hover{background:#1a1a1a}
+.btn:hover .arrow{transform:translate(calc(var(--u) * 2),calc(var(--u) * -2))}
+.btn .arrow{position:absolute;width:calc(var(--u) * 11.95);height:calc(var(--u) * 11.95);transition:transform .25s ease}
+.btn-contact{left:calc(var(--u) * 1173.5);top:calc(var(--u) * 29.5);width:calc(var(--u) * 187);height:calc(var(--u) * 47.8);padding-left:calc(var(--u) * 20.4);font-size:calc(var(--u) * 20)}
+.btn-contact .arrow{right:calc(var(--u) * 26);top:calc(var(--u) * 16.9)}
+
+.menu-toggle{display:none}
+.menu-panel{display:none}
+
+/* ---------- hero ---------- */
+.sp{flex:1 1 auto;min-height:0}
+.sp1{flex-basis:calc(var(--u) * 62.6)}
+.sp2{flex-basis:calc(var(--u) * 66.4)}
+.sp3{flex-basis:calc(var(--u) * 61.6)}
+.hero{position:relative;flex:none;text-align:center}
+.hero h1{margin:0;font-family:"Brygada 1918",Georgia,serif;font-weight:400;font-size:calc(var(--u) * 74);line-height:calc(var(--u) * 80);letter-spacing:-.058em;color:var(--ink);padding-left:.058em;position:relative;top:0}
+.hero h1 .l1,.hero h1 .l2{position:relative}
+.hero h1 .l1{left:calc(var(--u) * -4.9)}
+.hero h1 .l2{left:calc(var(--u) * 4.6);letter-spacing:-.0605em}
+.hero p{margin:calc(var(--u) * 26.1) 0 0;font-size:calc(var(--u) * 16);line-height:calc(var(--u) * 24);color:var(--ink-2)}
+.hero .cta-row{position:relative;height:calc(var(--u) * 56.2);margin-top:calc(var(--u) * 31.8)}
+.btn-cta{left:calc(var(--u) * 587.8);top:0;width:calc(var(--u) * 265.1);height:calc(var(--u) * 56.2);padding-left:calc(var(--u) * 23.8);font-size:calc(var(--u) * 20)}
+.btn-cta .arrow{right:calc(var(--u) * 30.2);top:calc(var(--u) * 21.1)}
+
+/* ---------- cards ---------- */
+.cards{flex:none;display:grid;grid-template-columns:calc(var(--u) * 412.2) calc(var(--u) * 24.4) calc(var(--u) * 411) calc(var(--u) * 23.1) calc(var(--u) * 411.6);padding-left:calc(var(--u) * 78.2);height:calc(var(--u) * 439.4)}
+.cards > .card:nth-child(1){grid-column:1}
+.cards > .card:nth-child(2){grid-column:3}
+.cards > .card:nth-child(3){grid-column:5}
+
+.card{position:relative;container-type:inline-size;height:100%;border-radius:calc(var(--c) * 24);overflow:hidden;isolation:isolate;background:#555}
+.card-body{position:absolute;inset:0;color:var(--white)}
+.card-bg{position:absolute;inset:0;background:var(--img) center / cover no-repeat}
+.card-glass{position:absolute;inset:0;-webkit-backdrop-filter:blur(var(--glass-blur));backdrop-filter:blur(var(--glass-blur));background:var(--glass-tint)}
+.card-window{position:absolute;left:calc(var(--c) * 40);top:calc(var(--c) * 40);right:calc(var(--c) * 40);bottom:calc(var(--c) * 40);border-radius:calc(var(--c) * 25);overflow:hidden;transform:translateZ(0)}
+.card-window .win-img{position:absolute;left:calc(var(--c) * -40);top:calc(var(--c) * -40);width:calc(100% + calc(var(--c) * 80));height:calc(100% + calc(var(--c) * 80));background:var(--img) center / cover no-repeat}
+.card-window .win-tint{position:absolute;inset:0;background:var(--win-tint,transparent)}
+.card-frame{position:absolute;left:calc(var(--c) * 40);top:calc(var(--c) * 40);right:calc(var(--c) * 40);bottom:calc(var(--c) * 40);border-radius:calc(var(--c) * 25);border:calc(var(--c) * 1.4) solid rgba(255,255,255,.9);pointer-events:none}
+
+.c-title{position:absolute;left:calc(var(--c) * 56.8);top:calc(var(--c) * 59.7);margin:0;font-weight:400;font-size:calc(var(--c) * 24);line-height:1;white-space:nowrap}
+.c-cap{position:absolute;left:calc(var(--c) * 57);top:calc(var(--c) * 335.3);width:calc(var(--c) * 298);margin:0;font-size:calc(var(--c) * 16);line-height:calc(var(--c) * 24)}
+.lbl{position:absolute;width:calc(var(--c) * 40);margin-left:calc(var(--c) * -20);text-align:center;font-size:calc(var(--c) * 12);line-height:1;white-space:nowrap}
+
+/* Sleep */
+.card--sleep .card-bg,.card--sleep .win-img{background-size:auto calc(100% + calc(var(--c) * 1.4));background-position:50% 0}
+.card--sleep{--glass-blur:calc(var(--c) * 4.2);--glass-tint:linear-gradient(90deg,rgba(255,255,255,.06),rgba(255,255,255,0) 45%,rgba(0,0,0,0) 55%,rgba(0,0,0,.13)),rgba(135,130,150,.28);--win-tint:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,0) calc(var(--c) * 38)),linear-gradient(200deg,rgba(0,0,0,.17),rgba(0,0,0,0) 50%),rgba(0,0,0,.25)}
+.bar{position:absolute;width:calc(var(--c) * 10);margin-left:calc(var(--c) * -5);bottom:calc(100% - calc(var(--c) * 275.9));border-radius:calc(var(--c) * 5);background:linear-gradient(180deg,#8eb3f7 0%,#fff 44%,rgba(255,255,255,0) 100%)}
+
+/* Biomarkers */
+.card--bio .card-bg,.card--bio .win-img{background-size:calc(100% + calc(var(--c) * 2.8)) auto;background-position:0 50%}
+.card--bio{--glass-blur:calc(var(--c) * 3);--glass-tint:rgba(202,211,212,.34);--win-tint:rgba(190,225,225,.12)}
+.stat{position:absolute;left:calc(var(--c) * 55.8);top:calc(var(--c) * 303.7);width:calc(var(--c) * 299.5);height:calc(var(--c) * 79.4);border-radius:calc(var(--c) * 5.6);-webkit-backdrop-filter:blur(calc(var(--c) * 4));backdrop-filter:blur(calc(var(--c) * 4));background:rgba(232,246,246,.28)}
+.stat-val{position:absolute;left:calc(var(--c) * 68.9);top:calc(var(--c) * 320.3);font-size:calc(var(--c) * 16);line-height:1;white-space:nowrap}
+.stat-k{position:absolute;top:calc(var(--c) * 357.1);font-size:calc(var(--c) * 12);line-height:1;white-space:nowrap}
+.stat-k--l{left:calc(var(--c) * 68.5)}
+.stat-k--r{left:calc(var(--c) * 193);width:calc(var(--c) * 150);text-align:right}
+.pill{position:absolute;left:calc(var(--c) * 229.5);top:calc(var(--c) * 316);width:calc(var(--c) * 111.7);height:calc(var(--c) * 23.9);display:flex;align-items:center;padding-left:calc(var(--c) * 8.5);border-radius:calc(var(--c) * 3.5);background:#e8e9e7;color:#2e2e2e;font-size:calc(var(--c) * 12);line-height:1;white-space:nowrap}
+
+/* HRV */
+.card--hrv{--glass-blur:calc(var(--c) * 3);--glass-tint:rgba(226,229,223,.24)}
+.card--hrv .win-img{filter:blur(calc(var(--c) * 1.2))}
+.card--hrv .zoom{transform-origin:25% 35%}
+.chart{position:absolute;left:0;top:0;width:calc(var(--c) * 412);height:calc(var(--c) * 439.4);overflow:visible}
+.card-data{position:absolute;inset:0}
+
+/* Entrance states only. Removing the class restores the untouched design. */
+.entrance-pending .brand,
+.entrance-pending .links,
+.entrance-pending .nav-actions,
+.entrance-pending .hero p,
+.entrance-pending .btn-cta,
+.entrance-pending .card:not(.entrance-static) .c-title,
+.entrance-pending .card:not(.entrance-static) .card-data,
+.entrance-pending .card:not(.entrance-static) .c-cap{opacity:0}
+.entrance-pending .hero h1,
+.entrance-pending .card:not(.entrance-static){clip-path:inset(0 0 100% 0)}
+
+/* ========================  COMPACT LAYOUT  ========================
+   Phones, small tablets and portrait screens: the composition
+   reflows instead of shrinking into an unreadable miniature.
+------------------------------------------------------------------- */
+@media (max-width: 899.98px), (max-aspect-ratio: 1/1){
+  .stage{
+    --u:1px;
+    width:100%;
+    padding:0 clamp(16px,5vw,40px) max(24px, env(safe-area-inset-bottom));
+  }
+  .nav{height:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:clamp(16px,4vw,28px) 0 0}
+  .brand{position:relative;inset:auto;width:auto;height:auto;display:flex;align-items:center;gap:6px}
+  .brand .logo{position:static;width:clamp(30px,8vw,40px);height:clamp(30px,8vw,40px)}
+  .brand .wordmark{position:static;font-size:clamp(22px,6vw,30px)}
+  .links{display:none}
+  .links li{margin:0!important}
+  .nav-actions{display:flex;align-items:center;gap:8px}
+  .btn{position:relative;left:auto;top:auto}
+  .btn-contact{width:auto;height:clamp(40px,10vw,48px);padding:0 clamp(16px,4vw,20px);gap:10px;font-size:clamp(14px,3.8vw,17px)}
+  .btn .arrow{position:static;width:.62em;height:.62em}
+  .menu-toggle{display:inline-grid;place-items:center;width:clamp(40px,10vw,48px);height:clamp(40px,10vw,48px);border:0;border-radius:999px;background:rgba(43,43,43,.08);color:var(--ink);cursor:pointer;padding:0}
+  .menu-toggle svg{width:20px;height:20px}
+  .menu-panel{position:absolute;z-index:20;left:0;right:0;top:calc(100% + 10px);display:grid;gap:2px;padding:10px;border-radius:20px;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2);box-shadow:0 18px 40px -18px rgba(0,0,0,.25),inset 0 0 0 1px rgba(255,255,255,.7);opacity:0;transform:translateY(-6px);pointer-events:none;visibility:hidden;transition:opacity .2s ease,transform .2s ease,visibility 0s .2s}
+  .nav.is-open .menu-panel{opacity:1;transform:none;pointer-events:auto;visibility:visible;transition:opacity .2s ease,transform .2s ease}
+  .menu-panel a{display:block;padding:14px 16px;border-radius:12px;font-family:"Urbanist",system-ui,sans-serif;font-weight:500;font-size:17px;color:#212121}
+  .menu-panel a:hover{background:rgba(0,0,0,.05)}
+
+  .sp1{flex:1 0 clamp(28px,7vh,72px)}
+  .sp2{flex:1 0 clamp(28px,5vh,56px)}
+  .sp3{flex:0 0 0}
+  .hero h1{font-size:clamp(28px,8.8vw,60px);line-height:1.12}
+  .hero h1 .l1{display:block}
+  .hero h1{top:0;padding-left:0;letter-spacing:-.04em}
+  .hero h1 .l1,.hero h1 .l2{left:0}
+  .hero h1 br{display:none}
+  .hero h1 .l2{display:block}
+  .hero p{margin-top:clamp(14px,3.5vw,24px);font-size:clamp(14px,3.9vw,16px);line-height:1.5;max-width:30em;margin-inline:auto}
+  .hero p br{display:none}
+  .hero .cta-row{height:auto;margin-top:clamp(20px,5vw,32px);display:flex;justify-content:center}
+  .btn-cta{width:auto;height:clamp(48px,12vw,56px);padding:0 clamp(22px,6vw,30px);gap:16px;font-size:clamp(16px,4.4vw,20px)}
+
+  .cards{height:auto;padding:0;grid-template-columns:1fr;gap:16px;justify-items:center}
+  .cards > .card:nth-child(n){grid-column:auto}
+  .card{width:100%;max-width:440px;height:auto;aspect-ratio:412/439.4}
+  .card-body{--c:calc(100cqw / 412)}
+}
+/* tablets / large phones in landscape-ish compact: horizontal, snap-scrolling card rail */
+@media (min-width: 560px) and (max-width: 899.98px), (min-width: 560px) and (max-aspect-ratio: 1/1){
+  .cards{
+    grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:min(46vw,400px);
+    justify-content:start;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;
+    scroll-padding-inline:clamp(16px,5vw,40px);margin-inline:calc(-1 * clamp(16px,5vw,40px));padding-inline:clamp(16px,5vw,40px);
+    padding-bottom:8px;scrollbar-width:none
+  }
+  .cards::-webkit-scrollbar{display:none}
+  .card{scroll-snap-align:start}
+}
+@media (min-width: 900px) and (max-aspect-ratio: 1/1){
+  .cards{grid-auto-flow:row;grid-template-columns:repeat(3,1fr);overflow:visible;margin-inline:0;padding-inline:0;gap:clamp(14px,2.2vw,24px)}
+  .card{max-width:none}
+}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important}
+  .entrance-pending .brand,.entrance-pending .links,.entrance-pending .nav-actions,
+  .entrance-pending .hero p,.entrance-pending .btn-cta,
+  .entrance-pending .card:not(.entrance-static) .c-title,
+  .entrance-pending .card:not(.entrance-static) .card-data,
+  .entrance-pending .card:not(.entrance-static) .c-cap{opacity:1!important}
+  .entrance-pending .hero h1,.entrance-pending .card:not(.entrance-static){clip-path:none!important}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="stage">
+    <header class="nav" id="nav">
+      <a class="brand" href="#" aria-label="Mentoxy home">
+        <svg class="logo" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 58 58" fill="none"><path transform="translate(3 0)" fill="currentColor" fill-rule="evenodd" d="M15.8,52.6 L35.6,52.8 C36.4,51.6 37.4,50.6 39.6,50.4 C42.4,50.0 44.4,47.6 44.8,44.6 L45.1,42.6 C45.3,41.4 46.0,41.0 47.2,40.8 C48.4,40.6 49.2,39.2 48.9,37.8 C48.5,36.0 47.7,34.0 47.0,32.2 C46.0,29.6 45.0,26.6 43.6,24.2 C41.0,19.6 35.8,15.8 28.6,15.8 C20.0,15.8 13.6,21.0 11.0,27.0 C9.0,31.6 9.6,37.0 11.6,41.0 C12.6,43.0 14.0,44.6 15.2,45.8 C15.6,46.4 15.8,47.2 15.8,48.2 ZM20.6,36.9 C18.6,36.6 17.6,35.0 17.8,32.8 C18.0,30.8 19.0,29.4 20.6,29.0 C21.2,26.9 22.6,25.7 24.2,25.6 C25.2,24.0 26.6,23.4 27.9,23.6 C29.2,23.8 30.2,24.7 31.3,24.6 C32.9,25.4 34.0,27.2 35.0,28.6 C36.6,29.2 37.6,30.8 37.3,32.6 C37.0,34.4 35.8,35.4 34.4,36.2 C32.0,36.6 29.0,36.5 27.3,36.6 L27.3,45.6 C27.3,46.8 26.5,47.4 25.5,47.4 C24.5,47.4 23.7,46.8 23.7,45.6 L23.7,36.9 Z"/><path d="M26.81,8.23L27.17,10.76M38.53,9.37L37.74,11.73M15.83,12.54L17.21,14.57M48.35,15.60L46.70,17.17M8.08,21.12L10.20,22.37" stroke="currentColor" stroke-width="3.85" stroke-linecap="round"/></svg>
+        <span class="wordmark">Mentoxy</span>
+      </a>
+      <nav aria-label="Primary">
+        <ul class="links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Benefit</a></li>
+          <li><a href="#">Community</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <a class="btn btn-contact" href="#">Contact Us <svg class="arrow" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M2.2 14.8 14.6 2.4M4.2 2.2h10.6v10.6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 7h14M3 13h14"/></svg>
+        </button>
+      </div>
+      <div class="menu-panel" id="menu">
+        <a href="#">Home</a><a href="#">About Us</a><a href="#">Benefit</a><a href="#">Community</a>
+      </div>
+    </header>
+
+    <div class="sp sp1"></div>
+
+    <section class="hero">
+      <h1><span class="l1">Smarter Mental Health,</span><br> <span class="l2">Powered by AI</span></h1>
+      <p>Get instant mental health insights, personalized advice, and<br> virtual care, anytime, anywhere.</p>
+      <div class="cta-row"><a class="btn btn-cta" href="#">Get Started Today <svg class="arrow" viewBox="0 0 17 17" fill="none" aria-hidden="true"><path d="M2.2 14.8 14.6 2.4M4.2 2.2h10.6v10.6" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+    </section>
+
+    <div class="sp sp2"></div>
+
+    <section class="cards" aria-label="Health insights">
+      <!-- Sleep -->
+      <article class="card card--sleep" style="--img:url(assets/sleep.webp)">
+        <div class="card-body">
+          <div class="card-bg" aria-hidden="true"></div>
+          <div class="card-glass"></div>
+          <div class="card-window">
+            <div class="win-img" role="img" aria-label="Woman resting with eyes closed"></div>
+            <div class="win-tint"></div>
+          </div>
+          <div class="card-frame"></div>
+          <h2 class="c-title">Sleep</h2>
+          <div class="card-data">
+          <div class="bar" style="left:calc(var(--c) * 75.45);top:calc(var(--c) * 187.00)"></div>
+          <span class="lbl" style="left:calc(var(--c) * 76.15);top:calc(var(--c) * 168.40)">64%</span>
+          <span class="lbl" style="left:calc(var(--c) * 75.45);top:calc(var(--c) * 288.60)">S</span>
+          <div class="bar" style="left:calc(var(--c) * 119.00);top:calc(var(--c) * 165.90)"></div>
+          <span class="lbl" style="left:calc(var(--c) * 119.70);top:calc(var(--c) * 147.30)">74%</span>
+          <span class="lbl" style="left:calc(var(--c) * 119.00);top:calc(var(--c) * 288.60)">M</span>
+          <div class="bar" style="left:calc(var(--c) * 162.00);top:calc(var(--c) * 193.30)"></div>
+          <span class="lbl" style="left:calc(var(--c) * 162.70);top:calc(var(--c) * 174.70)">57%</span>
+          <span class="lbl" style="left:calc(var(--c) * 162.00);top:calc(var(--c) * 288.60)">T</span>
+          <div class="bar" style="left:calc(var(--c) * 204.80);top:calc(var(--c) * 193.30)"></div>
+          <span class="lbl" style="left:calc(var(--c) * 205.50);top:calc(var(--c) * 174.70)">78%</span>
+          <span class="lbl" style="left:calc(var(--c) * 204.80);top:calc(var(--c) * 288.60)">W</span>
+          <div class="bar" style="left:calc(var(--c) * 248.40);top:calc(var(--c) * 179.20)"></div>
+          <span class="lbl" style="left:calc(var(--c) * 249.10);top:calc(var(--c) * 160.60)">68%</span>
+          <span class="lbl" style="left:calc(var(--c) * 248.40);top:calc(var(--c) * 288.60)">Th</span>
+          <div class="bar" style="left:calc(var(--c) * 292.70);top:calc(var(--c) * 124.00)"></div>
+          <span class="lbl" style="left:calc(var(--c) * 293.40);top:calc(var(--c) * 105.40)">56%</span>
+          <span class="lbl" style="left:calc(var(--c) * 292.70);top:calc(var(--c) * 288.60)">F</span>
+          <div class="bar" style="left:calc(var(--c) * 336.70);top:calc(var(--c) * 138.10)"></div>
+          <span class="lbl" style="left:calc(var(--c) * 337.40);top:calc(var(--c) * 119.50)">65%</span>
+          <span class="lbl" style="left:calc(var(--c) * 336.70);top:calc(var(--c) * 288.60)">S</span>
+          </div>
+          <p class="c-cap">Your HRV was within the typical range (35 - 40)</p>
+        </div>
+      </article>
+
+      <!-- Biomarkers -->
+      <article class="card card--bio" style="--img:url(assets/biomarkers.webp)">
+        <div class="card-body">
+          <div class="card-bg" aria-hidden="true"></div>
+          <div class="card-glass"></div>
+          <div class="card-window">
+            <div class="win-img" role="img" aria-label="Young man holding his head"></div>
+            <div class="win-tint"></div>
+          </div>
+          <div class="card-frame"></div>
+          <h2 class="c-title">Biomarkers</h2>
+          <div class="card-data">
+          <div class="stat"></div>
+          <div class="stat-val">10.8 g/dl</div>
+          <div class="pill">BOEDERLINE LOW</div>
+          <div class="stat-k stat-k--l">Ferritin</div>
+          <div class="stat-k stat-k--r">Blood Iron</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- HRV -->
+      <article class="card card--hrv" style="--img:url(assets/hrv.webp)">
+        <div class="card-body">
+          <div class="card-bg" aria-hidden="true"></div>
+          <div class="card-glass"></div>
+          <div class="card-window">
+            <div class="win-img" role="img" aria-label="Woman with short hair, eyes closed"></div>
+            <div class="win-img zoom" aria-hidden="true" style="transform:scale(1.0180);opacity:0.5000"></div>
+            <div class="win-img zoom" aria-hidden="true" style="transform:scale(1.0360);opacity:0.3333"></div>
+            <div class="win-img zoom" aria-hidden="true" style="transform:scale(1.0540);opacity:0.2500"></div>
+            <div class="win-img zoom" aria-hidden="true" style="transform:scale(1.0720);opacity:0.2000"></div>
+            <div class="win-img zoom" aria-hidden="true" style="transform:scale(1.0900);opacity:0.1667"></div>
+            <div class="win-img zoom" aria-hidden="true" style="transform:scale(1.1080);opacity:0.1429"></div>
+          </div>
+          <div class="card-frame"></div>
+          <h2 class="c-title" style="left:calc(var(--c) * 57);top:calc(var(--c) * 59)">HRV</h2>
+          <div class="card-data">
+          <svg class="chart" viewBox="0 0 412 439.4" aria-hidden="true">
+          <defs><linearGradient id="hrvFill" gradientUnits="userSpaceOnUse" x1="0" y1="126.2" x2="0" y2="217.6"><stop offset="0" stop-color="#fff" stop-opacity="0.6"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+          <polygon points="63.8,139.5 111.0,142.3 158.1,148.3 206.1,144.4 254.4,152.5 301.5,126.2 347.2,135.3 347.2,297.0 63.8,297.0" fill="url(#hrvFill)"/>
+          <line x1="63.8" y1="146.5" x2="63.8" y2="297.0" stroke="rgba(255,255,255,.85)" stroke-width="1" stroke-dasharray="4.2 3.9"/>
+          <line x1="111.0" y1="149.3" x2="111.0" y2="297.0" stroke="rgba(255,255,255,.85)" stroke-width="1" stroke-dasharray="4.2 3.9"/>
+          <line x1="158.1" y1="155.3" x2="158.1" y2="297.0" stroke="rgba(255,255,255,.85)" stroke-width="1" stroke-dasharray="4.2 3.9"/>
+          <line x1="206.1" y1="151.4" x2="206.1" y2="297.0" stroke="rgba(255,255,255,.85)" stroke-width="1" stroke-dasharray="4.2 3.9"/>
+          <line x1="254.4" y1="159.5" x2="254.4" y2="297.0" stroke="rgba(255,255,255,.85)" stroke-width="1" stroke-dasharray="4.2 3.9"/>
+          <line x1="301.5" y1="133.2" x2="301.5" y2="297.0" stroke="rgba(255,255,255,.85)" stroke-width="1" stroke-dasharray="4.2 3.9"/>
+          <line x1="347.2" y1="142.3" x2="347.2" y2="297.0" stroke="rgba(255,255,255,.85)" stroke-width="1" stroke-dasharray="4.2 3.9"/>
+          <polyline points="63.8,139.5 111.0,142.3 158.1,148.3 206.1,144.4 254.4,152.5 301.5,126.2 347.2,135.3" fill="none" stroke="#fff" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle cx="63.8" cy="139.5" r="2.65" fill="#fff"/>
+          <circle cx="111.0" cy="142.3" r="2.65" fill="#fff"/>
+          <circle cx="158.1" cy="148.3" r="2.65" fill="#fff"/>
+          <circle cx="206.1" cy="144.4" r="2.65" fill="#fff"/>
+          <circle cx="254.4" cy="152.5" r="2.65" fill="#fff"/>
+          <circle cx="301.5" cy="126.2" r="2.65" fill="#fff"/>
+          <circle cx="347.2" cy="135.3" r="2.65" fill="#fff"/>
+          </svg>
+          <span class="lbl" style="left:calc(var(--c) * 64.10);top:calc(var(--c) * 118.10)">37</span>
+          <span class="lbl" style="left:calc(var(--c) * 111.30);top:calc(var(--c) * 121.60)">36</span>
+          <span class="lbl" style="left:calc(var(--c) * 158.40);top:calc(var(--c) * 126.60)">29</span>
+          <span class="lbl" style="left:calc(var(--c) * 206.40);top:calc(var(--c) * 123.80)">35</span>
+          <span class="lbl" style="left:calc(var(--c) * 254.70);top:calc(var(--c) * 132.10)">27</span>
+          <span class="lbl" style="left:calc(var(--c) * 301.80);top:calc(var(--c) * 106.10)">45</span>
+          <span class="lbl" style="left:calc(var(--c) * 347.50);top:calc(var(--c) * 115.20)">40</span>
+          <span class="lbl" style="left:calc(var(--c) * 63.80);top:calc(var(--c) * 304.70)">S</span>
+          <span class="lbl" style="left:calc(var(--c) * 111.00);top:calc(var(--c) * 304.70)">M</span>
+          <span class="lbl" style="left:calc(var(--c) * 158.10);top:calc(var(--c) * 304.70)">T</span>
+          <span class="lbl" style="left:calc(var(--c) * 206.10);top:calc(var(--c) * 304.70)">W</span>
+          <span class="lbl" style="left:calc(var(--c) * 254.40);top:calc(var(--c) * 304.70)">Th</span>
+          <span class="lbl" style="left:calc(var(--c) * 301.50);top:calc(var(--c) * 304.70)">F</span>
+          <span class="lbl" style="left:calc(var(--c) * 347.20);top:calc(var(--c) * 304.70)">S</span>
+          </div>
+          <p class="c-cap">Your HRV was within the typical range (35 - 40)</p>
+        </div>
+      </article>
+    </section>
+
+    <div class="sp sp3"></div>
+  </div>
+</div>
+<script>
+(function(){
+  var nav=document.getElementById('nav'),btn=nav.querySelector('.menu-toggle');
+  function set(o){nav.classList.toggle('is-open',o);btn.setAttribute('aria-expanded',o);btn.setAttribute('aria-label',o?'Close menu':'Open menu');}
+  btn.addEventListener('click',function(e){e.stopPropagation();set(!nav.classList.contains('is-open'));});
+  document.addEventListener('click',function(e){if(!nav.contains(e.target))set(false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});
+  matchMedia('(min-width: 900px) and (min-aspect-ratio: 1/1)').addEventListener('change',function(){set(false);});
+})();
+</script>
+<script>
+(function(){
+  var root=document.documentElement;
+  if(!root.classList.contains('entrance-pending'))return;
+
+  var motion=matchMedia('(prefers-reduced-motion: reduce)');
+  var animations=[];
+  var finished=false;
+  var ease='cubic-bezier(.22,1,.36,1)';
+
+  function cleanup(){
+    if(finished)return;
+    finished=true;
+    clearTimeout(window.mentoxyEntranceFallback);
+    root.classList.remove('entrance-pending');
+    animations.forEach(function(animation){animation.cancel()});
+    document.querySelectorAll('.entrance-static').forEach(function(card){card.classList.remove('entrance-static')});
+    motion.removeEventListener('change',onMotionChange);
+  }
+  function onMotionChange(){if(motion.matches)cleanup()}
+  function cue(element,keyframes,at,duration){
+    if(!element || getComputedStyle(element).display==='none')return;
+    animations.push(element.animate(keyframes,{delay:at,duration:duration,easing:ease,fill:'both'}));
+  }
+  function lift(distance){
+    return [{opacity:0,transform:'translateY('+distance+'px)'},{opacity:1,transform:'none'}];
+  }
+  function visibleAtLoad(element){
+    var rect=element.getBoundingClientRect();
+    return rect.bottom>0 && rect.top<innerHeight && rect.right>0 && rect.left<innerWidth;
+  }
+
+  // A single overlapping schedule: quiet nav, headline, supporting copy, then card details.
+  cue(document.querySelector('.brand'),lift(7),0,520);
+  cue(document.querySelector('.links'),lift(6),120,500);
+  cue(document.querySelector('.nav-actions'),lift(6),210,520);
+  cue(document.querySelector('.hero h1'),
+    [{clipPath:'inset(0 0 100% 0)'},{clipPath:'inset(0 0 0% 0)'}],300,860);
+  cue(document.querySelector('.hero p'),lift(10),800,560);
+  cue(document.querySelector('.btn-cta'),lift(8),1020,520);
+
+  document.querySelectorAll('.card').forEach(function(card,index){
+    if(!visibleAtLoad(card)){
+      card.classList.add('entrance-static');
+      return;
+    }
+    var offset=index*120;
+    cue(card,[{clipPath:'inset(0 0 100% 0)'},{clipPath:'inset(0 0 0% 0)'}],1080+offset,850);
+    cue(card.querySelector('.c-title'),lift(7),1430+offset,490);
+    cue(card.querySelector('.card-data'),lift(7),1590+offset,650);
+    cue(card.querySelector('.c-cap'),lift(6),1890+offset,500);
+  });
+
+  motion.addEventListener('change',onMotionChange);
+  Promise.all(animations.map(function(animation){return animation.finished})).then(cleanup,cleanup);
+})();
+</script>
+</body>
+</html>

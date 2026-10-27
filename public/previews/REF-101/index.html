@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-101/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#090909">
+<title>Kindle3D — Log in</title>
+<link rel="stylesheet" href="asset/style.css">
+</head>
+<body>
+<main class="page">
+
+  <!-- ============================ AUTH ============================ -->
+  <section class="panel auth" aria-label="Log in">
+    <div class="auth-head">
+      <a class="brand" href="#" aria-label="Kindle3D home">
+        <svg viewBox="0 0 18 20" aria-hidden="true">
+          <defs>
+            <linearGradient id="flame" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#b3a5fa"/>
+              <stop offset="1" stop-color="#a08ff3"/>
+            </linearGradient>
+          </defs>
+          <path fill="url(#flame)" fill-rule="evenodd" d="M9.55.35C11.2 2.2 17.6 6.4 17.6 11.6c0 4.5-3.6 8.05-8.1 8.05S1.4 16.1 1.4 11.6c0-2.6.85-4.85 1.75-6.4.45 1.35 1.3 2.4 2.35 3.0C5.5 5.3 7.4 2.5 9.55.35ZM9.8 8.75c1.15 1.25 1.8 2.65 1.8 4.15 0 1.6-1.3 2.85-2.95 2.85s-2.9-1.25-2.9-2.85c0-1.85 1.75-2.95 4.05-4.15Z"/>
+        </svg>
+        <span class="brand-word">Kindle<span>3D</span></span>
+      </a>
+
+      <label class="lang">
+        <span class="sr-only">Language</span>
+        <select aria-label="Language">
+          <option selected>English</option>
+          <option>Español</option>
+          <option>Français</option>
+          <option>Deutsch</option>
+          <option>हिन्दी</option>
+          <option>日本語</option>
+        </select>
+        <svg viewBox="0 0 7 5" aria-hidden="true"><path d="M.75 1 3.5 3.75 6.25 1" fill="none" stroke="#d6d6d6" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </label>
+    </div>
+
+    <div class="auth-body">
+      <form class="form" id="login" novalidate autocomplete="on">
+        <h1 class="t title">Welcome!</h1>
+        <p class="t subtitle">Log in to Kindle3D to continue to Kindle3D.</p>
+
+        <button type="button" class="btn btn-google">
+          <svg viewBox="0 0 48 48" aria-hidden="true">
+            <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/>
+            <path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/>
+            <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/>
+            <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/>
+          </svg>
+          <span>Log in with Google</span>
+        </button>
+
+        <button type="button" class="btn btn-apple">
+          <svg viewBox="0 0 814 1000" aria-hidden="true"><path fill="#fff" d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57-155.5-127C46.7 790.7 0 663 0 541.8c0-194.4 126.4-297.5 250.8-297.5 66.1 0 121.2 43.4 162.7 43.4 39.5 0 101.1-46 176.3-46 28.5 0 130.9 2.6 198.3 99.2zm-234-181.5c31.1-36.9 53.1-88.1 53.1-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 135.5-71.3z"/></svg>
+          <span>Log in with Apple</span>
+        </button>
+
+        <div class="or" role="separator">OR</div>
+
+        <label class="t label label-email" for="email">Email</label>
+        <div class="field field-email">
+          <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="Your email address" required>
+        </div>
+
+        <label class="t label label-pass" for="password">Password</label>
+        <a class="t forgot" href="#">Forgot password?</a>
+        <div class="field field-pass">
+          <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Your password" required>
+          <button type="button" class="eye" aria-label="Show password" aria-pressed="false">
+            <svg viewBox="0 0 12 9" aria-hidden="true" fill="none" stroke="currentColor" stroke-width=".95" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M.75 4.5C1.9 2.2 3.75 1 6 1s4.1 1.2 5.25 3.5C10.1 6.8 8.25 8 6 8S1.9 6.8.75 4.5Z"/>
+              <circle cx="6" cy="4.5" r="1.55"/>
+              <path class="slash" d="M1.6.6 10.4 8.4"/>
+            </svg>
+          </button>
+        </div>
+
+        <button type="submit" class="btn btn-login" aria-disabled="true">Log in</button>
+
+        <p class="t signup">Don’t have an account?<a href="#">Sign up</a></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- =========================== SHOWCASE ========================== -->
+  <section class="panel showcase" aria-label="Kindle3D at a glance">
+    <div class="stage">
+      <svg class="scene" viewBox="0 0 421 1200" preserveAspectRatio="xMidYMin meet" aria-hidden="true">
+        <defs>
+          <linearGradient id="ghost" x1="0" y1="263" x2="0" y2="400" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#a7a8d6" stop-opacity=".022"/>
+            <stop offset=".5" stop-color="#a7a8d6" stop-opacity=".05"/>
+            <stop offset="1" stop-color="#a7a8d6" stop-opacity=".075"/>
+          </linearGradient>
+          <linearGradient id="ghostShade" x1="106" y1="0" x2="330" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#000" stop-opacity=".35"/>
+            <stop offset=".45" stop-color="#000" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="faceL" x1="149" y1="0" x2="205" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#101010"/>
+            <stop offset="1" stop-color="#0e0e0f"/>
+          </linearGradient>
+          <linearGradient id="faceR" x1="205" y1="0" x2="284" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#18181b"/>
+            <stop offset=".85" stop-color="#19191d"/>
+            <stop offset="1" stop-color="#151518"/>
+          </linearGradient>
+          <linearGradient id="top" x1="0" y1="344" x2="0" y2="395" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#2e2f38"/>
+            <stop offset=".6" stop-color="#2a2b33"/>
+            <stop offset="1" stop-color="#24242a"/>
+          </linearGradient>
+          <linearGradient id="ringFront" x1="0" y1="438" x2="0" y2="463" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#6c63a6" stop-opacity=".3"/>
+            <stop offset="1" stop-color="#a497ee"/>
+          </linearGradient>
+          <linearGradient id="ringBack" x1="0" y1="414" x2="0" y2="440" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#5a5390" stop-opacity=".06"/>
+            <stop offset="1" stop-color="#6c63a6" stop-opacity=".3"/>
+          </linearGradient>
+          <linearGradient id="guideFade" x1="0" y1="360" x2="0" y2="1200" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#fff" stop-opacity=".085"/>
+            <stop offset=".25" stop-color="#fff" stop-opacity=".065"/>
+            <stop offset="1" stop-color="#fff" stop-opacity=".035"/>
+          </linearGradient>
+          <clipPath id="column"><path d="M149 1200 L149 377 Q149 369 157 366 L214 347 Q224 343.5 234 347 L277 364 Q284 367 284 375 L284 1200 Z"/></clipPath>
+          <linearGradient id="bevel" x1="0" y1="372" x2="0" y2="440" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#9a9ab8" stop-opacity=".16"/>
+            <stop offset=".45" stop-color="#9a9ab8" stop-opacity=".05"/>
+            <stop offset="1" stop-color="#9a9ab8" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="1.1"/></filter>
+        </defs>
+
+        <!-- ghost "3D" wordmark — Inter SemiBold outlines (flat-top 3, cv09), fitted to the reference ink box -->
+        <path d="M151.25 394.74C177.65 394.74 197 378.87 197 355.31C197 334.11 181.14 317.18 156.4 318.23L192.02 279.93V263H112.23V282.54H164.62V283.42L135.56 315.7V331.93H147.93C165.95 331.93 174.17 342.31 174.17 354.26C174.17 367.87 164.54 375.2 151.42 375.2C139.05 375.2 129.41 368.83 128.5 357.75H106C107.08 380.44 125.93 394.74 151.25 394.74ZM260.85 393C301.24 393 325 368.48 325 327.83C325 287.43 301.24 263 261.74 263H216V393ZM239.76 372.85V283.15H260.31C287.45 283.15 301.6 298.07 301.6 327.83C301.6 357.84 287.45 372.85 259.69 372.85Z" fill="url(#ghost)"/>
+        <path d="M151.25 394.74C177.65 394.74 197 378.87 197 355.31C197 334.11 181.14 317.18 156.4 318.23L192.02 279.93V263H112.23V282.54H164.62V283.42L135.56 315.7V331.93H147.93C165.95 331.93 174.17 342.31 174.17 354.26C174.17 367.87 164.54 375.2 151.42 375.2C139.05 375.2 129.41 368.83 128.5 357.75H106C107.08 380.44 125.93 394.74 151.25 394.74ZM260.85 393C301.24 393 325 368.48 325 327.83C325 287.43 301.24 263 261.74 263H216V393ZM239.76 372.85V283.15H260.31C287.45 283.15 301.6 298.07 301.6 327.83C301.6 357.84 287.45 372.85 259.69 372.85Z" fill="url(#ghostShade)"/>
+
+        <!-- back half of orbit (behind the column) -->
+        <path d="M51 438A165.5 25 0 0 1 382 438" fill="none" stroke="url(#ringBack)" stroke-width="1"/>
+
+        <!-- back guide dot -->
+        <circle cx="226" cy="339" r="3.2" fill="#666669"/>
+
+        <!-- column: one silhouette, two shaded faces, a pillowed top -->
+        <g clip-path="url(#column)">
+          <rect x="140" y="330" width="160" height="870" fill="url(#faceR)"/>
+          <path d="M140 1200 L140 366 L205.5 394.5 L205.5 1200Z" fill="url(#faceL)"/>
+          <rect x="140" y="370" width="160" height="70" fill="url(#bevel)"/>
+          <path d="M157 366 L214 347 Q224 343.5 234 347 L277 364 Q284.5 367.5 278 371.5 L215 392.5 Q205.5 396 196 392.5 L157 375.5 Q148.5 371 157 366Z" fill="url(#top)" filter="url(#soft)"/>
+        </g>
+
+        <!-- wireframe guides -->
+        <g stroke="url(#guideFade)" stroke-width="1" fill="none">
+          <line x1="138.5" y1="359" x2="138.5" y2="1200"/>
+          <line x1="294.5" y1="366" x2="294.5" y2="1200"/>
+        </g>
+        <line x1="205.5" y1="387" x2="205.5" y2="1200" stroke="#fff" stroke-opacity=".08" stroke-width="1"/>
+        <g stroke="#fff" stroke-opacity=".2" stroke-width=".9" stroke-dasharray="3.2 2.6" fill="none">
+          <line x1="138" y1="359" x2="226" y2="339"/>
+          <line x1="226" y1="339" x2="294" y2="366"/>
+          <line x1="138" y1="359" x2="205" y2="387"/>
+          <line x1="205" y1="387" x2="294" y2="366"/>
+        </g>
+        <g fill="#666669">
+          <circle cx="138" cy="359" r="3.2"/>
+          <circle cx="294" cy="366" r="3.2"/>
+          <circle cx="205" cy="387" r="3.2"/>
+        </g>
+
+        <!-- front half of orbit (in front of the column) -->
+        <path d="M51 438A165.5 25 0 0 0 382 438" fill="none" stroke="url(#ringFront)" stroke-width="1.3"/>
+        <path class="ring-arrow" d="M213.6 455.2c0-1.3 1.4-2.1 2.5-1.4l14.6 8.3c1.1.6 1.1 2.2 0 2.9l-14.6 8.3c-1.1.6-2.5-.2-2.5-1.4Z" fill="#a596f2"/>
+      </svg>
+
+      <h2 class="headline">
+        <span class="l1">400K+ users. 50M+ AI</span>
+        <span class="l2">generated graphics.</span>
+      </h2>
+
+      <a class="join" href="#" aria-label="Join now">
+        <svg class="cursor" viewBox="0 0 17.5 13.5" aria-hidden="true">
+          <path d="M1.4.4h14.4c1 0 1.5 1.1.9 1.8L8.4 12.6c-.5.6-1.4.5-1.7-.2L.5 1.9C.1 1.2.6.4 1.4.4Z" fill="#a596f2"/>
+        </svg>
+        <span class="pill">Join Now</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<script src="asset/script.js"></script>
+</body>
+</html>

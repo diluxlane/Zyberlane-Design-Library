@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-133/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0e0e10">
+<title>RIFT — Autonomous Terrain Analytics</title>
+<meta name="description" content="AI-powered analysis combines drone imagery, elevation models and geological data into one workflow.">
+<style>
+/* ================================================================
+   FONTS (embedded, variable woff2)
+   Display  : Big Shoulders Display (condensed grotesque, wght 100–900)
+   Body     : Geist (wght 100–900)
+   Mono     : Geist Mono (wght 100–900)
+   ================================================================ */
+@font-face{font-family:"Big Shoulders Display";src:url(assets/075292b13a638821.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:block}
+@font-face{font-family:"Geist";src:url(assets/19f9c92546aa300c.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:block}
+@font-face{font-family:"Geist Mono";src:url(assets/684ad5b531f81d43.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:block}
+
+/* ================================================================
+   TOKENS — sampled from the reference
+   ================================================================ */
+:root{
+  --bg:#0e0e10;          /* page background   rgb(14,14,16) */
+  --ink:#ffffff;         /* text              */
+  --rift:#f8f5f0;        /* hero wordmark     rgb(248,245,240) */
+  --orange:#ff6b1c;      /* brand orange      rgb(255,107,28) */
+  --card:#1f1f1f;        /* stat card         rgb(31,31,31) */
+  --stage:#06100f;       /* rock stage tint   rgb(6,16,15) */
+  --sep:#8e8e92;         /* nav divider       */
+  --glow:rgba(255,107,28,.62);
+  --glow-soft:rgba(255,107,28,.22);
+  --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --f-sans:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--bg);-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision}
+a{color:inherit;text-decoration:none}
+img,svg{display:block}
+h1,h2,p{margin:0;font-weight:inherit}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+
+/* one-screen frame: the page is exactly the visible viewport — never scrolls */
+html,body{height:100%;overflow:hidden;overscroll-behavior:none}
+.site{container-type:size;position:relative;width:100%;height:100vh;height:100dvh;overflow:hidden}
+
+
+/* ---------- shared component styling (both layouts) ---------- */
+.brand{display:flex;align-items:center;color:var(--ink)}
+.brand-mark{flex:none}
+.brand-word{font:800 1em/1 var(--f-display);letter-spacing:.008em}
+.nav-links a,.cta,.eyebrow,.terrain-tag,.stat-label{font-family:var(--f-mono);font-weight:650;text-transform:uppercase}
+.nav-links a{color:var(--ink);transition:color .2s}
+.nav-links a:hover,.nav-links a:focus-visible{color:var(--orange)}
+.cta{display:flex;align-items:center;justify-content:center;background:#fff;color:#0b0b0b;white-space:nowrap;transition:background .2s,color .2s}
+.cta:hover,.cta:focus-visible{background:var(--orange);color:#0b0b0b}
+a:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+
+.rift{color:var(--rift);font-family:var(--f-display);font-weight:900;line-height:1;white-space:nowrap}
+
+.terrain-img{background:#2a170c url(assets/5d78fa423e63bb4b.webp) no-repeat}
+.terrain-grade{background:linear-gradient(90deg,rgba(14,14,16,.42) 0,rgba(14,14,16,.18) 5%,rgba(14,14,16,0) 12%),rgba(42,30,27,.40)}
+.diag line{stroke:var(--orange);vector-effect:non-scaling-stroke}
+.diag{overflow:visible;filter:drop-shadow(0 0 2px rgba(255,107,28,.7))}
+
+.tag-icon{background:var(--orange);border-radius:50%;display:grid;place-items:center;flex:none}
+.tag-icon svg{width:41%;height:auto;transform:translateY(-12%)}
+
+.stage-panel{background:var(--stage)}
+.beam{mix-blend-mode:screen;pointer-events:none}
+.rock{filter:saturate(.9) brightness(1.04);-webkit-mask-image:linear-gradient(180deg,transparent 0,transparent 33%,#000 47%);mask-image:linear-gradient(180deg,transparent 0,transparent 33%,#000 47%);user-select:none;-webkit-user-drag:none}
+.lede{font-family:var(--f-sans);font-weight:400;text-align:center;color:var(--ink)}
+
+.stat{background:var(--card);border-radius:4px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:inset 0 0 0 1px rgba(255,255,255,.025),2px 2px 5px rgba(0,0,0,.35)}
+.stat-value{font-family:var(--f-display);font-weight:800;line-height:1;white-space:nowrap}
+.stat-value sup{font-size:1em;vertical-align:baseline;line-height:0}
+.stat-foot{display:flex;align-items:center;justify-content:space-between}
+.stat-label{line-height:1;white-space:nowrap}
+.ic-square{background:var(--orange);flex:none}
+.ic-ring{border-radius:50%;flex:none;background:radial-gradient(circle at 50% 50%,var(--card) 0 13.2%,var(--orange) calc(13.2% + .6px))}
+
+.eyebrow{color:var(--orange)}
+.headline{font-family:var(--f-display);font-weight:800;color:var(--ink);text-transform:uppercase}
+
+/* grid lines + node */
+.ln{position:absolute;background:var(--orange);box-shadow:0 0 calc(var(--lw,2px)*2.6) rgba(255,107,28,.75),0 0 calc(var(--lw,2px)*5) rgba(255,107,28,.42),0 0 calc(var(--lw,2px)*10) rgba(255,107,28,.22)}
+.node{position:absolute}
+.node-ring{position:absolute;border-radius:50%;border-style:solid;border-color:var(--orange);background:rgba(255,107,28,.18);box-shadow:0 0 var(--ng,14px) rgba(255,107,28,.4)}
+.node-core{position:absolute;background:var(--orange);box-shadow:0 0 var(--ng2,6px) rgba(255,107,28,.45)}
+
+
+/* =================================================================
+   LAYOUT A — QUADRANT CANVAS (any viewport at least as wide as tall)
+   Reference frame 2048 × 1592. The orange cross is pinned to the same
+   proportional position (x 1026/2048, y 764.5/1592), so the four
+   quadrants stretch to exactly fill the screen. Content inside each
+   quadrant is measured in reference px × --u, where --u is the smaller
+   of the two axis scales, so nothing can overflow either axis.
+   At a 2048×1592 viewport --u = 1 and every value is the reference value.
+   ================================================================= */
+@media (min-aspect-ratio:1/1){
+  .stage{--sx:calc(100cqw / 2048);--sy:calc(100cqh / 1592);--u:min(var(--sx),var(--sy));--k:max(var(--sx),var(--sy));--Lx:calc(var(--sx) * 1026);--Ly:calc(var(--sy) * 764.5);--lw:max(calc(var(--u) * 1.8),1px);--mono:max(calc(var(--u) * 22.5),8.5px);position:relative;width:100%;height:100%;overflow:hidden;isolation:isolate}
+  .m-only{display:none!important}
+
+  /* header — anchored to the top-left / top-right corners */
+  .nav{position:absolute;inset:0 0 auto 0;height:0;z-index:20}
+  .brand{position:absolute;left:calc(var(--u)*34);top:calc(var(--u)*34);gap:0;font-size:max(calc(var(--u)*35.5),13px)}
+  .brand-mark{width:.9577em;height:.9859em}
+  .brand-word{position:absolute;left:1.2282em;top:.0268em}
+  .nav-sep{position:absolute;left:calc(var(--u)*220.4);top:calc(var(--u)*43.5);width:max(calc(var(--u)*2.4),1px);height:calc(var(--u)*23);background:var(--sep)}
+  .nav-links{position:absolute;left:calc(var(--u)*313.2);top:calc(var(--u)*42.7);display:flex;column-gap:max(calc(var(--u)*92.2),1.6em);font-size:var(--mono)}
+  .nav-links a{font-size:var(--mono);letter-spacing:calc(var(--u)*.13);line-height:1}
+  .cta{position:absolute;right:calc(var(--u)*35);top:calc(var(--u)*26);height:max(calc(var(--u)*68),2.1em);padding:0 calc(var(--u)*33) 0 calc(var(--u)*34.6);font-size:var(--mono);letter-spacing:calc(var(--u)*.13);line-height:1}
+
+  /* Q1 — wordmark, centred in its quadrant, standing on the horizontal rule */
+  .q-title{position:absolute;left:0;top:0;width:var(--Lx);height:var(--Ly);overflow:hidden;z-index:2}
+  .rift{position:absolute;left:calc(var(--Lx) / 2 - var(--u) * 513);top:calc(var(--Ly) - var(--u) * 764.5);width:calc(var(--u)*1026);height:calc(var(--u)*764.5);font-size:calc(var(--u)*567)}
+  .rift .l{position:absolute;top:calc(var(--u)*263.2);transform-origin:0 0}
+  .rift .l-r{left:calc(var(--u)*109.1);transform:scaleX(.997)}
+  .rift .l-i{left:calc(var(--u)*355.6)}
+  .rift .l-f{left:calc(var(--u)*453.6)}
+  .rift .l-t{left:calc(var(--u)*681.9)}
+
+  /* Q2 — terrain fills the quadrant (cover), diagonal = node → top-right corner */
+  .q-terrain{position:absolute;left:var(--Lx);top:0;right:0;height:var(--Ly);overflow:hidden;z-index:1}
+  .terrain-img,.terrain-grade{position:absolute;inset:0}
+  /* fitted from feature-matching: edge-padded 1508×1086 drawn at 1035×798.5 per reference px */
+  .terrain-img{background-size:calc(var(--k)*1035) calc(var(--k)*798.5);background-position:69.2% calc(var(--k)*.9)}
+  .diag{position:absolute;inset:0;width:100%;height:100%}
+  .diag line{stroke-width:max(calc(var(--u)*2),1px)}
+  .terrain-tag{position:absolute;right:calc(var(--u)*59.7);bottom:calc(var(--u)*53.2);display:flex;align-items:flex-start;font-size:var(--mono);letter-spacing:calc(var(--u)*.13);line-height:calc(var(--mono) * 1.1853);color:#fff}
+  .tag-icon{width:calc(var(--u)*33);height:calc(var(--u)*33);margin-right:calc(var(--u)*24.4)}
+  .terrain-tag span:last-child{margin-top:calc(var(--u)*-.34)}
+
+  /* Q3 — lede + rock, centred in the quadrant */
+  .q-intro{position:absolute;left:0;top:var(--Ly);width:var(--Lx);bottom:0;overflow:hidden;z-index:1}
+  .stage-panel{position:absolute;left:calc(50% - var(--u)*421);top:calc(var(--u)*45.5);width:calc(var(--u)*836);bottom:calc(var(--u)*-40);filter:blur(calc(var(--u)*7))}
+  .beam{position:absolute;left:calc(50% - var(--u)*453);top:calc(var(--u)*0.5);width:calc(var(--u)*900);height:calc(var(--u)*685)}
+  .rock{position:absolute;left:calc(50% - var(--u)*396);top:calc(var(--u)*103.5);width:calc(var(--u)*751.4);height:auto}
+  .lede{position:absolute;left:calc(50% - var(--u)*500);width:calc(var(--u)*1006);top:calc(var(--u)*110.5);font-size:calc(var(--u)*38.7);line-height:calc(var(--u)*40);letter-spacing:calc(var(--u)*-.62)}
+
+  /* Q4 — stats hang from the cross; the headline is kept inside the screen */
+  .q-stats{position:absolute;left:var(--Lx);top:var(--Ly);right:0;bottom:0;z-index:1}
+  .stats{position:absolute;left:calc(var(--u)*109);top:calc(var(--u)*109);display:flex;gap:calc(var(--u)*28.5)}
+  .stat{height:calc(var(--u)*347);padding:calc(var(--u)*107.9) calc(var(--u)*33.5) calc(var(--u)*34.5)}
+  .stat-1{width:calc(var(--u)*382)}
+  .stat-2{width:calc(var(--u)*388)}
+  .stat-value{font-size:calc(var(--u)*68);letter-spacing:calc(var(--u)*2.5)}
+  .stat-label{font-size:max(calc(var(--u)*22.5),7.5px);letter-spacing:calc(var(--u)*.13)}
+  .stat-1 .stat-label{transform:translateY(calc(var(--u)*0.4))}
+  .stat-2 .stat-label{transform:translateY(calc(var(--u)*-0.5))}
+  .ic-square{width:calc(var(--u)*31);height:calc(var(--u)*31)}
+  .ic-ring{width:calc(var(--u)*34);height:calc(var(--u)*34);margin-right:calc(var(--u)*-0.5)}
+  .eyebrow{position:absolute;left:calc(var(--u)*109.3);top:min(calc(var(--u)*648.9),calc(100% - var(--u)*231.2));font-size:var(--mono);letter-spacing:calc(var(--u)*.13);line-height:1}
+  .headline{position:absolute;left:calc(var(--u)*107.8);top:min(calc(var(--u)*709.8),calc(100% - var(--u)*170.3));font-size:calc(var(--u)*69.5);line-height:calc(var(--u)*69);letter-spacing:calc(var(--u)*1.8);white-space:nowrap}
+
+  /* rules + node (drawn above imagery) */
+  .grid{position:absolute;inset:0;z-index:10;pointer-events:none}
+  .ln-v{left:calc(var(--Lx) - var(--lw) / 2);top:0;bottom:0;width:var(--lw)}
+  .ln-h{left:0;right:0;top:calc(var(--Ly) - var(--lw) / 2);height:var(--lw)}
+  .node{left:0;top:0}
+  .node-ring{--ng:calc(var(--u)*20);left:calc(var(--Lx) - var(--u)*40.8);top:calc(var(--Ly) - var(--u)*39.1);width:calc(var(--u)*84);height:calc(var(--u)*84);border-width:max(calc(var(--u)*3),1.2px)}
+  .node-core{--ng2:calc(var(--u)*6);left:calc(var(--Lx) - var(--u)*17.5);top:calc(var(--Ly) - var(--u)*15);width:calc(var(--u)*36);height:calc(var(--u)*35)}
+}
+
+/* =================================================================
+   LAYOUT B — PORTRAIT GRID (phones, portrait tablets, tall windows)
+   Same system re-cut for a tall frame and fitted to exactly one screen:
+     header / wordmark / rule / terrain (flexes) / rule+node /
+     [lede+rock | stats] split by the vertical rule / headline.
+   --v = min(width/390, height/844): sizes scale with whichever axis is
+   tighter, and the terrain band absorbs the remaining height.
+   ================================================================= */
+@media not all and (min-aspect-ratio:1/1){
+  .stage{--v:min(calc(100cqw / 390),calc(100cqh / 844));--g:calc(var(--v)*20);--lw:2px;position:relative;width:100%;height:100%;overflow:hidden;isolation:isolate;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto auto 2px minmax(0,1fr) 2px calc(var(--v)*212) auto;grid-template-areas:"nav nav" "title title" "r1 r1" "terrain terrain" "r2 r2" "intro stats" "copy copy"}
+  .d-only,.grid{display:none!important}
+  br.d-br{display:none}
+
+  .nav{grid-area:nav;position:relative;z-index:20;display:grid;grid-template-columns:1fr auto;align-items:center;row-gap:calc(var(--v)*12);padding:calc(var(--v)*16) var(--g) 0}
+  .brand{gap:calc(var(--v)*8);font-size:calc(var(--v)*25)}
+  .brand-mark{width:.96em;height:.96em}
+  .nav-sep{display:none}
+  .nav-links{grid-column:1 / -1;grid-row:2;display:flex;gap:calc(var(--v)*26);font-size:max(calc(var(--v)*11.5),9px);letter-spacing:.01em}
+  .cta{font-size:max(calc(var(--v)*10.5),9px);letter-spacing:.01em;padding:.95em 1.2em}
+
+  .q-title{grid-area:title;display:flex;justify-content:center;padding-top:calc(var(--v)*12);overflow:hidden}
+  .rift{font-size:min(calc((100cqw - var(--g) * 2) / 1.538),calc(100cqh * .25));height:.8em;overflow:hidden;display:flex;gap:.018em}
+  .rift .l{display:block;position:relative;top:.0145em}
+  .rift .l-r{margin-right:-.012em}
+
+  .rule{position:relative;background:var(--orange);box-shadow:0 0 4.4px rgba(255,107,28,.75),0 0 10px rgba(255,107,28,.42),0 0 20px rgba(255,107,28,.22);z-index:11}
+  .rule-1{grid-area:r1}
+  .rule-2{grid-area:r2}
+  .rule .node-ring{--ng:calc(var(--v)*10);left:calc(50% - var(--v)*22);top:calc(1px - var(--v)*22);width:calc(var(--v)*44);height:calc(var(--v)*44);border-width:2px}
+  .rule .node-core{--ng2:calc(var(--v)*5);left:calc(50% - var(--v)*10);top:calc(1px - var(--v)*10);width:calc(var(--v)*20);height:calc(var(--v)*20)}
+
+  .q-terrain{grid-area:terrain;position:relative;overflow:hidden;min-height:0}
+  .terrain-img,.terrain-grade{position:absolute;inset:0}
+  .terrain-img{background-size:cover;background-position:62% 40%}
+  .terrain-grade{background:rgba(42,30,27,.40)}
+  .diag{position:absolute;inset:0;width:100%;height:100%;transform:scaleX(.5);transform-origin:100% 50%}
+  .diag line{stroke-width:2px}
+  .terrain-tag{position:absolute;left:var(--g);bottom:calc(var(--v)*14);display:flex;align-items:flex-start;gap:.7em;font-size:max(calc(var(--v)*9.5),8px);line-height:1.22;letter-spacing:.01em}
+  .tag-icon{width:1.5em;height:1.5em;margin-top:-.05em}
+
+  .q-intro{grid-area:intro;position:relative;overflow:hidden;padding:calc(var(--v)*16) calc(var(--v)*12) 0 var(--g)}
+  .stage-panel{position:absolute;inset:calc(var(--v)*6) 0 0 0;filter:blur(6px)}
+  .lede{position:relative;z-index:2;font-size:calc(var(--v)*13.6);line-height:1.12;letter-spacing:-.01em;text-align:center;text-wrap:balance}
+  /* rock + beam keep the reference relationship: beam box = rock box offset (-7.6%, -13.7%) at 119.8% width */
+  .rock-wrap{--rw:min(50cqw - var(--v)*14,var(--v)*200);position:absolute;left:calc(50% - var(--rw) / 2);top:calc(var(--v)*128 - var(--rw) * .545);width:var(--rw);height:calc(var(--rw) * 1.1414)}
+  .beam{position:absolute;left:-7.6%;top:calc(var(--rw) * -.137);width:119.8%;height:auto;aspect-ratio:900 / 685}
+  .rock{position:absolute;left:0;top:0;width:100%;height:auto}
+
+  .q-stats{display:contents}
+  .stats{grid-area:stats;position:relative;display:flex;flex-direction:column;gap:calc(var(--v)*10);padding:calc(var(--v)*16) var(--g) calc(var(--v)*12) calc(var(--v)*14);min-height:0}
+  .stats::before{content:"";position:absolute;left:-1px;top:0;bottom:0;width:2px;background:var(--orange);box-shadow:0 0 4.4px rgba(255,107,28,.75),0 0 10px rgba(255,107,28,.42),0 0 20px rgba(255,107,28,.22)}
+  .stat{flex:1 1 0;min-height:0;padding:calc(var(--v)*12) calc(var(--v)*12) calc(var(--v)*11)}
+  .stat-value{font-size:calc(var(--v)*31);letter-spacing:.03em}
+  .stat-label{font-size:max(calc(var(--v)*9.2),7.5px);letter-spacing:.01em}
+  .stat-foot{gap:6px}
+  .ic-square{width:calc(var(--v)*12);height:calc(var(--v)*12)}
+  .ic-ring{width:calc(var(--v)*13);height:calc(var(--v)*13)}
+  .copy{grid-area:copy;padding:calc(var(--v)*8) var(--g) calc(var(--v)*20 + env(safe-area-inset-bottom,0px))}
+  .eyebrow{font-size:max(calc(var(--v)*10.5),8.5px);letter-spacing:.02em}
+  .headline{margin-top:calc(var(--v)*9);font-size:calc(var(--v)*33);line-height:.98;letter-spacing:.024em}
+}
+/* One opening sequence. Backwards fill prevents a first-frame flash; after each
+   animation finishes the authored styles take over with no motion left running. */
+@media (prefers-reduced-motion:no-preference){
+  .nav .brand{animation:rift-soft .52s cubic-bezier(.22,1,.36,1) .04s backwards}
+  .nav-links{animation:rift-soft .5s cubic-bezier(.22,1,.36,1) .16s backwards}
+  .nav .cta{animation:rift-soft .52s cubic-bezier(.22,1,.36,1) .22s backwards}
+  .rift{animation:rift-title .86s cubic-bezier(.16,1,.3,1) .23s backwards}
+  .terrain-tag{animation:rift-soft .55s cubic-bezier(.22,1,.36,1) .72s backwards}
+  .lede{animation:rift-soft .62s cubic-bezier(.22,1,.36,1) .84s backwards}
+  .rock-wrap{animation:rift-rock .82s cubic-bezier(.16,1,.3,1) .94s backwards}
+  .stat-1{animation:rift-card .65s cubic-bezier(.22,1,.36,1) 1.05s backwards}
+  .stat-2{animation:rift-card .65s cubic-bezier(.22,1,.36,1) 1.18s backwards}
+  .copy{animation:rift-soft .62s cubic-bezier(.22,1,.36,1) 1.31s backwards}
+  @keyframes rift-soft{
+    from{opacity:0;transform:translate3d(0,8px,0)}
+    to{opacity:1;transform:none}
+  }
+  @keyframes rift-title{
+    from{opacity:0;transform:translate3d(0,.13em,0);clip-path:inset(100% 0 0)}
+    to{opacity:1;transform:none;clip-path:inset(0)}
+  }
+  @keyframes rift-rock{
+    from{opacity:0;transform:translate3d(0,12px,0) scale(.985)}
+    to{opacity:1;transform:none}
+  }
+  @keyframes rift-card{
+    from{opacity:0;transform:translate3d(0,9px,0);clip-path:inset(0 0 16% 0)}
+    to{opacity:1;transform:none;clip-path:inset(0)}
+  }
+}
+</style>
+</head>
+<body>
+<div class="site">
+<main class="stage" id="top">
+
+  <header class="nav">
+    <a class="brand" href="#top" aria-label="RIFT home">
+      <svg class="brand-mark" viewBox="0 0 34 34" preserveAspectRatio="none" aria-hidden="true"><path fill="#fff" fill-rule="evenodd" d="M17 0a17 17 0 1 1 0 34A17 17 0 0 1 17 0ZM6.45 5.25a1.2 1.2 0 0 0-1.2 1.2v21.1a1.2 1.2 0 0 0 1.2 1.2h21.1a1.2 1.2 0 0 0 1.2-1.2V6.45a1.2 1.2 0 0 0-1.2-1.2Z"/></svg>
+      <span class="brand-word">RIFT</span>
+    </a>
+    <span class="nav-sep" aria-hidden="true"></span>
+    <nav class="nav-links" aria-label="Primary"><a href="#intel">Intel</a><a href="#boundary">Boundary</a><a href="#global">Global</a></nav>
+    <a class="cta" href="#access">Access Platform</a>
+  </header>
+
+  <section class="q-title" aria-label="RIFT">
+    <h1 class="rift"><span class="sr-only">RIFT</span><span class="l l-r" aria-hidden="true">R</span><span class="l l-i" aria-hidden="true">I</span><span class="l l-f" aria-hidden="true">F</span><span class="l l-t" aria-hidden="true">T</span></h1>
+  </section>
+
+  <div class="rule rule-1 m-only" aria-hidden="true"></div>
+
+  <section class="q-terrain" id="intel" aria-label="Terrain scanning">
+    <div class="terrain-img" role="img" aria-label="Aerial view of folded, ridged mountain terrain"></div>
+    <div class="terrain-grade" aria-hidden="true"></div>
+    <svg class="diag" viewBox="0 0 1022 764.5" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="764.5" x2="1022" y2="0"/></svg>
+    <p class="terrain-tag"><span class="tag-icon" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M7 .6 13.6 13.4H.4Z" fill="#141012"/></svg></span><span>Autonomous<br>deep terrain<br>scanning &amp; ore<br>discovery</span></p>
+  </section>
+
+  <div class="rule rule-2 m-only" aria-hidden="true"><i class="node-ring"></i><i class="node-core"></i></div>
+
+  <section class="q-intro" id="boundary" aria-label="Overview">
+    <div class="stage-panel" aria-hidden="true"></div>
+    <p class="lede">AI-powered analysis combines drone<br class="d-br"> imagery, elevation models and geological<br class="d-br"> data into one workflow.</p>
+    <div class="rock-wrap">
+      <svg class="beam" viewBox="60 765 900 685" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="bmHaze" gradientUnits="userSpaceOnUse" x1="0" y1="1390" x2="0" y2="770">
+      <stop offset="0" stop-color="#ff7a12" stop-opacity=".62"/>
+      <stop offset=".2" stop-color="#ff6c10" stop-opacity=".5"/>
+      <stop offset=".45" stop-color="#e8560c" stop-opacity=".3"/>
+      <stop offset=".75" stop-color="#b03c0a" stop-opacity=".18"/>
+      <stop offset=".92" stop-color="#8a2e08" stop-opacity=".1"/>
+      <stop offset="1" stop-color="#8a2e08" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="bmRay" gradientUnits="userSpaceOnUse" x1="0" y1="1390" x2="0" y2="790">
+      <stop offset="0" stop-color="#ffa224" stop-opacity=".95"/>
+      <stop offset=".3" stop-color="#ff7414" stop-opacity=".78"/>
+      <stop offset=".65" stop-color="#d4500c" stop-opacity=".36"/>
+      <stop offset="1" stop-color="#a03808" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="bmB1" x="-30%" y="-10%" width="160%" height="120%"><feGaussianBlur stdDeviation="22"/></filter>
+    <filter id="bmB2" x="-50%" y="-10%" width="200%" height="120%"><feGaussianBlur stdDeviation="5.5"/></filter>
+    <filter id="bmB3" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="16"/></filter>
+  </defs>
+  <polygon points="486,1392 536,1392 680,770 320,770" fill="url(#bmHaze)" filter="url(#bmB1)"/>
+  <g filter="url(#bmB2)" fill="url(#bmRay)">
+    <polygon points="491,1365 519,1365 350,790 318,790" opacity=".45"/>
+    <polygon points="491,1365 521,1365 418,790 384,790" opacity=".7"/>
+    <polygon points="492,1365 522,1365 476,790 444,790" opacity=".85"/>
+    <polygon points="493,1365 523,1365 530,790 498,790"/>
+    <polygon points="494,1365 524,1365 588,790 556,790" opacity=".9"/>
+    <polygon points="495,1365 525,1365 646,790 614,790" opacity=".72"/>
+    <polygon points="496,1365 526,1365 704,790 676,790" opacity=".4"/>
+  </g>
+  <ellipse cx="510" cy="1338" rx="125" ry="38" fill="#ff7a14" fill-opacity=".32" filter="url(#bmB3)"/>
+  <ellipse cx="508" cy="1320" rx="44" ry="90" fill="#ffae2e" fill-opacity=".3" filter="url(#bmB3)"/>
+</svg>
+
+      <img class="rock" src="assets/97919c10d0d5076f.webp" alt="Floating slab of fractured rock with a beam of orange light escaping from its core" width="1174" height="1340">
+    </div>
+  </section>
+
+  <section class="q-stats" id="global" aria-label="Capabilities">
+    <div class="stats">
+      <article class="stat stat-1"><p class="stat-value">99.8%</p><div class="stat-foot"><span class="stat-label">Accuracy</span><i class="ic-square" aria-hidden="true"></i></div></article>
+      <article class="stat stat-2"><p class="stat-value">640K km<sup>²</sup></p><div class="stat-foot"><span class="stat-label">Area analyzed</span><i class="ic-ring" aria-hidden="true"></i></div></article>
+    </div>
+    <div class="copy" id="access">
+      <p class="eyebrow">What we do</p>
+      <h2 class="headline">End-to-end autonomous<br>terrain analytics</h2>
+    </div>
+  </section>
+
+  <div class="grid" aria-hidden="true">
+    <i class="ln ln-v"></i>
+    <i class="ln ln-h d-only"></i>
+    <span class="node d-only"><i class="node-ring"></i><i class="node-core"></i></span>
+  </div>
+</main>
+</div>
+</body>
+</html>

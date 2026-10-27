@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-148/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Timon Footer</title>
+<style>
+/* ---------- Embedded fonts (offline) ---------- */
+@font-face{font-family:"Golos Text";font-weight:400 900;font-style:normal;font-display:block;src:url(assets/golos-text-variable.woff2) format("woff2")}
+@font-face{font-family:"Reddit Sans";font-weight:300;font-style:normal;font-display:block;src:url(assets/reddit-sans-300.woff2) format("woff2")}
+@font-face{font-family:"Reddit Sans";font-weight:400;font-style:normal;font-display:block;src:url(assets/reddit-sans-400.woff2) format("woff2")}
+@font-face{font-family:"Reddit Sans";font-weight:600;font-style:normal;font-display:block;src:url(assets/reddit-sans-600.woff2) format("woff2")}
+@font-face{font-family:"Reddit Sans";font-weight:900;font-style:normal;font-display:block;src:url(assets/reddit-sans-900.woff2) format("woff2")}
+
+/* ---------- Design tokens (all measured on a 1596 x 986 canvas) ---------- */
+:root{
+  --W:1596; --H:986;
+  /* 1 design px. Contain-scale: the canvas always fits, the stage itself always fills the viewport */
+  --vh:100vh;
+  --u:min(calc(100vw / 1596), calc(var(--vh) / 986));
+
+  --page:#111111;            /* flat page colour */
+  --bg-edge:#0e0e0e;         /* asset edge colour, extends the artwork seamlessly */
+
+  --ink-head:#ffffff;
+  --ink-body:rgb(212,212,212);
+  --ink-cert:rgb(217,217,217);
+  --ink-card:rgb(203,203,203);
+
+  --title-1-top:#fbfbfb; --title-1-bot:#8b8c95;
+  --title-2-top:#838487; --title-2-bot:#505263;
+
+  --card-fill:rgba(30,30,30,1);
+  --card-blue:#22324e;
+  --card-green:#23413a;
+  --card-red:#523a44;
+  --badge-fill:#1e1e1e;
+
+  --f-display:"Golos Text", "Inter", system-ui, sans-serif;
+  --f-ui:"Reddit Sans", "Inter", system-ui, sans-serif;
+}
+@supports (height:100dvh){ :root{ --vh:100dvh; } }
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--page)}
+body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision;overflow:hidden}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+
+/* =========================================================
+   STAGE MODE (landscape, >= 1024px): pixel-exact canvas
+   ========================================================= */
+.footer{position:relative;width:100vw;height:var(--vh);overflow:hidden;background:var(--page);color:var(--ink-head)}
+
+/* Artwork layer: anchored bottom-right (the sphere bleeds off those edges),
+   its flat top/left edge colour extends the art to any extra stage area. */
+.art{position:absolute;inset:0;background:var(--bg-edge);filter:url(#tone);pointer-events:none}
+.art img{position:absolute;right:calc(-2 * var(--u));bottom:calc(-4.5 * var(--u));width:calc(1600 * var(--u));height:calc(988.5 * var(--u));display:block}
+
+/* Canvas layers: each is a 1596x986 design box pinned to an edge so the
+   composition stays locked to the artwork whatever the aspect ratio. */
+.layer{position:absolute;width:calc(1596 * var(--u));height:calc(986 * var(--u))}
+.layer--br{right:0;bottom:0}          /* cards follow the sphere */
+.layer--bl{left:0;bottom:0}           /* link columns + certification */
+.layer--top{left:0;right:0;width:auto;height:auto;
+  /* title keeps its 1596-canvas position, plus 40% of any extra height */
+  top:calc((var(--vh) - 986 * var(--u)) * .4)}
+
+.u{position:absolute}
+.cards{position:absolute;left:0;top:0;width:calc(1596 * var(--u));height:calc(986 * var(--u))}
+.art{z-index:0}
+.layer{z-index:1}
+
+/* ---- Title ---- */
+.title{position:absolute;left:0;right:0;top:calc(89.0 * var(--u));
+  transform:translateX(calc(-6.0 * var(--u)));
+  font-family:var(--f-display);font-weight:400;font-size:calc(116 * var(--u));
+  line-height:calc(109.0 * var(--u));letter-spacing:0.0045em;word-spacing:0.0em;text-align:center;white-space:nowrap}
+.title span{display:block;background-clip:text;-webkit-background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.title .l1{background-image:linear-gradient(180deg,var(--title-1-top) 0%,var(--title-1-bot) 100%)}
+.title .l2{background-image:linear-gradient(180deg,var(--title-2-top) 0%,var(--title-2-bot) 49%)}
+
+/* ---- Link columns ---- */
+.col h3,.cert h3{font-family:var(--f-ui);font-weight:600;font-size:calc(22.95 * var(--u));line-height:calc(30 * var(--u));letter-spacing:-0.0025em;color:var(--ink-head);white-space:nowrap}
+.col li,.cert p{font-family:var(--f-ui);font-weight:400;font-size:calc(18.075 * var(--u));line-height:calc(38 * var(--u));letter-spacing:0.001em;color:var(--ink-body);white-space:nowrap}
+.col ul,.cert .body{margin-top:calc(6 * var(--u))}
+.col a{transition:color .2s}
+.col a:hover{color:#fff}
+.col a:focus-visible{outline:2px solid #6d7bd6;outline-offset:3px;border-radius:2px}
+.col--legal{left:calc(94 * var(--u));top:calc(498.0 * var(--u))}
+.col--addr {left:calc(282.5 * var(--u));top:calc(498.0 * var(--u))}
+.col--timon{left:calc(498 * var(--u));top:calc(498.0 * var(--u))}
+.cert{left:calc(95 * var(--u));top:calc(698.0 * var(--u))}
+.cert h3{font-size:calc(23.45 * var(--u));letter-spacing:-0.0025em}
+.cert p{color:var(--ink-cert);font-size:calc(17.95 * var(--u));line-height:calc(37 * var(--u));letter-spacing:0.0075em}
+.cert .body{margin-top:calc(7 * var(--u))}
+
+/* ---- Certification badge ---- */
+.badge{left:calc(92.8 * var(--u));top:calc(813 * var(--u));width:calc(398 * var(--u));height:calc(65 * var(--u));
+  border-radius:calc(8 * var(--u));background:var(--badge-fill)}
+.badge svg{position:absolute;left:0;top:0;width:100%;height:100%}
+
+/* ---- Glass feature cards ---- */
+.card{width:calc(224.4 * var(--u));height:calc(93.3 * var(--u));border-radius:calc(18 * var(--u)) calc(18 * var(--u)) 0 calc(18 * var(--u));
+  background:var(--card-fill);
+  -webkit-backdrop-filter:blur(calc(24 * var(--u)));backdrop-filter:blur(calc(24 * var(--u)));
+  border:calc(2 * var(--u)) solid var(--bc);
+  box-shadow:0 0 calc(0 * var(--u)) rgba(0,0,0,0.45);
+  font-family:var(--f-ui);font-weight:400;font-size:calc(17 * var(--u));line-height:calc(24 * var(--u));letter-spacing:0em;color:var(--ink-card)}
+.card .ic{position:absolute;color:var(--ink-card)}
+.card .tx{position:absolute;white-space:nowrap}
+.card--a{--bc:var(--card-blue);left:calc(1294.8 * var(--u));top:calc(678.3 * var(--u))}
+.card--b{--bc:var(--card-green);left:calc(1246 * var(--u));top:calc(705 * var(--u));width:calc(226 * var(--u));height:calc(90 * var(--u));
+  transform:perspective(calc(675.0 * var(--u))) rotate(16.0deg) rotateY(0deg) rotateX(-14.0deg);transform-origin:0 0;overflow:hidden}
+.card--c{--bc:var(--card-red);left:calc(1285.3 * var(--u));top:calc(814 * var(--u));height:calc(93.8 * var(--u))}
+.card--a .ic{left:calc(26 * var(--u));top:calc(20 * var(--u));width:calc(24 * var(--u));height:calc(16 * var(--u))}
+.card--a .tx{left:calc(60 * var(--u));top:calc(16 * var(--u))}
+.card--b .ic{left:calc(9 * var(--u));top:calc(11.0 * var(--u));width:calc(30.5 * var(--u));height:calc(30.5 * var(--u))}
+.card--b .tx{left:calc(48 * var(--u));top:calc(14 * var(--u))}
+.card--c .ic{left:calc(14.5 * var(--u));top:calc(26 * var(--u));width:calc(24 * var(--u));height:calc(24 * var(--u))}
+.card--c .tx{left:calc(48.1 * var(--u));top:calc(26 * var(--u))}
+
+/* =========================================================
+   FLOW MODE (phones + tablets): one locked screen, no scrolling.
+   Each device class has its own design canvas (W0 x H0, in px).
+   One unit  --m = min(100vw / W0, 100dvh / H0)  sizes EVERYTHING
+   (type, gaps, padding, badge, cards), so the content always fits
+   inside the viewport; leftover space flows into the 1fr row, so
+   the background always fills the screen edge to edge.
+   ========================================================= */
+@media (max-width:1023px), (max-aspect-ratio:1/1){
+  html,body{height:100%;overflow:hidden;overscroll-behavior:none}
+  html{scrollbar-width:none}
+  html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
+  :root{
+    /* defaults = portrait phone canvas */
+    --W0:390; --H0:756;
+    --m:min(calc(100vw / var(--W0)), calc(var(--vh) / var(--H0)));
+    --padx:calc(22 * var(--m)); --padt:calc(52 * var(--m)); --padb:calc(22 * var(--m));
+    --t-fs:calc(34 * var(--m));
+    --gap-title:calc(32 * var(--m));
+    --h-fs:calc(17.5 * var(--m)); --b-fs:calc(14.5 * var(--m)); --b-lh:calc(26 * var(--m));
+    --list-gap:calc(6 * var(--m)); --col-gap:calc(44 * var(--m)); --row-gap:calc(22 * var(--m));
+    --badge-w:calc(300 * var(--m)); --badge-gap:calc(14 * var(--m));
+    --cards-k:.86;               /* cards cluster: 304 x 240 design units */
+    --gap-cards:calc(18 * var(--m));
+    --u:calc(var(--m) * var(--cards-k));
+  }
+  .footer{height:var(--vh);min-height:0;overflow:hidden;display:grid;
+    grid-template-columns:minmax(0,1fr);
+    grid-template-rows:auto auto minmax(var(--gap-cards),1fr) auto;
+    grid-template-areas:"title" "links" "." "cards";
+    row-gap:0;padding:var(--padt) var(--padx) var(--padb)}
+  .art img{width:max(150vw, 105vh);height:auto;aspect-ratio:1600 / 988.5;right:-22vw;bottom:-4vh}
+  .layer,.layer--top,.layer--bl,.layer--br{position:relative;z-index:1;inset:auto;width:auto;height:auto}
+  .layer--top .u,.layer--bl .u{position:relative;left:auto;top:auto}
+
+  .layer--top{grid-area:title;margin-bottom:var(--gap-title)}
+  .title{position:relative;top:auto;transform:none;white-space:nowrap;text-align:left;
+    font-size:var(--t-fs);line-height:1.1;letter-spacing:.0045em}
+  .title span{display:block;width:max-content}
+
+  .layer--bl{grid-area:links;display:grid;align-content:start;justify-content:start;
+    grid-template-columns:repeat(2,max-content);column-gap:var(--col-gap);row-gap:var(--row-gap)}
+  .col h3,.cert h3{font-size:var(--h-fs);line-height:1.3;letter-spacing:-.0025em}
+  .col li,.cert p{font-size:var(--b-fs);line-height:var(--b-lh)}
+  .col ul,.cert .body{margin-top:var(--list-gap)}
+  .cert,.badge{grid-column:1 / -1}
+  .badge{left:auto;top:auto;margin-top:calc(var(--badge-gap) - var(--row-gap));
+    width:var(--badge-w);height:calc(var(--badge-w) * 65 / 398);border-radius:calc(var(--badge-w) * 8 / 398)}
+
+  .layer--br{grid-area:cards;align-self:end;justify-self:end;width:calc(304 * var(--u));height:calc(240 * var(--u))}
+  .cards{left:calc(-1218 * var(--u));top:calc(-672 * var(--u))}
+}
+
+/* ---- portrait tablet canvas (600px+ wide, portrait / square) ---- */
+@media (max-aspect-ratio:1/1) and (min-width:700px){
+  :root{
+    --W0:768; --H0:1019;
+    --padx:calc(56 * var(--m)); --padt:calc(96 * var(--m)); --padb:calc(48 * var(--m));
+    --t-fs:calc(64 * var(--m));
+    --gap-title:calc(64 * var(--m));
+    --h-fs:calc(22 * var(--m)); --b-fs:calc(17 * var(--m)); --b-lh:calc(32 * var(--m));
+    --list-gap:calc(8 * var(--m)); --col-gap:calc(80 * var(--m)); --row-gap:calc(40 * var(--m));
+    --badge-w:calc(398 * var(--m)); --badge-gap:calc(18 * var(--m));
+    --cards-k:1.3; --gap-cards:calc(32 * var(--m));
+  }
+  .layer--bl{grid-template-columns:repeat(3,max-content)}
+}
+
+/* ---- landscape phone / small tablet canvas (< 1024px wide, landscape) ---- */
+@media (min-aspect-ratio:1001/1000) and (max-width:1023px){
+  :root{
+    --W0:844; --H0:412;
+    --padx:calc(40 * var(--m)); --padt:calc(34 * var(--m)); --padb:calc(22 * var(--m));
+    --t-fs:calc(42 * var(--m));
+    --gap-title:calc(26 * var(--m));
+    --h-fs:calc(16 * var(--m)); --b-fs:calc(13 * var(--m)); --b-lh:calc(23 * var(--m));
+    --list-gap:calc(5 * var(--m)); --col-gap:calc(40 * var(--m)); --row-gap:calc(18 * var(--m));
+    --badge-w:calc(280 * var(--m)); --badge-gap:calc(12 * var(--m));
+    --cards-k:.98; --gap-cards:0px;
+  }
+  .footer{grid-template-columns:minmax(0,1fr) auto;
+    grid-template-rows:auto minmax(0,1fr);
+    grid-template-areas:"title title" "links cards";column-gap:calc(24 * var(--m))}
+  .layer--bl{grid-template-columns:repeat(3,max-content);align-self:end}
+  .art img{width:max(100vw, 150vh);right:-6vw;bottom:-10vh}
+}
+
+/* One opening sequence. The background stays still; backwards fill hides each
+   group until its cue, and the authored styles take over when its reveal ends. */
+@media (prefers-reduced-motion: no-preference){
+  .title .l1,.title .l2{
+    --entrance-distance:clamp(8px,1.15vw,16px);
+    animation:title-unveil 820ms cubic-bezier(.22,1,.36,1) backwards;
+  }
+  .title .l1{animation-delay:80ms}
+  .title .l2{animation-delay:270ms}
+
+  .col,.cert{
+    --entrance-distance:clamp(6px,.65vw,10px);
+    animation:support-settle 560ms cubic-bezier(.22,1,.36,1) backwards;
+  }
+  .col--legal{animation-delay:570ms}
+  .col--addr{animation-delay:650ms}
+  .col--timon{animation-delay:730ms}
+  .cert{animation-delay:850ms}
+
+  .badge{animation:trust-reveal 600ms cubic-bezier(.22,1,.36,1) 980ms backwards}
+
+  .card{
+    --entrance-distance:clamp(7px,.85vw,13px);
+    animation:card-arrive 700ms cubic-bezier(.2,.8,.2,1) backwards;
+  }
+  .card--a{animation-delay:1120ms}
+  .card--b{animation-delay:1260ms}
+  .card--c{animation-delay:1400ms}
+}
+
+@keyframes title-unveil{
+  from{opacity:0;clip-path:inset(100% 0 0 0);translate:0 var(--entrance-distance)}
+  to{opacity:1;clip-path:inset(0 0 0 0);translate:0 0}
+}
+@keyframes support-settle{
+  from{opacity:0;translate:0 var(--entrance-distance)}
+  to{opacity:1;translate:0 0}
+}
+@keyframes trust-reveal{
+  from{opacity:0;scale:.985}
+  to{opacity:1;scale:1}
+}
+@keyframes card-arrive{
+  from{opacity:0;translate:0 var(--entrance-distance);scale:.975}
+  to{opacity:1;translate:0 0;scale:1}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <!-- measured tone curve: maps the supplied artwork onto the reference's exposure/contrast -->
+  <filter id="tone" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB"><feComponentTransfer>
+    <feFuncR type="table" tableValues="0.0039 0.0391 0.0665 0.0783 0.1016 0.1173 0.1445 0.1680 0.1914 0.2111 0.2306 0.2539 0.2736 0.2968 0.3188 0.3407 0.3625 0.3844 0.4063 0.4282 0.4500 0.4719 0.4938 0.5157 0.5375 0.5594 0.5813 0.6032 0.6250 0.6469 0.6688 0.6907 0.7125"/>
+    <feFuncG type="table" tableValues="0.0039 0.0391 0.0665 0.0783 0.0939 0.1172 0.1445 0.1680 0.1914 0.2111 0.2344 0.2541 0.2736 0.2968 0.3177 0.3384 0.3591 0.3798 0.4005 0.4212 0.4419 0.4626 0.4833 0.5040 0.5247 0.5454 0.5661 0.5868 0.6075 0.6282 0.6489 0.6696 0.6903"/>
+    <feFuncB type="table" tableValues="0.0039 0.0391 0.0665 0.0783 0.0977 0.1096 0.1290 0.1447 0.1907 0.2149 0.2345 0.2541 0.2736 0.2968 0.3177 0.3384 0.3591 0.3798 0.4005 0.4212 0.4419 0.4626 0.4833 0.5040 0.5247 0.5454 0.5661 0.5868 0.6075 0.6282 0.6489 0.6696 0.6903"/>
+  </feComponentTransfer></filter>
+</svg>
+<footer class="footer" aria-label="Site footer">
+  <div class="art" aria-hidden="true"><img alt="" src="assets/footer-art.webp"></div>
+
+  <div class="layer layer--top">
+    <h2 class="title"><span class="l1">Your Passport to see</span><span class="l2">the World</span></h2>
+  </div>
+
+  <div class="layer layer--bl">
+    <nav class="u col col--legal" aria-label="Legal">
+      <h3>Legal</h3>
+      <ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li></ul>
+    </nav>
+    <div class="u col col--addr">
+      <h3>Our Address</h3>
+      <ul><li>8 The Green, Dover</li><li>DE 19901, USA</li></ul>
+    </div>
+    <nav class="u col col--timon" aria-label="Timon">
+      <h3>Timon</h3>
+      <ul><li><a href="#">Travel Cards</a></li><li><a href="#">Global Wallets</a></li></ul>
+    </nav>
+    <div class="u cert">
+      <h3>We are certified by:</h3>
+      <div class="body"><p>The Payment Card Industry</p><p>Data Security Standard</p></div>
+    </div>
+    <div class="u badge" role="img" aria-label="PCI DSS Compliant">
+      <svg viewBox="0 0 398 65" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M20.3 12.4 L84.4 7.2 L91.8 43.9 L36.9 58.6 Z" fill="#256166"/>
+  <text x="31" y="42.4" font-family="Reddit Sans" font-weight="900" font-size="25.5" fill="#fff" textLength="44" lengthAdjust="spacingAndGlyphs">PC</text>
+  <rect x="76.8" y="24.2" width="7.6" height="18.2" fill="#fff"/>
+  <circle cx="80.6" cy="16.6" r="4.4" fill="#fff"/>
+  <path d="M71.8 37.9 L80.8 51.9 L103.7 19" fill="none" stroke="#10201a" stroke-opacity=".55" stroke-width="9" stroke-linejoin="miter"/>
+  <path d="M71.8 37.9 L80.8 51.9 L103.7 19" fill="none" stroke="#34ae5e" stroke-width="6" stroke-linejoin="miter"/>
+  <text x="136.7" y="40" font-family="Reddit Sans" font-weight="900" font-size="34" fill="#fff" textLength="70" lengthAdjust="spacingAndGlyphs">DSS</text>
+  <text x="137.7" y="52.9" font-family="Reddit Sans" font-weight="900" font-size="12.8" fill="#fff" textLength="68" lengthAdjust="spacingAndGlyphs">COMPLIANT</text>
+</svg>
+
+    </div>
+  </div>
+
+  <div class="layer layer--br" aria-label="Features">
+   <div class="cards">
+    <div class="u card card--a">
+      <svg class="ic" viewBox="0 0 24 16" aria-hidden="true"><rect x="0" y="0" width="24" height="16" rx="2" fill="currentColor"/><rect x="0" y="5" width="24" height="2.4" fill="#1e1e1e"/><rect x="3" y="11" width="3.6" height="3" fill="#1e1e1e"/><rect x="9" y="11" width="2" height="3" fill="#1e1e1e"/>
+</svg>
+      <div class="tx">Global Physical and<br>Virtual Cards</div>
+    </div>
+    <div class="u card card--b">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z" fill="currentColor"/>
+</svg>
+      <div class="tx">Local and<br>International payment</div>
+    </div>
+    <div class="u card card--c">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M5.2 6.4C7.4 9.6 8.9 12.6 12 13.1C15.1 12.6 16.6 9.6 18.8 6.4M12 13.1V19.6" fill="none" stroke="#1e1e1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+      <div class="tx">Travel and Lifestyle<br>friendly features</div>
+    </div>
+   </div>
+  </div>
+</footer>
+</body>
+</html>

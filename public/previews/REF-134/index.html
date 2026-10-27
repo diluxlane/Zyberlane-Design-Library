@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="/previews/REF-134/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>riverine.ai — Where Regeneration Fuels Future Thinking</title>
+<meta name="theme-color" content="#03080B">
+<style>
+/* ---------- Embedded fonts (offline) ---------- */
+@font-face{font-family:"RV Display";font-weight:300;font-style:normal;font-display:block;src:url(assets/fonts/rv-display.woff2) format("woff2")}
+@font-face{font-family:"RV Brand";font-weight:600;font-style:normal;font-display:block;src:url(assets/fonts/rv-brand.woff2) format("woff2")}
+@font-face{font-family:"RV Text";font-weight:400;font-style:normal;font-display:block;src:url(assets/fonts/rv-text.woff2) format("woff2")}
+
+/* ---------- Tokens (all measured from the 1280×960 reference) ---------- */
+:root{
+  /* One design pixel. 1px at 1280×960; scales with the viewport, never letterboxes. */
+  --u: max(0.62px, min(calc(100vw / 1280), calc(100vh / 960)));
+  --shade: 3, 8, 11;                 /* #03080B overlay tone */
+  --ink: #F5FAF6;                   /* headline white (slight mineral tint) */
+  --ink-2: #ECF1EF;                 /* small text */
+  --teal: #88DECC;                   /* brand / tree / check */
+  --teal-icon: #7EC4B5;              /* speaker glyph */
+  --teal-chev: #7CCBBA;              /* scroll chevron */
+  --moth: #315352;                   /* butterfly */
+  --cream: #EEF1EA;                  /* light pills */
+  --pine: #122B2A;                   /* arrow disc in Partner */
+  --pine-deep: #122B2A;              /* arrow disc in CTA */
+  --orb: #030909;                    /* logo disc */
+  --f-display: "RV Display", "Poppins", "Helvetica Neue", Arial, sans-serif;
+  --f-brand: "RV Brand", "Urbanist", "Helvetica Neue", Arial, sans-serif;
+  --f-text: "RV Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+@supports (height: 100dvh){ :root{ --u: max(0.62px, min(calc(100vw / 1280), calc(100dvh / 960))); } }
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;height:100%;background:rgb(var(--shade))}
+body{color:var(--ink);font-family:var(--f-text);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision;overflow:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:calc(2 * var(--u)) solid var(--teal);outline-offset:calc(3 * var(--u))}
+
+/* ---------- Stage: always exactly the viewport, no bands ---------- */
+.stage{position:relative;width:100%;height:100vh;height:100dvh;overflow:hidden;isolation:isolate}
+
+.scene{position:absolute;inset:0;z-index:-1}
+.scene img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%;display:block;user-select:none}
+/* Three stacked shade layers in one tone; fitted per-pixel against the reference (≈3/255 RMS). */
+.shade{position:absolute;inset:0;pointer-events:none}
+.shade--x{background:linear-gradient(90deg,
+  rgba(var(--shade),.683) 0%, rgba(var(--shade),.595) 20%, rgba(var(--shade),.458) 40%,
+  rgba(var(--shade),.221) 60%, rgba(var(--shade),.039) 80%, rgba(var(--shade),.054) 100%)}
+.shade--y{background:linear-gradient(180deg,
+  rgba(var(--shade),.060) 0%, rgba(var(--shade),.023) 20%, rgba(var(--shade),.152) 40%,
+  rgba(var(--shade),.300) 60%, rgba(var(--shade),.394) 80%, rgba(var(--shade),.632) 100%)}
+.shade--corner{background:radial-gradient(ellipse 93.8% 41.3% at 0% 100%, rgba(var(--shade),1) 0%, rgba(var(--shade),0) 100%)}
+
+/* ---------- Top bar ---------- */
+.mark{position:absolute;left:calc(16 * var(--u));top:calc(16 * var(--u));width:calc(104 * var(--u));height:calc(46 * var(--u));
+  border-radius:999px;background:rgba(150,220,130,.035);
+  -webkit-backdrop-filter:blur(calc(12 * var(--u)));backdrop-filter:blur(calc(12 * var(--u)))}
+.mark__orb{position:absolute;left:0;top:0;width:calc(46 * var(--u));height:calc(46 * var(--u));border-radius:50%;background:var(--orb);
+  box-shadow:inset 0 0 0 calc(1 * var(--u)) rgba(140,220,205,.07)}
+.mark__orb svg{position:absolute;inset:0;width:100%;height:100%}
+.mark__moth{position:absolute;left:calc(60 * var(--u));top:calc(11 * var(--u));width:calc(39 * var(--u));height:calc(30 * var(--u))}
+
+.nav{position:absolute;top:calc(16 * var(--u));right:calc(73 * var(--u));width:calc(442 * var(--u));height:calc(47 * var(--u));
+  border-radius:999px;background:#000}
+.nav__links{margin:0;padding:0;list-style:none}
+.nav__link{position:absolute;top:0;height:calc(47 * var(--u));display:flex;align-items:center;
+  font-size:calc(14.4 * var(--u));letter-spacing:calc(-0.55 * var(--u));line-height:1;white-space:nowrap;color:var(--ink-2)}
+.nav__link:hover{color:var(--teal)}
+.nav__link[data-i="1"]{left:calc(29 * var(--u))}
+.nav__link[data-i="2"]{left:calc(82 * var(--u))}
+.nav__link[data-i="3"]{left:calc(180 * var(--u))}
+.nav__link[data-i="4"]{left:calc(241 * var(--u))}
+.nav__link[data-i="5"]{left:calc(282 * var(--u))}
+.nav__chevron{position:static;flex:none;margin-left:calc(6 * var(--u));margin-top:calc(1 * var(--u));width:calc(11 * var(--u));height:calc(6 * var(--u));overflow:visible}
+.pill{display:flex;align-items:center;border-radius:999px;background:var(--cream);color:#000;white-space:nowrap}
+.nav__partner{position:absolute;left:calc(332 * var(--u));top:calc(4 * var(--u));width:calc(105 * var(--u));height:calc(39 * var(--u));
+  padding:0 0 0 calc(18 * var(--u));font-size:calc(14.4 * var(--u));letter-spacing:calc(-0.5 * var(--u));line-height:1;color:#263834}
+.disc{position:absolute;border-radius:50%;display:grid;place-items:center}
+.disc svg{overflow:visible}
+.nav__partner .disc{left:calc(76 * var(--u));top:calc(8.5 * var(--u));width:calc(22 * var(--u));height:calc(22 * var(--u));background:var(--pine)}
+.nav__partner .disc svg{width:calc(4 * var(--u));height:calc(7 * var(--u))}
+
+.sound{position:absolute;top:calc(16 * var(--u));right:calc(16 * var(--u));width:calc(48 * var(--u));height:calc(48 * var(--u));border-radius:50%;
+  background:rgba(12,23,28,.91);-webkit-backdrop-filter:blur(calc(10 * var(--u)));backdrop-filter:blur(calc(10 * var(--u)))}
+.sound svg{position:absolute;inset:0;width:100%;height:100%}
+.sound[aria-pressed="false"] .wave{opacity:.25}
+.menu{display:none}
+
+/* ---------- Hero copy ---------- */
+.hero{position:absolute;left:calc(61 * var(--u));bottom:calc(46 * var(--u));margin:0}
+.hero__brand{margin:0 0 calc(11.8 * var(--u)) calc(-0.4 * var(--u));font-family:var(--f-brand);font-weight:600;color:var(--teal);
+  font-size:calc(26 * var(--u));line-height:calc(26 * var(--u));letter-spacing:calc(-1.15 * var(--u))}
+.hero__title{margin:0 0 0 calc(-1 * var(--u));font-family:var(--f-display);font-weight:300;font-size:calc(59.2 * var(--u));line-height:calc(58 * var(--u));
+  letter-spacing:calc(-2.76 * var(--u));white-space:nowrap}
+.hero__title span{display:block}
+/* per-line optical tracking, fitted to the reference line widths */
+.hero__title .l1{letter-spacing:calc(-2.5 * var(--u))}
+.hero__title .l2{letter-spacing:calc(-2.83 * var(--u))}
+.hero__title .l3{letter-spacing:calc(-3.62 * var(--u))}
+.hero__lede{color:var(--ink-2);margin:calc(24.5 * var(--u)) 0 0 calc(-0.6 * var(--u));font-size:calc(18.1 * var(--u));line-height:calc(24 * var(--u));letter-spacing:calc(-0.51 * var(--u))}
+.hero__lede span{display:block}
+.hero__lede .l2{letter-spacing:calc(-0.43 * var(--u))}
+.hero__actions{display:flex;align-items:center;margin-top:calc(45.8 * var(--u));height:calc(46 * var(--u))}
+.cta{position:relative;width:calc(169 * var(--u));height:calc(46 * var(--u));padding:0 0 0 calc(24.5 * var(--u));
+  font-size:calc(13.6 * var(--u));letter-spacing:calc(-0.55 * var(--u));line-height:1;color:#142622}
+.cta .disc{right:calc(7 * var(--u));top:calc(10 * var(--u));width:calc(26 * var(--u));height:calc(26 * var(--u));background:var(--pine-deep)}
+.cta .disc svg{width:calc(4.5 * var(--u));height:calc(8 * var(--u))}
+.cta:hover .disc,.nav__partner:hover .disc{background:#26504d}
+.textlink{color:var(--ink-2);position:relative;top:0;margin-left:calc(30 * var(--u));font-size:calc(13.6 * var(--u));letter-spacing:calc(-0.56 * var(--u));line-height:1;white-space:nowrap}
+.textlink:hover{color:var(--teal)}
+
+.cue{color:var(--ink-2);position:absolute;right:calc(81 * var(--u));bottom:calc(62 * var(--u));display:flex;align-items:center;
+  font-size:calc(13.6 * var(--u));letter-spacing:calc(-0.4 * var(--u));line-height:1;white-space:nowrap}
+.cue svg{margin-left:calc(29 * var(--u));width:calc(11 * var(--u));height:calc(6 * var(--u));overflow:visible}
+.cue:hover{color:var(--teal)}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- Compact layout: phones, portrait tablets ---------- */
+/* Wide cinema screens: keep the horizon in frame. */
+@media (min-aspect-ratio: 16/9){ .scene img{object-position:50% 24%} }
+
+/* ---------- Mobile architecture ----------
+   Why 650px: the tablet composition holds until three relationships fail together —
+   headline right margin < its left margin (~651px), actions→scroll-cue gap < 48px (~648px),
+   logo→nav gap < 48px (~645px). Why 500px tall: below ~494px the hero rises into the header.
+   Components keep their desktop proportions (they are drawn in --u); only placement changes. */
+@media (max-width: 649.98px), (max-height: 500px){
+  :root{ --u: clamp(0.94px, calc(100vw / 390), 1.2px); --gutter: clamp(18px, 5.6vw, 32px); }
+  .scene img{object-position:63% 50%}
+  .shade--x{background:linear-gradient(90deg, rgba(var(--shade),.35) 0%, rgba(var(--shade),.1) 100%)}
+  .shade--y{background:linear-gradient(180deg, rgba(var(--shade),.45) 0%, rgba(var(--shade),.05) 22%, rgba(var(--shade),.25) 45%, rgba(var(--shade),.78) 70%, rgba(var(--shade),.94) 100%)}
+  .shade--corner{background:none}
+
+  .mark,.nav,.sound,.menu{top:max(calc(16 * var(--u)), env(safe-area-inset-top))}
+
+  .textlink::after,.cue::after{content:"";position:absolute;inset:calc(-15 * var(--u)) calc(-10 * var(--u))}
+  .hero__brand{letter-spacing:-0.044em}
+  .hero__title{margin-left:0;line-height:.98em}
+  .hero__title .l1{letter-spacing:-0.042em}
+  .hero__title .l2{letter-spacing:-0.048em}
+  .hero__title .l3{letter-spacing:-0.061em}
+  .hero__lede span{text-wrap:balance}
+  .hero__actions{height:auto;flex-wrap:wrap;gap:calc(12 * var(--u)) calc(22 * var(--u))}
+  .textlink{margin-left:0;top:0}
+}
+
+/* Narrow screens: the nav pill no longer fits beside the logo → it moves into a menu panel.
+   Header reads [logo] … [menu][sound], the menu taking the nav pill's place beside the sound control. */
+@media (max-width: 649.98px){
+  .menu{display:grid;place-items:center;position:absolute;right:calc(74 * var(--u));width:calc(48 * var(--u));height:calc(48 * var(--u));border-radius:50%;background:#000}
+  .menu svg{width:calc(18 * var(--u));height:calc(12 * var(--u))}
+  .menu .bar1,.menu .bar2,.menu .bar3{transform-box:fill-box;transform-origin:center;transition:transform .2s ease,opacity .2s ease}
+  .menu[aria-expanded="true"] .bar1{transform:translateY(5px) rotate(45deg)}
+  .menu[aria-expanded="true"] .bar2{opacity:0}
+  .menu[aria-expanded="true"] .bar3{transform:translateY(-5px) rotate(-45deg)}
+
+  /* The nav pill becomes a panel of the same black surface and 999px-family rounding. */
+  .nav{top:calc(max(calc(16 * var(--u)), env(safe-area-inset-top)) + 56 * var(--u));left:calc(16 * var(--u));right:calc(16 * var(--u));width:auto;height:auto;
+    border-radius:calc(24 * var(--u));padding:calc(8 * var(--u)) calc(8 * var(--u)) calc(12 * var(--u));display:flex;flex-direction:column;z-index:5;
+    visibility:hidden;opacity:0;transform:translateY(calc(-6 * var(--u)));transition:opacity .2s ease,transform .2s ease,visibility 0s linear .2s}
+  .nav.is-open{visibility:visible;opacity:1;transform:none;transition:opacity .2s ease,transform .2s ease}
+  .nav__links{display:flex;flex-direction:column}
+  .nav__link{position:relative;left:auto;height:calc(48 * var(--u));padding:0 calc(14 * var(--u));font-size:calc(17 * var(--u));letter-spacing:calc(-0.4 * var(--u))}
+  .nav__link[data-i]{left:auto}
+  .nav__chevron{position:static;flex:none;margin-left:calc(6 * var(--u));margin-top:calc(1 * var(--u));width:calc(11 * var(--u));height:calc(6 * var(--u))}
+  .nav__partner{position:relative;left:auto;top:auto;margin:calc(6 * var(--u)) 0 0 calc(6 * var(--u))}
+
+  .hero{left:var(--gutter);right:var(--gutter);bottom:calc(max(calc(24 * var(--u)), env(safe-area-inset-bottom) + 12 * var(--u)) + 34 * var(--u))}
+  .hero__brand{margin:0 0 calc(10 * var(--u));font-size:calc(21 * var(--u));line-height:calc(22 * var(--u))}
+  .hero__title{font-size:min(clamp(32px, 10.4vw, 60px), calc((100vw - 2 * var(--gutter)) / 8.7))}
+  .hero__lede{margin:calc(18 * var(--u)) 0 0;font-size:calc(16 * var(--u));line-height:1.375;letter-spacing:-0.025em}
+  .hero__actions{margin-top:calc(24 * var(--u))}
+  /* The scroll cue keeps its desktop anchor — bottom-right — as the closing line of the screen. */
+  .cue{right:var(--gutter);bottom:max(calc(24 * var(--u)), calc(env(safe-area-inset-bottom) + 12 * var(--u)))}
+  .cue svg{margin-left:calc(14 * var(--u))}
+}
+
+/* Short landscape phones: the header still fits across, so it keeps the desktop nav pill (≥650px wide);
+   the hero stays bottom-left with the scroll cue on its action row, as on desktop, tightened vertically. */
+@media (max-height: 500px) and (min-aspect-ratio: 1/1){
+  :root{ --u: clamp(0.82px, calc(100vh / 415), 0.94px); }
+  @supports (height: 100dvh){ :root{ --u: clamp(0.82px, calc(100dvh / 415), 0.94px); } }
+  .scene img{object-position:50% 30%}
+  .hero{left:max(calc(61 * var(--u)), calc(env(safe-area-inset-left) + 16px));right:auto;bottom:max(calc(24 * var(--u)), calc(env(safe-area-inset-bottom) + 10px))}
+  .hero__brand{margin:0 0 calc(10 * var(--u));font-size:calc(22 * var(--u));line-height:calc(22 * var(--u))}
+  .hero__title{font-size:clamp(28px, 10vh, 44px)}
+  @supports (height: 100dvh){ .hero__title{font-size:clamp(28px, 10dvh, 44px)} }
+  .hero__lede{margin-top:calc(14 * var(--u))}
+  .hero__actions{margin-top:calc(20 * var(--u));flex-wrap:nowrap}
+  .cue{right:max(calc(81 * var(--u)), calc(env(safe-area-inset-right) + 16px));bottom:calc(max(calc(24 * var(--u)), calc(env(safe-area-inset-bottom) + 10px)) + 16 * var(--u))}
+  .cue svg{margin-left:calc(29 * var(--u))}
+}
+@media (max-height: 500px) and (min-aspect-ratio: 1/1) and (max-width: 649.98px){
+  .nav{top:calc(max(calc(16 * var(--u)), env(safe-area-inset-top)) + 56 * var(--u));left:auto;width:min(calc(100vw - 32 * var(--u)), calc(360 * var(--u)))}
+  .nav__links{display:grid;grid-template-columns:1fr 1fr}
+  .nav__link{height:calc(42 * var(--u))}
+}
+/* ---------- Tablet architecture ----------
+   Why 1100px: the desktop composition never collides as it narrows (logo→nav gap stays >450px);
+   it only shrinks. Its first failure is the smallest type and the nav's touch height:
+   13.6px labels < 12px and the 47px nav pill < 40px once --u < 0.86, i.e. below ~1100px wide.
+   Below that, the composition stops shrinking and is anchored at a legible, touch-safe scale.
+   Portrait screens wider than phones get the same header and a larger hero instead of the phone menu. */
+@media (min-width: 650px) and (max-width: 1100px) and (min-height: 501px),
+       (min-width: 650px) and (max-aspect-ratio: 4/5) and (min-height: 501px){
+  :root{ --t: 0.94px; --u: var(--t); }
+
+  /* Invisible touch padding for the two text-only links; no visual change. */
+  .textlink::after,.cue::after{content:"";position:absolute;inset:calc(-15 * var(--u)) calc(-10 * var(--u))}
+}
+@media (min-width: 650px) and (max-aspect-ratio: 4/5) and (min-height: 501px){
+  /* Portrait: the header keeps desktop proportions; the hero takes the extra height and grows 10%. */
+  :root{ --t: clamp(0.94px, calc(100vw / 800), 1.15px); }
+  .hero,.cue{ --u: calc(var(--t) * 1.1); }
+  /* Keep the braided channels behind the copy instead of the dark open water. */
+  .scene img{ object-position: 58% 50%; }
+}
+/* ---------- Entrance (runs once, then leaves no trace) ---------- */
+.hero__title .rv-in{display:inline-block}
+.rv-pre :is(.mark,.nav,.sound,.menu,.hero__brand,.hero__title,.hero__lede,.hero__actions,.cue){opacity:0}
+/* Each headline line becomes its own mask while the entrance runs; the inset clears ascenders, descenders and overhangs. */
+.rv-run .hero__title > span{clip-path:inset(-0.12em -0.15em -0.2em -0.15em)}
+@media (prefers-reduced-motion: reduce){ *{transition:none!important;animation:none!important} }
+</style>
+<script>
+(function(h){try{if('animate' in h&&!matchMedia('(prefers-reduced-motion: reduce)').matches){h.classList.add('rv-pre');
+window.__rvFailsafe=setTimeout(function(){h.classList.remove('rv-pre','rv-run');},3500);}}catch(e){}})(document.documentElement);
+</script>
+</head>
+<body>
+<main class="stage">
+  <div class="scene" aria-hidden="true">
+    <img src="assets/images/riverine-background.jpg" alt="" width="1448" height="1086" decoding="async" fetchpriority="high">
+    <div class="shade shade--x"></div>
+    <div class="shade shade--y"></div>
+    <div class="shade shade--corner"></div>
+  </div>
+
+  <header>
+    <a class="mark" href="#" aria-label="riverine.ai home">
+      <span class="mark__orb">
+        <svg viewBox="0 0 46 46" fill="none" stroke="#7CC6B5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M24.2 37V24"/>
+          <path d="M19.8 39.3c1.2-1.9 2.8-2.7 4.4-2.7s3.2.8 4.4 2.7"/>
+          <path d="M23.8 30.2c-2.8-.6-5.5-2.6-7.2-5-2-1.8-5.2-2-7-4.2-1.4-1.8-1.4-4.2 0-6 2-3 5.8-5.2 8.8-6.2 1.4-.5 2.8-1 4.2-1.3"/>
+          <path d="M14.8 23V13.2c0-1.4.8-2.6 2.4-3.4"/>
+          <path d="M24 24.2c-1.8-1.8-3.2-3.8-3.7-6.4-.5-2.6-.6-5.2-.3-7.2"/>
+          <path d="M24.3 23.2c1.5-3 3.5-6.4 4.3-10.2.4-2.6 1.2-4.1 2.8-4.3H35"/>
+          <path d="M24.6 25.7c3-.7 5.8-2.1 7.4-4.5 1.2-1.8 1.4-3.8 2.8-5.2 1.4-1.4 3.2-2.1 5.2-2.4"/>
+        </svg>
+      </span>
+      <svg class="mark__moth" viewBox="0 0 39 30" aria-hidden="true"><g fill="#315352"><path d="M19.5 12.4C17.5 9.5 14 5 10.8 3 9.6 2.4 8 2.2 6 2.3 4.2 2.4 3.1 3 3 4.8L3.1 9.8C3.2 12.4 5 15 8.3 17.3 6.6 19.5 5.6 21.8 5.4 24.2 5.2 26.2 5.8 27.6 7.3 28 8.8 28.3 10.2 27.3 11.4 25.8 14.2 22.6 17.2 19.8 19.5 17.1Z"/><path transform="matrix(-1 0 0 1 39 0)" d="M19.5 12.4C17.5 9.5 14 5 10.8 3 9.6 2.4 8 2.2 6 2.3 4.2 2.4 3.1 3 3 4.8L3.1 9.8C3.2 12.4 5 15 8.3 17.3 6.6 19.5 5.6 21.8 5.4 24.2 5.2 26.2 5.8 27.6 7.3 28 8.8 28.3 10.2 27.3 11.4 25.8 14.2 22.6 17.2 19.8 19.5 17.1Z"/></g></svg>
+    </a>
+
+    <nav class="nav" id="site-nav" aria-label="Primary">
+      <ul class="nav__links">
+        <li><a class="nav__link" data-i="1" href="#work">Work</a></li>
+        <li><a class="nav__link" data-i="2" href="#regenerate" aria-current="page">Regenerate<svg class="nav__chevron" viewBox="0 0 11 6" fill="none" stroke="#7CCBBA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M.7.7 5.5 5.3 10.3.7"/></svg></a></li>
+        <li><a class="nav__link" data-i="3" href="#nature">Nature</a></li>
+        <li><a class="nav__link" data-i="4" href="#earth">Earth</a></li>
+        <li><a class="nav__link" data-i="5" href="#news">News</a></li>
+      </ul>
+      <a class="pill nav__partner" href="#partner">Partner
+        <span class="disc"><svg viewBox="0 0 4 7" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M.5.5 3.5 3.5.5 6.5"/></svg></span>
+      </a>
+    </nav>
+
+    <button class="sound" type="button" aria-pressed="true" aria-label="Ambient river sound">
+      <svg viewBox="0 0 48 48" fill="none" stroke="#7EC4B5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14.6 19.6h3.6l5.9-4.9v18.6l-5.9-4.9h-3.6z"/>
+        <path class="wave" d="M27.6 19.6c1.9 2.8 1.9 6 0 8.8"/>
+        <path class="wave" d="M31.2 16.2c3.4 4.9 3.4 10.7 0 15.6"/>
+      </svg>
+    </button>
+    <button class="menu" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
+      <svg viewBox="0 0 18 12" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <path class="bar1" d="M1 1h16"/><path class="bar2" d="M1 6h16"/><path class="bar3" d="M1 11h16"/>
+      </svg>
+    </button>
+  </header>
+
+  <section class="hero" aria-labelledby="hero-title">
+    <p class="hero__brand">riverine.ai</p>
+    <h1 class="hero__title" id="hero-title"><span class="l1"><span class="rv-in">Where</span></span> <span class="l2"><span class="rv-in">Regeneration Fuels</span></span> <span class="l3"><span class="rv-in">Future Thinking</span></span></h1>
+    <p class="hero__lede"><span>Living waterways reveal a hidden logic of renewal</span><span class="l2">Nature's patterns guide more caring AI</span></p>
+    <div class="hero__actions">
+      <a class="pill cta" href="#future">Shape our Future
+        <span class="disc"><svg viewBox="0 0 4.5 8" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M.6.6 4 4 .6 7.4"/></svg></span>
+      </a>
+      <a class="textlink" href="#rivers">Discover the Rivers</a>
+    </div>
+  </section>
+
+  <a class="cue" href="#details">Scroll for Details
+    <svg viewBox="0 0 11 6" fill="none" stroke="#7CCBBA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M.7.7 5.5 5.3 10.3.7"/></svg>
+  </a>
+</main>
+<script>
+/* Entrance timeline — one pass on first load.
+   0.00  logo glass settles; tree draws trunk → roots → branches (the delta motif)
+   0.12  nav pill drops in from its top edge; links follow in a 45ms ripple; sound control beside it
+   0.30  "riverine.ai" names the page
+   0.38  headline: three lines rise out of their own masks, 90ms apart (primary moment)
+   0.80  supporting lines lift in
+   1.00  CTA lifts into place, then the text link
+   1.25  scroll cue drifts down into place — last and quietest
+   ≈1.95 complete → every animation is finished and unfilled; the page is the original static design. */
+(function(){
+  var html=document.documentElement;
+  if(!html.classList.contains('rv-pre')) return;
+  var done=false;
+  function finish(){
+    html.classList.remove('rv-run','rv-pre');
+    /* Chrome can keep the last animated raster of the logo (dashed strokes inside a faded glass layer);
+       rebuild the logo and the action row once so the resting frame is the original artwork, and leave no inline style behind. */
+    ['.mark','.hero__actions'].forEach(function(s){ var m=document.querySelector(s);
+      if(m){ m.style.display='none'; m.getBoundingClientRect(); m.style.removeProperty('display'); if(!m.getAttribute('style')) m.removeAttribute('style'); } });
+  }
+  function run(){
+    if(done||!html.classList.contains('rv-pre')) return; done=true;
+    clearTimeout(window.__rvFailsafe);
+    var q=function(s){return document.querySelector(s);}, qa=function(s){return Array.prototype.slice.call(document.querySelectorAll(s));};
+    var cta=q('.cta'), u=(cta&&cta.getBoundingClientRect().height/46)||1;
+    var k=u*(innerWidth<650?0.8:1);              /* distances follow the layout unit; phones a touch calmer */
+    var EXPO='cubic-bezier(0.16, 1, 0.3, 1)', QUART='cubic-bezier(0.25, 1, 0.5, 1)', GROW='cubic-bezier(0.45, 0, 0.2, 1)';
+    var anims=[];
+    function play(el,frames,delay,dur,ease){ if(el) anims.push(el.animate(frames,{delay:delay,duration:dur,easing:ease,fill:'backwards'})); }
+    function lift(y){ return [{opacity:0,transform:'translateY('+Math.round(y*k)+'px)'},{opacity:1,transform:'none'}]; }  /* whole pixels: no fractional raster left behind */
+    var fadeIn=[{opacity:0},{opacity:1}];
+
+    html.classList.add('rv-run');
+
+    /* Header — understated */
+    play(q('.mark'),fadeIn,0,500,QUART);
+    qa('.mark__orb path').forEach(function(p,i){
+      var L=p.getTotalLength(), da=L.toFixed(2)+' '+(L*2).toFixed(2);
+      play(p,[{strokeDasharray:da,strokeDashoffset:L,opacity:0},{opacity:1,offset:0.12},{strokeDasharray:da,strokeDashoffset:0,opacity:1}],80+i*45,820,GROW);
+    });
+    play(q('.mark__moth'),[{opacity:0,transform:'scale(0.92)'},{opacity:1,transform:'none'}],420,650,EXPO);
+    var nav=q('.nav'), navShown=nav&&getComputedStyle(nav).visibility!=='hidden';
+    if(navShown){
+      play(nav,lift(-8),120,700,EXPO);
+      qa('.nav__link').forEach(function(a,i){ play(a,lift(-4),260+i*45,450,QUART); });
+      play(q('.nav__partner'),lift(-4),260+5*45,500,QUART);
+    }
+    if(getComputedStyle(q('.menu')).display!=='none') play(q('.menu'),lift(-8),120,700,EXPO);
+    play(q('.sound'),lift(-8),200,700,EXPO);
+
+    /* Hero copy — the story */
+    play(q('.hero__brand'),lift(10),300,650,EXPO);
+    qa('.hero__title .rv-in').forEach(function(l,i){
+      play(l,[{transform:'translateY(115%)'},{transform:'none'}],380+i*90,1050,EXPO);
+    });
+    qa('.hero__lede > span').forEach(function(l,i){ play(l,lift(14),800+i*60,800,EXPO); });
+    play(cta,lift(12),1000,800,EXPO);
+    play(q('.textlink'),lift(8),1100,600,QUART);
+    play(q('.cue'),lift(-6),1250,700,EXPO);
+
+    html.classList.remove('rv-pre');             /* same frame: backwards-fill now holds every start state */
+    Promise.all(anims.map(function(a){return a.finished;})).then(finish,finish);
+  }
+  var img=q0('.scene img');
+  function q0(s){return document.querySelector(s);}
+  var gates=[document.fonts&&document.fonts.ready, img&&img.decode&&img.decode().catch(function(){})];
+  Promise.all(gates).then(function(){ requestAnimationFrame(run); }, function(){ requestAnimationFrame(run); });
+})();
+</script>
+<script>
+(function(){
+  var menu=document.querySelector('.menu'),nav=document.getElementById('site-nav'),snd=document.querySelector('.sound');
+  function setOpen(o,restore){menu.setAttribute('aria-expanded',o);nav.classList.toggle('is-open',o);
+    if(o){var f=nav.querySelector('a');if(f)setTimeout(function(){f.focus({preventScroll:true});},30);}else if(restore){menu.focus();}}
+  menu.addEventListener('click',function(){setOpen(menu.getAttribute('aria-expanded')!=='true',false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&nav.classList.contains('is-open'))setOpen(false,true);});
+  document.addEventListener('click',function(e){if(nav.classList.contains('is-open')&&!nav.contains(e.target)&&!menu.contains(e.target))setOpen(false,false);});
+  nav.addEventListener('click',function(e){if(e.target.closest('a')&&nav.classList.contains('is-open'))setOpen(false,false);});
+  snd.addEventListener('click',function(){snd.setAttribute('aria-pressed',snd.getAttribute('aria-pressed')!=='true');});
+})();
+</script>
+</body>
+</html>

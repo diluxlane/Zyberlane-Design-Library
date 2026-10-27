@@ -1,0 +1,261 @@
+@font-face{font-family:'Poppins';font-weight:500;font-style:normal;font-display:block;src:url(fonts/Poppins-500.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-weight:300;font-style:normal;font-display:block;src:url(fonts/Inter-300.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-weight:400;font-style:normal;font-display:block;src:url(fonts/Inter-400.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-weight:500;font-style:normal;font-display:block;src:url(fonts/Inter-500.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-weight:600;font-style:normal;font-display:block;src:url(fonts/Inter-600.woff2) format('woff2')}
+:root{
+  --page:#070709;
+  --card:#060607;
+  --card-line:rgba(255,255,255,.115);
+  --ink:#ffffff;
+  --body:#f2f2f4;
+  --green:#22a447;
+  --red:#c42a2e;
+  --k:1;            /* desktop only: design-px -> css-px scale, set by layout script */
+  --stage-h:1145px; /* desktop only: design-px height the stage must fill */
+  --u:1px;          /* one design pixel of the card illustrations (fluid modes redefine it) */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--page);min-height:100%;}
+body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision}
+
+/* ---------- Stage: authored in design px (1374 x 1145), scaled with zoom ---------- */
+.stage{
+  zoom:var(--k);
+  width:1374px;
+  min-height:var(--stage-h);
+  display:grid;
+  grid-template-columns:647px 647px;
+  grid-template-rows:minmax(531px,1fr) minmax(531px,1fr);
+  column-gap:14px; row-gap:19px;
+  padding:23px 33px 41px 33px;
+  font-family:"Inter",system-ui,sans-serif;
+  color:var(--ink);
+}
+
+/* ---------- Card shell ---------- */
+.card{
+  position:relative; overflow:hidden; isolation:isolate;
+  border-radius:20px;
+  background:var(--card);
+  box-shadow:0 0 0 1px var(--card-line), 0 0 0 2.5px rgba(0,0,0,.55);
+  min-height:531px;
+}
+.card::after{ /* hairline that sits above glows, like the reference */
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:50;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);
+}
+.layer{position:absolute;left:0;top:0;width:calc(647*var(--u));height:calc(531*var(--u));pointer-events:none}
+.art{position:absolute;left:0;top:0;width:calc(647*var(--u));height:calc(400*var(--u))}
+.art.tall{height:calc(531*var(--u))}
+.foot{position:absolute;left:0;right:0;bottom:0;height:131px;z-index:20}
+
+.t{position:absolute;line-height:1;white-space:nowrap}
+.foot .ico{position:absolute;left:48px;top:9px;width:26px;height:26px}
+.foot h3{position:absolute;left:93px;top:9.6px;font:500 25.8px/1 "Poppins",sans-serif;letter-spacing:0;white-space:nowrap;color:#fff;
+  text-shadow:0 0 18px rgba(0,0,0,.6)}
+.foot p{position:absolute;left:46.5px;top:50.7px;width:440px;font:400 17px/25px "Inter",sans-serif;color:var(--body)}
+.c2 .foot h3,.c3 .foot h3{left:92px;font-size:25.5px}
+.c4 .foot h3{left:91.5px;font-size:25.5px}
+.c3 .foot p,.c4 .foot p{top:52.7px}
+
+/* Hide only entrance performers before the choreography starts. Card shells,
+   light fields, and decorative artwork remain in their authored state. */
+html.entry-prep .c1 .row,
+html.entry-prep .c2 .panel,
+html.entry-prep .c2 .pill,
+html.entry-prep .c2 .rate,
+html.entry-prep .c3 .bar,
+html.entry-prep .c4 .box,
+html.entry-prep .c4 .menu,
+html.entry-prep .foot .ico,
+html.entry-prep .foot h3,
+html.entry-prep .foot p{opacity:0}
+
+/* ---------- glow primitives ---------- */
+.blur{position:absolute;pointer-events:none}
+
+/* ============ CARD 1 : Visibility Metrics ============ */
+.c1 .row{position:absolute;left:calc(114*var(--u));width:calc(410*var(--u));height:calc(67*var(--u));border-radius:calc(15*var(--u));
+  background:linear-gradient(180deg,rgba(28,22,20,.55),rgba(14,12,12,.55));
+  box-shadow:inset 0 0 0 calc(1*var(--u)) rgba(255,255,255,.07);
+  -webkit-backdrop-filter:blur(calc(10*var(--u)));backdrop-filter:blur(calc(10*var(--u)))}
+.c1 .row.on{top:calc(67*var(--u));height:calc(77*var(--u));
+  background:linear-gradient(180deg,rgba(30,24,22,.62) 0%,rgba(40,26,20,.55) 60%,rgba(70,40,24,.5) 100%);
+  box-shadow:inset 0 0 0 calc(1*var(--u)) rgba(255,236,222,.42), 0 0 0 calc(1*var(--u)) rgba(0,0,0,.35), 0 calc(10*var(--u)) calc(30*var(--u)) rgba(0,0,0,.35)}
+.c1 .r2{top:calc(160*var(--u));opacity:.56}
+.c1 .r3{top:calc(243*var(--u));opacity:.31}
+.c1 .r4{top:calc(326*var(--u));opacity:.12}
+.c1 .name{left:calc(68*var(--u));top:calc(14*var(--u));font:500 calc(15*var(--u))/1 Inter;color:#fff}
+.c1 .on .name{top:calc(20*var(--u))}
+.c1 .sub{left:calc(68*var(--u));top:calc(40.2*var(--u));font:400 calc(13.5*var(--u))/1 Inter;color:rgba(255,246,236,.92)}
+.c1 .on .sub{top:calc(46.2*var(--u))}
+.c1 .r2 .sub,.c1 .r3 .sub,.c1 .r4 .sub{color:rgba(255,190,160,.62)}
+.c1 .logo{position:absolute;left:calc(23*var(--u));top:calc(22*var(--u));width:calc(32*var(--u));height:calc(33*var(--u))}
+.c1 .gico{position:absolute;left:calc(26*var(--u));top:calc(21*var(--u));width:calc(26*var(--u));height:calc(26*var(--u))}
+.c1 .btn{position:absolute;left:calc(281*var(--u));top:calc(16*var(--u));width:calc(105*var(--u));height:calc(34*var(--u));border-radius:calc(8*var(--u));
+  display:flex;align-items:center;justify-content:center;font:400 calc(14*var(--u))/1 Inter;color:rgba(255,255,255,.62);
+  background:rgba(255,255,255,.045);box-shadow:inset 0 0 0 calc(1*var(--u)) rgba(255,255,255,.08)}
+.c1 .on .btn{top:calc(20*var(--u));height:calc(35*var(--u));color:#fff;font-weight:500;
+  background:linear-gradient(135deg,#b6602f 0%,#a5582d 30%,#7a4a33 70%,#4e3a31 100%);
+  box-shadow:inset 0 calc(1*var(--u)) 0 rgba(255,214,186,.75),inset 0 0 0 calc(1*var(--u)) rgba(255,190,150,.35),0 calc(2*var(--u)) calc(8*var(--u)) rgba(0,0,0,.35)}
+
+/* ============ CARD 2 : Competitor Analysis (table) ============ */
+.c2 .panel{position:absolute;left:calc(55*var(--u));top:calc(71*var(--u));width:calc(371*var(--u));height:calc(254*var(--u));border-radius:calc(14*var(--u));
+  background:linear-gradient(180deg,rgba(22,23,32,.62),rgba(12,12,16,.72));
+  box-shadow:inset 0 calc(1*var(--u)) 0 rgba(180,190,255,.12);
+  -webkit-backdrop-filter:blur(calc(6*var(--u)));backdrop-filter:blur(calc(6*var(--u)))}
+.c2 .panel::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:calc(1*var(--u));pointer-events:none;
+  background:linear-gradient(200deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,.08) 40%,rgba(255,255,255,0) 85%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.c2 .pc{position:absolute;inset:0;
+  -webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,.42) 5%,#000 48%),linear-gradient(180deg,#000 38%,rgba(0,0,0,.78) 46%,rgba(0,0,0,.5) 62%,rgba(0,0,0,.36) 85%);
+  -webkit-mask-composite:source-in;mask-composite:intersect;
+  mask-image:linear-gradient(90deg,rgba(0,0,0,.42) 5%,#000 48%),linear-gradient(180deg,#000 38%,rgba(0,0,0,.78) 46%,rgba(0,0,0,.5) 62%,rgba(0,0,0,.36) 85%)}
+.c2 .pc .t{color:#fff}
+.c2 .details{position:absolute;left:calc(284*var(--u));top:calc(21*var(--u));width:calc(72*var(--u));height:calc(35*var(--u));border-radius:calc(8*var(--u));
+  background:#0c0d13;box-shadow:inset 0 0 0 calc(1*var(--u)) rgba(255,255,255,.2),0 0 0 calc(1*var(--u)) rgba(0,0,0,.6);
+  display:flex;align-items:center;justify-content:center;font:500 calc(14.5*var(--u))/1 Inter;color:#eceef4;padding-top:calc(3*var(--u))}
+.c2 .pill{position:absolute;left:calc(452*var(--u));top:calc(100*var(--u));width:calc(119*var(--u));height:calc(36*var(--u));border-radius:calc(18*var(--u));
+  background:linear-gradient(180deg,rgba(52,58,96,.55),rgba(30,32,52,.55));
+  box-shadow:inset 0 0 0 calc(1*var(--u)) rgba(170,180,255,.32),0 calc(4*var(--u)) calc(14*var(--u)) rgba(0,0,0,.35);
+  -webkit-backdrop-filter:blur(calc(8*var(--u)));backdrop-filter:blur(calc(8*var(--u)))}
+.c2 .av{position:absolute;top:calc(4*var(--u));width:calc(28*var(--u));height:calc(28*var(--u));border-radius:50%;overflow:hidden;
+  box-shadow:0 0 0 calc(1.5*var(--u)) rgba(205,212,255,.85)}
+.c2 .rate{position:absolute;left:calc(392*var(--u));top:calc(172*var(--u));width:calc(213*var(--u));height:calc(177*var(--u));border-radius:calc(16*var(--u));
+  background:linear-gradient(160deg,rgba(92,106,190,.97) 0%,rgba(66,72,118,.95) 22%,rgba(44,46,62,.96) 52%,rgba(22,22,26,.98) 82%,rgba(16,16,18,.98) 100%);
+  box-shadow:inset 0 0 0 calc(1*var(--u)) rgba(255,255,255,.1),inset 0 calc(1*var(--u)) 0 rgba(170,182,255,.55),0 calc(18*var(--u)) calc(40*var(--u)) rgba(0,0,0,.55);
+  -webkit-backdrop-filter:blur(calc(14*var(--u)));backdrop-filter:blur(calc(14*var(--u)))}
+
+/* ============ CARD 3 : Competitor Analysis (feed) ============ */
+.c3{background:radial-gradient(120% 90% at 55% 45%,#0e1020 0%,#0a0b14 45%,#08080c 100%)}
+.c3 .line{position:absolute;font:400 calc(19.5*var(--u))/1 Inter;white-space:nowrap}
+.c3 .bar{position:absolute;left:calc(45*var(--u));top:calc(137*var(--u));width:calc(556*var(--u));height:calc(69*var(--u));border-radius:calc(12*var(--u));
+  background:linear-gradient(180deg,#131318 0%,#0e0e10 30%,#0e0e0f 100%);
+  box-shadow:inset 0 0 0 calc(1*var(--u)) rgba(255,255,255,.09),inset 0 calc(1*var(--u)) 0 rgba(255,255,255,.05),0 calc(4*var(--u)) calc(10*var(--u)) rgba(0,0,0,.25)}
+.c3 .bar::before{content:"";position:absolute;left:calc(200*var(--u));top:calc(-1*var(--u));width:calc(200*var(--u));height:calc(2*var(--u));border-radius:calc(2*var(--u));background:linear-gradient(90deg,transparent,rgba(235,245,255,.95) 45%,rgba(235,245,255,.95) 60%,transparent);filter:blur(calc(.6*var(--u)))}
+
+/* ============ CARD 4 : Prompt Intelligence ============ */
+.c4 .box{position:absolute;left:calc(74*var(--u));top:calc(106*var(--u));width:calc(502*var(--u));height:calc(94*var(--u));border-radius:calc(22*var(--u));background:#0a0b0f}
+.c4 .box::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:calc(1*var(--u));pointer-events:none;
+  background:linear-gradient(100deg,rgba(255,170,110,1) 0%,rgba(255,150,95,.75) 18%,rgba(255,200,170,.25) 34%,rgba(255,255,255,.1) 50%,rgba(170,180,255,.3) 70%,rgba(185,200,255,.7) 92%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.c4 .chip{position:absolute;top:calc(55*var(--u));height:calc(28*var(--u));border-radius:calc(14*var(--u));
+  background:rgba(255,255,255,.025);box-shadow:inset 0 0 0 calc(1*var(--u)) rgba(255,255,255,.1);
+  display:flex;align-items:center;font:400 calc(11.5*var(--u))/1 Inter;color:#dfe3ee}
+.c4 .menu{position:absolute;left:calc(206*var(--u));top:calc(194*var(--u));width:calc(142*var(--u));height:calc(120*var(--u));border-radius:calc(10*var(--u));
+  background:linear-gradient(180deg,rgba(20,23,32,.92),rgba(16,19,27,.94));
+  box-shadow:inset 0 0 0 calc(1*var(--u)) rgba(255,255,255,.1),0 calc(12*var(--u)) calc(30*var(--u)) rgba(0,0,0,.6);
+  -webkit-backdrop-filter:blur(calc(10*var(--u)));backdrop-filter:blur(calc(10*var(--u)))}
+.c4 .mi{position:absolute;left:calc(31*var(--u));font:400 calc(11.5*var(--u))/1 Inter;color:#cbccd8}
+.c4 .mic{position:absolute;left:calc(12*var(--u));width:calc(12*var(--u));height:calc(12*var(--u))}
+.c4 .glyphs span{position:absolute;font:500 calc(7*var(--u))/1 "Inter",monospace;color:#fff}
+
+/* desktop coordinates of hooks used by the fluid modes */
+.c2 .k2{left:calc(183*var(--u))} .c2 .k3{left:calc(282*var(--u))} .c2 .ka{left:calc(287*var(--u))} .c2 .k4{left:calc(313*var(--u))}
+.c3 .l0{left:calc(110*var(--u));top:calc(24*var(--u))} .c3 .l1{left:calc(102*var(--u));top:calc(89.2*var(--u))} .c3 .l3{left:calc(95*var(--u));top:calc(243.2*var(--u))} .c3 .l4{left:calc(82*var(--u));top:calc(310.2*var(--u))}
+.c3 .fx{position:absolute;left:0;top:0;width:calc(647*var(--u));height:calc(531*var(--u));pointer-events:none}
+.c3 .spk{position:absolute;left:calc(19*var(--u));top:calc(19*var(--u));width:calc(30*var(--u));height:calc(30*var(--u));color:#fff}
+.c3 .msg{left:calc(60.5*var(--u));top:calc(25.2*var(--u));font:400 calc(19.75*var(--u))/1 Inter;color:#fff}
+.c4 .glyphs{position:absolute;left:0;top:0}
+.c4 .g-oh{left:calc(10*var(--u))} .c4 .g-vh{left:calc(400*var(--u))} .c4 .g-o{left:calc(64*var(--u))} .c4 .g-v{left:calc(326*var(--u))}
+.c4 .ch-plus{left:calc(11*var(--u))} .c4 .ch-normal{left:calc(44*var(--u))} .c4 .ch-deep{left:calc(133*var(--u))} .c4 .ch-voice{left:calc(395*var(--u))}
+.c4 .trail{display:contents}
+.c4 .send{position:absolute;left:calc(463*var(--u));top:calc(55*var(--u))}
+
+/* =====================================================================
+   FLUID MODES — everything below the locked desktop stage.
+   Desktop (>=1120px wide, landscape) keeps the zoomed 1374x1145 stage.
+   Below that the zoom would push body copy under 14px, so the cards
+   switch to real fluid layout: real type sizes, real gutters, and the
+   illustrations drawn in a container-relative unit (--u).
+   ===================================================================== */
+@media not all and (min-width:1120px) and (min-aspect-ratio:1/1){
+  .stage{zoom:1;width:auto;min-height:100vh;min-height:100svh;
+    grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:1fr;
+    column-gap:clamp(12px,1.4vw,14px);row-gap:clamp(12px,1.9vw,19px);
+    padding:clamp(16px,2.4vw,24px)}
+  .card{container-type:inline-size;min-height:0;display:flex;flex-direction:column;
+    /* the illustration's busy core is ~566 design px wide: fit it to the card, never upscale */
+    --u:min(1px, calc(100cqw / 566))}
+  .layer{left:50%;margin-left:calc(-323.5*var(--u))}
+  .art,.art.tall{position:relative;flex:none;align-self:center;height:calc(400*var(--u))}
+  .foot{position:relative;left:auto;right:auto;bottom:auto;height:auto;margin-top:auto;
+    display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;
+    column-gap:clamp(12px,2.9cqw,19px);row-gap:clamp(10px,2.2cqw,14px);
+    padding:clamp(8px,2cqw,12px) clamp(20px,7.2cqw,47px) clamp(24px,6.2cqw,40px)}
+  .foot .ico,.foot h3,.foot p{position:static}
+  .foot .ico{width:clamp(22px,4cqw,26px);height:clamp(22px,4cqw,26px)}
+  .foot h3,.c2 .foot h3,.c3 .foot h3,.c4 .foot h3{font-size:clamp(20px,4cqw,25.8px)}
+  .foot p{grid-column:1 / -1;width:auto;max-width:30em;font-size:clamp(15px,2.65cqw,17px);line-height:1.47}
+}
+
+/* Narrow tablet / large phone landscape: 2 columns would drop the illustrations
+   below ~0.79 scale, so cards take the full row (illustrations return to 1:1). */
+@media not all and (min-width:1120px) and (min-aspect-ratio:1/1){
+  @media (max-width:959.98px){
+    .stage{grid-template-columns:minmax(0,1fr);grid-auto-rows:auto}
+  }
+}
+
+/* =====================================================================
+   MOBILE — below ~513px a full-width card would shrink the illustration
+   under 0.85. Instead the illustrations re-flow: fluid widths, wrapping
+   text, flex/grid rows, and a unit that stays between 0.8 and 1.
+   ===================================================================== */
+@media (max-width:512.98px){
+  .stage{padding:16px;row-gap:14px}
+  .card{--u:clamp(.8px, calc(100cqw / 420), 1px);--g:clamp(14px,4.4cqw,20px)}
+  .art,.art.tall{align-self:stretch;width:auto;height:auto}
+  .foot p br{display:none}
+  .foot p{max-width:none}
+
+  /* card 1 — integration list: rows become fluid grid rows */
+  .c1 .art{display:flex;flex-direction:column;gap:calc(16*var(--u));padding:calc(67*var(--u)) var(--g) calc(36*var(--u))}
+  .c1 .row{position:relative;left:auto;top:auto;width:auto;height:auto;min-height:calc(67*var(--u));
+    display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-rows:auto auto;align-content:center;
+    column-gap:calc(13*var(--u));row-gap:calc(8*var(--u));padding:calc(13*var(--u)) calc(14*var(--u)) calc(13*var(--u)) calc(23*var(--u))}
+  .c1 .row.on{top:auto;height:auto;min-height:calc(77*var(--u))}
+  .c1 .logo,.c1 .gico{position:static;grid-row:1 / 3;align-self:center}
+  .c1 .gico{margin:0 calc(3*var(--u))}
+  .c1 .row .t{position:static;white-space:normal}
+  .c1 .on .name,.c1 .on .sub,.c1 .on .btn{top:auto}
+  .c1 .name{grid-column:2;align-self:end}
+  .c1 .sub{grid-column:2;align-self:start;line-height:1.25}
+  .c1 .btn{position:static;grid-column:3;grid-row:1 / 3;align-self:center}
+
+  /* card 2 — table panel full width, avatars above, rating card overlapping its corner */
+  .c2 .art{padding:calc(72*var(--u)) var(--g) calc(170*var(--u))}
+  .c2 .panel{position:relative;left:auto;top:auto;width:auto}
+  .c2 .k2{left:49.3%} .c2 .k3{left:76%} .c2 .ka{left:77.4%} .c2 .k4{left:84.4%}
+  .c2 .details{left:auto;right:calc(15*var(--u))}
+  .c2 .pill{left:auto;right:var(--g);top:calc(22*var(--u))}
+  .c2 .rate{left:auto;right:calc(var(--g) * .5);top:calc(300*var(--u))}
+
+  /* card 3 — feed: the drum of lines flows, the focused bar wraps its text */
+  .c3 .art{display:flex;flex-direction:column;padding:calc(24*var(--u)) var(--g) calc(44*var(--u))}
+  .c3 .fx{left:50%;margin-left:calc(-323.5*var(--u))}
+  .c3 .line{position:relative;left:auto;top:auto;flex:none;height:calc(19.5*var(--u))}
+  .c3 .l0{order:0} .c3 .l1{order:1} .c3 .bar{order:2} .c3 .l3{order:3} .c3 .l4{order:4} .c3 .fx{order:5}
+  .c3 .l0{margin-left:calc(65*var(--u))}
+  .c3 .l1{margin:calc(45.7*var(--u)) 0 0 calc(57*var(--u))}
+  .c3 .l3{margin:calc(37.2*var(--u)) 0 0 calc(50*var(--u))}
+  .c3 .l4{margin:calc(47.5*var(--u)) 0 0 calc(37*var(--u))}
+  .c3 .bar{position:relative;left:auto;top:auto;width:auto;height:auto;min-height:calc(69*var(--u));margin-top:calc(28.3*var(--u));
+    display:flex;align-items:center;padding:calc(14*var(--u)) calc(18*var(--u)) calc(14*var(--u)) calc(60.5*var(--u))}
+  .c3 .spk{top:calc(50% - calc(15*var(--u)))}
+  .c3 .msg{position:static;white-space:normal;line-height:1.3}
+
+  /* card 4 — prompt box spans the card, controls in a wrapping flex row */
+  .c4 .art{display:flex;flex-direction:column;align-items:stretch;padding:calc(106*var(--u)) var(--g) calc(36*var(--u))}
+  .c4 .glyphs{left:calc(var(--g) - calc(60*var(--u)))}
+  .c4 .g-oh{left:calc(var(--g) - calc(64*var(--u)))}
+  .c4 .g-o{left:calc(var(--g) - calc(10*var(--u)))}
+  .c4 .g-vh{left:auto;right:calc(var(--g) - calc(94*var(--u)))}
+  .c4 .g-v{left:auto;right:calc(var(--g) - calc(22*var(--u)))}
+  .c4 .box{position:relative;left:auto;top:auto;width:auto;height:auto;min-height:calc(94*var(--u));
+    display:flex;flex-wrap:wrap;align-items:center;gap:calc(8*var(--u)) calc(6*var(--u));padding:calc(55*var(--u)) calc(11*var(--u)) calc(11*var(--u))}
+  .c4 .chip,.c4 .send{position:relative;left:auto;top:auto;flex:none}
+  .c4 .trail{display:flex;gap:calc(6*var(--u));margin-left:auto}
+  .c4 .menu{position:relative;left:auto;top:auto;flex:none;margin:calc(-6*var(--u)) 0 0 calc(132*var(--u))}
+}

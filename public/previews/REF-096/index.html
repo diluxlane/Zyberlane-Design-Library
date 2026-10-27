@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-096/">
+<script>
+(()=>{if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+const root=document.documentElement;
+root.classList.add('entry-active');
+window.setTimeout(()=>root.classList.remove('entry-active'),2600);
+})();
+</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Insuria — Health insurance made simple</title>
+<meta name="description" content="A simple, zero paperwork health plan for your family. Protect everyone in less than a minute with transparent coverage.">
+<style>
+/* ------------------------------------------------------------------
+   Fonts (subset + embedded, works offline)
+   Display: Funnel Display · UI: Golos Text · Text: Inter · Body: DM Sans · Figures: Montserrat (all variable)
+------------------------------------------------------------------- */
+@font-face{font-family:'Golos Text';src:url(assets/font-01.woff2) format('woff2');font-weight:400 900;font-style:normal;font-display:block}
+@font-face{font-family:'DM Sans';src:url(assets/font-02.woff2) format('woff2');font-weight:100 1000;font-style:normal;font-display:block}
+@font-face{font-family:'Montserrat';src:url(assets/font-03.woff2) format('woff2');font-weight:100 900;font-style:normal;font-display:block}
+@font-face{font-family:'Funnel Display';src:url(assets/font-04.woff2) format('woff2');font-weight:300 800;font-style:normal;font-display:block}
+@font-face{font-family:'Inter';src:url(assets/font-05.woff2) format('woff2');font-weight:100 900;font-style:normal;font-display:block}
+
+/* ------------------------------------------------------------------
+   Design tokens — every value is measured from the 1619 × 971 reference
+------------------------------------------------------------------- */
+:root{
+  --ink-white:#ffffff;
+  --ink-brand:#0039a6;          /* dark-blue label on white pills   */
+  --chart-blue:#0b5fb0;         /* bars / wave / stars              */
+  --logo-blue:#2a7fd2;
+  --glass-fill-top:rgba(255,255,255,.197);
+  --glass-fill-bot:rgba(255,255,255,.145);
+  --glass-stroke:rgba(255,255,255,.34);
+  --pill-fill:rgba(255,255,255,.10);
+  --pill-a1:.117; --pill-a2:.101;
+  --pill-stroke:rgba(255,255,255,.36);
+  --bg-fallback:#5aa6ec;
+
+  --f-display:"Funnel Display",system-ui,sans-serif;
+  --f-ui:"Golos Text",system-ui,sans-serif;
+  --f-body:"DM Sans",system-ui,sans-serif;
+  --f-stat:"Montserrat",system-ui,sans-serif;
+  --f-text:"Inter",system-ui,sans-serif;
+
+  /* Design canvas */
+  --W:1619; --H:971;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{background:var(--bg-fallback);color:var(--ink-white);font-family:var(--f-body);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+img{display:block}
+svg{display:block;overflow:visible}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* hero photo is embedded once and shared by its three render layers */
+.photo{--hero:url(assets/image-01.png)}
+.photo i{position:absolute;inset:0;background:var(--hero) 0 0/100% 100% no-repeat}
+/* lower-body treatment: the sharp photo dissolves into a soft blue haze that
+   bleeds past the frame (feathered mask + pre-composited haze layer) */
+.photo .ph-sharp{filter:url(#grade);
+  -webkit-mask:url(assets/image-02.png) 0 0/100% 100% no-repeat;mask:url(assets/image-02.png) 0 0/100% 100% no-repeat}
+.photo .ph-fade{inset:auto;left:0.37%;top:70.628%;width:46.195%;height:57.152%;
+  background:url(assets/image-03.png) 0 0/100% 100% no-repeat}
+
+/* Stat cards are self-contained mini-stages: every child is placed in % of the
+   card and sized in container units, so a card renders identically at any size. */
+.card{container-type:inline-size;overflow:hidden}
+.card .t{position:absolute;white-space:pre;line-height:1;margin:0}
+.card .chart{position:absolute;inset:0;width:100%;height:100%}
+.stat-num{font-family:var(--f-stat)}
+.stat-label{font-family:var(--f-stat)}
+#s90{left:12.227%;top:13.369%;font-size:17.166cqw;letter-spacing:0.802cqw;font-weight:610.442;font-variation-settings:"wght" 610.442}
+#s3m{left:12.249%;top:13.103%;font-size:16.935cqw;letter-spacing:0.671cqw;font-weight:610.442;font-variation-settings:"wght" 610.442}
+#s49{left:9.669%;top:12.174%;font-size:16.943cqw;letter-spacing:0.363cqw;font-weight:610.442;font-variation-settings:"wght" 610.442}
+#saves0{left:10.282%;top:66.278%;font-size:9.56cqw;letter-spacing:0.031cqw;font-weight:513.449;font-variation-settings:"wght" 513.449}
+#saves1{left:10.282%;top:79.946%;font-size:9.56cqw;letter-spacing:-0.267cqw;font-weight:513.449;font-variation-settings:"wght" 513.449}
+#active{left:10.811%;top:74.638%;font-size:9.432cqw;letter-spacing:-0.088cqw;font-weight:513.449;font-variation-settings:"wght" 513.449}
+#reviews{left:10.149%;top:74.638%;font-size:9.436cqw;letter-spacing:0.074cqw;font-weight:513.449;font-variation-settings:"wght" 513.449}
+
+/* The hero always fills the viewport edge-to-edge: no letterboxing, ever. */
+.hero{position:relative;width:100%;min-height:100vh;min-height:100svh;overflow:hidden;isolation:isolate;
+  background:var(--bg-fallback) url(assets/image-04.png) center/cover no-repeat}
+
+/* =====================================================================
+   DESKTOP / LANDSCAPE  —  "anchored layers" scaling system
+   ---------------------------------------------------------------------
+   --u  = one design pixel. The canvas is scaled uniformly (aspect locked)
+          to the largest size that fits the viewport.
+   --ex / --ey = leftover viewport space on the free axis.
+   Each layer is a full design canvas that is shifted by a fraction of the
+   leftover space (its anchor), so nav sticks to the top, stats to the
+   bottom, right-hand items to the right edge, the copy floats centred.
+   At exactly 5:3 every layer coincides → pixel-identical to the comp.
+   ===================================================================== */
+@media (min-width:960px) and (min-aspect-ratio:6/5) and (min-height:500px){
+  .hero{
+    --u:min(100vw / var(--W), 100svh / var(--H));
+    --ex:calc(100vw - var(--W) * var(--u));
+    --ey:calc(100svh - var(--H) * var(--u));
+    height:100svh;
+  }
+  .L{position:absolute;left:0;top:0;width:calc(var(--W) * var(--u));height:calc(var(--H) * var(--u));
+     transform:translate(calc(var(--ax) * var(--ex)), calc(var(--ay) * var(--ey)));pointer-events:none}
+  .L > *{pointer-events:auto}
+  .abs{position:absolute}
+  .t{position:absolute;white-space:pre;line-height:1}
+  .mobile-only{display:none!important}
+
+  /* ---------- logo ---------- */
+  .logo-mark{left:calc(80 * var(--u));top:calc(30 * var(--u));width:calc(50 * var(--u));height:calc(48 * var(--u))}
+  #logo_text{font-family:var(--f-ui);font-weight:520}
+
+  /* ---------- nav pill ---------- */
+  .nav-pill{left:calc(482.5 * var(--u));top:calc(26.5 * var(--u));width:calc(653 * var(--u));height:calc(54.05 * var(--u));border-radius:calc(27 * var(--u));
+    background:
+      radial-gradient(calc(48 * var(--u)) calc(32 * var(--u)) at 95.5% 50%,rgba(255,255,255,.11),rgba(255,255,255,0)),
+      linear-gradient(180deg,rgba(255,255,255,var(--pill-a1)),rgba(255,255,255,var(--pill-a2)));
+    box-shadow:inset 0 0 0 calc(1.1 * var(--u)) var(--pill-stroke);
+    -webkit-backdrop-filter:blur(calc(14 * var(--u))) saturate(1.06);backdrop-filter:blur(calc(14 * var(--u))) saturate(1.06)}
+  .nav-item{font-family:var(--f-ui);font-weight:430}
+  .chev{width:calc(12 * var(--u));height:calc(7 * var(--u));top:calc(50.5 * var(--u))}
+
+  /* ---------- actions ---------- */
+  #login{font-family:var(--f-ui);font-weight:430}
+  .btn-plan{left:calc(1371.5 * var(--u));top:calc(26.5 * var(--u));width:calc(182 * var(--u));height:calc(54 * var(--u));border-radius:calc(27 * var(--u));background:#fff}
+  #findplan{font-family:var(--f-ui);font-weight:540;color:var(--ink-brand)}
+
+  /* ---------- copy ---------- */
+  .h1 .t{font-family:var(--f-display)}
+  .btn-shop{left:calc(84.5 * var(--u));top:calc(502.5 * var(--u));width:calc(185 * var(--u));height:calc(53 * var(--u));border-radius:calc(26.5 * var(--u));background:#fff}
+  #shop{font-family:var(--f-ui);font-weight:540;color:var(--ink-brand)}
+  .btn-care{left:calc(291.9 * var(--u));top:calc(502.9 * var(--u));width:calc(214.1 * var(--u));height:calc(54.2 * var(--u));border-radius:calc(27 * var(--u));
+    box-shadow:inset 0 0 0 calc(1.5 * var(--u)) #fff}
+  #findcare{font-family:var(--f-ui);font-weight:430}
+  .arrow-care{left:calc(145.1 * var(--u));top:calc(20.1 * var(--u));width:calc(20 * var(--u));height:calc(16 * var(--u))}
+
+  /* ---------- photo ---------- */
+  .photo{left:calc(466 * var(--u));top:calc(141.52 * var(--u));width:calc(1082.37 * var(--u));height:calc(649.15 * var(--u))}
+  /* ---------- coverage (bottom-left) ---------- */
+  #states{font-family:var(--f-body);font-weight:500}
+  #cov,#view{font-family:var(--f-body);font-weight:300}
+  .arrow-view{left:calc(269 * var(--u));top:calc(888 * var(--u));width:calc(22 * var(--u));height:calc(18 * var(--u))}
+  .thumbs{left:calc(309 * var(--u));top:calc(884.8 * var(--u));height:calc(40 * var(--u));width:calc(115 * var(--u))}
+  .thumb{position:absolute;top:0;width:calc(40 * var(--u));height:calc(40 * var(--u));border-radius:50%;overflow:hidden;
+    box-shadow:0 0 0 calc(2 * var(--u)) #fff inset;background:#fff}
+  .thumb img{width:100%;height:100%;object-fit:cover;border-radius:50%;clip-path:circle(calc(50% - var(--u) * 2))}
+  .thumb:nth-child(1){left:calc(0 * var(--u))} .thumb:nth-child(2){left:calc(25 * var(--u))} .thumb:nth-child(3){left:calc(50.5 * var(--u))} .thumb:nth-child(4){left:calc(75 * var(--u))}
+  .thumb.more::after{content:"";position:absolute;inset:calc(2 * var(--u));border-radius:50%;background:rgba(96,104,108,.56)}
+  .thumb.more svg{position:absolute;left:50%;top:50%;width:calc(14.5 * var(--u));height:calc(14.5 * var(--u));transform:translate(-50%,-50%);z-index:1}
+
+  /* ---------- glass stat cards ---------- */
+  .card{border-radius:calc(17 * var(--u));
+    background:linear-gradient(180deg,var(--glass-fill-top),var(--glass-fill-bot));
+    box-shadow:inset 0 0 0 calc(1 * var(--u)) var(--glass-stroke);
+    -webkit-backdrop-filter:blur(calc(22 * var(--u))) saturate(1.045);backdrop-filter:blur(calc(22 * var(--u))) saturate(1.045)}
+  .card.c1{left:calc(907.85 * var(--u));top:calc(728 * var(--u));width:calc(205.7 * var(--u));height:calc(188.4 * var(--u))} .card.c2{left:calc(1130.46 * var(--u));top:calc(728 * var(--u));width:calc(208.5 * var(--u));height:calc(188.4 * var(--u))} .card.c3{left:calc(1355.85 * var(--u));top:calc(728 * var(--u));width:calc(208.4 * var(--u));height:calc(188.4 * var(--u))}
+
+  #logo_text{left:calc(135 * var(--u));top:calc(31.584 * var(--u));font-size:calc(35.7 * var(--u));letter-spacing:calc(-0.17 * var(--u));font-weight:539.2;font-variation-settings:"wght" 539.2}
+  #nav0{left:calc(21.5 * var(--u));top:calc(17.626 * var(--u));font-size:calc(17.471 * var(--u));letter-spacing:calc(0.243 * var(--u));font-weight:428.7;font-variation-settings:"wght" 428.7}
+  #nav1{left:calc(144.5 * var(--u));top:calc(17.626 * var(--u));font-size:calc(17.471 * var(--u));letter-spacing:calc(0.367 * var(--u));font-weight:428.7;font-variation-settings:"wght" 428.7}
+  #nav2{left:calc(268.5 * var(--u));top:calc(17.876 * var(--u));font-size:calc(17.471 * var(--u));letter-spacing:calc(0.212 * var(--u));font-weight:428.7;font-variation-settings:"wght" 428.7}
+  #nav3{left:calc(402.5 * var(--u));top:calc(17.626 * var(--u));font-size:calc(17.471 * var(--u));letter-spacing:calc(0.367 * var(--u));font-weight:428.7;font-variation-settings:"wght" 428.7}
+  #nav4{left:calc(520.5 * var(--u));top:calc(17.876 * var(--u));font-size:calc(17.471 * var(--u));letter-spacing:calc(0.256 * var(--u));font-weight:428.7;font-variation-settings:"wght" 428.7}
+  #login{left:calc(1288 * var(--u));top:calc(44.186 * var(--u));font-size:calc(21.379 * var(--u));letter-spacing:calc(-0.31 * var(--u));font-weight:400;font-variation-settings:"wght" 400}
+  #findplan{left:calc(37.5 * var(--u));top:calc(19.333 * var(--u));font-size:calc(19.585 * var(--u));letter-spacing:calc(0.4 * var(--u));font-family:"Inter",system-ui,sans-serif;font-weight:589.7;font-variation-settings:"wght" 589.7}
+  #h1a{left:calc(79 * var(--u));top:calc(179.991 * var(--u));font-size:calc(76.582 * var(--u));letter-spacing:calc(-0.435 * var(--u));word-spacing:calc(-5.4 * var(--u));font-family:"Funnel Display",system-ui,sans-serif;font-weight:645.381;font-variation-settings:"wght" 645.381}
+  #h1b{left:calc(82 * var(--u));top:calc(264.991 * var(--u));font-size:calc(76.582 * var(--u));letter-spacing:calc(-1.109 * var(--u));word-spacing:calc(-2.4 * var(--u));font-family:"Funnel Display",system-ui,sans-serif;font-weight:645.381;font-variation-settings:"wght" 645.381}
+  #sub0{left:calc(85 * var(--u));top:calc(379.506 * var(--u));font-size:calc(24.595 * var(--u));letter-spacing:calc(0.939 * var(--u));font-family:"Inter",system-ui,sans-serif;font-weight:337.1;font-variation-settings:"wght" 337.1}
+  #sub1{left:calc(84 * var(--u));top:calc(414.506 * var(--u));font-size:calc(24.595 * var(--u));letter-spacing:calc(0.97 * var(--u));font-family:"Inter",system-ui,sans-serif;font-weight:337.1;font-variation-settings:"wght" 337.1}
+  #sub2{left:calc(85 * var(--u));top:calc(449.006 * var(--u));font-size:calc(24.595 * var(--u));letter-spacing:calc(1.093 * var(--u));font-family:"Inter",system-ui,sans-serif;font-weight:337.1;font-variation-settings:"wght" 337.1}
+  #shop{left:calc(43.5 * var(--u));top:calc(19.384 * var(--u));font-size:calc(17.5 * var(--u));letter-spacing:calc(0.501 * var(--u));font-family:"Inter",system-ui,sans-serif;font-weight:646.7;font-variation-settings:"wght" 646.7}
+  #findcare{left:calc(47.1 * var(--u));top:calc(18.235 * var(--u));font-size:calc(19.733 * var(--u));letter-spacing:calc(0 * var(--u));font-weight:412.6;font-variation-settings:"wght" 412.6}
+  #states{left:calc(75 * var(--u));top:calc(784.821 * var(--u));font-size:calc(36.9 * var(--u));letter-spacing:calc(-0.535 * var(--u));font-family:"Montserrat",system-ui,sans-serif;font-weight:549.2;font-variation-settings:"wght" 549.2}
+  #cov{left:calc(76 * var(--u));top:calc(847.729 * var(--u));font-size:calc(24.698 * var(--u));letter-spacing:calc(1.792 * var(--u));font-weight:358;font-variation-settings:"wght" 358}
+  #view{left:calc(75 * var(--u));top:calc(882.479 * var(--u));font-size:calc(24.698 * var(--u));letter-spacing:calc(1.275 * var(--u));font-weight:358;font-variation-settings:"wght" 358}
+  .nav-link:nth-child(1) .chev{left:calc(111 * var(--u))}
+  .nav-link:nth-child(2) .chev{left:calc(234 * var(--u))}
+  .nav-link:nth-child(3) .chev{left:calc(368 * var(--u))}
+  .nav-link:nth-child(4) .chev{left:calc(480 * var(--u))}
+  .nav-link:nth-child(5) .chev{left:calc(612 * var(--u))}
+  .chev{top:calc(24 * var(--u))}
+}
+
+/* =====================================================================
+   MOBILE / PORTRAIT  —  re-flowed stack that still fills the screen
+   (--m = one mobile-design pixel, 430-wide artboard)
+   ===================================================================== */
+@media not all and (min-width:960px) and (min-aspect-ratio:6/5) and (min-height:500px){
+  .hero{--m:clamp(.74px, min(100vw / 430, 100svh / 860), 1.6px);--padx:max(calc(20 * var(--m)), (100vw - calc(560 * var(--m))) / 2);
+    display:flex;flex-direction:column;
+    padding:max(env(safe-area-inset-top),calc(18 * var(--m))) var(--padx) max(env(safe-area-inset-bottom),calc(20 * var(--m)))}
+  .L{display:contents}
+  .desktop-only{display:none!important}
+  .t{white-space:normal}
+  /* header row */
+  .logo{order:1;display:flex;align-items:center;gap:calc(8 * var(--m));height:calc(44 * var(--m))}
+  .logo-mark{width:calc(34 * var(--m));height:calc(33 * var(--m))}
+  #logo_text{font-family:var(--f-ui);font-weight:520;font-size:calc(24 * var(--m));letter-spacing:-.005em}
+  .actions{order:1;position:absolute;right:var(--padx);top:max(env(safe-area-inset-top),calc(18 * var(--m)));display:flex;align-items:center;gap:calc(10 * var(--m));height:calc(44 * var(--m))}
+  #login{display:none}
+  .btn-plan{display:flex;align-items:center;justify-content:center;height:calc(40 * var(--m));padding:0 calc(18 * var(--m));border-radius:calc(20 * var(--m));background:#fff;position:relative}
+  #findplan{position:static;font-family:var(--f-text);font-weight:580;font-size:calc(15 * var(--m));color:var(--ink-brand)}
+  .menu-btn{display:grid;place-items:center;width:calc(40 * var(--m));height:calc(40 * var(--m));border-radius:50%;
+    background:var(--pill-fill);box-shadow:inset 0 0 0 1px var(--pill-stroke);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+  .menu-btn svg{width:calc(18 * var(--m));height:calc(18 * var(--m))}
+  .nav-pill{order:2;display:none}
+  .hero.menu-open .nav-pill{display:flex;flex-direction:column;position:absolute;z-index:5;left:var(--padx);right:var(--padx);top:calc(max(env(safe-area-inset-top),calc(18 * var(--m))) + calc(52 * var(--m)));
+    padding:calc(8 * var(--m));border-radius:calc(22 * var(--m));background:rgba(52,128,214,.86);box-shadow:inset 0 0 0 1px var(--pill-stroke),0 18px 40px rgba(10,50,110,.22);
+    -webkit-backdrop-filter:blur(18px) saturate(1.1);backdrop-filter:blur(18px) saturate(1.1)}
+  .nav-link{display:flex;align-items:center;justify-content:space-between;padding:calc(12 * var(--m)) calc(14 * var(--m));border-radius:calc(14 * var(--m))}
+  .nav-link:hover{background:rgba(255,255,255,.1)}
+  .nav-item{position:static;font-family:var(--f-ui);font-weight:450;font-size:calc(17 * var(--m))}
+  .chev{position:static;width:calc(12 * var(--m));height:calc(7 * var(--m))}
+
+  /* copy */
+  .copy{order:3;display:contents}
+  .h1{order:3;margin-top:calc(30 * var(--m));font-family:var(--f-display);font-weight:640;font-size:calc(44 * var(--m));line-height:1.08;letter-spacing:-.01em;word-spacing:-.04em}
+  .h1 .t{position:static;display:block}
+  .sub{order:4;margin-top:calc(14 * var(--m));font-family:var(--f-text);font-weight:330;font-size:calc(17.5 * var(--m));line-height:1.42;letter-spacing:.01em;max-width:calc(390 * var(--m))}
+  .sub .t{position:static;display:inline}
+  .ctas{order:5;display:flex;gap:calc(12 * var(--m));margin-top:calc(22 * var(--m))}
+  .btn-shop,.btn-care{position:relative;display:flex;align-items:center;justify-content:center;gap:calc(8 * var(--m));height:calc(48 * var(--m));padding:0 calc(24 * var(--m));border-radius:calc(24 * var(--m))}
+  .btn-shop{background:#fff}
+  .btn-care{box-shadow:inset 0 0 0 1.5px #fff}
+  #shop{position:static;font-family:var(--f-text);font-weight:580;font-size:calc(16 * var(--m));color:var(--ink-brand)}
+  #findcare{position:static;font-family:var(--f-ui);font-weight:450;font-size:calc(16 * var(--m))}
+  .arrow-care{position:static;width:calc(17 * var(--m));height:calc(14 * var(--m))}
+
+  /* photo grows to fill all remaining height — no empty bands */
+  .photo-wrap{order:6;position:relative;flex:1 1 0;min-height:calc(250 * var(--m));margin:calc(10 * var(--m)) calc(-1 * var(--padx)) 0;container-type:size}
+  .photo{position:absolute;left:50%;bottom:0;width:min(112cqw, 166.7cqh);aspect-ratio:1619/971;transform:translateX(-55%)}
+
+  /* stats overlap the bottom of the photo, glass over imagery */
+  .stats{order:7;display:grid;grid-template-columns:repeat(3,1fr);gap:calc(8 * var(--m));margin-top:calc(-30 * var(--m));position:relative;z-index:2}
+  .card{position:relative;aspect-ratio:208.5/188.4;border-radius:8.15%/9.02%;
+    background:linear-gradient(180deg,var(--glass-fill-top),var(--glass-fill-bot));box-shadow:inset 0 0 0 1px var(--glass-stroke);
+    -webkit-backdrop-filter:blur(14px) saturate(1.045);backdrop-filter:blur(14px) saturate(1.045)}
+
+  /* coverage strip */
+  .coverage{order:8;display:grid;grid-template-columns:1fr auto;grid-template-areas:"st st" "cv th" "vw th";align-items:center;column-gap:calc(12 * var(--m));margin-top:calc(18 * var(--m))}
+  #states{grid-area:st;font-family:var(--f-stat);font-weight:550;font-size:calc(24 * var(--m));letter-spacing:0}
+  #cov{grid-area:cv;font-family:var(--f-body);font-weight:300;font-size:calc(15.5 * var(--m));margin-top:calc(6 * var(--m));letter-spacing:.02em}
+  .view-link{grid-area:vw;display:flex;align-items:center;gap:calc(8 * var(--m));margin-top:calc(2 * var(--m))}
+  #view{position:static;font-family:var(--f-body);font-weight:300;font-size:calc(15.5 * var(--m));letter-spacing:.02em}
+  .arrow-view{position:static;width:calc(16 * var(--m));height:calc(13 * var(--m))}
+  .thumbs{grid-area:th;position:relative;height:calc(36 * var(--m));width:calc(102 * var(--m))}
+  .thumb{position:absolute;top:0;width:calc(36 * var(--m));height:calc(36 * var(--m));border-radius:50%;overflow:hidden;box-shadow:0 0 0 2px #fff inset;background:#fff}
+  .thumb img{width:100%;height:100%;object-fit:cover;clip-path:circle(calc(50% - 2px))}
+  .thumb:nth-child(1){left:0}.thumb:nth-child(2){left:calc(22 * var(--m))}.thumb:nth-child(3){left:calc(44 * var(--m))}.thumb:nth-child(4){left:calc(66 * var(--m))}
+  .thumb.more::after{content:"";position:absolute;inset:2px;border-radius:50%;background:rgba(96,104,108,.56)}
+  .thumb.more svg{position:absolute;left:50%;top:50%;width:calc(14 * var(--m));height:calc(14 * var(--m));transform:translate(-50%,-50%);z-index:1}
+}
+
+
+/* focus + motion */
+:where(a,button):focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:999px}
+@media (prefers-reduced-motion:no-preference){
+  .btn-plan,.btn-shop,.btn-care,.nav-link,.view-link{transition:transform .2s ease,background-color .2s ease,box-shadow .2s ease}
+  .btn-plan:hover,.btn-shop:hover{transform:translateY(-1px)}
+  .btn-care:hover{background-color:rgba(255,255,255,.12)}
+}
+
+/* One opening sequence; the class is removed when it finishes. */
+@media (prefers-reduced-motion:no-preference){
+@keyframes entry-nav{from{opacity:0;transform:translate3d(0,6px,0)}to{opacity:1;transform:none}}
+@keyframes entry-opacity{from{opacity:0}to{opacity:1}}
+@keyframes entry-soft{from{opacity:0;transform:translate3d(0,9px,0)}to{opacity:1;transform:none}}
+@keyframes entry-type{from{opacity:0;transform:translate3d(0,12px,0);clip-path:inset(0 0 100% 0)}to{opacity:1;transform:none;clip-path:inset(0)}}
+@keyframes entry-visual{from{opacity:0;clip-path:inset(10% 0 0 0)}to{opacity:1;clip-path:inset(0)}}
+
+html.entry-active .hero .logo{animation:entry-nav .5s cubic-bezier(.2,.75,.25,1) .05s both}
+html.entry-active .hero .nav-pill{animation:entry-opacity .52s cubic-bezier(.2,.75,.25,1) .17s both}
+html.entry-active .hero > .L > .actions{animation:entry-nav .5s cubic-bezier(.2,.75,.25,1) .25s both}
+html.entry-active .hero .copy #h1a{animation:entry-type .83s cubic-bezier(.16,1,.3,1) .31s both}
+html.entry-active .hero .copy #h1b{animation:entry-type .83s cubic-bezier(.16,1,.3,1) .44s both}
+html.entry-active .hero .copy .sub{animation:entry-soft .62s cubic-bezier(.2,.75,.25,1) .68s both}
+html.entry-active .hero .copy .ctas{animation:entry-soft .6s cubic-bezier(.2,.75,.25,1) .91s both}
+html.entry-active .hero .coverage{animation:entry-soft .62s cubic-bezier(.2,.75,.25,1) 1.09s both}
+html.entry-active .hero .stats .c1{animation:entry-visual .7s cubic-bezier(.16,1,.3,1) 1.17s both}
+html.entry-active .hero .stats .c2{animation:entry-visual .7s cubic-bezier(.16,1,.3,1) 1.27s both}
+html.entry-active .hero .stats .c3{animation:entry-visual .7s cubic-bezier(.16,1,.3,1) 1.37s both}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><filter id="grade" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0.8931 0.1417 0.0089 0.0000 0.0066  0.0217 1.0113 -0.0280 0.0000 0.0047  -0.0364 0.1394 0.9315 0.0000 0.0082  0 0 0 1 0"/></filter></svg>
+<main class="hero" id="hero">
+
+  <!-- logo -->
+  <div class="L" style="--ax:0;--ay:0">
+    <a class="logo" href="#" aria-label="Insuria home">
+      <svg class="abs logo-mark" viewBox="0 0 50 48" aria-hidden="true"><path fill="#fff" d="M45.05 3.05 C44.50 2.57 43.90 2.07 43.25 1.65 C42.60 1.23 42.00 0.90 41.15 0.55 C40.30 0.20 39.32 -0.23 38.15 -0.45 C36.98 -0.67 35.35 -0.77 34.15 -0.75 C32.95 -0.73 31.85 -0.53 30.95 -0.35 C30.05 -0.17 29.47 0.08 28.75 0.35 C28.03 0.62 27.33 0.88 26.65 1.25 C25.97 1.62 25.07 2.35 24.65 2.55 C24.23 2.75 24.52 2.67 24.15 2.45 C23.78 2.23 23.12 1.60 22.45 1.25 C21.78 0.90 21.32 0.63 20.15 0.35 C18.98 0.07 16.67 -0.35 15.45 -0.45 C14.23 -0.55 13.93 -0.45 12.85 -0.25 C11.77 -0.05 9.98 0.38 8.95 0.75 C7.92 1.12 7.40 1.48 6.65 1.95 C5.90 2.42 5.15 2.92 4.45 3.55 C3.75 4.18 2.98 5.07 2.45 5.75 C1.92 6.43 1.60 7.00 1.25 7.65 C0.90 8.30 0.65 8.57 0.35 9.65 C0.05 10.73 -0.40 10.50 -0.55 14.15 C-0.70 17.80 -0.70 28.02 -0.55 31.55 C-0.40 35.08 0.03 34.35 0.35 35.35 C0.67 36.35 0.88 36.75 1.35 37.55 C1.82 38.35 2.63 39.48 3.15 40.15 C3.67 40.82 3.83 41.00 4.45 41.55 C5.07 42.10 5.77 42.77 6.85 43.45 C7.93 44.13 9.67 45.10 10.95 45.65 C12.23 46.20 12.68 46.37 14.55 46.75 C16.42 47.13 20.53 47.63 22.15 47.95 C23.77 48.27 23.75 48.53 24.25 48.65 C24.75 48.77 24.72 48.77 25.15 48.65 C25.58 48.53 26.32 48.10 26.85 47.95 C27.38 47.80 26.75 48.12 28.35 47.75 C29.95 47.38 34.35 46.42 36.45 45.75 C38.55 45.08 39.70 44.45 40.95 43.75 C42.20 43.05 43.08 42.30 43.95 41.55 C44.82 40.80 45.47 40.12 46.15 39.25 C46.83 38.38 47.57 37.20 48.05 36.35 C48.53 35.50 48.75 35.03 49.05 34.15 C49.35 33.27 49.72 34.73 49.85 31.05 C49.98 27.37 50.00 15.78 49.85 12.05 C49.70 8.32 49.27 9.57 48.95 8.65 C48.63 7.73 48.35 7.23 47.95 6.55 C47.55 5.87 47.03 5.13 46.55 4.55 C46.07 3.97 45.60 3.53 45.05 3.05Z"/>
+<path fill="var(--logo-blue)" fill-rule="evenodd" d="M14.85 19.15 C14.70 19.42 14.75 19.72 14.85 19.95 C14.95 20.18 14.93 20.50 15.45 20.55 C15.97 20.60 17.45 20.33 17.95 20.25 C18.45 20.17 18.32 20.15 18.45 20.05 C18.58 19.95 18.70 19.80 18.75 19.65 C18.80 19.50 18.78 19.28 18.75 19.15 C18.72 19.02 18.83 18.98 18.55 18.85 C18.27 18.72 17.52 18.43 17.05 18.35 C16.58 18.27 16.12 18.22 15.75 18.35 C15.38 18.48 15.00 18.88 14.85 19.15Z M10.55 14.35 C10.07 14.68 9.18 15.27 8.65 15.85 C8.12 16.43 7.62 17.22 7.35 17.85 C7.08 18.48 7.10 19.10 7.05 19.65 C7.00 20.20 7.02 20.70 7.05 21.15 C7.08 21.60 6.95 21.68 7.25 22.35 C7.55 23.02 8.22 24.30 8.85 25.15 C9.48 26.00 8.93 25.53 11.05 27.45 C13.17 29.37 19.58 34.82 21.55 36.65 C23.52 38.48 22.58 38.02 22.85 38.45 C23.12 38.88 22.95 39.02 23.15 39.25 C23.35 39.48 23.83 39.53 24.05 39.85 C24.27 40.17 24.33 40.93 24.45 41.15 C24.57 41.37 24.55 41.32 24.75 41.15 C24.95 40.98 25.40 40.50 25.65 40.15 C25.90 39.80 26.02 39.37 26.25 39.05 C26.48 38.73 26.87 38.50 27.05 38.25 C27.23 38.00 26.72 38.32 27.35 37.55 C27.98 36.78 29.22 35.12 30.85 33.65 C32.48 32.18 35.58 30.05 37.15 28.75 C38.72 27.45 39.45 26.72 40.25 25.85 C41.05 24.98 41.55 24.23 41.95 23.55 C42.35 22.87 42.52 22.33 42.65 21.75 C42.78 21.17 42.80 20.70 42.75 20.05 C42.70 19.40 42.58 18.48 42.35 17.85 C42.12 17.22 41.70 16.70 41.35 16.25 C41.00 15.80 40.63 15.45 40.25 15.15 C39.87 14.85 39.53 14.67 39.05 14.45 C38.57 14.23 38.03 13.98 37.35 13.85 C36.67 13.72 35.85 13.60 34.95 13.65 C34.05 13.70 32.72 13.98 31.95 14.15 C31.18 14.32 30.73 14.57 30.35 14.65 C29.97 14.73 29.97 14.57 29.65 14.65 C29.33 14.73 28.88 14.80 28.45 15.15 C28.02 15.50 27.37 16.28 27.05 16.75 C26.73 17.22 26.62 17.62 26.55 17.95 C26.48 18.28 26.45 18.65 26.65 18.75 C26.85 18.85 27.38 18.70 27.75 18.55 C28.12 18.40 28.38 18.07 28.85 17.85 C29.32 17.63 29.80 17.37 30.55 17.25 C31.30 17.13 32.65 17.07 33.35 17.15 C34.05 17.23 34.28 17.42 34.75 17.75 C35.22 18.08 35.82 18.68 36.15 19.15 C36.48 19.62 36.65 20.13 36.75 20.55 C36.85 20.97 36.83 21.20 36.75 21.65 C36.67 22.10 36.57 22.62 36.25 23.25 C35.93 23.88 35.60 24.52 34.85 25.45 C34.10 26.38 32.95 27.45 31.75 28.85 C30.55 30.25 28.57 32.62 27.65 33.85 C26.73 35.08 26.58 35.53 26.25 36.25 C25.92 36.97 25.88 37.65 25.65 38.15 C25.42 38.65 25.07 39.02 24.85 39.25 C24.63 39.48 24.47 39.53 24.35 39.55 C24.23 39.57 24.23 39.80 24.15 39.35 C24.07 38.90 24.08 37.63 23.85 36.85 C23.62 36.07 23.27 35.48 22.75 34.65 C22.23 33.82 21.52 32.82 20.75 31.85 C19.98 30.88 18.65 29.52 18.15 28.85 C17.65 28.18 17.82 28.22 17.75 27.85 C17.68 27.48 17.68 27.00 17.75 26.65 C17.82 26.30 17.63 26.45 18.15 25.75 C18.67 25.05 20.32 23.15 20.85 22.45 C21.38 21.75 21.27 21.78 21.35 21.55 C21.43 21.32 21.52 21.13 21.35 21.05 C21.18 20.97 20.67 20.92 20.35 21.05 C20.03 21.18 19.82 21.60 19.45 21.85 C19.08 22.10 18.62 22.38 18.15 22.55 C17.68 22.72 17.20 22.80 16.65 22.85 C16.10 22.90 15.27 22.90 14.85 22.85 C14.43 22.80 14.38 22.70 14.15 22.55 C13.92 22.40 13.72 22.32 13.45 21.95 C13.18 21.58 12.70 20.87 12.55 20.35 C12.40 19.83 12.50 19.25 12.55 18.85 C12.60 18.45 12.62 18.33 12.85 17.95 C13.08 17.57 13.48 16.92 13.95 16.55 C14.42 16.18 14.88 15.88 15.65 15.75 C16.42 15.62 17.77 15.72 18.55 15.75 C19.33 15.78 20.00 15.98 20.35 15.95 C20.70 15.92 20.63 15.72 20.65 15.55 C20.67 15.38 20.70 15.20 20.45 14.95 C20.20 14.70 19.82 14.28 19.15 14.05 C18.48 13.82 17.52 13.63 16.45 13.55 C15.38 13.47 13.57 13.50 12.75 13.55 C11.93 13.60 11.92 13.72 11.55 13.85 C11.18 13.98 11.03 14.02 10.55 14.35Z M30.65 6.65 C30.32 6.72 29.97 6.85 29.65 7.05 C29.33 7.25 28.98 7.57 28.75 7.85 C28.52 8.13 28.35 8.37 28.25 8.75 C28.15 9.13 28.05 9.70 28.15 10.15 C28.25 10.60 28.58 11.08 28.85 11.45 C29.12 11.82 29.35 12.10 29.75 12.35 C30.15 12.60 30.92 12.85 31.25 12.95 C31.58 13.05 31.48 13.07 31.75 12.95 C32.02 12.83 32.55 12.50 32.85 12.25 C33.15 12.00 33.37 11.77 33.55 11.45 C33.73 11.13 33.88 10.75 33.95 10.35 C34.02 9.95 34.05 9.48 33.95 9.05 C33.85 8.62 33.58 8.08 33.35 7.75 C33.12 7.42 32.83 7.23 32.55 7.05 C32.27 6.87 31.97 6.72 31.65 6.65 C31.33 6.58 30.98 6.58 30.65 6.65Z"/></svg>
+      <span class="t" id="logo_text">Insuria</span>
+    </a>
+  </div>
+
+  <!-- primary navigation -->
+  <div class="L" style="--ax:.5;--ay:0">
+    <nav class="abs nav-pill" id="nav" aria-label="Primary">
+      <a class="nav-link" href="#"><span class="t nav-item" id="nav0">Coverage</span><svg class="abs chev" viewBox="0 0 12 7" aria-hidden="true"><path d="M1 1l5 4.6L11 1" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="nav-link" href="#"><span class="t nav-item" id="nav1">Members</span><svg class="abs chev" viewBox="0 0 12 7" aria-hidden="true"><path d="M1 1l5 4.6L11 1" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="nav-link" href="#"><span class="t nav-item" id="nav2">Employers</span><svg class="abs chev" viewBox="0 0 12 7" aria-hidden="true"><path d="M1 1l5 4.6L11 1" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="nav-link" href="#"><span class="t nav-item" id="nav3">Brokers</span><svg class="abs chev" viewBox="0 0 12 7" aria-hidden="true"><path d="M1 1l5 4.6L11 1" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="nav-link" href="#"><span class="t nav-item" id="nav4">Providers</span><svg class="abs chev" viewBox="0 0 12 7" aria-hidden="true"><path d="M1 1l5 4.6L11 1" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </nav>
+  </div>
+
+  <!-- actions -->
+  <div class="L" style="--ax:1;--ay:0">
+    <div class="actions">
+      <a href="#" class="t" id="login">Log in</a>
+      <a href="#" class="abs btn-plan"><span class="t" id="findplan">Find a Plan</span></a>
+      <button class="menu-btn mobile-only" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav"
+        onclick="var h=document.getElementById('hero');var o=h.classList.toggle('menu-open');this.setAttribute('aria-expanded',o)">
+        <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 9h14M2 13h14" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- headline + copy + CTAs -->
+  <div class="L" style="--ax:0;--ay:.5">
+    <div class="copy">
+      <h1 class="h1"><span class="t" id="h1a">Health insurance </span><span class="t" id="h1b">made simple.</span></h1>
+      <p class="sub"><span class="t" id="sub0">A simple, zero paperwork health plan for </span><span class="t" id="sub1">your family. Protect everyone in less than a </span><span class="t" id="sub2">minute with transparent coverage</span></p>
+      <div class="ctas">
+        <a href="#" class="abs btn-shop"><span class="t" id="shop">Shop plans</span></a>
+        <a href="#" class="abs btn-care"><span class="t" id="findcare">Find care</span>
+          <svg class="abs arrow-care" viewBox="437 523 20 16" aria-hidden="true"><path d="M438.6 531.2H455.6M449.6 525L455.8 531.2L449.6 537.4" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- photo -->
+  <div class="L" style="--ax:.5;--ay:1">
+    <div class="photo-wrap">
+      <div class="abs photo" role="img" aria-label="A smiling father lifting his laughing daughter into the air">
+        <i class="ph-sharp"></i><i class="ph-fade"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- coverage -->
+  <div class="L" style="--ax:0;--ay:1">
+    <div class="coverage">
+      <p class="t" id="states">20+ States</p>
+      <p class="t" id="cov">Coverage across 20+ states</p>
+      <a href="#" class="view-link"><span class="t" id="view">View Coverage</span>
+        <svg class="abs arrow-view" viewBox="269 888 22 18" aria-hidden="true"><path d="M270.8 896.8H289M282.6 890.3L289.2 896.8L282.6 903.3" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <div class="abs thumbs" aria-hidden="true">
+        <span class="thumb"><img src="assets/image-05.webp" alt=""></span>
+        <span class="thumb"><img src="assets/image-06.webp" alt=""></span>
+        <span class="thumb"><img src="assets/image-07.webp" alt=""></span>
+        <span class="thumb more"><img src="assets/image-08.webp" alt=""><svg viewBox="0 0 16 16"><path d="M8 1.2v13.6M1.2 8h13.6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- stats -->
+  <div class="L" style="--ax:1;--ay:1">
+    <div class="stats">
+      <article class="abs card c1">
+        <p class="t stat-num" id="s90">90%</p>
+        <svg class="abs chart" viewBox="907.85 728 205.7 188.4" aria-hidden="true"><rect x="931.015" y="802.6" width="4.85" height="34.7" rx="2.425" fill="var(--chart-blue)" opacity="0.97"/><rect x="940.265" y="802.6" width="4.85" height="34.7" rx="2.425" fill="var(--chart-blue)" opacity="0.97"/><rect x="949.205" y="802.6" width="4.85" height="34.7" rx="2.425" fill="var(--chart-blue)" opacity="0.97"/><rect x="957.725" y="802.6" width="4.85" height="34.7" rx="2.425" fill="var(--chart-blue)" opacity="0.97"/><rect x="964.505" y="802.6" width="4.85" height="34.7" rx="2.425" fill="var(--chart-blue)" opacity="0.9"/><rect x="972.115" y="802.6" width="4.85" height="34.7" rx="2.425" fill="var(--chart-blue)" opacity="0.95"/><rect x="980.595" y="802.6" width="4.85" height="34.7" rx="2.425" fill="var(--chart-blue)" opacity="0.97"/><rect x="989.075" y="802.6" width="4.85" height="34.7" rx="2.425" fill="var(--chart-blue)" opacity="0.97"/><rect x="997.075" y="802.6" width="4.85" height="34.7" rx="2.425" fill="var(--chart-blue)" opacity="0.97"/><rect x="1005.175" y="802.6" width="4.85" height="34.7" rx="2.425" fill="var(--chart-blue)" opacity="0.97"/><rect x="1013.375" y="802.6" width="4.85" height="34.7" rx="2.425" fill="var(--chart-blue)" opacity="0.97"/><rect x="1022.435" y="802.6" width="4.85" height="34.7" rx="2.425" fill="var(--chart-blue)" opacity="0.97"/><rect x="1031.415" y="802.6" width="4.85" height="34.7" rx="2.425" fill="var(--chart-blue)" opacity="0.97"/><rect x="1040.575" y="802.6" width="4.85" height="34.7" rx="2.425" fill="var(--chart-blue)" opacity="0.95"/><rect x="1044.975" y="802.6" width="4.85" height="34.7" rx="2.425" fill="var(--chart-blue)" opacity="0.5"/><rect x="1052.865" y="802.6" width="4.85" height="34.7" rx="2.425" fill="var(--chart-blue)" opacity="0.97"/><rect x="1062.355" y="802.6" width="4.85" height="34.7" rx="2.425" fill="var(--chart-blue)" opacity="0.97"/><rect x="1071.355" y="802.6" width="4.85" height="34.7" rx="2.425" fill="var(--chart-blue)" opacity="0.97"/><rect x="1080.425" y="802.6" width="4.85" height="34.7" rx="2.425" fill="var(--chart-blue)" opacity="0.5"/><rect x="1089.515" y="802.6" width="4.85" height="34.7" rx="2.425" fill="var(--chart-blue)" opacity="0.45"/></svg>
+        <p class="stat-label"><span class="t stat-label" id="saves0">Saves Time &amp; </span><span class="t stat-label" id="saves1">Money</span></p>
+      </article>
+      <article class="abs card c2">
+        <p class="t stat-num" id="s3m">3M</p>
+        <svg class="abs chart" viewBox="1130.46 728 208.5 188.4" aria-hidden="true"><defs><linearGradient id="wg1" gradientUnits="userSpaceOnUse" x1="1140" y1="0" x2="1335" y2="0"><stop offset="0.031" stop-color="var(--chart-blue)" stop-opacity="0.18"/><stop offset="0.103" stop-color="var(--chart-blue)" stop-opacity="0.31"/><stop offset="0.164" stop-color="var(--chart-blue)" stop-opacity="0.37"/><stop offset="0.205" stop-color="var(--chart-blue)" stop-opacity="0.4"/><stop offset="0.256" stop-color="var(--chart-blue)" stop-opacity="0.8"/><stop offset="0.513" stop-color="var(--chart-blue)" stop-opacity="0.78"/><stop offset="0.595" stop-color="var(--chart-blue)" stop-opacity="0.62"/><stop offset="0.677" stop-color="var(--chart-blue)" stop-opacity="0.53"/><stop offset="0.769" stop-color="var(--chart-blue)" stop-opacity="0.46"/><stop offset="0.821" stop-color="var(--chart-blue)" stop-opacity="0.4"/><stop offset="0.872" stop-color="var(--chart-blue)" stop-opacity="0.3"/><stop offset="0.954" stop-color="var(--chart-blue)" stop-opacity="0.24"/></linearGradient><linearGradient id="wg2" gradientUnits="userSpaceOnUse" x1="1140" y1="0" x2="1335" y2="0"><stop offset="0.051" stop-color="var(--chart-blue)" stop-opacity="0"/><stop offset="0.179" stop-color="var(--chart-blue)" stop-opacity="0.1"/><stop offset="0.308" stop-color="var(--chart-blue)" stop-opacity="0.22"/><stop offset="0.462" stop-color="var(--chart-blue)" stop-opacity="0.27"/><stop offset="0.615" stop-color="var(--chart-blue)" stop-opacity="0.2"/><stop offset="0.744" stop-color="var(--chart-blue)" stop-opacity="0.12"/><stop offset="0.846" stop-color="var(--chart-blue)" stop-opacity="0.05"/></linearGradient></defs><path d="M1150 846 C1151.667 846.083 1156.667 846.467 1160 846.5 C1163.333 846.533 1166.667 846.533 1170 846.2 C1173.333 845.867 1177 845.533 1180 844.5 C1183 843.467 1185.333 842.25 1188 840 C1190.667 837.75 1193.333 834.083 1196 831 C1198.667 827.917 1201.333 824.167 1204 821.5 C1206.667 818.833 1209 816.65 1212 815 C1215 813.35 1219 812.2 1222 811.6 C1225 811 1227.333 811.167 1230 811.4 C1232.667 811.633 1235.333 811.733 1238 813 C1240.667 814.267 1243.333 816.417 1246 819 C1248.667 821.583 1251.333 825.583 1254 828.5 C1256.667 831.417 1259.333 834.15 1262 836.5 C1264.667 838.85 1267.333 841.15 1270 842.6 C1272.667 844.05 1275.333 844.7 1278 845.2 C1280.667 845.7 1283.333 845.883 1286 845.6 C1288.667 845.317 1291.333 844.433 1294 843.5 C1296.667 842.567 1300.667 840.583 1302 840" fill="none" stroke="url(#wg2)" stroke-width="7.5" stroke-linecap="round"/><path d="M1146 833.5 C1147 832.583 1149.667 829.867 1152 828 C1154.333 826.133 1157.333 824.417 1160 822.3 C1162.667 820.183 1165.333 817.267 1168 815.3 C1170.667 813.333 1173 811.767 1176 810.5 C1179 809.233 1183 808.183 1186 807.7 C1189 807.217 1191.333 807.333 1194 807.6 C1196.667 807.867 1199.333 808.1 1202 809.3 C1204.667 810.5 1207.333 812.667 1210 814.8 C1212.667 816.933 1215.333 819.2 1218 822.1 C1220.667 825 1223.333 829.117 1226 832.2 C1228.667 835.283 1231.333 838.567 1234 840.6 C1236.667 842.633 1239.333 843.6 1242 844.4 C1244.667 845.2 1247.333 845.6 1250 845.4 C1252.667 845.2 1255.333 844.2 1258 843.2 C1260.667 842.2 1263.333 841.117 1266 839.4 C1268.667 837.683 1271.333 835.067 1274 832.9 C1276.667 830.733 1279.333 828.25 1282 826.4 C1284.667 824.55 1287.333 822.85 1290 821.8 C1292.667 820.75 1295.333 820.317 1298 820.1 C1300.667 819.883 1303.333 819.933 1306 820.5 C1308.667 821.067 1311.667 822.417 1314 823.5 C1316.333 824.583 1318 825.7 1320 827 C1322 828.3 1325 830.583 1326 831.3" fill="none" stroke="url(#wg1)" stroke-width="7.2" stroke-linecap="round"/><circle cx="1186" cy="807.8" r="9.6" fill="rgba(140,198,250,.92)"/><circle cx="1186" cy="807.8" r="6.1" fill="var(--chart-blue)" opacity="1"/></svg>
+        <p class="t stat-label" id="active">Active Members</p>
+      </article>
+      <article class="abs card c3">
+        <p class="t stat-num" id="s49">4.9-star</p>
+        <svg class="abs chart" viewBox="1355.85 728 208.4 188.4" aria-hidden="true"><path d="M1388.38 811.55 L1391.907 818.696 L1399.793 819.842 L1394.086 825.404 L1395.433 833.258 L1388.38 829.55 L1381.327 833.258 L1382.674 825.404 L1376.967 819.842 L1384.853 818.696Z" fill="var(--chart-blue)" stroke="var(--chart-blue)" stroke-width="1.6" stroke-linejoin="round" opacity="0.92"/><path d="M1422.8 811.55 L1426.327 818.696 L1434.213 819.842 L1428.506 825.404 L1429.853 833.258 L1422.8 829.55 L1415.747 833.258 L1417.094 825.404 L1411.387 819.842 L1419.273 818.696Z" fill="var(--chart-blue)" stroke="var(--chart-blue)" stroke-width="1.6" stroke-linejoin="round" opacity="0.92"/><path d="M1457.27 811.55 L1460.797 818.696 L1468.683 819.842 L1462.976 825.404 L1464.323 833.258 L1457.27 829.55 L1450.217 833.258 L1451.564 825.404 L1445.857 819.842 L1453.743 818.696Z" fill="var(--chart-blue)" stroke="var(--chart-blue)" stroke-width="1.6" stroke-linejoin="round" opacity="0.92"/><path d="M1492 811.55 L1495.527 818.696 L1503.413 819.842 L1497.706 825.404 L1499.053 833.258 L1492 829.55 L1484.947 833.258 L1486.294 825.404 L1480.587 819.842 L1488.473 818.696Z" fill="var(--chart-blue)" stroke="var(--chart-blue)" stroke-width="1.6" stroke-linejoin="round" opacity="0.92"/><path d="M1526.82 811.55 L1530.347 818.696 L1538.233 819.842 L1532.526 825.404 L1533.873 833.258 L1526.82 829.55 L1519.767 833.258 L1521.114 825.404 L1515.407 819.842 L1523.293 818.696Z" fill="var(--chart-blue)" stroke="var(--chart-blue)" stroke-width="1.6" stroke-linejoin="round" opacity="0.92"/></svg>
+        <p class="t stat-label" id="reviews">17K+ Reviews</p>
+      </article>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

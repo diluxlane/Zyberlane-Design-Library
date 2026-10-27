@@ -1,0 +1,9 @@
+/*
+!/.gitignore
+!/index.html
+!/assets/
+/assets/*
+!/assets/jost.woff2
+!/assets/ibm-plex-sans.woff2
+!/assets/hero.jpg
+!/assets/panel-texture.png

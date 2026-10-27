@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-098/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>InvoPilot — Create Invoice</title>
+<script src="assets/entry.js"></script>
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/entry.css">
+</head>
+<body>
+<div class="app" id="app">
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="InvoPilot home">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><g fill="#fff"><circle cx="8" cy="8" r="7.75"/><circle cx="24" cy="8" r="7.75"/><circle cx="8" cy="24" r="7.75"/><circle cx="24" cy="24" r="7.75"/></g></svg>
+      <span class="brand-name">InvoPilot</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <button class="nav-btn" aria-label="Store"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.6 8.4 5.2 3.8h13.6l1.6 4.6"/><path d="M3.6 8.4a2.8 2.8 0 0 0 5.6 0 2.8 2.8 0 0 0 5.6 0 2.8 2.8 0 0 0 5.6 0"/><path d="M5.2 11.3V20.2h13.6v-8.9"/><path d="M10 20.2v-5h4v5"/></svg></button>
+      <button class="nav-btn" aria-label="Clients"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.5" cy="7.5" r="3.6"/><path d="M3 20.5v-1.2a5 5 0 0 1 5-5h3a5 5 0 0 1 5 5v1.2"/><path d="M15.2 4.1a3.6 3.6 0 0 1 0 6.8"/><path d="M18.4 14.6a5 5 0 0 1 2.6 4.5v1.4"/></svg></button>
+      <button class="nav-btn" aria-label="Orders"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4.6" y="3.6" width="14.8" height="16.8" rx="2.4"/><path d="M4.6 7.6h14.8"/><path d="M9.2 10.6 12 12.6l2.8-2"/></svg></button>
+      <button class="nav-btn" aria-label="Invoices" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg></button>
+      <button class="nav-btn" aria-label="Products"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 7.8a1.8 1.8 0 0 0-.9-1.5l-6.7-3.8a1.8 1.8 0 0 0-1.8 0L4.4 6.3a1.8 1.8 0 0 0-.9 1.5v8.4a1.8 1.8 0 0 0 .9 1.5l6.7 3.8a1.8 1.8 0 0 0 1.8 0l6.7-3.8a1.8 1.8 0 0 0 .9-1.5Z"/><path d="M3.8 7 12 11.7 20.2 7"/><path d="M12 21.6v-9.9"/><circle cx="12" cy="6.3" r=".6" fill="currentColor"/></svg></button>
+    </nav>
+    <div class="spacer"></div>
+    <label class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="10.6" cy="10.6" r="7.4"/><path d="m16.2 16.2 5 5"/></svg>
+      <span class="sr">Search</span>
+      <input type="search" placeholder="Search here ...">
+    </label>
+    <button class="settings" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></button>
+  </header>
+
+  <main class="card">
+    <div class="card-head">
+      <h1 class="card-title">Create New Invoice</h1>
+      <div class="head-actions">
+        <button class="btn btn-hide" id="togglePreview">Hide Preview</button>
+        <button class="btn btn-save" id="saveDraft">Save Draft</button>
+        <button class="btn btn-primary" id="sendInvoice">Send Invoice</button>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <!-- ================= FORM ================= -->
+      <section class="form" aria-label="Invoice details">
+        <h2 class="form-h">Invoice Details</h2>
+
+        <label class="label f1" for="invNo">Invoice Number</label>
+        <div class="field fld-inv"><input id="invNo" data-bind="number" autocomplete="off"></div>
+
+        <label class="label f2" for="billTo">Billing Address</label>
+        <div class="field fld-bill"><span class="val" data-out="billEmail"></span>
+          <select class="native" id="billTo" data-bind="client"></select>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5.5 9 6.5 6.5L18.5 9"/></svg></div>
+
+        <div class="dates f3">
+          <div class="col">
+            <label class="label" for="issue">Issue Date</label>
+            <div class="field fld-date">
+              <svg class="cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3.6" y="4.8" width="16.8" height="16" rx="2.4"/><path d="M3.6 9.6h16.8M8 3v3.4M16 3v3.4"/><circle cx="8.4" cy="14.6" r=".5" fill="currentColor"/><circle cx="12" cy="14.6" r=".5" fill="currentColor"/><circle cx="15.6" cy="14.6" r=".5" fill="currentColor"/></svg>
+              <span class="val" data-out="issue"></span>
+              <input class="native" type="date" id="issue" data-bind="issue">
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5.5 9 6.5 6.5L18.5 9"/></svg>
+            </div>
+          </div>
+          <div class="col">
+            <label class="label" for="due">Due Date</label>
+            <div class="field fld-date">
+              <svg class="cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3.6" y="4.8" width="16.8" height="16" rx="2.4"/><path d="M3.6 9.6h16.8M8 3v3.4M16 3v3.4"/><circle cx="8.4" cy="14.6" r=".5" fill="currentColor"/><circle cx="12" cy="14.6" r=".5" fill="currentColor"/><circle cx="15.6" cy="14.6" r=".5" fill="currentColor"/></svg>
+              <span class="val" data-out="due"></span>
+              <input class="native" type="date" id="due" data-bind="due">
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5.5 9 6.5 6.5L18.5 9"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <label class="label f4" for="project">Project / Service</label>
+        <div class="field fld-proj"><span class="val" data-out="project"></span>
+          <select class="native" id="project" data-bind="project"></select>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5.5 9 6.5 6.5L18.5 9"/></svg></div>
+
+        <div class="billing">
+          <div class="billing-head">
+            <h3 class="billing-title">Billing Items</h3>
+            <button class="add-btn" id="addItem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 3v18M3 12h18"/></svg>Add Item</button>
+          </div>
+          <div class="items" id="items"></div>
+        </div>
+      </section>
+
+      <!-- ================= PREVIEW ================= -->
+      <section class="preview" aria-label="Invoice preview">
+        <svg class="fold" viewBox="0 0 46 44" aria-hidden="true">
+          <path d="M0 0H34a12 12 0 0 1 12 12V44H0Z" fill="#222223"/>
+          <path d="M0 4V39.5a4.5 4.5 0 0 0 4.5 4.5H41Z" fill="#282828"/>
+          <path d="M1.2 4.6V39.2a3.6 3.6 0 0 0 3.6 3.6H39.9Z" fill="url(#foldg)"/>
+          <defs><linearGradient id="foldg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#444446"/><stop offset=".6" stop-color="#414143"/><stop offset="1" stop-color="#464648"/></linearGradient></defs>
+        </svg>
+        <article class="invoice" id="invoice" aria-live="polite">
+          <div class="inv-head">
+            <svg class="inv-logo" viewBox="0 0 32 32" aria-hidden="true"><g fill="#fff"><circle cx="8" cy="8" r="7.75"/><circle cx="24" cy="8" r="7.75"/><circle cx="8" cy="24" r="7.75"/><circle cx="24" cy="24" r="7.75"/></g></svg>
+            <div class="inv-dates"><div><b>Issue Date:</b> <span data-out="issue"></span></div><div><b>Due Date:</b> <span data-out="due"></span></div></div>
+            <div class="inv-no" data-out="number"></div>
+            <div class="inv-proj" data-out="project"></div>
+            <div class="party from"><h4>From</h4><div class="who">Designmonks</div><div class="mail who">hello.designmonks@gmail.com</div></div>
+            <div class="party to"><h4>Billed to</h4><div class="who" data-out="billName"></div><div class="mail who" data-out="billEmail"></div></div>
+          </div>
+          <div class="inv-body">
+            <div class="t-row t-head"><span>Billing Items</span><span class="qty">Qty</span><span></span><span>Rate</span><span class="tax">Tax</span><span class="tot">Total</span></div>
+            <div id="lines"></div>
+            <div class="subtotal"><span>Sub Total (inc vat)</span><b data-out="subtotal"></b></div>
+            <div class="terms">Terms &amp; Conditions</div>
+            <div class="note">Please pay within 15 days of receiving this invoice.</div>
+          </div>
+        </article>
+        <div class="empty"><span>Preview is hidden</span><button class="btn btn-hide" data-act="show">Show Preview</button></div>
+      </section>
+    </div>
+  </main>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<template id="itemTpl">
+  <div class="item">
+    <div class="item-top"><span class="item-no"></span>
+      <button class="icon-btn" data-act="remove" aria-label="Remove item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 6h17"/><path d="M18.6 6v13.4a2 2 0 0 1-2 2H7.4a2 2 0 0 1-2-2V6"/><path d="M8.4 6V4a2 2 0 0 1 2-2h3.2a2 2 0 0 1 2 2v2"/><path d="M10.2 10.6v6.6M13.8 10.6v6.6"/></svg></button>
+    </div>
+    <div class="svc">
+      <span class="svc-ico"></span>
+      <span class="svc-txt"><span class="svc-title"></span><span class="svc-sub"></span></span>
+      <select class="native" data-f="service" aria-label="Service"></select>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8.5 7 7 7-7"/></svg>
+    </div>
+    <div class="nums">
+      <div class="num n-rate"><span class="num-l">Rate</span>
+        <div class="num-f"><span class="cur"><span class="cur-v">USD</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 9 7 7 7-7"/></svg><select data-f="currency" aria-label="Currency"></select></span>
+          <input class="rate-in" data-f="rate" inputmode="decimal" aria-label="Rate"></div></div>
+      <div class="num n-qty"><span class="num-l">Qty</span>
+        <div class="num-f"><span class="qty-v"></span><select data-f="qty" aria-label="Quantity"></select>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8.5 7 7 7-7"/></svg></div></div>
+      <div class="num n-tax"><span class="num-l">Tax</span>
+        <div class="num-f"><input class="tax-in" data-f="tax" inputmode="decimal" aria-label="Tax"></div></div>
+    </div>
+  </div>
+</template>
+
+<script src="assets/app-1.js"></script>
+</body>
+</html>

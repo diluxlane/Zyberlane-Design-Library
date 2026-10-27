@@ -1,0 +1,8 @@
+/*
+!/index.html
+!/assets/
+!/.gitignore
+
+/assets/*
+!/assets/anta.woff2
+!/assets/hero-glow.webp

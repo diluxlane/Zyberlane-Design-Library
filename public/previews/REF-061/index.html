@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-061/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#010102">
+<title>AI Verse — Design To Code Copilot</title>
+<style>
+/* ---------- Embedded fonts (subset, offline) ---------- */
+@font-face{font-family:"AV Inter";font-weight:400;font-style:normal;font-display:block;src:url(assets/inter-regular.woff) format("woff"),local("Inter Regular"),local("Inter-Regular")}
+@font-face{font-family:"AV Inter";font-weight:500;font-style:normal;font-display:block;src:url(assets/inter-medium.woff) format("woff"),local("Inter Medium"),local("Inter-Medium")}
+@font-face{font-family:"AV Inter";font-weight:600;font-style:normal;font-display:block;src:url(assets/inter-semibold.woff) format("woff"),local("Inter SemiBold"),local("Inter-SemiBold")}
+@font-face{font-family:"AV Inter";font-weight:700;font-style:normal;font-display:block;src:url(assets/inter-bold.woff) format("woff"),local("Inter Bold"),local("Inter-Bold")}
+@font-face{font-family:"AV Display";font-weight:600;font-style:normal;font-display:block;src:url(assets/display-semibold.woff) format("woff"),local("Inter Display SemiBold")}
+
+/* ---------- Design tokens (sampled from the reference) ---------- */
+:root{
+  --ink:#ffffff;
+  --page:#010102;
+  --frame-line:rgba(150,108,255,.42);
+  --sidebar:rgba(36,23,101,.97);
+  --main:rgba(27,17,78,.97);
+  --panel:rgba(40,27,112,.86);
+  --panel-line:rgba(112,84,226,.42);
+  --chip:rgba(84,52,206,.34);
+  --chip-line:rgba(126,92,255,.55);
+  --violet:#7330fd;
+  --magenta:#d85ffd;
+  --green:#4fd06e;
+  --font:"AV Inter","Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --display:"AV Display","Inter Display","AV Inter","Inter",ui-sans-serif,system-ui,sans-serif;
+  /* 1 design pixel. Desktop: fit the 1478 x 1064 stage inside the viewport */
+  --u: min(calc(100vw / 1478), calc(100dvh / 1064));
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--page);color:var(--ink)}
+body{font-family:var(--font);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-feature-settings:"cv11" 0}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+svg{display:block;overflow:visible}
+
+/* ======================================================
+   PAGE SHELL — always exactly fills the viewport height
+   ====================================================== */
+.page{position:relative;width:100%;height:100vh;height:100dvh;overflow:hidden;background:var(--page);isolation:isolate}
+.bg{position:absolute;left:50%;top:0;width:calc(1478 * var(--u));height:calc(1064 * var(--u));transform:translateX(-50%);z-index:-1;pointer-events:none;
+  background:linear-gradient(rgba(0,0,10,.18),rgba(0,0,10,.18)),url(assets/hero-background.webp) center/100% 100% no-repeat;
+  /* when the viewport is wider than the stage, feather the image edges into the page colour */
+  --fx:clamp(0px, calc((100vw - calc(1478 * var(--u))) * .6), 160px);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 var(--fx),#000 calc(100% - var(--fx)),transparent 100%);
+          mask-image:linear-gradient(90deg,transparent 0,#000 var(--fx),#000 calc(100% - var(--fx)),transparent 100%)}
+.bg::after{content:"";position:absolute;inset:auto 0 0 0;height:calc(120 * var(--u));background:linear-gradient(rgba(1,1,2,0),var(--page))}
+.stage{position:relative;width:calc(1478 * var(--u));height:100%;margin:0 auto}
+
+/* ---------- Navigation ---------- */
+.nav{position:absolute;inset:0 0 auto 0;height:calc(88 * var(--u))}
+.brand{position:absolute;left:calc(234 * var(--u));top:calc(27 * var(--u));display:block;width:calc(110 * var(--u));height:calc(36 * var(--u))}
+.brand-mark{position:absolute;left:0;top:0;width:calc(38 * var(--u));height:calc(33 * var(--u))}
+.brand-word{position:absolute;left:calc(40 * var(--u));top:calc(-5 * var(--u));width:calc(69 * var(--u));text-align:center;font-weight:700;color:#fff}
+.brand-word b{display:block;font-size:calc(22 * var(--u));line-height:calc(22 * var(--u));letter-spacing:calc(-.2 * var(--u));font-weight:700}
+.brand-word span{display:block;font-size:calc(18.6 * var(--u));line-height:calc(19 * var(--u));letter-spacing:calc(-.15 * var(--u));margin-top:calc(2.3 * var(--u))}
+.nav-links{position:absolute;left:calc(594 * var(--u));top:calc(34.3 * var(--u));display:flex;gap:calc(49.6 * var(--u));font-size:calc(14.6 * var(--u));line-height:calc(20 * var(--u));font-weight:400;letter-spacing:calc(-.05 * var(--u))}
+.nav-links a{color:#fdfdfc;transition:opacity .2s}
+.nav-links a:hover{opacity:.75}
+.btn-light{display:inline-flex;align-items:center;justify-content:center;background:#fff;color:#04030a;border-radius:999px;font-weight:600;white-space:nowrap;transition:transform .2s ease, box-shadow .2s ease}
+.btn-light:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(170,110,255,.35)}
+.nav-cta{position:absolute;left:calc(1150 * var(--u));top:calc(23 * var(--u));width:calc(118 * var(--u));height:calc(41 * var(--u));font-size:calc(14.1 * var(--u));letter-spacing:calc(-.05 * var(--u))}
+.menu-btn{display:none}
+.mobile-menu{display:none}
+
+/* ---------- Hero ---------- */
+.hero{position:absolute;left:0;right:0;top:0;height:calc(460 * var(--u));text-align:center}
+.pill{position:absolute;left:calc(639 * var(--u));top:calc(123 * var(--u));width:calc(201 * var(--u));height:calc(35 * var(--u));display:flex;align-items:center;padding:0 calc(14 * var(--u));gap:calc(11 * var(--u));border-radius:999px;
+  font-size:calc(13 * var(--u));line-height:calc(16 * var(--u));color:#f6f1fb;letter-spacing:calc(-.02 * var(--u));white-space:nowrap;
+  background:linear-gradient(90deg,rgba(84,28,150,.9),rgba(60,18,112,.86) 55%,rgba(70,22,128,.9));
+  box-shadow:inset 0 0 0 calc(1 * var(--u)) rgba(168,104,255,.62),inset 0 calc(1 * var(--u)) 0 rgba(214,170,255,.35),0 0 calc(18 * var(--u)) rgba(120,50,220,.25);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.pill svg{width:calc(17 * var(--u));height:calc(17 * var(--u));flex:none}
+.h1{position:absolute;left:0;right:0;top:calc(178.1 * var(--u));margin:0;font-family:var(--display);font-weight:600;font-size:calc(55.2 * var(--u));line-height:calc(62 * var(--u));letter-spacing:calc(.49 * var(--u));word-spacing:calc(3.8 * var(--u));color:#fff;-webkit-text-stroke:calc(1.05 * var(--u)) #fff;paint-order:stroke fill;text-shadow:0 0 calc(1.2 * var(--u)) rgba(255,255,255,.35)}
+.h1 span{display:block}
+.lead{position:absolute;left:0;right:0;top:calc(313.8 * var(--u));margin:0;font-size:calc(18.25 * var(--u));line-height:calc(26 * var(--u));font-weight:400;color:#ececeb;letter-spacing:calc(-.05 * var(--u))}
+.lead span{display:block}
+.hero-cta{position:absolute;left:calc(662 * var(--u));top:calc(390 * var(--u));width:calc(153 * var(--u));height:calc(42 * var(--u));gap:calc(9.6 * var(--u));font-size:calc(15 * var(--u));font-weight:500;letter-spacing:calc(-.1 * var(--u))}
+.hero-cta svg{width:calc(11 * var(--u));height:calc(11 * var(--u))}
+
+/* ---------- Dashboard showcase region ---------- */
+.showcase{position:absolute;left:0;right:0;top:calc(460 * var(--u));bottom:calc(110 * var(--u))}
+.dash-clip{position:absolute;left:calc(214 * var(--u));top:0;width:calc(1058 * var(--u));bottom:0;overflow:hidden;border-radius:calc(14 * var(--u)) calc(14 * var(--u)) 0 0}
+.fade{position:absolute;left:0;right:0;bottom:0;height:calc(100 * var(--u));pointer-events:none;z-index:5;
+  background:linear-gradient(180deg,rgba(1,1,8,0) 0%,rgba(1,1,8,.07) 6%,rgba(1,1,8,.27) 30%,rgba(1,1,8,.47) 46%,rgba(1,1,8,.63) 66%,rgba(1,1,8,.76) 78%,rgba(1,1,8,.87) 90%,rgba(1,1,6,.96) 100%)}
+
+/* ---------- Logos band ---------- */
+.band{position:absolute;left:0;right:0;bottom:0;height:calc(110 * var(--u));background:var(--page)}
+.band::before{content:"";position:absolute;left:-100vw;right:-100vw;top:0;bottom:0;background:var(--page);z-index:-1}
+.tagline{position:absolute;left:0;right:0;top:calc(19.95 * var(--u));margin:0;text-align:center;font-size:calc(13.72 * var(--u));line-height:calc(18 * var(--u));color:#e8e8e7;letter-spacing:calc(-.02 * var(--u))}
+.logos{position:absolute;left:0;right:0;top:calc(57 * var(--u));height:calc(26 * var(--u));margin:0;padding:0;list-style:none}
+.logo{position:absolute;top:0;height:calc(26 * var(--u));display:flex;align-items:center;gap:calc(7 * var(--u));color:#fff;font-weight:600;font-size:calc(22 * var(--u));letter-spacing:calc(-.4 * var(--u));white-space:nowrap;transform:translateX(-50%);opacity:.96}
+.logo svg{height:calc(24 * var(--u));width:auto;flex:none}
+.logo-q{font-weight:700;font-size:calc(24 * var(--u));letter-spacing:calc(-.8 * var(--u))}
+.logo-q svg{margin-left:calc(-5 * var(--u))}
+
+/* ======================================================
+   DASHBOARD MOCK — absolute layout in measured design px
+   (origin = top-left of the dashboard frame)
+   ====================================================== */
+.dash{position:absolute;left:0;top:0;width:calc(1058 * var(--u));height:max(calc(660 * var(--u)),100%);font-family:var(--font);color:#fff;
+  box-shadow:0 0 calc(40 * var(--u)) rgba(110,60,255,.18)}
+.dash::after{content:"";position:absolute;inset:0;border-radius:calc(14 * var(--u)) calc(14 * var(--u)) 0 0;box-shadow:inset 0 0 0 calc(1 * var(--u)) var(--frame-line),inset 0 calc(1.5 * var(--u)) 0 rgba(170,130,255,.35);pointer-events:none;z-index:4}
+.d-side{position:absolute;left:0;top:0;width:calc(172 * var(--u));height:100%;border-radius:calc(14 * var(--u)) 0 0 0;
+  background:linear-gradient(180deg,rgba(37,24,104,.97),rgba(35,22,98,.97));
+  -webkit-backdrop-filter:blur(30px) saturate(140%);backdrop-filter:blur(30px) saturate(140%);
+  box-shadow:inset calc(-1 * var(--u)) 0 0 rgba(116,84,232,.5)}
+.d-main{position:absolute;left:calc(172 * var(--u));top:0;right:0;height:100%;border-radius:0 calc(14 * var(--u)) 0 0;
+  background:linear-gradient(180deg,rgba(27,17,79,.97),rgba(26,17,76,.97) 60%,rgba(24,15,72,.97));
+  -webkit-backdrop-filter:blur(30px) saturate(140%);backdrop-filter:blur(30px) saturate(140%)}
+.abs{position:absolute}
+.panel{position:absolute;border-radius:calc(8 * var(--u));background:var(--panel);box-shadow:inset 0 0 0 calc(1 * var(--u)) var(--panel-line),inset 0 calc(1 * var(--u)) 0 rgba(150,120,255,.12)}
+.chip{position:absolute;display:flex;align-items:center;border-radius:calc(7 * var(--u));background:var(--chip);box-shadow:inset 0 0 0 calc(1 * var(--u)) var(--chip-line)}
+.t{position:absolute;white-space:nowrap;margin:0}
+
+/* sidebar */
+.d-logo{left:calc(16 * var(--u));top:calc(23 * var(--u));width:calc(32 * var(--u));height:calc(32 * var(--u))}
+.d-brand{left:calc(54.8 * var(--u));top:calc(23.8 * var(--u));font-size:calc(13.1 * var(--u));line-height:calc(16 * var(--u));font-weight:600;letter-spacing:calc(-.1 * var(--u))}
+.d-brand-sub{left:calc(55 * var(--u));top:calc(43.6 * var(--u));font-size:calc(8.6 * var(--u));line-height:calc(11 * var(--u));color:#f2edfc}
+.d-active{left:calc(13 * var(--u));top:calc(81 * var(--u));width:calc(148 * var(--u));height:calc(33 * var(--u));border-radius:calc(7 * var(--u));background:linear-gradient(180deg,#7a39ff,#6d2bf8);box-shadow:inset 0 calc(1 * var(--u)) 0 rgba(255,255,255,.18),0 calc(4 * var(--u)) calc(14 * var(--u)) rgba(115,48,253,.35)}
+.d-nav{left:0;top:0;width:calc(172 * var(--u));margin:0;padding:0;list-style:none}
+.d-nav li{position:absolute;left:calc(24 * var(--u));height:calc(16 * var(--u));width:calc(140 * var(--u));display:flex;align-items:center;gap:calc(14 * var(--u));font-size:calc(9.4 * var(--u));font-weight:500;color:#fdf9ff;letter-spacing:calc(-.02 * var(--u))}
+.d-nav svg{width:calc(16 * var(--u));height:calc(16 * var(--u));flex:none}
+.d-upg{left:calc(13 * var(--u));top:calc(388 * var(--u));width:calc(148 * var(--u));height:calc(122 * var(--u));border-radius:calc(9 * var(--u));background:linear-gradient(180deg,rgba(82,40,206,.66),rgba(62,30,160,.5) 45%,rgba(44,22,124,.42));box-shadow:inset 0 0 0 calc(1 * var(--u)) rgba(132,92,255,.42),inset 0 calc(1 * var(--u)) 0 rgba(180,140,255,.25)}
+.d-upg>*{z-index:7}
+.d-upg svg{position:absolute;left:calc(13 * var(--u));top:calc(17 * var(--u));width:calc(17 * var(--u));height:calc(17 * var(--u));filter:drop-shadow(0 0 calc(4 * var(--u)) rgba(170,100,255,.4))}
+.d-upg h4{position:absolute;left:calc(12.5 * var(--u));top:calc(45 * var(--u));margin:0;font-size:calc(12.9 * var(--u));line-height:calc(16 * var(--u));font-weight:600;color:#9470e0;letter-spacing:calc(-.1 * var(--u));white-space:nowrap}
+.d-upg p{position:absolute;left:calc(12.5 * var(--u));top:calc(65 * var(--u));margin:0;width:calc(140 * var(--u));font-size:calc(10 * var(--u));line-height:calc(15.5 * var(--u));color:#5f5b8a;-webkit-mask-image:linear-gradient(180deg,#000 45%,rgba(0,0,0,.7));mask-image:linear-gradient(180deg,#000 45%,rgba(0,0,0,.7))}
+
+/* header */
+.d-welcome{left:calc(191.6 * var(--u));top:calc(32.6 * var(--u));font-size:calc(16.8 * var(--u));line-height:calc(21 * var(--u));font-weight:600;letter-spacing:calc(-.2 * var(--u));display:flex;align-items:center;gap:calc(6 * var(--u))}
+.d-welcome img{width:calc(18 * var(--u));height:calc(18 * var(--u));margin-top:calc(-1 * var(--u))}
+.d-sub{left:calc(191.8 * var(--u));top:calc(59.8 * var(--u));font-size:calc(11.3 * var(--u));line-height:calc(15 * var(--u));color:#f6f3fd;letter-spacing:calc(-.04 * var(--u))}
+.d-search{left:calc(594 * var(--u));top:calc(15 * var(--u));width:calc(211 * var(--u));height:calc(32 * var(--u));border-radius:calc(8 * var(--u));padding:0 0 0 calc(12 * var(--u));gap:calc(10 * var(--u));font-size:calc(9.3 * var(--u));color:#bea7ee;
+  background:linear-gradient(90deg,rgba(88,46,230,.52),rgba(80,40,214,.46));box-shadow:inset 0 0 0 calc(1 * var(--u)) rgba(122,86,255,.62)}
+.d-search svg{width:calc(12 * var(--u));height:calc(12 * var(--u))}
+.kbd{position:absolute;right:calc(8 * var(--u));top:calc(6 * var(--u));width:calc(30 * var(--u));height:calc(19 * var(--u));border-radius:calc(4 * var(--u));display:flex;align-items:center;justify-content:center;gap:calc(3 * var(--u));font-size:calc(8.2 * var(--u));font-weight:500;color:#e9e1ff;background:rgba(110,72,240,.42);box-shadow:inset 0 0 0 calc(1 * var(--u)) rgba(140,104,255,.35)}
+.d-bell{left:calc(823 * var(--u));top:calc(15 * var(--u));width:calc(31 * var(--u));height:calc(31 * var(--u));border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(34,20,100,.6);box-shadow:inset 0 0 0 calc(1 * var(--u)) rgba(110,80,226,.75)}
+.d-bell svg{width:calc(14 * var(--u));height:calc(14 * var(--u))}
+.d-bell i{position:absolute;right:calc(5.5 * var(--u));top:calc(3 * var(--u));width:calc(5 * var(--u));height:calc(5 * var(--u));border-radius:50%;background:#f575fb;box-shadow:0 0 calc(6 * var(--u)) #f575fb}
+.d-avatar{left:calc(885 * var(--u));top:calc(15 * var(--u));width:calc(33 * var(--u));height:calc(33 * var(--u));border-radius:50%;object-fit:cover}
+.d-name{left:calc(925.6 * var(--u));top:calc(16.6 * var(--u));font-size:calc(9.7 * var(--u));line-height:calc(12 * var(--u));font-weight:600;letter-spacing:calc(-.05 * var(--u))}
+.d-plan{left:calc(926 * var(--u));top:calc(33.6 * var(--u));font-size:calc(7.2 * var(--u));line-height:calc(9 * var(--u));color:#c1b4da}
+.d-chev{width:calc(10 * var(--u));height:calc(10 * var(--u))}
+.d-date{left:calc(876 * var(--u));top:calc(57 * var(--u));width:calc(165 * var(--u));height:calc(30 * var(--u));padding-left:calc(12 * var(--u));gap:calc(8 * var(--u));font-size:calc(9.7 * var(--u));font-weight:500;color:#fff;letter-spacing:calc(-.02 * var(--u));
+  background:rgba(58,40,152,.42);box-shadow:inset 0 0 0 calc(1 * var(--u)) rgba(110,84,226,.7)}
+.d-date svg.cal{width:calc(14 * var(--u));height:calc(14 * var(--u))}
+.d-date .d-chev{position:absolute;right:calc(10 * var(--u));top:calc(10 * var(--u))}
+
+/* stat cards */
+.stat{top:calc(94 * var(--u));height:calc(88 * var(--u))}
+.stat .ic{position:absolute;top:calc(14 * var(--u));width:calc(39 * var(--u));height:calc(39 * var(--u));border-radius:calc(9 * var(--u));display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(160deg,#7733ff,#6a27f8);box-shadow:inset 0 calc(1 * var(--u)) 0 rgba(255,255,255,.18),0 calc(4 * var(--u)) calc(12 * var(--u)) rgba(110,40,250,.3)}
+.stat .ic.blue{background:linear-gradient(160deg,#3e47fd,#343df5);box-shadow:inset 0 calc(1 * var(--u)) 0 rgba(255,255,255,.2),0 calc(4 * var(--u)) calc(12 * var(--u)) rgba(50,60,250,.35)}
+.stat .ic svg{width:calc(19 * var(--u));height:calc(19 * var(--u))}
+.stat .lbl{top:calc(14 * var(--u));font-size:calc(9.3 * var(--u));line-height:calc(12 * var(--u));color:#f3f3ff;letter-spacing:calc(-.02 * var(--u))}
+.stat .num{top:calc(30 * var(--u));font-size:calc(17.6 * var(--u));line-height:calc(22 * var(--u));font-weight:600;letter-spacing:calc(-.2 * var(--u))}
+.stat .delta{top:calc(59.6 * var(--u));font-size:calc(8.1 * var(--u));line-height:calc(11 * var(--u));font-weight:500;color:#ece2f8;display:flex;align-items:center;gap:calc(2.6 * var(--u));letter-spacing:calc(-.32 * var(--u))}
+.stat .delta b{color:#43dc6c;font-weight:700;font-size:calc(9.1 * var(--u));display:flex;align-items:center;gap:calc(4 * var(--u));letter-spacing:calc(-.2 * var(--u))}
+.stat .delta svg{width:calc(7.6 * var(--u));height:calc(9 * var(--u))}
+.stat .spark{position:absolute;right:calc(10 * var(--u));bottom:calc(10 * var(--u));width:calc(41 * var(--u));height:calc(21 * var(--u))}
+
+/* chart */
+.chart-panel{left:calc(190 * var(--u));top:calc(188 * var(--u));width:calc(525 * var(--u));height:calc(212 * var(--u))}
+.p-title{font-size:calc(11.05 * var(--u));line-height:calc(14 * var(--u));font-weight:600;letter-spacing:calc(-.08 * var(--u));color:#fff}
+.chip-sm{height:calc(25 * var(--u));padding:0 0 0 calc(12 * var(--u));font-size:calc(9.6 * var(--u));font-weight:500;gap:0;color:#fff}
+.chip-sm .d-chev{position:absolute;right:calc(10 * var(--u));top:calc(7.5 * var(--u))}
+.chart-svg{position:absolute;left:0;top:0;width:calc(525 * var(--u));height:calc(212 * var(--u))}
+.chart-svg text{font-family:var(--font);fill:#f2f0fb;font-weight:500}
+
+/* agents */
+.agents{left:calc(722 * var(--u));top:calc(188 * var(--u));width:calc(319 * var(--u));height:calc(181 * var(--u))}
+.ag-ic{position:absolute;left:calc(15 * var(--u));width:calc(26 * var(--u));height:calc(26 * var(--u));border-radius:calc(6 * var(--u));display:flex;align-items:center;justify-content:center;box-shadow:inset 0 calc(1 * var(--u)) 0 rgba(255,255,255,.18)}
+.ag-ic svg{width:calc(14 * var(--u));height:calc(14 * var(--u))}
+.ag-name{left:calc(52.6 * var(--u));font-size:calc(9.6 * var(--u));line-height:calc(12 * var(--u));font-weight:500;letter-spacing:calc(-.03 * var(--u))}
+.bar{position:absolute;left:calc(52 * var(--u));width:calc(161 * var(--u));height:calc(5 * var(--u));border-radius:calc(3 * var(--u));background:rgba(110,46,255,.5);overflow:hidden}
+.bar i{position:absolute;left:0;top:0;bottom:0;border-radius:calc(3 * var(--u));background:rgba(150,96,255,.6)}
+.bar b{position:absolute;left:0;top:0;bottom:0;border-radius:calc(3 * var(--u));background:linear-gradient(90deg,#d660f8,#ec6efa);box-shadow:0 0 calc(6 * var(--u)) rgba(225,100,248,.6)}
+.ag-val{right:calc(58.4 * var(--u));margin-top:calc(1.4 * var(--u));font-size:calc(9.5 * var(--u));line-height:calc(12 * var(--u));font-weight:500;text-align:right}
+.ag-pct{right:calc(15 * var(--u));font-size:calc(9.6 * var(--u));line-height:calc(12 * var(--u));font-weight:600;color:var(--green);display:flex;align-items:center;gap:calc(3 * var(--u))}
+.ag-pct svg{width:calc(7 * var(--u));height:calc(8 * var(--u))}
+
+/* intents */
+.intents{left:calc(722 * var(--u));top:calc(375 * var(--u));width:calc(319 * var(--u));height:calc(281 * var(--u))}
+.legend{position:absolute;left:0;top:0;margin:0;padding:0;list-style:none}
+.legend li{position:absolute;left:calc(144 * var(--u));width:calc(160 * var(--u));height:calc(14 * var(--u));display:flex;align-items:center;font-size:calc(10 * var(--u));font-weight:500;color:#fff;letter-spacing:calc(-.02 * var(--u))}
+.legend li i{width:calc(9 * var(--u));height:calc(9 * var(--u));border-radius:50%;margin-right:calc(11 * var(--u));flex:none}
+.legend li span{margin-left:auto}
+
+/* lower row */
+.recent{left:calc(190 * var(--u));top:calc(406 * var(--u));width:calc(248 * var(--u));height:calc(250 * var(--u))}
+.usage{left:calc(445 * var(--u));top:calc(406 * var(--u));width:calc(270 * var(--u));height:calc(250 * var(--u))}
+.conv{position:absolute;left:calc(13 * var(--u));width:calc(222 * var(--u));height:calc(32 * var(--u))}
+.conv .av{position:absolute;left:0;top:0;width:calc(24 * var(--u));height:calc(24 * var(--u));border-radius:50%}
+.conv .q{left:calc(31 * var(--u));top:calc(-3 * var(--u));font-size:calc(10 * var(--u));line-height:calc(13 * var(--u));font-weight:500;color:#ece8ff;letter-spacing:calc(-.03 * var(--u))}
+.conv .w{left:calc(31 * var(--u));top:calc(13.5 * var(--u));font-size:calc(9 * var(--u));line-height:calc(12 * var(--u));color:#8f88c0}
+.conv .st{position:absolute;right:0;top:calc(4 * var(--u));height:calc(15 * var(--u));padding:0 calc(7 * var(--u));border-radius:calc(8 * var(--u));font-size:calc(7.6 * var(--u));line-height:calc(15 * var(--u));font-weight:600}
+
+/* ======================================================
+   ADAPTIVE LAYOUT — portrait, tablets and phones.
+   Same markup, reflowed; still fills the full viewport.
+   ====================================================== */
+@media (max-width: 1023.98px), (max-aspect-ratio: 23/20){
+  .page{height:auto;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;overflow-x:hidden;overflow-y:visible}
+  .bg{width:100%;height:100%;left:0;transform:none;-webkit-mask-image:none;mask-image:none;
+    background:linear-gradient(rgba(0,0,10,.2),rgba(0,0,10,.2)),url(assets/hero-background.webp) 72% 0/auto max(100%,780px) no-repeat}
+  .bg::after{height:35%}
+  .stage{display:contents}
+  .nav,.hero,.showcase,.band,.brand,.brand-mark,.brand-word,.nav-links,.nav-cta,.pill,.h1,.lead,.hero-cta,.tagline,.logos,.logo{position:relative;inset:auto;left:auto;top:auto;right:auto;bottom:auto;transform:none}
+  .nav{height:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:max(16px,env(safe-area-inset-top)) clamp(16px,5vw,40px) 0;z-index:20}
+  .brand{width:auto;height:auto;display:flex;align-items:center;gap:6px}
+  .brand-mark{width:34px;height:30px}
+  .brand-word{width:auto;top:0}
+  .brand-word b{font-size:19px;line-height:19px}
+  .brand-word span{font-size:16px;line-height:16px;margin-top:2px}
+  .nav-links{display:flex;gap:clamp(20px,4vw,44px);font-size:15px;line-height:20px;letter-spacing:0}
+  .nav-cta{width:auto;height:40px;padding:0 20px;font-size:14.5px;letter-spacing:0}
+  .hero{height:auto;flex:1 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(28px,6vh,72px) clamp(16px,5vw,40px) clamp(24px,4.5vh,48px);gap:0}
+  .pill{width:auto;height:34px;padding:0 14px;gap:10px;font-size:13px;line-height:16px}
+  .pill svg{width:17px;height:17px}
+  .h1{margin:clamp(20px,3vh,30px) 0 0;font-size:clamp(31px,7.3vw,58px);line-height:1.1;letter-spacing:-.01em;word-spacing:0;max-width:760px;text-wrap:balance}
+  .h1 span{display:inline}
+  .lead{margin:clamp(14px,2.2vh,22px) 0 0;font-size:clamp(15px,3.9vw,18px);line-height:1.45;max-width:480px;letter-spacing:0}
+  .lead span{display:inline}
+  .hero-cta{margin-top:clamp(22px,3.6vh,34px);width:auto;height:46px;padding:0 24px;font-size:15px;gap:8px}
+  .hero-cta svg{width:11px;height:11px}
+  .showcase{--u:calc(min(100vw - 2 * clamp(12px,3.5vw,32px), 1060px) / 1058);flex:1 1 auto;height:auto;min-height:240px;max-height:calc(660 * var(--u));width:calc(1058 * var(--u));margin:0 auto;display:block}
+  .dash-clip{left:0;width:calc(1058 * var(--u));top:0;bottom:0;height:auto}
+  .band{height:auto;padding:22px clamp(16px,5vw,40px) max(22px,env(safe-area-inset-bottom));background:var(--page)}
+  .tagline{font-size:13.5px;line-height:18px;padding:0 8px}
+  .logos{height:auto;margin-top:18px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 12px;justify-items:center;max-width:720px;margin-left:auto;margin-right:auto}
+  .logo{left:auto!important;font-size:clamp(15px,4.2vw,20px);gap:6px;height:24px}
+  .logo svg{height:clamp(17px,4.6vw,22px)}
+  .logo-q{font-size:clamp(16px,4.5vw,21px);letter-spacing:-.03em}
+  .logo-q svg{margin-left:-4px}
+}
+@media (max-width: 1023.98px), (max-aspect-ratio: 23/20){
+  @media (min-width: 900px){ .logos{grid-template-columns:repeat(6,minmax(0,1fr));max-width:980px} }
+}
+@media (max-width: 719.98px){
+  .nav-links{display:none}
+  .nav-cta{display:none}
+  .menu-btn{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:12px;background:rgba(40,22,96,.45);box-shadow:inset 0 0 0 1px rgba(150,110,255,.38);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+  .menu-btn svg{width:18px;height:18px}
+  .mobile-menu{position:absolute;left:12px;right:12px;top:calc(max(16px,env(safe-area-inset-top)) + 54px);display:flex;flex-direction:column;gap:4px;padding:10px;border-radius:16px;z-index:30;
+    background:rgba(22,12,60,.78);box-shadow:inset 0 0 0 1px rgba(150,110,255,.35),0 18px 40px rgba(0,0,0,.45);-webkit-backdrop-filter:blur(18px) saturate(150%);backdrop-filter:blur(18px) saturate(150%);
+    opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .2s ease,transform .2s ease}
+  .mobile-menu a{padding:12px 14px;border-radius:10px;font-size:16px}
+  .mobile-menu a:not(.btn-light):hover{background:rgba(255,255,255,.06)}
+  .mobile-menu .btn-light{height:46px;margin-top:6px;font-size:15px}
+  .page.menu-open .mobile-menu{opacity:1;transform:none;pointer-events:auto}
+}
+@media (max-height: 520px) and (max-width: 1023.98px){ .hero{flex-grow:0} }
+@media (prefers-reduced-motion: reduce){ *{transition:none!important} }
+</style>
+</head>
+<body>
+<div class="page" id="page">
+  <div class="bg" aria-hidden="true"></div>
+
+  <div class="stage">
+    <!-- ================= NAV ================= -->
+    <header class="nav">
+      <a class="brand" href="#" aria-label="AI Verse home">
+        <svg class="brand-mark" viewBox="0 0 38 33" aria-hidden="true">
+          <defs><mask id="cut"><rect x="-4" y="-4" width="46" height="41" fill="#fff"/><line x1="1.5" y1="32.5" x2="36.5" y2="0.5" stroke="#000" stroke-width="8.2" stroke-linecap="round"/></mask></defs>
+          <g fill="none" stroke="#fff" stroke-width="3.1" mask="url(#cut)">
+            <circle cx="19.6" cy="16.6" r="13.6"/>
+            <path d="M12.1 16.6a7.5 7.5 0 1 1 7.5 7.5"/>
+            <path d="M23.6 16.6a4 4 0 0 1-4 4"/>
+          </g>
+          <line x1="2.3" y1="31.7" x2="35.7" y2="1.3" stroke="#fff" stroke-width="3.1" stroke-linecap="round"/>
+          <line x1="13" y1="21.6" x2="23.2" y2="12.4" stroke="#fff" stroke-width="3.1" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-word"><b>AI</b><span>Verse</span></span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+        <a href="#community">Community</a>
+      </nav>
+      <a class="btn-light nav-cta" href="#start">Get Started</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M2.5 5h13M2.5 9h13M2.5 13h13"/></svg>
+      </button>
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+        <a href="#community">Community</a>
+        <a class="btn-light" href="#start">Get Started</a>
+      </div>
+    </header>
+
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+      <div class="pill">
+        <span>Design To Code Copilot</span>
+        <svg viewBox="0 0 17 17" fill="none" stroke="#f3eaff" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M8.5 1.6 11.3 4.4 14.7 3.9 13.4 7.3 15.4 10 12 11.2 11.1 14.8 8.5 12.7 5.6 14.9 5.1 11.4 1.6 10.3 3.6 7.4 2.4 4 5.8 4.4Z"/>
+          <path d="M8.5 1.6 8.5 12.7M3.6 7.4 13.4 7.3M5.8 4.4 11.1 14.8M11.3 4.4 5.6 14.9"/>
+          <circle cx="8.5" cy="8.1" r="1.4" fill="#f3eaff" stroke="none"/>
+        </svg>
+      </div>
+      <h1 class="h1"><span>Grow Your Business with AI</span> <span>Powered Interfaces.</span></h1>
+      <p class="lead"><span>Production Ready Frontend Pages in minutes using</span> <span>Figma Designs or Screenshots.</span></p>
+      <a class="btn-light hero-cta" href="#start">Get Started
+        <svg viewBox="0 0 11 11" fill="none" stroke="#000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 9.5 9.5 1.5M3 1.5h6.5V8"/></svg>
+      </a>
+    </section>
+
+    <!-- ================= DASHBOARD ================= -->
+    <section class="showcase" aria-label="Product preview">
+      <div class="dash-clip">
+        <div class="dash" role="img" aria-label="AIVerse AI assistant dashboard preview">
+          <!-- Sidebar -->
+          <aside class="d-side">
+            <svg class="abs d-logo" viewBox="0 0 32 32" aria-hidden="true">
+              <defs>
+                <linearGradient id="gA" x1="0" y1="0" x2=".3" y2="1"><stop offset="0" stop-color="#f38cff"/><stop offset=".55" stop-color="#c562f7"/><stop offset="1" stop-color="#9c4cf2"/></linearGradient>
+              </defs>
+              <path d="M5.2 28.2 14.1 6.1c.7-1.8 3.1-1.8 3.8 0l8.9 22.1" fill="none" stroke="url(#gA)" stroke-width="6.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M8.8 21.9 21.6 18.4" stroke="#5b2bc4" stroke-width="3.2" stroke-linecap="round" opacity=".9"/>
+            </svg>
+            <p class="t d-brand">AIVerse</p>
+            <p class="t d-brand-sub">AI Assistant Dashboard</p>
+            <div class="abs d-active"></div>
+            <ul class="d-nav">
+              <li style="top:calc(89 * var(--u))"><svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.25" stroke-linejoin="round"><path d="M8 .7c1 1.9 2 2.9 3.6 3.1 1.6.2 3.5.9 3.6 2.6.1 1.4-1.5 1.6-1.5 1.6s1.6.3 1.5 1.7c-.1 1.7-2 2.3-3.6 2.5C10 12.4 9 13.5 8 15.3c-1-1.8-2-2.9-3.6-3.1-1.6-.2-3.5-.8-3.6-2.5C.7 8.3 2.3 8 2.3 8S.7 7.8.8 6.4c.1-1.7 2-2.4 3.6-2.6C6 3.6 7 2.6 8 .7Z"/><path d="M6 8.2c.8 1.2 3.2 1.2 4 0" stroke-linecap="round"/></svg>Overview</li>
+              <li style="top:calc(123.4 * var(--u))"><svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.25" stroke-linejoin="round" stroke-linecap="round"><path d="M3 1.1h10.4a2.2 2.2 0 0 1 2.2 2.2v6.6a2.2 2.2 0 0 1-2.2 2.2H7.4L3.4 15.2v-3.1h-.4A2.2 2.2 0 0 1 .8 9.9V3.3A2.2 2.2 0 0 1 3 1.1Z"/><path d="M5.2 5.6 6.5 8.4 8 6.2 9.5 8.4l1.3-2.8"/></svg>Conversations</li>
+              <li style="top:calc(157.2 * var(--u))"><svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.25" stroke-linejoin="round" stroke-linecap="round"><path d="M8 1.4a2.5 2.5 0 0 1 2.5 2.5v4.2a2.5 2.5 0 0 1-5 0V3.9A2.5 2.5 0 0 1 8 1.4Z"/><path d="M3.3 7.4a4.7 4.7 0 0 0 9.4 0M8 12.2v2.6M5.4 14.8h5.2"/><path d="M1.6 9.5c.4.8 1 1.3 1.7 1.5M14.4 9.5c-.4.8-1 1.3-1.7 1.5"/></svg>AI Agents</li>
+              <li style="top:calc(190.8 * var(--u))"><svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.25" stroke-linejoin="round"><rect x="1.6" y="8.6" width="2.9" height="5.8" rx=".7"/><rect x="6.55" y="4.6" width="2.9" height="9.8" rx=".7"/><rect x="11.5" y="1.6" width="2.9" height="12.8" rx=".7"/><path d="M.8 14.9h14.4" stroke-linecap="round"/></svg>Analytics</li>
+              <li style="top:calc(224.4 * var(--u))"><svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.25" stroke-linejoin="round" stroke-linecap="round"><rect x="1.8" y="1.6" width="12.4" height="12.8" rx="2.4"/><path d="M5.4 4.6v3.1a2.6 2.6 0 0 0 5.2 0V4.6M8 10.3v1.6"/></svg>Knowledge Base</li>
+              <li style="top:calc(257.4 * var(--u))"><svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.25"><circle cx="4.3" cy="4.4" r="2.8"/><path d="M9.1 7.2V4.4a2.8 2.8 0 1 1 2.8 2.8Z" stroke-linejoin="round"/><circle cx="4.3" cy="11.6" r="2.8"/><circle cx="11.9" cy="11.6" r="2.8"/></svg>Integrations</li>
+              <li style="top:calc(290.6 * var(--u))"><svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.25" stroke-linecap="round"><circle cx="8" cy="5" r="3.4"/><path d="M1.8 14.6c.4-3 3-4.8 6.2-4.8s5.8 1.8 6.2 4.8Z" stroke-linejoin="round"/></svg>Team</li>
+              <li style="top:calc(322.8 * var(--u))"><svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.25" stroke-linejoin="round"><path d="M6.6 1.3h2.8l.4 1.9 1.4.8 1.8-.6 1.4 2.4-1.4 1.3v1.8l1.4 1.3-1.4 2.4-1.8-.6-1.4.8-.4 1.9H6.6l-.4-1.9-1.4-.8-1.8.6-1.4-2.4 1.4-1.3V7.1L1.6 5.8 3 3.4l1.8.6 1.4-.8Z"/><circle cx="8" cy="8" r="2.3"/></svg>Settings</li>
+            </ul>
+          </aside>
+
+          <div class="abs d-upg">
+              <svg viewBox="0 0 17 17" fill="none" stroke="#b56af8" stroke-width="1.7" stroke-linecap="round"><path d="M8.5 1.5v14M1.5 8.5h14"/></svg>
+              <h4>Upgrade to Pro</h4>
+              <p>Unlock advanced features and higher limits.</p>
+            </div>
+
+          <!-- Main -->
+          <div class="d-main"></div>
+          <p class="t d-welcome">Welcome back, Sagor <img alt="" src="assets/welcome-icon.png"></p>
+          <p class="t d-sub">Here's what's happening with your AI ecosystem today.</p>
+
+          <div class="chip d-search">
+            <svg viewBox="0 0 12 12" fill="none" stroke="#e2d6ff" stroke-width="1.3" stroke-linecap="round"><circle cx="5.2" cy="5.2" r="4.1"/><path d="m8.3 8.3 2.9 2.9"/></svg>
+            <span>Search anything...</span>
+            <span class="kbd">⌘ <span>K</span></span>
+          </div>
+          <div class="abs d-bell"><svg viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="1.15" stroke-linejoin="round" stroke-linecap="round"><path d="M3.1 10.4V6.5a3.9 3.9 0 0 1 7.8 0v3.9l1.1 1.1H2Z"/><path d="M5.6 12.6a1.5 1.5 0 0 0 2.8 0M7 1.4v1.2"/></svg><i></i></div>
+          <img class="abs d-avatar" alt="" src="assets/dashboard-avatar.png">
+          <p class="t d-name">Sagor Hossain</p>
+          <p class="t d-plan">Pro Plan</p>
+          <svg class="abs d-chev" style="left:calc(1020 * var(--u));top:calc(26 * var(--u))" viewBox="0 0 10 10" fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="m2.2 3.6 2.8 2.8 2.8-2.8"/></svg>
+          <div class="chip d-date">
+            <svg class="cal" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="1.1" stroke-linecap="round"><rect x="1.4" y="2.3" width="11.2" height="10.3" rx="1.6"/><path d="M1.4 5.4h11.2M4.4 1.1v2.4M9.6 1.1v2.4"/><path d="M4 7.6h1.2M6.4 7.6h1.2M8.8 7.6H10M4 9.9h1.2M6.4 9.9h1.2" stroke-width="1"/></svg>
+            <span>May 1 – Jun 30, 2025</span>
+            <svg class="d-chev" viewBox="0 0 10 10" fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="m2.2 3.6 2.8 2.8 2.8-2.8"/></svg>
+          </div>
+
+          <!-- Stat cards -->
+          <div class="panel stat" style="left:calc(190 * var(--u));width:calc(200 * var(--u))">
+            <div class="ic" style="left:calc(13 * var(--u))"><svg viewBox="0 0 19 19"><path d="M4.2 2.6h10.6a2.6 2.6 0 0 1 2.6 2.6v6.2a2.6 2.6 0 0 1-2.6 2.6H8.4l-3.6 3v-3h-.6a2.6 2.6 0 0 1-2.6-2.6V5.2a2.6 2.6 0 0 1 2.6-2.6Z" fill="#fff"/><circle cx="6.4" cy="8.3" r="1" fill="#7a35fd"/><circle cx="9.5" cy="8.3" r="1" fill="#7a35fd"/><circle cx="12.6" cy="8.3" r="1" fill="#7a35fd"/></svg></div>
+            <p class="t lbl" style="left:calc(65 * var(--u))">Total Conversations</p>
+            <p class="t num" style="left:calc(64.8 * var(--u))">24,842</p>
+            <p class="t delta" style="left:calc(65 * var(--u))"><b><svg viewBox="0 0 7 8" fill="none" stroke="#4fd06e" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.4V1M1 3.4 3.5.9 6 3.4"/></svg>12.4%</b> from last month</p>
+            <svg class="spark" viewBox="0 0 41 21"><use href="#spark1"/></svg>
+          </div>
+          <div class="panel stat" style="left:calc(397 * var(--u));width:calc(197 * var(--u))">
+            <div class="ic" style="left:calc(11 * var(--u))"><svg viewBox="0 0 19 19" fill="#fff"><circle cx="9.5" cy="5.4" r="3"/><circle cx="4.6" cy="6.6" r="2.3"/><circle cx="14.4" cy="6.6" r="2.3"/><path d="M4.4 15.8c.2-3.2 2.3-5.4 5.1-5.4s4.9 2.2 5.1 5.4Z"/><path d="M1 14.4c.1-2.5 1.5-4 3.4-4.2-.9 1-1.4 2.4-1.5 4.2ZM18 14.4c-.1-2.5-1.5-4-3.4-4.2.9 1 1.4 2.4 1.5 4.2Z"/></svg></div>
+            <p class="t lbl" style="left:calc(62 * var(--u))">Active Users</p>
+            <p class="t num" style="left:calc(61.8 * var(--u))">8,162</p>
+            <p class="t delta" style="left:calc(62 * var(--u))"><b><svg viewBox="0 0 7 8" fill="none" stroke="#4fd06e" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.4V1M1 3.4 3.5.9 6 3.4"/></svg>8.1%</b> from last month</p>
+            <svg class="spark" viewBox="0 0 41 21"><use href="#spark2"/></svg>
+          </div>
+          <div class="panel stat" style="left:calc(601 * var(--u));width:calc(195 * var(--u))">
+            <div class="ic blue" style="left:calc(10 * var(--u))"><svg viewBox="0 0 19 19"><path d="M9.5 1.4v2.4" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/><circle cx="9.5" cy="1.6" r="1.2" fill="#fff"/><rect x="3" y="4.4" width="13" height="10.4" rx="3.6" fill="#fff"/><rect x="1" y="8" width="2.2" height="3.6" rx="1" fill="#fff"/><rect x="15.8" y="8" width="2.2" height="3.6" rx="1" fill="#fff"/><circle cx="6.8" cy="9.1" r="1.25" fill="#3a43fb"/><circle cx="12.2" cy="9.1" r="1.25" fill="#3a43fb"/><path d="M8.3 11.8h2.4" stroke="#3a43fb" stroke-width="1.1" stroke-linecap="round"/></svg></div>
+            <p class="t lbl" style="left:calc(62 * var(--u))">AI Agents</p>
+            <p class="t num" style="left:calc(61.8 * var(--u))">12</p>
+            <p class="t delta" style="left:calc(62 * var(--u))"><b><svg viewBox="0 0 7 8" fill="none" stroke="#4fd06e" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.4V1M1 3.4 3.5.9 6 3.4"/></svg>33%</b> from last month</p>
+            <svg class="spark" viewBox="0 0 41 21"><use href="#spark3"/></svg>
+          </div>
+          <div class="panel stat" style="left:calc(803 * var(--u));width:calc(237 * var(--u))">
+            <div class="ic" style="left:calc(10 * var(--u))"><svg viewBox="0 0 19 19" fill="#fff"><rect x="9.6" y="1.4" width="4" height="3.4" rx=".6"/><path d="M3 9.6 9.8 6.1h4.4l-4.3 3.2h3.7L5.5 17.6l3.3-6.2H4.4c-1.3 0-1.9-1.1-1.4-1.8Z"/></svg></div>
+            <p class="t lbl" style="left:calc(62 * var(--u))">Tasks Automated</p>
+            <p class="t num" style="left:calc(61.8 * var(--u))">5,721</p>
+            <p class="t delta" style="left:calc(62 * var(--u))"><b><svg viewBox="0 0 7 8" fill="none" stroke="#4fd06e" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.4V1M1 3.4 3.5.9 6 3.4"/></svg>18.6%</b> from last month</p>
+            <svg class="spark" style="width:calc(61 * var(--u))" viewBox="0 0 61 21"><use href="#spark4"/></svg>
+          </div>
+
+          <!-- Conversation chart -->
+          <div class="panel chart-panel">
+            <svg class="chart-svg" viewBox="0 0 525 212" aria-hidden="true">
+              <defs>
+                <linearGradient id="gArea" gradientUnits="userSpaceOnUse" x1="0" y1="62" x2="0" y2="176.5"><stop offset="0" stop-color="#7a33ff" stop-opacity="1"/><stop offset=".55" stop-color="#7532fa" stop-opacity=".6"/><stop offset="1" stop-color="#6c2df0" stop-opacity=".14"/></linearGradient>
+                <filter id="glow" x="-10%" y="-30%" width="120%" height="160%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                <filter id="dotGlow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="1.6" result="b"/><feFlood flood-color="#e47bff"/><feComposite in2="b" operator="in" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              </defs>
+              <g stroke="rgba(150,120,255,.13)" stroke-width="1"><line x1="42" y1="48.5" x2="506" y2="48.5"/><line x1="42" y1="74.1" x2="506" y2="74.1"/><line x1="42" y1="99.7" x2="506" y2="99.7"/><line x1="42" y1="125.3" x2="506" y2="125.3"/><line x1="42" y1="150.9" x2="506" y2="150.9"/><line x1="42" y1="176.5" x2="506" y2="176.5"/><line x1="63.5" y1="44" x2="63.5" y2="176.5" stroke-opacity=".55"/><line x1="133.7" y1="44" x2="133.7" y2="176.5" stroke-opacity=".55"/><line x1="203.9" y1="44" x2="203.9" y2="176.5" stroke-opacity=".55"/><line x1="274.1" y1="44" x2="274.1" y2="176.5" stroke-opacity=".55"/><line x1="344.3" y1="44" x2="344.3" y2="176.5" stroke-opacity=".55"/><line x1="414.5" y1="44" x2="414.5" y2="176.5" stroke-opacity=".55"/><line x1="485.5" y1="44" x2="485.5" y2="176.5" stroke-opacity=".55"/></g>
+              <g font-size="9" text-anchor="end"><text x="29.6" y="51.8">10K</text><text x="29.6" y="77.4">8K</text><text x="29.6" y="103.0">6K</text><text x="29.6" y="128.6">4K</text><text x="29.6" y="154.2">2K</text><text x="29.6" y="179.8">0</text></g>
+              <g font-size="9.3" text-anchor="middle"><text x="63.5" y="195.8">May 01</text><text x="133.7" y="195.8">Jun 01</text><text x="203.9" y="195.8">Jun 15</text><text x="274.1" y="195.8">Jun 29</text><text x="344.3" y="195.8">Jul 14</text><text x="414.5" y="195.8">Jul 28</text><text x="485.5" y="195.8">Jun 30</text></g>
+              <path d="M44.0 166.0 C47.2 161.4 56.7 142.5 63.5 138.6 C70.3 134.7 78.1 143.3 85.0 142.4 C91.9 141.5 99.8 136.2 105.0 133.3 C110.2 130.4 111.7 127.8 116.5 125.0 C121.3 122.2 128.0 117.6 133.7 116.3 C139.4 115.0 145.2 117.2 150.5 117.0 C155.8 116.8 160.8 117.4 165.3 114.9 C169.8 112.4 171.0 106.8 177.3 102.0 C183.6 97.2 194.6 87.9 203.0 86.0 C211.4 84.1 218.9 90.1 227.5 90.8 C236.1 91.5 246.7 90.9 254.4 90.2 C262.1 89.5 267.1 85.7 273.5 86.5 C279.9 87.3 287.5 91.9 293.0 95.3 C298.5 98.7 301.7 102.5 306.7 107.0 C311.7 111.5 317.2 119.0 323.1 122.5 C329.0 126.0 335.6 127.9 342.0 128.0 C348.4 128.2 354.8 126.7 361.5 123.4 C368.2 120.1 376.8 112.6 382.5 108.0 C388.2 103.4 391.6 99.1 396.0 95.7 C400.4 92.3 403.3 88.3 409.2 87.5 C415.1 86.7 424.8 90.1 431.5 91.0 C438.2 91.9 444.2 93.7 449.3 93.0 C454.4 92.3 453.6 92.7 462.3 87.0 C471.0 81.3 494.8 63.4 501.3 58.7 L501.3 176.5 L44.0 176.5 Z" fill="url(#gArea)"/>
+              <line x1="273.5" y1="80" x2="273.5" y2="176.5" stroke="rgba(214,190,255,.45)" stroke-width="1"/>
+              <path d="M44.0 166.0 C47.2 161.4 56.7 142.5 63.5 138.6 C70.3 134.7 78.1 143.3 85.0 142.4 C91.9 141.5 99.8 136.2 105.0 133.3 C110.2 130.4 111.7 127.8 116.5 125.0 C121.3 122.2 128.0 117.6 133.7 116.3 C139.4 115.0 145.2 117.2 150.5 117.0 C155.8 116.8 160.8 117.4 165.3 114.9 C169.8 112.4 171.0 106.8 177.3 102.0 C183.6 97.2 194.6 87.9 203.0 86.0 C211.4 84.1 218.9 90.1 227.5 90.8 C236.1 91.5 246.7 90.9 254.4 90.2 C262.1 89.5 267.1 85.7 273.5 86.5 C279.9 87.3 287.5 91.9 293.0 95.3 C298.5 98.7 301.7 102.5 306.7 107.0 C311.7 111.5 317.2 119.0 323.1 122.5 C329.0 126.0 335.6 127.9 342.0 128.0 C348.4 128.2 354.8 126.7 361.5 123.4 C368.2 120.1 376.8 112.6 382.5 108.0 C388.2 103.4 391.6 99.1 396.0 95.7 C400.4 92.3 403.3 88.3 409.2 87.5 C415.1 86.7 424.8 90.1 431.5 91.0 C438.2 91.9 444.2 93.7 449.3 93.0 C454.4 92.3 453.6 92.7 462.3 87.0 C471.0 81.3 494.8 63.4 501.3 58.7" fill="none" stroke="#d85ffd" stroke-width="2.6" stroke-linecap="round" filter="url(#glow)"/>
+              <g fill="#fff" filter="url(#dotGlow)"><circle cx="44.0" cy="166.0" r="2.35"/><circle cx="63.5" cy="138.6" r="2.35"/><circle cx="85.0" cy="142.4" r="2.35"/><circle cx="105.0" cy="133.3" r="2.35"/><circle cx="116.5" cy="125.0" r="2.35"/><circle cx="133.7" cy="116.3" r="2.35"/><circle cx="150.5" cy="117.0" r="2.35"/><circle cx="165.3" cy="114.9" r="2.35"/><circle cx="177.3" cy="102.0" r="2.35"/><circle cx="203.0" cy="86.0" r="2.35"/><circle cx="227.5" cy="90.8" r="2.35"/><circle cx="254.4" cy="90.2" r="2.35"/><circle cx="293.0" cy="95.3" r="2.35"/><circle cx="306.7" cy="107.0" r="2.35"/><circle cx="323.1" cy="122.5" r="2.35"/><circle cx="361.5" cy="123.4" r="2.35"/><circle cx="382.5" cy="108.0" r="2.35"/><circle cx="396.0" cy="95.7" r="2.35"/><circle cx="409.2" cy="87.5" r="2.35"/><circle cx="431.5" cy="91.0" r="2.35"/><circle cx="449.3" cy="93.0" r="2.35"/><circle cx="462.3" cy="87.0" r="2.35"/><circle cx="501.3" cy="58.7" r="2.35"/></g>
+              <circle cx="273.5" cy="86.5" r="4.6" fill="#fff" filter="url(#dotGlow)"/>
+              <circle cx="273.5" cy="86.5" r="2.4" fill="#9a52ff"/>
+            </svg>
+            <p class="t p-title" style="left:calc(12.6 * var(--u));top:calc(12.2 * var(--u))">Conversation Over Time</p>
+            <div class="chip chip-sm" style="left:calc(450 * var(--u));top:calc(8 * var(--u));width:calc(65 * var(--u))">Daily<svg class="d-chev" viewBox="0 0 10 10" fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="m2.2 3.6 2.8 2.8 2.8-2.8"/></svg></div>
+            <div class="abs" style="left:calc(259 * var(--u));top:calc(37 * var(--u));width:calc(110 * var(--u));height:calc(41 * var(--u));border-radius:calc(6 * var(--u));background:rgba(88,42,226,.56);box-shadow:inset 0 0 0 calc(1 * var(--u)) rgba(168,128,255,.7),0 calc(6 * var(--u)) calc(18 * var(--u)) rgba(40,10,120,.35);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)">
+              <p class="t" style="left:calc(9.6 * var(--u));top:calc(7.2 * var(--u));font-size:calc(9.4 * var(--u));line-height:calc(12 * var(--u));color:#ead7fd">Jun 29</p>
+              <p class="t" style="left:calc(9.6 * var(--u));top:calc(20.4 * var(--u));font-size:calc(9.3 * var(--u));line-height:calc(12 * var(--u));font-weight:500">7,842 Conversations</p>
+              <svg class="abs" style="left:calc(10 * var(--u));top:calc(40 * var(--u));width:calc(9 * var(--u));height:calc(5 * var(--u))" viewBox="0 0 9 5"><path d="M0 0h9L4.5 4.6Z" fill="rgba(122,72,236,.95)"/><path d="M0 0 4.5 4.6 9 0" fill="none" stroke="rgba(168,128,255,.75)" stroke-width="1"/></svg>
+            </div>
+          </div>
+
+          <!-- AI agent activity -->
+          <div class="panel agents">
+            <p class="t p-title" style="left:calc(15.6 * var(--u));top:calc(12.2 * var(--u));font-size:calc(11.2 * var(--u))">AI Agent Activity</p>
+            <div class="chip chip-sm" style="left:calc(254 * var(--u));top:calc(8 * var(--u));width:calc(54 * var(--u));height:calc(24 * var(--u));padding-left:calc(10 * var(--u))">View all</div>
+            <div class="ag-ic" style="top:calc(40.0 * var(--u));background:linear-gradient(160deg,#601ce6,#5616d8)"><svg viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round"><path d="M2.2 8.6V7a4.8 4.8 0 0 1 9.6 0v1.6"/><rect x="1.4" y="7.6" width="2.6" height="4" rx="1.2" fill="#fff" stroke="none"/><rect x="10" y="7.6" width="2.6" height="4" rx="1.2" fill="#fff" stroke="none"/><circle cx="7" cy="6.9" r="1.6" fill="#fff" stroke="none"/><path d="M4.8 11.6c.4-1.5 1.2-2.2 2.2-2.2s1.8.7 2.2 2.2"/></svg></div><p class="t ag-name" style="top:calc(40.8 * var(--u))">Customer Support Agent</p><div class="bar" style="top:calc(61.0 * var(--u))"><i style="width:calc(142 * var(--u))"></i><b style="width:calc(131 * var(--u))"></b></div><p class="t ag-val" style="top:calc(47.6 * var(--u))">12.4K</p><p class="t ag-pct" style="top:calc(47.4 * var(--u))"><svg viewBox="0 0 7 8" fill="none" stroke="#4fd06e" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.4V1M1 3.4 3.5.9 6 3.4"/></svg>18%</p><div class="ag-ic" style="top:calc(73.7 * var(--u));background:linear-gradient(160deg,#304dfc,#2843f4)"><svg viewBox="0 0 14 14" fill="#fff"><path d="M5 2.2h4a1 1 0 0 1 1 1V4H4v-.8a1 1 0 0 1 1-1Z" fill="none" stroke="#fff" stroke-width="1.2"/><rect x="1.2" y="4" width="11.6" height="8.6" rx="1.6"/><rect x="6" y="6.8" width="2" height="2.6" rx=".5" fill="#2c49fa"/></svg></div><p class="t ag-name" style="top:calc(74.5 * var(--u))">Sales Assistant</p><div class="bar" style="top:calc(94.7 * var(--u))"><i style="width:calc(121 * var(--u))"></i><b style="width:calc(110 * var(--u))"></b></div><p class="t ag-val" style="top:calc(81.3 * var(--u))">7.8K</p><p class="t ag-pct" style="top:calc(81.1 * var(--u))"><svg viewBox="0 0 7 8" fill="none" stroke="#4fd06e" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.4V1M1 3.4 3.5.9 6 3.4"/></svg>14%</p><div class="ag-ic" style="top:calc(107.4 * var(--u));background:linear-gradient(160deg,#0e9256,#0a834c)"><svg viewBox="0 0 14 14" fill="#fff"><path d="M1 3.2c2.2-.6 4.2-.3 5.6 1v8.2C5.2 11.2 3.2 11 1 11.6Z"/><path d="M13 3.2c-2.2-.6-4.2-.3-5.6 1v8.2c1.4-1.2 3.4-1.4 5.6-.8Z"/><path d="M2.6 6.2c1-.2 2-.1 2.8.4M8.6 6.6c.8-.5 1.8-.6 2.8-.4" stroke="#0c8b52" stroke-width=".8" fill="none"/></svg></div><p class="t ag-name" style="top:calc(108.2 * var(--u))">Knowledge Assistant</p><div class="bar" style="top:calc(128.4 * var(--u))"><i style="width:calc(64 * var(--u))"></i><b style="width:calc(54 * var(--u))"></b></div><p class="t ag-val" style="top:calc(115.0 * var(--u))">3.6K</p><p class="t ag-pct" style="top:calc(114.8 * var(--u))"><svg viewBox="0 0 7 8" fill="none" stroke="#4fd06e" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.4V1M1 3.4 3.5.9 6 3.4"/></svg>9%</p><div class="ag-ic" style="top:calc(141.1 * var(--u));background:linear-gradient(160deg,#ff8318,#f46a04)"><svg viewBox="0 0 14 14" fill="#fff"><rect x="1.4" y="8" width="2.4" height="4.6" rx=".5"/><rect x="5" y="9.4" width="2.4" height="3.2" rx=".5"/><rect x="8.6" y="7.2" width="2.4" height="5.4" rx=".5"/><path d="M1.6 6.4 5 3.6l2.6 2 4.8-4.2" fill="none" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.2 1.3h2.4v2.4" fill="none" stroke="#fff" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><p class="t ag-name" style="top:calc(141.9 * var(--u))">Content Analyst</p><div class="bar" style="top:calc(162.1 * var(--u))"><i style="width:calc(36 * var(--u))"></i><b style="width:calc(27 * var(--u))"></b></div><p class="t ag-val" style="top:calc(148.7 * var(--u))">2.9K</p><p class="t ag-pct" style="top:calc(148.5 * var(--u))"><svg viewBox="0 0 7 8" fill="none" stroke="#4fd06e" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.4V1M1 3.4 3.5.9 6 3.4"/></svg>11%</p>
+          </div>
+
+          <!-- Top intents -->
+          <div class="panel intents">
+            <p class="t p-title" style="left:calc(15 * var(--u));top:calc(10.2 * var(--u));font-size:calc(10.5 * var(--u))">Top Intents</p>
+            <svg class="abs" style="left:calc(24 * var(--u));top:calc(30 * var(--u));width:calc(92 * var(--u));height:calc(92 * var(--u))" viewBox="0 0 92 92" aria-hidden="true">
+              <circle cx="46" cy="46" r="35" fill="rgba(6,2,34,.45)"/><g fill="none" stroke-width="11" transform="rotate(-90 46 46)"><circle cx="46" cy="46" r="40.5" stroke="#c05cff" stroke-dasharray="87.66 254.47" stroke-dashoffset="0.00"/><circle cx="46" cy="46" r="40.5" stroke="#4b2fb4" stroke-dasharray="69.85 254.47" stroke-dashoffset="-89.06"/><circle cx="46" cy="46" r="40.5" stroke="#b496ee" stroke-dasharray="49.49 254.47" stroke-dashoffset="-160.32"/><circle cx="46" cy="46" r="40.5" stroke="#5b42dc" stroke-dasharray="29.14 254.47" stroke-dashoffset="-211.21"/><circle cx="46" cy="46" r="40.5" stroke="#5236cc" stroke-dasharray="11.32 254.47" stroke-dashoffset="-241.75"/></g>
+              <text x="46" y="50.5" text-anchor="middle" font-family="AV Inter, Inter, sans-serif" font-size="13.5" font-weight="500" fill="#d6d2ee">24.8K</text>
+              <text x="46" y="63" text-anchor="middle" font-family="AV Inter, Inter, sans-serif" font-size="7" fill="#7d76ad">Total</text>
+            </svg>
+            <ul class="legend">
+              <li style="top:calc(26.5 * var(--u))"><i style="background:#9b51f5"></i>Account &amp; Billing<span>35%</span></li>
+              <li style="top:calc(44.5 * var(--u))"><i style="background:#9f55f4"></i>Product Information<span>28%</span></li>
+              <li style="top:calc(62.5 * var(--u));color:#c9c3ea"><i style="background:#6440d2"></i>Technical Support<span>20%</span></li>
+              <li style="top:calc(80.5 * var(--u));color:#b7b0dd"><i style="background:#6a42c8"></i>Feature Request<span>12%</span></li>
+              <li style="top:calc(98.5 * var(--u));color:#a39cd0"><i style="background:#4b33a6"></i>Other<span>5%</span></li>
+            </ul>
+          </div>
+
+          <!-- Recent conversations -->
+          <div class="panel recent">
+            <p class="t p-title" style="left:calc(12.6 * var(--u));top:calc(12.2 * var(--u));font-size:calc(10.3 * var(--u))">Recent Conversations</p>
+            <div class="chip chip-sm" style="left:calc(186 * var(--u));top:calc(10 * var(--u));width:calc(52 * var(--u));height:calc(23 * var(--u));padding-left:calc(9.6 * var(--u))">View all</div>
+            <div class="conv" style="top:calc(41 * var(--u))"><svg class="av" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#3a2f72"/><circle cx="12" cy="10" r="5.4" fill="#f0a35e"/><path d="M6.4 9.6C6.6 5.6 9 3.8 12 3.8s5.6 1.9 5.6 5.8c-1.8-.3-4.4-1.8-5.6-3.4-1.1 1.7-3.4 3.1-5.6 3.4Z" fill="#6b3d22"/><path d="M3.6 21.4c1.6-3.4 4.6-5 8.4-5s6.8 1.6 8.4 5A12 12 0 0 1 3.6 21.4Z" fill="#6c5ce0"/></svg><p class="t q">How do I integrate with Stripe?</p><p class="t w">2 minutes ago</p></div><div class="conv" style="top:calc(81 * var(--u))"><svg class="av" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#3a2f72"/><circle cx="12" cy="10" r="5.4" fill="#8cc8ff"/><path d="M6.4 9.6C6.6 5.6 9 3.8 12 3.8s5.6 1.9 5.6 5.8c-1.8-.3-4.4-1.8-5.6-3.4-1.1 1.7-3.4 3.1-5.6 3.4Z" fill="#2b3f73"/><path d="M3.6 21.4c1.6-3.4 4.6-5 8.4-5s6.8 1.6 8.4 5A12 12 0 0 1 3.6 21.4Z" fill="#6c5ce0"/></svg><p class="t q">Reset my workspace password</p><p class="t w">9 minutes ago</p></div><div class="conv" style="top:calc(121 * var(--u))"><svg class="av" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#3a2f72"/><circle cx="12" cy="10" r="5.4" fill="#ffc2d6"/><path d="M6.4 9.6C6.6 5.6 9 3.8 12 3.8s5.6 1.9 5.6 5.8c-1.8-.3-4.4-1.8-5.6-3.4-1.1 1.7-3.4 3.1-5.6 3.4Z" fill="#7a2e55"/><path d="M3.6 21.4c1.6-3.4 4.6-5 8.4-5s6.8 1.6 8.4 5A12 12 0 0 1 3.6 21.4Z" fill="#6c5ce0"/></svg><p class="t q">Can I export reports to CSV?</p><p class="t w">24 minutes ago</p></div><div class="conv" style="top:calc(161 * var(--u))"><svg class="av" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#3a2f72"/><circle cx="12" cy="10" r="5.4" fill="#b7f0c9"/><path d="M6.4 9.6C6.6 5.6 9 3.8 12 3.8s5.6 1.9 5.6 5.8c-1.8-.3-4.4-1.8-5.6-3.4-1.1 1.7-3.4 3.1-5.6 3.4Z" fill="#245a3a"/><path d="M3.6 21.4c1.6-3.4 4.6-5 8.4-5s6.8 1.6 8.4 5A12 12 0 0 1 3.6 21.4Z" fill="#6c5ce0"/></svg><p class="t q">Upgrade plan for my team</p><p class="t w">1 hour ago</p></div><div class="conv" style="top:calc(201 * var(--u))"><svg class="av" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#3a2f72"/><circle cx="12" cy="10" r="5.4" fill="#d8c2ff"/><path d="M6.4 9.6C6.6 5.6 9 3.8 12 3.8s5.6 1.9 5.6 5.8c-1.8-.3-4.4-1.8-5.6-3.4-1.1 1.7-3.4 3.1-5.6 3.4Z" fill="#45307e"/><path d="M3.6 21.4c1.6-3.4 4.6-5 8.4-5s6.8 1.6 8.4 5A12 12 0 0 1 3.6 21.4Z" fill="#6c5ce0"/></svg><p class="t q">Webhook keeps timing out</p><p class="t w">3 hours ago</p></div>
+          </div>
+
+          <!-- Usage breakdown -->
+          <div class="panel usage">
+            <p class="t p-title" style="left:calc(13.6 * var(--u));top:calc(13.7 * var(--u));font-size:calc(10.5 * var(--u))">Usage Breakdown</p>
+            <div class="chip chip-sm" style="left:calc(175 * var(--u));top:calc(10 * var(--u));width:calc(84 * var(--u));height:calc(23 * var(--u));padding-left:calc(10 * var(--u))">This Month<svg class="d-chev" style="top:calc(7 * var(--u))" viewBox="0 0 10 10" fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="m2.2 3.6 2.8 2.8 2.8-2.8"/></svg></div>
+            <svg class="abs" style="left:calc(19 * var(--u));top:calc(48 * var(--u));width:calc(110 * var(--u));height:calc(110 * var(--u))" viewBox="0 0 110 110" aria-hidden="true">
+              <g fill="none" stroke-width="11" transform="rotate(-90 55 55)"><circle cx="55" cy="55" r="49" stroke="#9c52f6" stroke-dasharray="140.02 307.88" stroke-dashoffset="0.00"/><circle cx="55" cy="55" r="49" stroke="#5d43e6" stroke-dasharray="93.84 307.88" stroke-dashoffset="-141.62"/><circle cx="55" cy="55" r="49" stroke="#4f4570" stroke-dasharray="69.21 307.88" stroke-dashoffset="-237.06"/></g>
+              <text x="55" y="58" text-anchor="middle" font-family="AV Inter, Inter, sans-serif" font-size="14" font-weight="600" fill="#fff">1.28M</text>
+              <text x="55" y="71" text-anchor="middle" font-family="AV Inter, Inter, sans-serif" font-size="7.5" fill="#a59fd0">Tokens</text>
+            </svg>
+            <ul class="legend">
+              <li style="left:calc(146 * var(--u));top:calc(118 * var(--u));width:calc(110 * var(--u))"><i style="background:#9c52f6"></i>Chat<span>46%</span></li>
+              <li style="left:calc(146 * var(--u));top:calc(138 * var(--u));width:calc(110 * var(--u))"><i style="background:#5d43e6"></i>Agents<span>31%</span></li>
+              <li style="left:calc(146 * var(--u));top:calc(158 * var(--u));width:calc(110 * var(--u))"><i style="background:#5a4c86"></i>API<span>23%</span></li>
+            </ul>
+          </div>
+
+        </div>
+        <div class="fade"></div>
+      </div>
+    </section>
+
+    <!-- ================= SOCIAL PROOF ================= -->
+    <footer class="band">
+      <p class="tagline">Engineers from top 100 startup use Godove to build faster</p>
+      <ul class="logos" aria-label="Customer logos (placeholders)">
+        <li class="logo" style="left:calc(347 * var(--u))"><svg viewBox="0 0 26 24" fill="#fff"><path d="M1 2h6l6 9.5L19 2h6L15.5 22h-5Z"/></svg>Nexora</li>
+        <li class="logo" style="left:calc(508 * var(--u));font-weight:500"><svg viewBox="0 0 26 24" fill="none" stroke="#fff" stroke-width="2.4"><circle cx="9" cy="12" r="6.5"/><circle cx="17" cy="12" r="6.5"/></svg>codeloop</li>
+        <li class="logo" style="left:calc(663 * var(--u))"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><circle cx="12" cy="12" r="5"/><ellipse cx="12" cy="12" rx="11" ry="4.4" transform="rotate(-28 12 12)"/></svg>Orbitly</li>
+        <li class="logo logo-q" style="left:calc(822.5 * var(--u))">Quantix<svg viewBox="0 0 8 24" fill="#fff"><circle cx="4" cy="17" r="3.4"/></svg></li>
+        <li class="logo" style="left:calc(973 * var(--u));font-weight:500"><svg viewBox="0 0 26 24" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round"><path d="M2 9c3-4 6-4 9 0s6 4 9 0 4-2 4-2M2 16c3-4 6-4 9 0s6 4 9 0 4-2 4-2"/></svg>wavepoint</li>
+        <li class="logo" style="left:calc(1133.5 * var(--u));font-weight:500"><svg viewBox="0 0 22 24" fill="#fff"><rect x="1" y="9" width="4" height="12" rx="2"/><rect x="9" y="4" width="4" height="17" rx="2"/><rect x="17" y="12" width="4" height="9" rx="2"/></svg>lumen.io</li>
+      </ul>
+    </footer>
+  </div>
+
+  <!-- shared sparkline symbols -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="gSpark" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9b46ff" stop-opacity=".75"/><stop offset="1" stop-color="#6a2af0" stop-opacity="0"/></linearGradient>
+      <filter id="sGlow" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="1" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <symbol id="spark1" viewBox="0 0 41 21"><path d="M0 20.5C4 19.5 7 15.5 11 15.5s6 4 10 3.4 6-4.6 10-6.4c4-1.7 6-6 8.4-11 1 3 .8 10 .8 19Z" fill="url(#gSpark)"/><path d="M0 20.5C4 19.5 7 15.5 11 15.5s6 4 10 3.4 6-4.6 10-6.4c4-1.7 6-6 8.4-11" fill="none" stroke="#b153ff" stroke-width="1.6" stroke-linecap="round" filter="url(#sGlow)"/></symbol>
+      <symbol id="spark2" viewBox="0 0 41 21"><path d="M0 20C4 19 7 15 11 15s6 3.5 10 3c4-.6 6-6 10-8s6-6 9.4-9c.5 4 .6 11 .6 20Z" fill="url(#gSpark)"/><path d="M0 20C4 19 7 15 11 15s6 3.5 10 3c4-.6 6-6 10-8s6-6 9.4-9" fill="none" stroke="#b153ff" stroke-width="1.6" stroke-linecap="round" filter="url(#sGlow)"/></symbol>
+      <symbol id="spark3" viewBox="0 0 41 21"><path d="M0 20.5C4 19.5 7 15.5 11 15.5s6 4 10 3c4-1 6-5 10-6.6s6-6 9.4-10.4c.5 4 .6 11 .6 19Z" fill="url(#gSpark)"/><path d="M0 20.5C4 19.5 7 15.5 11 15.5s6 4 10 3c4-1 6-5 10-6.6s6-6 9.4-10.4" fill="none" stroke="#b153ff" stroke-width="1.6" stroke-linecap="round" filter="url(#sGlow)"/></symbol>
+      <symbol id="spark4" viewBox="0 0 61 21"><path d="M0 20.5C6 19 10 13 16 12.5s9 5 15 3.6 8-7 14-7.6 10 1.6 15.4-8c.5 4 .6 12 .6 20Z" fill="url(#gSpark)"/><path d="M0 20.5C6 19 10 13 16 12.5s9 5 15 3.6 8-7 14-7.6 10 1.6 15.4-8" fill="none" stroke="#b153ff" stroke-width="1.6" stroke-linecap="round" filter="url(#sGlow)"/></symbol>
+    </defs>
+  </svg>
+</div>
+<script>
+(function(){
+  var page=document.getElementById('page'),btn=document.getElementById('menuBtn');
+  function set(open){page.classList.toggle('menu-open',open);btn.setAttribute('aria-expanded',open?'true':'false');btn.setAttribute('aria-label',open?'Close menu':'Open menu');}
+  btn.addEventListener('click',function(e){e.stopPropagation();set(!page.classList.contains('menu-open'));});
+  document.addEventListener('click',function(e){if(!e.target.closest('#mobileMenu'))set(false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});
+  window.addEventListener('resize',function(){if(window.innerWidth>=720)set(false);});
+})();
+
+// One entrance timeline. The page's authored styles remain the final frame.
+(function(){
+  if(!Element.prototype.animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+
+  var motion=[], ease='cubic-bezier(.22,1,.36,1)';
+  function reveal(selector,from,delay,duration){
+    var element=document.querySelector(selector);
+    if(!element || getComputedStyle(element).display==='none')return;
+    motion.push(element.animate([from,{opacity:1,transform:'none',clipPath:'inset(0 0 0 0)'}],{
+      delay:delay,duration:duration,easing:ease,fill:'backwards'
+    }));
+  }
+
+  // Quiet framing gives the headline room to lead.
+  reveal('.brand',{opacity:0,transform:'translateY(8px)'},60,510);
+  if(window.matchMedia('(max-width: 719.98px)').matches){
+    reveal('.menu-btn',{opacity:0,transform:'translateY(6px)'},180,440);
+  }else{
+    reveal('.nav-links',{opacity:0,transform:'translateY(7px)'},150,480);
+    reveal('.nav-cta',{opacity:0,transform:'translateY(7px)'},230,480);
+  }
+  reveal('.pill',{opacity:0,transform:'translateY(9px)'},310,550);
+
+  // The two designed desktop lines unfold in order; mobile keeps its natural wrap.
+  if(window.matchMedia('(min-width: 1024px) and (min-aspect-ratio: 23/20)').matches){
+    reveal('.h1 span:first-child',{opacity:1,transform:'translateY(15px)',clipPath:'inset(0 0 100% 0)'},450,820);
+    reveal('.h1 span:last-child',{opacity:1,transform:'translateY(15px)',clipPath:'inset(0 0 100% 0)'},590,820);
+  }else{
+    reveal('.h1',{opacity:1,transform:'translateY(12px)',clipPath:'inset(0 0 100% 0)'},450,820);
+  }
+  reveal('.lead',{opacity:0,transform:'translateY(10px)'},830,610);
+  reveal('.hero-cta',{opacity:0,transform:'translateY(9px) scale(.985)'},1030,600);
+
+  // The product interface resolves as a single foreground composition.
+  reveal('.dash-clip',{opacity:1,transform:'none',clipPath:'inset(0 0 100% 0)'},930,1050);
+  reveal('.tagline',{opacity:0,transform:'translateY(5px)'},1480,490);
+  reveal('.logos',{opacity:0,transform:'translateY(6px)'},1640,520);
+
+  Promise.all(motion.map(function(animation){return animation.finished.catch(function(){});})).then(function(){
+    motion.forEach(function(animation){animation.cancel();});
+  });
+})();
+</script>
+</body>
+</html>

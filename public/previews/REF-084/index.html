@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-084/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d0c11">
+<meta name="color-scheme" content="dark">
+<title>Extent AI — Breakthrough AI from Data to Deployment</title>
+<script>
+/* Entrance guard: hide only the elements that will perform the entrance, and only when
+   JS runs and motion is allowed. If the timeline never starts, content is released. */
+(function(d){
+  if(!('animate' in d.documentElement) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  d.documentElement.classList.add('intro');
+  window.__introFailsafe = setTimeout(function(){ d.documentElement.classList.remove('intro'); }, 2500);
+})(document);
+</script>
+<style>
+/* =====================================================================
+   Extent AI — hero
+   Two layout engines share one DOM:
+   1. CANVAS (landscape ≥ 6:5, height ≥ 540px): the measured 2048×1455
+      reference, every value in design px × --u, where --u = viewport
+      height / 1455. The screen is always filled top-to-bottom (no
+      letterbox); spare width is background, the header is pinned to the
+      true viewport edges.
+   2. FLOW (portrait, tablets, phones, short windows): a fluid, reflowing
+      layout built from the same tokens, min-height 100dvh so there is
+      never empty space above or below.
+   ===================================================================== */
+
+/* ---------- Local fonts (latin subset) ---------- */
+@font-face{font-family:"DM Sans";font-style:normal;font-weight:100 1000;font-display:block;src:url(assets/dm-sans-latin.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:100 900;font-display:block;src:url(assets/inter-latin.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-style:italic;font-weight:100 900;font-display:block;src:url(assets/inter-italic-latin.woff2) format("woff2")}
+
+/* ---------- Design tokens (sampled from the reference) ---------- */
+:root{
+  --knot-img:url(assets/knot.webp);
+  --bg:#0d0c11;
+  --ink:#ffffff;
+  --nav:#b9b8bb;
+  --muted:#d3d3d7;
+  --wordmark:#bdbdc1;
+  --ai:#9ff0ec;
+  --teal:#bdf7ee;
+  --logo:#bcbcbf;
+  --glass:rgba(255,255,255,.02);
+  --glass-line:rgba(255,255,255,.16);
+  --tile:rgba(255,255,255,.09);
+  --violet-a:#4d19b1;
+  --violet-b:#6f5adc;
+  --display:"DM Sans",ui-sans-serif,system-ui,sans-serif;
+  --text:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  /* knot tone: measured opacity profile of the artwork over --bg (top → bottom) */
+  --knot-mask:linear-gradient(to bottom,
+    rgba(0,0,0,.25) 0%, rgba(0,0,0,.24) 37.1%, rgba(0,0,0,.41) 45.4%, rgba(0,0,0,.43) 52.2%,
+    rgba(0,0,0,.47) 55%, rgba(0,0,0,.6) 57.7%, rgba(0,0,0,.62) 59.5%, rgba(0,0,0,.78) 61.3%,
+    rgba(0,0,0,.84) 64.9%, rgba(0,0,0,.88) 70.1%, rgba(0,0,0,.86) 75.6%, rgba(0,0,0,.84) 80.1%,
+    rgba(0,0,0,.78) 83.2%, rgba(0,0,0,.66) 86.9%, rgba(0,0,0,.49) 89.7%, rgba(0,0,0,.3) 92.1%, rgba(0,0,0,.2) 100%);
+  --card-bf:blur(8px) brightness(1.15) saturate(.8);
+  --kw:clamp(760px, 205vw, 1700px);          /* flow: width of the artwork layer */
+}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--bg);-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:var(--text);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision}
+a{color:inherit;text-decoration:none}
+ul{list-style:none;margin:0;padding:0}
+h1,p{margin:0}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+a:focus-visible,button:focus-visible{outline:2px solid #8f7cf0;outline-offset:3px}
+
+/* ---------- Shared components ---------- */
+.hero{position:relative;isolation:isolate;background:var(--bg);
+  display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
+
+/* knot artwork — one decorative layer; it is clipped to its own box, never the page */
+.knot{position:absolute;z-index:0;pointer-events:none;user-select:none}
+.knot__img,.front__knot{display:block;width:100%;height:100%;
+  background:var(--knot-img) 0 0/100% 100% no-repeat;filter:saturate(.9);
+  -webkit-mask-image:var(--knot-mask);mask-image:var(--knot-mask)}
+.front{display:none}
+
+.brand{display:flex;align-items:center;flex:none}
+.brand__tile{display:grid;place-items:center;flex:none;color:#fff;font-weight:700;line-height:1;
+  background:linear-gradient(90deg,#5219c9,#7259d1)}
+.brand__word{position:relative;font-weight:340;color:var(--wordmark);line-height:1}
+.brand__ai{position:absolute;color:var(--ai);font-weight:500;line-height:1}
+.nav__links a{color:var(--nav);transition:color .2s,background-color .2s}
+.nav__login{color:#efeff1;font-weight:500;transition:color .2s}
+
+.h1{font-family:var(--display);font-weight:380;font-variation-settings:"opsz" 24;text-align:center}
+.sub{font-weight:300;color:var(--muted);text-align:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;white-space:nowrap;line-height:1;
+  transition:filter .2s,transform .2s}
+.btn:active{transform:translateY(1px)}
+.btn--primary{background:linear-gradient(90deg,var(--violet-a),var(--violet-b));color:#fff;border:1px solid rgba(255,255,255,.32)}
+.btn--ghost{color:#b6c0c2;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.15);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.nav__demo{color:#fff;background:rgba(255,255,255,.016);border:1px solid rgba(255,255,255,.32)}
+
+.card{position:relative;z-index:2;background:var(--glass);border:1px solid var(--glass-line);
+  -webkit-backdrop-filter:var(--card-bf);backdrop-filter:var(--card-bf)}
+.card__head{display:flex;align-items:center}
+.card__tile{display:grid;place-items:center;flex:none;background:var(--tile)}
+.card__tile svg{display:block;width:100%;height:100%}
+.card__kicker{color:var(--teal);font-weight:420;line-height:1}
+.card__title{font-weight:560;color:#fff}
+
+.logos{position:relative;z-index:3;color:var(--logo)}
+.logos li{white-space:nowrap;line-height:1}
+.lg-adept,.lg-meta,.lg-anth{font-style:italic;font-weight:700}
+.lg-cohere{font-weight:400}
+
+@media (hover:hover){
+  .nav__links a:hover,.nav__login:hover{color:#fff}
+  .btn:hover{filter:brightness(1.1)}
+}
+
+/* =====================================================================
+   FLOW ENGINE — tablet & mobile architectures (everything that is not
+   the desktop canvas). Every size is the desktop design value × --f, so
+   the hierarchy and proportions are the desktop's own; --f glides from
+   .55px (≈390px phone) to .76px (≥1095px). --m is the outer margin.
+   ===================================================================== */
+:root{
+  --f:clamp(.55px, calc(.449px + .0284vw), .76px);
+  --m:clamp(16px, 4.2vw, 40px);
+}
+
+/* --- header: logo + menu button; the same nav/actions become the menu panel --- */
+.nav{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  container:navbar / inline-size;
+  padding:calc(env(safe-area-inset-top) + calc(28 * var(--f))) max(var(--m), env(safe-area-inset-right)) calc(22 * var(--f)) max(var(--m), env(safe-area-inset-left))}
+.brand__tile{width:calc(70 * var(--f));height:calc(69 * var(--f));border-radius:calc(14 * var(--f));font-size:calc(44.3 * var(--f));box-shadow:0 0 calc(3 * var(--f)) calc(1 * var(--f)) rgba(110,50,225,.55),0 0 calc(10 * var(--f)) rgba(130,30,190,.3)}
+.brand__tile span{transform:translateY(calc(.5 * var(--f)))}
+.brand__word{margin-left:calc(19.5 * var(--f));font-size:calc(41.5 * var(--f));top:calc(4.5 * var(--f))}
+.brand__ai{font-size:calc(20.5 * var(--f));left:calc(89 * var(--f));top:calc(-9.5 * var(--f))}
+
+.nav__burger{position:relative;flex:none;display:grid;place-content:center;gap:6px;width:46px;height:46px;border-radius:999px;
+  background:rgba(255,255,255,.016);border:1px solid rgba(255,255,255,.32);box-shadow:inset 0 0 9px 3px rgba(255,255,255,.14)}
+.nav__burger span{display:block;width:16px;height:1.5px;border-radius:2px;background:#fff;transition:transform .25s ease}
+.nav.is-open .nav__burger span:first-child{transform:translateY(3.75px) rotate(45deg)}
+.nav.is-open .nav__burger span:last-child{transform:translateY(-3.75px) rotate(-45deg)}
+
+.nav__menu{position:absolute;top:calc(100% - 6px);right:max(var(--m), env(safe-area-inset-right));
+  width:min(380px, calc(100% - 2 * var(--m)));display:flex;flex-direction:column;padding:10px;
+  border-radius:18px;background:rgba(17,17,23,.8);border:1px solid var(--glass-line);
+  -webkit-backdrop-filter:blur(18px) brightness(1.15) saturate(.8);backdrop-filter:blur(18px) brightness(1.15) saturate(.8);
+  box-shadow:inset 0 0 18px 4px rgba(255,255,255,.07),0 24px 60px rgba(0,0,0,.5);
+  opacity:0;visibility:hidden;transform:translateY(-8px);transform-origin:top right;
+  transition:opacity .2s ease,transform .2s ease,visibility 0s linear .2s}
+.nav.is-open .nav__menu{opacity:1;visibility:visible;transform:none;transition:opacity .2s ease,transform .2s ease,visibility 0s}
+.nav__links{display:flex;flex-direction:column}
+.nav__links a{display:flex;align-items:center;min-height:48px;padding:0 14px;border-radius:12px;font-size:16px;letter-spacing:.01em}
+.nav__actions{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-top:8px;padding:12px 4px 4px 14px;border-top:1px solid rgba(255,255,255,.08)}
+.nav__login{display:inline-flex;align-items:center;min-height:46px;font-size:16px;letter-spacing:.01em}
+.nav .nav__demo{height:46px;padding:0 24px;font-size:15px;letter-spacing:.01em;box-shadow:inset 0 0 9px 3px rgba(255,255,255,.14)}
+@media (hover:hover){.nav__links a:hover{background:rgba(255,255,255,.05)}}
+
+/* the full desktop navigation returns as soon as it genuinely fits: measured at --f .76 the
+   header needs logo 154.7 + gap 36.8 + six links 745.7 + Log in/Book a Demo 271.6 = 1208.8px */
+@container navbar (min-width: 1209px){
+  .nav__burger{display:none}
+  .nav__menu{position:static;flex:1;flex-direction:row;align-items:center;justify-content:space-between;width:auto;
+    padding:0 0 0 calc(48.4 * var(--f));margin:0;border:0;border-radius:0;background:none;box-shadow:none;
+    -webkit-backdrop-filter:none;backdrop-filter:none;opacity:1;visibility:visible;transform:none;transition:none}
+  .nav__menu nav{flex:1;display:flex;justify-content:center}
+  .nav__links{flex-direction:row;gap:calc(48.4 * var(--f))}
+  .nav__links a{display:block;min-height:0;padding:0;border-radius:0;font-size:calc(23.5 * var(--f));letter-spacing:calc(.18 * var(--f));background:none}
+  .nav__actions{margin:0;padding:0 0 0 calc(48.4 * var(--f));border:0;gap:calc(39 * var(--f))}
+  .nav__login{min-height:0;font-size:calc(22.7 * var(--f));letter-spacing:calc(.4 * var(--f))}
+  .nav .nav__demo{width:calc(202.5 * var(--f));height:calc(63.5 * var(--f));padding:0;font-size:calc(23.4 * var(--f));letter-spacing:calc(.3 * var(--f));box-shadow:inset 0 0 calc(14 * var(--f)) calc(6 * var(--f)) rgba(255,255,255,.14)}
+}
+
+/* --- stage --- */
+.stage{position:relative;flex:1 0 auto;display:flex;flex-direction:column;container:stage / inline-size}
+.knot{inset:0;overflow:hidden;overflow:clip}
+.knot__img{position:absolute;left:50%;bottom:0;width:var(--kw);height:calc(var(--kw) * .7094);margin-left:calc(var(--kw) * -.5)}
+
+/* --- copy --- */
+.copy{position:relative;z-index:3;padding:calc(calc(54 * var(--f)) + 2vh) var(--m) 0}
+.h1{width:fit-content;max-width:100%;margin-inline:auto;
+  font-size:max(min(10vw, 42px), min(calc((100vw - 2 * var(--m)) / 12.35), 88px));
+  line-height:1.196;letter-spacing:-.0015em}
+.h1 .l{display:block;text-wrap:balance;color:transparent;-webkit-background-clip:text;background-clip:text;
+  background-image:linear-gradient(90deg,#9d9da0 0,#fff 1.9em,#fff calc(100% - 2.45em),#a09fa3 100%)}
+.h1 .l1{letter-spacing:.0065em}
+.sub{max-width:37em;margin:calc(26 * var(--f)) auto 0;font-size:calc(29.5 * var(--f));letter-spacing:.05em;line-height:1.5;text-wrap:balance}
+.sub br{display:none}
+.cta{display:flex;justify-content:center;gap:max(10px, calc(17 * var(--f)));margin-top:calc(52 * var(--f))}
+.btn{flex:0 1 auto;min-width:max-content;height:max(46px, calc(85.5 * var(--f)));padding:0 max(14px, calc(30 * var(--f)));font-size:max(15px, calc(26.3 * var(--f)));letter-spacing:.01em}
+.btn--primary{width:calc(306.5 * var(--f))}
+.btn--ghost{width:calc(286 * var(--f));box-shadow:inset 0 0 calc(16 * var(--f)) calc(4 * var(--f)) rgba(255,255,255,.09)}
+
+/* --- visual: TABLET architecture — the desktop's two flanking cards stay side by side,
+       staggered exactly like desktop (research high-right, leaderboards low-left) --- */
+.visual{position:relative;z-index:2;flex:1 0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:calc(32 * var(--f));
+  grid-template-rows:auto minmax(calc(28 * var(--f)), 1fr) auto;padding:calc(72 * var(--f)) var(--m) 0;min-height:calc(var(--kw) * .27)}
+.card{width:min(calc(451 * var(--f)), 100%);padding:calc(23 * var(--f)) calc(24 * var(--f)) calc(23 * var(--f)) calc(23 * var(--f));border-radius:calc(18 * var(--f));box-shadow:inset 0 0 calc(18 * var(--f)) calc(4 * var(--f)) rgba(255,255,255,.07)}
+.card--rs{grid-column:2;grid-row:1;justify-self:end;align-self:start}
+.card--lb{grid-column:1;grid-row:1;justify-self:start;align-self:start;margin-top:calc(146 * var(--f))}
+.card__tile{width:calc(63.5 * var(--f));height:calc(63.5 * var(--f));border-radius:calc(10 * var(--f))}
+.card__kicker{font-size:calc(25.2 * var(--f));letter-spacing:calc(.9 * var(--f));margin-left:calc(22.5 * var(--f))}
+.card__title{font-size:calc(26.7 * var(--f));letter-spacing:calc(.44 * var(--f));line-height:calc(35 * var(--f));margin-top:calc(20 * var(--f))}
+.logos{grid-column:1 / -1;grid-row:3;display:flex;flex-wrap:nowrap;justify-content:center;align-items:baseline;
+  --lg-gap:min(calc(118 * var(--f)), 6vw);
+  --ls:min(var(--f), calc((100cqw - 2 * var(--m) - 3 * var(--lg-gap)) / 650));
+  gap:var(--lg-gap);padding:calc(40 * var(--f)) 0 calc(calc(46 * var(--f)) + env(safe-area-inset-bottom))}
+.lg-adept{font-size:calc(42.25 * var(--ls));letter-spacing:calc(1.75 * var(--ls))}
+.lg-meta{font-size:calc(41 * var(--ls));letter-spacing:calc(2.2 * var(--ls))}
+.lg-cohere{font-size:calc(51 * var(--ls));letter-spacing:calc(3.2 * var(--ls))}
+.lg-anth{font-size:calc(38.67 * var(--ls));letter-spacing:calc(1.88 * var(--ls))}
+
+/* --- MOBILE architecture — two 2-line cards no longer fit side by side:
+       the pair (2 × 432 + 32 design px) + margins needs ≥ 607px (bisected). The cards keep
+       their desktop diagonal: research upper-right, leaderboards lower-left. --- */
+@container stage (max-width: 606.98px){
+  .visual{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(calc(36 * var(--f)), 1fr) auto auto;padding-top:calc(56 * var(--f))}
+  .card--rs{grid-column:1;grid-row:1}
+  .card--lb{grid-column:1;grid-row:3;margin-top:0}
+  .logos{grid-row:4}
+}
+
+/* =====================================================================
+   CANVAS MODE — measured reference, scaled by --u
+   ===================================================================== */
+@media (min-aspect-ratio: 1769/1455) and (min-width: 828px){
+  /* u = viewport height / 1455, floored at .468px so the smallest label (nav, calc(23.5 * var(--u))) never drops under 11px;
+     below that floor the page simply grows taller than the screen and scrolls. */
+  :root{--u:max(calc(100vh / 1455), .468px);--card-bf:blur(calc(8 * var(--u))) brightness(1.15) saturate(.8)}
+  @supports (height:100dvh){:root{--u:max(calc(100dvh / 1455), .468px)}}
+  .hero{display:block;height:calc(1455 * var(--u));min-height:0;width:100%;overflow:hidden;overflow:clip}
+  .stage{position:absolute;top:0;left:50%;width:calc(2048 * var(--u));height:calc(1455 * var(--u));margin-left:calc(-1024 * var(--u));z-index:1;display:block;container-type:normal}
+  .knot{inset:auto;left:0;top:calc(2.8 * var(--u));width:calc(2048 * var(--u));height:calc(1452.9 * var(--u));margin:0;overflow:visible}
+  .knot__img{position:static;width:100%;height:100%;margin:0}
+
+  /* research card sits behind the knot's left arm: re-draw that arm in front */
+  .front{display:block;position:absolute;z-index:3;overflow:hidden;pointer-events:none;background:var(--bg);
+    left:calc(1405 * var(--u));top:calc(950 * var(--u));width:calc(110 * var(--u));height:calc(160 * var(--u));
+    clip-path:polygon(0% 25%, 1.82% 30%, 7.27% 35%, 12.73% 40%, 17.27% 45%, 21.82% 50%, 26.36% 55%, 30% 60%, 33.64% 65%, 36.36% 70%, 39.09% 75%, 41.82% 80%, 44.55% 85%, 46.36% 90%, 48.18% 95%, 50% 100%, 0% 100%)}
+  .front__knot{position:absolute;left:calc(-1405 * var(--u));top:calc(calc(2.8 * var(--u)) - calc(950 * var(--u)));width:calc(2048 * var(--u));height:calc(1452.9 * var(--u))}
+
+  /* header */
+  .nav{display:block;position:absolute;inset:0 0 auto 0;height:calc(148 * var(--u));padding:0;z-index:5;container-type:normal}
+  .nav__menu{display:contents;visibility:visible;opacity:1;transform:none}
+  .brand{position:absolute;left:calc(36.5 * var(--u));top:calc(39.5 * var(--u))}
+  .brand__tile{width:calc(70 * var(--u));height:calc(69 * var(--u));border-radius:calc(14 * var(--u));font-size:calc(44.3 * var(--u));box-shadow:0 0 calc(3 * var(--u)) calc(1 * var(--u)) rgba(110,50,225,.55),0 0 calc(10 * var(--u)) rgba(130,30,190,.3)}
+  .brand__tile span{transform:translateY(calc(.5 * var(--u)))}
+  .brand__word{margin-left:calc(19.5 * var(--u));font-size:calc(41.5 * var(--u));top:calc(4.5 * var(--u))}
+  .brand__ai{font-size:calc(20.5 * var(--u));left:calc(89 * var(--u));top:calc(-9.5 * var(--u))}
+  .nav nav{display:block;position:static;transform:none}
+  .nav__links{position:absolute;top:0;left:calc(50% - calc(547 * var(--u)));display:flex;flex-direction:row;gap:calc(48.4 * var(--u));height:calc(148 * var(--u));align-items:flex-start}
+  .nav__links a{display:block;min-height:0;padding:calc(63 * var(--u)) 0 0;border-radius:0;font-size:calc(23.5 * var(--u));letter-spacing:calc(.18 * var(--u));line-height:1}
+  .nav__actions{position:absolute;top:calc(42.5 * var(--u));right:calc(41.5 * var(--u));display:flex;align-items:center;gap:0;margin:0;padding:0;border:0}
+  .nav__login{display:inline;min-height:0;position:relative;top:calc(2 * var(--u));font-size:calc(22.7 * var(--u));letter-spacing:calc(.4 * var(--u));margin-right:calc(39 * var(--u));line-height:1}
+  .nav .nav__demo{display:inline-flex;width:calc(202.5 * var(--u));height:calc(63.5 * var(--u));padding:0;font-size:calc(23.4 * var(--u));letter-spacing:calc(.3 * var(--u));
+    border:calc(1.5 * var(--u)) solid rgba(255,255,255,.32);box-shadow:inset 0 0 calc(14 * var(--u)) calc(6 * var(--u)) rgba(255,255,255,.14)}
+  .nav__burger{display:none}
+
+  /* copy */
+  .copy{position:absolute;inset:0;padding:0;z-index:3;pointer-events:none}
+  .h1{margin:0;max-width:none}
+  .copy > *{pointer-events:auto}
+  .h1{position:absolute;left:0;top:0;width:calc(2048 * var(--u));margin:0;max-width:none;font-size:calc(114.5 * var(--u));letter-spacing:calc(-.17 * var(--u));line-height:calc(137 * var(--u));padding-top:calc(265 * var(--u));
+    background:none;color:inherit;text-wrap:wrap}
+  .h1 .l{display:block;text-wrap:wrap;width:calc(2048 * var(--u));color:transparent;-webkit-background-clip:text;background-clip:text;
+    background-repeat:no-repeat;background-size:calc(2048 * var(--u)) 100%;
+    background-image:linear-gradient(90deg,#9d9da0 calc(313 * var(--u)),#fff calc(530 * var(--u)),#fff calc(1425 * var(--u)),#a09fa3 calc(1706 * var(--u)))}
+  .h1 .l1{margin-left:calc(-15 * var(--u));background-position:calc(15 * var(--u)) 0;letter-spacing:calc(.75 * var(--u))}
+  .h1 .l2{margin-left:calc(-16 * var(--u));background-position:calc(16 * var(--u)) 0}
+  .h1 .l1{letter-spacing:calc(.75 * var(--u))}
+  .sub{position:absolute;left:0;top:0;width:calc(2048 * var(--u));max-width:none;margin:0;font-size:calc(29.5 * var(--u));letter-spacing:calc(1.5 * var(--u));line-height:calc(43 * var(--u));
+    padding-top:calc(579 * var(--u));transform:translateX(calc(22 * var(--u)));text-wrap:wrap}
+  .sub br{display:inline}
+  .sub .s1{letter-spacing:calc(1.57 * var(--u));position:relative;left:calc(-1.5 * var(--u))}
+  .sub .s2{letter-spacing:calc(1.43 * var(--u));position:relative;left:calc(-1.5 * var(--u))}
+  .cta{position:absolute;top:calc(720.5 * var(--u));left:calc(716.5 * var(--u));margin:0;gap:calc(17 * var(--u))}
+  .btn{flex:none;min-width:0;height:calc(85.5 * var(--u));padding:calc(2 * var(--u)) 0 0;font-size:calc(26.3 * var(--u));letter-spacing:calc(.3 * var(--u))}
+  .btn--primary{width:calc(306.5 * var(--u));border-width:calc(1.5 * var(--u))}
+  .btn--ghost{width:calc(286 * var(--u));border-width:calc(1.5 * var(--u));box-shadow:inset 0 0 calc(16 * var(--u)) calc(4 * var(--u)) rgba(255,255,255,.09)}
+
+  /* glass cards */
+  .visual{display:block;padding:0;min-height:0}
+  .card{justify-self:auto;align-self:auto}
+  .card{position:absolute;width:calc(451 * var(--u));max-width:none;height:calc(201 * var(--u));border-radius:calc(18 * var(--u));border-width:calc(1.5 * var(--u));padding:calc(23 * var(--u)) calc(24 * var(--u)) calc(23 * var(--u)) calc(23 * var(--u));
+    box-shadow:inset 0 0 calc(18 * var(--u)) calc(4 * var(--u)) rgba(255,255,255,.07)}
+  .card--lb{left:calc(176 * var(--u));top:calc(1047 * var(--u));margin:0}
+  .card--rs{left:calc(1417 * var(--u));top:calc(901 * var(--u));margin:0;--card-bf:blur(calc(8 * var(--u)))}
+  .card__tile{width:calc(63.5 * var(--u));height:calc(63.5 * var(--u));border-radius:calc(10 * var(--u))}
+  .card__kicker{font-size:calc(25.2 * var(--u));letter-spacing:calc(.9 * var(--u));margin-left:calc(22.5 * var(--u))}
+  .card--lb .card__kicker{font-size:calc(26.6 * var(--u))}
+  .card--rs .card__kicker{font-size:calc(24.6 * var(--u))}
+  .card__title{font-size:calc(26.7 * var(--u));letter-spacing:calc(.44 * var(--u));line-height:calc(35 * var(--u));margin-top:calc(20 * var(--u))}
+  .card--lb .card__title .w{letter-spacing:calc(.82 * var(--u))}
+
+  /* customer strip */
+  .logos{position:absolute;inset:0;display:block;padding:0}
+  .logos li{position:absolute}
+  .logos{gap:0}
+  .lg-adept{left:calc(488 * var(--u));top:calc(1368 * var(--u));font-size:calc(42.25 * var(--u));letter-spacing:calc(1.75 * var(--u))}
+  .lg-meta{left:calc(802 * var(--u));top:calc(1368 * var(--u));font-size:calc(41 * var(--u));letter-spacing:calc(2.2 * var(--u))}
+  .lg-cohere{left:calc(1020 * var(--u));top:calc(1363 * var(--u));font-size:calc(51 * var(--u));letter-spacing:calc(3.2 * var(--u))}
+  .lg-anth{left:calc(1318 * var(--u));top:calc(1370 * var(--u));font-size:calc(38.67 * var(--u));letter-spacing:calc(1.88 * var(--u))}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* entrance: performers wait off-stage until the master timeline takes them (see script) */
+.intro [data-enter]{opacity:0}
+</style>
+</head>
+<body>
+<main class="hero">
+  <header class="nav" id="nav">
+    <a class="brand" href="#" aria-label="Extent AI home" data-enter>
+      <span class="brand__tile" aria-hidden="true"><span>E</span></span>
+      <span class="brand__word" aria-hidden="true">Extent<span class="brand__ai">AI</span></span>
+    </a>
+    <button class="nav__burger" data-enter type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu"><span></span><span></span></button>
+    <div class="nav__menu" id="nav-menu">
+      <nav aria-label="Primary">
+        <ul class="nav__links">
+          <li data-enter><a href="#">Products</a></li>
+          <li data-enter><a href="#">Leaderboards</a></li>
+          <li data-enter><a href="#">Enterprise</a></li>
+          <li data-enter><a href="#">Government</a></li>
+          <li data-enter><a href="#">Customers</a></li>
+          <li data-enter><a href="#">Resources</a></li>
+        </ul>
+      </nav>
+      <div class="nav__actions">
+        <a class="nav__login" href="#" data-enter>Log in</a>
+        <a class="btn nav__demo" href="#" data-enter>Book a Demo</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="stage">
+    <div class="knot" aria-hidden="true"><div class="knot__img"></div></div>
+
+    <div class="copy">
+      <h1 class="h1"><span class="l l1" data-enter>Breakthrough AI from Data</span> <span class="l l2" data-enter>to Deployment</span></h1>
+      <p class="sub" data-enter><span class="s1">Scale provides trusted data, assessments, and results to AI labs, government</span><br> <span class="s2">agencies, and Fortune 500 companies.</span></p>
+      <div class="cta">
+        <a class="btn btn--primary" href="#" data-enter>Book a Demo</a>
+        <a class="btn btn--ghost" href="#" data-enter>Build AI</a>
+      </div>
+    </div>
+
+    <div class="visual">
+      <article class="card card--rs" data-enter>
+        <div class="card__head">
+          <span class="card__tile"><svg viewBox="0 0 64 64" aria-hidden="true">
+<defs><linearGradient id="rsw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#36d4d1"/><stop offset=".35" stop-color="#1fb3b2"/><stop offset="1" stop-color="#169799"/></linearGradient>
+<linearGradient id="rsl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2cc5c3"/><stop offset="1" stop-color="#16a1a1"/></linearGradient></defs>
+<path d="M12.2 10.3h4.2v3.4h3v-3.4h4.2v3.4h3v-3.4h4.3v3.4h3v-3.4h4.2v3.4h3v-3.4h4.2v3.4h3v-3.4h3.3v8.2l-1.5 1.5V45.8H13.7V19.2l-1.5-1.5z" fill="url(#rsw)"/>
+<path d="M12.2 15.6h39.4v2.2H12.2z" fill="#4fe3df" opacity=".75"/>
+<g stroke="#0f7f84" stroke-width=".7" opacity=".75"><path d="M14 23.5h36M14 29h36M14 34.5h36M14 40h36"/><path d="M19.5 18v5.5M26 23.5V29M38 23.5V29M44.5 18v5.5M19.5 29v5.5M44.5 29v5.5M19.5 40v5.8M44.5 40v5.8"/></g>
+<path d="M10 45.6h44v3.1l-1.4 2.8H11.4L10 48.7z" fill="#22bcbb"/>
+<path d="M10 45.6h44v1.4H10z" fill="#5ae6e2" opacity=".8"/>
+<path d="M25.4 30.4v-4.2a6.1 6.1 0 0 1 12.2 0v4.2" fill="none" stroke="#3fd8d4" stroke-width="2.6"/>
+<rect x="22" y="30" width="19" height="15.2" rx="2" fill="url(#rsl)" stroke="#55e3df" stroke-width="1.2"/>
+<path d="M26.3 37.6c3.4-4.1 7-4.1 10.4 0-3.4 4.1-7 4.1-10.4 0z" fill="#0f6f73" stroke="#7ff0ec" stroke-width="1"/>
+<circle cx="31.5" cy="37.6" r="1.6" fill="#a9fbf7"/>
+</svg></span>
+          <span class="card__kicker">Research</span>
+        </div>
+        <p class="card__title">FORTRESS: Risk Assessment<br> for National Security</p>
+      </article>
+      <div class="front" aria-hidden="true"><div class="front__knot"></div></div>
+      <article class="card card--lb" data-enter>
+        <div class="card__head">
+          <span class="card__tile"><svg viewBox="0 0 64 64" aria-hidden="true">
+<defs><radialGradient id="lbn" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#b8ffe9"/><stop offset=".55" stop-color="#43e2b7"/><stop offset="1" stop-color="#1aa486"/></radialGradient>
+<filter id="lbg" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation=".9"/></filter></defs>
+<g stroke="#27c39c" stroke-width="1.25" stroke-linecap="round" fill="none" opacity=".92">
+<path d="M21 14.6 10.7 33 21 50.9M42.9 14.6 53.5 33 42.9 50.9M21 14.6 53.5 33M42.9 14.6 10.7 33M10.7 33 42.9 50.9M53.5 33 21 50.9M21 14.6 42.9 50.9M42.9 14.6 21 50.9M10.7 33h42.8"/>
+</g>
+<g fill="#36d3ad" opacity=".55" filter="url(#lbg)"><circle cx="21" cy="14.6" r="3.2"/><circle cx="42.9" cy="14.6" r="3.2"/><circle cx="10.7" cy="33" r="3.2"/><circle cx="53.5" cy="33" r="3.2"/><circle cx="21" cy="50.9" r="3.2"/><circle cx="42.9" cy="50.9" r="3.2"/></g>
+<g fill="url(#lbn)"><circle cx="21" cy="14.6" r="2.3"/><circle cx="42.9" cy="14.6" r="2.3"/><circle cx="10.7" cy="33" r="2.3"/><circle cx="53.5" cy="33" r="2.3"/><circle cx="21" cy="50.9" r="2.3"/><circle cx="42.9" cy="50.9" r="2.3"/></g>
+<path d="M28.6 33.5 26.4 44.2l3.4-1.6 2.1 2.9 1.2-10.2zM34.6 33.5l2.2 10.7-3.4-1.6-2.1 2.9-1.2-10.2z" fill="#16967a" stroke="#2fd0a9" stroke-width=".9" stroke-linejoin="round"/>
+<circle cx="31.6" cy="29.4" r="6.4" fill="#169a7e" stroke="#3fe0b8" stroke-width="1.2"/>
+<circle cx="31.6" cy="29.4" r="3.4" fill="none" stroke="#7ff3d3" stroke-width="1"/>
+<path d="M31.6 27.6v3.6M29.9 29.4h3.4" stroke="#aaf8e2" stroke-width=".8" stroke-linecap="round"/>
+</svg></span>
+          <span class="card__kicker">Leaderboards</span>
+        </div>
+        <p class="card__title">SEAL Leaderboards: Expert-<br><span class="w">Driven Private Evaluations</span></p>
+      </article>
+      <ul class="logos" aria-label="Trusted by">
+        <li class="lg-adept" data-enter>Adept</li>
+        <li class="lg-meta" data-enter>Meta</li>
+        <li class="lg-cohere" data-enter>cohere</li>
+        <li class="lg-anth" data-enter>ANTHROPIC</li>
+      </ul>
+    </div>
+  </div>
+</main>
+<script>
+(function(){
+  var nav=document.getElementById('nav'),btn=nav.querySelector('.nav__burger'),menu=document.getElementById('nav-menu');
+  function collapsed(){return getComputedStyle(btn).display!=='none';}
+  function set(open,refocus){
+    nav.classList.toggle('is-open',open);
+    btn.setAttribute('aria-expanded',String(open));
+    btn.setAttribute('aria-label',open?'Close menu':'Open menu');
+    if(open){var first=menu.querySelector('a');if(first)first.focus({preventScroll:true});}
+    else if(refocus)btn.focus({preventScroll:true});
+  }
+  btn.addEventListener('click',function(){set(!nav.classList.contains('is-open'));});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&nav.classList.contains('is-open'))set(false,true);
+  });
+  document.addEventListener('click',function(e){if(nav.classList.contains('is-open')&&!nav.contains(e.target))set(false);});
+  menu.addEventListener('click',function(e){if(e.target.closest('a')&&collapsed())set(false);});
+  menu.addEventListener('focusout',function(e){
+    if(collapsed()&&nav.classList.contains('is-open')&&!nav.contains(e.relatedTarget))set(false);
+  });
+})();
+</script>
+<script>
+/* =====================================================================
+   ENTRANCE — one master timeline, runs once, then the page is static.
+   Stage (knot artwork + grid) never moves. Performers rise into place:
+     A  masked line reveal   — headline lines rise out of their own line box
+     B  supporting settle    — nav, subtitle, logos: short rise + fade
+     C  action settle        — CTAs: rise + a 1.5% scale settle
+     D  glass card arrival   — cards: rise + 3% scale settle, in eye-flow order
+   Distances are design-px × the live type scale, so every layout gets the
+   same proportions; phones play it ~20% calmer. Only translate/scale/
+   opacity/clip-path are animated, with fill:'backwards' and no forward
+   fill — when a tween ends the element is exactly its authored style.
+   ===================================================================== */
+(function(){
+  var root=document.documentElement;
+  if(!root.classList.contains('intro')) return;
+  var q=function(s){return document.querySelector(s)}, qa=function(s){return [].slice.call(document.querySelectorAll(s))};
+  var started=false, wait;
+
+  function start(){
+    if(started) return; started=true;
+    clearTimeout(wait); clearTimeout(window.__introFailsafe);
+
+    var phone=matchMedia('(max-width: 606.98px)').matches;
+    var k=parseFloat(getComputedStyle(q('.h1')).fontSize)/114.5;           /* css px per design px */
+    var calm=phone?.8:1, pace=phone?.9:1;
+    var px=function(v){return (v*k*calm).toFixed(2)+'px'}, s=function(v){return v*1000*pace};
+    var EXPO='cubic-bezier(.16,1,.3,1)',   /* headline: decisive start, long soft landing */
+        QUINT='cubic-bezier(.22,1,.36,1)', /* supporting content */
+        GLASS='cubic-bezier(.2,.75,.25,1)';/* cards: a touch more weight */
+    var tweens=[];
+    function shown(el){var c=getComputedStyle(el);return c.display!=='none'&&c.visibility!=='hidden'&&el.getClientRects().length>0}
+    function play(el,frames,at,dur,ease){
+      if(!el||!shown(el)) return;
+      tweens.push(el.animate(frames,{delay:s(at),duration:s(dur),easing:ease,fill:'backwards'}));
+    }
+    var rise=function(d){return [{opacity:0,translate:'0 '+px(d)},{opacity:1,translate:'0 0'}]};
+    var settle=function(d,sc){return [{opacity:0,translate:'0 '+px(d),scale:sc},{opacity:1,translate:'0 0',scale:'1'}]};
+    var mask=[{translate:'0 100%',clipPath:'inset(0 -6% 100% -6%)'},{translate:'0 0',clipPath:'inset(0 -6% 0 -6%)'}];
+
+    /* 0.00  NAVIGATION — understated: logo, links ripple left→right, actions */
+    play(q('.brand'),rise(10),.00,.70,QUINT);
+    qa('.nav__links li').forEach(function(li,i){play(li,rise(8),.10+i*.04,.55,QUINT)});
+    play(q('.nav__burger'),rise(8),.14,.60,QUINT);
+    play(q('.nav__login'),rise(8),.30,.55,QUINT);
+    play(q('.nav__demo'),rise(8),.36,.60,QUINT);
+
+    /* 0.16  HEADLINE — the lead: each line rises out of its own mask */
+    play(q('.h1 .l1'),mask,.16,1.10,EXPO);
+    play(q('.h1 .l2'),mask,.30,1.10,EXPO);
+
+    /* 0.62  SUBTITLE — follows while the headline is still landing */
+    play(q('.sub'),rise(18),.62,.90,QUINT);
+
+    /* 0.84  ACTIONS — primary first, secondary a beat later */
+    play(q('.btn--primary'),settle(14,'.985'),.84,.80,QUINT);
+    play(q('.btn--ghost'),rise(14),.92,.80,QUINT);
+
+    /* 1.00  GLASS CARDS — eye flows from the CTAs to the higher card, then the lower */
+    play(q('.card--rs'),rise(28),1.00,1.05,GLASS);
+    play(q('.card--lb'),rise(28),1.14,1.05,GLASS);
+
+    /* 1.32  TRUST STRIP — quiet, left→right, the last word */
+    qa('.logos li').forEach(function(li,i){play(li,rise(10),1.32+i*.06,.75,QUINT)});
+
+    root.classList.remove('intro');           /* backwards-fill now holds every start state */
+
+    /* END — release everything; nothing is left running */
+    Promise.all(tweens.map(function(t){return t.finished})).then(function(){
+      var targets=tweens.map(function(t){return t.effect&&t.effect.target}).filter(Boolean);
+      tweens.forEach(function(t){t.cancel()}); tweens.length=0;
+      /* glass elements (backdrop-filter) keep the GPU raster the transform produced, a sub-pixel
+         off; re-resolving their backdrop once restores the exact first-load raster.
+         Synchronous, before the next paint, so nothing is ever seen. */
+
+      root.setAttribute('data-entrance','done');
+    },function(){root.setAttribute('data-entrance','done')});
+  }
+
+  var ready=document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve();
+  wait=setTimeout(function(){requestAnimationFrame(start)},600);  /* never wait long for fonts */
+  ready.then(function(){requestAnimationFrame(start)});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<base href="/previews/REF-117/"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>New Collection</title>
+<style>
+@font-face{font-family:"GS";src:url(assets/fonts/font-01.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:"PD";src:url(assets/fonts/font-02.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:"PF";src:url(assets/fonts/font-03.woff2) format("woff2");font-weight:400;font-display:block}
+:root{--teal:#285252}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#285252;overscroll-behavior:none}
+body{-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision;-webkit-tap-highlight-color:transparent}
+/* viewport: texture fills every pixel of the screen, the stage sits on top of it */
+#vp{position:fixed;inset:0;overflow-x:hidden;overflow-y:hidden;
+  background-color:#285252;background-image:linear-gradient(rgba(94,79,78,0.15),rgba(94,79,78,0.15)),url(assets/images/image-01.webp);
+  background-size:cover;background-position:center}
+#vp.scroll{overflow-y:auto}
+#sizer{width:1px;pointer-events:none}
+#stage{position:absolute;left:0;top:0;width:1391px;height:1131px;transform-origin:0 0;visibility:hidden}
+.m .spike{display:none}
+#stage.ready{visibility:visible}
+.el{position:absolute;display:block;white-space:nowrap;transform-origin:0 0}
+.m-only{display:none} .m .m-only{display:block} .m .d-only{display:none}
+button.el{background:none;border:0;cursor:pointer;padding:0;font:inherit}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+a.nav{transition:opacity .2s} a.nav:hover{opacity:.75} a.nav:focus-visible,.pill:focus-visible,#burger:focus-visible{outline:1.5px solid #fcba3d;outline-offset:3px;border-radius:4px}
+.pill .arrow{transition:transform .25s ease} .pill:hover .arrow{transform:translateX(3px)}
+.logo img{display:block;width:100%;height:100%}
+/* portrait / phone composition */
+.m .tag{white-space:normal;text-align:center;font-size:19px;line-height:1.42;width:var(--tagw,360px)}
+/* mobile menu */
+#menu{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:22px;
+  background:rgba(17,18,18,.72);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);opacity:0;pointer-events:none;transition:opacity .25s}
+#menu.open{opacity:1;pointer-events:auto}
+#menu a{font:400 24px/1 "GS",sans-serif;color:#fff;text-decoration:none;letter-spacing:.2px}
+#menu a:hover{color:#fcba3d}
+#menu .close{position:absolute;top:22px;right:22px;width:40px;height:40px;border:0;background:none;color:#fff;cursor:pointer}
+.nav{font:400 14px/1 "GS",sans-serif;color:#fff;text-decoration:none;text-shadow:1.53px 0.00px 0.6px rgba(0,28,28,0.18), -1.53px 0.00px 0.6px rgba(0,28,28,0.18), 0.00px 1.53px 0.6px rgba(0,28,28,0.18), 0.00px -1.53px 0.6px rgba(0,28,28,0.18), 1.07px 1.07px 0.6px rgba(0,28,28,0.18), -1.07px 1.07px 0.6px rgba(0,28,28,0.18), 1.07px -1.07px 0.6px rgba(0,28,28,0.18), -1.07px -1.07px 0.6px rgba(0,28,28,0.18)}
+.ico-link{color:#fff;filter:drop-shadow(1.3px 0 0.5px rgba(0,28,28,.22)) drop-shadow(-1.3px 0 0.5px rgba(0,28,28,.22)) drop-shadow(0 1.3px 0.5px rgba(0,28,28,.22)) drop-shadow(0 -1.3px 0.5px rgba(0,28,28,.22))} .ico{display:block;width:24px;height:24px}
+.logo{left:660px;top:42.6px;width:72px;height:56px}
+.hero{left:0;top:0;width:1391px;height:1131px;pointer-events:none}
+.hero-svg{position:absolute;left:0;top:0;overflow:visible}
+.disc{font-family:"GS",sans-serif;font-weight:400}
+.big{font-family:"PD",serif;font-weight:400;color:#fff;line-height:1;transform-origin:0 0;pointer-events:none}
+.new{font-family:"PF",serif;left:87px;top:463px;font-size:171.4px;text-shadow:2.07px 0.00px 0.6px rgba(0,28,28,0.22499999999999998), -2.07px 0.00px 0.6px rgba(0,28,28,0.22499999999999998), 0.00px 2.07px 0.6px rgba(0,28,28,0.22499999999999998), 0.00px -2.07px 0.6px rgba(0,28,28,0.22499999999999998), 1.45px 1.45px 0.6px rgba(0,28,28,0.22499999999999998), -1.45px 1.45px 0.6px rgba(0,28,28,0.22499999999999998), 1.45px -1.45px 0.6px rgba(0,28,28,0.22499999999999998), -1.45px -1.45px 0.6px rgba(0,28,28,0.22499999999999998)}
+.coll{left:964px;top:353px;font-size:77.89px;text-shadow:2.07px 0.00px 0.6px rgba(0,28,28,0.22499999999999998), -2.07px 0.00px 0.6px rgba(0,28,28,0.22499999999999998), 0.00px 2.07px 0.6px rgba(0,28,28,0.22499999999999998), 0.00px -2.07px 0.6px rgba(0,28,28,0.22499999999999998), 1.45px 1.45px 0.6px rgba(0,28,28,0.22499999999999998), -1.45px 1.45px 0.6px rgba(0,28,28,0.22499999999999998), 1.45px -1.45px 0.6px rgba(0,28,28,0.22499999999999998), -1.45px -1.45px 0.6px rgba(0,28,28,0.22499999999999998)}
+.tag{left:131.5px;top:985.1px;font:400 24.43px/1 "GS",sans-serif;color:#fff;text-shadow:1.80px 0.00px 0.6px rgba(0,28,28,0.18), -1.80px 0.00px 0.6px rgba(0,28,28,0.18), 0.00px 1.80px 0.6px rgba(0,28,28,0.18), 0.00px -1.80px 0.6px rgba(0,28,28,0.18), 1.26px 1.26px 0.6px rgba(0,28,28,0.18), -1.26px 1.26px 0.6px rgba(0,28,28,0.18), 1.26px -1.26px 0.6px rgba(0,28,28,0.18), -1.26px -1.26px 0.6px rgba(0,28,28,0.18)}
+.see{width:285px;height:57px}
+.pill{position:absolute;left:0;top:0;border-radius:999px;overflow:hidden;z-index:5;display:block;isolation:isolate;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.pill{background:rgb(12,60,58)}
+.pill img{position:absolute;display:block;z-index:-1;filter:url(#rackTone) blur(1.6px)}
+.pill .lbl{position:absolute;font:400 16.15px/1 "GS",sans-serif;color:#fff;text-shadow:1.44px 0.00px 0.6px rgba(0,28,28,0.135), -1.44px 0.00px 0.6px rgba(0,28,28,0.135), 0.00px 1.44px 0.6px rgba(0,28,28,0.135), 0.00px -1.44px 0.6px rgba(0,28,28,0.135), 1.01px 1.01px 0.6px rgba(0,28,28,0.135), -1.01px 1.01px 0.6px rgba(0,28,28,0.135), 1.01px -1.01px 0.6px rgba(0,28,28,0.135), -1.01px -1.01px 0.6px rgba(0,28,28,0.135)}
+.pill .arrow{position:absolute;overflow:visible}
+.av{position:absolute;border-radius:50%;overflow:hidden;box-shadow:0 0 0 1px rgba(70,140,138,0.55)}
+.av img{position:absolute;display:block}
+.deco-l{left:0;top:880px} .deco-r{left:780px;top:880px}
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="rackTone" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0.622 0 0 0 0.05 0 0.456 0 0 0.21 0 0 0.408 0 0.18 0 0 0 1 0"/></filter></svg>
+<div id="vp"><div id="sizer"></div><div id="stage">
+<h1 class="sr">New Collection</h1>
+<svg id="decoL" class="el deco deco-l" data-ax="l" data-ay="b" viewBox="0 880 620 251" width="620" height="251" overflow="visible" aria-hidden="true">
+<defs><linearGradient id="lgL" gradientUnits="userSpaceOnUse" x1="62.3" y1="0" x2="592.0" y2="0">
+<stop offset="0" stop-color="#fff" stop-opacity="0.17"/><stop offset="0.45" stop-color="#fff" stop-opacity="0.15"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<filter id="lshadow" x="-5%" y="-200%" width="110%" height="500%"><feDropShadow dx="0" dy="0" stdDeviation="0.8" flood-color="#001a1a" flood-opacity="0.45"/></filter></defs>
+<path d="M0.8 899L22.3 974.5L101 996L22.3 1017.5L0.8 1092.5L-20.7 1017.5L-99.4 996L-20.7 974.5Z" fill="#3a7a79"/>
+<g filter="url(#lshadow)" stroke-linecap="round">
+<path d="M62.3 934H592" stroke="url(#lgL)" stroke-width="1.7" fill="none"/>
+<path d="M31.6 964.3L62.3 934" stroke="#fff" stroke-opacity="0.17" stroke-width="1.7" fill="none"/>
+<circle cx="31.6" cy="964.3" r="3.5" fill="#fff" fill-opacity="0.33"/>
+</g></svg>
+<svg id="decoR" class="el deco deco-r" data-ax="r" data-ay="b" viewBox="780 880 611 251" width="611" height="251" overflow="visible" aria-hidden="true">
+<defs><linearGradient id="lgR" gradientUnits="userSpaceOnUse" x1="812.0" y1="0" x2="1328.6" y2="0">
+<stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="0.55" stop-color="#fff" stop-opacity="0.14"/><stop offset="1" stop-color="#fff" stop-opacity="0.17"/></linearGradient></defs>
+<path d="M1390.2 899L1411.7 974.5L1490.9 996L1411.7 1017.5L1390.2 1092.5L1368.7 1017.5L1289.5 996L1368.7 974.5Z" fill="#3b7d7b"/>
+<g filter="url(#lshadow)" stroke-linecap="round">
+<path d="M812 1057.6H1328.6" stroke="url(#lgR)" stroke-width="1.7" fill="none"/>
+<path d="M1328.6 1057.6L1358.6 1027.7" stroke="#fff" stroke-opacity="0.17" stroke-width="1.7" fill="none"/>
+<circle cx="1358.6" cy="1027.7" r="3.5" fill="#fff" fill-opacity="0.33"/>
+</g></svg>
+<div id="hero" class="el hero" data-ax="c" data-ay="m"><svg class="hero-svg" viewBox="0 0 1391 1131" width="1391" height="1131" overflow="visible" aria-hidden="true">
+<defs>
+  <filter id="ptone" color-interpolation-filters="sRGB"><feComponentTransfer>
+    <feFuncR type="linear" slope="0.975" intercept="0.024"/><feFuncG type="linear" slope="0.975" intercept="0.024"/><feFuncB type="linear" slope="0.975" intercept="0.026"/>
+  </feComponentTransfer></filter>
+  <filter id="yshadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="0.7" flood-color="#00141c" flood-opacity="0.75"/></filter>
+  <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="0.55"/></filter>
+  <clipPath id="topH"><rect x="-10" y="-5000" width="1411" height="5446.85"/></clipPath>
+  <clipPath id="botH"><rect x="-10" y="443.85" width="1411" height="1500"/></clipPath>
+  <clipPath id="c-p1t"><path d="M434.2 199H695.7V688.7H309V324.2A125.2 125.2 0 0 1 434.2 199Z"/></clipPath><clipPath id="c-p2t"><path d="M695.7 199H956.45V688.7H571.1V323.6A124.6 124.6 0 0 1 695.7 199Z"/></clipPath><clipPath id="c-p3t"><path d="M956.45 199H956.45A124.25 124.25 0 0 1 1080.7 323.25V688.7H832.2V323.25A124.25 124.25 0 0 1 956.45 199Z"/></clipPath><clipPath id="c-p3b"><path d="M695.7 199H1080.7V564.45A124.25 124.25 0 0 1 956.45 688.7H695.7V199Z"/></clipPath><clipPath id="c-p2b"><path d="M434.2 199H820.3V564.1A124.6 124.6 0 0 1 695.7 688.7H434.2V199Z"/></clipPath><clipPath id="c-p1b"><path d="M309 199H559.4V563.5A125.2 125.2 0 0 1 434.2 688.7H434.2A125.2 125.2 0 0 1 309 563.5V199Z"/></clipPath>
+  <mask id="m-cut2a" maskUnits="userSpaceOnUse" x="0" y="0" width="1391" height="1131"><rect width="1391" height="1131" fill="#fff"/><path d="M695.7 187.3H695.7A136.3 136.3 0 0 1 832 323.6V564.1A136.3 136.3 0 0 1 695.7 700.4H695.7A136.3 136.3 0 0 1 559.4 564.1V323.6A136.3 136.3 0 0 1 695.7 187.3Z" fill="#000"/></mask>
+  <mask id="m-cut3" maskUnits="userSpaceOnUse" x="0" y="0" width="1391" height="1131"><rect width="1391" height="1131" fill="#fff"/><path d="M956.45 187.1H956.45A136.15 136.15 0 0 1 1092.6 323.25V564.45A136.15 136.15 0 0 1 956.45 700.6H956.45A136.15 136.15 0 0 1 820.3 564.45V323.25A136.15 136.15 0 0 1 956.45 187.1Z" fill="#000"/></mask>
+  <mask id="m-cut2b" maskUnits="userSpaceOnUse" x="0" y="0" width="1391" height="1131"><rect width="1391" height="1131" fill="#fff"/><path d="M695.7 187.1H695.7A136.5 136.5 0 0 1 832.2 323.6V564.1A136.5 136.5 0 0 1 695.7 700.6H695.7A136.5 136.5 0 0 1 559.2 564.1V323.6A136.5 136.5 0 0 1 695.7 187.1Z" fill="#000"/></mask>
+  <mask id="m-cut1" maskUnits="userSpaceOnUse" x="0" y="0" width="1391" height="1131"><rect width="1391" height="1131" fill="#fff"/><path d="M434.2 187.3H434.2A136.9 136.9 0 0 1 571.1 324.2V563.5A136.9 136.9 0 0 1 434.2 700.4H434.2A136.9 136.9 0 0 1 297.3 563.5V324.2A136.9 136.9 0 0 1 434.2 187.3Z" fill="#000"/></mask>
+  <clipPath id="crescent"><rect x="600" y="785.6" width="200" height="80"/></clipPath>
+</defs>
+<path d="M1295.02 323.04A3.54 3.54 0 0 1 1301.22 325.7L1297.65 361.02L1324.56 384.18A3.54 3.54 0 0 1 1321.9 390.38L1286.58 386.81L1263.42 413.72A3.54 3.54 0 0 1 1257.22 411.06L1260.79 375.74L1233.88 352.58A3.54 3.54 0 0 1 1236.54 346.38L1271.86 349.95Z" fill="#254a4d" filter="url(#soft)"/>
+<path class="spike" d="M149 184H439.2A145 145 0 0 0 294.2 329L293.8 328.8A144.8 144.8 0 0 0 149 184Z" fill="#101112"/>
+<g clip-path="url(#topH)">
+  <g clip-path="url(#c-p1t)" mask="url(#m-cut2a)"><path d="M434.2 199H695.7V688.7H309V324.2A125.2 125.2 0 0 1 434.2 199Z" fill="#121812"/><image href="assets/images/image-02.webp" x="0" y="0" width="720" height="1440" preserveAspectRatio="none" transform="translate(270.29 142.6) rotate(-0.0653) scale(0.5295 0.5307)" filter="url(#ptone)"/></g>
+  <path d="M642.44 -4000H748.1V786.4A52.83 49.6 0 0 1 642.44 786.4Z" fill="#111212"/>
+  <g clip-path="url(#c-p2t)" mask="url(#m-cut3)"><path d="M695.7 199H956.45V688.7H571.1V323.6A124.6 124.6 0 0 1 695.7 199Z" fill="#091211"/><image href="assets/images/image-03.webp" x="0" y="0" width="720" height="1440" preserveAspectRatio="none" transform="translate(529.2 186.42) rotate(-5.4538) scale(0.4418 0.4364)" filter="url(#ptone)"/></g>
+  <g clip-path="url(#c-p3t)"><path d="M956.45 199H956.45A124.25 124.25 0 0 1 1080.7 323.25V688.7H832.2V323.25A124.25 124.25 0 0 1 956.45 199Z" fill="#1a1c1d"/><image href="assets/images/image-04.webp" x="0" y="0" width="720" height="1440" preserveAspectRatio="none" transform="translate(760.82 130) rotate(0.272) scale(0.4887 0.4842)" filter="url(#ptone)"/></g>
+</g>
+<g clip-path="url(#botH)">
+  <g clip-path="url(#c-p3b)" mask="url(#m-cut2b)"><path d="M695.7 199H1080.7V564.45A124.25 124.25 0 0 1 956.45 688.7H695.7V199Z" fill="#1a1c1d"/><image href="assets/images/image-04.webp" x="0" y="0" width="720" height="1440" preserveAspectRatio="none" transform="translate(760.82 130) rotate(0.272) scale(0.4887 0.4842)" filter="url(#ptone)"/></g>
+  <path d="M642.44 -4000H748.1V786.4A52.83 49.6 0 0 1 642.44 786.4Z" fill="#111212"/>
+  <g clip-path="url(#c-p2b)" mask="url(#m-cut1)"><path d="M434.2 199H820.3V564.1A124.6 124.6 0 0 1 695.7 688.7H434.2V199Z" fill="#091211"/><image href="assets/images/image-03.webp" x="0" y="0" width="720" height="1440" preserveAspectRatio="none" transform="translate(529.2 186.42) rotate(-5.4538) scale(0.4418 0.4364)" filter="url(#ptone)"/></g>
+  <path d="M294 711.2L279.47 677.06L251.57 701.51L253.29 664.45L217.54 674.38L235.17 641.73L198.65 635.16L228.7 613.4L198.65 591.64L235.17 585.07L217.54 552.42L253.29 562.35L251.57 525.29L279.47 549.74L294 515.6L308.53 549.74L336.43 525.29L334.71 562.35L370.46 552.42L352.83 585.07L389.35 591.64L359.3 613.4L389.35 635.16L352.83 641.73L370.46 674.38L334.71 664.45L336.43 701.51L308.53 677.06Z" fill="#397877"/>
+  <g clip-path="url(#c-p1b)"><path d="M309 199H559.4V563.5A125.2 125.2 0 0 1 434.2 688.7H434.2A125.2 125.2 0 0 1 309 563.5V199Z" fill="#121812"/><image href="assets/images/image-02.webp" x="0" y="0" width="720" height="1440" preserveAspectRatio="none" transform="translate(270.29 142.6) rotate(-0.0653) scale(0.5295 0.5307)" filter="url(#ptone)"/></g>
+</g>
+<ellipse cx="695.27" cy="785.6" rx="50.7" ry="46" fill="var(--teal)" clip-path="url(#crescent)"/>
+<ellipse cx="695.27" cy="780.1" rx="50.15" ry="44.5" fill="#111212"/>
+<rect x="645.12" y="700" width="100.3" height="80.1" fill="#111212"/>
+<line x1="695.2" y1="699.6" x2="695.2" y2="760" stroke="#386d6f" stroke-width="1.7"/>
+<path d="M695.2 756.8L701.5 763.4L695.2 770L688.9 763.4Z" fill="#2c5f61"/>
+<path id="discArc" d="M651.27 766.8A44 44 0 0 0 739.27 766.8" fill="none"/>
+<text class="disc" fill="#e6e7e7" stroke="#e6e7e7" stroke-width="0.25" font-size="14.6" letter-spacing="2.0"><textPath href="#discArc" startOffset="50%" text-anchor="middle">discover</textPath></text>
+<path d="M987.1 704.4A118.3 118.3 0 0 0 1105.4 586.1L1106.4 586.1A118.3 118.3 0 0 0 1224.7 704.4Z" fill="#fcba3d" filter="url(#yshadow)"/>
+</svg></div>
+<div id="coll" class="el big coll" data-ax="c" data-ay="m" data-sx="1.0" aria-hidden="true">Collection</div>
+<div id="new" class="el big new" data-ax="c" data-ay="m" data-sx="0.996" aria-hidden="true">New</div>
+<a id="logo" class="el logo" data-ax="c" data-ay="t" href="#" aria-label="Home"><img src="assets/images/image-01.png" alt="" width="70" height="54"></a>
+<nav aria-label="Primary"><a class="el nav ico-link d-only" data-ax="l" data-ay="t" style="left:118px;top:62px" href="#" aria-label="Search"><svg class="ico" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.45" stroke-linecap="round">
+<circle cx="11.6" cy="10.6" r="5.6"/><path d="M15.6 14.7L19.4 18.4"/></g></svg></a>
+<a class="el nav d-only" data-ax="l" data-ay="t" data-k="nl0" style="left:171.9px;top:69.1px" href="#">Home</a>
+<a class="el nav d-only" data-ax="l" data-ay="t" data-k="nl1" style="left:239.9px;top:69.1px" href="#">Products</a>
+<a class="el nav d-only" data-ax="l" data-ay="t" data-k="nl2" style="left:326.6px;top:69.1px" href="#">Shop</a>
+<a class="el nav d-only" data-ax="l" data-ay="t" data-k="nl3" style="left:387.9px;top:69.1px" href="#">Blog</a>
+<a class="el nav d-only" data-ax="l" data-ay="t" data-k="nl4" style="left:444.9px;top:69.1px" href="#">Pages</a>
+<a class="el nav d-only" data-ax="r" data-ay="t" data-k="nr0" style="left:909.4px;top:69.4px;letter-spacing:-0.2px" href="#">Contact Us</a>
+<a class="el nav d-only" data-ax="r" data-ay="t" data-k="nr1" style="left:1007.7px;top:69.4px" href="#">About Us</a>
+<a class="el nav d-only" data-ax="r" data-ay="t" data-k="nr2" style="left:1117.7px;top:69.4px" href="#">Account</a>
+<a class="el nav d-only" data-ax="r" data-ay="t" data-k="nr3" style="left:1224.6px;top:69.4px" href="#">Shoping</a>
+<span class="el nav ico-link d-only" data-ax="r" data-ay="t" style="left:1090.4px;top:63px" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.45" stroke-linecap="round">
+<circle cx="12" cy="8.7" r="2.75"/><path d="M5.6 19.4C7 13.0 17 13.0 18.4 19.4"/></g></svg></span>
+<span id="bag" class="el nav ico-link" data-ax="r" data-ay="t" style="left:1196px;top:63.6px" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.45" stroke-linejoin="round" stroke-linecap="round">
+<path d="M5.5 10.4H18.5V18.2A1.4 1.4 0 0 1 17.1 19.6H6.9A1.4 1.4 0 0 1 5.5 18.2Z"/><path d="M8.9 12.6V8.7A3.1 3.1 0 0 1 15.1 8.7V12.6"/></g></svg></span>
+<button id="burger" class="el nav ico-link m-only" data-ax="l" data-ay="t" style="left:0;top:0" aria-label="Open menu" aria-expanded="false"><svg class="ico" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><g stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 7.5H20M4 12H20M4 16.5H14"/></g></svg></button>
+</nav>
+<p id="tag" class="el tag" data-ax="l" data-ay="b">We Are With You To Have The Latest And Most Beautiful Clothing Style</p>
+<div id="see" class="el see" data-ax="r" data-ay="b" style="left:981px;top:968px">
+  <span class="av" style="left:151.5px;top:0px;width:57px;height:57px;z-index:3"><img src="assets/images/image-05.webp" alt="" style="left:3.99px;top:-0.58px;width:57.12px;height:57.12px"></span><span class="av" style="left:190px;top:0px;width:57px;height:57px;z-index:2"><img src="assets/images/image-06.webp" alt="" style="left:-28.4px;top:-23.4px;width:98.4px;height:98.4px"></span><span class="av" style="left:228px;top:0px;width:57px;height:57px;z-index:1"><img src="assets/images/image-07.webp" alt="" style="left:2.73px;top:-1.74px;width:57.12px;height:57.12px"></span>
+  <a class="pill" href="#" style="width:172px;height:57px">
+    <img src="assets/images/image-08.webp" alt="" style="left:44.1px;top:-17.1px;width:129.1px;height:129.1px">
+    <span class="lbl" style="left:21.5px;top:22px">See All</span>
+    <svg class="arrow" viewBox="0 0 80 20" width="80" height="20" style="left:77px;top:18.5px" aria-hidden="true">
+      <path d="M4.2 10H66" stroke="#fff" stroke-width="2.1"/>
+      <path d="M70.8 3.8L76.6 10L70.8 16.2L65 10Z" fill="#fff" stroke="#fff" stroke-width="0.6" stroke-linejoin="round"/>
+    </svg>
+  </a>
+</div>
+</div></div>
+<div id="menu" aria-hidden="true">
+  <button class="close" aria-label="Close menu"><svg viewBox="0 0 24 24" width="28" height="28"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+  <a href="#">Home</a><a href="#">Products</a><a href="#">Shop</a><a href="#">Blog</a><a href="#">Pages</a><a href="#">Contact Us</a><a href="#">About Us</a><a href="#">Account</a><a href="#">Shoping</a>
+</div>
+<script>
+/* Responsive stage.
+ * The composition is authored at 1391 x 1131 design px. Every element keeps its
+ * authored position; the engine only translates/scales it.
+ *  - Landscape / desktop: one uniform scale fits the frame, then elements are
+ *    pinned to the edge they belong to (nav to the top corners, the hero to the
+ *    centre, the footer row to the bottom corners), so the texture and the
+ *    composition always reach every edge - no letterbox bars.
+ *  - Portrait / phone: the same elements are recomposed into a vertical stack
+ *    (headline, capsules, tagline, CTA) with the free height distributed.
+ */
+(function () {
+  var BW = 1391, BH = 1131;
+  var root = document.documentElement;
+  var vp = document.getElementById('vp');
+  var stage = document.getElementById('stage');
+  var sizer = document.getElementById('sizer');
+  var els = Array.prototype.slice.call(stage.querySelectorAll('.el'));
+  var $ = function (id) { return document.getElementById(id); };
+  var natural = new Map();
+
+  function nat(el) {             // authored box, unaffected by transforms
+    if (!natural.has(el)) natural.set(el, { x: el.offsetLeft, y: el.offsetTop });
+    return natural.get(el);
+  }
+  function put(el, X, Y, k, sx) {  // move element's authored box to (X,Y) and scale it by k
+    var n = nat(el); k = k || 1; sx = sx || parseFloat(el.dataset.sx || '1');
+    el.style.transform = 'translate(' + (X - n.x) + 'px,' + (Y - n.y) + 'px) scale(' + (k * sx) + ',' + k + ')';
+  }
+
+  function frame(s, W, H, left, scroll) {
+    stage.style.width = W + 'px';
+    stage.style.height = H + 'px';
+    stage.style.left = left + 'px';
+    stage.style.transform = 'scale(' + s + ')';
+    sizer.style.height = Math.ceil(H * s) + 'px';
+    vp.classList.toggle('scroll', !!scroll);
+  }
+
+  function desktop(vw, vh) {
+    root.classList.remove('m');
+    var fit = Math.min(vw / BW, vh / BH), s = fit;
+    // very short landscape screens (phones on their side): keep text legible and scroll instead
+    if (vh < 560 && vw / BW > fit * 1.2) s = Math.min(vw / BW, Math.max(fit, 0.56));
+    var Wv = vw / s, Hv = vh / s;
+    var W = Math.min(Wv, BW * 1.75);          // ultra-wide: stop spreading, centre the frame
+    var H = Math.max(Hv, BH);
+    var dx = { l: 0, c: (W - BW) / 2, r: W - BW };
+    var dy = { t: 0, m: (H - BH) / 2, b: H - BH };
+    els.forEach(function (el) {
+      var n = nat(el);
+      put(el, n.x + dx[el.dataset.ax || 'l'], n.y + dy[el.dataset.ay || 't'], 1);
+    });
+    frame(s, W, H, (Wv - W) / 2 * s, H > Hv + 0.5);
+  }
+
+  function mobile(vw, vh) {
+    root.classList.add('m');
+    var tag = $('tag'), see = $('see');
+    var pad = 22;
+    // ink offsets inside the authored text boxes (design px)
+    var collInkTop = 11.9, collInkBot = 71.9, collInkR = 338.8;
+    var newInkTop = 34.5, newInkBot = 158.5, newInkL = 6.6;
+
+    function plan(s) {
+      var W = vw / s, Hv = vh / s;
+      var g = Math.min(0.56, (W - 2 * pad + 10) / 772);       // capsules fill the width
+      var kc = 1.42 * g, kn = 1.48 * g;                        // headline follows the capsules
+      kc = Math.min(kc, (W - 2 * pad) / collInkR);
+      root.style.setProperty('--tagw', Math.min(W - 2 * pad - 10, 380) + 'px');
+      var tagH = tag.offsetHeight;
+      var tN = collInkBot * kc + 18 * g - newInkTop * kn;      // New sits under Collection
+      var hy = tN + newInkBot * kn - 72 * g;                   // and overlaps the capsule tops
+      var heroH = hy + (836 - 199) * g;
+      var header = 78, bottomH = tagH + 30 + 57;
+      var fixed = header + heroH + bottomH + 26;
+      return { s: s, W: W, Hv: Hv, g: g, kc: kc, kn: kn, tagH: tagH, tN: tN, hy: hy, heroH: heroH,
+               header: header, bottomH: bottomH, fixed: fixed };
+    }
+    // largest scale (<= 1 design px per 430th of the width) whose stack still fits the screen
+    var s = Math.min(vw / 430, 1.85), P = plan(s), sMin = vw / 640;
+    while (P.fixed + 40 > P.Hv && s > sMin) { s = Math.max(sMin, s * 0.97); P = plan(s); }
+    var W = P.W, Hv = P.Hv, cx = W / 2, g = P.g;
+    var free = Math.max(0, Hv - P.fixed - 40);
+    var H = Math.max(Hv, P.fixed + 40);
+    var top = P.header + 10 + free * 0.30;
+    var bTop = top + P.heroH + 30 + free * 0.36;
+
+    // header: menu, logo riding on the black bar, bag
+    var kl = Math.min(0.66, (105.7 * g - 6) / 69.8);
+    put($('logo'), cx - 72 * kl / 2, 20, kl);
+    put($('burger'), pad - 2, 30, 1.15);
+    put($('bag'), W - pad - 24 * 1.15 + 2, 30, 1.15);
+
+    // headline + capsules
+    put($('coll'), W - pad - collInkR * P.kc, top - collInkTop * P.kc, P.kc);
+    put($('new'), pad - newInkL * P.kn, top + P.tN, P.kn);
+    put($('hero'), cx - 695.27 * g, top + P.hy - 199 * g, g);
+
+    // footer: tagline, CTA, edge stars framing the CTA
+    var tagW = tag.offsetWidth;
+    put(tag, cx - tagW / 2, bTop, 1);
+    var rowY = bTop + P.tagH + 30;
+    put(see, cx - see.offsetWidth / 2, rowY, 1);
+    var kd = 0.62, rowCY = rowY + 28.5;
+    put($('decoL'), -2, rowCY - 116 * kd, kd);
+    put($('decoR'), W - 611 * kd + 2, rowCY - 116 * kd, kd);
+
+    frame(P.s, W, H, 0, H > Hv + 0.5);
+  }
+
+  function layout() {
+    var vw = vp.clientWidth || window.innerWidth, vh = vp.clientHeight || window.innerHeight;
+    if (vw / vh < 0.8 || vw < 700) mobile(vw, vh); else desktop(vw, vh);
+    stage.classList.add('ready');
+  }
+
+  // menu (portrait)
+  var menu = $('menu'), burger = $('burger');
+  function setMenu(open) {
+    menu.classList.toggle('open', open);
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  burger.addEventListener('click', function () { setMenu(true); });
+  menu.addEventListener('click', function (e) { if (e.target === menu || e.target.closest('.close') || e.target.tagName === 'A') setMenu(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+
+  var raf = 0;
+  function schedule() { cancelAnimationFrame(raf); raf = requestAnimationFrame(layout); }
+  window.addEventListener('resize', schedule);
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', schedule);
+  layout();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+
+  // One opening composition. Animate only paint properties so the responsive
+  // stage transforms remain authoritative; cancel every effect at the end.
+  if (Element.prototype.animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var entrance = [];
+    var ease = 'cubic-bezier(0.22, 1, 0.36, 1)';
+    function reveal(element, frames, delay, duration, easing) {
+      entrance.push(element.animate(frames, {
+        delay: delay, duration: duration, easing: easing || ease, fill: 'both'
+      }));
+    }
+
+    // The fixed texture stays still. The foreground artwork opens down its
+    // central ribbon, followed by the two words and the supporting content.
+    reveal($('hero'), [
+      { clipPath: 'inset(0 0 100% 0)' },
+      { clipPath: 'inset(0 0 0% 0)' }
+    ], 0, 1260);
+    reveal($('logo'), [{ opacity: 0 }, { opacity: 1 }], 180, 520);
+    reveal(stage.querySelector('nav'), [{ opacity: 0 }, { opacity: 1 }], 220, 480);
+    reveal($('new'), [
+      { clipPath: 'inset(100% 0 0 0)', opacity: 0.65 },
+      { clipPath: 'inset(0% 0 0 0)', opacity: 1 }
+    ], 390, 830);
+    reveal($('coll'), [
+      { clipPath: 'inset(100% 0 0 0)', opacity: 0.65 },
+      { clipPath: 'inset(0% 0 0 0)', opacity: 1 }
+    ], 560, 790);
+    reveal($('tag'), [{ opacity: 0 }, { opacity: 1 }], 1030, 520);
+    reveal($('see'), [
+      { clipPath: 'inset(0 100% 0 0)', opacity: 0.7 },
+      { clipPath: 'inset(0 0% 0 0)', opacity: 1 }
+    ], 1160, 670);
+    reveal($('decoL'), [{ opacity: 0 }, { opacity: 1 }], 1270, 520);
+    reveal($('decoR'), [{ opacity: 0 }, { opacity: 1 }], 1270, 520);
+
+    Promise.allSettled(entrance.map(function (animation) { return animation.finished; }))
+      .then(function () { entrance.forEach(function (animation) { animation.cancel(); }); });
+  }
+})();
+
+</script>
+</body></html>

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-110/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#D7E99C">
+<title>Lumo — Banking for freelance life</title>
+<script>
+  if (Element.prototype.animate && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('entry-pending');
+    window.lumoEntryAnimations = [];
+    window.finishLumoEntry = function () {
+      if (!document.documentElement.classList.contains('entry-pending')) return;
+      document.documentElement.classList.remove('entry-pending');
+      window.lumoEntryAnimations.forEach(animation => animation.cancel());
+      window.lumoEntryMedia?.removeEventListener('change', window.lumoEntryMotionHandler);
+      clearTimeout(window.lumoEntryFallback);
+    };
+    window.lumoEntryFallback = setTimeout(window.finishLumoEntry, 3500);
+  }
+</script>
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/entry.css">
+<script src="assets/entry.js" defer></script>
+</head>
+<body>
+<div class="page">
+
+  <section class="visual" aria-label="Lumo app preview">
+    <div class="photo" role="img" aria-label="Sunlit hillside meadow with wildflowers and a stone cottage"></div>
+    <svg class="dust" viewBox="0 0 100 26" preserveAspectRatio="xMidYMin meet" aria-hidden="true"><circle cx="9.51" cy="1.46" r="0.114" fill="#ffffff" fill-opacity="0.46"/><circle cx="28.27" cy="2.56" r="0.185" fill="#ffffff" fill-opacity="0.49"/><circle cx="37.02" cy="3.1" r="0.151" fill="#ffffff" fill-opacity="0.28"/><circle cx="41.44" cy="2.98" r="0.151" fill="#ffffff" fill-opacity="0.28"/><circle cx="94.69" cy="3.74" r="0.151" fill="#ffffff" fill-opacity="0.23"/><circle cx="36.14" cy="3.99" r="0.151" fill="#ffffff" fill-opacity="0.41"/><circle cx="55.78" cy="4.66" r="0.185" fill="#ffffff" fill-opacity="0.29"/><circle cx="48.0" cy="5.0" r="0.151" fill="#ffffff" fill-opacity="0.33"/><circle cx="43.24" cy="5.42" r="0.185" fill="#ffffff" fill-opacity="0.55"/><circle cx="34.33" cy="5.84" r="0.185" fill="#ffffff" fill-opacity="0.42"/><circle cx="42.45" cy="6.64" r="0.214" fill="#ffffff" fill-opacity="0.37"/><circle cx="25.03" cy="6.89" r="0.214" fill="#ffffff" fill-opacity="0.52"/><circle cx="36.64" cy="7.52" r="0.427" fill="#f3dcc4" fill-opacity="0.93"/><circle cx="19.6" cy="8.03" r="0.114" fill="#ffffff" fill-opacity="0.22"/><circle cx="31.21" cy="8.66" r="0.151" fill="#ffffff" fill-opacity="0.38"/><circle cx="99.11" cy="8.66" r="0.151" fill="#ffffff" fill-opacity="0.29"/><circle cx="89.64" cy="10.42" r="0.214" fill="#ffffff" fill-opacity="0.4"/><circle cx="40.68" cy="11.06" r="0.151" fill="#ffffff" fill-opacity="0.5"/><circle cx="88.51" cy="11.43" r="0.151" fill="#ffffff" fill-opacity="0.28"/><circle cx="97.47" cy="13.33" r="0.151" fill="#ffffff" fill-opacity="0.25"/><circle cx="82.32" cy="15.35" r="0.151" fill="#ffffff" fill-opacity="0.67"/><circle cx="86.49" cy="18.25" r="0.151" fill="#ffffff" fill-opacity="0.21"/><circle cx="93.47" cy="20.73" r="0.185" fill="#ffffff" fill-opacity="0.28"/></svg>
+    <div class="cluster">
+      <article class="card balance" aria-label="Total balance">
+        <span class="dot" aria-hidden="true"></span>
+        <p class="label">Total balance</p>
+        <p class="amount">$24,318.40</p>
+        <p class="delta">+$3,200 today</p>
+        <a class="more" href="#">View detail</a>
+      </article>
+
+      <article class="card glass" aria-label="Recent activity">
+        <div class="tx tx1">
+          <p class="name">Northwind Studio</p>
+          <p class="when">Project fee · Today</p>
+          <p class="amt">+$3,200</p>
+        </div>
+        <div class="rule r1"></div>
+        <div class="tx tx2">
+          <p class="name">Tax Vault</p>
+          <p class="when">Savings goal · Today</p>
+          <p class="amt neg">−$640</p>
+        </div>
+        <div class="rule r2"></div>
+        <div class="tx tx3">
+          <p class="name">Figma</p>
+          <p class="when">Workspace · Yesterday</p>
+          <p class="amt neg">−$15</p>
+        </div>
+        <div class="notice">
+          <p>Invoice #0413 is due tomorrow</p>
+          <a href="#">Send a reminder ↗</a>
+        </div>
+      </article>
+
+      <article class="card vcard" aria-label="Virtual debit card">
+        <div class="meta"><span>Virtual cart</span><span>Debit</span></div>
+        <div class="mark" aria-hidden="true">lumo</div>
+      </article>
+    </div>
+
+    <h2 class="hey">Hey,<em>it’s Lumo!</em></h2>
+  </section>
+
+  <main class="side">
+    <header class="topbar">
+      <button class="icon-btn menu" aria-label="Open menu">
+        <svg viewBox="0 0 11 10" fill="none" stroke="#333331" stroke-width="1.35" stroke-linecap="butt"><path d="M.5 1.7h10M.5 5.4h10M.5 9.1h10"/></svg>
+      </button>
+      <a class="logo" href="#" aria-label="Lumo home">lumo</a>
+      <button class="icon-btn account" aria-label="Account">
+        <svg viewBox="0 0 10 12" fill="none" stroke="#A5A5A5" stroke-width="1.1"><circle cx="5" cy="3.4" r="2.4"/><path d="M1.2 11.2c0-2.3 1.7-3.4 3.8-3.4s3.8 1.1 3.8 3.4z"/></svg>
+      </button>
+    </header>
+
+    <section class="hero">
+      <h1><span class="l1">Banking that</span> <span class="l2">keeps up with</span> <em>freelance life</em></h1>
+      <p>One account for invoices, taxes and getting paid from anywhere. No monthly fees, no waiting for Monday.</p>
+      <a class="cta" href="#">Open an account<span class="arrow" aria-hidden="true"><svg viewBox="0 0 9 8" fill="none" stroke="#D0D0D0" stroke-width="1.1"><path d="M0 4h8M4.8 .8 8 4 4.8 7.2"/></svg></span></a>
+    </section>
+
+    <footer class="perks"><span>No monthly fees</span><i aria-hidden="true">·</i><span>30+ currencies</span></footer>
+  </main>
+</div>
+</body>
+</html>

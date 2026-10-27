@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-152/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06152a">
+<title>VidPro · Log in</title>
+<style>
+@font-face{font-family:"VP Sans";font-weight:300 900;font-style:normal;font-display:swap;src:url(assets/vp-sans.woff2) format("woff2-variations"),url(assets/vp-sans.woff2) format("woff2")}
+
+/* ------------------------------------------------------------------
+   Design tokens.  Every desktop measurement is expressed in --u, one
+   pixel of the 1672×941 reference.  --u is the largest scale at which
+   the reference composition fits the viewport, so at the reference
+   aspect ratio the layout is an exact scaled copy; at any other ratio
+   the background, card and panels stretch to the edges (no letterbox
+   bands) while type and spacing stay in proportion.
+------------------------------------------------------------------- */
+:root{
+  --u: max(.62px, min(calc(100vw / 1672), calc(100dvh / 941)));
+  --ink:#000;
+  --ink-2:#5f636b;
+  --muted:#898d94;
+  --placeholder:#95999f;
+  --line:#e2e4e7;
+  --line-soft:#e9eaec;
+  --card:#fefefe;
+  --brand:#0b3ef0;
+  --btn:#161515;
+  --font:"VP Sans","General Sans","Red Hat Display",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@supports not (height:100dvh){:root{--u:max(.62px,min(calc(100vw / 1672),calc(100vh / 941)))}}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  min-height:100vh;min-height:100dvh;
+  font-family:var(--font);color:var(--ink);background:#020a16;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid #3b6cff;outline-offset:3px}
+
+/* ---------------- background ---------------- */
+.bg{
+  position:fixed;z-index:0;pointer-events:none;
+  /* the photo box is 1687×1012u anchored at (-5u,-3u) – exactly as in the reference */
+  left:calc(-5 * var(--u));top:calc(-3 * var(--u));
+  right:calc(-10 * var(--u));bottom:calc(-68 * var(--u));
+  min-height:calc(100dvh + 71 * var(--u));
+  background:#06152a url(assets/hero.webp) 30% 40% / cover no-repeat;
+}
+.shade{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,0.14) 0, rgba(0,0,0,0) calc(150 * var(--u))),
+    linear-gradient(180deg, rgba(0,0,0,0.12) 0, rgba(0,0,0,0) calc(140 * var(--u))),
+    linear-gradient(0deg, rgba(0,0,0,0.03) 0, rgba(0,0,0,0) calc(160 * var(--u)));
+}
+
+/* ---------------- page frame ---------------- */
+.page{position:relative;z-index:1;display:flex;min-height:100vh;min-height:100dvh}
+
+/* hero (left) */
+.hero{
+  flex:1 1 auto;min-width:0;display:flex;flex-direction:column;justify-content:space-between;
+  padding:calc(57 * var(--u)) calc(84.4 * var(--u)) calc(57.5 * var(--u)) calc(92.5 * var(--u));
+  color:#fff;
+}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:calc(24 * var(--u))}
+.brand{display:inline-flex;align-items:center;gap:calc(11 * var(--u))}
+.brand-mark{width:calc(37.5 * var(--u));height:calc(37.5 * var(--u));display:block;flex:none;
+  border-radius:calc(9.5 * var(--u));
+  box-shadow:0 calc(1 * var(--u)) calc(3 * var(--u)) rgba(0,0,0,.25)}
+.brand-name{font-weight:680;font-size:calc(30 * var(--u));letter-spacing:calc(-0.95 * var(--u));line-height:1;transform:translateY(calc(-0.5 * var(--u)))}
+.back{display:inline-flex;align-items:center;gap:calc(13 * var(--u));font-weight:520;
+  font-size:max(12.5px, calc(17.4 * var(--u)));letter-spacing:calc(-0.621 * var(--u));line-height:1;
+  transform:translateY(calc(0 * var(--u)));opacity:1;transition:opacity .2s}
+.back:hover{opacity:.8}
+.back svg{width:calc(14.5 * var(--u));height:calc(14.5 * var(--u));flex:none}
+
+.headline{margin:0;font-weight:600;font-size:calc(59.2 * var(--u));line-height:calc(67 * var(--u));letter-spacing:calc(-2.604 * var(--u))}
+.headline .l{display:block;white-space:nowrap}
+.headline .l2{letter-spacing:calc(-2.4 * var(--u))}
+.pitch-copy{margin:calc(19 * var(--u)) 0 0;max-width:calc(640 * var(--u));font-weight:460;
+  font-size:max(13.5px, calc(20 * var(--u)));line-height:calc(27.5 * var(--u));letter-spacing:calc(-0.8 * var(--u))}
+.pitch-copy .l{display:block;white-space:nowrap}
+.pitch-copy .l2{letter-spacing:calc(-0.805 * var(--u))}
+.dots{display:flex;align-items:center;margin-top:calc(35.5 * var(--u));height:calc(9 * var(--u))}
+.dots i{display:block;flex:none;width:calc(6 * var(--u));height:calc(6 * var(--u));border-radius:50%;background:rgba(255,255,255,0.35);margin-left:calc(5.5 * var(--u))}
+.dots i.on{width:calc(34.5 * var(--u));height:calc(9 * var(--u));border-radius:calc(4.5 * var(--u));background:#fff;margin-left:0;
+  box-shadow:0 0 calc(6 * var(--u)) rgba(255,255,255,.25)}
+.dots i.on + i{margin-left:0}
+
+/* card (right) */
+.panel{flex:none;display:flex;width:calc(742.4 * var(--u));
+  padding:calc(18 * var(--u)) calc(18.2 * var(--u)) calc(22.5 * var(--u)) 0;
+  box-sizing:content-box}
+.card{flex:1;display:flex;flex-direction:column;justify-content:center;
+  background:var(--card);border-radius:calc(20 * var(--u));
+  padding:calc(40 * var(--u)) 0 calc(40 * var(--u)) calc(96.2 * var(--u))}
+.form{width:calc(559 * var(--u));transform:translateY(calc(3 * var(--u)))}
+
+.title{margin:0;font-weight:660;font-size:calc(50.6 * var(--u));line-height:calc(60 * var(--u));letter-spacing:calc(-1.884 * var(--u))}
+.lede{margin:calc(11 * var(--u)) 0 0;color:var(--ink-2);font-size:max(13px, calc(19 * var(--u)));line-height:calc(24 * var(--u));letter-spacing:calc(-0.2 * var(--u))}
+.label{display:block;margin-top:calc(41 * var(--u));font-weight:560;font-size:max(12.5px, calc(17.4 * var(--u)));line-height:calc(20 * var(--u));letter-spacing:calc(-0.7 * var(--u))}
+.label.pw{margin-top:calc(22 * var(--u));letter-spacing:calc(-0.729 * var(--u))}
+.field{position:relative;margin-top:calc(10 * var(--u))}
+.field.pw{margin-top:calc(10 * var(--u))}
+.input{display:block;width:100%;height:calc(66 * var(--u));margin:0;
+  padding:0 calc(20 * var(--u)) 0 calc(18.5 * var(--u));
+  background:#fff;border:calc(1 * var(--u)) solid var(--line);border-radius:calc(10 * var(--u));
+  font-size:max(13px, calc(19 * var(--u)));letter-spacing:calc(-0.3 * var(--u));color:var(--ink);
+  outline:none;transition:border-color .2s, box-shadow .2s;-webkit-appearance:none;appearance:none}
+.field.pw .input{padding-right:calc(64 * var(--u));letter-spacing:calc(-0.291 * var(--u))}
+.input::placeholder{color:var(--placeholder);opacity:1}
+.input:focus{border-color:#9aa3b2;box-shadow:0 0 0 calc(3 * var(--u)) rgba(23,23,23,.06)}
+.eye{position:absolute;top:50%;right:calc(21 * var(--u));transform:translateY(calc(-50% + 0 * var(--u)));
+  display:grid;place-items:center;width:calc(26 * var(--u));height:calc(26 * var(--u));padding:0;border:0;background:none;color:#868991;cursor:pointer}
+.eye svg{width:calc(26 * var(--u));height:calc(22 * var(--u));display:block}
+.eye .slash{opacity:0;transition:opacity .15s}
+.eye[aria-pressed="true"] .slash{opacity:1}
+
+.row{display:flex;align-items:center;justify-content:space-between;margin-top:calc(20 * var(--u))}
+.check{display:inline-flex;align-items:center;gap:calc(12 * var(--u));cursor:pointer;color:var(--muted);
+  font-size:max(13px, calc(19.8 * var(--u)));letter-spacing:calc(-1.0 * var(--u));line-height:1}
+.check input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.box{width:calc(26 * var(--u));height:calc(26 * var(--u));flex:none;border:calc(1.5 * var(--u)) solid #7b8088;border-radius:calc(6 * var(--u));
+  display:grid;place-items:center;transition:background .15s,border-color .15s}
+.box svg{width:calc(14 * var(--u));height:calc(14 * var(--u));opacity:0}
+.check input:checked + .box{background:var(--btn);border-color:var(--btn)}
+.check input:checked + .box svg{opacity:1}
+.check input:focus-visible + .box{outline:2px solid #3b6cff;outline-offset:2px}
+.check .txt{transform:translateY(calc(2 * var(--u)))}
+.forgot{color:#7a7f87;font-size:max(13px, calc(19.8 * var(--u)));letter-spacing:calc(-0.416 * var(--u));line-height:1;
+  transform:translate(calc(-1 * var(--u)), calc(2 * var(--u)))}
+.forgot:hover,.signup a:hover{text-decoration:underline;text-underline-offset:3px}
+
+.btn{display:flex;align-items:center;justify-content:center;width:100%;margin:0;cursor:pointer;
+  border-radius:calc(40 * var(--u));transition:transform .15s, box-shadow .2s, background .2s}
+.btn:active{transform:translateY(1px)}
+.btn-primary{margin-top:calc(38 * var(--u));height:calc(66 * var(--u));border:0;background:var(--btn);color:#fff;
+  font-weight:560;font-size:max(14px, calc(20.5 * var(--u)));letter-spacing:calc(-0.95 * var(--u))}
+.btn-primary span{transform:translate(calc(0 * var(--u)),calc(0 * var(--u)))}
+.btn-primary:hover{background:#000;box-shadow:0 calc(8 * var(--u)) calc(24 * var(--u)) rgba(0,0,0,.18)}
+.divider{display:flex;align-items:center;gap:calc(18 * var(--u));margin-top:calc(42 * var(--u));
+  color:var(--placeholder);font-size:max(12px, calc(16.8 * var(--u)));letter-spacing:calc(-0.138 * var(--u));line-height:calc(14 * var(--u))}
+.divider::before,.divider::after{content:"";flex:1;height:calc(1 * var(--u));background:var(--line-soft);transform:translateY(calc(0 * var(--u)))}
+.btn-google{margin-top:calc(42 * var(--u));height:calc(66 * var(--u));background:#fff;border:calc(1 * var(--u)) solid var(--line-soft);
+  gap:calc(14 * var(--u));font-weight:600;font-size:max(14px, calc(20 * var(--u)));letter-spacing:calc(-0.458 * var(--u));color:var(--ink)}
+.btn-google:hover{background:#fafafa}
+.btn-google svg{width:calc(28.5 * var(--u));height:calc(28.5 * var(--u));flex:none;transform:translate(calc(-3 * var(--u)),calc(0 * var(--u)))}
+.btn-google span{transform:translate(calc(-3 * var(--u)),calc(0 * var(--u)))}
+.signup{margin:calc(38 * var(--u)) 0 0;text-align:center;color:#64686f;font-size:max(13px, calc(18.9 * var(--u)));letter-spacing:calc(-0.141 * var(--u));line-height:calc(24 * var(--u));
+  transform:translateX(calc(-0.5 * var(--u)))}
+.signup a{color:var(--ink);font-weight:680;letter-spacing:calc(-0.191 * var(--u))}
+
+/* ------------------------------------------------------------------
+   Compact layouts (tablet / phone).  Both are "fit-to-screen":
+   the page is exactly one viewport tall, never scrolls, and every
+   size is expressed in --c, a unit derived from the viewport so the
+   whole composition always fits inside it.
+     • Stack  – any portrait screen: pitch on the photo, card below.
+     • Split  – landscape phones / small landscape windows: a compact
+                version of the desktop side-by-side layout.
+------------------------------------------------------------------- */
+@media (orientation:portrait), (orientation:landscape) and (max-width:1199px), (orientation:landscape) and (max-height:599px){
+  html,body{height:100%;overflow:hidden;overscroll-behavior:none}
+  body{min-height:0}
+  .bg{left:0;top:0;right:0;bottom:0;min-height:0}
+  .page{height:100vh;height:100dvh;min-height:0;overflow:hidden}
+  .hero{min-height:0;overflow:hidden}
+  .brand{gap:calc(10 * var(--c))}
+  .brand-mark{width:var(--k-mark);height:var(--k-mark);border-radius:calc(var(--k-mark) * .253)}
+  .brand-name{font-size:var(--k-brand);letter-spacing:-.02em;transform:none}
+  .back{font-size:var(--k-back);letter-spacing:-.01em;gap:calc(9 * var(--c));transform:none}
+  .back svg{width:calc(var(--k-back) * .9);height:calc(var(--k-back) * .9)}
+  .headline{font-size:var(--k-h);line-height:1.12;letter-spacing:-.03em}
+  .headline .l,.pitch-copy .l{display:inline;white-space:normal}
+  .headline .l2,.pitch-copy .l2{letter-spacing:inherit}
+  .pitch-copy{margin-top:calc(10 * var(--c));max-width:none;font-size:var(--k-p);line-height:1.45;letter-spacing:-.01em}
+  .dots{margin-top:calc(14 * var(--c));height:calc(7 * var(--c))}
+  .dots i{width:calc(5 * var(--c));height:calc(5 * var(--c));margin-left:calc(5 * var(--c))}
+  .dots i.on{width:calc(26 * var(--c));height:calc(7 * var(--c));border-radius:calc(3.5 * var(--c))}
+  .dots i.on + i{margin-left:calc(5 * var(--c))}
+  .panel{box-sizing:border-box;min-height:0}
+  .card{border-radius:var(--k-radius);padding:var(--k-pad-y) var(--k-pad-x);align-items:center;justify-content:center;min-height:0}
+  .form{width:100%;max-width:var(--k-form);transform:none}
+  .title{font-size:var(--k-title);line-height:1.15;letter-spacing:-.03em}
+  .lede{margin-top:var(--k-gap-xs);font-size:var(--k-small);line-height:1.4;letter-spacing:-.005em}
+  .label,.label.pw{font-size:var(--k-label);line-height:1.3;letter-spacing:-.01em}
+  .label{margin-top:var(--k-gap-l)}
+  .label.pw{margin-top:var(--k-gap-m)}
+  .field,.field.pw{margin-top:var(--k-gap-xs)}
+  .input{height:var(--k-ctl);border-width:1px;border-radius:calc(var(--k-ctl) * .19);padding-left:calc(var(--k-ctl) * .3);font-size:var(--k-input);letter-spacing:-.01em}
+  .field.pw .input{padding-right:calc(var(--k-ctl) * 1.05);letter-spacing:-.01em}
+  .eye{right:calc(var(--k-ctl) * .3);transform:translateY(-50%);width:calc(var(--k-ctl) * .48);height:calc(var(--k-ctl) * .48)}
+  .eye svg{width:100%;height:auto}
+  .row{margin-top:var(--k-gap-m);gap:calc(8 * var(--c))}
+  .check{font-size:var(--k-small);letter-spacing:-.01em;gap:calc(8 * var(--c))}
+  .check .txt,.forgot,.btn-primary span,.btn-google svg,.btn-google span{transform:none}
+  .box{width:calc(var(--k-small) * 1.45);height:calc(var(--k-small) * 1.45);border-width:1.5px;border-radius:calc(var(--k-small) * .38)}
+  .box svg{width:60%;height:60%}
+  .forgot{font-size:var(--k-small);letter-spacing:-.01em;white-space:nowrap}
+  .btn-primary{margin-top:var(--k-gap-l);height:var(--k-ctl);font-size:var(--k-btn);letter-spacing:-.01em}
+  .divider{margin-top:var(--k-gap-m);gap:calc(12 * var(--c));font-size:var(--k-tiny);letter-spacing:0;line-height:1.2}
+  .divider::before,.divider::after{height:1px;transform:none}
+  .btn-google{margin-top:var(--k-gap-m);height:var(--k-ctl);font-size:var(--k-btn);letter-spacing:-.01em;gap:calc(9 * var(--c));border-width:1px}
+  .btn-google svg{width:calc(var(--k-ctl) * .43);height:calc(var(--k-ctl) * .43)}
+  .signup{margin-top:var(--k-gap-m);font-size:var(--k-small);letter-spacing:-.005em;line-height:1.3;transform:none}
+  .signup a{letter-spacing:inherit}
+}
+
+/* Stack — base artboard 390×844 */
+@media (orientation:portrait){
+  :root{
+    --c:min(calc(100vw / 390), calc(100dvh / 844));
+    --k-mark:calc(30 * var(--c)); --k-brand:calc(22 * var(--c)); --k-back:calc(13 * var(--c));
+    --k-h:calc(28 * var(--c)); --k-p:calc(13.5 * var(--c));
+    --k-radius:calc(22 * var(--c)); --k-pad-y:calc(24 * var(--c)); --k-pad-x:calc(22 * var(--c)); --k-form:calc(400 * var(--c));
+    --k-title:calc(28 * var(--c)); --k-label:calc(13 * var(--c)); --k-small:calc(13.5 * var(--c)); --k-tiny:calc(12 * var(--c));
+    --k-input:calc(14.5 * var(--c)); --k-btn:calc(15 * var(--c)); --k-ctl:calc(46 * var(--c));
+    --k-gap-xs:calc(6 * var(--c)); --k-gap-m:calc(14 * var(--c)); --k-gap-l:calc(18 * var(--c));
+  }
+  @supports not (height:100dvh){:root{--c:min(calc(100vw / 390), calc(100vh / 844))}}
+  .bg{background-position:42% 30%}
+  .shade{background:linear-gradient(180deg,rgba(0,0,0,.38) 0,rgba(0,0,0,.05) 35%,rgba(0,0,0,.3) 100%)}
+  .page{flex-direction:column}
+  .hero{flex:1 1 auto;justify-content:space-between;
+    padding:max(calc(18 * var(--c)), env(safe-area-inset-top)) calc(20 * var(--c)) calc(20 * var(--c))}
+  .panel{flex:0 0 auto;width:auto;padding:0 calc(10 * var(--c)) max(calc(10 * var(--c)), env(safe-area-inset-bottom))}
+}
+/* Shorter portrait screens (iPhone SE/8, most Androids, iPads):
+   drop the paragraph so the type can stay larger. */
+@media (orientation:portrait) and (min-aspect-ratio:10/19){
+  :root{--c:min(calc(100vw / 390), calc(100dvh / 720))}
+  @supports not (height:100dvh){:root{--c:min(calc(100vw / 390), calc(100vh / 720))}}
+  .pitch-copy{display:none}
+}
+
+/* Split — base artboard 700×390 */
+@media (orientation:landscape) and (max-width:1199px), (orientation:landscape) and (max-height:599px){
+  :root{
+    --c:min(calc(100vw / 700), calc(100dvh / 390));
+    --k-mark:calc(26 * var(--c)); --k-brand:calc(19 * var(--c)); --k-back:calc(12 * var(--c));
+    --k-h:calc(22 * var(--c)); --k-p:calc(11.5 * var(--c));
+    --k-radius:calc(18 * var(--c)); --k-pad-y:calc(14 * var(--c)); --k-pad-x:calc(28 * var(--c)); --k-form:none;
+    --k-title:calc(22 * var(--c)); --k-label:calc(11 * var(--c)); --k-small:calc(11.5 * var(--c)); --k-tiny:calc(10.5 * var(--c));
+    --k-input:calc(12.5 * var(--c)); --k-btn:calc(13 * var(--c)); --k-ctl:calc(34 * var(--c));
+    --k-gap-xs:calc(4 * var(--c)); --k-gap-m:calc(9 * var(--c)); --k-gap-l:calc(11 * var(--c));
+  }
+  @supports not (height:100dvh){:root{--c:min(calc(100vw / 700), calc(100vh / 390))}}
+  .bg{background-position:35% 40%}
+  .page{flex-direction:row}
+  .hero{flex:1 1 auto;padding:max(calc(18 * var(--c)), env(safe-area-inset-top)) calc(24 * var(--c)) calc(20 * var(--c)) max(calc(28 * var(--c)), env(safe-area-inset-left))}
+  .panel{flex:0 0 auto;width:calc(420 * var(--c));padding:calc(8 * var(--c)) max(calc(8 * var(--c)), env(safe-area-inset-right)) calc(8 * var(--c)) 0}
+  .card{justify-content:center}
+}
+
+/* Touch devices: 16px inputs stop iOS Safari zooming the page on focus */
+@media (pointer:coarse){
+  @media (orientation:portrait), (orientation:landscape) and (max-width:1199px), (orientation:landscape) and (max-height:599px){
+    .input{font-size:max(16px, var(--k-input))}
+  }
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* One entrance sequence. Backwards fill prevents a flash before each cue;
+   after each animation ends, the element returns to its authored styles. */
+@media (prefers-reduced-motion:no-preference){
+  @keyframes enter-card{
+    from{opacity:0;transform:translate3d(0,14px,0) scale(.99)}
+    to{opacity:1;transform:none}
+  }
+  @keyframes enter-type{
+    from{opacity:.65;clip-path:inset(0 0 100% 0);transform:translate3d(0,10px,0)}
+    to{opacity:1;clip-path:inset(0 0 0 0);transform:none}
+  }
+  @keyframes enter-soft{
+    from{opacity:0;transform:translate3d(0,8px,0)}
+    to{opacity:1;transform:none}
+  }
+  .brand{animation:enter-soft .48s cubic-bezier(.22,1,.36,1) .10s backwards}
+  .back{animation:enter-soft .45s cubic-bezier(.22,1,.36,1) .18s backwards}
+  .card{animation:enter-card .8s cubic-bezier(.16,1,.3,1) .14s backwards}
+  .headline .l{animation:enter-type .78s cubic-bezier(.16,1,.3,1) .33s backwards}
+  .headline .l2{animation-delay:.45s}
+  .title{animation:enter-type .72s cubic-bezier(.16,1,.3,1) .45s backwards}
+  .lede{animation:enter-soft .52s cubic-bezier(.22,1,.36,1) .72s backwards}
+  .pitch-copy{animation:enter-soft .55s cubic-bezier(.22,1,.36,1) .90s backwards}
+  .dots{animation:enter-soft .44s cubic-bezier(.22,1,.36,1) 1.10s backwards}
+  .label:not(.pw),.field:not(.pw){animation:enter-soft .55s cubic-bezier(.22,1,.36,1) .82s backwards}
+  .label.pw,.field.pw{animation:enter-soft .55s cubic-bezier(.22,1,.36,1) .98s backwards}
+  .row{animation:enter-soft .5s cubic-bezier(.22,1,.36,1) 1.13s backwards}
+  .btn-primary{animation:enter-soft .5s cubic-bezier(.22,1,.36,1) 1.24s backwards}
+  .divider{animation:enter-soft .43s cubic-bezier(.22,1,.36,1) 1.38s backwards}
+  .btn-google{animation:enter-soft .52s cubic-bezier(.22,1,.36,1) 1.47s backwards}
+  .signup{animation:enter-soft .48s cubic-bezier(.22,1,.36,1) 1.58s backwards}
+  @media (orientation:portrait), (orientation:landscape) and (max-width:1199px), (orientation:landscape) and (max-height:599px){
+    .headline .l{animation:none}
+    .headline{animation:enter-type .78s cubic-bezier(.16,1,.3,1) .33s backwards}
+  }
+}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+<div class="shade" aria-hidden="true"></div>
+
+<div class="page">
+  <section class="hero" aria-label="VidPro">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="VidPro home">
+        <svg class="brand-mark" viewBox="0 0 37.5 37.5" aria-hidden="true">
+          <defs><linearGradient id="tile" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fefefe"/><stop offset="1" stop-color="#f3f4f6"/></linearGradient></defs>
+          <rect width="37.5" height="37.5" rx="9.5" fill="url(#tile)"/>
+          <g fill="none" stroke="var(--brand)" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 10.9v6.6M6.7 14.2h6.6"/>
+            <path d="M7.6 28.2c.2-3.6 3-6.3 6.3-6.3 3.4 0 4.6 2.2 6.3 3.9 1.3 1.3 2.6 2 4 2 3.9 0 6.9-3.1 6.9-6.9s-3.1-6.9-6.9-6.9c-3.1 0-5.6 2-6.5 4.7"/>
+          </g>
+          <circle cx="23.8" cy="20.1" r="2.5" fill="var(--brand)"/>
+          <circle cx="13.6" cy="28.3" r="2.05" fill="var(--brand)"/>
+        </svg>
+        <span class="brand-name">VidPro</span>
+      </a>
+      <a class="back" href="#" aria-label="Back to Website">
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 7H1.2M7 1.2 1.2 7 7 12.8"/></svg>
+        <span>Back to Website</span>
+      </a>
+    </header>
+
+    <div class="pitch">
+      <h2 class="headline"><span class="l">Edit Smarter. Export Faster.</span> <span class="l l2">Create Anywhere.</span></h2>
+      <p class="pitch-copy"><span class="l">From quick social media clips to full-length videos, our powerful editor</span> <span class="l l2">lets you work saamlessly across devices.</span></p>
+      <div class="dots" role="tablist" aria-label="Highlights">
+        <i class="on" role="tab" aria-selected="true" aria-label="Slide 1"></i><i role="tab" aria-selected="false" aria-label="Slide 2"></i><i role="tab" aria-selected="false" aria-label="Slide 3"></i><i role="tab" aria-selected="false" aria-label="Slide 4"></i>
+      </div>
+    </div>
+  </section>
+
+  <main class="panel">
+    <div class="card">
+      <form class="form" action="#" method="post" novalidate>
+        <h1 class="title">Welcome Back!</h1>
+        <p class="lede">Log in to start creating stunning videos with ease.</p>
+
+        <label class="label" for="email">Email</label>
+        <div class="field"><input class="input" id="email" name="email" type="email" autocomplete="email" placeholder="Input your email"></div>
+
+        <label class="label pw" for="password">Password</label>
+        <div class="field pw">
+          <input class="input" id="password" name="password" type="password" autocomplete="current-password" placeholder="Input your company name">
+          <button class="eye" type="button" aria-label="Show password" aria-pressed="false">
+            <svg viewBox="0 0 26 22" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M1.6 15c2.9-4.5 6.9-6.8 11.4-6.8s8.5 2.3 11.4 6.8c-2.9 4.5-6.9 6.7-11.4 6.7S4.5 19.5 1.6 15Z"/>
+              <circle cx="13" cy="15" r="3.5" stroke-width="2.6"/>
+              <path d="M13 1.9v3M3.6 4.6l1.7 2.6M22.4 4.6l-1.7 2.6"/>
+              <path class="slash" d="M3.5 20.5 22.5 3.5"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="row">
+          <label class="check"><input type="checkbox" name="remember"><span class="box"><svg viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m2.5 7.4 3 3 6-6.4"/></svg></span><span class="txt">Remember Me</span></label>
+          <a class="forgot" href="#">Forgot Password?</a>
+        </div>
+
+        <button class="btn btn-primary" type="submit"><span>Login</span></button>
+
+        <div class="divider"><span>Or continue with:</span></div>
+
+        <button class="btn btn-google" type="button">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+          <span>Continue with Google</span>
+        </button>
+
+        <p class="signup">Don’t have an account? <a href="#">Sign up here</a></p>
+      </form>
+    </div>
+  </main>
+</div>
+
+<script>
+  (function(){
+    var eye=document.querySelector('.eye'),pw=document.getElementById('password');
+    eye.addEventListener('click',function(){
+      var show=pw.type==='password';pw.type=show?'text':'password';
+      eye.setAttribute('aria-pressed',show);eye.setAttribute('aria-label',show?'Hide password':'Show password');
+    });
+    var dots=[].slice.call(document.querySelectorAll('.dots i'));
+    dots.forEach(function(d,i){d.addEventListener('click',function(){
+      dots.forEach(function(x){x.classList.remove('on');x.setAttribute('aria-selected','false')});
+      d.classList.add('on');d.setAttribute('aria-selected','true');
+    })});
+  })();
+</script>
+</body>
+</html>

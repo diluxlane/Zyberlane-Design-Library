@@ -1,0 +1,6 @@
+# Publish only the page and its assets.
+*
+!/.gitignore
+!/index.html
+!/assets/
+!/assets/**

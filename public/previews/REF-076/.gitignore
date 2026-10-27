@@ -1,0 +1,12 @@
+# Local development tools and credentials
+node_modules/
+.wrangler/
+.env
+.env.*
+.dev.vars
+.dev.vars.*
+*.log
+
+# Operating system files
+.DS_Store
+Thumbs.db

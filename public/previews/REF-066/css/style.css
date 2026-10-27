@@ -1,0 +1,2367 @@
+/* ==========================================================================
+   Atlas — Global HR Workspace landing page
+   Values below are taken verbatim from the Figma document (canvas.fig).
+
+   Coordinate system
+   -----------------
+   The design is authored on a 1685px-wide page. Every length is written as
+   `calc(<figma value> * var(--k))`, where --k is the ratio between the space
+   the page actually has and that 1685px canvas. At the design's own width --k
+   is 1 and the layout is the Figma frame to the pixel; at any other width the
+   whole design grows or shrinks with it rather than re-flowing into something
+   the file never specified.
+
+   Section one carries one extra rule: it is sized to a single screen. Its
+   photograph takes whatever height is left once the fixed parts are laid out,
+   so the hero can fill the width and the viewport height at the same time.
+   See the scale block in :root.
+
+   The features / showcase sections were authored on a 1186.5px-wide artboard,
+   so their values are the Figma numbers multiplied by 1685 / 1186.5 = 1.420143
+   in order to sit on the same 1685px page as the hero.
+   ========================================================================== */
+
+/* --------------------------------------------------------------- fonts -- */
+/* The design specifies TT Hoves (Regular / Medium), a commercial typeface
+   that cannot be redistributed here. Figtree is the closest metrically
+   matching web font (avg. 2.2% advance-width delta over 33 strings measured
+   against the widths recorded in the Figma file). */
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/figtree-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../assets/fonts/figtree-500.woff2') format('woff2');
+}
+
+/* --------------------------------------------------------------- tokens -- */
+:root {
+  /* ---- Figma canvas constants -------------------------------------------
+     Every length in this file is a value from the design multiplied by a
+     scale, so these are the only raw numbers that carry meaning. */
+  --gutter: 20px;           /* breathing space either side of the page      */
+  --design-w: 1685;         /* page width of the Figma frame                */
+  --section-inset: 10;      /* shared inset for full-width page sections   */
+  --section-gap: 150;       /* shared vertical rhythm between sections     */
+  --media-h: 737;           /* media height at design scale                 */
+  --hero-chrome: 336;       /* the hero minus the media: 11 above the media,
+                               71 below it, a 180 tall text block and 74 of
+                               closing space                                */
+  --media-min: 675;         /* shortest media that still clears the nav, the
+                               search panel at full size and the CTA        */
+
+  /* ---- palette ---- */
+  --white: #ffffff;
+  --black: #000000;
+  --ink: #020202;                        /* hero media backdrop */
+  --placeholder: #d9d9d9;                /* avatar fallback fill */
+  --glass: rgba(0, 0, 0, 0.1);           /* 10% black surface  */
+  --glass-soft: rgba(0, 0, 0, 0.08);     /* 8% black surface   */
+
+  /* ---- radii, in design units — multiplied by a scale at each use ---- */
+  --radius-media: 30;
+  --radius-panel: 18;
+  --radius-button: 14;
+  --radius-pill: 12;
+  --radius-card: 38.34;
+
+  /* ---- type ---- */
+  --font: 'Figtree', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --track-tight: -0.02em;
+  --track-display: -0.05em;
+
+  /* ---- motion — fast arrival and long, controlled deceleration ---- */
+  --ease-panel: cubic-bezier(0.42, 0.02, 0.05, 0.97);
+
+  /* ---- scale ------------------------------------------------------------
+     Two scales, because the hero and the sections below it are constrained
+     by different things.
+
+     --page-scale  drives everything that only has to fit the viewport
+                   WIDTH. The page always spans the viewport, so the design
+                   never leaves bars of empty space down either side.
+
+     --hero-scale  additionally respects the viewport HEIGHT, so section one
+                   always fits on one screen. It is the page scale until the
+                   viewport gets too short to hold the hero at that size, at
+                   which point the height takes over.
+
+     The hero's photograph absorbs whatever height is left after the fixed
+     parts, so the two constraints never fight: the page fills the width and
+     the hero fills the height. */
+  --viewport-h: 100vh;
+  --page-scale: calc((100vw - 2 * var(--gutter)) / var(--design-w));
+  --hero-scale: min(
+    var(--page-scale),
+    calc(var(--viewport-h) / (var(--media-min) + var(--hero-chrome)))
+  );
+  --k: var(--page-scale);
+}
+
+/* Small-viewport height ignores retractable browser chrome. */
+@supports (height: 1svh) {
+  :root { --viewport-h: 100svh; }
+}
+
+/* Container units exclude the scrollbar, so the page measures the space it
+   actually has rather than the space the viewport claims. */
+@supports (width: 1cqw) {
+  body { container-type: inline-size; }
+
+  .page {
+    --page-scale: calc((100cqw - 2 * var(--gutter)) / var(--design-w));
+    --hero-scale: min(
+      var(--page-scale),
+      calc(var(--viewport-h) / (var(--media-min) + var(--hero-chrome)))
+    );
+    --k: var(--page-scale);
+  }
+}
+
+/* ---------------------------------------------------------------- reset -- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--font);
+  font-weight: 400;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img { display: block; max-width: 100%; }
+
+[hidden] { display: none !important; }
+
+a { color: inherit; text-decoration: none; }
+
+button,
+input { font: inherit; color: inherit; }
+
+:focus-visible {
+  outline: calc(2 * var(--k)) solid currentColor;
+  outline-offset: calc(2 * var(--k));
+}
+
+/* ----------------------------------------------------------------- page -- */
+.page {
+  position: relative;
+  margin-inline: var(--gutter);
+}
+
+/* Shared: circular portrait */
+.avatar {
+  width: calc(56 * var(--k));
+  height: calc(56 * var(--k));
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--placeholder);
+  flex: none;
+}
+
+.avatar--ring { border: calc(3 * var(--k)) solid var(--white); }
+
+/* Shared: rounded label / navigation pill */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(40 * var(--k));
+  padding: calc(12 * var(--k)) calc(18 * var(--k));
+  border: 0;
+  border-radius: calc(var(--radius-pill) * var(--k));
+  background: var(--glass);
+  color: var(--white);
+  font-size: calc(16 * var(--k));
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: var(--track-tight);
+  white-space: nowrap;
+}
+
+.pill--light { background: var(--white); color: var(--black); }
+
+/* Shared: square icon button */
+.icon-button {
+  display: grid;
+  place-items: center;
+  width: calc(63 * var(--k));
+  height: calc(63 * var(--k));
+  border-radius: calc(var(--radius-button) * var(--k));
+  flex: none;
+}
+
+.icon-button--soft { background: var(--glass-soft); }
+
+.icon-button img {
+  width: calc(31 * var(--k));
+  height: calc(31 * var(--k));
+}
+
+/* Shared: image cropped exactly as in Figma */
+.crop--cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ==========================================================================
+   HERO  (Figma frame "Dribbble shot HD - 132", page card 1685 x 1073)
+   ========================================================================== */
+/* The hero is a column: a photograph that takes whatever height is going,
+   then the fixed text block beneath it. Giving the column the viewport's
+   height and letting the photograph absorb the remainder is what keeps
+   section one on one screen at any desktop shape, without the design ever
+   having to shrink away from the sides.
+
+   `min-height` rather than `height`: on a viewport too short to hold even the
+   smallest usable hero, the section grows and the page scrolls rather than
+   clipping its own content. */
+.hero {
+  --k: var(--hero-scale);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: var(--viewport-h);
+  padding-block: calc(11 * var(--k)) calc(74 * var(--k));
+}
+
+.hero__media {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: calc(var(--media-min) * var(--k));
+  margin-inline: calc(var(--section-inset) * var(--page-scale));
+  border-radius: calc(var(--radius-media) * var(--k));
+  overflow: hidden;
+  background: var(--ink);
+}
+
+/* The hero remains still throughout the entrance. The original ambient push
+   is enabled only after the entrance controller announces completion. */
+.hero__zoom {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  transform-origin: 50% 42%;
+}
+
+html.continuous-motion .hero__zoom {
+  animation: hero-push 5.2s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes hero-push {
+  from { transform: scale(1); }
+  to   { transform: scale(1.238); }
+}
+
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  opacity: 0.2;
+}
+
+/* ------------------------------------------------------------------ nav -- */
+/* Pinned to the top of the media and stretched between its own margins, so
+   the bar spans whatever width the photograph ends up with. */
+.nav {
+  position: absolute;
+  left: calc(26 * var(--k));
+  right: calc(25 * var(--k));
+  top: calc(19 * var(--k));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: calc(43 * var(--k));
+}
+
+.brand {
+  position: relative;
+  width: calc(126 * var(--k));
+  height: calc(43 * var(--k));
+  flex: none;
+}
+
+.brand__mark {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(43 * var(--k));
+  height: calc(43 * var(--k));
+}
+
+.brand__name {
+  position: absolute;
+  left: calc(55 * var(--k));
+  top: calc(6 * var(--k));
+  color: var(--white);
+  font-size: calc(34.08 * var(--k));
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: var(--track-display);
+}
+
+.nav__menu {
+  display: flex;
+  gap: calc(1 * var(--k));
+  width: calc(389 * var(--k));
+  height: calc(40 * var(--k));
+  -webkit-backdrop-filter: blur(calc(12.35 * var(--k)));
+  backdrop-filter: blur(calc(12.35 * var(--k)));
+}
+
+.nav__link:nth-child(1) { width: calc(96 * var(--k)); }
+.nav__link:nth-child(2) { width: calc(111 * var(--k)); }
+.nav__link:nth-child(3) { width: calc(94 * var(--k)); }
+.nav__link:nth-child(4) { width: calc(85 * var(--k)); }
+
+.nav__cta { width: calc(140 * var(--k)); }
+
+.nav__cta--menu,
+.nav__toggle { display: none; }
+
+.nav__link:hover { background: rgba(0, 0, 0, 0.22); }
+.nav__cta:hover { background: rgba(255, 255, 255, 0.86); }
+
+/* --------------------------------------------------------- talent panel -- */
+/* The panel resizes between four states. It is anchored by its centre —
+   the reference animation keeps that centre pinned at y 339 of the media
+   while the panel grows and shrinks around it.
+
+     collapsed    83 = 10 + 63 + 10                      search row only
+     suggestions 223 = 10 + 63 + 10 + 130 + 10           + role list
+     results     388 = 10 + 63 + 10 + 295 + 10           + result list
+     full        528 = 10 + 63 + 10 + 130 + 10 + 295 + 10  both (Figma frame)
+
+   `full` is the state the panel settles into once a visitor takes over from
+   the demo, so every control in the design stays reachable. */
+/* Held by its own centre, 8 design units right of the media's centre line and
+   46% of the way down it — both read straight off the Figma frame, but as
+   ratios so the panel keeps its place however the photograph is shaped.
+
+   The clamp keeps that centre far enough from the top and bottom edges that
+   the full panel cannot climb into the nav or slide off past the CTA. */
+.finder {
+  --finder-h: 388;
+  --results-top: 83;
+  --finder-half: calc(var(--finder-h) * var(--k) / 2);
+  position: absolute;
+  left: calc(50% + 8 * var(--k));
+  top: clamp(
+    calc(82 * var(--k) + var(--finder-half)),
+    calc(100% * 339 / var(--media-h)),
+    calc(100% - 159 * var(--k) - var(--finder-half))
+  );
+  width: calc(541 * var(--k));
+  height: calc(var(--finder-h) * var(--k));
+  border-radius: calc(var(--radius-panel) * var(--k));
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(calc(16.85 * var(--k)));
+  backdrop-filter: blur(calc(16.85 * var(--k)));
+  overflow: hidden;
+  transform: translate(-50%, -50%);
+  transition:
+    height var(--finder-dur, 600ms) var(--ease-panel),
+    top var(--finder-dur, 600ms) var(--ease-panel);
+}
+
+.finder[data-state='collapsed']   { --finder-h: 83; }
+.finder[data-state='suggestions'] { --finder-h: 223; }
+.finder[data-state='results']     { --finder-h: 388; --results-top: 83; }
+.finder[data-state='full']        { --finder-h: 528; --results-top: 223; }
+
+.finder[data-state='collapsed'] .finder__roles,
+.finder[data-state='collapsed'] .finder__results,
+.finder[data-state='suggestions'] .finder__results,
+.finder[data-state='results'] .finder__roles { display: none; }
+
+.finder__bar {
+  position: absolute;
+  left: calc(10 * var(--k));
+  top: calc(10 * var(--k));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: calc(521 * var(--k));
+  height: calc(63 * var(--k));
+}
+
+.finder__field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: calc(20 * var(--k));
+  width: calc(340 * var(--k));
+  height: calc(63 * var(--k));
+}
+
+.finder__input {
+  width: calc(257 * var(--k));
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--white);
+  font-size: calc(26 * var(--k));
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: var(--track-tight);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.finder__input::placeholder { color: var(--white); opacity: 0.4; }
+.finder__input::-webkit-search-cancel-button { display: none; }
+
+/* country selector — Figma shows this control in a "Global" and a country
+   state, so it is implemented as a listbox over the countries in the design */
+.country { position: relative; flex: none; }
+
+.country__toggle,
+.country--static {
+  display: flex;
+  align-items: center;
+  gap: calc(11 * var(--k));
+  width: calc(149 * var(--k));
+  height: calc(31 * var(--k));
+  padding: 0 calc(16 * var(--k));
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.country__icon {
+  width: calc(31 * var(--k));
+  height: calc(31 * var(--k));
+  flex: none;
+}
+
+.country__label {
+  color: var(--white);
+  font-size: calc(26 * var(--k));
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: var(--track-tight);
+}
+
+.country__menu {
+  position: absolute;
+  right: 0;
+  top: calc(41 * var(--k));
+  z-index: 2;
+  margin: 0;
+  padding: calc(6 * var(--k));
+  list-style: none;
+  width: calc(180 * var(--k));
+  border-radius: calc(var(--radius-pill) * var(--k));
+  background: rgba(0, 0, 0, 0.55);
+  -webkit-backdrop-filter: blur(calc(16.85 * var(--k)));
+  backdrop-filter: blur(calc(16.85 * var(--k)));
+}
+
+.country__menu[hidden] { display: none; }
+
+.country__option {
+  padding: calc(9 * var(--k)) calc(12 * var(--k));
+  border-radius: calc(8 * var(--k));
+  color: var(--white);
+  font-size: calc(18 * var(--k));
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: var(--track-tight);
+  cursor: pointer;
+}
+
+.country__option:hover,
+.country__option[aria-selected='true'] { background: rgba(255, 255, 255, 0.16); }
+
+/* role list */
+.finder__roles {
+  position: absolute;
+  left: calc(10 * var(--k));
+  top: calc(83 * var(--k));
+  display: flex;
+  flex-direction: column;
+  gap: calc(5 * var(--k));
+  width: calc(519 * var(--k));
+}
+
+.pill--row {
+  width: calc(519 * var(--k));
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+.role:hover { background: rgba(0, 0, 0, 0.16); }
+.role[aria-pressed='true'] { background: rgba(255, 255, 255, 0.2); }
+
+/* result list */
+.finder__results {
+  position: absolute;
+  left: calc(10 * var(--k));
+  top: calc(var(--results-top) * var(--k));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(5 * var(--k));
+  width: calc(519 * var(--k));
+  transition: top var(--finder-dur, 600ms) var(--ease-panel);
+}
+
+.expert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: calc(519 * var(--k));
+  height: calc(80 * var(--k));
+  padding: calc(12 * var(--k)) calc(18 * var(--k));
+  border-radius: calc(var(--radius-pill) * var(--k));
+  background: var(--glass);
+}
+
+.expert__who {
+  display: flex;
+  align-items: center;
+  gap: calc(13 * var(--k));
+}
+
+.expert__id,
+.expert__terms {
+  display: flex;
+  flex-direction: column;
+  gap: calc(6 * var(--k));
+}
+
+.expert__terms { align-items: flex-end; }
+
+.expert__name,
+.expert__rate {
+  color: var(--white);
+  font-size: calc(20 * var(--k));
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: var(--track-tight);
+}
+
+.expert__meta,
+.expert__type {
+  color: var(--white);
+  font-size: calc(16 * var(--k));
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: var(--track-tight);
+}
+
+.expert__meta { opacity: 0.5; }
+.expert__type { opacity: 0.6; }
+
+.finder__count {
+  margin: 0;
+  padding: calc(10 * var(--k)) 0;
+  color: var(--white);
+  font-size: calc(20 * var(--k));
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: var(--track-tight);
+}
+
+/* The original finder cycle begins only after the entrance completes. */
+.finder .role,
+.finder .expert,
+.finder__count {
+  transition: opacity 180ms linear, transform 180ms linear;
+}
+
+.finder .role.is-revealed,
+.finder .expert.is-revealed,
+.finder .finder__count.is-revealed {
+  transition: opacity 420ms var(--ease-panel), transform 420ms var(--ease-panel);
+}
+
+.finder.is-demo .role,
+.finder.is-demo .expert,
+.finder.is-demo .finder__count {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.finder.is-demo .role.is-revealed,
+.finder.is-demo .expert.is-revealed,
+.finder.is-demo .finder__count.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+.finder__demo {
+  position: absolute;
+  left: calc(83 * var(--k));
+  top: calc(18.5 * var(--k));
+  display: block;
+  white-space: pre;
+  pointer-events: none;
+  font-size: calc(26 * var(--k));
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: var(--track-tight);
+  color: var(--white);
+}
+
+.finder__demo-hint,
+.finder__demo-typed {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: pre;
+}
+
+.finder__demo-hint {
+  opacity: 0.4;
+  transition: opacity 300ms linear;
+}
+
+.finder__demo-hint.is-hidden { opacity: 0; }
+
+.finder__demo-typed { transition: opacity 300ms linear; }
+.finder__demo-typed.is-out { opacity: 0; }
+
+.finder__demo-typed .char {
+  opacity: 0;
+  transition: opacity 120ms linear;
+}
+
+.finder__demo-typed .char.is-in { opacity: 1; }
+
+.finder.is-demo .finder__input { opacity: 0; }
+.finder:not(.is-demo) .finder__demo { display: none; }
+
+/* ------------------------------------------------------------------ cta -- */
+/* Centred on the media and held 76 design units off its bottom edge, which is
+   where the Figma frame puts it. */
+.cta {
+  position: absolute;
+  left: 50%;
+  bottom: calc(76 * var(--k));
+  display: flex;
+  width: calc(252 * var(--k));
+  height: calc(63 * var(--k));
+  transform: translateX(-50%);
+}
+
+.cta__label,
+.cta__go {
+  display: grid;
+  place-items: center;
+  height: calc(63 * var(--k));
+  border-radius: calc(var(--radius-button) * var(--k));
+  background: var(--white);
+  color: var(--black);
+}
+
+.cta__label {
+  width: calc(189 * var(--k));
+  font-size: calc(19 * var(--k));
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: var(--track-tight);
+}
+
+.cta__go { width: calc(63 * var(--k)); }
+
+.cta__go img {
+  width: calc(21.2067 * var(--k));
+  height: calc(21.2067 * var(--k));
+}
+
+.cta__label:hover,
+.cta__go:hover { background: rgba(255, 255, 255, 0.86); }
+
+/* -------------------------------------------------------- hero headline -- */
+/* The closing block keeps its own height and hugs the page's two edges —
+   headline against the left margin, the aside against the right — so the gap
+   between them opens up on a wider screen instead of the pair drifting. */
+.hero__foot {
+  position: relative;
+  flex: none;
+  height: calc(180 * var(--k));
+  margin-top: calc(71 * var(--k));
+}
+
+.hero__title {
+  position: absolute;
+  left: calc(57 * var(--k));
+  top: 0;
+  width: calc(757 * var(--k));
+  margin: 0;
+  font-size: calc(100 * var(--k));
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: var(--track-display);
+}
+
+.hero__aside {
+  position: absolute;
+  right: calc(35 * var(--k));
+  top: calc(17 * var(--k));
+  width: calc(437 * var(--k));
+}
+
+.avatar-stack {
+  position: relative;
+  height: calc(56 * var(--k));
+}
+
+.avatar-stack .avatar { position: absolute; top: 0; }
+.avatar-stack .avatar:nth-child(1) { left: 0; }
+.avatar-stack .avatar:nth-child(2) { left: calc(48 * var(--k)); }
+.avatar-stack .avatar:nth-child(3) { left: calc(95 * var(--k)); }
+.avatar-stack .avatar:nth-child(4) { left: calc(143 * var(--k)); }
+
+.hero__lede {
+  width: calc(437 * var(--k));
+  margin: calc(43 * var(--k)) 0 0;    /* 935 - (836 + 56) */
+  font-size: calc(25 * var(--k));
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: var(--track-display);
+}
+
+/* ==========================================================================
+   FEATURES  (Figma frame "Dribbble shot HD - 134", left artboard, x 1.420143)
+   ========================================================================== */
+.features {
+  display: grid;
+  row-gap: calc(70 * var(--k));
+  padding-top: calc(var(--section-gap) * var(--page-scale));
+  padding-inline: calc(var(--section-inset) * var(--page-scale));
+  padding-bottom: calc(70 * var(--k));
+}
+
+.features__row {
+  display: grid;
+  min-width: 0;
+}
+
+.features__row--top {
+  grid-template-columns: minmax(0, 1060.28fr) minmax(0, 457.29fr);
+  column-gap: calc(25.44 * var(--k));
+}
+
+.features__row--bottom {
+  grid-template-columns: minmax(0, 774.44fr) minmax(0, 738.47fr);
+  column-gap: calc(30.06 * var(--k));
+}
+
+/* ---------------------------------------------------------- bento cards -- */
+.feature { min-width: 0; }
+
+.feature__media {
+  position: relative;
+  width: 100%;
+  height: calc(577.97 * var(--k));
+  border-radius: calc(var(--radius-card) * var(--k));
+  overflow: hidden;
+}
+
+.feature__title,
+.feature__text {
+  margin-inline: 0;
+  white-space: nowrap;
+}
+
+.feature__title {
+  margin-block: calc(39 * var(--k)) 0;
+  font-size: calc(37.48 * var(--k));
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: var(--track-display);
+}
+
+.feature__text {
+  margin-block: calc(17 * var(--k)) 0;
+  font-size: calc(21.1 * var(--k));
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: var(--track-tight);
+  opacity: 0.6;
+}
+
+/* cropped card artwork */
+.crop--payroll {
+  position: absolute;
+  left: calc(-247.27 * var(--k));
+  top: calc(-385.32 * var(--k));
+  width: calc(1380.29 * var(--k));
+  height: calc(1725.35 * var(--k));
+  max-width: none;
+}
+
+.crop--onboarding {
+  position: absolute;
+  left: calc(-1055.85 * var(--k));
+  top: calc(-210.19 * var(--k));
+  width: calc(1513.36 * var(--k));
+  height: calc(1891.7 * var(--k));
+  max-width: none;
+}
+
+/* -------------------------------------------------- floating card chrome -- */
+.chip {
+  position: absolute;
+  gap: calc(19.88 * var(--k));
+  height: calc(69.59 * var(--k));
+  padding: calc(17.04 * var(--k)) calc(25.56 * var(--k));
+  border-radius: calc(17.04 * var(--k));
+  font-size: calc(22.72 * var(--k));
+}
+
+.chip__icon {
+  width: calc(35.5 * var(--k));
+  height: calc(35.5 * var(--k));
+  flex: none;
+}
+
+.pill--glass {
+  background: var(--glass);
+  color: var(--white);
+  -webkit-backdrop-filter: blur(calc(30.11 * var(--k)));
+  backdrop-filter: blur(calc(30.11 * var(--k)));
+}
+
+.chip--payroll {
+  left: calc(149.85 * var(--k));
+  top: calc(254.67 * var(--k));
+  width: calc(242.84 * var(--k));
+}
+
+.chip--legal {
+  left: calc(149.12 * var(--k));
+  top: calc(120.71 * var(--k));
+  width: calc(157.64 * var(--k));
+  height: calc(56.81 * var(--k));
+}
+
+.chip--labor {
+  left: calc(117.88 * var(--k));
+  top: calc(213.02 * var(--k));
+  width: calc(220.12 * var(--k));
+}
+
+.chip--data {
+  left: calc(96.58 * var(--k));
+  top: calc(299.65 * var(--k));
+  width: calc(262.73 * var(--k));
+}
+
+.chip--contract {
+  left: calc(130.66 * var(--k));
+  top: calc(386.28 * var(--k));
+  width: calc(195.98 * var(--k));
+}
+
+.feature__connector {
+  position: absolute;
+  left: calc(405.48 * var(--k));
+  top: calc(168.75 * var(--k));       /* 169.46 less the 0.71 stroke overhang */
+  width: calc(133.49 * var(--k));
+  height: calc(239.99 * var(--k));
+}
+
+/* candidate rows floating over card 1 */
+.mini-card {
+  position: absolute;
+  left: calc(557.43 * var(--k));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: calc(353.79 * var(--k));
+  height: calc(91.89 * var(--k));
+  padding: calc(13.78 * var(--k)) calc(20.68 * var(--k));
+  border-radius: calc(13.78 * var(--k));
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(calc(39.92 * var(--k)));
+  backdrop-filter: blur(calc(39.92 * var(--k)));
+}
+
+.mini-card--r1 { top: calc(121.17 * var(--k)); }
+.mini-card--r2 { top: calc(242.93 * var(--k)); }
+.mini-card--r3 { top: calc(365.74 * var(--k)); }
+
+.mini-card__who {
+  display: flex;
+  align-items: center;
+  gap: calc(14.93 * var(--k));
+}
+
+.avatar--mini {
+  width: calc(64.33 * var(--k));
+  height: calc(64.33 * var(--k));
+}
+
+.mini-card__name,
+.mini-card__place {
+  color: var(--white);
+  font-size: calc(22.97 * var(--k));
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: var(--track-tight);
+  white-space: nowrap;
+}
+
+/* benefits card overlay */
+.benefit-card {
+  position: absolute;
+  left: calc(199.56 * var(--k));
+  top: calc(150.25 * var(--k));
+  display: flex;
+  flex-direction: column;
+  gap: calc(34.08 * var(--k));
+  width: calc(413.26 * var(--k));
+  height: calc(298.23 * var(--k));
+  padding: calc(17.04 * var(--k)) calc(25.56 * var(--k));
+  border-radius: calc(17.04 * var(--k));
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(calc(38.56 * var(--k)));
+  backdrop-filter: blur(calc(38.56 * var(--k)));
+}
+
+.benefit-card__person {
+  display: flex;
+  align-items: center;
+  gap: calc(18.46 * var(--k));
+}
+
+.benefit-card__person .avatar {
+  width: calc(79.53 * var(--k));
+  height: calc(79.53 * var(--k));
+}
+
+.benefit-card__person .expert__id { gap: calc(8.52 * var(--k)); }
+
+.benefit-card__person .expert__name { font-size: calc(28.4 * var(--k)); }
+
+.benefit-card__person .expert__meta { font-size: calc(22.72 * var(--k)); }
+
+.benefit-card__tags {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(11.36 * var(--k));
+}
+
+.benefit-card__tags .chip { position: static; }
+
+/* experts card overlay */
+.mini-finder {
+  position: absolute;
+  left: calc(68.47 * var(--k));
+  top: calc(223.14 * var(--k));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: calc(603.56 * var(--k));
+  height: calc(117.87 * var(--k));
+  padding: calc(14.2 * var(--k));
+  border-radius: calc(25.56 * var(--k));
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(calc(23.93 * var(--k)));
+  backdrop-filter: blur(calc(23.93 * var(--k)));
+}
+
+.mini-finder__field {
+  display: flex;
+  align-items: center;
+  gap: calc(28.4 * var(--k));
+  width: calc(313.85 * var(--k));
+  height: calc(89.47 * var(--k));
+}
+
+.mini-finder .icon-button {
+  width: calc(89.47 * var(--k));
+  height: calc(89.47 * var(--k));
+  border-radius: calc(19.88 * var(--k));
+}
+
+.mini-finder .icon-button img {
+  width: calc(44.02 * var(--k));
+  height: calc(44.02 * var(--k));
+}
+
+.mini-finder__placeholder {
+  color: var(--white);
+  opacity: 0.4;
+  font-size: calc(36.92 * var(--k));
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: var(--track-tight);
+}
+
+.country--static {
+  width: calc(238.58 * var(--k));
+  height: calc(44.02 * var(--k));
+  gap: calc(15.62 * var(--k));
+  padding: 0 calc(22.72 * var(--k));
+  cursor: default;
+}
+
+.country--static .country__icon {
+  width: calc(44.02 * var(--k));
+  height: calc(44.02 * var(--k));
+}
+
+.country--static .country__label { font-size: calc(36.92 * var(--k)); }
+
+/* ==========================================================================
+   SHOWCASE  (Figma frame "Dribbble shot HD - 134", right artboard)
+   ========================================================================== */
+.showcase {
+  position: relative;
+  height: calc(2387.26 * var(--k));
+}
+
+.showcase__title {
+  position: absolute;
+  left: calc(69.59 * var(--k));
+  top: calc(274.09 * var(--k));
+  width: calc(624.86 * var(--k));
+  margin: 0;
+  font-size: calc(96.85 * var(--k));
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: var(--track-display);
+}
+
+.showcase__title--second {
+  left: calc(71.01 * var(--k));
+  top: calc(1330.67 * var(--k));
+  width: calc(1062.27 * var(--k));
+}
+
+.showcase__figure {
+  position: absolute;
+  left: calc(71.01 * var(--k));
+  top: calc(521.19 * var(--k));
+  width: calc(1060.85 * var(--k));
+  height: calc(675.47 * var(--k));
+  margin: 0;
+  border-radius: calc(var(--radius-card) * var(--k));
+  overflow: hidden;
+}
+
+.showcase__figure--second {
+  left: calc(72.43 * var(--k));
+  top: calc(1577.78 * var(--k));
+}
+
+/* Laptop and desktop: the two showcase stories sit side by side. The base
+   vertical layout remains unchanged below this breakpoint for tablet/mobile. */
+@media (min-width: 1024px) {
+  .showcase {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      'title-one title-two'
+      'figure-one figure-two';
+    grid-template-rows: auto auto;
+    column-gap: calc(40 * var(--k));
+    row-gap: calc(42 * var(--k));
+    height: auto;
+    padding-block: calc(var(--section-gap) * var(--page-scale)) calc(120 * var(--k));
+    padding-inline: calc(var(--section-inset) * var(--page-scale));
+  }
+
+  .showcase__title,
+  .showcase__title--second,
+  .showcase__figure,
+  .showcase__figure--second {
+    position: static;
+    width: 100%;
+  }
+
+  .showcase__title {
+    grid-area: title-one;
+    font-size: calc(72 * var(--k));
+  }
+
+  .showcase__title--second { grid-area: title-two; }
+
+  .showcase__figure {
+    grid-area: figure-one;
+    height: auto;
+    aspect-ratio: 1060.85 / 675.47;
+  }
+
+  .showcase__figure--second { grid-area: figure-two; }
+}
+
+/* =======================================================================
+   TABLET ARCHITECTURE
+   The desktop composition remains active through 1080px. Below that point
+   the desktop navigation and scaled type become too small for comfortable
+   reading and touch, so all three sections adopt an intrinsic tablet layout.
+   ======================================================================= */
+@media (min-width: 700px) and (max-width: 1080px) {
+  .page {
+    --tablet-inset: clamp(16px, 2.5vw, 28px);
+    --tablet-section-gap: clamp(72px, 10vw, 108px);
+    margin-inline: var(--tablet-inset);
+  }
+
+  /* Section 1: preserve the photographic composition and its motion while
+     replacing the shrinking desktop scale with readable tablet dimensions. */
+  .hero {
+    /* --k is a length throughout the Figma scale system. Keep every clamp
+       branch length-valued so Firefox can resolve downstream multiplication. */
+    --k: clamp(0.72px, calc((100vw - 2 * var(--tablet-inset)) / 1080), 1px);
+    min-height: auto;
+    padding-block: 10px var(--tablet-section-gap);
+  }
+
+  .hero__media {
+    flex: none;
+    min-height: 0;
+    height: clamp(720px, 90svh, 820px);
+    margin-inline: 0;
+    border-radius: clamp(20px, 3vw, 30px);
+  }
+
+  .nav {
+    left: clamp(18px, 3vw, 28px);
+    right: clamp(18px, 3vw, 28px);
+    top: clamp(16px, 2.4vw, 24px);
+    height: 48px;
+  }
+
+  .brand {
+    width: 126px;
+    height: 43px;
+  }
+
+  .brand__mark {
+    width: 43px;
+    height: 43px;
+  }
+
+  .brand__name {
+    left: 55px;
+    top: 6px;
+    font-size: 34px;
+  }
+
+  .nav > .nav__cta { display: none; }
+
+  .nav__toggle {
+    position: relative;
+    z-index: 4;
+    display: grid;
+    place-content: center;
+    gap: 7px;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: 0;
+    border-radius: 14px;
+    background: var(--glass);
+    color: var(--white);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    cursor: pointer;
+  }
+
+  .nav__toggle span {
+    width: 22px;
+    height: 2px;
+    border-radius: 999px;
+    background: currentColor;
+    transition: transform 240ms var(--ease-panel);
+  }
+
+  .nav__toggle[aria-expanded='true'] span:first-child {
+    transform: translateY(4.5px) rotate(45deg);
+  }
+
+  .nav__toggle[aria-expanded='true'] span:last-child {
+    transform: translateY(-4.5px) rotate(-45deg);
+  }
+
+  .nav__menu {
+    position: absolute;
+    z-index: 3;
+    right: 0;
+    top: 58px;
+    display: grid;
+    gap: 6px;
+    width: min(320px, calc(100vw - 2 * var(--tablet-inset) - 36px));
+    height: auto;
+    padding: 8px;
+    border-radius: 18px;
+    background: rgba(0, 0, 0, 0.28);
+    -webkit-backdrop-filter: blur(22px);
+    backdrop-filter: blur(22px);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.14);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px) scale(0.98);
+    transform-origin: top right;
+    transition:
+      opacity 220ms var(--ease-panel),
+      transform 220ms var(--ease-panel),
+      visibility 220ms;
+  }
+
+  .nav__menu.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  .nav__link,
+  .nav__link:nth-child(n),
+  .nav__cta--menu {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    min-height: 48px;
+    height: auto;
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-size: 16px;
+  }
+
+  .nav__cta--menu {
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  .finder {
+    left: 50%;
+    top: 46%;
+    width: min(calc(541 * var(--k)), calc(100% - 48px));
+  }
+
+  .cta { bottom: clamp(36px, 6vw, 60px); }
+
+  .hero__foot {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(240px, 0.7fr);
+    align-items: start;
+    column-gap: clamp(32px, 6vw, 72px);
+    height: auto;
+    margin-top: clamp(48px, 7vw, 72px);
+    padding-inline: clamp(18px, 4vw, 44px);
+  }
+
+  .hero__title,
+  .hero__aside {
+    position: static;
+    width: auto;
+  }
+
+  .hero__title {
+    font-size: clamp(58px, 8.5vw, 82px);
+    line-height: 0.9;
+  }
+
+  .hero__aside { padding-top: 8px; }
+
+  .hero__lede {
+    width: auto;
+    margin-top: 30px;
+    font-size: clamp(18px, 2.3vw, 24px);
+  }
+
+  /* Section 2: preserve the bento hierarchy at landscape tablet widths;
+     portrait tablets use a single readable column rather than compressed
+     artwork. Card interiors keep the same design-unit scale via --k. */
+  .features {
+    --k: clamp(0.64px, calc((100vw - 2 * var(--tablet-inset)) / 1080), 0.94px);
+    gap: clamp(56px, 8vw, 84px);
+    padding: 0 0 var(--tablet-section-gap);
+  }
+
+  .features__row {
+    gap: clamp(18px, 2.5vw, 28px);
+  }
+
+  .features__row--top {
+    grid-template-columns: minmax(0, 1.45fr) minmax(310px, 0.75fr);
+  }
+
+  .features__row--bottom {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .feature {
+    container-type: inline-size;
+  }
+
+  .feature--payroll > * { --k: min(1px, calc(100cqw / 1060.28)); }
+  .feature--onboarding > * { --k: min(1px, calc(100cqw / 457.29)); }
+  .feature--benefits > * { --k: min(1px, calc(100cqw / 774.44)); }
+  .feature--experts > * { --k: min(1px, calc(100cqw / 738.47)); }
+
+  .feature__media {
+    height: clamp(390px, 53vw, 540px);
+    border-radius: clamp(24px, 4vw, 38px);
+  }
+
+  .feature__title {
+    margin-top: clamp(24px, 3.5vw, 38px);
+    font-size: clamp(29px, 3.8vw, 38px);
+    white-space: normal;
+  }
+
+  .feature__text {
+    margin-top: 14px;
+    font-size: clamp(17px, 2.15vw, 21px);
+    white-space: normal;
+  }
+
+  /* Section 3: the paired stories remain horizontal while both columns can
+     still support a strong heading and a legible image. */
+  .showcase {
+    --k: clamp(0.68px, calc((100vw - 2 * var(--tablet-inset)) / 1080), 0.94px);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      'title-one title-two'
+      'figure-one figure-two';
+    grid-template-rows: auto auto;
+    column-gap: clamp(20px, 3vw, 34px);
+    row-gap: clamp(28px, 4vw, 42px);
+    height: auto;
+    padding: 0 0 var(--tablet-section-gap);
+  }
+
+  .showcase__title,
+  .showcase__title--second,
+  .showcase__figure,
+  .showcase__figure--second {
+    position: static;
+    width: 100%;
+  }
+
+  .showcase__title {
+    grid-area: title-one;
+    font-size: clamp(48px, 6.5vw, 66px);
+  }
+
+  .showcase__title--second { grid-area: title-two; }
+
+  .showcase__figure {
+    grid-area: figure-one;
+    height: auto;
+    aspect-ratio: 1060.85 / 675.47;
+  }
+
+  .showcase__figure--second { grid-area: figure-two; }
+}
+
+@media (min-width: 700px) and (max-width: 860px) {
+  .hero__foot {
+    grid-template-columns: 1fr;
+    row-gap: 38px;
+  }
+
+  .hero__aside {
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr);
+    align-items: center;
+    gap: 28px;
+    padding-top: 0;
+  }
+
+  .hero__lede { margin: 0; }
+
+  .features__row--top,
+  .features__row--bottom {
+    grid-template-columns: 1fr;
+  }
+
+  .features__row { gap: 56px; }
+
+  .feature__media { height: min(66vw, 520px); }
+
+  .feature--onboarding .crop--onboarding {
+    left: -230.96%;
+    top: -36.37%;
+    width: 330.96%;
+    height: auto;
+  }
+
+  .feature--onboarding .chip {
+    transform: translateX(calc((100cqw - 457.29px) / 2));
+  }
+
+  .showcase {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'title-one'
+      'figure-one'
+      'title-two'
+      'figure-two';
+    row-gap: 36px;
+  }
+
+  .showcase__title--second { margin-top: 34px; }
+}
+
+/* =======================================================================
+   MOBILE ARCHITECTURE
+   The tablet layout remains effective through 700px. Directly below that
+   boundary its scaled controls and typography become too small for touch and
+   reading, so the same content switches to an intrinsic mobile composition.
+   ======================================================================= */
+@media (max-width: 699px) {
+  .page {
+    --mobile-inset: clamp(12px, 4vw, 20px);
+    --mobile-section-gap: clamp(64px, 18vw, 88px);
+    margin-inline: var(--mobile-inset);
+  }
+
+  /* Section 1 --------------------------------------------------------- */
+  .hero {
+    --k: 1px;
+    min-height: auto;
+    padding-block: 8px var(--mobile-section-gap);
+  }
+
+  .hero__media {
+    flex: none;
+    min-height: 0;
+    height: clamp(640px, 88svh, 760px);
+    margin-inline: 0;
+    border-radius: clamp(18px, 6vw, 26px);
+  }
+
+  .nav {
+    left: 16px;
+    right: 16px;
+    top: max(14px, env(safe-area-inset-top));
+    height: 46px;
+  }
+
+  .brand {
+    width: 112px;
+    height: 40px;
+  }
+
+  .brand__mark {
+    width: 40px;
+    height: 40px;
+  }
+
+  .brand__name {
+    left: 51px;
+    top: 6px;
+    font-size: 31px;
+  }
+
+  .nav > .nav__cta { display: none; }
+
+  .nav__toggle {
+    position: relative;
+    z-index: 4;
+    display: grid;
+    place-content: center;
+    gap: 7px;
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    border: 0;
+    border-radius: 14px;
+    background: var(--glass);
+    color: var(--white);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    cursor: pointer;
+  }
+
+  .nav__toggle span {
+    width: 21px;
+    height: 2px;
+    border-radius: 999px;
+    background: currentColor;
+    transition: transform 240ms var(--ease-panel);
+  }
+
+  .nav__toggle[aria-expanded='true'] span:first-child {
+    transform: translateY(4.5px) rotate(45deg);
+  }
+
+  .nav__toggle[aria-expanded='true'] span:last-child {
+    transform: translateY(-4.5px) rotate(-45deg);
+  }
+
+  .nav__menu {
+    position: absolute;
+    z-index: 3;
+    right: 0;
+    top: 56px;
+    display: grid;
+    gap: 6px;
+    width: min(300px, calc(100vw - 2 * var(--mobile-inset) - 32px));
+    height: auto;
+    padding: 8px;
+    border-radius: 18px;
+    background: rgba(0, 0, 0, 0.3);
+    -webkit-backdrop-filter: blur(22px);
+    backdrop-filter: blur(22px);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.16);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px) scale(0.98);
+    transform-origin: top right;
+    transition:
+      opacity 220ms var(--ease-panel),
+      transform 220ms var(--ease-panel),
+      visibility 220ms;
+  }
+
+  .nav__menu.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  .nav__link,
+  .nav__link:nth-child(n),
+  .nav__cta--menu {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    min-height: 48px;
+    height: auto;
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-size: 16px;
+  }
+
+  .nav__cta--menu {
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  .finder {
+    left: 50%;
+    top: 45%;
+    width: calc(100% - 24px);
+    border-radius: 16px;
+  }
+
+  .finder[data-state='collapsed'] { height: 72px; }
+  .finder[data-state='suggestions'] { height: 218px; }
+  .finder[data-state='results'] { height: 344px; }
+  .finder[data-state='full'] { height: 490px; }
+
+  .finder__bar {
+    left: 8px;
+    top: 8px;
+    width: calc(100% - 16px);
+    height: 56px;
+  }
+
+  .finder__field {
+    gap: 12px;
+    width: min(58%, 230px);
+    height: 56px;
+  }
+
+  .finder .icon-button {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+  }
+
+  .finder .icon-button img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .finder__input,
+  .finder__demo {
+    font-size: clamp(16px, 4.5vw, 19px);
+  }
+
+  .finder__input {
+    width: calc(100% - 60px);
+  }
+
+  .finder__demo {
+    left: 60px;
+    top: 18px;
+  }
+
+  .country__toggle {
+    gap: 7px;
+    width: auto;
+    min-width: 104px;
+    height: 36px;
+    padding: 0 8px;
+  }
+
+  .country__icon {
+    width: 25px;
+    height: 25px;
+  }
+
+  .country__label { font-size: clamp(15px, 4vw, 18px); }
+
+  .country__menu {
+    top: 40px;
+    width: 150px;
+    padding: 6px;
+  }
+
+  .country__option {
+    min-height: 42px;
+    padding: 12px 10px;
+    font-size: 15px;
+  }
+
+  .finder__roles {
+    left: 8px;
+    top: 72px;
+    gap: 4px;
+    width: calc(100% - 16px);
+  }
+
+  .pill--row {
+    justify-content: flex-start;
+    width: 100%;
+    height: 42px;
+    padding: 12px 14px;
+    font-size: 15px;
+  }
+
+  .finder__results {
+    left: 8px;
+    top: 72px;
+    gap: 4px;
+    width: calc(100% - 16px);
+  }
+
+  .finder[data-state='full'] .finder__results { top: 218px; }
+
+  .expert {
+    width: 100%;
+    height: 76px;
+    padding: 10px 12px;
+  }
+
+  .expert__who { gap: 10px; }
+
+  .expert .avatar {
+    width: 44px;
+    height: 44px;
+  }
+
+  .expert__id,
+  .expert__terms { gap: 5px; }
+
+  .expert__name,
+  .expert__rate { font-size: clamp(13px, 3.6vw, 15px); }
+
+  .expert__meta,
+  .expert__type { font-size: clamp(11px, 3vw, 13px); }
+
+  .finder__count {
+    padding: 9px 0;
+    font-size: 14px;
+  }
+
+  .cta {
+    bottom: max(24px, env(safe-area-inset-bottom));
+    width: 224px;
+    height: 56px;
+  }
+
+  .cta__label,
+  .cta__go { height: 56px; }
+
+  .cta__label {
+    width: 168px;
+    font-size: 17px;
+  }
+
+  .cta__go { width: 56px; }
+
+  .cta__go img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .hero__foot {
+    display: grid;
+    gap: clamp(34px, 9vw, 48px);
+    height: auto;
+    margin-top: clamp(42px, 11vw, 58px);
+    padding-inline: clamp(4px, 2vw, 10px);
+  }
+
+  .hero__title,
+  .hero__aside {
+    position: static;
+    width: auto;
+  }
+
+  .hero__title {
+    max-width: 11ch;
+    font-size: clamp(44px, 12.2vw, 68px);
+    line-height: 0.91;
+  }
+
+  .hero__aside {
+    display: grid;
+    grid-template-columns: 178px minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(18px, 5vw, 28px);
+  }
+
+  .avatar-stack {
+    height: 50px;
+  }
+
+  .avatar-stack .avatar {
+    width: 50px;
+    height: 50px;
+  }
+
+  .avatar-stack .avatar:nth-child(2) { left: 42px; }
+  .avatar-stack .avatar:nth-child(3) { left: 84px; }
+  .avatar-stack .avatar:nth-child(4) { left: 126px; }
+
+  .hero__lede {
+    width: auto;
+    margin: 0;
+    font-size: clamp(16px, 4.4vw, 20px);
+    line-height: 1.15;
+  }
+
+  /* Section 2 --------------------------------------------------------- */
+  .features {
+    display: grid;
+    gap: clamp(52px, 14vw, 72px);
+    padding: 0 0 var(--mobile-section-gap);
+  }
+
+  .features__row {
+    grid-template-columns: 1fr;
+    gap: clamp(48px, 13vw, 68px);
+  }
+
+  .feature {
+    min-width: 0;
+    container-type: inline-size;
+  }
+
+  .feature__media {
+    height: clamp(330px, 94vw, 480px);
+    border-radius: clamp(24px, 8vw, 34px);
+  }
+
+  .feature__title {
+    margin-top: clamp(24px, 7vw, 34px);
+    font-size: clamp(28px, 8vw, 38px);
+    white-space: normal;
+  }
+
+  .feature__text {
+    margin-top: 13px;
+    font-size: clamp(17px, 4.7vw, 21px);
+    white-space: normal;
+  }
+
+  .feature__media > .crop {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+  }
+
+  .feature--payroll .crop--payroll { object-position: 30% center; }
+  .feature--onboarding .crop--onboarding { object-position: 73% center; }
+
+  .chip {
+    height: 46px;
+    padding: 12px 15px;
+    border-radius: 13px;
+    font-size: 14px;
+  }
+
+  .chip__icon {
+    width: 23px;
+    height: 23px;
+  }
+
+  .chip--payroll {
+    left: 18px;
+    top: 30px;
+    width: auto;
+  }
+
+  .feature__connector {
+    left: 31%;
+    top: 104px;
+    width: 58px;
+    height: 108px;
+  }
+
+  .mini-card {
+    left: 43%;
+    width: 53%;
+    height: 62px;
+    padding: 9px 10px;
+    border-radius: 11px;
+  }
+
+  .mini-card--r1 { top: 88px; }
+  .mini-card--r2 { top: 160px; }
+  .mini-card--r3 { top: 232px; }
+
+  .mini-card__who { gap: 8px; }
+
+  .avatar--mini {
+    width: 38px;
+    height: 38px;
+  }
+
+  .mini-card__name,
+  .mini-card__place { font-size: clamp(11px, 3vw, 13px); }
+
+  .chip--legal {
+    left: 50%;
+    top: 30px;
+    width: auto;
+    height: 44px;
+    transform: translateX(-50%);
+  }
+
+  .chip--labor,
+  .chip--data,
+  .chip--contract {
+    left: 50%;
+    width: auto;
+    transform: translateX(-50%);
+  }
+
+  .chip--labor { top: 98px; }
+  .chip--data { top: 158px; }
+  .chip--contract { top: 218px; }
+
+  .benefit-card {
+    left: 7%;
+    top: 48px;
+    gap: 20px;
+    width: 86%;
+    height: auto;
+    padding: 16px;
+    border-radius: 15px;
+  }
+
+  .benefit-card__person { gap: 14px; }
+
+  .benefit-card__person .avatar {
+    width: 58px;
+    height: 58px;
+  }
+
+  .benefit-card__person .expert__name { font-size: 20px; }
+  .benefit-card__person .expert__meta { font-size: 15px; }
+
+  .benefit-card__tags { gap: 9px; }
+
+  .benefit-card__tags .chip {
+    max-width: 100%;
+    height: 44px;
+    font-size: 13px;
+  }
+
+  .mini-finder {
+    left: 5%;
+    top: 50%;
+    width: 90%;
+    height: 76px;
+    padding: 10px;
+    border-radius: 18px;
+    transform: translateY(-50%);
+  }
+
+  .mini-finder__field {
+    gap: 12px;
+    width: 48%;
+    height: 56px;
+  }
+
+  .mini-finder .icon-button {
+    width: 56px;
+    height: 56px;
+    border-radius: 13px;
+  }
+
+  .mini-finder .icon-button img {
+    width: 27px;
+    height: 27px;
+  }
+
+  .mini-finder__placeholder { font-size: 20px; }
+
+  .country--static {
+    gap: 8px;
+    width: auto;
+    height: 34px;
+    padding: 0 8px;
+  }
+
+  .country--static .country__icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .country--static .country__label { font-size: 18px; }
+
+  /* Section 3 --------------------------------------------------------- */
+  .showcase {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'title-one'
+      'figure-one'
+      'title-two'
+      'figure-two';
+    gap: 0;
+    height: auto;
+    padding: 0 0 var(--mobile-section-gap);
+  }
+
+  .showcase__title,
+  .showcase__title--second,
+  .showcase__figure,
+  .showcase__figure--second {
+    position: static;
+    width: 100%;
+  }
+
+  .showcase__title {
+    grid-area: title-one;
+    max-width: 10ch;
+    font-size: clamp(44px, 12vw, 66px);
+    line-height: 0.92;
+  }
+
+  .showcase__title--second {
+    grid-area: title-two;
+    max-width: 13ch;
+    margin-top: var(--mobile-section-gap);
+  }
+
+  .showcase__figure {
+    grid-area: figure-one;
+    height: auto;
+    margin-top: clamp(30px, 8vw, 42px);
+    aspect-ratio: 4 / 3;
+    border-radius: clamp(24px, 8vw, 34px);
+  }
+
+  .showcase__figure--second { grid-area: figure-two; }
+}
+
+@media (max-width: 360px) {
+  .hero__aside {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .finder__field { width: calc(100% - 106px); }
+
+  .expert__meta { max-width: 98px; }
+
+  .mini-card {
+    left: 39%;
+    width: 58%;
+  }
+
+  .mini-card__name,
+  .mini-card__place { font-size: 10px; }
+}
+
+/* ==========================================================================
+   One-time entrance
+   Only meaningful foreground groups participate. The background and original
+   finder demo stay still until this finite sequence completes.
+   ========================================================================== */
+html.entrance-pending .brand,
+html.entrance-pending .nav__link,
+html.entrance-pending .nav > .nav__cta,
+html.entrance-pending .nav__toggle,
+html.entrance-pending .finder,
+html.entrance-pending .cta,
+html.entrance-pending .hero__title,
+html.entrance-pending .avatar-stack,
+html.entrance-pending .hero__lede {
+  opacity: 0;
+}
+
+html.entrance-pending .brand { transform: translateY(calc(-8 * var(--k))); }
+html.entrance-pending .nav__link,
+html.entrance-pending .nav > .nav__cta,
+html.entrance-pending .nav__toggle { transform: translateY(calc(-6 * var(--k))); }
+
+html.entrance-pending .hero__title {
+  clip-path: inset(100% 0 0 0);
+  transform: translateY(calc(18 * var(--k)));
+}
+
+html.entrance-pending .finder {
+  clip-path: inset(5% 0 5% 0 round calc(var(--radius-panel) * var(--k)));
+  transform: translate(-50%, -50%) scale(0.98);
+}
+
+html.entrance-pending .cta {
+  transform: translateX(-50%) translateY(calc(10 * var(--k))) scale(0.985);
+}
+
+html.entrance-pending .avatar-stack {
+  transform: translateY(calc(8 * var(--k))) scale(0.97);
+  transform-origin: left center;
+}
+
+html.entrance-pending .hero__lede { transform: translateY(calc(10 * var(--k))); }
+
+html.entrance-pending .brand,
+html.entrance-pending .nav__link,
+html.entrance-pending .nav > .nav__cta,
+html.entrance-pending .nav__toggle,
+html.entrance-pending .finder,
+html.entrance-pending .cta,
+html.entrance-pending .hero__title,
+html.entrance-pending .avatar-stack,
+html.entrance-pending .hero__lede,
+html.entrance-playing .brand,
+html.entrance-playing .nav__link,
+html.entrance-playing .nav > .nav__cta,
+html.entrance-playing .nav__toggle,
+html.entrance-playing .finder,
+html.entrance-playing .cta,
+html.entrance-playing .hero__title,
+html.entrance-playing .avatar-stack,
+html.entrance-playing .hero__lede {
+  will-change: opacity, transform;
+}
+
+html.entrance-playing .brand {
+  transition: opacity 560ms var(--ease-panel) 80ms,
+              transform 680ms var(--ease-panel) 80ms;
+}
+
+html.entrance-playing .nav__link {
+  transition: opacity 460ms var(--ease-panel), transform 580ms var(--ease-panel);
+}
+
+html.entrance-playing .nav__link:nth-child(1) { transition-delay: 130ms; }
+html.entrance-playing .nav__link:nth-child(2) { transition-delay: 170ms; }
+html.entrance-playing .nav__link:nth-child(3) { transition-delay: 210ms; }
+html.entrance-playing .nav__link:nth-child(4) { transition-delay: 250ms; }
+
+html.entrance-playing .nav > .nav__cta {
+  transition: opacity 480ms var(--ease-panel) 280ms,
+              transform 600ms var(--ease-panel) 280ms;
+}
+
+html.entrance-playing .nav__toggle {
+  transition: opacity 480ms var(--ease-panel) 130ms,
+              transform 600ms var(--ease-panel) 130ms;
+}
+
+html.entrance-playing .hero__title {
+  transition: opacity 680ms var(--ease-panel) 180ms,
+              transform 900ms var(--ease-panel) 180ms,
+              clip-path 900ms var(--ease-panel) 180ms;
+}
+
+html.entrance-playing .finder {
+  transition: opacity 720ms var(--ease-panel) 390ms,
+              transform 920ms var(--ease-panel) 390ms,
+              clip-path 920ms var(--ease-panel) 390ms;
+}
+
+html.entrance-playing .cta {
+  transition: opacity 520ms var(--ease-panel) 710ms,
+              transform 700ms var(--ease-panel) 710ms;
+}
+
+html.entrance-playing .avatar-stack {
+  transition: opacity 500ms var(--ease-panel) 610ms,
+              transform 680ms var(--ease-panel) 610ms;
+}
+
+html.entrance-playing .hero__lede {
+  transition: opacity 560ms var(--ease-panel) 720ms,
+              transform 720ms var(--ease-panel) 720ms;
+}
+
+@media (max-width: 699px) {
+  html.entrance-pending .hero__title { transform: translateY(12px); }
+  html.entrance-pending .finder { transform: translate(-50%, -50%) scale(0.99); }
+  html.entrance-pending .cta { transform: translateX(-50%) translateY(7px); }
+}
+
+/* ==========================================================================
+   One-time scroll choreography
+   Feature cards reveal as product scenes (media, title, supporting copy).
+   Showcase stories reveal editorially (headline, then image). JavaScript adds
+   the ready class only after the observer is safely initialized, so content
+   remains visible if scripting is unavailable.
+   ========================================================================== */
+.feature,
+.showcase__title,
+.showcase__figure { --scroll-order: 0; }
+
+.feature:nth-child(even),
+.showcase__title--second,
+.showcase__figure--second { --scroll-order: 1; }
+
+html.scroll-reveal-ready .feature .feature__media,
+html.scroll-reveal-ready .feature .feature__title,
+html.scroll-reveal-ready .feature .feature__text,
+html.scroll-reveal-ready .showcase__title,
+html.scroll-reveal-ready .showcase__figure {
+  will-change: opacity, transform, clip-path;
+}
+
+html.scroll-reveal-ready .feature.is-revealed .feature__media {
+  transition:
+    opacity 720ms var(--ease-panel) calc(var(--scroll-order) * 90ms),
+    transform 920ms var(--ease-panel) calc(var(--scroll-order) * 90ms),
+    clip-path 920ms var(--ease-panel) calc(var(--scroll-order) * 90ms);
+}
+
+html.scroll-reveal-ready .feature.is-revealed .feature__title {
+  transition:
+    opacity 560ms var(--ease-panel) calc(150ms + var(--scroll-order) * 90ms),
+    transform 720ms var(--ease-panel) calc(150ms + var(--scroll-order) * 90ms),
+    clip-path 720ms var(--ease-panel) calc(150ms + var(--scroll-order) * 90ms);
+}
+
+html.scroll-reveal-ready .feature.is-revealed .feature__text {
+  transition:
+    opacity 520ms var(--ease-panel) calc(260ms + var(--scroll-order) * 90ms),
+    transform 680ms var(--ease-panel) calc(260ms + var(--scroll-order) * 90ms);
+}
+
+html.scroll-reveal-ready .feature:not(.is-revealed) .feature__media {
+  opacity: 0;
+  clip-path: inset(9% 0 0 0 round calc(var(--radius-card) * var(--k)));
+  transform: translateY(calc(18 * var(--k))) scale(0.985);
+}
+
+html.scroll-reveal-ready .feature:not(.is-revealed) .feature__title {
+  opacity: 0;
+  clip-path: inset(0 0 100% 0);
+  transform: translateY(calc(11 * var(--k)));
+}
+
+html.scroll-reveal-ready .feature:not(.is-revealed) .feature__text {
+  opacity: 0;
+  transform: translateY(calc(9 * var(--k)));
+}
+
+/* Internal card choreography begins after each media panel establishes itself.
+   Delays are local to the feature, keeping every scene readable as one action. */
+.feature--payroll .feature__connector { --inside-delay: calc(250ms + var(--scroll-order) * 90ms); }
+.feature--payroll .chip--payroll { --inside-delay: calc(320ms + var(--scroll-order) * 90ms); }
+.feature--payroll .mini-card--r1 { --inside-delay: calc(390ms + var(--scroll-order) * 90ms); }
+.feature--payroll .mini-card--r2 { --inside-delay: calc(460ms + var(--scroll-order) * 90ms); }
+.feature--payroll .mini-card--r3 { --inside-delay: calc(530ms + var(--scroll-order) * 90ms); }
+
+.feature--onboarding .chip--legal { --inside-delay: calc(280ms + var(--scroll-order) * 90ms); }
+.feature--onboarding .chip--labor { --inside-delay: calc(360ms + var(--scroll-order) * 90ms); }
+.feature--onboarding .chip--data { --inside-delay: calc(440ms + var(--scroll-order) * 90ms); }
+.feature--onboarding .chip--contract { --inside-delay: calc(520ms + var(--scroll-order) * 90ms); }
+
+.feature--benefits .benefit-card { --inside-delay: calc(280ms + var(--scroll-order) * 90ms); }
+.feature--benefits .benefit-card__person { --inside-delay: calc(390ms + var(--scroll-order) * 90ms); }
+.feature--benefits .benefit-card__tags .chip:first-child { --inside-delay: calc(480ms + var(--scroll-order) * 90ms); }
+.feature--benefits .benefit-card__tags .chip:last-child { --inside-delay: calc(560ms + var(--scroll-order) * 90ms); }
+
+.feature--experts .mini-finder { --inside-delay: calc(300ms + var(--scroll-order) * 90ms); }
+.feature--experts .icon-button { --inside-delay: calc(410ms + var(--scroll-order) * 90ms); }
+.feature--experts .mini-finder__placeholder { --inside-delay: calc(470ms + var(--scroll-order) * 90ms); }
+.feature--experts .country--static { --inside-delay: calc(540ms + var(--scroll-order) * 90ms); }
+
+html.scroll-reveal-ready .feature.is-revealed .chip--payroll,
+html.scroll-reveal-ready .feature.is-revealed .mini-card,
+html.scroll-reveal-ready .feature.is-revealed.feature--onboarding .chip,
+html.scroll-reveal-ready .feature.is-revealed .benefit-card,
+html.scroll-reveal-ready .feature.is-revealed .benefit-card__person,
+html.scroll-reveal-ready .feature.is-revealed .benefit-card__tags .chip,
+html.scroll-reveal-ready .feature.is-revealed .mini-finder,
+html.scroll-reveal-ready .feature.is-revealed .mini-finder .icon-button,
+html.scroll-reveal-ready .feature.is-revealed .mini-finder__placeholder,
+html.scroll-reveal-ready .feature.is-revealed .country--static {
+  transition:
+    opacity 460ms var(--ease-panel) var(--inside-delay),
+    transform 640ms var(--ease-panel) var(--inside-delay);
+}
+
+html.scroll-reveal-ready .feature.is-revealed .feature__connector {
+  transition:
+    opacity 420ms var(--ease-panel) var(--inside-delay),
+    clip-path 620ms var(--ease-panel) var(--inside-delay);
+}
+
+html.scroll-reveal-ready .feature:not(.is-revealed) .chip--payroll {
+  opacity: 0;
+  transform: translateX(calc(-14 * var(--k)));
+}
+
+html.scroll-reveal-ready .feature:not(.is-revealed) .feature__connector {
+  opacity: 0;
+  clip-path: inset(50% 0 50% 0);
+}
+
+html.scroll-reveal-ready .feature:not(.is-revealed) .mini-card {
+  opacity: 0;
+  transform: translateX(calc(18 * var(--k)));
+}
+
+html.scroll-reveal-ready .feature:not(.is-revealed).feature--onboarding .chip {
+  opacity: 0;
+  transform: translateY(calc(10 * var(--k)));
+}
+
+html.scroll-reveal-ready .feature:not(.is-revealed) .benefit-card {
+  opacity: 0;
+  transform: translateY(calc(14 * var(--k))) scale(0.985);
+}
+
+html.scroll-reveal-ready .feature:not(.is-revealed) .benefit-card__person,
+html.scroll-reveal-ready .feature:not(.is-revealed) .benefit-card__tags .chip {
+  opacity: 0;
+  transform: translateY(calc(8 * var(--k)));
+}
+
+html.scroll-reveal-ready .feature:not(.is-revealed) .mini-finder {
+  opacity: 0;
+  transform: translateY(calc(12 * var(--k))) scale(0.985);
+}
+
+html.scroll-reveal-ready .feature:not(.is-revealed) .mini-finder .icon-button,
+html.scroll-reveal-ready .feature:not(.is-revealed) .mini-finder__placeholder {
+  opacity: 0;
+  transform: translateX(calc(-8 * var(--k)));
+}
+
+html.scroll-reveal-ready .feature:not(.is-revealed) .country--static {
+  opacity: 0;
+  transform: translateX(calc(8 * var(--k)));
+}
+
+html.scroll-reveal-ready .showcase__title.is-revealed {
+  transition:
+    opacity 620ms var(--ease-panel) calc(var(--scroll-order) * 100ms),
+    transform 820ms var(--ease-panel) calc(var(--scroll-order) * 100ms);
+}
+
+html.scroll-reveal-ready .showcase__figure.is-revealed {
+  transition:
+    opacity 760ms var(--ease-panel) calc(190ms + var(--scroll-order) * 100ms),
+    transform 980ms var(--ease-panel) calc(190ms + var(--scroll-order) * 100ms),
+    clip-path 980ms var(--ease-panel) calc(190ms + var(--scroll-order) * 100ms);
+}
+
+html.scroll-reveal-ready .showcase__title:not(.is-revealed) {
+  opacity: 0;
+  transform: translateY(calc(15 * var(--k)));
+}
+
+html.scroll-reveal-ready .showcase__figure:not(.is-revealed) {
+  opacity: 0;
+  clip-path: inset(10% 0 0 0 round calc(var(--radius-card) * var(--k)));
+  transform: translateY(calc(20 * var(--k))) scale(0.985);
+}
+
+@media (max-width: 699px) {
+  html.scroll-reveal-ready .feature:not(.is-revealed) .feature__media {
+    transform: translateY(14px) scale(0.99);
+  }
+
+  html.scroll-reveal-ready .showcase__figure:not(.is-revealed) {
+    transform: translateY(16px) scale(0.99);
+  }
+}
+
+/* Motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after { transition: none !important; animation: none !important; }
+
+  html.entrance-pending .brand,
+  html.entrance-pending .nav__link,
+  html.entrance-pending .nav > .nav__cta,
+  html.entrance-pending .nav__toggle,
+  html.entrance-pending .finder,
+  html.entrance-pending .cta,
+  html.entrance-pending .hero__title,
+  html.entrance-pending .avatar-stack,
+  html.entrance-pending .hero__lede { opacity: 1; clip-path: none; }
+
+  html.entrance-pending .brand,
+  html.entrance-pending .nav__link,
+  html.entrance-pending .nav > .nav__cta,
+  html.entrance-pending .nav__toggle,
+  html.entrance-pending .hero__title,
+  html.entrance-pending .avatar-stack,
+  html.entrance-pending .hero__lede { transform: none; }
+
+  html.entrance-pending .finder { transform: translate(-50%, -50%); }
+  html.entrance-pending .cta { transform: translateX(-50%); }
+
+  html.scroll-reveal-ready .feature .feature__media,
+  html.scroll-reveal-ready .feature .feature__title,
+  html.scroll-reveal-ready .feature .feature__text,
+  html.scroll-reveal-ready .feature .chip--payroll,
+  html.scroll-reveal-ready .feature .feature__connector,
+  html.scroll-reveal-ready .feature .mini-card,
+  html.scroll-reveal-ready .feature.feature--onboarding .chip,
+  html.scroll-reveal-ready .feature .benefit-card,
+  html.scroll-reveal-ready .feature .benefit-card__person,
+  html.scroll-reveal-ready .feature .benefit-card__tags .chip,
+  html.scroll-reveal-ready .feature .mini-finder,
+  html.scroll-reveal-ready .feature .mini-finder .icon-button,
+  html.scroll-reveal-ready .feature .mini-finder__placeholder,
+  html.scroll-reveal-ready .feature .country--static,
+  html.scroll-reveal-ready .showcase__title,
+  html.scroll-reveal-ready .showcase__figure {
+    opacity: 1;
+    clip-path: none;
+    transform: none;
+    will-change: auto;
+  }
+}

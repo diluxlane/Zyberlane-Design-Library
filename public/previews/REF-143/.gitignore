@@ -1,0 +1,27 @@
+# Dependencies and generated Cloudflare state
+node_modules/
+.wrangler/
+
+# Local environment and secrets
+.dev.vars
+.dev.vars.*
+.env
+.env.*
+!.env.example
+
+# Logs and test/build output
+*.log
+coverage/
+dist/
+
+# Editor and operating-system files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Local exports and backups
+*.bak
+*.tmp
+*.zip

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="/previews/REF-141/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f1014">
+<title>StakeKit — Web3 Yield Infrastructure</title>
+<style>
+/* ---------- Embedded fonts (offline) ---------- */
+@font-face{font-family:"Google Sans";src:url(assets/google-sans.woff2) format("woff2");font-weight:400 700;font-style:normal;font-display:block}
+@font-face{font-family:"Instrument Serif";src:url(assets/instrument-serif.woff2) format("woff2");font-weight:400;font-style:normal;font-display:block}
+
+/* =====================================================================
+   SCALE SYSTEM
+   Every length below is written in "u" = one pixel of the 1394×1128
+   reference. At the reference size u = 1px (pixel-for-pixel).
+   Desktop: u = min(width-fit, height-fit)  (exact fit, no scrollbar)
+     → the whole screen fills the viewport exactly (no top/bottom gaps);
+       spare width/height is absorbed by the flexible regions
+       (header bar, hero card, bottom card extension) — never letterboxed.
+   ===================================================================== */
+:root{
+  --u: min(calc(100vw / 1394), calc(100vh / 1128));
+  --ink:#0b0b0c;
+  --muted:#76777a;
+  --orange:#ff7a3d;
+  --accent:#fc5020;
+  --sheet:#fefefe;
+  --frame:#0f1014;
+}
+@supports (height:100dvh){ :root{ --u: min(calc(100vw / 1394), calc(100dvh / 1128)); } }
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--frame)}
+body{
+  font-family:"Google Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  text-rendering:geometricPrecision;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+svg{display:block}
+
+/* ---------- Page frame ---------- */
+.page{
+  position:relative;
+  display:flex;flex-direction:column;
+  min-height:100vh;
+  height:100vh;
+  padding:0 calc(2 * var(--u)) calc(1 * var(--u));
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.13) 0, rgba(0,0,0,0) calc(92 * var(--u))),
+    linear-gradient(180deg, rgba(10,9,11,0) calc(120 * var(--u)), rgba(10,9,11,1) calc(420 * var(--u))),
+    linear-gradient(90deg,
+      #0f1014 0, #101014 2.87%, #151219 7.89%, #1b141d 9.33%, #2d1a2b 15.42%,
+      #3d1e38 19.37%, #4e2245 23.67%, #572349 27.26%, #63274b 33.00%, #772f53 38.74%,
+      #8c3858 44.48%, #973b57 50.22%, #a64254 55.95%, #b0484d 61.69%, #b95244 67.43%,
+      #c2603b 74.61%, #bd6834 78.19%, #a6662c 84.65%, #9c642a 87.52%, #7f5624 93.26%,
+      #62461f 97.56%, #563f1d 100.00%);
+}
+@supports (height:100dvh){ .page{min-height:100dvh;height:100dvh} }
+/* desktop is an exact fit to the window: never a scrollbar */
+@media (min-width:1000px){ html,body{overflow:hidden} }
+
+/* ---------- Header ---------- */
+.hdr{position:relative;flex:0 0 calc(97 * var(--u));z-index:3}
+.brand{position:absolute;left:calc(39.5 * var(--u));top:calc(27.5 * var(--u));display:flex;align-items:flex-start;gap:0}
+.brand svg{width:calc(33 * var(--u));height:calc(47 * var(--u))}
+.brand-word{position:absolute;left:calc(42.6 * var(--u));top:calc(6.4 * var(--u));-webkit-text-stroke:calc(.35 * var(--u)) #fff;font-family:"Instrument Serif",serif;font-size:calc(43.4 * var(--u));line-height:1;color:#fff;white-space:nowrap;letter-spacing:calc(.1 * var(--u))}
+
+.navtab{
+  position:absolute;left:50%;top:calc(14 * var(--u));width:calc(658 * var(--u));height:calc(84 * var(--u));margin-left:calc(-329 * var(--u));
+  background:var(--sheet);border-radius:calc(24 * var(--u)) calc(24 * var(--u)) 0 0;
+}
+.navtab::before,.navtab::after{content:"";position:absolute;bottom:calc(1 * var(--u));width:calc(28 * var(--u));height:calc(28 * var(--u))}
+.navtab::before{left:calc(-28 * var(--u));background:radial-gradient(circle at 0 0, rgba(255,255,255,0) calc(calc(28 * var(--u)) - .6px), var(--sheet) calc(28 * var(--u)))}
+.navtab::after{right:calc(-28 * var(--u));background:radial-gradient(circle at 100% 0, rgba(255,255,255,0) calc(calc(28 * var(--u)) - .6px), var(--sheet) calc(28 * var(--u)))}
+.nav a{position:absolute;top:calc(20.8 * var(--u));height:calc(39.8 * var(--u));line-height:calc(42.9 * var(--u));padding:0 calc(23 * var(--u));border-radius:calc(40 * var(--u));font-size:calc(14.3 * var(--u));font-weight:400;color:var(--ink);white-space:nowrap;transition:background-color .2s}
+.nav a:hover{background:#f6f6f6}
+.nav a.on{background:#f4f4f4;font-size:calc(14.4 * var(--u));font-weight:500}
+
+.cta-bar{position:absolute;right:calc(32 * var(--u));top:calc(34 * var(--u));display:flex;gap:calc(15.5 * var(--u));align-items:center}
+.btn-glass{
+  width:calc(109.5 * var(--u));height:calc(41 * var(--u));justify-content:center;border-radius:calc(30 * var(--u));display:inline-flex;align-items:center;margin-top:calc(1.5 * var(--u));padding-left:0;margin-right:calc(.5 * var(--u));
+  font-size:calc(14.1 * var(--u));font-weight:500;color:#fff;letter-spacing:calc(.05 * var(--u));padding-top:0;
+  background:linear-gradient(180deg, rgba(22,34,30,.22), rgba(22,34,30,.26));
+  box-shadow:inset 0 0 0 calc(1 * var(--u)) rgba(255,214,180,.20), inset 0 calc(1 * var(--u)) 0 rgba(255,255,255,.06);
+  -webkit-backdrop-filter:blur(12px) saturate(120%);backdrop-filter:blur(12px) saturate(120%);
+}
+.btn-white{
+  width:calc(130.5 * var(--u));height:calc(41 * var(--u));padding:0 calc(4.5 * var(--u)) 0 calc(22.5 * var(--u));border-radius:calc(30 * var(--u));display:inline-flex;align-items:center;justify-content:space-between;
+  background:#fff;font-size:calc(14.4 * var(--u));font-weight:600;padding-top:calc(1.5 * var(--u));color:var(--ink);margin-top:0;
+  box-shadow:0 calc(1 * var(--u)) calc(2 * var(--u)) rgba(0,0,0,.06);
+}
+.orb{border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(120% 120% at 25% 18%, #ffc672 0%, #ff9f82 30%, #ff8a8b 48%, #fb5a72 72%, #ff5a2c 100%);}
+.btn-white .orb{width:calc(31 * var(--u));height:calc(31 * var(--u))}
+.orb svg{width:calc(9.5 * var(--u));height:calc(7.8 * var(--u))}
+
+/* ---------- Sheet ---------- */
+.sheet{
+  position:relative;flex:1 1 auto;display:flex;flex-direction:column;
+  background:var(--sheet);border-radius:calc(36 * var(--u)) calc(36 * var(--u)) calc(32 * var(--u)) calc(32 * var(--u));
+  padding:0 calc(16.5 * var(--u)) calc(20 * var(--u)) calc(16 * var(--u));
+}
+.hero{flex:0 0 calc(382 * var(--u));display:flex;align-items:center;justify-content:center;position:relative}
+.hero-in{position:relative;width:100%;height:calc(382 * var(--u))}
+.h1{
+  position:absolute;left:calc(4 * var(--u));right:0;top:calc(27.3 * var(--u));text-align:center;
+  font-family:"Instrument Serif",serif;font-weight:400;font-size:calc(95 * var(--u));line-height:calc(91.5 * var(--u));color:#000;
+  letter-spacing:calc(-2.85 * var(--u));word-spacing:calc(5 * var(--u));
+}
+.h1 span{display:block;white-space:nowrap}
+.h1 span i{display:inline-block;font-style:normal;transform:scaleX(var(--sx,.935));-webkit-text-stroke:calc(.8 * var(--u)) #000;
+  text-shadow:0 calc(2 * var(--u)) calc(6 * var(--u)) rgba(0,0,0,.10)}
+
+.actions{position:absolute;left:0;right:0;top:calc(228 * var(--u));display:flex;justify-content:center;align-items:center;gap:calc(48 * var(--u));padding-left:0;margin-left:calc(-2.6 * var(--u))}
+.btn-dark{
+  position:relative;width:calc(192 * var(--u));height:calc(58 * var(--u));border-radius:calc(40 * var(--u));background:#0e0f13;color:#fff;
+  display:inline-flex;align-items:center;font-size:calc(16.45 * var(--u));font-weight:500;padding-left:calc(31.6 * var(--u));padding-top:calc(1 * var(--u));letter-spacing:calc(.05 * var(--u));
+  box-shadow:0 0 0 calc(1 * var(--u)) rgba(255,255,255,.55), 0 calc(7 * var(--u)) calc(26 * var(--u)) rgba(0,0,0,.20), 0 calc(2 * var(--u)) calc(6 * var(--u)) rgba(0,0,0,.05);
+}
+.btn-dark .orb{position:absolute;right:calc(9 * var(--u));top:calc(11 * var(--u));width:calc(36 * var(--u));height:calc(36 * var(--u))}
+.btn-dark .orb svg{width:calc(12 * var(--u));height:calc(10 * var(--u))}
+.link-docs{position:relative;font-size:calc(16.9 * var(--u));font-weight:500;color:var(--ink);padding-bottom:calc(2 * var(--u));margin-top:calc(2 * var(--u));margin-left:calc(-1 * var(--u));letter-spacing:calc(.05 * var(--u))}
+.link-docs::after{content:"";position:absolute;left:0;right:0;bottom:calc(1.5 * var(--u));height:calc(2 * var(--u));background:#1b1b1b;border-radius:calc(1 * var(--u))}
+
+.logos{position:absolute;left:0;right:0;top:calc(322 * var(--u));height:calc(34 * var(--u))}
+.logos svg{position:absolute;top:0;height:calc(34 * var(--u))}
+.lg-zerion{left:calc(50% - calc(293 * var(--u)));width:calc(120 * var(--u));margin-top:calc(-1 * var(--u))}
+.lg-ledger{left:calc(50% - calc(118 * var(--u)));width:calc(91 * var(--u))}
+.lg-tangem{left:calc(50% + calc(29 * var(--u)));width:calc(118 * var(--u))}
+.lg-omni{left:calc(50% + calc(192 * var(--u)));width:calc(116 * var(--u));margin-top:calc(-1 * var(--u))}
+
+/* ---------- Hero card (image) ---------- */
+.card{position:relative;flex:1 1 calc(628 * var(--u));min-height:calc(calc(628 * var(--u)) - 2px);border-radius:calc(31 * var(--u)) calc(31 * var(--u)) calc(25 * var(--u)) calc(25 * var(--u));overflow:hidden;background:#140f17;isolation:isolate}
+.card-bg{position:absolute;left:50%;top:0;width:max(calc(1390 * var(--u)), 102.43%);min-height:100%;aspect-ratio:1843/853;height:auto;object-fit:cover;object-position:50% 0;transform:translateX(calc(-50% - calc(2.5 * var(--u))));z-index:-1;user-select:none;pointer-events:none}
+
+/* glass app panel */
+.panel{
+  position:absolute;left:calc(50% - calc(239.5 * var(--u)));top:calc(50% - calc(262 * var(--u)));width:calc(357 * var(--u));height:calc(482 * var(--u));border-radius:calc(14 * var(--u));
+  background:rgba(15,18,19,.945);
+  -webkit-backdrop-filter:blur(25px);backdrop-filter:blur(25px);
+  box-shadow:0 0 0 calc(1 * var(--u)) rgba(255,255,255,.06), inset 0 0 0 calc(1 * var(--u)) rgba(0,0,0,.45), 0 calc(24 * var(--u)) calc(48 * var(--u)) rgba(0,0,0,.28);
+}
+.p-logo{position:absolute;left:calc(19 * var(--u));top:calc(15.5 * var(--u));width:calc(24 * var(--u));height:calc(22 * var(--u))}
+.p-menu .t{font-size:calc(12 * var(--u));font-weight:500;color:#fff;letter-spacing:0;margin-top:calc(1.5 * var(--u))}
+.p-menu .t.on{color:#ff8247}
+
+.widget{position:absolute;left:calc(165 * var(--u));top:calc(65 * var(--u));width:calc(249 * var(--u));height:calc(369 * var(--u));border-radius:calc(12 * var(--u));background:#fff;
+  box-shadow:0 0 0 calc(1 * var(--u)) rgba(0,0,0,.35), 0 calc(18 * var(--u)) calc(40 * var(--u)) rgba(0,0,0,.30)}
+.w-tabline{position:absolute;left:calc(11 * var(--u));top:calc(41 * var(--u));width:calc(228 * var(--u));height:calc(1.4 * var(--u));background:#efeded}
+.w-tabact{position:absolute;left:calc(57 * var(--u));top:calc(40 * var(--u));width:calc(40 * var(--u));height:calc(2.2 * var(--u));background:#fc6f45;border-radius:calc(2 * var(--u))}
+.w-box{position:absolute;left:calc(6 * var(--u));width:calc(234 * var(--u));border-radius:calc(10 * var(--u));background:#f6f6f7}
+.w-box.b1{top:calc(70 * var(--u));height:calc(59.5 * var(--u))}
+.w-box.b2{top:calc(142 * var(--u));height:calc(67.5 * var(--u));width:calc(235.5 * var(--u))}
+.pill{position:absolute;height:calc(27.5 * var(--u));width:calc(68.5 * var(--u));border-radius:calc(20 * var(--u));background:#fff;box-shadow:0 calc(1 * var(--u)) calc(2 * var(--u)) rgba(0,0,0,.05)}
+.pill svg.coin{position:absolute;left:calc(7.5 * var(--u));top:calc(7 * var(--u));width:calc(11 * var(--u));height:calc(14 * var(--u))}
+.pill b{position:absolute;left:calc(23.2 * var(--u));top:calc(11.2 * var(--u));font-size:calc(10.6 * var(--u));font-weight:700;line-height:1;color:#000;letter-spacing:calc(.1 * var(--u))}
+.pill svg.chev{position:absolute;right:calc(11 * var(--u));top:calc(11.5 * var(--u));width:calc(7 * var(--u));height:calc(5 * var(--u))}
+.w-stake{position:absolute;left:calc(10 * var(--u));top:calc(306 * var(--u));width:calc(230 * var(--u));height:calc(35 * var(--u));border-radius:calc(8.5 * var(--u));background:#fd7243;
+  display:flex;align-items:center;justify-content:center;font-size:calc(11.3 * var(--u));font-weight:600;color:#000;padding-top:calc(1.5 * var(--u))}
+.w-pow{position:absolute;left:0;right:0;top:calc(350 * var(--u));display:flex;justify-content:center;align-items:center;gap:calc(4 * var(--u));font-size:calc(8.45 * var(--u));font-weight:600;color:#000;line-height:1;padding-left:calc(2 * var(--u));margin-top:calc(1 * var(--u))}
+.w-pow svg{width:calc(7.5 * var(--u));height:calc(7.5 * var(--u))}
+.feat .ic{position:absolute;left:calc(10.6 * var(--u));width:calc(7 * var(--u));height:calc(8.5 * var(--u))}
+.feat .t{font-size:calc(9.8 * var(--u));color:#7a7b7d;margin-top:calc(1 * var(--u))}
+
+.para{position:absolute;left:calc(50% + calc(288.6 * var(--u)));top:calc(50% - calc(117.5 * var(--u)));font-size:calc(17.8 * var(--u));line-height:calc(27.3 * var(--u));color:#fff;font-weight:400;letter-spacing:calc(-.02 * var(--u));white-space:nowrap;
+  text-shadow:0 calc(1 * var(--u)) calc(10 * var(--u)) rgba(0,0,0,.18)}
+
+/* ---------- Bottom tabs (white cut-outs of the sheet) ---------- */
+.tab-l,.tab-r{position:absolute;bottom:0;background:var(--sheet);z-index:2}
+.tab-l{left:0;width:calc(327 * var(--u));height:calc(132 * var(--u));border-radius:0 calc(25 * var(--u)) 0 calc(32 * var(--u))}
+.tab-r{right:0;width:calc(392 * var(--u));height:calc(146 * var(--u));border-radius:calc(20 * var(--u)) 0 calc(32 * var(--u)) 0}
+.fil{position:absolute}
+.tab-l .f1{left:calc(16 * var(--u));top:calc(-25 * var(--u));width:calc(25 * var(--u));height:calc(25 * var(--u));background:radial-gradient(circle at 100% 0, rgba(255,255,255,0) calc(calc(25 * var(--u)) - .6px), var(--sheet) calc(25 * var(--u)))}
+.tab-l .f2{left:calc(327 * var(--u));top:calc(92 * var(--u));width:calc(20 * var(--u));height:calc(20 * var(--u));background:radial-gradient(circle at 100% 0, rgba(255,255,255,0) calc(calc(20 * var(--u)) - .6px), var(--sheet) calc(20 * var(--u)))}
+.tab-r .f1{left:calc(345 * var(--u));top:calc(-30 * var(--u));width:calc(31 * var(--u));height:calc(30 * var(--u));background:radial-gradient(circle at 0 0, rgba(255,255,255,0) calc(calc(30 * var(--u)) - .6px), var(--sheet) calc(30 * var(--u)))}
+.tab-r .f2{left:calc(-24 * var(--u));top:calc(102 * var(--u));width:calc(24 * var(--u));height:calc(24 * var(--u));background:radial-gradient(circle at 0 0, rgba(255,255,255,0) calc(calc(24 * var(--u)) - .6px), var(--sheet) calc(24 * var(--u)))}
+.scroll-btn{position:absolute;left:calc(32 * var(--u));top:calc(20 * var(--u));width:calc(67 * var(--u));height:calc(67 * var(--u));border-radius:50%;box-shadow:inset 0 0 0 calc(1.4 * var(--u)) #e1e1e3;display:grid;place-items:center}
+.scroll-btn svg{width:calc(6 * var(--u));height:calc(16 * var(--u))}
+.tab-l .t{font-size:calc(15.8 * var(--u));font-weight:500;color:#000;margin-top:calc(1.5 * var(--u))}
+.prog{position:absolute;left:calc(44 * var(--u));top:calc(34 * var(--u));width:calc(307 * var(--u));height:calc(2 * var(--u));background:#e8e8e8;border-radius:calc(2 * var(--u))}
+.prog i{position:absolute;left:0;top:calc(-.5 * var(--u));height:calc(3 * var(--u));width:calc(21 * var(--u));background:var(--accent);border-radius:calc(2 * var(--u))}
+.tab-r .n{font-size:calc(14.7 * var(--u));color:#4d494a;letter-spacing:calc(.1 * var(--u));margin-top:calc(2 * var(--u))}
+.tab-r .n.on{color:#fd481b}
+.tab-r .ll{font-size:calc(16.1 * var(--u));font-weight:600;color:#000;margin-top:calc(1.5 * var(--u))}
+
+/* generic absolutely-positioned text */
+.t{position:absolute;left:calc(var(--x) * var(--u));top:calc(var(--y) * var(--u));line-height:1;white-space:nowrap}
+
+/* hidden in desktop (burger/menu only exist below the desktop breakpoint) */
+.burger{display:none}
+
+/* focus + motion */
+a:focus-visible,button:focus-visible{outline:2px solid #ff7a3d;outline-offset:2px}
+.btn-dark,.btn-white,.btn-glass,.w-stake{transition:transform .2s ease, filter .2s ease}
+.btn-dark:hover,.btn-white:hover,.btn-glass:hover{transform:translateY(-1px)}
+.w-stake:hover{filter:brightness(1.05)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* =====================================================================
+   RESPONSIVE ARCHITECTURE
+   ---------------------------------------------------------------------
+   ≥1000px  DESKTOP  – the reference composition above (untouched).
+            Below 1000px its fitted scale would push nav/CTA text under
+            10px and body copy under 13px, so the architecture changes.
+   704–999  TABLET   – same composition language re-architected:
+            nav links collapse into the white nav tab (burger), CTAs stay
+            in the header, the product mock keeps its own scale unit, and
+            the copy moves into the strip between the two bottom cut-outs.
+   <704px   MOBILE   – the cut-out strip would drop below ~250px (≈28ch),
+            so copy moves under the mock, the progress cut-out becomes a
+            full-width row, CTAs move into the expanded nav tab.
+   Tablet/mobile use u = 1px (reference size) plus fluid clamp() values.
+   ===================================================================== */
+@media (max-width:999.98px){
+  :root{
+    --u:1px;
+    --hh:76px;                                  /* header height            */
+    --gut:14px;                                 /* sheet side gutter        */
+    --pb:14px;                                  /* sheet bottom gutter      */
+    --tlw:clamp(180px, 21vw, 198px); --tlh:100px;   /* left cut-out        */
+    --trw:clamp(222px, 26vw, 256px);   --trh:116px;   /* right cut-out       */
+    --lh:46px;                                  /* menu link height          */
+    --m:clamp(.64px, min(calc((100vh - 462px - 24.7vw) / 482), calc((100vw - 110px) / 414)), 1px);
+  }
+  @supports (height:100dvh){
+    :root{ --m:clamp(.64px, min(calc((100dvh - 462px - 24.7vw) / 482), calc((100vw - 110px) / 414)), 1px); }
+  }
+
+  .page{height:auto;min-height:100vh;padding:0 calc(2px + env(safe-area-inset-right,0px)) 2px calc(2px + env(safe-area-inset-left,0px))}
+  @supports (height:100dvh){ .page{min-height:100dvh} }
+
+  /* ---- header: logo · white nav tab (burger) · CTAs ---- */
+  .hdr{flex:0 0 var(--hh)}
+  .brand{left:20px;top:15px}
+  .burger{
+    display:block;position:absolute;left:50%;bottom:-1px;width:64px;height:calc(var(--hh) - 13px);margin-left:-32px;
+    background:var(--sheet);border-radius:20px 20px 0 0;color:var(--ink);z-index:2;
+  }
+  .burger::before,.burger::after{content:"";position:absolute;bottom:1px;width:18px;height:18px}
+  .burger::before{left:-18px;background:radial-gradient(circle at 0 0, rgba(255,255,255,0) calc(18px - .6px), var(--sheet) 18px)}
+  .burger::after{right:-18px;background:radial-gradient(circle at 100% 0, rgba(255,255,255,0) calc(18px - .6px), var(--sheet) 18px)}
+  .burger span{position:absolute;left:21px;right:21px;top:50%;height:2px;margin-top:-1px;background:currentColor;border-radius:2px;transition:transform .25s ease}
+  .burger span:first-child{transform:translateY(-4px)}
+  .burger span:last-child{transform:translateY(4px)}
+  .nav-open .burger span:first-child{transform:rotate(45deg)}
+  .nav-open .burger span:last-child{transform:rotate(-45deg)}
+
+  .cta-bar{right:20px;top:17px;gap:12px}
+  .btn-glass,.btn-white{margin:0}
+
+  /* the nav tab itself becomes the menu surface (no duplicated links) */
+  .navtab{
+    top:var(--hh);left:50%;width:300px;height:auto;margin-left:-150px;padding:8px;
+    display:flex;flex-direction:column;gap:2px;
+    border-radius:24px;box-shadow:0 30px 70px rgba(0,0,0,.30), 0 2px 8px rgba(0,0,0,.06);
+    visibility:hidden;opacity:0;transform:translateY(-8px);transform-origin:50% 0;
+    transition:opacity .22s ease, transform .22s ease, visibility 0s linear .22s;
+  }
+  .navtab::before{display:none}
+  .navtab::after{content:none}
+  .nav-open .navtab{visibility:visible;opacity:1;transform:none;transition:opacity .22s ease, transform .22s ease}
+  .nav a{position:static;height:var(--lh);line-height:calc(var(--lh) + 2px);padding:0 20px;font-size:16px;border-radius:40px}
+  .nav a.on{font-size:16px}
+
+  /* scrim behind the open menu (header stays on top) */
+  .nav-open .hdr{z-index:30}
+  .nav-open::after{content:"";position:fixed;inset:0;z-index:20;background:rgba(10,9,12,.55);
+    -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  html.nav-lock{overflow:hidden}
+
+  /* ---- sheet ---- */
+  .sheet{border-radius:30px 30px 28px 28px;padding:0 var(--gut) var(--pb)}
+
+  /* ---- hero: same two-line headline, CTA pair, one logo row ---- */
+  .hero{flex:0 0 auto}
+  .hero-in{height:auto;display:flex;flex-direction:column;align-items:center;padding:clamp(30px, 5vw, 46px) 10px clamp(28px, 4.2vw, 40px)}
+  .h1{position:static;font-size:clamp(46px, calc((100vw - 84px) / 8.3), 90px);line-height:.965;
+    letter-spacing:-.03em;word-spacing:.053em;padding-left:.04em}
+  .h1 span i{-webkit-text-stroke:.0085em #000;text-shadow:0 .02em .06em rgba(0,0,0,.10)}
+  .h1 span:last-child i{letter-spacing:-.033em!important}
+  .actions{position:static;margin:clamp(26px, 3.6vw, 34px) 0 0;gap:clamp(28px, 4.4vw, 46px)}
+  .logos{position:static;height:auto;margin-top:clamp(26px, 3.8vw, 36px);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
+    gap:14px clamp(26px, 5vw, 52px)}
+  .logos svg{position:static;margin:0;height:clamp(28px, 3.9vw, 34px)}
+  .lg-zerion{width:auto;aspect-ratio:120/34}.lg-ledger{width:auto;aspect-ratio:91/34}
+  .lg-tangem{width:auto;aspect-ratio:118/34}.lg-omni{width:auto;aspect-ratio:116/34}
+
+  /* ---- card: mock on top, copy between the two cut-outs ---- */
+  .card{flex:1 1 auto;min-height:0;border-radius:28px;display:flex;flex-direction:column;align-items:center;padding-top:clamp(28px, 4vw, 40px)}
+  .card-bg{width:auto;height:100%;min-width:100%;min-height:0;aspect-ratio:auto;left:0;transform:none;object-fit:cover;object-position:38% 50%}
+  .panel{--u:var(--m);position:relative;left:auto;top:auto;flex:none;margin:0 calc(57 * var(--u)) 0 0}
+  .para{position:relative;left:auto;top:auto;white-space:normal;align-self:stretch;
+    margin:28px calc(var(--trw) - var(--gut) + 24px) 0 calc(var(--tlw) - var(--gut) + 24px);margin-top:auto;
+    min-height:calc(var(--trh) - var(--pb) + 30px);padding:30px 0 22px;
+    display:flex;align-items:center;font-size:clamp(15px, 1.75vw, 17px);line-height:1.55;text-wrap:pretty}
+  .para br{display:none}
+
+  /* ---- bottom cut-outs (same fillet construction as desktop) ---- */
+  .tab-l{width:var(--tlw);height:var(--tlh);border-radius:0 24px 0 28px;display:flex;align-items:center;gap:12px;padding:6px 0 0 calc(var(--gut) + 8px)}
+  .tab-r{width:var(--trw);height:var(--trh);border-radius:20px 0 28px 0;padding:30px calc(var(--gut) + 16px) 0 26px;
+    display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto auto auto;align-content:start;row-gap:13px}
+  .tab-l .f1{left:var(--gut);top:-24px;width:24px;height:24px;background:radial-gradient(circle at 100% 0, rgba(255,255,255,0) 23.4px, var(--sheet) 24px)}
+  .tab-l .f2{left:var(--tlw);top:calc(var(--tlh) - var(--pb) - 20px);width:20px;height:20px;background:radial-gradient(circle at 100% 0, rgba(255,255,255,0) 19.4px, var(--sheet) 20px)}
+  .tab-r .f1{left:calc(var(--trw) - var(--gut) - 26px);top:-26px;width:26px;height:26px;background:radial-gradient(circle at 0 0, rgba(255,255,255,0) 25.4px, var(--sheet) 26px)}
+  .tab-r .f2{left:-22px;top:calc(var(--trh) - var(--pb) - 22px);width:22px;height:22px;background:radial-gradient(circle at 0 0, rgba(255,255,255,0) 21.4px, var(--sheet) 22px)}
+  .scroll-btn{position:relative;left:auto;top:auto;width:52px;height:52px;flex:none}
+  .tab-l .t,.tab-r .t{position:static;margin:0}
+  .tab-l .t{font-size:15.5px}
+  .prog{position:relative;left:auto;top:auto;width:auto;grid-column:1/-1}
+  .tab-r .n{font-size:14px}
+  .tab-r .n:nth-of-type(2){justify-self:center}
+  .tab-r .n:nth-of-type(3){justify-self:end}
+  .tab-r .ll{grid-column:1/-1;font-size:16px}
+
+  @media (hover:hover){ .nav a:hover{background:#f6f6f6} .burger:hover span{background:#000} }
+}
+
+/* =====================================================================
+   MOBILE  (<704px): the strip between the cut-outs is too narrow for the
+   copy, and the header can no longer hold logo + CTAs + tab.
+   ===================================================================== */
+@media (max-width:703.98px){
+  :root{
+    --hh:68px;--gut:10px;--pb:0px;
+    --tlw:clamp(164px, 46vw, 196px);--tlh:84px;
+    --m:clamp(.6px, calc((100vw - 52px) / 414), .95px);
+    --panel-h:calc(8px + 5 * var(--lh) + 4 * 2px + 84px);
+  }
+  .brand{left:16px;top:14px}
+  .brand svg{width:28px;height:40px}
+  .brand-word{left:36px;top:5px;font-size:37px}
+  .burger{left:auto;right:44px;margin:0;width:60px;height:calc(var(--hh) - 12px)}
+  .burger span{left:20px;right:20px}
+
+  /* CTAs live inside the expanded tab, on their native gradient band */
+  .cta-bar{display:none;left:26px;right:26px;top:calc(var(--hh) + var(--panel-h) - 8px - 68px + 10px);gap:10px;z-index:3}
+  .nav-open .cta-bar{display:flex}
+  .cta-bar a{flex:1 1 0;width:auto;height:48px}
+  .btn-white{justify-content:center;gap:14px;padding:0 6px 0 18px}
+  .btn-white .orb{margin-left:auto}
+  .navtab{left:10px;right:10px;width:auto;margin:0;height:var(--panel-h);padding-bottom:84px}
+  .navtab::after{content:"";position:absolute;left:8px;right:8px;bottom:8px;height:68px;border-radius:18px;width:auto;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,0)),
+      linear-gradient(90deg, #1b141d 0, #4e2245 24%, #8c3858 48%, #b0484d 64%, #c2603b 78%, #9c642a 92%, #62461f 100%)}
+
+  .sheet{border-radius:26px 26px 24px 24px;padding:0 var(--gut)}
+  .hero-in{padding:30px 4px 30px}
+  .h1{font-size:clamp(40px, 12.6vw, 64px);line-height:.98}
+  .h1 span{white-space:normal;text-wrap:balance}
+  .h1 span i{display:inline}
+  .actions{gap:clamp(18px, 6vw, 34px);flex-wrap:wrap}
+  .btn-dark{width:clamp(172px, 49vw, 192px);height:56px;padding-left:clamp(24px, 7vw, 31px)}
+  .btn-dark .orb{top:10px}
+  .logos{margin-top:30px;gap:16px 30px}
+  .logos svg{height:clamp(24px, 7.2vw, 30px)}
+
+  .card{flex:0 0 auto;border-radius:24px;padding:26px 0 calc(var(--tlh) + 4px)}
+  .card-bg{object-position:30% 50%}
+  .para{margin:24px auto 4px;width:calc(100% - 44px);max-width:34em;min-height:0;padding:0;font-size:16px;line-height:1.55;display:block}
+
+  /* left cut-out pulled up into the card's bottom-left corner */
+  .tab-l{position:relative;align-self:flex-start;margin:calc(-1 * var(--tlh)) 0 0;left:auto;bottom:auto;
+    height:var(--tlh);border-radius:0 22px 0 0;padding:4px 0 0 14px}
+  .tab-l .f1{left:0;top:-22px;width:22px;height:22px;background:radial-gradient(circle at 100% 0, rgba(255,255,255,0) 21.4px, var(--sheet) 22px)}
+  .tab-l .f2{left:var(--tlw);top:calc(var(--tlh) - 20px)}
+  .scroll-btn{width:54px;height:54px}
+  /* right cut-out becomes the closing full-width row of the sheet */
+  .tab-r{position:relative;right:auto;bottom:auto;width:auto;height:auto;border-radius:0 0 24px 24px;padding:22px 14px 26px;row-gap:12px}
+  .tab-r .fil{display:none}
+}
+/* narrow phones: one logo row would need logos under ~24px tall → 2×2 */
+@media (max-width:519.98px){
+  .logos{display:grid;grid-template-columns:repeat(2, max-content);justify-content:center;justify-items:center;gap:18px clamp(24px, 9vw, 44px)}
+}
+
+/* One entrance sequence. The page and card backgrounds remain still. */
+@media (prefers-reduced-motion:no-preference){
+  @keyframes entrance-soft{
+    from{opacity:0}
+    to{opacity:1}
+  }
+  @keyframes entrance-rise{
+    from{opacity:0;transform:translate3d(0, var(--entrance-y, 10px), 0)}
+    to{opacity:1;transform:none}
+  }
+  @keyframes entrance-line{
+    from{opacity:0;clip-path:inset(0 0 100% 0);transform:translate3d(0, 16px, 0)}
+    to{opacity:1;clip-path:inset(0);transform:none}
+  }
+  @keyframes entrance-panel{
+    from{opacity:0;transform:translate3d(0, 12px, 0) scale(.985)}
+    to{opacity:1;transform:none}
+  }
+
+  .brand{--entrance-y:8px;animation:entrance-rise .62s cubic-bezier(.22,1,.36,1) .06s backwards}
+  .nav a{animation:entrance-soft .55s ease-out .22s backwards}
+  .cta-bar{--entrance-y:7px;animation:entrance-rise .58s cubic-bezier(.22,1,.36,1) .27s backwards}
+  .h1 span{animation:entrance-line .76s cubic-bezier(.2,.8,.2,1) .28s backwards}
+  .h1 span + span{animation-delay:.47s}
+  .actions{--entrance-y:9px;animation:entrance-rise .62s cubic-bezier(.22,1,.36,1) .82s backwards}
+  .logos{animation:entrance-soft .64s ease-out 1.02s backwards}
+  .panel{animation:entrance-panel .78s cubic-bezier(.22,1,.36,1) 1.03s backwards}
+  .para{--entrance-y:9px;animation:entrance-rise .66s cubic-bezier(.22,1,.36,1) 1.27s backwards}
+  .tab-l .scroll-btn,.tab-l .t,.tab-r .prog,.tab-r .t{
+    animation:entrance-soft .48s ease-out 1.48s backwards;
+  }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="hdr">
+    <a class="brand" href="#" aria-label="StakeKit home">
+      <svg viewBox="0 0 33 47" aria-hidden="true">
+        <defs>
+          <linearGradient id="lg-brand" x1="0" y1="0" x2="0" y2="47" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#ffd52c"/>
+            <stop offset=".17" stop-color="#fdc93a"/>
+            <stop offset=".3" stop-color="#fbaa86"/>
+            <stop offset=".42" stop-color="#f794dc"/>
+            <stop offset=".55" stop-color="#f96acd"/>
+            <stop offset=".68" stop-color="#f7525b"/>
+            <stop offset=".84" stop-color="#fd5a12"/>
+            <stop offset="1" stop-color="#f35d01"/>
+          </linearGradient>
+        </defs>
+        <path d="M3.8 8.4 L26.9 4.6 M26.9 4.6 L28.9 23.6 M26.9 4.6 L8.6 23 L19.8 31.6 L5.6 43.6" fill="none" stroke="url(#lg-brand)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="brand-word">StakeKit</span>
+    </a>
+
+    <nav class="navtab nav" id="primary-nav" aria-label="Primary">
+      <a class="on t" href="#" style="--x:60;--y:21.5">Home</a>
+      <a class="t" href="#" style="--x:145;--y:21.5">Solutions</a>
+      <a class="t" href="#" style="--x:252.5;--y:21.5">Revenue Calculator</a>
+      <a class="t" href="#" style="--x:430;--y:21.5">About</a>
+      <a class="t" href="#" style="--x:522.5;--y:21.5">Blog</a>
+    </nav>
+
+    <div class="cta-bar">
+      <a class="btn-glass" href="#">Contact us</a>
+      <a class="btn-white" href="#">Sign up
+        <span class="orb"><svg viewBox="0 0 11 9" aria-hidden="true"><path d="M1 4.5h7.6M5.6 1.3 8.9 4.5 5.6 7.7" fill="none" stroke="#000" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+    </div>
+
+    <button class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav"><span></span><span></span></button>
+  </header>
+
+  <!-- ===================== SHEET ===================== -->
+  <main class="sheet">
+    <section class="hero">
+      <div class="hero-in">
+        <h1 class="h1"><span><i style="--sx:1.02">The Ultimate</i></span><span><i style="--sx:1.02;letter-spacing:calc(-3.15 * var(--u))">Web3 Yield Infrastructure</i></span></h1>
+
+        <div class="actions">
+          <a class="btn-dark" href="#">Get Started
+            <span class="orb"><svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5h8.4M6.2 1.5 9.8 5 6.2 8.5" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+          <a class="link-docs" href="#">View Docs</a>
+        </div>
+
+        <div class="logos" aria-label="Trusted by">
+          <!-- Zerion -->
+          <svg class="lg-zerion" viewBox="0 0 120 34" aria-label="Zerion">
+            <path d="M1.5 5.5 H20 L21.5 8 L11 19.5 H19.5 L21.5 22 L20.5 32 H3 L1.5 29.5 L12 18 H3.5 L1.5 15.5 Z" fill="#a8a7a8"/>
+            <path d="M12 18 L1.5 29.5 L3 32 H6 L15.5 21.5 Z" fill="#c3c2c3"/>
+            <text x="31.5" y="26.2" font-family="Google Sans" font-weight="700" font-size="21" letter-spacing="2.25" fill="#a6a5a6">ZERION</text>
+          </svg>
+          <!-- Ledger -->
+          <svg class="lg-ledger" viewBox="0 0 91 34" aria-label="Ledger">
+            <path d="M1 11.5 V2 H11.5 M79.5 2 H90 V11.5 M90 22.5 V32 H79.5 M11.5 32 H1 V22.5" fill="none" stroke="#acabae" stroke-width="2"/>
+            <text x="11.5" y="23.4" font-family="Google Sans" font-weight="400" font-size="17.6" letter-spacing=".1" fill="#a9a8ac">LEDGER</text>
+          </svg>
+          <!-- Tangem -->
+          <svg class="lg-tangem" viewBox="0 0 118 34" aria-label="Tangem">
+            <path d="M0 4 Q0 0 4 0 H19.5 V7 H0 Z" fill="#a8aaad"/>
+            <rect x="1" y="9.5" width="5.5" height="16.5" fill="#a8aaad"/>
+            <rect x="11.5" y="9.5" width="7.5" height="16.5" fill="#a8aaad"/>
+            <text x="29" y="26" font-family="Google Sans" font-weight="700" font-size="29.5" letter-spacing="-.2" fill="#a7a9ac" transform="translate(29 0) scale(.825 1) translate(-29 0)">tangem</text>
+          </svg>
+          <!-- Omni -->
+          <svg class="lg-omni" viewBox="0 0 116 34" aria-label="Omni">
+            <rect x="1" y="2" width="28" height="29" fill="#c3c6c3"/>
+            <g fill="#fff" transform="translate(15 16.5)">
+              <path d="M-1.6 -10 H1.6 V-5 L0 -3.4 L-1.6 -5 Z"/>
+              <path d="M-1.6 -10 H1.6 V-5 L0 -3.4 L-1.6 -5 Z" transform="rotate(60)"/>
+              <path d="M-1.6 -10 H1.6 V-5 L0 -3.4 L-1.6 -5 Z" transform="rotate(120)"/>
+              <path d="M-1.6 -10 H1.6 V-5 L0 -3.4 L-1.6 -5 Z" transform="rotate(180)"/>
+              <path d="M-1.6 -10 H1.6 V-5 L0 -3.4 L-1.6 -5 Z" transform="rotate(240)"/>
+              <path d="M-1.6 -10 H1.6 V-5 L0 -3.4 L-1.6 -5 Z" transform="rotate(300)"/>
+              <circle r="2.1"/>
+            </g>
+            <text x="36" y="28.2" font-family="Google Sans" font-weight="400" font-size="31" letter-spacing="-.9" fill="#c1c4c2">Omni</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" aria-label="Product preview">
+      <img class="card-bg" alt="" src="assets/card-background.webp">
+
+      <div class="panel">
+        <svg class="p-logo" viewBox="0 0 24 22" aria-hidden="true">
+          <path d="M2 19.6 V2.4 H12.2 V12.4 M7.4 7.6 V19.6 H21.8 V2.4 H17.4 V12.4" fill="none" stroke="#ff7a3d" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="p-menu">
+          <span class="t" style="--x:35.2;--y:89.8">HOME</span>
+          <span class="t" style="--x:35.2;--y:126.8">WALLET</span>
+          <span class="t" style="--x:34.6;--y:163.8">VAULTS</span>
+          <span class="t" style="--x:35.2;--y:199.8">SWAPDE</span>
+          <span class="t" style="--x:35.2;--y:236.8">ACTIVITY</span>
+          <span class="t" style="--x:35.2;--y:272.8">AIRDROPS</span>
+          <span class="t on" style="--x:35.2;--y:309.8">EARN</span>
+          <span class="t" style="--x:35.2;--y:346.8">BULILUN</span>
+        </div>
+
+        <div class="widget">
+          <span class="t" style="--x:63;--y:19.5;font-size:calc(12.3 * var(--u));font-weight:600;color:#000">Earn</span>
+          <span class="t" style="--x:117;--y:19.5;font-size:calc(12.3 * var(--u));font-weight:600;color:#000">Portfolio</span>
+          <i class="w-tabline"></i><i class="w-tabact"></i>
+
+          <span class="t" style="--x:10.3;--y:57.6;font-size:calc(10.85 * var(--u));font-weight:500;color:#060808">Total Value</span>
+          <div class="w-box b1"></div>
+          <span class="t" style="--x:16.6;--y:80.1;font-size:calc(23.8 * var(--u));font-weight:500;color:#000">0.01</span>
+          <span class="t" style="--x:16.4;--y:108.4;font-size:calc(11.1 * var(--u));color:#7d7f81;display:flex;align-items:center;gap:calc(3 * var(--u))">
+            <svg viewBox="0 0 9 9" style="width:calc(8.5 * var(--u));height:calc(8.5 * var(--u))"><circle cx="4.5" cy="4.5" r="4.3" fill="#a3a4a6"/><path d="M3.4 2.3v4.4M3.4 2.6h1.6a1 1 0 0 1 0 1.9H3.4M3.4 4.5h1.9a1.1 1.1 0 0 1 0 2.1H3.4" fill="none" stroke="#fff" stroke-width=".8"/></svg>BTC</span>
+          <div class="pill" style="left:calc(171 * var(--u));top:calc(76 * var(--u))">
+            <svg class="coin" viewBox="0 0 11 14"><path d="M5.6 .8 C2.6 3.4 .9 6.2 .9 8.7 a4.6 4.6 0 0 0 9.2 0 c0-2.2-1.6-3.6-3.5-3.6 c-1 0-1.9.4-2.5 1.1 c.3-1.8 1.3-3.6 2.8-5 Z" fill="#0687f8"/><circle cx="5.5" cy="8.8" r="1.5" fill="#fff"/></svg>
+            <b>BTC</b>
+            <svg class="chev" viewBox="0 0 7 5"><path d="M1 1l2.5 2.5L6 1" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="t" style="--x:144.2;--y:108.6;font-size:calc(11.9 * var(--u));color:#6f6b6c">0.0001-0.0005</span>
+
+          <span class="t" style="--x:10.3;--y:133.6;font-size:calc(10.9 * var(--u));font-weight:500;color:#000">APY</span>
+          <div class="w-box b2"></div>
+          <span class="t" style="--x:16.6;--y:155.1;font-size:calc(23.8 * var(--u));font-weight:500;color:#000">5.49%</span>
+          <div class="pill" style="left:calc(172 * var(--u));top:calc(152 * var(--u))">
+            <svg class="coin" viewBox="0 0 11 14"><path d="M5.6 .8 C2.6 3.4 .9 6.2 .9 8.7 a4.6 4.6 0 0 0 9.2 0 c0-2.2-1.6-3.6-3.5-3.6 c-1 0-1.9.4-2.5 1.1 c.3-1.8 1.3-3.6 2.8-5 Z" fill="#0687f8"/><circle cx="5.5" cy="8.8" r="1.5" fill="#fff"/></svg>
+            <b>USD</b>
+            <svg class="chev" viewBox="0 0 7 5"><path d="M1 1l2.5 2.5L6 1" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="t" style="--x:17.3;--y:189.7;font-size:calc(10.8 * var(--u));color:#6a6a70">Monthly</span>
+          <span class="t" style="--x:182.5;--y:189.4;font-size:calc(11.45 * var(--u));color:#6f6b6c">0.1-0.5%</span>
+
+          <div class="feat">
+            <svg class="ic" style="top:calc(224 * var(--u))" viewBox="0 0 7 9"><path d="M3.5.6 6.5 3v5H.5V3z" fill="#8b8a8a"/><circle cx="3.5" cy="5.3" r="1.2" fill="#fff"/></svg>
+            <span class="t" style="--x:24.3;--y:221.8">Access institutional-grade DeFi yield strategies</span>
+            <svg class="ic" style="top:calc(244 * var(--u))" viewBox="0 0 7 9"><ellipse cx="3.5" cy="4.5" rx="3.2" ry="2.8" fill="#8b8a8a"/><ellipse cx="3.5" cy="4.5" rx="1.4" ry="1.1" fill="#fff"/></svg>
+            <span class="t" style="--x:24.3;--y:241.8">Non-custodial by design</span>
+            <svg class="ic" style="top:calc(262 * var(--u))" viewBox="0 0 7 9"><path d="M3.5.8 6.7 4.5 3.5 8.2.3 4.5z" fill="#8b8a8a"/><path d="M3.5 3.2 4.7 4.5 3.5 5.8 2.3 4.5z" fill="#fff"/></svg>
+            <span class="t" style="--x:24.3;--y:259.8">Automate your yield across chains and protocols</span>
+            <svg class="ic" style="top:calc(281 * var(--u))" viewBox="0 0 7 9"><circle cx="3.5" cy="4.5" r="3.3" fill="#8b8a8a"/><path d="M3.5 2.4v2.1l1.3.9" fill="none" stroke="#fff" stroke-width=".9" stroke-linecap="round"/></svg>
+            <span class="t" style="--x:24.3;--y:278.8">Real-time risk monitoring</span>
+          </div>
+
+          <a class="w-stake" href="#">Stake</a>
+          <div class="w-pow">Powered by StakeKit
+            <svg viewBox="0 0 8 8" aria-hidden="true"><path d="M3.3 1.2H1.6a.6.6 0 0 0-.6.6v4.6c0 .3.3.6.6.6h4.6c.3 0 .6-.3.6-.6V4.7" fill="none" stroke="#000" stroke-width="1.1"/><path d="M4.4 .9h2.7v2.7M7 1 3.6 4.4" fill="none" stroke="#000" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <p class="para"><span>Yield.xyz gives clients one unified API to <br>bring every yield in Web3 on every <br>network into their product. From staking <br>to stablecoins, and DeFi.</span></p>
+    </section>
+
+    <!-- bottom cut-outs -->
+    <div class="tab-l">
+      <i class="fil f1"></i><i class="fil f2"></i>
+      <button class="scroll-btn" aria-label="Scroll down">
+        <svg viewBox="0 0 6 16" aria-hidden="true"><circle cx="3" cy="2.1" r="1.9"/><circle cx="3" cy="8" r="2.6"/><circle cx="3" cy="13.8" r="1.9"/></svg>
+      </button>
+      <span class="t" style="--x:117.8;--y:45">Scroll now</span>
+    </div>
+    <div class="tab-r">
+      <i class="fil f1"></i><i class="fil f2"></i>
+      <div class="prog"><i></i></div>
+      <span class="t n on" style="--x:43.6;--y:46.2">01</span>
+      <span class="t n" style="--x:165.4;--y:46.2">02</span>
+      <span class="t n" style="--x:288.4;--y:46.2">03</span>
+      <span class="t ll" style="--x:43.8;--y:81.8">Ledger Live</span>
+    </div>
+  </main>
+</div>
+<script>
+(function(){
+  var page=document.querySelector('.page'),hdr=document.querySelector('.hdr'),
+      btn=document.querySelector('.burger'),nav=document.getElementById('primary-nav'),
+      root=document.documentElement,mq=window.matchMedia('(max-width: 999.98px)');
+  function isOpen(){return page.classList.contains('nav-open');}
+  function setOpen(o,restoreFocus){
+    page.classList.toggle('nav-open',o);root.classList.toggle('nav-lock',o);
+    btn.setAttribute('aria-expanded',o?'true':'false');btn.setAttribute('aria-label',o?'Close menu':'Open menu');
+    if(o){var first=nav.querySelector('a');if(first)first.focus({preventScroll:true});}
+    else if(restoreFocus){btn.focus({preventScroll:true});}
+  }
+  function focusables(){return Array.prototype.filter.call(hdr.querySelectorAll('a,button'),function(el){return el.offsetParent!==null&&getComputedStyle(el).visibility!=='hidden';});}
+  btn.addEventListener('click',function(){setOpen(!isOpen(),false);});
+  document.addEventListener('keydown',function(e){
+    if(!isOpen())return;
+    if(e.key==='Escape'){e.preventDefault();setOpen(false,true);return;}
+    if(e.key==='Tab'){var f=focusables();if(!f.length)return;var a=f[0],z=f[f.length-1];
+      if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus();}
+      else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus();}}
+  });
+  document.addEventListener('click',function(e){if(isOpen()&&!hdr.contains(e.target))setOpen(false,false);});
+  hdr.addEventListener('click',function(e){if(isOpen()&&e.target.closest('a'))setOpen(false,false);});
+  (mq.addEventListener?mq.addEventListener('change',function(){if(!mq.matches&&isOpen())setOpen(false,false);}):mq.addListener(function(){if(!mq.matches&&isOpen())setOpen(false,false);}));
+  document.querySelector('.scroll-btn').addEventListener('click',function(){window.scrollBy({top:window.innerHeight*.8,behavior:'smooth'});});
+})();
+</script>
+</body>
+</html>

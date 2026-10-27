@@ -57,20 +57,24 @@
       "id": "REF-060",
       "repository": "https://github.com/Magicinmybones/ai-assistant-motionsitesv5",
       "commit": "1f233df35f341808aae97a0b970da490681e01d7",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-060/",
+      "thumbnail": "/screenshots/REF-060.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:50:26.331Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-060/; title: AI Assistant; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "ai-verse",
@@ -123,20 +127,24 @@
       "id": "REF-061",
       "repository": "https://github.com/Magicinmybones/ai-verse",
       "commit": "9bc6b71282c373bd0194c02313e6277ed9dce126",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-061/",
+      "thumbnail": "/screenshots/REF-061.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:50:28.279Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-061/; title: AI Verse — Design To Code Copilot; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "anfalova-art",
@@ -188,20 +196,24 @@
       "id": "REF-062",
       "repository": "https://github.com/Magicinmybones/anfalova-art",
       "commit": "c91b24de9672a94cd8c4986d76eac4ae6c00ff87",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-062/",
+      "thumbnail": "/screenshots/REF-062.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:50:32.405Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-062/; title: anfalova.art; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "anveril",
@@ -255,20 +267,24 @@
       "id": "REF-063",
       "repository": "https://github.com/Magicinmybones/anveril",
       "commit": "42d76c51f92ae0c254872a5b6e7d11d0baa614e5",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-063/",
+      "thumbnail": "/screenshots/REF-063.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:50:34.482Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-063/; title: Novaryn — Acceleration Through Vision™; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "artifact-museum-hero",
@@ -322,20 +338,24 @@
       "id": "REF-064",
       "repository": "https://github.com/Magicinmybones/artifact-museum-hero",
       "commit": "eaeff455e565338e1a7461ae1cb150732e801119",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-064/",
+      "thumbnail": "/screenshots/REF-064.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:50:36.366Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-064/; title: Artifact — The Legacy of Artistic Expression Through Time; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "atelier-unit-hero",
@@ -389,20 +409,24 @@
       "id": "REF-065",
       "repository": "https://github.com/Magicinmybones/atelier-unit-hero",
       "commit": "0444a24db6cdafd50b934ce3d3a7d51311f92d30",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-065/",
+      "thumbnail": "/screenshots/REF-065.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:50:38.247Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-065/; title: Atelier Unit — Craftwork, Technology, Design; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "atlas_workspace_ui",
@@ -458,20 +482,25 @@
       "id": "REF-066",
       "repository": "https://github.com/Magicinmybones/atlas_workspace_ui",
       "commit": "a5f8251a5719ebd6d3bc3e426acd0af9e1ef1022",
-      "preview": "https://atlas-workspace-ui.vercel.app",
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Creator-hosted preview linked but not browser-verified.",
+      "preview": "/previews/REF-066/",
+      "thumbnail": "/screenshots/REF-066.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": "external",
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static.",
+        "1 oversized binary asset(s) stay on the pinned source fallback instead of being duplicated in this repository."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:50:40.300Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-066/; title: Atlas — Your compliant global workspace; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "automify-hero",
@@ -523,20 +552,24 @@
       "id": "REF-067",
       "repository": "https://github.com/Magicinmybones/automify-hero",
       "commit": "9569a752958e3c08f764486572055232dd9cbd6a",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-067/",
+      "thumbnail": "/screenshots/REF-067.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:50:42.196Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-067/; title: Automify — Practical AI Solutions; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "banklio",
@@ -588,20 +621,24 @@
       "id": "REF-068",
       "repository": "https://github.com/Magicinmybones/banklio",
       "commit": "a8d194d365b258a90f28f179147dd7321b3701b0",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-068/",
+      "thumbnail": "/screenshots/REF-068.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:50:44.099Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-068/; title: Banklio; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "blinq",
@@ -659,20 +696,24 @@
       "id": "REF-069",
       "repository": "https://github.com/Magicinmybones/blinq",
       "commit": "97b88ce9d2c84efac588818872672892a9a73006",
-      "preview": "https://blinq-eosin.vercel.app",
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Creator-hosted preview linked but not browser-verified.",
+      "preview": "/previews/REF-069/",
+      "thumbnail": "/screenshots/REF-069.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": "external",
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:50:46.188Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-069/; title: blinq — the city moves electric; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "blossom-ai-growth-platform",
@@ -727,20 +768,24 @@
       "id": "REF-070",
       "repository": "https://github.com/Magicinmybones/blossom-ai-growth-platform",
       "commit": "c5b9be1294044dde5acaad4ac69159e0852813ec",
-      "preview": "https://blossom-ai-growth-platform.vercel.app",
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Creator-hosted preview linked but not browser-verified.",
+      "preview": "/previews/REF-070/",
+      "thumbnail": "/screenshots/REF-070.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": "external",
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:50:48.214Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-070/; title: Blossom — AI Growth Platform; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "campaigns-dashboard",
@@ -796,20 +841,24 @@
       "id": "REF-071",
       "repository": "https://github.com/Magicinmybones/campaigns-dashboard",
       "commit": "c14826c8235115c68bdd12a5710add0a100bc75c",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-071/",
+      "thumbnail": "/screenshots/REF-071.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:50:50.366Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-071/; title: Campaigns Dashboard; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "camper-overnight-camp",
@@ -863,20 +912,24 @@
       "id": "REF-072",
       "repository": "https://github.com/Magicinmybones/camper-overnight-camp",
       "commit": "dd2b45b539032d2d520414db2a76af8dac240893",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-072/",
+      "thumbnail": "/screenshots/REF-072.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:50:52.248Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-072/; title: Camper — Overnight Camp; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "clawd-hero",
@@ -931,20 +984,24 @@
       "id": "REF-073",
       "repository": "https://github.com/Magicinmybones/clawd-hero",
       "commit": "27122548c67e372fc960461018e90a932f588311",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-073/",
+      "thumbnail": "/screenshots/REF-073.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:50:54.148Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-073/; title: Clawd — We already picked the best one; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "cleargate-hero",
@@ -997,20 +1054,24 @@
       "id": "REF-074",
       "repository": "https://github.com/Magicinmybones/cleargate-hero",
       "commit": "530b18d3ea5105b23b786672074e6f86018bd8c7",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-074/",
+      "thumbnail": "/screenshots/REF-074.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:50:56.058Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-074/; title: ClearGate — The AI Communication Firewall; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "cloud-cards",
@@ -1063,20 +1124,24 @@
       "id": "REF-075",
       "repository": "https://github.com/Magicinmybones/cloud-cards",
       "commit": "771d29eb62d42d5cbc2527f95471c3c2e3838a53",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-075/",
+      "thumbnail": "/screenshots/REF-075.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:50:57.925Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-075/; title: Cloud Growth Cards; visible text detected.",
+      "assetFallbackRoot": "site",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "codex-signup",
@@ -1130,20 +1195,24 @@
       "id": "REF-076",
       "repository": "https://github.com/Magicinmybones/codex-signup",
       "commit": "8d7f7fde26efa96a72c77dccaa2b5b1ee83f68cf",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-076/",
+      "thumbnail": "/screenshots/REF-076.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:50:59.824Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-076/; title: Codex — Get your Codex Account; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "designup",
@@ -1197,20 +1266,24 @@
       "id": "REF-077",
       "repository": "https://github.com/Magicinmybones/designup",
       "commit": "a3afc9eb52e3f385f962b697b029408c2bbbb5aa",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-077/",
+      "thumbnail": "/screenshots/REF-077.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:01.701Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-077/; title: Design Up — Level Up Your AI Design Skills; visible text detected.",
+      "assetFallbackRoot": "site",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "dreamflow-footer",
@@ -1262,20 +1335,24 @@
       "id": "REF-078",
       "repository": "https://github.com/Magicinmybones/dreamflow-footer",
       "commit": "20c934f8c46e6e1928232141dfc9c20f36858e06",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-078/",
+      "thumbnail": "/screenshots/REF-078.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:03.575Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-078/; title: Dreamflow — Your next app starts now; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "ecommerce-dashboard",
@@ -1330,20 +1407,24 @@
       "id": "REF-079",
       "repository": "https://github.com/Magicinmybones/ecommerce-dashboard",
       "commit": "18b88c13cc8ab57ff4d27626fe7f8d143538fc40",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-079/",
+      "thumbnail": "/screenshots/REF-079.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:05.447Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-079/; title: E-commerce Dashboard; visible text detected.",
+      "assetFallbackRoot": "site",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "effortless-crypto-hero",
@@ -1395,20 +1476,24 @@
       "id": "REF-080",
       "repository": "https://github.com/Magicinmybones/effortless-crypto-hero",
       "commit": "d49c564edb8b5ade076f407e0e2a4ab487bcddfb",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-080/",
+      "thumbnail": "/screenshots/REF-080.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:07.343Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-080/; title: Effortless Crypto Control; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "else-landing",
@@ -1460,20 +1545,24 @@
       "id": "REF-081",
       "repository": "https://github.com/Magicinmybones/else-landing",
       "commit": "3658053b61a24a6bd34d83d3db6299dd818131d1",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-081/",
+      "thumbnail": "/screenshots/REF-081.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:09.216Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-081/; title: ELSE — Official Site; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "espace-mtl",
@@ -1528,20 +1617,24 @@
       "id": "REF-082",
       "repository": "https://github.com/Magicinmybones/espace-mtl",
       "commit": "098c9626c57d4d6db76b132699e9778a459d548d",
-      "preview": "https://espace-mtl.pages.dev",
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Creator-hosted preview linked but not browser-verified.",
+      "preview": "/previews/REF-082/",
+      "thumbnail": "/screenshots/REF-082.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": "external",
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:11.110Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-082/; title: ATRIUM MTL — An archive of light cast in stone; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "evcarlandingpage",
@@ -1603,20 +1696,24 @@
       "id": "REF-083",
       "repository": "https://github.com/Magicinmybones/evcarlandingpage",
       "commit": "41e0389ff2367ad8f19e14a00ae9a48a8c61d370",
-      "preview": "https://blinqmob.vercel.app",
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Creator-hosted preview linked but not browser-verified.",
+      "preview": "/previews/REF-083/",
+      "thumbnail": "/screenshots/REF-083.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "React / Vite",
-      "previewType": "external",
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using vite."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:13.092Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-083/; title: Blinq | Battery swapping in 90 seconds; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "extent-ai-hero",
@@ -1670,20 +1767,24 @@
       "id": "REF-084",
       "repository": "https://github.com/Magicinmybones/extent-ai-hero",
       "commit": "0a9518daea1aff68f8c68e2f299e0f3a7c3a2143",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-084/",
+      "thumbnail": "/screenshots/REF-084.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:14.998Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-084/; title: Extent AI — Breakthrough AI from Data to Deployment; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "feature-cards",
@@ -1735,20 +1836,24 @@
       "id": "REF-085",
       "repository": "https://github.com/Magicinmybones/feature-cards",
       "commit": "082c74213f4708d7d988b248b4eb4090c8a9af09",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-085/",
+      "thumbnail": "/screenshots/REF-085.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:16.934Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-085/; title: Feature Cards; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "finance-signup",
@@ -1800,20 +1905,24 @@
       "id": "REF-086",
       "repository": "https://github.com/Magicinmybones/finance-signup",
       "commit": "0486a68e65fef4a6a8df775971e6502bccd87efc",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-086/",
+      "thumbnail": "/screenshots/REF-086.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:18.809Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-086/; title: Create Finance account; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "finns",
@@ -1865,20 +1974,24 @@
       "id": "REF-087",
       "repository": "https://github.com/Magicinmybones/finns",
       "commit": "feb10448dfb84b17f9f2dc03bdda413742409847",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-087/",
+      "thumbnail": "/screenshots/REF-087.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:21.009Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-087/; title: Finns — Take Control for your Finances; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "flexitee-login-responsive",
@@ -1930,20 +2043,24 @@
       "id": "REF-088",
       "repository": "https://github.com/Magicinmybones/flexitee-login-responsive",
       "commit": "7155cdb55a4c4a5aa9f9639fe5df40f61aa6a008",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-088/",
+      "thumbnail": "/screenshots/REF-088.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:22.899Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-088/; title: Log in · Flexitee; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "flux-hero",
@@ -1995,20 +2112,24 @@
       "id": "REF-089",
       "repository": "https://github.com/Magicinmybones/flux-hero",
       "commit": "a05d75162ecb790fba396521e798621b3a3895c9",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-089/",
+      "thumbnail": "/screenshots/REF-089.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:24.760Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-089/; title: Flux — Financial automation; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "framefutures",
@@ -2060,20 +2181,24 @@
       "id": "REF-090",
       "repository": "https://github.com/Magicinmybones/framefutures",
       "commit": "b35355e656c60d5b2bba76c97fd576822dabfd17",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-090/",
+      "thumbnail": "/screenshots/REF-090.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:26.659Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-090/; title: framefutures — Digital progress made simple; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "hero_section_09",
@@ -2125,20 +2250,24 @@
       "id": "REF-091",
       "repository": "https://github.com/Magicinmybones/hero_section_09",
       "commit": "d4081a499a1a3f1f647514f07e3c7b0d8a2b5202",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-091/",
+      "thumbnail": "/screenshots/REF-091.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:29.016Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-091/; title: Highframe — Build the tools your team actually needs; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "hevn",
@@ -2190,20 +2319,24 @@
       "id": "REF-092",
       "repository": "https://github.com/Magicinmybones/hevn",
       "commit": "045c1d789d49caf3a9d53d217fa8c8752bcb3f8a",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-092/",
+      "thumbnail": "/screenshots/REF-092.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:30.898Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-092/; title: hevn — Global business banking; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "highframe",
@@ -2265,20 +2398,24 @@
       "id": "REF-093",
       "repository": "https://github.com/Magicinmybones/highframe",
       "commit": "28715dddbf462382bf947f6c01a35eb9e4627007",
-      "preview": "https://highframe.vercel.app",
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Creator-hosted preview linked but not browser-verified.",
+      "preview": "/previews/REF-093/",
+      "thumbnail": "/screenshots/REF-093.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "React / Vite",
-      "previewType": "external",
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using vite."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:32.789Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-093/; title: highframe; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "hinata-sakai",
@@ -2332,20 +2469,24 @@
       "id": "REF-094",
       "repository": "https://github.com/Magicinmybones/hinata-sakai",
       "commit": "e2da703ca9229e7f1f409651ef38afc219744406",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-094/",
+      "thumbnail": "/screenshots/REF-094.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:34.695Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-094/; title: Hinata Sakai — Motivational Speaker; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "insight-signup",
@@ -2397,20 +2538,24 @@
       "id": "REF-095",
       "repository": "https://github.com/Magicinmybones/insight-signup",
       "commit": "4e61f8dfea90e317af4edcc76799a8542a65e232",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-095/",
+      "thumbnail": "/screenshots/REF-095.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:36.560Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-095/; title: Insight AI — Sign up; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "insuria-hero",
@@ -2462,20 +2607,24 @@
       "id": "REF-096",
       "repository": "https://github.com/Magicinmybones/insuria-hero",
       "commit": "981e279d073da32480acc1b6c1efbfb37a4be82c",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-096/",
+      "thumbnail": "/screenshots/REF-096.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:38.468Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-096/; title: Insuria — Health insurance made simple; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "interior",
@@ -2529,20 +2678,24 @@
       "id": "REF-097",
       "repository": "https://github.com/Magicinmybones/interior",
       "commit": "fcd478737c6c9b6ba9fbab21cbe95ddf4bb40452",
-      "preview": "https://interior-gilt.vercel.app",
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Creator-hosted preview linked but not browser-verified.",
+      "preview": "/previews/REF-097/",
+      "thumbnail": "/screenshots/REF-097.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": "external",
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:40.453Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-097/; title: Design your next room — Landing; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "invopilot-create-invoice",
@@ -2597,20 +2750,24 @@
       "id": "REF-098",
       "repository": "https://github.com/Magicinmybones/invopilot-create-invoice",
       "commit": "8a581b9eb01aef585b708d053bfd2ae599bb47de",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-098/",
+      "thumbnail": "/screenshots/REF-098.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:42.419Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-098/; title: InvoPilot — Create Invoice; visible text detected.",
+      "assetFallbackRoot": "site",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "karu-creative-studio",
@@ -2662,20 +2819,24 @@
       "id": "REF-099",
       "repository": "https://github.com/Magicinmybones/karu-creative-studio",
       "commit": "8291aed30adbbf6d6775ed69873676b040a2cfd0",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-099/",
+      "thumbnail": "/screenshots/REF-099.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:44.300Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-099/; title: KARU — Creative Studio; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "kaultai",
@@ -2727,20 +2888,24 @@
       "id": "REF-100",
       "repository": "https://github.com/Magicinmybones/kaultai",
       "commit": "acec16b749ed117ba84c4871ca9e0b34711c49a2",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-100/",
+      "thumbnail": "/screenshots/REF-100.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:46.192Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-100/; title: KaultAI — Own Your Professional Edge; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "kindle3d-login",
@@ -2794,20 +2959,24 @@
       "id": "REF-101",
       "repository": "https://github.com/Magicinmybones/kindle3d-login",
       "commit": "ec31fa7371313ffe5a099592f704e94516f2c349",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-101/",
+      "thumbnail": "/screenshots/REF-101.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:48.073Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-101/; title: Kindle3D — Log in; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "kora-ai",
@@ -2859,20 +3028,24 @@
       "id": "REF-102",
       "repository": "https://github.com/Magicinmybones/kora-ai",
       "commit": "1a3cb08bbd55ba80eed5d1d5f9a2fd6428b0c1d3",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-102/",
+      "thumbnail": "/screenshots/REF-102.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:50.005Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-102/; title: Kora AI — Scale Operations, Not Headcount; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "la-consulting",
@@ -2924,20 +3097,24 @@
       "id": "REF-103",
       "repository": "https://github.com/Magicinmybones/la-consulting",
       "commit": "3e59295abb7f3150db7466174c57e2208d85678e",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-103/",
+      "thumbnail": "/screenshots/REF-103.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:51.921Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-103/; title: LA Consulting; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "lab-post-train-agents",
@@ -2990,20 +3167,24 @@
       "id": "REF-104",
       "repository": "https://github.com/Magicinmybones/lab-post-train-agents",
       "commit": "76c3404a82eca84b933ed01d9b554a96302c93b1",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-104/",
+      "thumbnail": "/screenshots/REF-104.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:53.895Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-104/; title: Lab — Post-train self-improving agents; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "logistics-freight-hero",
@@ -3059,20 +3240,24 @@
       "id": "REF-105",
       "repository": "https://github.com/Magicinmybones/logistics-freight-hero",
       "commit": "b70669c03bb302c4f35c34cbb04932627ae86ae3",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-105/",
+      "thumbnail": "/screenshots/REF-105.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:55.794Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-105/; title: Logistics that works as hard as you do.; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "loomix-footer",
@@ -3124,20 +3309,24 @@
       "id": "REF-106",
       "repository": "https://github.com/Magicinmybones/loomix-footer",
       "commit": "3d2399e3b28de4626afaa00064ee62d204d27bb5",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-106/",
+      "thumbnail": "/screenshots/REF-106.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:57.657Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-106/; title: Loomix Footer; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "lumen-hero",
@@ -3189,20 +3378,24 @@
       "id": "REF-107",
       "repository": "https://github.com/Magicinmybones/lumen-hero",
       "commit": "44839765d52a0be976fb394976ecdfe6fead2e59",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-107/",
+      "thumbnail": "/screenshots/REF-107.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:51:59.559Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-107/; title: Lumen — Timeless Style; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "lumen-studio",
@@ -3255,20 +3448,24 @@
       "id": "REF-108",
       "repository": "https://github.com/Magicinmybones/lumen-studio",
       "commit": "47d18a567365aad92c6e2899c38c059b5f17fed2",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-108/",
+      "thumbnail": "/screenshots/REF-108.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:01.442Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-108/; title: Lumen Studio; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "lumenkey-login",
@@ -3320,20 +3517,24 @@
       "id": "REF-109",
       "repository": "https://github.com/Magicinmybones/lumenkey-login",
       "commit": "3ce138aa46cba31d9efbef91cc46be8fc7de1479",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-109/",
+      "thumbnail": "/screenshots/REF-109.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:03.350Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-109/; title: Sign in · Lumenkey; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "lumo-landing",
@@ -3385,20 +3586,24 @@
       "id": "REF-110",
       "repository": "https://github.com/Magicinmybones/lumo-landing",
       "commit": "5c1a0b84a94ba61971007c89aa458efeed22ec3a",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-110/",
+      "thumbnail": "/screenshots/REF-110.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:05.254Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-110/; title: Lumo — Banking for freelance life; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "medical-center-dashboard",
@@ -3450,20 +3655,24 @@
       "id": "REF-111",
       "repository": "https://github.com/Magicinmybones/medical-center-dashboard",
       "commit": "408bf8b07a6a6b30327b83a821af3a19045552fa",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-111/",
+      "thumbnail": "/screenshots/REF-111.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:07.178Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-111/; title: Medical Center Dashboard; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "mentoxy",
@@ -3516,20 +3725,24 @@
       "id": "REF-112",
       "repository": "https://github.com/Magicinmybones/mentoxy",
       "commit": "b38b07b68fb43c8f1161e3cacb3c363bb00d7c32",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-112/",
+      "thumbnail": "/screenshots/REF-112.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:09.093Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-112/; title: Mentoxy — Smarter Mental Health, Powered by AI; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "Meridial",
@@ -3583,20 +3796,24 @@
       "id": "REF-113",
       "repository": "https://github.com/Magicinmybones/Meridial",
       "commit": "f149cfe761a18922bd7f289ba74d923fa610a919",
-      "preview": "https://meridial-one.vercel.app",
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Creator-hosted preview linked but not browser-verified.",
+      "preview": "/previews/REF-113/",
+      "thumbnail": "/screenshots/REF-113.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": "external",
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:11.035Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-113/; title: Meridial — Clarity, across every portfolio you manage; visible text detected.",
+      "assetFallbackRoot": "src",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "meridian",
@@ -3649,20 +3866,24 @@
       "id": "REF-114",
       "repository": "https://github.com/Magicinmybones/meridian",
       "commit": "f953cdd5c6edc3fbb1a3ac91706663c663bf5bf5",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-114/",
+      "thumbnail": "/screenshots/REF-114.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:12.948Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-114/; title: Meridian — Move payments forward together; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "meshora-hero",
@@ -3714,20 +3935,24 @@
       "id": "REF-115",
       "repository": "https://github.com/Magicinmybones/meshora-hero",
       "commit": "d5da90f4f4458386a97b02d2cc5a9c1cb26e9387",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-115/",
+      "thumbnail": "/screenshots/REF-115.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:14.868Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-115/; title: Meshora — Secure Decentralized Networking; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "mindease",
@@ -3779,20 +4004,24 @@
       "id": "REF-116",
       "repository": "https://github.com/Magicinmybones/mindease",
       "commit": "fce00cd5b5e7708813915ab866cf3482545f381a",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-116/",
+      "thumbnail": "/screenshots/REF-116.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:16.760Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-116/; title: MindEase — Feel Better Here; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "new-collection",
@@ -3844,20 +4073,24 @@
       "id": "REF-117",
       "repository": "https://github.com/Magicinmybones/new-collection",
       "commit": "b4ae4554449952d36b51464de30aefeaaed888d5",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-117/",
+      "thumbnail": "/screenshots/REF-117.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:18.688Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-117/; title: New Collection; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "nexora",
@@ -3909,20 +4142,24 @@
       "id": "REF-118",
       "repository": "https://github.com/Magicinmybones/nexora",
       "commit": "8412a74c6840dcf5c2f2b9b686b5c4ac5db0a036",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-118/",
+      "thumbnail": "/screenshots/REF-118.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:20.559Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-118/; title: Nexora — Ideas Into Digital Experiences; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "nexusai",
@@ -3975,20 +4212,24 @@
       "id": "REF-119",
       "repository": "https://github.com/Magicinmybones/nexusai",
       "commit": "f9ac01864888ebf0d0ac3a1c0136d19ca4d13ab1",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-119/",
+      "thumbnail": "/screenshots/REF-119.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:22.424Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-119/; title: NexusAI — Build Anything with AI Automation; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "Nike-Style-Shoe-Landing-Page",
@@ -4042,20 +4283,24 @@
       "id": "REF-120",
       "repository": "https://github.com/Magicinmybones/Nike-Style-Shoe-Landing-Page",
       "commit": "52306835dad2c1e81722987f5b84316aec9a0829",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-120/",
+      "thumbnail": "/screenshots/REF-120.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:24.698Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-120/; title: Wear your style with Comfort; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "orbit-see-beyond",
@@ -4109,20 +4354,24 @@
       "id": "REF-121",
       "repository": "https://github.com/Magicinmybones/orbit-see-beyond",
       "commit": "5cea7f97fa1913fb7574a54934022cacdd498228",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-121/",
+      "thumbnail": "/screenshots/REF-121.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:26.591Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-121/; title: Orbit — See beyond now; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "orbitals",
@@ -4176,20 +4425,24 @@
       "id": "REF-122",
       "repository": "https://github.com/Magicinmybones/orbitals",
       "commit": "05442ac49eb777939c01ad1508418ba6264a44ed",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-122/",
+      "thumbnail": "/screenshots/REF-122.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:29.408Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-122/; title: Orbitals — Dark Moon; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "ordiva-hero",
@@ -4242,20 +4495,24 @@
       "id": "REF-123",
       "repository": "https://github.com/Magicinmybones/ordiva-hero",
       "commit": "63f72c9e6df5fd6c3ad171f1599b07704be4106f",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-123/",
+      "thumbnail": "/screenshots/REF-123.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:31.391Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-123/; title: ORDIVA — Autonomous Lab System; visible text detected.",
+      "assetFallbackRoot": "site",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "orinex",
@@ -4307,20 +4564,24 @@
       "id": "REF-124",
       "repository": "https://github.com/Magicinmybones/orinex",
       "commit": "11a2a158819b8b3e3d72f20eea5ccc845f2b08ee",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-124/",
+      "thumbnail": "/screenshots/REF-124.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:33.274Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-124/; title: Orinex — Know Your Body; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "orvixa",
@@ -4372,20 +4633,24 @@
       "id": "REF-125",
       "repository": "https://github.com/Magicinmybones/orvixa",
       "commit": "64ae4aa5a7fa6196c05bc3b2a6ef821c1842b04b",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-125/",
+      "thumbnail": "/screenshots/REF-125.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:35.177Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-125/; title: Orvixa — Creative Digital Agency; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "oryn-studio",
@@ -4437,20 +4702,24 @@
       "id": "REF-126",
       "repository": "https://github.com/Magicinmybones/oryn-studio",
       "commit": "9f163d5afd5519bc7dd8ecd9608406ada7a3ae0e",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-126/",
+      "thumbnail": "/screenshots/REF-126.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:37.076Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-126/; title: Oryn Studio; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "parallax",
@@ -4503,20 +4772,24 @@
       "id": "REF-127",
       "repository": "https://github.com/Magicinmybones/parallax",
       "commit": "d5fdca264c7392c6de84b1663dd39f26fa8667e6",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-127/",
+      "thumbnail": "/screenshots/REF-127.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:38.972Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-127/; title: PARALLAX — Every spark is a fresh impact; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "polu-testimonials",
@@ -4568,20 +4841,24 @@
       "id": "REF-128",
       "repository": "https://github.com/Magicinmybones/polu-testimonials",
       "commit": "6a1dccc9c09688e78847a64ac376b76e30d2fdaf",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-128/",
+      "thumbnail": "/screenshots/REF-128.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:40.854Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-128/; title: Polu — What people remember most; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "pulse",
@@ -4635,20 +4912,24 @@
       "id": "REF-129",
       "repository": "https://github.com/Magicinmybones/pulse",
       "commit": "6ca296e7c4d253a784da7d6f7b13c1947e944363",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-129/",
+      "thumbnail": "/screenshots/REF-129.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using package-build."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:42.745Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-129/; title: Pulse — Make moves. Unbound.; visible text detected.",
+      "assetFallbackRoot": "dist",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "pulse-prototype",
@@ -4701,20 +4982,24 @@
       "id": "REF-130",
       "repository": "https://github.com/Magicinmybones/pulse-prototype",
       "commit": "baa42d2cddf02eeb6d9a2934c97dd5674d88927f",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-130/",
+      "thumbnail": "/screenshots/REF-130.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:44.628Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-130/; title: Pulse — See your performance in motion; visible text detected.",
+      "assetFallbackRoot": "site",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "pulse-tennis-club",
@@ -4768,20 +5053,24 @@
       "id": "REF-131",
       "repository": "https://github.com/Magicinmybones/pulse-tennis-club",
       "commit": "b1fc222c839813edcfa29d1371355848afe102c9",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-131/",
+      "thumbnail": "/screenshots/REF-131.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:46.574Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-131/; title: Pulse Tennis Club; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "quantom_landing",
@@ -4835,20 +5124,24 @@
       "id": "REF-132",
       "repository": "https://github.com/Magicinmybones/quantom_landing",
       "commit": "a41b4a0b1f0a01063a41403784a652cb5fa3269e",
-      "preview": "https://quantom-landing.vercel.app",
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Creator-hosted preview linked but not browser-verified.",
+      "preview": "/previews/REF-132/",
+      "thumbnail": "/screenshots/REF-132.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": "external",
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:48.489Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-132/; title: Quantum² — Convert screen recording into clear, intelligent insights; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "rift",
@@ -4901,20 +5194,24 @@
       "id": "REF-133",
       "repository": "https://github.com/Magicinmybones/rift",
       "commit": "c731540e521ccb704c141b6c109b0a3151dbef50",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-133/",
+      "thumbnail": "/screenshots/REF-133.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:50.375Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-133/; title: RIFT — Autonomous Terrain Analytics; visible text detected.",
+      "assetFallbackRoot": "site",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "riverine",
@@ -4966,20 +5263,24 @@
       "id": "REF-134",
       "repository": "https://github.com/Magicinmybones/riverine",
       "commit": "6589e7507d4d64f512b449fc84048c3c9516a5ab",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-134/",
+      "thumbnail": "/screenshots/REF-134.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:52.260Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-134/; title: riverine.ai — Where Regeneration Fuels Future Thinking; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "securemind-hero",
@@ -5031,20 +5332,24 @@
       "id": "REF-135",
       "repository": "https://github.com/Magicinmybones/securemind-hero",
       "commit": "1b38a4ba4aa19843c09e6ab5f40c6a4cfe456134",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-135/",
+      "thumbnail": "/screenshots/REF-135.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:54.155Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-135/; title: SecureMind — AI Security Agent; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "sendit-hero",
@@ -5097,20 +5402,24 @@
       "id": "REF-136",
       "repository": "https://github.com/Magicinmybones/sendit-hero",
       "commit": "ca1b0260c9b21ebda1ce5d1c0a12ba6e55cad6ec",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-136/",
+      "thumbnail": "/screenshots/REF-136.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:56.036Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-136/; title: Sendit — Every courier. One dashboard.; visible text detected.",
+      "assetFallbackRoot": "site",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "shoes-v2",
@@ -5164,20 +5473,24 @@
       "id": "REF-137",
       "repository": "https://github.com/Magicinmybones/shoes-v2",
       "commit": "c7d3d08bb11bd8dc7430bd80b1efe2e193305286",
-      "preview": "https://shoes-v2.vercel.app",
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Creator-hosted preview linked but not browser-verified.",
+      "preview": "/previews/REF-137/",
+      "thumbnail": "/screenshots/REF-137.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": "external",
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:52:59.110Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-137/; title: Wear your style with Comfort; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "shoe_gradient",
@@ -5231,20 +5544,24 @@
       "id": "REF-138",
       "repository": "https://github.com/Magicinmybones/shoe_gradient",
       "commit": "fd9e41c0d55c7eae703f8d1f849cdd742770f0cf",
-      "preview": "https://shoe-gradient.vercel.app",
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Creator-hosted preview linked but not browser-verified.",
+      "preview": "/previews/REF-138/",
+      "thumbnail": "/screenshots/REF-138.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": "external",
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:53:01.230Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-138/; title: STRYDE — Step Into Style; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "smart-pricing",
@@ -5296,20 +5613,24 @@
       "id": "REF-139",
       "repository": "https://github.com/Magicinmybones/smart-pricing",
       "commit": "4dcd5590d5655b800377ddbfd51ea150483069c2",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-139/",
+      "thumbnail": "/screenshots/REF-139.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:53:03.172Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-139/; title: Smart Pricing; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "soma-hero",
@@ -5362,20 +5683,24 @@
       "id": "REF-140",
       "repository": "https://github.com/Magicinmybones/soma-hero",
       "commit": "d112d5b31404e684778dfb088af771f5caedb6d2",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-140/",
+      "thumbnail": "/screenshots/REF-140.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:53:05.057Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-140/; title: SOMA — Decode Your Body; visible text detected.",
+      "assetFallbackRoot": "site",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "stakekit",
@@ -5427,20 +5752,24 @@
       "id": "REF-141",
       "repository": "https://github.com/Magicinmybones/stakekit",
       "commit": "f1f59afdb7ab47e4093c9c07a33ab024359bd543",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-141/",
+      "thumbnail": "/screenshots/REF-141.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:53:06.947Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-141/; title: StakeKit — Web3 Yield Infrastructure; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "starform",
@@ -5494,20 +5823,24 @@
       "id": "REF-142",
       "repository": "https://github.com/Magicinmybones/starform",
       "commit": "c54e4d14d7e846d333beaafbbfe4ab32dcbf1ff9",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-142/",
+      "thumbnail": "/screenshots/REF-142.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:53:08.872Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-142/; title: Starform — Cinematic mockups; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "stridr",
@@ -5561,20 +5894,24 @@
       "id": "REF-143",
       "repository": "https://github.com/Magicinmybones/stridr",
       "commit": "6de715e904443c840e7159b4db68dc127940c26d",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-143/",
+      "thumbnail": "/screenshots/REF-143.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:53:10.881Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-143/; title: Stridr — Move ahead; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "sundi-headphones",
@@ -5626,20 +5963,24 @@
       "id": "REF-144",
       "repository": "https://github.com/Magicinmybones/sundi-headphones",
       "commit": "b766b210a234d1bd3ffd963ade8948d217e2cfb9",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-144/",
+      "thumbnail": "/screenshots/REF-144.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:53:12.756Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-144/; title: SUNDI® — Headphones; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "suttere-hero",
@@ -5691,20 +6032,24 @@
       "id": "REF-145",
       "repository": "https://github.com/Magicinmybones/suttere-hero",
       "commit": "eda0957be7528eadb9e27ff4477f7fc78cd08e4e",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-145/",
+      "thumbnail": "/screenshots/REF-145.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:53:14.643Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-145/; title: Suttere — Crypto Financial Solutions; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "talkie-hero",
@@ -5757,20 +6102,24 @@
       "id": "REF-146",
       "repository": "https://github.com/Magicinmybones/talkie-hero",
       "commit": "0236cb78dc958419d61981e963067d0c8d181959",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-146/",
+      "thumbnail": "/screenshots/REF-146.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:53:16.558Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-146/; title: Talkie — Reliable AI Assistants; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "testimonials",
@@ -5830,20 +6179,24 @@
       "id": "REF-147",
       "repository": "https://github.com/Magicinmybones/testimonials",
       "commit": "01871fab68c81442c655f1f49cf679e82f92cdd8",
-      "preview": "https://testimonials-tawny.vercel.app",
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Creator-hosted preview linked but not browser-verified.",
+      "preview": "/previews/REF-147/",
+      "thumbnail": "/screenshots/REF-147.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "React / Vite",
-      "previewType": "external",
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using vite."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:53:18.461Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-147/; title: satss; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "timon-footer",
@@ -5895,20 +6248,24 @@
       "id": "REF-148",
       "repository": "https://github.com/Magicinmybones/timon-footer",
       "commit": "ea80de17144431c0201baca2d5d5dc765e4ff874",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-148/",
+      "thumbnail": "/screenshots/REF-148.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:53:20.343Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-148/; title: Timon Footer; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "total-mortgages",
@@ -5960,20 +6317,24 @@
       "id": "REF-149",
       "repository": "https://github.com/Magicinmybones/total-mortgages",
       "commit": "57944d9fff3a89a5499c445ef3f22d2ed30740db",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-149/",
+      "thumbnail": "/screenshots/REF-149.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:53:22.230Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-149/; title: Total — Mortgages Built Around AI; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "valta-hero",
@@ -6026,20 +6387,24 @@
       "id": "REF-150",
       "repository": "https://github.com/Magicinmybones/valta-hero",
       "commit": "62fbc1702198fd9b693774cb9b118126c003c45b",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-150/",
+      "thumbnail": "/screenshots/REF-150.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:53:24.138Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-150/; title: Valta — Immobilien-Investments; visible text detected.",
+      "assetFallbackRoot": "site",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "velora-login",
@@ -6091,20 +6456,24 @@
       "id": "REF-151",
       "repository": "https://github.com/Magicinmybones/velora-login",
       "commit": "382360802d921412ae0e78ba446e68ff161f56e0",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-151/",
+      "thumbnail": "/screenshots/REF-151.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:53:26.012Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-151/; title: Velora AI — Sign in; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "vidpro-login",
@@ -6156,20 +6525,24 @@
       "id": "REF-152",
       "repository": "https://github.com/Magicinmybones/vidpro-login",
       "commit": "e3d35f5b2a5b07c8ee7fb7458263eaede4f3b79c",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-152/",
+      "thumbnail": "/screenshots/REF-152.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:53:27.889Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-152/; title: VidPro · Log in; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "visionos-prototype",
@@ -6223,20 +6596,24 @@
       "id": "REF-153",
       "repository": "https://github.com/Magicinmybones/visionos-prototype",
       "commit": "41103f0135c5f4de4bacc9b06cdf6aecea452d88",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-153/",
+      "thumbnail": "/screenshots/REF-153.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:53:29.772Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-153/; title: VisionOS — Let Your Work Speak For Itself; visible text detected.",
+      "assetFallbackRoot": "public",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "vitalyn-landing",
@@ -6288,20 +6665,24 @@
       "id": "REF-154",
       "repository": "https://github.com/Magicinmybones/vitalyn-landing",
       "commit": "816b0bfcb385a6bdc97632f9a89b97d5053bd3ec",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-154/",
+      "thumbnail": "/screenshots/REF-154.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:53:31.720Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-154/; title: Vitalyn AI — The AI Agent for Healthcare Operations; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     },
     {
       "name": "voicelab-login",
@@ -6355,20 +6736,24 @@
       "id": "REF-155",
       "repository": "https://github.com/Magicinmybones/voicelab-login",
       "commit": "2e8e915d6051b79f3242a04819b5204549f7049a",
-      "preview": null,
-      "thumbnail": null,
-      "status": "Partial",
-      "previewReason": "Authorized for centralized/separate preview hosting; build preparation still required.",
+      "preview": "/previews/REF-155/",
+      "thumbnail": "/screenshots/REF-155.jpg",
+      "status": "Working",
+      "previewReason": "Authorized central preview built from the pinned source commit and browser-verified inside the Design Reference Library.",
       "frameworkShort": "Static HTML/CSS/JS",
-      "previewType": null,
+      "previewType": "local",
       "buildVerified": false,
-      "preparedPreview": null,
+      "preparedPreview": true,
       "verificationScope": "Repository tree, commit, framework signals and declared homepage inspected; visual equivalence not claimed.",
-      "compatibilityNotes": [],
+      "compatibilityNotes": [
+        "Central preview prepared using static."
+      ],
       "license": null,
       "mirrorAllowed": true,
-      "checkedAt": null,
-      "visualEvidence": null
+      "checkedAt": "2026-10-27T15:53:33.618Z",
+      "visualEvidence": "Browser rendered http://127.0.0.1:4173/previews/REF-155/; title: Voicelab Login; visible text detected.",
+      "assetFallbackRoot": "",
+      "screenshotNote": "Actual browser capture of the authorized central preview at 1440×900."
     }
   ],
   "inventory": [
@@ -8319,5 +8704,1460 @@
         "REF-155"
       ]
     }
-  ]
+  ],
+  "buildResults": {
+    "generatedAt": "2026-10-27T15:49:52.402Z",
+    "built": 96,
+    "failed": 0,
+    "results": [
+      {
+        "id": "REF-060",
+        "repo": "ai-assistant-motionsitesv5",
+        "commit": "1f233df35f341808aae97a0b970da490681e01d7",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-061",
+        "repo": "ai-verse",
+        "commit": "9bc6b71282c373bd0194c02313e6277ed9dce126",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-062",
+        "repo": "anfalova-art",
+        "commit": "c91b24de9672a94cd8c4986d76eac4ae6c00ff87",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-063",
+        "repo": "anveril",
+        "commit": "42d76c51f92ae0c254872a5b6e7d11d0baa614e5",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-064",
+        "repo": "artifact-museum-hero",
+        "commit": "eaeff455e565338e1a7461ae1cb150732e801119",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-065",
+        "repo": "atelier-unit-hero",
+        "commit": "0444a24db6cdafd50b934ce3d3a7d51311f92d30",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-066",
+        "repo": "atlas_workspace_ui",
+        "commit": "a5f8251a5719ebd6d3bc3e426acd0af9e1ef1022",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "",
+        "skippedLargeAssets": 1
+      },
+      {
+        "id": "REF-067",
+        "repo": "automify-hero",
+        "commit": "9569a752958e3c08f764486572055232dd9cbd6a",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-068",
+        "repo": "banklio",
+        "commit": "a8d194d365b258a90f28f179147dd7321b3701b0",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-069",
+        "repo": "blinq",
+        "commit": "97b88ce9d2c84efac588818872672892a9a73006",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-070",
+        "repo": "blossom-ai-growth-platform",
+        "commit": "c5b9be1294044dde5acaad4ac69159e0852813ec",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-071",
+        "repo": "campaigns-dashboard",
+        "commit": "c14826c8235115c68bdd12a5710add0a100bc75c",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-072",
+        "repo": "camper-overnight-camp",
+        "commit": "dd2b45b539032d2d520414db2a76af8dac240893",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-073",
+        "repo": "clawd-hero",
+        "commit": "27122548c67e372fc960461018e90a932f588311",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-074",
+        "repo": "cleargate-hero",
+        "commit": "530b18d3ea5105b23b786672074e6f86018bd8c7",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-075",
+        "repo": "cloud-cards",
+        "commit": "771d29eb62d42d5cbc2527f95471c3c2e3838a53",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "site"
+      },
+      {
+        "id": "REF-076",
+        "repo": "codex-signup",
+        "commit": "8d7f7fde26efa96a72c77dccaa2b5b1ee83f68cf",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-077",
+        "repo": "designup",
+        "commit": "a3afc9eb52e3f385f962b697b029408c2bbbb5aa",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "site"
+      },
+      {
+        "id": "REF-078",
+        "repo": "dreamflow-footer",
+        "commit": "20c934f8c46e6e1928232141dfc9c20f36858e06",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-079",
+        "repo": "ecommerce-dashboard",
+        "commit": "18b88c13cc8ab57ff4d27626fe7f8d143538fc40",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "site"
+      },
+      {
+        "id": "REF-080",
+        "repo": "effortless-crypto-hero",
+        "commit": "d49c564edb8b5ade076f407e0e2a4ab487bcddfb",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-081",
+        "repo": "else-landing",
+        "commit": "3658053b61a24a6bd34d83d3db6299dd818131d1",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-082",
+        "repo": "espace-mtl",
+        "commit": "098c9626c57d4d6db76b132699e9778a459d548d",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-083",
+        "repo": "evcarlandingpage",
+        "commit": "41e0389ff2367ad8f19e14a00ae9a48a8c61d370",
+        "status": "built",
+        "strategy": "vite",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-084",
+        "repo": "extent-ai-hero",
+        "commit": "0a9518daea1aff68f8c68e2f299e0f3a7c3a2143",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-085",
+        "repo": "feature-cards",
+        "commit": "082c74213f4708d7d988b248b4eb4090c8a9af09",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-086",
+        "repo": "finance-signup",
+        "commit": "0486a68e65fef4a6a8df775971e6502bccd87efc",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-087",
+        "repo": "finns",
+        "commit": "feb10448dfb84b17f9f2dc03bdda413742409847",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-088",
+        "repo": "flexitee-login-responsive",
+        "commit": "7155cdb55a4c4a5aa9f9639fe5df40f61aa6a008",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-089",
+        "repo": "flux-hero",
+        "commit": "a05d75162ecb790fba396521e798621b3a3895c9",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-090",
+        "repo": "framefutures",
+        "commit": "b35355e656c60d5b2bba76c97fd576822dabfd17",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-091",
+        "repo": "hero_section_09",
+        "commit": "d4081a499a1a3f1f647514f07e3c7b0d8a2b5202",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-092",
+        "repo": "hevn",
+        "commit": "045c1d789d49caf3a9d53d217fa8c8752bcb3f8a",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-093",
+        "repo": "highframe",
+        "commit": "28715dddbf462382bf947f6c01a35eb9e4627007",
+        "status": "built",
+        "strategy": "vite",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-094",
+        "repo": "hinata-sakai",
+        "commit": "e2da703ca9229e7f1f409651ef38afc219744406",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-095",
+        "repo": "insight-signup",
+        "commit": "4e61f8dfea90e317af4edcc76799a8542a65e232",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-096",
+        "repo": "insuria-hero",
+        "commit": "981e279d073da32480acc1b6c1efbfb37a4be82c",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-097",
+        "repo": "interior",
+        "commit": "fcd478737c6c9b6ba9fbab21cbe95ddf4bb40452",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-098",
+        "repo": "invopilot-create-invoice",
+        "commit": "8a581b9eb01aef585b708d053bfd2ae599bb47de",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "site"
+      },
+      {
+        "id": "REF-099",
+        "repo": "karu-creative-studio",
+        "commit": "8291aed30adbbf6d6775ed69873676b040a2cfd0",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-100",
+        "repo": "kaultai",
+        "commit": "acec16b749ed117ba84c4871ca9e0b34711c49a2",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-101",
+        "repo": "kindle3d-login",
+        "commit": "ec31fa7371313ffe5a099592f704e94516f2c349",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-102",
+        "repo": "kora-ai",
+        "commit": "1a3cb08bbd55ba80eed5d1d5f9a2fd6428b0c1d3",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-103",
+        "repo": "la-consulting",
+        "commit": "3e59295abb7f3150db7466174c57e2208d85678e",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-104",
+        "repo": "lab-post-train-agents",
+        "commit": "76c3404a82eca84b933ed01d9b554a96302c93b1",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-105",
+        "repo": "logistics-freight-hero",
+        "commit": "b70669c03bb302c4f35c34cbb04932627ae86ae3",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-106",
+        "repo": "loomix-footer",
+        "commit": "3d2399e3b28de4626afaa00064ee62d204d27bb5",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-107",
+        "repo": "lumen-hero",
+        "commit": "44839765d52a0be976fb394976ecdfe6fead2e59",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-108",
+        "repo": "lumen-studio",
+        "commit": "47d18a567365aad92c6e2899c38c059b5f17fed2",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-109",
+        "repo": "lumenkey-login",
+        "commit": "3ce138aa46cba31d9efbef91cc46be8fc7de1479",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-110",
+        "repo": "lumo-landing",
+        "commit": "5c1a0b84a94ba61971007c89aa458efeed22ec3a",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-111",
+        "repo": "medical-center-dashboard",
+        "commit": "408bf8b07a6a6b30327b83a821af3a19045552fa",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-112",
+        "repo": "mentoxy",
+        "commit": "b38b07b68fb43c8f1161e3cacb3c363bb00d7c32",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-113",
+        "repo": "Meridial",
+        "commit": "f149cfe761a18922bd7f289ba74d923fa610a919",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "src"
+      },
+      {
+        "id": "REF-114",
+        "repo": "meridian",
+        "commit": "f953cdd5c6edc3fbb1a3ac91706663c663bf5bf5",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-115",
+        "repo": "meshora-hero",
+        "commit": "d5da90f4f4458386a97b02d2cc5a9c1cb26e9387",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-116",
+        "repo": "mindease",
+        "commit": "fce00cd5b5e7708813915ab866cf3482545f381a",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-117",
+        "repo": "new-collection",
+        "commit": "b4ae4554449952d36b51464de30aefeaaed888d5",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-118",
+        "repo": "nexora",
+        "commit": "8412a74c6840dcf5c2f2b9b686b5c4ac5db0a036",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-119",
+        "repo": "nexusai",
+        "commit": "f9ac01864888ebf0d0ac3a1c0136d19ca4d13ab1",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-120",
+        "repo": "Nike-Style-Shoe-Landing-Page",
+        "commit": "52306835dad2c1e81722987f5b84316aec9a0829",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-121",
+        "repo": "orbit-see-beyond",
+        "commit": "5cea7f97fa1913fb7574a54934022cacdd498228",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-122",
+        "repo": "orbitals",
+        "commit": "05442ac49eb777939c01ad1508418ba6264a44ed",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-123",
+        "repo": "ordiva-hero",
+        "commit": "63f72c9e6df5fd6c3ad171f1599b07704be4106f",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "site"
+      },
+      {
+        "id": "REF-124",
+        "repo": "orinex",
+        "commit": "11a2a158819b8b3e3d72f20eea5ccc845f2b08ee",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-125",
+        "repo": "orvixa",
+        "commit": "64ae4aa5a7fa6196c05bc3b2a6ef821c1842b04b",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-126",
+        "repo": "oryn-studio",
+        "commit": "9f163d5afd5519bc7dd8ecd9608406ada7a3ae0e",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-127",
+        "repo": "parallax",
+        "commit": "d5fdca264c7392c6de84b1663dd39f26fa8667e6",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-128",
+        "repo": "polu-testimonials",
+        "commit": "6a1dccc9c09688e78847a64ac376b76e30d2fdaf",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-129",
+        "repo": "pulse",
+        "commit": "6ca296e7c4d253a784da7d6f7b13c1947e944363",
+        "status": "built",
+        "strategy": "package-build",
+        "error": null,
+        "fallbackRoot": "dist"
+      },
+      {
+        "id": "REF-130",
+        "repo": "pulse-prototype",
+        "commit": "baa42d2cddf02eeb6d9a2934c97dd5674d88927f",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "site"
+      },
+      {
+        "id": "REF-131",
+        "repo": "pulse-tennis-club",
+        "commit": "b1fc222c839813edcfa29d1371355848afe102c9",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-132",
+        "repo": "quantom_landing",
+        "commit": "a41b4a0b1f0a01063a41403784a652cb5fa3269e",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-133",
+        "repo": "rift",
+        "commit": "c731540e521ccb704c141b6c109b0a3151dbef50",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "site"
+      },
+      {
+        "id": "REF-134",
+        "repo": "riverine",
+        "commit": "6589e7507d4d64f512b449fc84048c3c9516a5ab",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-135",
+        "repo": "securemind-hero",
+        "commit": "1b38a4ba4aa19843c09e6ab5f40c6a4cfe456134",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-136",
+        "repo": "sendit-hero",
+        "commit": "ca1b0260c9b21ebda1ce5d1c0a12ba6e55cad6ec",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "site"
+      },
+      {
+        "id": "REF-137",
+        "repo": "shoes-v2",
+        "commit": "c7d3d08bb11bd8dc7430bd80b1efe2e193305286",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-138",
+        "repo": "shoe_gradient",
+        "commit": "fd9e41c0d55c7eae703f8d1f849cdd742770f0cf",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-139",
+        "repo": "smart-pricing",
+        "commit": "4dcd5590d5655b800377ddbfd51ea150483069c2",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-140",
+        "repo": "soma-hero",
+        "commit": "d112d5b31404e684778dfb088af771f5caedb6d2",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "site"
+      },
+      {
+        "id": "REF-141",
+        "repo": "stakekit",
+        "commit": "f1f59afdb7ab47e4093c9c07a33ab024359bd543",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-142",
+        "repo": "starform",
+        "commit": "c54e4d14d7e846d333beaafbbfe4ab32dcbf1ff9",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-143",
+        "repo": "stridr",
+        "commit": "6de715e904443c840e7159b4db68dc127940c26d",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-144",
+        "repo": "sundi-headphones",
+        "commit": "b766b210a234d1bd3ffd963ade8948d217e2cfb9",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-145",
+        "repo": "suttere-hero",
+        "commit": "eda0957be7528eadb9e27ff4477f7fc78cd08e4e",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-146",
+        "repo": "talkie-hero",
+        "commit": "0236cb78dc958419d61981e963067d0c8d181959",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-147",
+        "repo": "testimonials",
+        "commit": "01871fab68c81442c655f1f49cf679e82f92cdd8",
+        "status": "built",
+        "strategy": "vite",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-148",
+        "repo": "timon-footer",
+        "commit": "ea80de17144431c0201baca2d5d5dc765e4ff874",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-149",
+        "repo": "total-mortgages",
+        "commit": "57944d9fff3a89a5499c445ef3f22d2ed30740db",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-150",
+        "repo": "valta-hero",
+        "commit": "62fbc1702198fd9b693774cb9b118126c003c45b",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "site"
+      },
+      {
+        "id": "REF-151",
+        "repo": "velora-login",
+        "commit": "382360802d921412ae0e78ba446e68ff161f56e0",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-152",
+        "repo": "vidpro-login",
+        "commit": "e3d35f5b2a5b07c8ee7fb7458263eaede4f3b79c",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-153",
+        "repo": "visionos-prototype",
+        "commit": "41103f0135c5f4de4bacc9b06cdf6aecea452d88",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": "public"
+      },
+      {
+        "id": "REF-154",
+        "repo": "vitalyn-landing",
+        "commit": "816b0bfcb385a6bdc97632f9a89b97d5053bd3ec",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      },
+      {
+        "id": "REF-155",
+        "repo": "voicelab-login",
+        "commit": "2e8e915d6051b79f3242a04819b5204549f7049a",
+        "status": "built",
+        "strategy": "static",
+        "error": null,
+        "fallbackRoot": ""
+      }
+    ]
+  },
+  "visualVerification": {
+    "generatedAt": "2026-10-27T15:53:33.657Z",
+    "working": 96,
+    "failed": 0,
+    "results": [
+      {
+        "id": "REF-060",
+        "url": "http://127.0.0.1:4173/previews/REF-060/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-061",
+        "url": "http://127.0.0.1:4173/previews/REF-061/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-062",
+        "url": "http://127.0.0.1:4173/previews/REF-062/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-063",
+        "url": "http://127.0.0.1:4173/previews/REF-063/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-064",
+        "url": "http://127.0.0.1:4173/previews/REF-064/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-065",
+        "url": "http://127.0.0.1:4173/previews/REF-065/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-066",
+        "url": "http://127.0.0.1:4173/previews/REF-066/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-067",
+        "url": "http://127.0.0.1:4173/previews/REF-067/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-068",
+        "url": "http://127.0.0.1:4173/previews/REF-068/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-069",
+        "url": "http://127.0.0.1:4173/previews/REF-069/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-070",
+        "url": "http://127.0.0.1:4173/previews/REF-070/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-071",
+        "url": "http://127.0.0.1:4173/previews/REF-071/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-072",
+        "url": "http://127.0.0.1:4173/previews/REF-072/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-073",
+        "url": "http://127.0.0.1:4173/previews/REF-073/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-074",
+        "url": "http://127.0.0.1:4173/previews/REF-074/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-075",
+        "url": "http://127.0.0.1:4173/previews/REF-075/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-076",
+        "url": "http://127.0.0.1:4173/previews/REF-076/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-077",
+        "url": "http://127.0.0.1:4173/previews/REF-077/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-078",
+        "url": "http://127.0.0.1:4173/previews/REF-078/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-079",
+        "url": "http://127.0.0.1:4173/previews/REF-079/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-080",
+        "url": "http://127.0.0.1:4173/previews/REF-080/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-081",
+        "url": "http://127.0.0.1:4173/previews/REF-081/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-082",
+        "url": "http://127.0.0.1:4173/previews/REF-082/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-083",
+        "url": "http://127.0.0.1:4173/previews/REF-083/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-084",
+        "url": "http://127.0.0.1:4173/previews/REF-084/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-085",
+        "url": "http://127.0.0.1:4173/previews/REF-085/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-086",
+        "url": "http://127.0.0.1:4173/previews/REF-086/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-087",
+        "url": "http://127.0.0.1:4173/previews/REF-087/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-088",
+        "url": "http://127.0.0.1:4173/previews/REF-088/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-089",
+        "url": "http://127.0.0.1:4173/previews/REF-089/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-090",
+        "url": "http://127.0.0.1:4173/previews/REF-090/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-091",
+        "url": "http://127.0.0.1:4173/previews/REF-091/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-092",
+        "url": "http://127.0.0.1:4173/previews/REF-092/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-093",
+        "url": "http://127.0.0.1:4173/previews/REF-093/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-094",
+        "url": "http://127.0.0.1:4173/previews/REF-094/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-095",
+        "url": "http://127.0.0.1:4173/previews/REF-095/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-096",
+        "url": "http://127.0.0.1:4173/previews/REF-096/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-097",
+        "url": "http://127.0.0.1:4173/previews/REF-097/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-098",
+        "url": "http://127.0.0.1:4173/previews/REF-098/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-099",
+        "url": "http://127.0.0.1:4173/previews/REF-099/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-100",
+        "url": "http://127.0.0.1:4173/previews/REF-100/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-101",
+        "url": "http://127.0.0.1:4173/previews/REF-101/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-102",
+        "url": "http://127.0.0.1:4173/previews/REF-102/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-103",
+        "url": "http://127.0.0.1:4173/previews/REF-103/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-104",
+        "url": "http://127.0.0.1:4173/previews/REF-104/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-105",
+        "url": "http://127.0.0.1:4173/previews/REF-105/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-106",
+        "url": "http://127.0.0.1:4173/previews/REF-106/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-107",
+        "url": "http://127.0.0.1:4173/previews/REF-107/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-108",
+        "url": "http://127.0.0.1:4173/previews/REF-108/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-109",
+        "url": "http://127.0.0.1:4173/previews/REF-109/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-110",
+        "url": "http://127.0.0.1:4173/previews/REF-110/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-111",
+        "url": "http://127.0.0.1:4173/previews/REF-111/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-112",
+        "url": "http://127.0.0.1:4173/previews/REF-112/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-113",
+        "url": "http://127.0.0.1:4173/previews/REF-113/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-114",
+        "url": "http://127.0.0.1:4173/previews/REF-114/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-115",
+        "url": "http://127.0.0.1:4173/previews/REF-115/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-116",
+        "url": "http://127.0.0.1:4173/previews/REF-116/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-117",
+        "url": "http://127.0.0.1:4173/previews/REF-117/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-118",
+        "url": "http://127.0.0.1:4173/previews/REF-118/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-119",
+        "url": "http://127.0.0.1:4173/previews/REF-119/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-120",
+        "url": "http://127.0.0.1:4173/previews/REF-120/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-121",
+        "url": "http://127.0.0.1:4173/previews/REF-121/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-122",
+        "url": "http://127.0.0.1:4173/previews/REF-122/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-123",
+        "url": "http://127.0.0.1:4173/previews/REF-123/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-124",
+        "url": "http://127.0.0.1:4173/previews/REF-124/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-125",
+        "url": "http://127.0.0.1:4173/previews/REF-125/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-126",
+        "url": "http://127.0.0.1:4173/previews/REF-126/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-127",
+        "url": "http://127.0.0.1:4173/previews/REF-127/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-128",
+        "url": "http://127.0.0.1:4173/previews/REF-128/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-129",
+        "url": "http://127.0.0.1:4173/previews/REF-129/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-130",
+        "url": "http://127.0.0.1:4173/previews/REF-130/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-131",
+        "url": "http://127.0.0.1:4173/previews/REF-131/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-132",
+        "url": "http://127.0.0.1:4173/previews/REF-132/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-133",
+        "url": "http://127.0.0.1:4173/previews/REF-133/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-134",
+        "url": "http://127.0.0.1:4173/previews/REF-134/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-135",
+        "url": "http://127.0.0.1:4173/previews/REF-135/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-136",
+        "url": "http://127.0.0.1:4173/previews/REF-136/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-137",
+        "url": "http://127.0.0.1:4173/previews/REF-137/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-138",
+        "url": "http://127.0.0.1:4173/previews/REF-138/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-139",
+        "url": "http://127.0.0.1:4173/previews/REF-139/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-140",
+        "url": "http://127.0.0.1:4173/previews/REF-140/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-141",
+        "url": "http://127.0.0.1:4173/previews/REF-141/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-142",
+        "url": "http://127.0.0.1:4173/previews/REF-142/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-143",
+        "url": "http://127.0.0.1:4173/previews/REF-143/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-144",
+        "url": "http://127.0.0.1:4173/previews/REF-144/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-145",
+        "url": "http://127.0.0.1:4173/previews/REF-145/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-146",
+        "url": "http://127.0.0.1:4173/previews/REF-146/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-147",
+        "url": "http://127.0.0.1:4173/previews/REF-147/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-148",
+        "url": "http://127.0.0.1:4173/previews/REF-148/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-149",
+        "url": "http://127.0.0.1:4173/previews/REF-149/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-150",
+        "url": "http://127.0.0.1:4173/previews/REF-150/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-151",
+        "url": "http://127.0.0.1:4173/previews/REF-151/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-152",
+        "url": "http://127.0.0.1:4173/previews/REF-152/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-153",
+        "url": "http://127.0.0.1:4173/previews/REF-153/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-154",
+        "url": "http://127.0.0.1:4173/previews/REF-154/",
+        "status": "working",
+        "error": null
+      },
+      {
+        "id": "REF-155",
+        "url": "http://127.0.0.1:4173/previews/REF-155/",
+        "status": "working",
+        "error": null
+      }
+    ]
+  }
 }

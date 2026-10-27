@@ -158,6 +158,390 @@
       "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/vistaRail/a87c6af7f07a29856b76b2973796bbaee25a1566/public/:path*"
     },
     {
+      "source": "/previews/REF-060/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/ai-assistant-motionsitesv5/1f233df35f341808aae97a0b970da490681e01d7/:path*"
+    },
+    {
+      "source": "/previews/REF-061/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/ai-verse/9bc6b71282c373bd0194c02313e6277ed9dce126/:path*"
+    },
+    {
+      "source": "/previews/REF-062/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/anfalova-art/c91b24de9672a94cd8c4986d76eac4ae6c00ff87/public/:path*"
+    },
+    {
+      "source": "/previews/REF-063/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/anveril/42d76c51f92ae0c254872a5b6e7d11d0baa614e5/public/:path*"
+    },
+    {
+      "source": "/previews/REF-064/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/artifact-museum-hero/eaeff455e565338e1a7461ae1cb150732e801119/:path*"
+    },
+    {
+      "source": "/previews/REF-065/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/atelier-unit-hero/0444a24db6cdafd50b934ce3d3a7d51311f92d30/:path*"
+    },
+    {
+      "source": "/previews/REF-066/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/atlas_workspace_ui/a5f8251a5719ebd6d3bc3e426acd0af9e1ef1022/:path*"
+    },
+    {
+      "source": "/previews/REF-067/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/automify-hero/9569a752958e3c08f764486572055232dd9cbd6a/:path*"
+    },
+    {
+      "source": "/previews/REF-068/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/banklio/a8d194d365b258a90f28f179147dd7321b3701b0/:path*"
+    },
+    {
+      "source": "/previews/REF-069/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/blinq/97b88ce9d2c84efac588818872672892a9a73006/:path*"
+    },
+    {
+      "source": "/previews/REF-070/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/blossom-ai-growth-platform/c5b9be1294044dde5acaad4ac69159e0852813ec/:path*"
+    },
+    {
+      "source": "/previews/REF-071/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/campaigns-dashboard/c14826c8235115c68bdd12a5710add0a100bc75c/public/:path*"
+    },
+    {
+      "source": "/previews/REF-072/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/camper-overnight-camp/dd2b45b539032d2d520414db2a76af8dac240893/public/:path*"
+    },
+    {
+      "source": "/previews/REF-073/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/clawd-hero/27122548c67e372fc960461018e90a932f588311/public/:path*"
+    },
+    {
+      "source": "/previews/REF-074/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/cleargate-hero/530b18d3ea5105b23b786672074e6f86018bd8c7/public/:path*"
+    },
+    {
+      "source": "/previews/REF-075/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/cloud-cards/771d29eb62d42d5cbc2527f95471c3c2e3838a53/site/:path*"
+    },
+    {
+      "source": "/previews/REF-076/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/codex-signup/8d7f7fde26efa96a72c77dccaa2b5b1ee83f68cf/:path*"
+    },
+    {
+      "source": "/previews/REF-077/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/designup/a3afc9eb52e3f385f962b697b029408c2bbbb5aa/site/:path*"
+    },
+    {
+      "source": "/previews/REF-078/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/dreamflow-footer/20c934f8c46e6e1928232141dfc9c20f36858e06/:path*"
+    },
+    {
+      "source": "/previews/REF-079/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/ecommerce-dashboard/18b88c13cc8ab57ff4d27626fe7f8d143538fc40/site/:path*"
+    },
+    {
+      "source": "/previews/REF-080/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/effortless-crypto-hero/d49c564edb8b5ade076f407e0e2a4ab487bcddfb/:path*"
+    },
+    {
+      "source": "/previews/REF-081/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/else-landing/3658053b61a24a6bd34d83d3db6299dd818131d1/:path*"
+    },
+    {
+      "source": "/previews/REF-082/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/espace-mtl/098c9626c57d4d6db76b132699e9778a459d548d/:path*"
+    },
+    {
+      "source": "/previews/REF-083/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/evcarlandingpage/41e0389ff2367ad8f19e14a00ae9a48a8c61d370/public/:path*"
+    },
+    {
+      "source": "/previews/REF-084/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/extent-ai-hero/0a9518daea1aff68f8c68e2f299e0f3a7c3a2143/:path*"
+    },
+    {
+      "source": "/previews/REF-085/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/feature-cards/082c74213f4708d7d988b248b4eb4090c8a9af09/:path*"
+    },
+    {
+      "source": "/previews/REF-086/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/finance-signup/0486a68e65fef4a6a8df775971e6502bccd87efc/:path*"
+    },
+    {
+      "source": "/previews/REF-087/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/finns/feb10448dfb84b17f9f2dc03bdda413742409847/public/:path*"
+    },
+    {
+      "source": "/previews/REF-088/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/flexitee-login-responsive/7155cdb55a4c4a5aa9f9639fe5df40f61aa6a008/public/:path*"
+    },
+    {
+      "source": "/previews/REF-089/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/flux-hero/a05d75162ecb790fba396521e798621b3a3895c9/public/:path*"
+    },
+    {
+      "source": "/previews/REF-090/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/framefutures/b35355e656c60d5b2bba76c97fd576822dabfd17/:path*"
+    },
+    {
+      "source": "/previews/REF-091/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/hero_section_09/d4081a499a1a3f1f647514f07e3c7b0d8a2b5202/:path*"
+    },
+    {
+      "source": "/previews/REF-092/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/hevn/045c1d789d49caf3a9d53d217fa8c8752bcb3f8a/:path*"
+    },
+    {
+      "source": "/previews/REF-093/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/highframe/28715dddbf462382bf947f6c01a35eb9e4627007/public/:path*"
+    },
+    {
+      "source": "/previews/REF-094/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/hinata-sakai/e2da703ca9229e7f1f409651ef38afc219744406/:path*"
+    },
+    {
+      "source": "/previews/REF-095/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/insight-signup/4e61f8dfea90e317af4edcc76799a8542a65e232/:path*"
+    },
+    {
+      "source": "/previews/REF-096/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/insuria-hero/981e279d073da32480acc1b6c1efbfb37a4be82c/public/:path*"
+    },
+    {
+      "source": "/previews/REF-097/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/interior/fcd478737c6c9b6ba9fbab21cbe95ddf4bb40452/:path*"
+    },
+    {
+      "source": "/previews/REF-098/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/invopilot-create-invoice/8a581b9eb01aef585b708d053bfd2ae599bb47de/site/:path*"
+    },
+    {
+      "source": "/previews/REF-099/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/karu-creative-studio/8291aed30adbbf6d6775ed69873676b040a2cfd0/:path*"
+    },
+    {
+      "source": "/previews/REF-100/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/kaultai/acec16b749ed117ba84c4871ca9e0b34711c49a2/:path*"
+    },
+    {
+      "source": "/previews/REF-101/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/kindle3d-login/ec31fa7371313ffe5a099592f704e94516f2c349/:path*"
+    },
+    {
+      "source": "/previews/REF-102/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/kora-ai/1a3cb08bbd55ba80eed5d1d5f9a2fd6428b0c1d3/public/:path*"
+    },
+    {
+      "source": "/previews/REF-103/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/la-consulting/3e59295abb7f3150db7466174c57e2208d85678e/:path*"
+    },
+    {
+      "source": "/previews/REF-104/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/lab-post-train-agents/76c3404a82eca84b933ed01d9b554a96302c93b1/public/:path*"
+    },
+    {
+      "source": "/previews/REF-105/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/logistics-freight-hero/b70669c03bb302c4f35c34cbb04932627ae86ae3/public/:path*"
+    },
+    {
+      "source": "/previews/REF-106/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/loomix-footer/3d2399e3b28de4626afaa00064ee62d204d27bb5/public/:path*"
+    },
+    {
+      "source": "/previews/REF-107/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/lumen-hero/44839765d52a0be976fb394976ecdfe6fead2e59/:path*"
+    },
+    {
+      "source": "/previews/REF-108/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/lumen-studio/47d18a567365aad92c6e2899c38c059b5f17fed2/public/:path*"
+    },
+    {
+      "source": "/previews/REF-109/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/lumenkey-login/3ce138aa46cba31d9efbef91cc46be8fc7de1479/public/:path*"
+    },
+    {
+      "source": "/previews/REF-110/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/lumo-landing/5c1a0b84a94ba61971007c89aa458efeed22ec3a/:path*"
+    },
+    {
+      "source": "/previews/REF-111/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/medical-center-dashboard/408bf8b07a6a6b30327b83a821af3a19045552fa/:path*"
+    },
+    {
+      "source": "/previews/REF-112/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/mentoxy/b38b07b68fb43c8f1161e3cacb3c363bb00d7c32/public/:path*"
+    },
+    {
+      "source": "/previews/REF-113/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/Meridial/f149cfe761a18922bd7f289ba74d923fa610a919/src/:path*"
+    },
+    {
+      "source": "/previews/REF-114/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/meridian/f953cdd5c6edc3fbb1a3ac91706663c663bf5bf5/public/:path*"
+    },
+    {
+      "source": "/previews/REF-115/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/meshora-hero/d5da90f4f4458386a97b02d2cc5a9c1cb26e9387/:path*"
+    },
+    {
+      "source": "/previews/REF-116/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/mindease/fce00cd5b5e7708813915ab866cf3482545f381a/:path*"
+    },
+    {
+      "source": "/previews/REF-117/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/new-collection/b4ae4554449952d36b51464de30aefeaaed888d5/:path*"
+    },
+    {
+      "source": "/previews/REF-118/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/nexora/8412a74c6840dcf5c2f2b9b686b5c4ac5db0a036/:path*"
+    },
+    {
+      "source": "/previews/REF-119/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/nexusai/f9ac01864888ebf0d0ac3a1c0136d19ca4d13ab1/public/:path*"
+    },
+    {
+      "source": "/previews/REF-120/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/Nike-Style-Shoe-Landing-Page/52306835dad2c1e81722987f5b84316aec9a0829/:path*"
+    },
+    {
+      "source": "/previews/REF-121/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/orbit-see-beyond/5cea7f97fa1913fb7574a54934022cacdd498228/public/:path*"
+    },
+    {
+      "source": "/previews/REF-122/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/orbitals/05442ac49eb777939c01ad1508418ba6264a44ed/public/:path*"
+    },
+    {
+      "source": "/previews/REF-123/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/ordiva-hero/63f72c9e6df5fd6c3ad171f1599b07704be4106f/site/:path*"
+    },
+    {
+      "source": "/previews/REF-124/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/orinex/11a2a158819b8b3e3d72f20eea5ccc845f2b08ee/:path*"
+    },
+    {
+      "source": "/previews/REF-125/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/orvixa/64ae4aa5a7fa6196c05bc3b2a6ef821c1842b04b/public/:path*"
+    },
+    {
+      "source": "/previews/REF-126/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/oryn-studio/9f163d5afd5519bc7dd8ecd9608406ada7a3ae0e/:path*"
+    },
+    {
+      "source": "/previews/REF-127/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/parallax/d5fdca264c7392c6de84b1663dd39f26fa8667e6/public/:path*"
+    },
+    {
+      "source": "/previews/REF-128/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/polu-testimonials/6a1dccc9c09688e78847a64ac376b76e30d2fdaf/:path*"
+    },
+    {
+      "source": "/previews/REF-129/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/pulse/6ca296e7c4d253a784da7d6f7b13c1947e944363/dist/:path*"
+    },
+    {
+      "source": "/previews/REF-130/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/pulse-prototype/baa42d2cddf02eeb6d9a2934c97dd5674d88927f/site/:path*"
+    },
+    {
+      "source": "/previews/REF-131/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/pulse-tennis-club/b1fc222c839813edcfa29d1371355848afe102c9/:path*"
+    },
+    {
+      "source": "/previews/REF-132/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/quantom_landing/a41b4a0b1f0a01063a41403784a652cb5fa3269e/:path*"
+    },
+    {
+      "source": "/previews/REF-133/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/rift/c731540e521ccb704c141b6c109b0a3151dbef50/site/:path*"
+    },
+    {
+      "source": "/previews/REF-134/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/riverine/6589e7507d4d64f512b449fc84048c3c9516a5ab/:path*"
+    },
+    {
+      "source": "/previews/REF-135/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/securemind-hero/1b38a4ba4aa19843c09e6ab5f40c6a4cfe456134/:path*"
+    },
+    {
+      "source": "/previews/REF-136/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/sendit-hero/ca1b0260c9b21ebda1ce5d1c0a12ba6e55cad6ec/site/:path*"
+    },
+    {
+      "source": "/previews/REF-137/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/shoes-v2/c7d3d08bb11bd8dc7430bd80b1efe2e193305286/:path*"
+    },
+    {
+      "source": "/previews/REF-138/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/shoe_gradient/fd9e41c0d55c7eae703f8d1f849cdd742770f0cf/:path*"
+    },
+    {
+      "source": "/previews/REF-139/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/smart-pricing/4dcd5590d5655b800377ddbfd51ea150483069c2/:path*"
+    },
+    {
+      "source": "/previews/REF-140/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/soma-hero/d112d5b31404e684778dfb088af771f5caedb6d2/site/:path*"
+    },
+    {
+      "source": "/previews/REF-141/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/stakekit/f1f59afdb7ab47e4093c9c07a33ab024359bd543/:path*"
+    },
+    {
+      "source": "/previews/REF-142/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/starform/c54e4d14d7e846d333beaafbbfe4ab32dcbf1ff9/public/:path*"
+    },
+    {
+      "source": "/previews/REF-143/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/stridr/6de715e904443c840e7159b4db68dc127940c26d/:path*"
+    },
+    {
+      "source": "/previews/REF-144/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/sundi-headphones/b766b210a234d1bd3ffd963ade8948d217e2cfb9/:path*"
+    },
+    {
+      "source": "/previews/REF-145/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/suttere-hero/eda0957be7528eadb9e27ff4477f7fc78cd08e4e/:path*"
+    },
+    {
+      "source": "/previews/REF-146/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/talkie-hero/0236cb78dc958419d61981e963067d0c8d181959/public/:path*"
+    },
+    {
+      "source": "/previews/REF-147/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/testimonials/01871fab68c81442c655f1f49cf679e82f92cdd8/public/:path*"
+    },
+    {
+      "source": "/previews/REF-148/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/timon-footer/ea80de17144431c0201baca2d5d5dc765e4ff874/public/:path*"
+    },
+    {
+      "source": "/previews/REF-149/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/total-mortgages/57944d9fff3a89a5499c445ef3f22d2ed30740db/:path*"
+    },
+    {
+      "source": "/previews/REF-150/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/valta-hero/62fbc1702198fd9b693774cb9b118126c003c45b/site/:path*"
+    },
+    {
+      "source": "/previews/REF-151/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/velora-login/382360802d921412ae0e78ba446e68ff161f56e0/:path*"
+    },
+    {
+      "source": "/previews/REF-152/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/vidpro-login/e3d35f5b2a5b07c8ee7fb7458263eaede4f3b79c/:path*"
+    },
+    {
+      "source": "/previews/REF-153/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/visionos-prototype/41103f0135c5f4de4bacc9b06cdf6aecea452d88/public/:path*"
+    },
+    {
+      "source": "/previews/REF-154/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/vitalyn-landing/816b0bfcb385a6bdc97632f9a89b97d5053bd3ec/:path*"
+    },
+    {
+      "source": "/previews/REF-155/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/voicelab-login/2e8e915d6051b79f3242a04819b5204549f7049a/:path*"
+    },
+    {
       "source": "/reference/:id",
       "destination": "/index.html"
     },

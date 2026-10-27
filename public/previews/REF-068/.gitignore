@@ -1,0 +1,6 @@
+/*
+!/index.html
+!/.gitignore
+!/assets/
+/assets/*
+!/assets/*.woff2

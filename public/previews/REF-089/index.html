@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-089/">
+<script>
+(()=>{if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+const root=document.documentElement;
+root.classList.add('entry-active');
+window.setTimeout(()=>root.classList.remove('entry-active'),2600);
+})();
+</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06102b">
+<title>Flux — Financial automation</title>
+<style>
+/* ------------------------------------------------------------------
+   Fonts (embedded so the file works fully offline)
+   Display: Libre Caslon Text 400  ·  UI/body: Inter Tight 400/500
+------------------------------------------------------------------- */
+@font-face{font-family:"Flux Serif";font-weight:400;font-style:normal;font-display:block;
+  src:url(assets/font-01.woff2) format("woff2")}
+@font-face{font-family:"Flux Sans";font-weight:400;font-style:normal;font-display:block;
+  src:url(assets/font-02.woff2) format("woff2")}
+@font-face{font-family:"Flux Sans";font-weight:500;font-style:normal;font-display:block;
+  src:url(assets/font-03.woff2) format("woff2")}
+
+/* ------------------------------------------------------------------
+   Design tokens — every value below was sampled from the reference
+   (2924 × 1644 master). Geometry is written in master pixels and
+   multiplied by --u, so the whole screen scales as one unit.
+------------------------------------------------------------------- */
+:root{
+  --ink-0:#ffffff;
+  --ink-nav:#b4c6ec;          /* nav labels            */
+  --ink-badge:#aeb6cd;        /* eyebrow label         */
+  --ink-sub:#bfc4d9;          /* supporting copy       */
+  --ink-dark:#05070d;         /* text on light buttons */
+  --btn-light:#e6e8ea;        /* light button fill     */
+  --arrow:#d5def8;
+  --icon:#c6cfe5;
+  --page:#050d26;             /* body colour under the artwork */
+  --headline-bg:#030c24;      /* used to optically thin the serif */
+  --glass-nav:rgba(255,255,255,.047);
+  --glass-tab:rgba(255,255,255,.075);
+  --glass-badge:rgba(255,255,255,.043);
+  --glass-chip:rgba(255,255,255,.075);
+  --glass-btn:rgba(255,255,255,.06);
+  --hair:rgba(255,255,255,.055);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--page)}
+body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision;
+  font-family:"Flux Sans",Inter,system-ui,sans-serif;color:var(--ink-0)}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid #9ec2ff;outline-offset:3px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Readability floors: below ~1462 CSS px the smallest UI text stops
+   shrinking (≥11px). At and above that size the master scales 1:1. */
+/* ==================================================================
+   STAGE — fills the viewport exactly (no bands top/bottom).
+   --u = contain scale of the 2924×1644 master. The artwork layer uses
+   cover scale, so at the reference aspect (16:9) both are identical and
+   every element lands on its measured pixel.
+=================================================================== */
+.stage{
+  --u:min(calc(100vw / 2924), calc(100vh / 1644));
+  position:relative;width:100%;height:100vh;overflow:hidden;isolation:isolate;
+}
+@supports (height:100dvh){
+  .stage{--u:min(calc(100vw / 2924), calc(100dvh / 1644));height:100dvh}
+}
+.art{position:absolute;inset:0;z-index:-1;
+  background:var(--page) url(assets/image-01.webp) 50% 50% / cover no-repeat}
+
+/* ---------------- Header ---------------- */
+.logo{position:absolute;left:calc(61 * var(--u));top:calc(45.5 * var(--u));
+  display:flex;align-items:center;height:calc(70 * var(--u))}
+.logo svg{width:calc(70 * var(--u));height:calc(70 * var(--u));display:block;flex:none}
+.logo span{font-family:"Flux Serif",Georgia,serif;font-size:calc(43.5 * var(--u));line-height:1;
+  letter-spacing:.03em;margin-left:calc(20.6 * var(--u));transform:translateY(calc(1.9 * var(--u)));
+  -webkit-text-stroke:calc(.3 * var(--u)) #fff}
+
+.nav{position:absolute;left:50%;top:calc(43.5 * var(--u));transform:translateX(-50%);
+  display:flex;height:calc(74 * var(--u));padding:calc(6 * var(--u)) calc(5.5 * var(--u)) calc(7.5 * var(--u));
+  background:var(--glass-nav);border-radius:calc(5 * var(--u));
+  box-shadow:inset 0 0 0 calc(1.2 * var(--u)) rgba(255,255,255,.035);
+  -webkit-backdrop-filter:blur(calc(6 * var(--u)));backdrop-filter:blur(calc(6 * var(--u)))}
+.nav a{display:flex;align-items:center;justify-content:center;padding:0 calc(63.2 * var(--u));
+  font-size:max(calc(22.8 * var(--u)),11px);font-weight:500;letter-spacing:.016em;color:var(--ink-nav);border-radius:calc(4 * var(--u));
+  transition:background-color .25s,color .25s}
+.nav a:hover{background:rgba(255,255,255,.045);color:#d6e2fa}
+.nav a[aria-current="page"]{background:var(--glass-tab);color:#c4d6f6;
+  box-shadow:inset 0 0 0 calc(1.2 * var(--u)) rgba(255,255,255,.05),0 calc(1 * var(--u)) calc(2 * var(--u)) rgba(0,6,24,.28)}
+
+/* Light button with dark arrow tile (header + hero share one component) */
+.btn-light{position:relative;display:flex;align-items:center;background:var(--btn-light);color:var(--ink-dark);
+  border-radius:calc(var(--r) * var(--u));
+  box-shadow:inset 0 0 0 calc(2.2 * var(--u)) #fff,0 0 0 calc(1.5 * var(--u)) rgba(0,2,14,.75),0 calc(2 * var(--u)) calc(6 * var(--u)) rgba(0,3,18,.45);
+  transition:background-color .25s,transform .25s}
+.btn-light:hover{background:#f1f2f4}
+.btn-light .tile{position:absolute;top:calc(var(--ti) * var(--u));right:calc(var(--tr) * var(--u));
+  width:calc(var(--ts) * var(--u));height:calc(var(--ts) * var(--u));border-radius:calc(4.5 * var(--u));
+  display:grid;place-items:center;
+  background:radial-gradient(circle at 0% 100%,rgb(88,106,144) 0%,rgb(84,102,140) 18%,rgb(73,90,128) 28%,rgb(60,74,110) 39%,rgb(52,66,100) 47%,rgb(39,50,80) 58%,rgb(34,45,74) 67%);
+  box-shadow:0 0 0 calc(1.5 * var(--u)) #fff,inset 0 calc(1.5 * var(--u)) 0 rgba(4,10,32,.55),inset 0 0 0 calc(1 * var(--u)) rgba(6,12,36,.45);
+  transition:filter .25s}
+.btn-light:hover .tile{filter:brightness(1.12)}
+.btn-light .tile svg{width:calc(19 * var(--u));height:calc(17.5 * var(--u));display:block;transition:transform .25s}
+.btn-light:hover .tile svg{transform:translateX(calc(3 * var(--u)))}
+
+.cta{--r:5;--ti:6;--tr:4;--ts:59;position:absolute;right:calc(62.5 * var(--u));top:calc(44.5 * var(--u));
+  width:calc(252 * var(--u));height:calc(70 * var(--u));padding-left:calc(25.6 * var(--u));
+  font-size:max(calc(24.1 * var(--u)),11.5px);font-weight:500;letter-spacing:-.0104em;padding-top:calc(2 * var(--u))}
+
+/* ---------------- Hero ---------------- */
+.hero{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(138.5 * var(--u));
+  display:flex;flex-direction:column;align-items:center;text-align:center;width:max-content}
+
+.badge{display:flex;align-items:center;height:calc(56 * var(--u));padding:calc(5 * var(--u)) calc(23 * var(--u)) calc(5 * var(--u)) calc(6 * var(--u));
+  background:var(--glass-badge);border-radius:calc(3 * var(--u));
+  box-shadow:inset 0 0 0 calc(1 * var(--u)) rgba(255,255,255,.035),inset 0 0 calc(3 * var(--u)) rgba(255,255,255,.035);
+  -webkit-backdrop-filter:blur(calc(6 * var(--u)));backdrop-filter:blur(calc(6 * var(--u)));
+  font-size:max(calc(22.4 * var(--u)),11px);font-weight:500;letter-spacing:.029em;color:var(--ink-badge)}
+.badge i{display:grid;place-items:center;width:calc(43 * var(--u));height:calc(46 * var(--u));
+  background:var(--glass-chip);border-radius:calc(2.5 * var(--u));margin-right:calc(17 * var(--u))}
+.badge i svg{width:100%;height:100%;display:block}
+
+h1{margin:calc(45.2 * var(--u)) 0 0;font-family:"Flux Serif",Georgia,serif;font-weight:400;
+  font-size:calc(96.43 * var(--u));line-height:calc(110 * var(--u));letter-spacing:calc(-1.28 * var(--u));
+  white-space:nowrap;color:var(--ink-0);font-variant-ligatures:common-ligatures;font-feature-settings:"liga" 1,"kern" 1;
+  /* optical thinning: the reference cut is a lighter Caslon than the free Text cut */
+  -webkit-text-stroke:calc(.95 * var(--u)) var(--headline-bg);paint-order:normal}
+h1 .l{display:block}
+h1 .l:first-child{letter-spacing:calc(-1.21 * var(--u))}
+h1 .l+.l{letter-spacing:calc(-1.09 * var(--u))}
+
+.lede{margin:calc(31.8 * var(--u)) 0 0;font-size:max(calc(29.9 * var(--u)),13px);line-height:max(calc(40 * var(--u)),17.4px);
+  letter-spacing:-.0017em;color:var(--ink-sub);white-space:nowrap}
+.lede .l{display:block}
+.lede .l:first-child{letter-spacing:.0006em}
+.lede .l+.l{letter-spacing:-.004em}
+
+.actions{display:flex;gap:calc(15 * var(--u));margin-top:calc(44 * var(--u));align-items:center;margin-left:calc(-1 * var(--u))}
+.actions .btn-light{--r:5;--ti:6;--tr:6.5;--ts:78;width:calc(320 * var(--u));height:calc(90 * var(--u));
+  padding-left:calc(30.6 * var(--u));font-size:max(calc(29.6 * var(--u)),13px);font-weight:500;letter-spacing:-.0034em}
+.btn-glass{display:flex;align-items:center;justify-content:center;width:calc(321 * var(--u));height:calc(92 * var(--u));
+  font-size:max(calc(30.8 * var(--u)),13px);letter-spacing:-.027em;color:#fff;
+  background:var(--glass-btn);border-radius:calc(5 * var(--u));
+  box-shadow:inset 0 0 0 calc(1 * var(--u)) rgba(255,255,255,.04),inset 0 0 calc(4 * var(--u)) rgba(255,255,255,.04);
+  -webkit-backdrop-filter:blur(calc(6 * var(--u)));backdrop-filter:blur(calc(6 * var(--u)));
+  transition:background-color .25s}
+.btn-glass:hover{background:rgba(255,255,255,.1)}
+
+.menu-btn,.nav .nav-mobile-cta{display:none}
+
+/* ==================================================================
+   REFLOW MODE — phones, portrait tablets, short landscape screens.
+   Proportional scaling would make UI text unreadably small here, so
+   the same components re-flow with fluid, clamped sizes while the
+   artwork still covers the full viewport edge-to-edge.
+=================================================================== */
+@media (max-width:1099px),(max-aspect-ratio:5/4),(max-height:559px){
+  .stage{height:auto;min-height:100vh;display:flex;flex-direction:column;overflow:visible;
+    padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+  @supports (height:100dvh){.stage{min-height:100dvh;height:auto}}
+  .art{position:fixed;background-position:78% 46%}
+  .art::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(4,10,32,0) 45%,rgba(4,10,32,.55) 78%,rgba(4,10,32,.8) 100%)}
+
+  .top{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:16px clamp(16px,4.5vw,32px)}
+  .logo{position:static;height:auto;margin-right:auto}
+  .logo svg{width:clamp(28px,7.4vw,40px);height:clamp(28px,7.4vw,40px)}
+  .logo span{font-size:clamp(21px,5.4vw,28px);margin-left:clamp(8px,2.2vw,12px);transform:translateY(1px)}
+
+  .cta{--r:5;position:relative;right:auto;top:auto;width:auto;height:44px;padding:0 54px 0 16px;font-size:15px;white-space:nowrap}
+  .cta .tile{--ti:0;top:4px;right:4px;width:36px;height:36px;border-radius:4px}
+  .cta .tile svg{width:13px;height:12px}
+
+  .menu-btn{display:grid;place-items:center;width:44px;height:44px;border:0;padding:0;cursor:pointer;color:#dfe8fb;
+    background:rgba(255,255,255,.07);border-radius:5px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+    -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+  .menu-btn svg{width:20px;height:20px}
+  .menu-btn .x{display:none}
+  .stage.open .menu-btn .x{display:block}
+  .stage.open .menu-btn .bars{display:none}
+
+  .nav{position:absolute;top:calc(100% + 4px);left:clamp(16px,4.5vw,32px);right:clamp(16px,4.5vw,32px);transform:none;
+    height:auto;flex-direction:column;padding:6px;border-radius:6px;
+    background:rgba(18,32,70,.72);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),0 18px 40px rgba(0,4,20,.45);
+    -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+    opacity:0;visibility:hidden;translate:0 -6px;transition:opacity .2s,translate .2s,visibility 0s .2s}
+  .stage.open .nav{opacity:1;visibility:visible;translate:0 0;transition:opacity .2s,translate .2s}
+  .nav a{justify-content:flex-start;height:48px;padding:0 14px;font-size:16px;border-radius:4px}
+  .nav a[aria-current="page"]{box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+
+  .hero{position:static;transform:none;width:auto;margin-top:auto;
+    padding:clamp(40px,20vh,320px) clamp(20px,6vw,48px) clamp(24px,5vh,56px)}
+  .badge{height:34px;padding:3px 12px 3px 3px;font-size:13.5px;border-radius:3px}
+  .badge i{width:28px;height:28px;margin-right:9px;border-radius:2px}
+  h1{margin-top:22px;font-size:clamp(34px,9.6vw,68px);line-height:1.12;letter-spacing:-.013em;white-space:normal;
+    -webkit-text-stroke:.5px var(--headline-bg);max-width:15em;text-wrap:balance}
+  h1 .l{display:inline;letter-spacing:inherit!important}
+  .lede{margin-top:16px;font-size:clamp(15px,3.9vw,18px);line-height:1.45;white-space:normal;max-width:34em;text-wrap:pretty}
+  .lede .l{display:inline;letter-spacing:inherit!important}
+  .actions{margin-top:28px;gap:10px;flex-wrap:wrap;justify-content:center;width:100%}
+  .actions .btn-light{--r:5;width:auto;height:52px;padding:0 70px 0 22px;font-size:16px;flex:0 0 auto}
+  .actions .btn-light .tile{top:5px;right:5px;width:42px;height:42px;border-radius:4px}
+  .actions .btn-light .tile svg{width:14px;height:13px}
+  .btn-glass{width:auto;height:52px;padding:0 24px;font-size:16px;letter-spacing:-.012em}
+}
+/* very narrow phones: stack the two actions and drop the header CTA label into the menu */
+@media (max-width:420px){
+  .actions{flex-direction:column;align-items:stretch;max-width:340px}
+  .actions .btn-light,.btn-glass{width:100%;justify-content:center}
+  .actions .btn-light{padding-right:56px}
+  .top .cta{display:none}
+  .nav .nav-mobile-cta{display:flex}
+}
+/* short landscape phones: keep the hero compact */
+@media (max-height:559px) and (min-aspect-ratio:5/4){
+  .top{padding-top:10px;padding-bottom:10px}
+  .hero{padding-top:12px;padding-bottom:max(16px,env(safe-area-inset-bottom))}
+  .badge{height:30px;font-size:12.5px}.badge i{width:24px;height:24px}
+  h1{margin-top:12px;font-size:clamp(26px,4.3vw,38px);max-width:none}
+  .lede{margin-top:10px;font-size:14px}
+  .actions{margin-top:16px}
+  .actions .btn-light,.btn-glass{height:44px}
+  .actions .btn-light .tile{width:36px;height:36px;top:4px;right:4px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* One opening sequence; the class is removed when it finishes. */
+@media (prefers-reduced-motion:no-preference){
+@keyframes entry-nav{from{opacity:0;transform:translate3d(0,6px,0)}to{opacity:1;transform:none}}
+@keyframes entry-opacity{from{opacity:0}to{opacity:1}}
+@keyframes entry-soft{from{opacity:0;transform:translate3d(0,9px,0)}to{opacity:1;transform:none}}
+@keyframes entry-type{from{opacity:0;transform:translate3d(0,12px,0);clip-path:inset(0 0 100% 0)}to{opacity:1;transform:none;clip-path:inset(0)}}
+@keyframes entry-visual{from{opacity:0;clip-path:inset(10% 0 0 0)}to{opacity:1;clip-path:inset(0)}}
+
+html.entry-active .top .logo{animation:entry-nav .5s cubic-bezier(.2,.75,.25,1) .06s both}
+html.entry-active .top .nav{animation:entry-opacity .52s cubic-bezier(.2,.75,.25,1) .18s both}
+html.entry-active .top .cta,html.entry-active .top .menu-btn{animation:entry-nav .48s cubic-bezier(.2,.75,.25,1) .28s both}
+html.entry-active .hero .badge{animation:entry-soft .5s cubic-bezier(.2,.75,.25,1) .38s both}
+html.entry-active .hero h1 .l:first-child{animation:entry-type .8s cubic-bezier(.16,1,.3,1) .53s both}
+html.entry-active .hero h1 .l:last-child{animation:entry-type .8s cubic-bezier(.16,1,.3,1) .68s both}
+html.entry-active .hero .lede{animation:entry-soft .58s cubic-bezier(.2,.75,.25,1) .89s both}
+html.entry-active .hero .actions .btn-light{animation:entry-soft .55s cubic-bezier(.2,.75,.25,1) 1.11s both}
+html.entry-active .hero .actions .btn-glass{animation:entry-soft .55s cubic-bezier(.2,.75,.25,1) 1.21s both}
+@media (max-width:1099px){
+  html.entry-active .hero h1 .l:first-child,html.entry-active .hero h1 .l:last-child{animation:none}
+  html.entry-active .hero h1{animation:entry-soft .82s cubic-bezier(.16,1,.3,1) .52s both}
+}
+}
+</style>
+</head>
+<body>
+<main class="stage" id="stage">
+  <div class="art" aria-hidden="true"></div>
+
+  <header class="top">
+    <a class="logo" href="#" aria-label="Flux home">
+      <svg viewBox="-35 -35 70 70" aria-hidden="true">
+        <defs>
+          <path id="ray" d="M-.85,-12.6 L-3.05,-32.4 A3.05,3.05 0 0 1 3.05,-32.4 L.85,-12.6 A.85,.85 0 0 1 -.85,-12.6 Z"/>
+          <radialGradient id="rayfade" cx="0" cy="0" r="35" gradientUnits="userSpaceOnUse">
+            <stop offset=".34" stop-color="#fff" stop-opacity=".72"/>
+            <stop offset=".62" stop-color="#fff" stop-opacity=".97"/>
+            <stop offset="1" stop-color="#fff"/>
+          </radialGradient>
+        </defs>
+        <g fill="url(#rayfade)"><use href="#ray" transform="rotate(0)"/><use href="#ray" transform="rotate(20)"/><use href="#ray" transform="rotate(40)"/><use href="#ray" transform="rotate(60)"/><use href="#ray" transform="rotate(80)"/><use href="#ray" transform="rotate(100)"/><use href="#ray" transform="rotate(120)"/><use href="#ray" transform="rotate(140)"/><use href="#ray" transform="rotate(160)"/><use href="#ray" transform="rotate(180)"/><use href="#ray" transform="rotate(200)"/><use href="#ray" transform="rotate(220)"/><use href="#ray" transform="rotate(240)"/><use href="#ray" transform="rotate(260)"/><use href="#ray" transform="rotate(280)"/><use href="#ray" transform="rotate(300)"/><use href="#ray" transform="rotate(320)"/><use href="#ray" transform="rotate(340)"/></g>
+      </svg>
+      <span>Flux</span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="#" aria-current="page">Platform</a>
+      <a href="#">Solutions</a>
+      <a href="#">Resources</a>
+      <a href="#">Pricing</a>
+      <a href="#">Contact</a>
+      <a href="#" class="nav-mobile-cta">Get started</a>
+    </nav>
+
+    <a class="btn-light cta" href="#">Get started
+      <span class="tile" aria-hidden="true"><svg viewBox="0 0 19 17.5" fill="none" stroke="var(--arrow)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8.75h16.6M10.3 .75l7.5 8-7.5 8"/></svg></span>
+    </a>
+
+    <button class="menu-btn" type="button" aria-controls="nav" aria-expanded="false" aria-label="Open menu">
+      <svg class="bars" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 6.5h14M3 13.5h14"/></svg>
+      <svg class="x" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg>
+    </button>
+  </header>
+
+  <section class="hero" aria-labelledby="hero-title">
+    <p class="badge" style="margin:0">
+      <i aria-hidden="true">
+        <svg viewBox="0 0 43 46" fill="none" stroke="var(--icon)" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(23.5 24.5) scale(.94) translate(-21.5 -23)">
+          <circle cx="18.3" cy="25.8" r="6.9" stroke-width="1.75"/>
+          <path d="M20.05 23.75c-.35-.55-1-.9-1.8-.9-1.05 0-1.8.55-1.8 1.3 0 1.75 3.75.95 3.75 2.75 0 .8-.8 1.35-1.9 1.35-.85 0-1.55-.35-1.95-.9M18.3 21.95v.9M18.3 28.75v.9" stroke-width="1.25"/>
+          <path d="M19.96 13.62A6.9 6.9 0 1 1 29.49 23.3" stroke-width="1.75"/>
+          <path d="M9.7 15.6Q11.3 11.6 15.4 10.5" stroke-width="1.75"/>
+          <path d="M13.6 8.7L15.6 10.45 13.9 12.5" stroke-width="1.75"/>
+          <path d="M33.5 27.4Q32 31.3 28.1 32.5" stroke-width="1.75"/>
+          <path d="M29.9 34.3L27.9 32.55 29.6 30.5" stroke-width="1.75"/>
+        </g></svg>
+      </i>
+      Financial automation
+    </p>
+
+    <h1 id="hero-title"><span class="l">Take control of cash flow with </span><span class="l">smarter financial automation</span></h1>
+
+    <p class="lede"><span class="l">Automate payments, simplify bookkeeping, and track every transaction in one </span><span class="l">place. FLUX gives your team the clarity to make faster financial decisions</span></p>
+
+    <div class="actions">
+      <a class="btn-light" href="#">Get started
+        <span class="tile" aria-hidden="true"><svg viewBox="0 0 19 17.5" fill="none" stroke="var(--arrow)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M1 8.75h16.6M10.3 .75l7.5 8-7.5 8"/></svg></span>
+      </a>
+      <a class="btn-glass" href="#">Try free for 14 days</a>
+    </div>
+  </section>
+</main>
+
+<script>
+(function(){
+  var stage=document.getElementById('stage'),btn=stage.querySelector('.menu-btn'),nav=document.getElementById('nav');
+  function set(open){stage.classList.toggle('open',open);btn.setAttribute('aria-expanded',open);btn.setAttribute('aria-label',open?'Close menu':'Open menu');}
+  btn.addEventListener('click',function(){set(!stage.classList.contains('open'))});
+  nav.addEventListener('click',function(e){if(e.target.closest('a'))set(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+  matchMedia('(min-width:1100px) and (min-aspect-ratio:5/4) and (min-height:560px)').addEventListener('change',function(){set(false)});
+})();
+</script>
+</body>
+</html>

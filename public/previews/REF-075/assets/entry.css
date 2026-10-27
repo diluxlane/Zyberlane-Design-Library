@@ -1,0 +1,54 @@
+/* Surfaces, background grain, and the illustrated card graphics stay still. */
+@keyframes cloud-type {
+  from { opacity: 0; clip-path: inset(100% 0 0); transform: translateY(9px); }
+  to { opacity: 1; clip-path: inset(0); transform: none; }
+}
+@keyframes cloud-detail {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes cloud-icon {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+html.entry-motion .card--1 .num {
+  animation: cloud-type .83s cubic-bezier(.19,1,.22,1) .14s both;
+}
+html.entry-motion .card--1 .c1sub {
+  animation: cloud-type .68s cubic-bezier(.19,1,.22,1) .32s both;
+}
+html.entry-motion .card--1 .c1foot,
+html.entry-motion .card--1 .ico--flag {
+  animation: cloud-detail .50s cubic-bezier(.22,1,.36,1) .64s both;
+}
+html.entry-motion .card--2 .ico--miner {
+  animation: cloud-icon .42s cubic-bezier(.22,1,.36,1) .46s both;
+}
+html.entry-motion .card--2 .c2title {
+  animation: cloud-type .78s cubic-bezier(.19,1,.22,1) .61s both;
+}
+html.entry-motion .card--2 .c2num {
+  animation: cloud-type .72s cubic-bezier(.19,1,.22,1) .93s both;
+}
+html.entry-motion .card--2 .c2sub {
+  animation: cloud-detail .49s cubic-bezier(.22,1,.36,1) 1.13s both;
+}
+html.entry-motion .card--3 .c3title {
+  animation: cloud-type .79s cubic-bezier(.19,1,.22,1) 1.04s both;
+}
+html.entry-motion .card--3 .c3foot,
+html.entry-motion .card--3 .ico--trend {
+  animation: cloud-detail .50s cubic-bezier(.22,1,.36,1) 1.37s both;
+}
+
+@media (max-aspect-ratio:23/20), (max-width:560px) {
+  html.entry-motion .card--2 .c2num,
+  html.entry-motion .card--2 .c2sub,
+  html.entry-motion .card--3 .c3title,
+  html.entry-motion .card--3 .c3foot,
+  html.entry-motion .card--3 .ico--trend { animation: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.entry-motion * { animation: none !important; }
+}

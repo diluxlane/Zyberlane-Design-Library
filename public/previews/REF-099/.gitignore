@@ -1,0 +1,21 @@
+# Local/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
+*.tmp
+*.bak
+*~
+
+# Tool caches and dependencies
+node_modules/
+.wrangler/
+.cache/
+dist/
+build/
+
+# Credentials and local configuration
+.env
+.env.*
+!.env.example

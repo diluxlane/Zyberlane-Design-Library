@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-128/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Polu — What people remember most</title>
+<meta name="description" content="Real stories from people who needed clarity, support, and a smoother way through their claim.">
+<style>
+/* ==========================================================================
+   Fonts (embedded, offline). Display/serif: Source Serif 4 (opsz + wght axes).
+   UI/sans: Inter (opsz + wght axes).
+   ========================================================================== */
+@font-face{font-family:"Polu Serif";src:url(assets/polu-serif.woff2) format("woff2");font-weight:200 900;font-style:normal;font-display:block}
+@font-face{font-family:"Polu Sans";src:url(assets/polu-sans.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:block}
+
+/* ==========================================================================
+   Design tokens — every value sampled from the 1316 × 913 reference.
+   ========================================================================== */
+:root{
+  --bg:#ffffff;
+  --ink:#0e0f1a;            /* heading line 1                         */
+  --brand:#0c47bb;          /* CTA fill                               */
+  --brand-ink:#103c8d;      /* heading line 2, "3" in 3/8              */
+  --muted:#8d8f93;          /* subtitle                               */
+  --card:#f6f6f6;           /* testimonial card fill                  */
+  --card-edge:rgba(0,0,0,.022); /* 1px hairline around cards          */
+  --card-text:#8b8e92;      /* quote copy                             */
+  --name:#212428;           /* person name                            */
+  --role:#87898c;           /* claim type                             */
+  --counter:#828386;
+  --counter-cur:#3a4f8a;        /* "/8"                                   */
+  --btn-off:#f8f8f8;        /* inactive pager button                  */
+  --btn-off-ink:#4c4c4c;
+  --btn-on:#37ffaf;         /* active pager button                    */
+  --btn-on-ink:#006c35;
+
+  --serif:"Polu Serif", "Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans:"Polu Sans", Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+
+  /* Design unit: 1 reference pixel.
+     Desktop/landscape: the whole 1316×913 screen is scaled to fit the viewport
+     (contain), with a floor so text never becomes unreadably small. */
+  --dw:1316; --dh:913;
+  --u:max(min(calc(100vw / 1316), calc(100svh / 913)), min(calc(100vw / 1316), .78px));
+  --bu:var(--u);            /* unit used by the bubble composition      */
+}
+@supports not (height:100svh){
+  :root{--u:max(min(calc(100vw / 1316), calc(100vh / 913)), min(calc(100vw / 1316), .78px))}
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg)}
+body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+img{display:block}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ==========================================================================
+   Section shell: fills the viewport height exactly (no bands above/below).
+   Content sits in a centred column; the portrait strip is pinned to the
+   bottom edge. Any spare height is shared between the two flexible gaps, so
+   at the reference aspect ratio every element lands on its measured pixel.
+   ========================================================================== */
+.testimonials{
+  position:relative;
+  min-height:100vh; min-height:100svh;
+  display:flex; flex-direction:column; align-items:center;
+  background:var(--bg);
+  /* The portraits deliberately bleed off the bottom edge (as in the reference).
+     Only the vertical axis is clipped; nothing is hidden horizontally. */
+  overflow-x:visible; overflow-y:clip;
+}
+.gap-top{flex:1 0 calc(var(--u) * 58.5)}
+.gap-mid{flex:1 0 calc(var(--u) * 25)}
+
+.content{
+  width:calc(var(--u) * 1316);
+  max-width:100%;
+  display:flex; flex-direction:column; align-items:center;
+  text-align:center;
+}
+
+/* ---------- Heading ---------- */
+.title{
+  margin:0;
+  font-family:var(--serif);
+  font-weight:430;
+  font-size:calc(var(--u) * 53);
+  line-height:calc(var(--u) * 49.5);
+  letter-spacing:-0.025em;
+  color:var(--ink);
+  font-optical-sizing:auto;
+}
+.title .accent{display:block;color:var(--brand-ink)}
+.title .l1{display:inline-block;margin-right:calc(var(--u) * 10)}
+
+/* ---------- Sub copy ---------- */
+.lede{
+  margin:calc(var(--u) * 20) 0 0;
+  font-family:var(--sans);
+  font-weight:400;
+  font-size:calc(var(--u) * 16.4);
+  line-height:calc(var(--u) * 23.5);
+  letter-spacing:-0.021em;
+  color:var(--muted);
+}
+.ln{display:block}
+
+/* ---------- Carousel ---------- */
+.carousel{margin-top:calc(var(--u) * 47.5);width:calc(var(--u) * 980)}
+.track{
+  --gap:calc(var(--u) * 20);
+  --per:3;
+  display:flex; gap:var(--gap);
+  overflow-x:auto; overscroll-behavior-x:contain;
+  scroll-snap-type:x mandatory; scroll-behavior:smooth;
+  scrollbar-width:none; -ms-overflow-style:none;
+  margin:0; padding:0; list-style:none;
+}
+.track::-webkit-scrollbar{display:none}
+.card{
+  flex:0 0 calc((100% - var(--gap) * (var(--per) - 1)) / var(--per));
+  min-width:0;
+  scroll-snap-align:start;
+  height:calc(var(--u) * 257);
+  border-radius:calc(var(--u) * 20);
+  background:var(--card);
+  box-shadow:inset 0 0 0 1px var(--card-edge);
+  padding:calc(var(--u) * 29) calc(var(--u) * 24) 0 calc(var(--u) * 28);
+  display:flex; flex-direction:column; align-items:flex-start;
+  text-align:left;
+}
+.quote{
+  margin:0;
+  font-family:var(--sans);
+  font-size:calc(var(--u) * 12.3);
+  line-height:calc(var(--u) * 17);
+  letter-spacing:-0.048em;
+  color:var(--card-text);
+  white-space:nowrap;
+}
+.who{margin-top:auto;padding-bottom:calc(var(--u) * 28);display:flex;flex-direction:column;align-items:flex-start}
+.avatar{
+  width:calc(var(--u) * 33); height:calc(var(--u) * 33);
+  border-radius:50%;
+  background-size:cover; background-position:center;
+  margin-left:calc(var(--u) * .5);
+}
+.name{
+  margin:calc(var(--u) * 6) 0 0;
+  font-family:var(--serif);
+  font-weight:500;
+  font-size:calc(var(--u) * 18.3);
+  line-height:calc(var(--u) * 22);
+  letter-spacing:-0.01em;
+  color:var(--name);
+}
+.role{
+  margin:calc(var(--u) * 4) 0 0;
+  font-family:var(--sans);
+  font-size:calc(var(--u) * 12);
+  line-height:calc(var(--u) * 16);
+  letter-spacing:-0.03em;
+  color:var(--role);
+}
+
+/* ---------- Pager ---------- */
+.pager{
+  margin-top:calc(var(--u) * 38);
+  display:flex; align-items:center; justify-content:center;
+  gap:calc(var(--u) * 20.5);
+  height:calc(var(--u) * 32);
+}
+.pager-btn{
+  width:calc(var(--u) * 28); height:calc(var(--u) * 28);
+  border-radius:50%;
+  display:grid; place-items:center;
+  background:var(--btn-on); color:var(--btn-on-ink);
+  transition:background-color .25s ease, color .25s ease, transform .2s ease;
+}
+.pager-btn svg{width:calc(var(--u) * 12);height:calc(var(--u) * 12);display:block}
+@media (hover:hover){.pager-btn:hover:not([aria-disabled="true"]){transform:scale(1.06)}}
+.pager-btn:active:not([aria-disabled="true"]){transform:scale(.96)}
+.pager-btn[aria-disabled="true"]{background:var(--btn-off);color:var(--btn-off-ink);cursor:default}
+.pager-btn:focus-visible,.bubble:focus-visible,.cta:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+.count{
+  font-family:var(--serif);
+  font-weight:380;
+  font-size:calc(var(--u) * 31);
+  line-height:1;
+  letter-spacing:-0.02em;
+  color:var(--counter);
+  font-variant-numeric:lining-nums proportional-nums;
+  min-width:calc(var(--u) * 36);
+  text-align:center;
+  transform:translateY(calc(var(--u) * -1));
+  margin:0;
+}
+.count .cur{color:var(--counter-cur)}
+
+/* ---------- Portrait strip ---------- */
+.bubbles{
+  position:relative;
+  flex:0 0 auto;
+  width:100%;
+  height:calc(var(--bu) * 248);
+}
+.bubbles-inner{
+  position:absolute; left:50%; bottom:0;
+  width:calc(var(--bu) * 1316); height:calc(var(--bu) * 248);
+  transform:translateX(calc(var(--bu) * var(--shift, 0) - 50%));
+}
+.bubble,.cta{
+  position:absolute;
+  left:calc(var(--bu) * var(--x)); top:calc(var(--bu) * (var(--y) - 665));
+  width:calc(var(--bu) * var(--w)); height:calc(var(--bu) * var(--h));
+  border-radius:50%;
+}
+.bubble{
+  background-size:100% 100%; background-repeat:no-repeat;
+  transition:transform .45s cubic-bezier(.2,.8,.2,1);
+  will-change:transform;
+}
+@media (hover:hover){.bubble:hover{transform:translateY(calc(var(--bu) * -6))}}
+.bubble.is-active{transform:translateY(calc(var(--bu) * -6))}
+.cta{
+  display:grid; place-items:center;
+  background:var(--brand); color:#fff;
+  font-family:var(--sans); font-weight:560;
+  font-size:calc(var(--bu) * 13.6);
+  letter-spacing:-0.01em;
+  line-height:1.15;
+  text-decoration:none; text-align:center;
+  transition:transform .3s ease, background-color .3s ease;
+}
+@media (hover:hover){.cta:hover{transform:scale(1.04);background:#0a3fa6}}
+
+/* Portrait composition. --x/--y/--w/--h: positions measured on the 1316×913
+   reference (template-matched). --cx/--cy: the compact cluster used when the
+   wide row no longer fits (same circles, same sizes, tangent overlaps). */
+.b-beret  {--x:76;--y:696;--w:217;--h:217;--cx:0.0;--cy:202.8;z-index:1}
+.b-emily  {--x:285;--y:672;--w:146;--h:146;--cx:142.5;--cy:95.4;z-index:2}
+.b-daniel {--x:333;--y:816;--w:92;--h:92;--cx:53.8;--cy:114.1;z-index:3}
+.b-cap    {--x:426;--y:693;--w:217;--h:217;--cx:214.0;--cy:202.8;z-index:2}
+.b-sophie {--x:644;--y:679;--w:94;--h:94;--cx:391.8;--cy:5.9;z-index:2}
+.b-smile  {--x:643;--y:765;--w:147;--h:147;--cx:249.6;--cy:0.0;z-index:3}
+.b-cta    {--x:747;--y:665;--w:145;--h:145;--cx:357.0;--cy:96.6;z-index:4}
+.b-curly  {--x:876;--y:698;--w:217;--h:217;--cx:428.0;--cy:202.8;z-index:2}
+.b-blonde {--x:1095;--y:733;--w:146;--h:146;--cx:495.0;--cy:62.6;z-index:1}
+
+/* Portrait assets (each embedded once, reused by bubble + card avatar) */
+.p-beret{background-image:url(assets/portrait-beret.webp)}
+.p-emily{background-image:url(assets/portrait-emily.webp)}
+.p-daniel{background-image:url(assets/portrait-daniel.webp)}
+.p-cap{background-image:url(assets/portrait-cap.webp)}
+.p-sophie{background-image:url(assets/portrait-sophie.webp)}
+.p-smile{background-image:url(assets/portrait-smile.webp)}
+.p-curly{background-image:url(assets/portrait-curly.webp)}
+.p-blonde{background-image:url(assets/portrait-blonde.webp)}
+
+/* ==========================================================================
+   RESPONSIVE ARCHITECTURE  (desktop rules above are untouched)
+
+   Why the desktop composition stops at 1177px:
+   The desktop screen scales as one unit (--u). The first element to fail when
+   width shrinks is the card quote: it is set on fixed, reference-matched line
+   breaks, so it cannot grow independently. It reaches 11px at
+   u = 11 / 12.3 → 0.894 → 0.894 × 1316 ≈ 1177px. Below that, body copy drops
+   to 10px. The same composition on a square/portrait screen would leave
+   ≥31% of the height empty (913/1316), so those use the reflowed layout too.
+
+   Below the breakpoint the section keeps its DOM and design tokens and
+   reflows:
+   • type stops scaling with the screen and uses fluid clamp()s that start
+     from the size desktop had at the breakpoint, so the hand-off is smooth;
+   • quotes wrap naturally instead of using the desktop line breaks;
+   • the number of cards per view comes from the carousel's own width
+     (container query): 3 → 2 → 1;
+   • landscape keeps the portraits in one wide row while the "Start a Claim"
+     disc can hold its label on one line (≥92px → strip ≥740px). Portrait
+     screens and narrower strips regroup the same nine circles into a compact
+     cluster, so every portrait stays visible and spare height is used.
+   • spacing tokens scale with the smaller of width and height, so landscape
+     tablets fit their viewport without shrinking the type.
+   No horizontal overflow, nothing is hidden, no content changes.
+   ========================================================================== */
+@media (max-width:1176.98px), (max-aspect-ratio:1/1){
+  .testimonials{
+    --gutter:clamp(20px, 4vw, 40px);
+    --sp-top:clamp(32px, min(6vw, 6svh), 64px);
+    --sp-mid:clamp(20px, min(4vw, 3.5svh), 40px);
+    --sp-cards:clamp(24px, min(3.6vw, 4.5svh), 44px);
+    --sp-pager:clamp(18px, min(3vw, 3svh), 34px);
+  }
+  @media (orientation:portrait){
+    /* tall screens: let the rhythm breathe with the height instead of
+       collecting all spare height in the two outer gaps */
+    .testimonials{
+      --sp-cards:clamp(24px, 4svh, 56px);
+      --sp-pager:clamp(18px, 3svh, 40px);
+    }
+    padding-bottom:env(safe-area-inset-bottom, 0px);
+  }
+  .gap-top{flex-basis:var(--sp-top)}
+  .gap-mid{flex-basis:var(--sp-mid)}
+
+  .content{width:100%;padding-inline:var(--gutter)}
+
+  /* Heading: 47.5px at the breakpoint (desktop's size there) → 34px on narrow
+     phones. Tall portrait tablets may follow the height up to the desktop
+     reference size (53px) so the heading keeps its dominance. */
+  .title{
+    font-size:clamp(34px, max(calc(28px + 1.654vw), 3.9svh), 53px);
+    line-height:.934;                       /* 49.5 / 53, as on desktop */
+  }
+  .title .l1{margin-right:.19em}            /* same optical nudge as desktop (10/53) */
+
+  .lede{
+    margin-top:clamp(14px, 1.6vw, 18px);
+    font-size:clamp(15px, calc(14.38px + .172vw), 16.4px);
+    line-height:1.433;                      /* 23.5 / 16.4 */
+    max-width:23em;                         /* keeps the desktop two-line break while it fits */
+    text-wrap:balance;
+  }
+  .lede .ln{display:inline}
+
+  /* Carousel: cards per view chosen by the carousel's own width
+     (container queries below): 1 → 2 from 600px, → 3 from 1012px. */
+  .carousel{
+    width:100%;
+    max-width:1060px;
+    margin-top:var(--sp-cards);
+    container:stories / inline-size;
+  }
+  .track{--per:1;--gap:clamp(12px, 1.7vw, 20px)}
+  .card{
+    height:auto;
+    border-radius:20px;
+    padding:clamp(20px, 2.4vw, 28px) clamp(20px, 2.2vw, 26px) 0;
+  }
+  .quote{
+    white-space:normal;
+    font-size:13px;
+    line-height:1.4;
+  }
+  .quote .ln{display:inline}
+  .who{padding-top:22px;padding-bottom:clamp(20px, 2.4vw, 28px)}
+  .avatar{width:33px;height:33px;margin-left:0}
+  .name{margin-top:6px;font-size:17px;line-height:1.25}
+  .role{margin-top:3px;font-size:12.5px;line-height:1.3}
+
+  /* Pager: same 32px discs; the touch target is extended invisibly to 44px */
+  .pager{margin-top:var(--sp-pager);gap:20px;height:auto}
+  .pager-btn{position:relative;width:32px;height:32px}
+  .pager-btn::after{content:"";position:absolute;inset:-6px;border-radius:50%}
+  .pager-btn svg{width:13px;height:13px}
+  .count{font-size:28px;min-width:40px;transform:translateY(-1px)}
+
+  /* Portraits: unit taken from the strip's own width (container units) */
+  .bubbles{
+    height:auto;
+    padding-inline:var(--gutter);
+    container:portraits / inline-size;
+  }
+  .bubbles-inner{
+    position:relative; left:auto; bottom:auto; transform:none;
+    margin-inline:auto;
+    /* compact cluster: 645 × 419 design box. On tall screens it grows with
+       the height (≈36% of it) so spare height goes to the composition rather
+       than to empty gaps; capped at 1.05 so the portraits never outweigh the
+       heading. */
+    --bu:min(calc(100cqi / 645), max(.85px, min(calc(36svh / 419), 1.05px)));
+    width:calc(var(--bu) * 645);
+    height:calc(var(--bu) * 419);
+  }
+  .bubble,.cta{
+    left:calc(var(--bu) * var(--cx));
+    top:calc(var(--bu) * var(--cy));
+  }
+  .cta{
+    font-size:max(12.5px, calc(var(--bu) * 13.6));
+    padding-inline:calc(var(--bu) * var(--w) * .08);   /* 8% of the disc */
+    text-wrap:balance;
+  }
+}
+
+/* Landscape: one wide row (the desktop composition) whenever the CTA disc
+   can hold "Start a Claim" on one line: label ≈75px + 8% padding → disc ≥92px
+   → u ≥ .635 → strip ≥ 1165 × .635 ≈ 740px. Height-capped at 27.5% of the
+   viewport so landscape tablets keep the whole section on screen. */
+@media (orientation:landscape){
+  @container portraits (min-width:740px){
+    .bubbles-inner{
+      /* 1165 = visible extent (x 76 → 1241). The height cap only applies
+         where the section can fit the screen at all (≥ ~600px tall). */
+      --bu:min(calc(100cqi / 1165), 1px, calc(max(27.5svh, 170px) / 248));
+      width:calc(var(--bu) * 1165);
+      height:calc(var(--bu) * 248);
+    }
+    .bubble,.cta{
+      left:calc(var(--bu) * (var(--x) - 76));
+      top:calc(var(--bu) * (var(--y) - 665));
+    }
+  }
+}
+
+/* Cards per view from the carousel's own width. A card needs ≈19–21em of
+   13px quote (desktop sets 20.9em) plus padding: ≥290px. */
+@container stories (max-width:599.98px){
+  .track{max-width:540px;margin-inline:auto}  /* a single card never stretches into long lines */
+}
+@container stories (min-width:600px){ .track{--per:2} }
+@container stories (min-width:1012px){ .track{--per:3} }
+
+@media (prefers-reduced-motion:reduce){
+  .track{scroll-behavior:auto}
+  .bubble,.cta,.pager-btn{transition:none}
+}
+
+/* One opening composition: type establishes the message, stories follow,
+   then the claim action settles among the still portrait collage. The
+   backwards fill hides delayed groups without retaining animated styles. */
+@media (prefers-reduced-motion:no-preference){
+  .title .l1{
+    animation:entry-line .78s cubic-bezier(.22,1,.36,1) .08s 1 backwards;
+  }
+  .title .accent{
+    animation:entry-line .82s cubic-bezier(.22,1,.36,1) .22s 1 backwards;
+  }
+  .lede{
+    animation:entry-copy .58s cubic-bezier(.22,1,.36,1) .55s 1 backwards;
+  }
+  .card:nth-child(1){animation:entry-story .7s cubic-bezier(.22,1,.36,1) .79s 1 backwards}
+  .card:nth-child(2){animation:entry-story .7s cubic-bezier(.22,1,.36,1) .88s 1 backwards}
+  .card:nth-child(3){animation:entry-story .7s cubic-bezier(.22,1,.36,1) .97s 1 backwards}
+  .pager{
+    animation:entry-pager .46s cubic-bezier(.22,1,.36,1) 1.24s 1 backwards;
+  }
+  .cta{
+    animation:entry-action .62s cubic-bezier(.22,1,.36,1) 1.34s 1 backwards;
+  }
+}
+@keyframes entry-line{
+  from{clip-path:inset(0 0 100% 0);transform:translateY(10px)}
+  to{clip-path:inset(0 0 0 0);transform:none}
+}
+@keyframes entry-copy{
+  from{opacity:0;transform:translateY(5px)}
+  to{opacity:1;transform:none}
+}
+@keyframes entry-story{
+  from{opacity:0;transform:translateY(11px)}
+  to{opacity:1;transform:none}
+}
+@keyframes entry-pager{
+  from{opacity:0}
+  to{opacity:1}
+}
+@keyframes entry-action{
+  from{opacity:0;transform:scale(.96)}
+  to{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<main>
+<section class="testimonials" aria-labelledby="t-title">
+  <div class="gap-top" aria-hidden="true"></div>
+
+  <div class="content">
+    <h2 class="title" id="t-title"><span class="l1">What people</span> <span class="accent">remember most.</span></h2>
+    <p class="lede"><span class="ln">Real stories from people who needed clarity,</span> <span class="ln">support, and a smoother way through their claim.</span></p>
+
+    <div class="carousel" role="region" aria-roledescription="carousel" aria-label="Customer stories">
+      <ul class="track" id="track">
+        <li class="card" data-person="emily">
+          <p class="quote"><span class="ln">After the accident, I expected weeks of calls and</span> <span class="ln">paperwork. Polu showed me exactly what to</span> <span class="ln">upload, what was happening, and what came</span> <span class="ln">next. It made a stressful situation feel</span> <span class="ln">manageable.</span></p>
+          <div class="who"><div class="avatar p-emily" role="img" aria-label="Emily Carter"></div><h3 class="name">Emily Carter</h3><p class="role">Auto claim</p></div>
+        </li>
+        <li class="card" data-person="daniel">
+          <p class="quote"><span class="ln">We had water damage at home and no idea</span> <span class="ln">where to start. Polu kept everything organized in</span> <span class="ln">one place and gave us clear updates without</span> <span class="ln">constantly chasing someone for answers</span></p>
+          <div class="who"><div class="avatar p-daniel" role="img" aria-label="Daniel Brooks"></div><h3 class="name">Daniel Brooks</h3><p class="role">Home damage claim</p></div>
+        </li>
+        <li class="card" data-person="sophie">
+          <p class="quote"><span class="ln">My flight disruption turned into a messy claim fast.</span> <span class="ln">With Polu, I could submit the right documents,</span> <span class="ln">track progress, and get help when I needed it. The</span> <span class="ln">whole process felt much calmer</span></p>
+          <div class="who"><div class="avatar p-sophie" role="img" aria-label="Sophie Bennett"></div><h3 class="name">Sophie Bennett</h3><p class="role">Travel claim</p></div>
+        </li>
+        <!-- Cards 4–8: placeholder copy for the remaining portraits; replace with real stories. -->
+        <li class="card" data-person="cap">
+          <p class="quote"><span class="ln">Someone broke into my car and I had no idea</span> <span class="ln">what the insurer needed. Polu turned it into a</span> <span class="ln">short checklist, and I always knew which step</span> <span class="ln">came next.</span></p>
+          <div class="who"><div class="avatar p-cap" role="img" aria-label="Ethan Walker"></div><h3 class="name">Ethan Walker</h3><p class="role">Theft claim</p></div>
+        </li>
+        <li class="card" data-person="smile">
+          <p class="quote"><span class="ln">Hospital bills were piling up and every form</span> <span class="ln">looked the same. Polu sorted what mattered,</span> <span class="ln">flagged what was missing, and kept me</span> <span class="ln">updated the whole way.</span></p>
+          <div class="who"><div class="avatar p-smile" role="img" aria-label="Olivia Martinez"></div><h3 class="name">Olivia Martinez</h3><p class="role">Health claim</p></div>
+        </li>
+        <li class="card" data-person="curly">
+          <p class="quote"><span class="ln">A burst pipe ruined half of our apartment. I</span> <span class="ln">uploaded photos from my phone and Polu</span> <span class="ln">handled the back-and-forth. I finally felt like</span> <span class="ln">someone was on my side.</span></p>
+          <div class="who"><div class="avatar p-curly" role="img" aria-label="Maya Thompson"></div><h3 class="name">Maya Thompson</h3><p class="role">Renters claim</p></div>
+        </li>
+        <li class="card" data-person="blonde">
+          <p class="quote"><span class="ln">My luggage disappeared on the first day of a</span> <span class="ln">trip. Polu helped me file before I even got</span> <span class="ln">to the hotel, and the reimbursement came</span> <span class="ln">through without a single phone call.</span></p>
+          <div class="who"><div class="avatar p-blonde" role="img" aria-label="Chloe Anderson"></div><h3 class="name">Chloe Anderson</h3><p class="role">Baggage claim</p></div>
+        </li>
+        <li class="card" data-person="beret">
+          <p class="quote"><span class="ln">A minor fender bender turned into a dispute</span> <span class="ln">about who was at fault. Polu kept every</span> <span class="ln">document and message in one timeline, which</span> <span class="ln">made the outcome easy to accept.</span></p>
+          <div class="who"><div class="avatar p-beret" role="img" aria-label="Kenji Sato"></div><h3 class="name">Kenji Sato</h3><p class="role">Liability claim</p></div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="pager">
+      <button class="pager-btn" id="prev" type="button" aria-controls="track" aria-label="Previous stories" aria-disabled="true">
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.25 6H1.9M4.6 3.3 1.9 6l2.7 2.7"/></svg>
+      </button>
+      <p class="count" aria-live="polite"><span class="sr-only">Showing up to story </span><span class="cur" id="cur">3</span>/<span id="total">8</span></p>
+      <button class="pager-btn" id="next" type="button" aria-controls="track" aria-label="Next stories" aria-disabled="false">
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.75 6h8.35M7.4 3.3 10.1 6 7.4 8.7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="gap-mid" aria-hidden="true"></div>
+
+  <div class="bubbles">
+    <div class="bubbles-inner">
+      <button type="button" class="bubble p-beret b-beret" data-person="beret" aria-label="Read Kenji's story"></button>
+      <button type="button" class="bubble p-emily b-emily" data-person="emily" aria-label="Read Emily's story"></button>
+      <button type="button" class="bubble p-daniel b-daniel" data-person="daniel" aria-label="Read Daniel's story"></button>
+      <button type="button" class="bubble p-cap b-cap" data-person="cap" aria-label="Read Ethan's story"></button>
+      <button type="button" class="bubble p-sophie b-sophie" data-person="sophie" aria-label="Read Sophie's story"></button>
+      <button type="button" class="bubble p-smile b-smile" data-person="smile" aria-label="Read Olivia's story"></button>
+      <a class="cta b-cta" href="#start-claim">Start a Claim</a>
+      <button type="button" class="bubble p-curly b-curly" data-person="curly" aria-label="Read Maya's story"></button>
+      <button type="button" class="bubble p-blonde b-blonde" data-person="blonde" aria-label="Read Chloe's story"></button>
+    </div>
+  </div>
+</section>
+</main>
+
+<script>
+(() => {
+  const track = document.getElementById('track');
+  const cards = [...track.children];
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  const cur = document.getElementById('cur');
+  document.getElementById('total').textContent = cards.length;
+
+  const perView = () => parseInt(getComputedStyle(track).getPropertyValue('--per'), 10) || 1;
+  const step = () => cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : track.clientWidth;
+  const firstIndex = () => Math.round(track.scrollLeft / step());
+
+  function render() {
+    const first = Math.min(firstIndex(), cards.length - perView());
+    const last = Math.min(cards.length, first + perView());
+    cur.textContent = last;
+    prev.setAttribute('aria-disabled', String(first <= 0));
+    next.setAttribute('aria-disabled', String(last >= cards.length));
+    cards.forEach((c, i) => c.setAttribute('aria-hidden', String(i < first || i >= last)));
+    const active = new Set(cards.slice(first, last).map(c => c.dataset.person));
+    document.querySelectorAll('.bubble').forEach(b => b.classList.toggle('is-active', perView() === 1 && active.has(b.dataset.person)));
+  }
+  function goTo(i) {
+    i = Math.max(0, Math.min(i, cards.length - perView()));
+    track.scrollTo({ left: i * step() });
+  }
+  prev.addEventListener('click', () => { if (prev.getAttribute('aria-disabled') !== 'true') goTo(firstIndex() - 1); });
+  next.addEventListener('click', () => { if (next.getAttribute('aria-disabled') !== 'true') goTo(firstIndex() + 1); });
+  track.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(firstIndex() + 1); }
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(firstIndex() - 1); }
+  });
+  track.tabIndex = 0;
+  document.querySelectorAll('.bubble').forEach(b => b.addEventListener('click', () => {
+    const i = cards.findIndex(c => c.dataset.person === b.dataset.person);
+    if (i < 0) return;
+    const first = firstIndex(), pv = perView();
+    if (i < first) goTo(i); else if (i >= first + pv) goTo(i - pv + 1);
+    else render();
+  }));
+  let raf = 0;
+  track.addEventListener('scroll', () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(render); }, { passive: true });
+  window.addEventListener('resize', () => { goTo(firstIndex()); render(); });
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-136/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sendit — Every courier. One dashboard.</title>
+<meta name="description" content="Sendit links SMEs and online sellers to top global couriers. Compare, book, ship and track all deliveries in one place.">
+<meta name="theme-color" content="#000000">
+<link rel="preload" as="image" href="assets/e9ef7465c2bed0fa.webp" fetchpriority="high">
+<style>
+/* =====================================================================
+   Fonts — TeX Gyre Heros (Helvetica-class grotesque), subset + embedded
+   ===================================================================== */
+@font-face{font-family:"SenditSans";font-style:normal;font-weight:400;font-display:block;
+  src:url(assets/612c48dcb434eb09.woff2) format("woff2");}
+@font-face{font-family:"SenditSans";font-style:italic;font-weight:400;font-display:block;
+  src:url(assets/182cbc88d41aac32.woff2) format("woff2");}
+
+/* =====================================================================
+   Tokens (sampled from the reference)
+   ===================================================================== */
+:root{
+  --bg:#000000; --ink:#ffffff; --ink-muted:#787878;
+  --orange:#f16536; --orange-hi:#ff7748; --ice:#cadee6; --ice-line:#eaf7fb; --panel:#fefefe;
+  --font:"SenditSans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  /* reference artboard */
+  --bw:1536px; --bh:1024px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:var(--font);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+svg{display:block}
+a:focus-visible,button:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+
+/* =====================================================================
+   SHARED COMPONENTS (identity is identical in every mode)
+   ===================================================================== */
+.logo__tm{font-size:.27em;vertical-align:top;position:relative;letter-spacing:0}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;font-size:18.3px;letter-spacing:-0.1px;
+  color:#fff;transition:background-color .2s,border-color .2s}
+.btn span{display:block;line-height:1;position:relative}
+.btn--ghost{border:1.35px solid var(--orange)}
+.btn--solid{background:var(--orange)}
+.btn__frame{display:none}
+.btn__frame rect{transition:fill .2s}
+.btn--ghost .btn__frame rect{fill:rgba(241,101,54,0);stroke:var(--orange);stroke-width:1.35}
+.btn--solid .btn__frame rect{fill:var(--orange)}
+
+.burger{position:relative;width:53px;height:17px}
+.burger svg{width:100%;height:100%;overflow:visible}
+.burger rect{fill:#fff;transition:fill .2s,transform .3s cubic-bezier(.2,.7,.2,1);transform-box:fill-box;transform-origin:center}
+/* open state: the two bars fold into a compact X centred in the same box */
+.burger[aria-expanded="true"] rect:first-child{transform:translateY(6.37px) rotate(45deg) scaleX(.5)}
+.burger[aria-expanded="true"] rect:last-child{transform:translateY(-6.37px) rotate(-45deg) scaleX(.5)}
+
+.nav a{font-size:17.4px;line-height:17.4px;letter-spacing:-0.1px;transition:color .2s}
+
+.social a{display:block;color:#000;transition:color .2s}
+
+@media (hover:hover){
+  .nav a:hover{color:var(--orange)}
+  .btn--ghost:hover{background:var(--orange)}
+  .btn--ghost:hover .btn__frame rect{fill:var(--orange)}
+  .btn--solid:hover{background:var(--orange-hi)}
+  .btn--solid:hover .btn__frame rect{fill:var(--orange-hi)}
+  .burger:hover rect{fill:var(--orange)}
+  .social a:hover{color:var(--orange)}
+}
+
+/* ---------- hero illustration: authored in artboard px, scaled as one unit ---------- */
+.hero{position:absolute;left:0;top:0;width:1536px;height:1024px}
+.hex-svg,.hex-top{position:absolute;left:0;top:0;width:1536px;height:1024px;overflow:visible;pointer-events:none}
+.courier-clip{position:absolute;left:0;top:0;width:1536px;height:687.7px;overflow:hidden;pointer-events:none}
+.courier{position:absolute;left:727.42px;top:161.47px;width:513.13px;height:545.47px;max-width:none}
+.ruler--mid{position:absolute;left:0;top:500px;overflow:visible}
+.ruler rect,.ruler--mid rect{x:calc(var(--rx,0px) + var(--tx) * 1px - .5px)}
+
+/* labels / claims keep a readable floor when the illustration is scaled down (--lf / --f = 1 on desktop) */
+.tag{position:absolute;font-size:calc(18.6px * var(--lf,1));line-height:calc(18.6px * var(--lf,1));
+  letter-spacing:-0.55px;white-space:nowrap;transform-origin:0 0}
+.tag--1{left:419.6px;top:225.8px;color:#000;transform:scaleX(1.19)}
+.tag--2{left:720.6px;top:225.3px;color:#fff;transform:scaleX(1.31)}
+.tag--3{left:1245.6px;top:225.3px;color:var(--ice-line);transform:scaleX(1.19)}
+.claim{position:absolute;left:0;top:0;font-style:italic;font-size:calc(29.5px * var(--f,1));line-height:calc(29.5px * var(--f,1));
+  letter-spacing:-0.2px;white-space:nowrap}
+.claim--1{color:#000;--ax:534.8;--ay:611.9}
+.claim--3{color:var(--ice-line);--ax:1371.8;--ay:610.9}
+/* each line keeps its measured offset from the anchor (last line); offsets grow with --f so the stagger follows the hex edge */
+.claim span{position:absolute;display:block;transform:scaleX(1.2);transform-origin:0 0;
+  left:calc((var(--ax) + (var(--x) - var(--ax)) * var(--f,1)) * 1px);
+  top:calc((var(--ay) + (var(--y) - var(--ay)) * var(--f,1)) * 1px)}
+
+.headline{font-weight:400}
+.headline span{display:inline-block}
+.lede--lead{color:#fff}
+.lede--echo{color:var(--ink-muted)}
+
+/* ---------- menu surface (same DOM as the desktop nav + CTAs) ---------- */
+@keyframes menuIn{from{opacity:0}to{opacity:1}}
+@keyframes menuOut{from{opacity:1}to{opacity:0}}
+@keyframes itemIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.menu.open{position:fixed;inset:0;z-index:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;
+  gap:clamp(28px,5vh,48px);padding:96px var(--gut,48px) 64px;
+  background:rgba(0,0,0,.94);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  animation:menuIn .28s ease both}
+.menu.open.closing{animation:menuOut .2s ease both}
+.menu.open .nav{display:flex;flex-direction:column;gap:.12em}
+.menu.open .nav a{position:static;font-size:clamp(38px,6.2vw,72px);line-height:1.12;letter-spacing:-.035em;
+  animation:itemIn .42s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i) * 45ms + 60ms)}
+.menu.open .actions{display:flex;flex-wrap:wrap;gap:12px;margin:0;animation:itemIn .42s cubic-bezier(.2,.7,.2,1) .26s both}
+.menu.open .actions .btn{position:static;width:auto;height:52px;padding:0 30px;font-size:18px}
+.menu.open .actions .btn--ghost{border:1.35px solid var(--orange)}
+.menu.open .actions .btn--solid{background:var(--orange)}
+.menu.open .actions .btn span{top:0}
+.menu.open .btn__frame{display:none}
+html.menu-lock{overflow:hidden}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+
+/* =====================================================================
+   DESKTOP — the measured 1536×1024 composition (LOCKED)
+   Active while the uniformly-scaled artboard stays readable:
+     · scale ≥ ~0.59 (nav ≥ 10px, body copy ≥ 14.5px)  → min-width 960 / min-height 600
+     · aspect ≥ 1.1 (otherwise >10% of the height would be empty bands)
+   ===================================================================== */
+@media (min-width:960px) and (min-height:600px) and (min-aspect-ratio:11/10){
+  :root{--vh:100vh;--s:min(tan(atan2(100vw,1536px)),tan(atan2(var(--vh),1024px)))}
+  @supports (height:100dvh){:root{--vh:100dvh}}
+  @supports (width:calc(1px * round(1.5,1))){
+    :root{--s:round(min(tan(atan2(100vw,1536px)),tan(atan2(var(--vh),1024px))),0.000000001)}
+  }
+  body{overflow:hidden}
+  #page{position:fixed;inset:0;overflow:hidden}
+  /* stage = artboard widened/heightened to the viewport's aspect, then scaled uniformly */
+  #stage{position:absolute;left:0;top:0;transform-origin:0 0;transform:scale(var(--s));
+    width:calc(100vw / var(--s));height:calc(var(--vh) / var(--s));
+    --ox:calc((100vw / var(--s) - 1536px) / 2);   /* spare width  → centred */
+    --E:calc(var(--vh) / var(--s) - 1024px)}      /* spare height → distributed between bands */
+  .band{position:absolute;left:var(--ox);width:1536px}
+  .band--header{top:calc(var(--E) * .16);height:150px;z-index:20}
+  .band--hero{top:calc(var(--E) * .44);height:0}
+  .band--copy{top:calc(var(--E) * .80);height:0}
+
+  /* rulers span the whole stage from x=0 (pixel-aligned); ticks are shifted by the centring offset */
+  .ruler{position:absolute;left:0;width:calc(100vw / var(--s));overflow:visible;pointer-events:none;--rx:var(--ox)}
+  .ruler--mid{left:calc(var(--ox) * -1);width:calc(100vw / var(--s));--rx:var(--ox)}
+  .ruler--top{top:0;height:50px}
+  .ruler--bottom{top:calc(var(--E) + 960px);height:64px}
+
+  /* header */
+  .menu:not(.open){display:contents}
+  .logo__mark{position:absolute;left:49.4px;top:63.6px;width:60.8px;height:72.4px;z-index:2}
+  .logo__word{position:absolute;left:114.6px;top:80.9px;font-size:33.9px;line-height:33.9px;letter-spacing:0.87px;white-space:nowrap;z-index:2}
+  .logo__tm{position:absolute;left:101.3px;top:1.9px;font-size:11.4px;line-height:11.4px}
+  .menu:not(.open) .nav a{position:absolute;top:93.35px;left:calc(var(--x) * 1px);letter-spacing:calc(var(--ls) * 1px);white-space:nowrap}
+  /* frames drawn as SVG so the 1.35px stroke and fractional edges anti-alias exactly like the reference */
+  .menu:not(.open) .actions .btn{position:absolute;border:0;background:none}
+  .menu:not(.open) .actions .btn__frame{display:block;position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible}
+  .menu:not(.open) .actions .btn--ghost{left:1128px;top:76px;width:107px;height:49px}
+  .menu:not(.open) .actions .btn--ghost span{top:-.6px}
+  .menu:not(.open) .actions .btn--solid{left:1252px;top:76px;width:155px;height:48px}
+  .burger{position:absolute;left:1425px;top:91px;z-index:2}
+
+  /* social rail — pinned to the viewport's left edge, centred on the hex band */
+  .social{position:absolute;left:0;top:calc(var(--E) * .44 + 439px);width:54px;height:180px}
+  .social__bg{position:absolute;left:0;top:0;width:54px;height:180px}
+  .social a{position:absolute}
+  .s-ig{left:14.6px;top:28.6px}
+  .s-tw{left:14.2px;top:82.35px}
+  .s-yt{left:13.8px;top:133px}
+  .social a svg{width:var(--iw);height:var(--ih)}
+
+  /* copy */
+  .headline{position:absolute;left:58.6px;top:752.6px;white-space:nowrap;font-size:79.6px;line-height:80px}
+  .headline .l1{letter-spacing:-2.82px}
+  .headline .l2{letter-spacing:-1.97px;margin-left:3px}
+  .lede{position:absolute;left:706.6px;width:772px;font-size:24.6px;line-height:36px}
+  .lede--lead{top:767.6px;text-indent:132px;letter-spacing:.12px}
+  .lede--echo{top:842.6px;letter-spacing:.22px}
+}
+
+/* =====================================================================
+   TABLET + MOBILE — reflowed architecture (same DOM, CSS Grid)
+   ===================================================================== */
+@media not all and (min-width:960px) and (min-height:600px) and (min-aspect-ratio:11/10){
+  #page{
+    --gut:clamp(20px,4.4vw,48px);
+    display:grid;grid-template-columns:minmax(0,1fr);
+    grid-template-rows:auto auto 1fr auto auto auto;
+    grid-template-areas:"rt" "hd" "hero" "copy" "soc" "rb";
+    min-height:100vh;min-height:100svh}
+  #stage{display:contents}
+
+  /* rulers: same tick markup, 1:1 rhythm, simply cropped to the viewport width */
+  .ruler{width:100%;pointer-events:none}
+  .ruler--top{grid-area:rt;height:50px}
+  .ruler--bottom{grid-area:rb;height:64px;margin-top:clamp(12px,2.4vw,24px)}
+
+  /* ---------- header: logo · CTAs · burger (nav links move into the burger surface) ---------- */
+  .band--header{grid-area:hd;position:relative;z-index:20;display:flex;align-items:center;gap:clamp(12px,1.8vw,18px);
+    padding:clamp(4px,1.2vw,12px) var(--gut) clamp(10px,1.8vw,20px)}
+  .logo{--lg:.86;position:relative;z-index:2;display:flex;align-items:center;flex:none}
+  .logo__mark{width:calc(var(--lg) * 60.8px);height:calc(var(--lg) * 72.4px)}
+  .logo__word{font-size:calc(var(--lg) * 33.9px);line-height:1;letter-spacing:.026em;margin-left:calc(var(--lg) * 4.6px);white-space:nowrap}
+  .logo__tm{top:.22em;margin-left:.08em}
+  .menu:not(.open){display:contents}
+  .menu:not(.open) .nav{display:none}
+  .menu:not(.open) .actions{display:flex;gap:12px;margin-left:auto}
+  .menu:not(.open) .actions .btn{height:44px;font-size:16px}
+  .menu:not(.open) .btn--ghost{width:calc(107px * .86)}
+  .menu:not(.open) .btn--solid{width:calc(155px * .86)}
+  .burger{--bz:.84;position:relative;z-index:2;flex:none;width:calc(53px * var(--bz));height:calc(17px * var(--bz));margin-left:clamp(6px,1.4vw,14px)}
+  .burger::before{content:"";position:absolute;inset:-14px -8px}   /* 44px+ touch target, visual unchanged */
+  .menu.open + .burger{margin-left:auto}                         /* CTAs left the row: keep the burger right-aligned */
+
+  /* ---------- hero: the illustration scales as one unit inside its band ---------- */
+  .band--hero{grid-area:hero;position:relative;container-type:size;overflow:clip;
+    --hl:62px;                                   /* light-hex left vertex inset (clears the edge tab) */
+    min-height:calc((100vw - var(--hl)) * 580 / 1226)}
+  /* k: the strip keeps the desktop window (hex vertex → artboard edge, outline hex bleeding off the right)
+     and may grow into spare height until the window narrows to 1160px of artboard (the outline hex keeps its tagline) */
+  .hero{top:50%;transform-origin:0 0;
+    --k:clamp(tan(atan2(calc(100cqw - var(--hl)),1226px)), tan(atan2(100cqh,580px)), tan(atan2(calc(100cqw - var(--hl)),1160px)));
+    --lf:max(1, calc(8 / (18.6 * var(--k))));      /* labels never below 8px on screen */
+    --f:max(1, calc(9 / (29.5 * var(--k))));       /* tagline never below 9px on screen */
+    transform:translate(calc(var(--hl) - 309.8px * var(--k)), calc(425px * var(--k) * -1)) scale(var(--k))}
+
+  /* social rail: same white edge tab, pinned to the left edge, centred on the hex band */
+  .social{--t:.86;grid-area:hero;align-self:center;justify-self:start;position:relative;z-index:3;
+    display:flex;flex-direction:column;align-items:center;gap:calc(28.5px * var(--t));
+    padding:calc(28.6px * var(--t)) calc(15px * var(--t));background:var(--panel)}
+  .social__bg{display:none}
+  .social a{position:relative;padding:8px;margin:-8px}           /* touch target, visual unchanged */
+  .social a svg{width:calc(var(--iw) * var(--t));height:calc(var(--ih) * var(--t))}
+
+  /* ---------- copy ---------- */
+  .band--copy{grid-area:copy;padding:clamp(16px,3vw,40px) var(--gut) 0}
+  .headline{font-size:clamp(52px,min(10.4vw,7svh),88px);line-height:1.005}
+  .headline .l1{letter-spacing:-.0354em}
+  .headline .l2{letter-spacing:-.0247em}
+  .lede{font-size:clamp(18px,min(2.6vw,1.9svh),23px);line-height:1.4634;max-width:38em;text-wrap:pretty}
+  .lede--lead{margin-top:clamp(18px,2.6vw,28px);text-indent:5.37em;letter-spacing:.005em}
+  .lede--echo{margin-top:.08em;letter-spacing:.009em}
+
+  /* wide, non-portrait tablet: the desktop's two-column copy fits again (paragraph column ≥ ~20em);
+     portrait keeps the stacked copy, which uses the tall viewport better */
+  @media (min-width:1000px) and (min-aspect-ratio:1/1){
+    .band--copy{display:grid;grid-template-columns:max-content minmax(0,1fr);column-gap:clamp(48px,6.5vw,108px);align-items:start}
+    .headline{grid-row:1 / span 2;font-size:clamp(52px,7.4vw,80px)}
+    .lede--lead{margin-top:.42em}
+  }
+
+  /* =================================================================
+     MOBILE — below the width where the header can no longer hold
+     logo + both CTAs + burger, and the edge tab would sit on the hexes
+     ================================================================= */
+  @media (max-width:559.98px){
+    #page{--gut:clamp(16px,5vw,24px)}
+    .logo{--lg:.74}
+    .menu:not(.open) .actions{display:none}
+    .burger{--bz:.76;margin-left:auto}
+    .band--hero{--hl:var(--gut)}
+    .social{--t:.8;grid-area:soc;align-self:start;flex-direction:row;gap:calc(28.5px * var(--t));
+      padding:calc(15px * var(--t)) calc(28.6px * var(--t)) calc(15px * var(--t)) var(--gut);margin-top:clamp(22px,6vw,32px)}
+    .headline{font-size:clamp(40px,12.3vw,60px)}
+    .lede{font-size:clamp(16px,4.4vw,18px)}
+  }
+}
+/* One opening sequence. Geometric panels and rulers stay fixed; only
+   foreground content moves, and authored styles resume when it finishes. */
+@media (prefers-reduced-motion:no-preference){
+  .band--header .logo{animation:send-soft .48s cubic-bezier(.22,1,.36,1) .04s backwards}
+  .menu:not(.open) .nav a:nth-child(1){animation:send-soft .48s cubic-bezier(.22,1,.36,1) .12s backwards}
+  .menu:not(.open) .nav a:nth-child(2){animation:send-soft .48s cubic-bezier(.22,1,.36,1) .17s backwards}
+  .menu:not(.open) .nav a:nth-child(3){animation:send-soft .48s cubic-bezier(.22,1,.36,1) .22s backwards}
+  .menu:not(.open) .nav a:nth-child(4){animation:send-soft .48s cubic-bezier(.22,1,.36,1) .27s backwards}
+  .menu:not(.open) .actions{animation:send-soft .52s cubic-bezier(.22,1,.36,1) .23s backwards}
+  .burger{animation:send-soft .5s cubic-bezier(.22,1,.36,1) .25s backwards}
+  .courier{animation:send-courier .93s cubic-bezier(.16,1,.3,1) .43s backwards}
+  .tag--1{animation:send-mark .43s cubic-bezier(.22,1,.36,1) .52s backwards}
+  .tag--2{animation:send-mark .43s cubic-bezier(.22,1,.36,1) .63s backwards}
+  .tag--3{animation:send-mark .43s cubic-bezier(.22,1,.36,1) .74s backwards}
+  .claim--1{animation:send-soft .58s cubic-bezier(.22,1,.36,1) .71s backwards}
+  .claim--3{animation:send-soft .58s cubic-bezier(.22,1,.36,1) .89s backwards}
+  .headline .l1{animation:send-line .76s cubic-bezier(.16,1,.3,1) .64s backwards}
+  .headline .l2{animation:send-line .78s cubic-bezier(.16,1,.3,1) .81s backwards}
+  .lede--lead{animation:send-soft .58s cubic-bezier(.22,1,.36,1) 1.01s backwards}
+  .lede--echo{animation:send-soft .58s cubic-bezier(.22,1,.36,1) 1.17s backwards}
+  .social a:nth-of-type(1){animation:send-soft .44s cubic-bezier(.22,1,.36,1) 1.03s backwards}
+  .social a:nth-of-type(2){animation:send-soft .44s cubic-bezier(.22,1,.36,1) 1.11s backwards}
+  .social a:nth-of-type(3){animation:send-soft .44s cubic-bezier(.22,1,.36,1) 1.19s backwards}
+  @keyframes send-soft{from{opacity:0;transform:translate3d(0,7px,0)}to{opacity:1;transform:none}}
+  @keyframes send-line{from{opacity:0;transform:translate3d(0,.17em,0);clip-path:inset(100% 0 0)}to{opacity:1;transform:none;clip-path:inset(0)}}
+  @keyframes send-courier{from{opacity:0;transform:translate3d(0,13px,0) scale(.986)}to{opacity:1;transform:none}}
+  @keyframes send-mark{from{opacity:0}to{opacity:1}}
+}
+@media (prefers-reduced-motion:no-preference) and (max-width:559.98px){
+  .tag--3,.claim--3{animation:none}
+}
+</style>
+</head>
+<body>
+<div id="page">
+ <div id="stage">
+
+  <svg class="ruler ruler--top" width="1536" height="50" aria-hidden="true" focusable="false"><rect style="--tx:-2577.949" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-2550.046" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-2522.143" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-2494.24" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-2466.337" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-2438.434" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-2410.531" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-2382.628" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-2354.725" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-2326.822" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-2298.919" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-2271.016" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-2243.113" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-2215.21" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-2187.307" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-2159.404" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-2131.501" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-2103.598" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-2075.695" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-2047.792" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-2019.889" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1991.986" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1964.083" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1936.18" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1908.277" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1880.374" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1852.471" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1824.568" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1796.665" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1768.762" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1740.859" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1712.956" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1685.053" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1657.15" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1629.247" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1601.344" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1573.441" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1545.538" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1517.635" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1489.732" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1461.829" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1433.926" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1406.023" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1378.12" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1350.217" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1322.314" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1294.411" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1266.508" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1238.605" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1210.702" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1182.799" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1154.896" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1126.993" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1099.09" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1071.187" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1043.284" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-1015.381" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-987.478" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-959.575" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-931.672" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-903.769" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-875.866" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-847.963" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-820.06" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-792.157" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-764.254" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-736.351" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-708.448" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-680.545" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-652.642" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-624.739" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-596.836" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-568.933" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-541.03" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-513.127" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-485.224" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-457.321" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-429.418" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-401.515" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-373.612" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-345.709" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-317.806" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-289.903" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-262.0" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-234.097" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-206.194" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-178.291" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-150.388" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-122.485" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-94.582" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-66.679" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-38.776" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:-10.873" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:17.03" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:45.17" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:73.38" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:101.08" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:129.01" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:156.99" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:184.98" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:212.95" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:240.56" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:268.75" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:296.7" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:324.5" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:352.19" y="12.8" width="1" height="31.2" fill="#7a7a7a"/><rect style="--tx:380.18" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:408.21" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:436.11" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:464.08" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:492.05" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:519.97" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:547.97" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:575.92" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:603.95" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:631.98" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:660.05" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:688.04" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:716.21" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:744.17" y="12.8" width="1" height="27.2" fill="#7a7a7a"/><rect style="--tx:772.05" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:799.74" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:827.65" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:855.75" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:883.66" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:911.27" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:938.95" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:966.92" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:994.88" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1022.72" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1050.81" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1078.55" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1106.48" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1134.36" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1162.28" y="12.8" width="1" height="27.2" fill="#7a7a7a"/><rect style="--tx:1190.21" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1218.04" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1245.84" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1273.85" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1301.77" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1329.57" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1357.46" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1385.15" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1412.35" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1440.2" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1468.26" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1496.02" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1523.8" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1551.703" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1579.606" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1607.509" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1635.412" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1663.315" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1691.218" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1719.121" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1747.024" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1774.927" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1802.83" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1830.733" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1858.636" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1886.539" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1914.442" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1942.345" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1970.248" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:1998.151" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2026.054" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2053.957" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2081.86" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2109.763" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2137.666" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2165.569" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2193.472" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2221.375" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2249.278" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2277.181" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2305.084" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2332.987" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2360.89" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2388.793" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2416.696" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2444.599" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2472.502" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2500.405" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2528.308" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2556.211" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2584.114" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2612.017" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2639.92" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2667.823" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2695.726" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2723.629" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2751.532" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2779.435" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2807.338" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2835.241" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2863.144" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2891.047" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2918.95" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2946.853" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:2974.756" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3002.659" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3030.562" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3058.465" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3086.368" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3114.271" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3142.174" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3170.077" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3197.98" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3225.883" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3253.786" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3281.689" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3309.592" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3337.495" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3365.398" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3393.301" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3421.204" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3449.107" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3477.01" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3504.913" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3532.816" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3560.719" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3588.622" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3616.525" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3644.428" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3672.331" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3700.234" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3728.137" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3756.04" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3783.943" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3811.846" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3839.749" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3867.652" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3895.555" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3923.458" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3951.361" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:3979.264" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:4007.167" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:4035.07" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:4062.973" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:4090.876" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:4118.779" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:4146.682" y="12.8" width="1" height="12.4" fill="#9a9a9a"/><rect style="--tx:4174.585" y="12.8" width="1" height="12.4" fill="#9a9a9a"/></svg>
+
+  <header class="band band--header">
+    <a class="logo" href="#" aria-label="Sendit home">
+      <svg class="logo__mark" viewBox="50 64 60 72" aria-hidden="true">
+        <defs>
+          <linearGradient id="lgA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8e8e8e"/><stop offset="1" stop-color="#d9d9d9"/></linearGradient>
+          <linearGradient id="lgB" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a8a8a"/><stop offset="1" stop-color="#dcdcdc"/></linearGradient>
+        </defs>
+        <path fill="#fbfbfb" d="M94.3 71.1 L103.2 76.3 L103.2 86.4 L94.7 91.4 L103.2 96.6 L103.2 108.1 L94.0 113.7 L85.3 108.5 L84.6 108.8 L84.6 119.3 L66.4 129.6 L56.5 123.9 L56.5 113.4 L64.7 108.5 L56.5 103.0 L56.5 92.4 L65.7 86.8 L75.4 92.3 L75.9 92.0 L75.9 81.3 Z"/>
+        <path fill="url(#lgA)" d="M94.4 74.3 L100.8 77.6 L100.3 82.3 L94.4 78.7 Z"/>
+        <path fill="url(#lgB)" d="M65.3 89.9 L58.4 92.5 L60.1 96.3 L64.4 95.4 Z"/>
+        <path fill="url(#lgA)" d="M94.2 104.6 L100.4 107.4 L94.9 108.2 L93.8 111.9 L88.6 108.6 Z"/>
+        <path fill="url(#lgB)" d="M67.3 121.0 L62.1 123.2 L62.2 124.1 L66.4 125.3 Z"/>
+      </svg>
+      <span class="logo__word">Sendit<sup class="logo__tm">™</sup></span>
+    </a>
+
+    <div class="menu" id="menu">
+      <nav class="nav" aria-label="Primary">
+        <a href="#" style="--x:353.7;--ls:1.1;--i:0">Home</a>
+        <a href="#shipping" style="--x:436.6;--ls:.29;--i:1">Shipping</a>
+        <a href="#tracking" style="--x:539.7;--ls:.51;--i:2">Tracking</a>
+        <a href="#support" style="--x:641.6;--ls:.4;--i:3">Support</a>
+      </nav>
+      <div class="actions">
+        <a class="btn btn--ghost" href="#login"><svg class="btn__frame" viewBox="0 0 107 49" aria-hidden="true"><rect x="1.315" y=".995" width="104.3" height="46.36"/></svg><span>Login</span></a>
+        <a class="btn btn--solid" href="#start"><svg class="btn__frame" viewBox="0 0 155 48" aria-hidden="true"><rect x=".9" y=".4" width="153.5" height="47.5"/></svg><span>Get Started</span></a>
+      </div>
+    </div>
+
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><svg viewBox="0 0 53 17" aria-hidden="true"><rect x=".36" y=".56" width="51.69" height="2.8"/><rect x=".36" y="13.3" width="51.69" height="2.84"/></svg></button>
+  </header>
+
+  <section class="band band--hero" aria-label="Unified Shipment Control System">
+    <div class="hero">
+      <svg class="ruler--mid" width="1536" height="50" aria-hidden="true" focusable="false"><rect style="--tx:-2577.415" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-2549.512" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-2521.609" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-2493.706" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-2465.803" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-2437.9" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-2409.997" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-2382.094" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-2354.191" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-2326.288" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-2298.385" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-2270.482" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-2242.579" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-2214.676" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-2186.773" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-2158.87" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-2130.967" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-2103.064" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-2075.161" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-2047.258" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-2019.355" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1991.452" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1963.549" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1935.646" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1907.743" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1879.84" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1851.937" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1824.034" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1796.131" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1768.228" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1740.325" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1712.422" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1684.519" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1656.616" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1628.713" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1600.81" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1572.907" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1545.004" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1517.101" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1489.198" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1461.295" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1433.392" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1405.489" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1377.586" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1349.683" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1321.78" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1293.877" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1265.974" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1238.071" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1210.168" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1182.265" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1154.362" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1126.459" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1098.556" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1070.653" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1042.75" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-1014.847" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-986.944" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-959.041" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-931.138" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-903.235" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-875.332" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-847.429" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-819.526" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-791.623" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-763.72" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-735.817" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-707.914" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-680.011" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-652.108" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-624.205" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-596.302" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-568.399" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-540.496" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-512.593" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-484.69" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-456.787" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-428.884" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-400.981" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-373.078" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-345.175" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-317.272" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-289.369" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-261.466" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-233.563" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-205.66" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-177.757" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-149.854" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-121.951" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-94.048" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-66.145" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-38.242" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:-10.339" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:17.564" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:45.467" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:73.37" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:101.06" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:129.02" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:157.0" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:185.0" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:212.94" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:240.61" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:268.74" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:296.7" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:324.46" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:351.86" y="12" width="1" height="31" fill="#6e6e6e"/><rect style="--tx:377.24" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:1364.35" y="19" width="1" height="13" fill="#8c8c8c"/><rect style="--tx:1392.2" y="19" width="1" height="13" fill="#8c8c8c"/></svg>
+
+      <!-- back layer: outline hex + orange hex -->
+      <svg class="hex-svg" viewBox="0 0 1536 1024" aria-hidden="true">
+        <polygon points="1234.1,214.6 1424.1,214.6 1623.9,554.5 1545,686.5 1317.75,686.5 1135.9,375.6"
+                 fill="none" stroke="#eaf7fb" stroke-width="2.4" stroke-linejoin="miter"/>
+        <polygon points="613.2,374.3 712.5,213.8 1157.5,213.8 1344.5,528.8 1247.05,687.7 803.4,687.7" fill="#f16536"/>
+      </svg>
+
+      <!-- courier photo, clipped to the hex baseline -->
+      <div class="courier-clip">
+        <img class="courier" alt="Smiling courier in an orange jacket carrying parcels" src="assets/e9ef7465c2bed0fa.webp" decoding="sync" fetchpriority="high">
+      </div>
+
+      <!-- front layer: ice hex -->
+      <svg class="hex-top" viewBox="0 0 1536 1024" aria-hidden="true">
+        <polygon points="309.8,375.7 409.7,213.8 594.6,213.8 780.65,531.3 688.1,687.7 491.3,687.7" fill="#cadee6"/>
+      </svg>
+
+      <span class="tag tag--1">SNDT _01</span>
+      <span class="tag tag--2">PCKG_02</span>
+      <span class="tag tag--3" aria-hidden="true">SNDT _01</span>
+
+      <p class="claim claim--1"><span style="--x:580.3;--y:522.1">Unified</span><span style="--x:567.6;--y:551.8">Shipment</span><span style="--x:550.5;--y:581.6">Control</span><span style="--x:534.8;--y:611.9">System</span></p>
+      <p class="claim claim--3" aria-hidden="true"><span style="--x:1416.3;--y:520.1">Unified</span><span style="--x:1401.6;--y:550.6">Shipment</span><span style="--x:1387.5;--y:580.6">Control</span><span style="--x:1371.8;--y:610.9">System</span></p>
+    </div>
+  </section>
+
+  <aside class="social" aria-label="Social media">
+    <svg class="social__bg" viewBox="0 0 54 180" aria-hidden="true"><rect x="0" y=".75" width="53.83" height="178.95" fill="#fefefe"/></svg>
+    <a class="s-ig" href="#" aria-label="Instagram" style="--iw:24px;--ih:24px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" aria-hidden="true"><rect x="1.4" y="1.4" width="21.2" height="21.2" rx="5.6"/><circle cx="12" cy="12" r="4.7"/><circle cx="18" cy="6" r=".9" fill="currentColor" stroke="none"/></svg>
+    </a>
+    <a class="s-tw" href="#" aria-label="Twitter" style="--iw:25.2px;--ih:21.2px">
+      <svg viewBox="0 0 24 20.2" fill="currentColor" aria-hidden="true"><path d="M23.95 2.4a9.9 9.9 0 0 1-2.83.78A4.96 4.96 0 0 0 23.29.45a9.86 9.86 0 0 1-3.13 1.2A4.92 4.92 0 0 0 11.78 6.13 13.97 13.97 0 0 1 1.64.99a4.82 4.82 0 0 0-.67 2.47c0 1.71.87 3.21 2.19 4.1a4.9 4.9 0 0 1-2.23-.62v.06a4.92 4.92 0 0 0 3.95 4.83 5 5 0 0 1-2.21.08 4.94 4.94 0 0 0 4.6 3.42A9.87 9.87 0 0 1 0 17.47 14 14 0 0 0 7.56 19.7c9.05 0 14-7.5 14-13.99l-.02-.63A9.94 9.94 0 0 0 24 2.42z"/></svg>
+    </a>
+    <a class="s-yt" href="#" aria-label="YouTube" style="--iw:26px;--ih:18.5px">
+      <svg viewBox="0 0 26 18.5" aria-hidden="true"><rect x=".4" y=".4" width="25.2" height="17.7" rx="4.2" fill="currentColor"/><path d="M10.4 5.1 L16.9 9.25 L10.4 13.4 Z" fill="#fff"/></svg>
+    </a>
+  </aside>
+
+  <section class="band band--copy">
+    <h1 class="headline"><span class="l1">Every courier.</span><br><span class="l2">One dashboard.</span></h1>
+    <p class="lede lede--lead">Sendit links SMEs and online sellers to top global couriers. Compare, book, ship and track all deliveries in one place.</p>
+    <p class="lede lede--echo" aria-hidden="true">Sendit links SMEs and online sellers to top global couriers. Compare, book, ship and track all deliveries in one place.</p>
+  </section>
+
+  <svg class="ruler ruler--bottom" width="1536" height="64" aria-hidden="true" focusable="false"><rect style="--tx:-2577.949" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-2550.046" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-2522.143" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-2494.24" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-2466.337" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-2438.434" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-2410.531" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-2382.628" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-2354.725" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-2326.822" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-2298.919" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-2271.016" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-2243.113" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-2215.21" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-2187.307" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-2159.404" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-2131.501" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-2103.598" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-2075.695" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-2047.792" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-2019.889" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1991.986" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1964.083" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1936.18" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1908.277" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1880.374" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1852.471" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1824.568" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1796.665" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1768.762" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1740.859" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1712.956" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1685.053" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1657.15" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1629.247" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1601.344" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1573.441" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1545.538" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1517.635" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1489.732" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1461.829" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1433.926" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1406.023" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1378.12" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1350.217" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1322.314" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1294.411" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1266.508" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1238.605" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1210.702" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1182.799" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1154.896" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1126.993" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1099.09" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1071.187" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1043.284" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-1015.381" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-987.478" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-959.575" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-931.672" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-903.769" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-875.866" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-847.963" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-820.06" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-792.157" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-764.254" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-736.351" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-708.448" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-680.545" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-652.642" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-624.739" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-596.836" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-568.933" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-541.03" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-513.127" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-485.224" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-457.321" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-429.418" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-401.515" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-373.612" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-345.709" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-317.806" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-289.903" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-262.0" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-234.097" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-206.194" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-178.291" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-150.388" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-122.485" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-94.582" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-66.679" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-38.776" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:-10.873" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:17.03" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:45.17" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:73.38" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:101.08" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:129.01" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:156.99" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:184.98" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:212.95" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:240.56" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:268.75" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:296.7" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:324.5" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:352.19" y="17.0" width="1" height="32.8" fill="#7a7a7a"/><rect style="--tx:380.18" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:408.21" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:436.11" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:464.08" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:492.05" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:519.97" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:547.97" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:575.92" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:603.95" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:631.98" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:660.05" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:688.04" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:716.21" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:744.17" y="22.0" width="1" height="27.8" fill="#7a7a7a"/><rect style="--tx:772.05" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:799.74" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:827.65" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:855.75" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:883.66" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:911.27" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:938.95" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:966.92" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:994.88" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1022.72" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1050.81" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1078.55" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1106.48" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1134.36" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1162.28" y="22.0" width="1" height="27.8" fill="#7a7a7a"/><rect style="--tx:1190.21" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1218.04" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1245.84" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1273.85" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1301.77" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1329.57" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1357.46" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1385.15" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1412.35" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1440.2" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1468.26" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1496.02" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1523.8" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1551.703" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1579.606" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1607.509" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1635.412" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1663.315" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1691.218" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1719.121" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1747.024" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1774.927" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1802.83" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1830.733" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1858.636" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1886.539" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1914.442" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1942.345" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1970.248" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:1998.151" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2026.054" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2053.957" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2081.86" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2109.763" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2137.666" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2165.569" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2193.472" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2221.375" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2249.278" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2277.181" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2305.084" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2332.987" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2360.89" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2388.793" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2416.696" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2444.599" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2472.502" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2500.405" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2528.308" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2556.211" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2584.114" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2612.017" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2639.92" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2667.823" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2695.726" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2723.629" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2751.532" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2779.435" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2807.338" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2835.241" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2863.144" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2891.047" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2918.95" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2946.853" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:2974.756" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3002.659" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3030.562" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3058.465" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3086.368" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3114.271" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3142.174" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3170.077" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3197.98" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3225.883" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3253.786" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3281.689" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3309.592" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3337.495" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3365.398" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3393.301" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3421.204" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3449.107" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3477.01" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3504.913" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3532.816" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3560.719" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3588.622" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3616.525" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3644.428" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3672.331" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3700.234" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3728.137" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3756.04" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3783.943" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3811.846" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3839.749" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3867.652" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3895.555" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3923.458" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3951.361" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:3979.264" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:4007.167" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:4035.07" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:4062.973" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:4090.876" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:4118.779" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:4146.682" y="35.9" width="1" height="13.9" fill="#9a9a9a"/><rect style="--tx:4174.585" y="35.9" width="1" height="13.9" fill="#9a9a9a"/></svg>
+ </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var root=document.documentElement;
+
+  /* Legacy fallback only: browsers without CSS trig functions get the two scale factors from JS. */
+  if(!(window.CSS&&CSS.supports&&CSS.supports("width","calc(1px * tan(atan2(1px, 1px)))"))){
+    var hero=document.querySelector(".hero"), band=document.querySelector(".band--hero");
+    var fit=function(){
+      root.style.setProperty("--s",Math.min(innerWidth/1536,innerHeight/1024));
+      var hl=parseFloat(getComputedStyle(band).getPropertyValue("--hl"))||62, w=band.clientWidth-hl;
+      hero.style.setProperty("--k",Math.min(w/1160,Math.max(w/1226,band.clientHeight/580)));
+    };
+    addEventListener("resize",fit,{passive:true}); fit();
+  }
+
+  /* Burger surface: the existing nav + CTAs become the overlay (no duplicated markup). */
+  var menu=document.getElementById("menu"), burger=document.getElementById("burger"), timer;
+  function focusables(){return [burger].concat([].slice.call(menu.querySelectorAll("a")));}
+  function open(){
+    clearTimeout(timer); menu.classList.remove("closing"); menu.classList.add("open");
+    root.classList.add("menu-lock"); burger.setAttribute("aria-expanded","true"); burger.setAttribute("aria-label","Close menu");
+    var first=menu.querySelector("a"); if(first) first.focus({preventScroll:true});
+  }
+  function close(returnFocus){
+    if(!menu.classList.contains("open")) return;
+    burger.setAttribute("aria-expanded","false"); burger.setAttribute("aria-label","Open menu");
+    menu.classList.add("closing");
+    timer=setTimeout(function(){menu.classList.remove("open","closing"); root.classList.remove("menu-lock");},
+      matchMedia("(prefers-reduced-motion: reduce)").matches?0:200);
+    if(returnFocus) burger.focus({preventScroll:true});
+  }
+  burger.addEventListener("click",function(){ menu.classList.contains("open")&&!menu.classList.contains("closing")?close(true):open(); });
+  menu.addEventListener("click",function(e){ if(e.target.closest("a")) close(false); else if(e.target===menu) close(true); });
+  document.addEventListener("keydown",function(e){
+    if(!menu.classList.contains("open")) return;
+    if(e.key==="Escape"){e.preventDefault(); close(true); return;}
+    if(e.key==="Tab"){
+      /* keep focus cycling inside the open surface (burger/close + its links) */
+      var f=focusables(), i=f.indexOf(document.activeElement), n=f.length;
+      e.preventDefault(); f[i<0?0:(i+(e.shiftKey?-1:1)+n)%n].focus();
+    }
+  });
+})();
+</script>
+</body>
+</html>

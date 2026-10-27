@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="/previews/REF-077/">
+<meta charset="utf-8">
+<script>document.documentElement.className+=' entering';</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Design Up — Level Up Your AI Design Skills</title>
+<style>
+@font-face{font-family:'Pixel Display';font-style:normal;font-weight:700;font-display:block;src:url(assets/fonts/pixel-display.woff2) format('woff2');}
+@font-face{font-family:'Pixel Mono';font-style:normal;font-weight:400;font-display:block;src:url(assets/fonts/pixel-mono.woff2) format('woff2');}
+@font-face{font-family:'UI';font-style:normal;font-weight:500;font-display:block;src:url(assets/fonts/ui.woff2) format('woff2');}
+@font-face{font-family:'UI Light';font-style:normal;font-weight:500;font-display:block;src:url(assets/fonts/ui-light.woff2) format('woff2');}
+@font-face{font-family:'By';font-style:normal;font-weight:400;font-display:block;src:url(assets/fonts/by.woff2) format('woff2');}
+
+/* ==========================================================================
+   Reference canvas: 1053 x 657.  Every number below is a measured pixel
+   value from that reference, multiplied by the uniform scale --s.
+   ========================================================================== */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%}
+
+:root{
+  --s: clamp(0.72px, min(100vw / 1053, 100vh / 657), 1.55px);
+  --ink:#04070F;             /* page background, sampled #04070F            */
+  --title-src:url(assets/images/title.webp);
+  --hero-x:15;             /* hero inset left/right                       */
+  --hero-y:78;             /* hero top edge (header band = 78px)          */
+}
+/* Desktop holds until nav type would fall below ~11.5px, which happens at
+   900px. iPad Pro portrait (1024) therefore stays on desktop. */
+@media (max-width:900px){
+  :root{ --s: clamp(0.62px, min(100vw / 470, 100vh / 860), 1.45px); }
+}
+/* Below 420px the subtitle - the one nowrap line the composition is chained
+   to - falls under 13.5px (13.5 at 412, 12.8 at 390). That is the mobile
+   breaking point, so 428/430 phones stay on the tablet architecture. */
+@media (max-width:420px){
+  :root{ --s: clamp(0.6px, min(100vw / 460, 100vh / 900), 1px); }
+}
+
+body{
+  background:var(--ink);
+  color:#fff;
+  height:100dvh;
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:geometricPrecision;
+}
+.screen{position:relative;width:100%;height:100dvh;overflow:hidden}
+
+/* ---------------------------------------------------------------- header */
+.topbar{
+  position:absolute;inset:0 0 auto 0;
+  height:calc(var(--hero-y) * var(--s));
+  z-index:5;
+}
+.brand{
+  position:absolute;
+  left:calc(44 * var(--s));
+  top:calc(14 * var(--s));
+  display:flex;align-items:flex-start;text-decoration:none;
+}
+.brand-mark{
+  width:calc(29 * var(--s));height:calc(37 * var(--s));
+  display:block;image-rendering:pixelated;
+}
+.brand-word{
+  position:absolute;
+  left:calc(36 * var(--s));
+  top:calc(8 * var(--s));
+  font-family:'Pixel Display';font-weight:700;
+  font-size:calc(23.4 * var(--s));
+  letter-spacing:calc(-0.65 * var(--s));
+  line-height:1;white-space:nowrap;color:#fff;
+}
+.navlink{
+  position:absolute;
+  display:flex;align-items:center;
+  gap:calc(10 * var(--s));
+  padding:0;margin:0;border:0;background:none;cursor:pointer;
+  font-family:'UI';font-weight:500;
+  font-size:calc(13.45 * var(--s));
+  letter-spacing:calc(-0.06 * var(--s));
+  line-height:1;white-space:nowrap;color:#C6C8CE;
+}
+.navlink:hover{color:#fff}
+.chev{
+  width:calc(11 * var(--s));height:calc(7 * var(--s));
+  flex:none;fill:#9BA2B0;stroke:none;
+  shape-rendering:crispEdges;
+}
+.searchbtn{
+  position:absolute;
+  right:calc(195 * var(--s));
+  top:calc(28 * var(--s));
+  width:calc(18 * var(--s));height:calc(18 * var(--s));
+  padding:0;border:0;background:none;cursor:pointer;
+}
+.searchbtn svg{width:100%;height:100%;display:block;
+  fill:#98A3B5;stroke:none;shape-rendering:geometricPrecision}
+
+/* --------------------------------------------------------------- buttons
+   Coded from the 471x122 sprite. Each layer carries its own staircase clip so
+   the border WRAPS the stepped corner instead of being cut away by it. */
+.btn{
+  position:absolute;display:block;text-decoration:none;cursor:pointer;
+  background:none;border:none;isolation:isolate;
+  color:#000;font-family:'Pixel Mono';font-weight:400;
+  --bw:calc(3 * var(--u));              /* outer border  (sampled) */
+  --bv:calc(4 * var(--u));              /* dark bevel   */
+  --hl:calc(4 * var(--u));              /* inner highlight */
+  transition:filter .15s ease;
+}
+.bface,.bbase{position:absolute;left:0;right:0;background:#110205}
+.bface{
+  top:0;height:calc(100% - var(--base));z-index:1;
+  display:flex;align-items:center;justify-content:center;
+  clip-path:polygon(
+    calc(12 * var(--u)) 0, calc(100% - 12 * var(--u)) 0,
+    calc(100% - 12 * var(--u)) calc(4 * var(--u)), calc(100% - 7 * var(--u)) calc(4 * var(--u)),
+    calc(100% - 7 * var(--u)) calc(7 * var(--u)), calc(100% - 4 * var(--u)) calc(7 * var(--u)),
+    calc(100% - 4 * var(--u)) calc(11 * var(--u)), 100% calc(11 * var(--u)),
+    100% 100%,
+    calc(100% - 4 * var(--u)) 100%, calc(100% - 4 * var(--u)) 100%,
+    calc(100% - 7 * var(--u)) 100%, calc(100% - 7 * var(--u)) 100%,
+    calc(100% - 12 * var(--u)) 100%, calc(100% - 12 * var(--u)) 100%,
+    calc(12 * var(--u)) 100%, calc(12 * var(--u)) 100%,
+    calc(7 * var(--u)) 100%, calc(7 * var(--u)) 100%,
+    calc(4 * var(--u)) 100%, calc(4 * var(--u)) 100%,
+    0 100%, 0 calc(11 * var(--u)),
+    calc(4 * var(--u)) calc(11 * var(--u)), calc(4 * var(--u)) calc(7 * var(--u)),
+    calc(7 * var(--u)) calc(7 * var(--u)), calc(7 * var(--u)) calc(4 * var(--u)),
+    calc(12 * var(--u)) calc(4 * var(--u)));
+  transition:transform .09s cubic-bezier(.32,.72,.35,1), clip-path .09s cubic-bezier(.32,.72,.35,1);
+}
+.bface::before{
+  content:'';position:absolute;inset:var(--bw) var(--bw) 0;background:#9C4610;
+  clip-path:polygon(
+    calc(12 * var(--u)) 0, calc(100% - 12 * var(--u)) 0,
+    calc(100% - 12 * var(--u)) calc(4 * var(--u)), calc(100% - 7 * var(--u)) calc(4 * var(--u)),
+    calc(100% - 7 * var(--u)) calc(7 * var(--u)), calc(100% - 4 * var(--u)) calc(7 * var(--u)),
+    calc(100% - 4 * var(--u)) calc(11 * var(--u)), 100% calc(11 * var(--u)),
+    100% 100%,
+    calc(100% - 4 * var(--u)) 100%, calc(100% - 4 * var(--u)) 100%,
+    calc(100% - 7 * var(--u)) 100%, calc(100% - 7 * var(--u)) 100%,
+    calc(100% - 12 * var(--u)) 100%, calc(100% - 12 * var(--u)) 100%,
+    calc(12 * var(--u)) 100%, calc(12 * var(--u)) 100%,
+    calc(7 * var(--u)) 100%, calc(7 * var(--u)) 100%,
+    calc(4 * var(--u)) 100%, calc(4 * var(--u)) 100%,
+    0 100%, 0 calc(11 * var(--u)),
+    calc(4 * var(--u)) calc(11 * var(--u)), calc(4 * var(--u)) calc(7 * var(--u)),
+    calc(7 * var(--u)) calc(7 * var(--u)), calc(7 * var(--u)) calc(4 * var(--u)),
+    calc(12 * var(--u)) calc(4 * var(--u)));
+}
+.bface::after{
+  content:'';position:absolute;inset:calc(var(--bw) + var(--bv)) calc(var(--bw) + var(--bv)) 0;
+  background-image:
+    linear-gradient(180deg,#2D1E0E 0.00% 1.01%,#552E20 1.01% 2.02%,#501F0B 2.02% 3.03%,#421000 3.03% 4.04%,#763E1A 4.04% 5.05%,#98502F 5.05% 6.06%,#994B26 6.06% 7.07%,#873B09 7.07% 8.08%,#E6A363 8.08% 9.09%,#FFD786 9.09% 10.10%,#FFD985 10.10% 11.11%,#FFDE90 11.11% 12.12%,#FFDE94 12.12% 15.15%,#FFDD94 15.15% 17.17%,#FFDD92 17.17% 18.18%,#FFDC91 18.18% 20.20%,#FFDB8E 20.20% 22.22%,#FFD98D 22.22% 26.26%,#FFDB8E 26.26% 27.27%,#FFDB91 27.27% 28.28%,#FFDC92 28.28% 30.30%,#FFDB91 30.30% 31.31%,#FFD88F 31.31% 32.32%,#FFD68C 32.32% 34.34%,#FFD587 34.34% 35.35%,#FFD57C 35.35% 36.36%,#FFD577 36.36% 37.37%,#FFD575 37.37% 38.38%,#FFD473 38.38% 40.40%,#FFD272 40.40% 41.41%,#FFD373 41.41% 42.42%,#FFD471 42.42% 43.43%,#FFD36F 43.43% 44.44%,#FFD36D 44.44% 45.45%,#FFD46F 45.45% 46.46%,#FFD26C 46.46% 47.47%,#FFD26B 47.47% 48.48%,#FFD168 48.48% 50.51%,#FFCF68 50.51% 51.52%,#FFC560 51.52% 52.53%,#FFC461 52.53% 54.55%,#FFC35E 54.55% 55.56%,#FFC45F 55.56% 57.58%,#FFC35E 57.58% 58.59%,#FFC25E 58.59% 59.60%,#FFC15D 59.60% 61.62%,#FFC05B 61.62% 62.63%,#FFBE5A 62.63% 64.65%,#FFBC59 64.65% 66.67%,#FFBB59 66.67% 71.72%,#FFB958 71.72% 72.73%,#FFBA56 72.73% 76.77%,#FFBA54 76.77% 78.79%,#FFB954 78.79% 82.83%,#FFB855 82.83% 83.84%,#FFB654 83.84% 84.85%,#FFB552 84.85% 86.87%,#FFB454 86.87% 87.88%,#FFB253 87.88% 90.91%,#FFAE59 90.91% 91.92%,#C0500F 91.92% 92.93%,#B63B05 92.93% 93.94%,#C24111 93.94% 94.95%,#B53D11 94.95% 95.96%,#A13D12 95.96% 96.97%,#A04219 96.97% 97.98%,#AE4E2A 97.98% 98.99%,#A24B2F 98.99% 100.00%),
+    linear-gradient(180deg,#2D1E0E 0.00% 1.01%,#552E20 1.01% 2.02%,#501F0B 2.02% 3.03%,#421000 3.03% 4.04%,#763E1A 4.04% 5.05%,#98502F 5.05% 6.06%,#994B26 6.06% 7.07%,#873B09 7.07% 8.08%,#E6A363 8.08% 9.09%,#FFD786 9.09% 10.10%,#FFD985 10.10% 11.11%,#FFDE90 11.11% 12.12%,#FFDE94 12.12% 15.15%,#FFDD94 15.15% 17.17%,#FFDD92 17.17% 18.18%,#FFDC91 18.18% 20.20%,#FFDB8E 20.20% 22.22%,#FFD98D 22.22% 26.26%,#FFDB8E 26.26% 27.27%,#FFDB91 27.27% 28.28%,#FFDC92 28.28% 30.30%,#FFDB91 30.30% 31.31%,#FFD88F 31.31% 32.32%,#FFD68C 32.32% 34.34%,#FFD587 34.34% 35.35%,#FFD57C 35.35% 36.36%,#FFD577 36.36% 37.37%,#FFD575 37.37% 38.38%,#FFD473 38.38% 40.40%,#FFD272 40.40% 41.41%,#FFD373 41.41% 42.42%,#FFD471 42.42% 43.43%,#FFD36F 43.43% 44.44%,#FFD36D 44.44% 45.45%,#FFD46F 45.45% 46.46%,#FFD26C 46.46% 47.47%,#FFD26B 47.47% 48.48%,#FFD168 48.48% 50.51%,#FFCF68 50.51% 51.52%,#FFC560 51.52% 52.53%,#FFC461 52.53% 54.55%,#FFC35E 54.55% 55.56%,#FFC45F 55.56% 57.58%,#FFC35E 57.58% 58.59%,#FFC25E 58.59% 59.60%,#FFC15D 59.60% 61.62%,#FFC05B 61.62% 62.63%,#FFBE5A 62.63% 64.65%,#FFBC59 64.65% 66.67%,#FFBB59 66.67% 71.72%,#FFB958 71.72% 72.73%,#FFBA56 72.73% 76.77%,#FFBA54 76.77% 78.79%,#FFB954 78.79% 82.83%,#FFB855 82.83% 83.84%,#FFB654 83.84% 84.85%,#FFB552 84.85% 86.87%,#FFB454 86.87% 87.88%,#FFB253 87.88% 90.91%,#FFAE59 90.91% 91.92%,#C0500F 91.92% 92.93%,#B63B05 92.93% 93.94%,#C24111 93.94% 94.95%,#B53D11 94.95% 95.96%,#A13D12 95.96% 96.97%,#A04219 96.97% 97.98%,#AE4E2A 97.98% 98.99%,#A24B2F 98.99% 100.00%),
+    linear-gradient(180deg,#DD9565 0.00% 1.01%,#FFECB7 1.01% 2.02%,#FFF5AE 2.02% 3.03%,#FFF696 3.03% 4.04%,#E8CA4E 4.04% 5.05%,#F4C12A 5.05% 6.06%,#F7BC13 6.06% 7.07%,#EEB60A 7.07% 8.08%,#F0B50A 8.08% 9.09%,#F2B40E 9.09% 10.10%,#F5B210 10.10% 11.11%,#F8B20F 11.11% 15.15%,#F6B10E 15.15% 18.18%,#F5B00D 18.18% 19.19%,#F7B00B 19.19% 20.20%,#F6AF0A 20.20% 23.23%,#FBB40F 23.23% 27.27%,#F7AE0A 27.27% 30.30%,#F6AD08 30.30% 31.31%,#F8AC08 31.31% 32.32%,#F6AB07 32.32% 35.35%,#FAAE0B 35.35% 39.39%,#F6A705 39.39% 43.43%,#F9A806 43.43% 47.47%,#F8A504 47.47% 48.48%,#F3A000 48.48% 49.49%,#FBA807 49.49% 50.51%,#F5A201 50.51% 54.55%,#F8A303 54.55% 55.56%,#FBA304 55.56% 56.57%,#FAA203 56.57% 57.58%,#F7A000 57.58% 58.59%,#F69E00 58.59% 59.60%,#F9A003 59.60% 60.61%,#FAA105 60.61% 63.64%,#F69B00 63.64% 65.66%,#F79C00 65.66% 67.68%,#F89B00 67.68% 69.70%,#FA9C01 69.70% 71.72%,#FA9C03 71.72% 73.74%,#F89B02 73.74% 75.76%,#F99901 75.76% 77.78%,#F89800 77.78% 79.80%,#F59200 79.80% 80.81%,#F59100 80.81% 83.84%,#F39000 83.84% 85.86%,#F59100 85.86% 87.88%,#F69001 87.88% 88.89%,#F58F00 88.89% 89.90%,#F69001 89.90% 90.91%,#F78E00 90.91% 91.92%,#F78C01 91.92% 92.93%,#F78A00 92.93% 93.94%,#F98902 93.94% 94.95%,#F18A02 94.95% 95.96%,#FCAF20 95.96% 96.97%,#FEC131 96.97% 97.98%,#FCC838 97.98% 98.99%,#F8C24C 98.99% 100.00%);
+  background-size:var(--hl) 100%,var(--hl) 100%,auto;
+  background-position:0 0,right 0 top,0 0;
+  background-repeat:no-repeat;
+  clip-path:polygon(
+    calc(12 * var(--u)) 0, calc(100% - 12 * var(--u)) 0,
+    calc(100% - 12 * var(--u)) calc(4 * var(--u)), calc(100% - 7 * var(--u)) calc(4 * var(--u)),
+    calc(100% - 7 * var(--u)) calc(7 * var(--u)), calc(100% - 4 * var(--u)) calc(7 * var(--u)),
+    calc(100% - 4 * var(--u)) calc(11 * var(--u)), 100% calc(11 * var(--u)),
+    100% 100%,
+    calc(100% - 4 * var(--u)) 100%, calc(100% - 4 * var(--u)) 100%,
+    calc(100% - 7 * var(--u)) 100%, calc(100% - 7 * var(--u)) 100%,
+    calc(100% - 12 * var(--u)) 100%, calc(100% - 12 * var(--u)) 100%,
+    calc(12 * var(--u)) 100%, calc(12 * var(--u)) 100%,
+    calc(7 * var(--u)) 100%, calc(7 * var(--u)) 100%,
+    calc(4 * var(--u)) 100%, calc(4 * var(--u)) 100%,
+    0 100%, 0 calc(11 * var(--u)),
+    calc(4 * var(--u)) calc(11 * var(--u)), calc(4 * var(--u)) calc(7 * var(--u)),
+    calc(7 * var(--u)) calc(7 * var(--u)), calc(7 * var(--u)) calc(4 * var(--u)),
+    calc(12 * var(--u)) calc(4 * var(--u)));
+}
+.bbase{bottom:0;height:var(--base);z-index:0;clip-path:polygon(
+    0 0, 100% 0, 100% calc(100% - 11 * var(--u)),
+    calc(100% - 4 * var(--u)) calc(100% - 11 * var(--u)),
+    calc(100% - 4 * var(--u)) calc(100% - 7 * var(--u)),
+    calc(100% - 7 * var(--u)) calc(100% - 7 * var(--u)),
+    calc(100% - 7 * var(--u)) calc(100% - 4 * var(--u)),
+    calc(100% - 12 * var(--u)) calc(100% - 4 * var(--u)),
+    calc(100% - 12 * var(--u)) 100%, calc(12 * var(--u)) 100%,
+    calc(12 * var(--u)) calc(100% - 4 * var(--u)), calc(7 * var(--u)) calc(100% - 4 * var(--u)),
+    calc(7 * var(--u)) calc(100% - 7 * var(--u)), calc(4 * var(--u)) calc(100% - 7 * var(--u)),
+    calc(4 * var(--u)) calc(100% - 11 * var(--u)), 0 calc(100% - 11 * var(--u)));}
+.bbase::before{
+  content:'';position:absolute;inset:0 var(--bw) var(--bw);
+  background-image:
+    linear-gradient(90deg,#6E1000 0 calc(8 * var(--u)),rgba(0,0,0,0) calc(8 * var(--u))
+      calc(100% - 8 * var(--u)),#6E1000 calc(100% - 8 * var(--u))),
+    linear-gradient(180deg,#823D00 0.00% 7.14%,#671300 7.14% 14.29%,#721200 14.29% 21.43%,#881400 21.43% 28.57%,#C3350E 28.57% 35.71%,#CC3407 35.71% 42.86%,#C73006 42.86% 50.00%,#C93306 50.00% 57.14%,#CB3606 57.14% 64.29%,#C0350D 64.29% 71.43%,#A82F18 71.43% 78.57%,#6A0800 78.57% 85.71%,#510B09 85.71% 92.86%,#320204 92.86% 100.00%);
+  clip-path:polygon(
+    0 0, 100% 0, 100% calc(100% - 11 * var(--u)),
+    calc(100% - 4 * var(--u)) calc(100% - 11 * var(--u)),
+    calc(100% - 4 * var(--u)) calc(100% - 7 * var(--u)),
+    calc(100% - 7 * var(--u)) calc(100% - 7 * var(--u)),
+    calc(100% - 7 * var(--u)) calc(100% - 4 * var(--u)),
+    calc(100% - 12 * var(--u)) calc(100% - 4 * var(--u)),
+    calc(100% - 12 * var(--u)) 100%, calc(12 * var(--u)) 100%,
+    calc(12 * var(--u)) calc(100% - 4 * var(--u)), calc(7 * var(--u)) calc(100% - 4 * var(--u)),
+    calc(7 * var(--u)) calc(100% - 7 * var(--u)), calc(4 * var(--u)) calc(100% - 7 * var(--u)),
+    calc(4 * var(--u)) calc(100% - 11 * var(--u)), 0 calc(100% - 11 * var(--u)));
+}
+.btn .lbl{position:relative;z-index:2;display:block;white-space:nowrap;
+  transition:transform .08s cubic-bezier(.33,.9,.5,1)}
+.btn:hover{filter:brightness(1.05) saturate(.96)}
+.btn:active .bface{transform:translateY(var(--press));clip-path:polygon(
+    calc(12 * var(--u)) 0, calc(100% - 12 * var(--u)) 0,
+    calc(100% - 12 * var(--u)) calc(4 * var(--u)), calc(100% - 7 * var(--u)) calc(4 * var(--u)),
+    calc(100% - 7 * var(--u)) calc(7 * var(--u)), calc(100% - 4 * var(--u)) calc(7 * var(--u)),
+    calc(100% - 4 * var(--u)) calc(11 * var(--u)), 100% calc(11 * var(--u)),
+    100% calc(100% - 11 * var(--u)),
+    calc(100% - 4 * var(--u)) calc(100% - 11 * var(--u)), calc(100% - 4 * var(--u)) calc(100% - 7 * var(--u)),
+    calc(100% - 7 * var(--u)) calc(100% - 7 * var(--u)), calc(100% - 7 * var(--u)) calc(100% - 4 * var(--u)),
+    calc(100% - 12 * var(--u)) calc(100% - 4 * var(--u)), calc(100% - 12 * var(--u)) 100%,
+    calc(12 * var(--u)) 100%, calc(12 * var(--u)) calc(100% - 4 * var(--u)),
+    calc(7 * var(--u)) calc(100% - 4 * var(--u)), calc(7 * var(--u)) calc(100% - 7 * var(--u)),
+    calc(4 * var(--u)) calc(100% - 7 * var(--u)), calc(4 * var(--u)) calc(100% - 11 * var(--u)),
+    0 calc(100% - 11 * var(--u)), 0 calc(11 * var(--u)),
+    calc(4 * var(--u)) calc(11 * var(--u)), calc(4 * var(--u)) calc(7 * var(--u)),
+    calc(7 * var(--u)) calc(7 * var(--u)), calc(7 * var(--u)) calc(4 * var(--u)),
+    calc(12 * var(--u)) calc(4 * var(--u)));}
+
+.btn-sm{
+  right:calc(40 * var(--s));
+  top:calc(19 * var(--s));
+  width:calc(137 * var(--s));height:calc(35 * var(--s));
+  --u:calc(0.2897 * var(--s));          /* 137 / 473 sprite px */
+  --base:calc(4.84 * var(--s));--press:calc(3.97 * var(--s));
+  font-size:calc(17.9 * var(--s));
+  letter-spacing:calc(-0.43 * var(--s));
+}
+.btn-sm .lbl{left:calc(1 * var(--s));top:calc(1 * var(--s))}
+.btn-lg{
+  left:calc(422 * var(--s));
+  top:calc(169 * var(--s));
+  width:calc(174 * var(--s));height:calc(45 * var(--s));
+  --u:calc(0.3694 * var(--s));          /* 174 / 471 sprite px */
+  --base:calc(6.2 * var(--s));--press:calc(5.09 * var(--s));
+  font-size:calc(23.2 * var(--s));
+  letter-spacing:calc(-0.88 * var(--s));
+}
+.btn-lg .lbl{left:calc(1 * var(--s));top:calc(1 * var(--s))}
+@media (prefers-reduced-motion:reduce){
+  .title-shine::before{animation:none;opacity:0}
+  .bface,.btn .lbl{transition:none}
+}
+
+/* ------------------------------------------------------------------ hero */
+.hero{
+  position:absolute;
+  left:calc(var(--hero-x) * var(--s));
+  right:calc(18 * var(--s));
+  top:calc(var(--hero-y) * var(--s));
+  bottom:0;
+  border-radius:calc(16 * var(--s)) calc(16 * var(--s)) 0 0;
+  overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.hero-photo{                    /* 1060 x 707 over a 1020-wide box = 103.92% */
+  position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:103.92%;height:auto;min-height:100%;
+  object-fit:cover;object-position:center top;
+  image-rendering:auto;
+}
+.hero-tint{position:absolute;inset:0;background:rgba(0,0,0,.10)}
+.canopy{position:absolute;left:-1.57%;width:102.94%;height:auto;display:block;
+  pointer-events:none;user-select:none;z-index:2}
+.canopy-top{top:0;max-height:22%;object-fit:fill}
+/* the crest is the wavy silhouette only (1020x157); the flat black mass below it
+   is drawn as a band so it scales with --s instead of ballooning with hero width */
+.canopy-bottom{bottom:0;max-height:46%;object-fit:fill;
+  /* the site renders the frame's lower band ~1.31x taller than its natural
+     aspect; matching that puts the foliage crest where the reference has it */
+  aspect-ratio:2842 / 696;height:auto}
+.footer-fill{position:absolute;left:0;right:0;bottom:0;
+  height:calc(16 * var(--s));background:var(--ink);pointer-events:none;z-index:1}
+
+.stage{
+  position:relative;z-index:3;
+  width:calc(1020 * var(--s));
+  height:calc(213 * var(--s));      /* eyebrow ink top 204 -> btn bot 417 */
+  transform:translateY(calc(-57 * var(--s)));
+}
+
+/* --------------------------------------------------------------- eyebrow */
+.eyebrow{
+  position:absolute;
+  left:calc(443 * var(--s));
+  top:calc(-2 * var(--s));
+  display:flex;align-items:center;
+  height:calc(16 * var(--s));
+}
+.by{
+  font-family:'By';font-weight:400;
+  font-size:calc(15 * var(--s));line-height:1;
+  color:rgba(255,255,255,.78);
+  margin-right:calc(9 * var(--s));
+}
+.ms-mark{
+  width:calc(19 * var(--s));height:calc(13.37 * var(--s));
+  display:block;flex:none;color:#fff;overflow:visible;
+  margin-right:calc(7 * var(--s));
+  position:relative;
+  left:calc(-2 * var(--s));
+  top:calc(1 * var(--s));
+}
+.ms-word{
+  width:calc(79 * var(--s));height:calc(11.7 * var(--s));
+  display:block;flex:none;color:#fff;
+  position:relative;
+  left:calc(-3 * var(--s));
+  top:calc(2 * var(--s));
+}
+
+/* ----------------------------------------------------------------- title */
+.title{
+  position:absolute;
+  left:calc(322 * var(--s));
+  top:calc(25 * var(--s));
+  width:calc(378 * var(--s));height:calc(101 * var(--s));
+  display:block;image-rendering:auto;
+  background-image:var(--title-src);background-size:100% 100%;background-repeat:no-repeat;
+}
+/* shine: a tilted cream band swept across the glyphs, masked by the title art.
+   Measured from the reference clip: 0.47s sweep, 4.9s cycle, ~18 degrees of tilt. */
+.title-shine{position:absolute;inset:0;overflow:hidden;pointer-events:none;
+  -webkit-mask-image:var(--title-src);mask-image:var(--title-src);
+  -webkit-mask-size:100% 100%;mask-size:100% 100%;
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;}
+.title-shine::before{content:'';position:absolute;top:-25%;height:150%;left:-40%;width:20%;
+  background:linear-gradient(90deg,rgba(255,246,214,0) 0%,rgba(255,246,214,.95) 50%,rgba(255,246,214,0) 100%);
+  transform:skewX(-18deg) translateX(-100%);
+  animation:title-shine var(--shine-cycle,2.2s) cubic-bezier(.45,.05,.35,1) 1.72s infinite;}
+@keyframes title-shine{
+  0%   {transform:skewX(-18deg) translateX(-100%)}
+  21.4% {transform:skewX(-18deg) translateX(750%)}
+  100% {transform:skewX(-18deg) translateX(750%)}
+}
+
+/* -------------------------------------------------------------- subtitle */
+.sub{
+  position:absolute;margin:0;
+  left:calc(333 * var(--s));
+  top:calc(125 * var(--s));
+  font-family:'UI Light';font-weight:500;
+  font-size:calc(15.4 * var(--s));
+  letter-spacing:calc(0.659 * var(--s));
+  line-height:1;white-space:nowrap;color:#fff;
+}
+
+/* ------------------------------------------------ tablet architecture ---
+   Breakpoint taken from the design, not a device: the header never collides
+   (everything scales together) so the real failure is legibility. Nav type
+   reads 13.1px at 1024, 12.3px at 960 and 11.5px at 900 - that is the floor,
+   so 900px is where the bar restructures. */
+.burger{display:none}
+.navwrap{display:contents}
+
+@media (max-width:900px){
+  .brand{left:calc(26 * var(--s))}
+  .searchbtn{right:calc(66 * var(--s));top:calc(30 * var(--s))}
+  .searchbtn::after,.burger::after{content:'';position:absolute;inset:-14px}
+
+  .burger{
+    display:block;position:absolute;
+    right:calc(26 * var(--s));top:calc(29 * var(--s));
+    width:calc(20 * var(--s));height:calc(20 * var(--s));
+    padding:0;border:0;background:none;cursor:pointer;z-index:22;
+  }
+  .burger svg{width:100%;height:100%;display:block;fill:#98A3B5;
+    shape-rendering:geometricPrecision}
+  .burger .bar{transform-origin:50% 50%;
+    transition:transform .16s cubic-bezier(.33,.9,.5,1),opacity .12s ease}
+  .topbar.open .burger .bar.t{transform:translateY(4px) rotate(45deg)}
+  .topbar.open .burger .bar.b{transform:translateY(-4px) rotate(-45deg)}
+  .topbar.open .burger .bar.m{opacity:0}
+
+  /* panel: same ink, same stepped corners and border-wrapping as the buttons */
+  .navwrap{
+    display:flex;flex-direction:column;align-items:stretch;
+    position:absolute;z-index:20;
+    top:calc(64 * var(--s));right:calc(26 * var(--s));
+    width:min(calc(272 * var(--s)), calc(100vw - 52 * var(--s)));
+    --u:calc(0.3694 * var(--s));
+    padding:calc(9 * var(--s));background:#1C1A1F;
+    clip-path:polygon(
+      calc(12 * var(--u)) 0, calc(100% - 12 * var(--u)) 0,
+      calc(100% - 12 * var(--u)) calc(4 * var(--u)), calc(100% - 7 * var(--u)) calc(4 * var(--u)),
+      calc(100% - 7 * var(--u)) calc(7 * var(--u)), calc(100% - 4 * var(--u)) calc(7 * var(--u)),
+      calc(100% - 4 * var(--u)) calc(11 * var(--u)), 100% calc(11 * var(--u)),
+      100% calc(100% - 11 * var(--u)),
+      calc(100% - 4 * var(--u)) calc(100% - 11 * var(--u)), calc(100% - 4 * var(--u)) calc(100% - 7 * var(--u)),
+      calc(100% - 7 * var(--u)) calc(100% - 7 * var(--u)), calc(100% - 7 * var(--u)) calc(100% - 4 * var(--u)),
+      calc(100% - 12 * var(--u)) calc(100% - 4 * var(--u)), calc(100% - 12 * var(--u)) 100%,
+      calc(12 * var(--u)) 100%, calc(12 * var(--u)) calc(100% - 4 * var(--u)),
+      calc(7 * var(--u)) calc(100% - 4 * var(--u)), calc(7 * var(--u)) calc(100% - 7 * var(--u)),
+      calc(4 * var(--u)) calc(100% - 7 * var(--u)), calc(4 * var(--u)) calc(100% - 11 * var(--u)),
+      0 calc(100% - 11 * var(--u)), 0 calc(11 * var(--u)),
+      calc(4 * var(--u)) calc(11 * var(--u)), calc(4 * var(--u)) calc(7 * var(--u)),
+      calc(7 * var(--u)) calc(7 * var(--u)), calc(7 * var(--u)) calc(4 * var(--u)),
+      calc(12 * var(--u)) calc(4 * var(--u)));
+    opacity:0;transform:translateY(calc(-6 * var(--s)));pointer-events:none;
+    transition:opacity .14s ease,transform .14s cubic-bezier(.33,.9,.5,1);
+  }
+  .navwrap::before{content:'';position:absolute;inset:calc(1.6 * var(--s));
+    background:#080B14;clip-path:inherit;z-index:0}
+  .topbar.open .navwrap{opacity:1;transform:none;pointer-events:auto}
+
+  .navlink{
+    position:static!important;left:auto!important;top:auto!important;
+    z-index:1;width:100%;justify-content:space-between;
+    padding:calc(9 * var(--s)) calc(10 * var(--s));
+    font-size:max(13.5px, calc(15 * var(--s)));
+  }
+  .navlink+.navlink{border-top:1px solid rgba(255,255,255,.07)}
+  .navlink:hover{background:rgba(255,255,255,.05)}
+
+  .btn-sm{position:relative;right:auto;top:auto;z-index:1;
+    align-self:center;margin:calc(13 * var(--s)) 0 calc(5 * var(--s))}
+
+  /* hero keeps its composition, re-centred for the narrower canvas */
+  .stage{width:100%}
+  .eyebrow{left:50%;transform:translateX(-50%)}
+  .title{left:50%;margin-left:calc(-189 * var(--s))}
+  .sub{left:50%;transform:translateX(-50%)}
+  .btn-lg{left:50%;margin-left:calc(-87 * var(--s))}
+}
+
+
+
+/* ================================================================ ENTRANCE
+   One master sequence, ~1.8s, runs once on load then removes itself.
+   The hero photograph is the stage and never moves; the forest frame
+   composes around it, then the content performs inside it.
+   All motion uses the individual `translate`/`scale` properties so it
+   composes with, and never clobbers, existing transforms.            */
+@media (prefers-reduced-motion:no-preference){
+  @keyframes e-frame-top{from{opacity:0;translate:0 calc(-13 * var(--s))}to{opacity:1;translate:0 0}}
+  @keyframes e-frame-bot{from{opacity:0;translate:0 calc(13 * var(--s))}to{opacity:1;translate:0 0}}
+  @keyframes e-fade    {from{opacity:0}to{opacity:1}}
+  @keyframes e-rise    {from{opacity:0;translate:0 calc(9 * var(--s))}to{opacity:1;translate:0 0}}
+  @keyframes e-rise-sm {from{opacity:0;translate:0 calc(6 * var(--s))}to{opacity:1;translate:0 0}}
+  @keyframes e-title{
+    from{opacity:0;translate:0 calc(13 * var(--s));clip-path:inset(0 0 100% 0)}
+    to  {opacity:1;translate:0 0;             clip-path:inset(0 0 0 0)}
+  }
+  @keyframes e-cta{from{opacity:0;translate:0 calc(8 * var(--s));scale:.975}
+                   to  {opacity:1;translate:0 0;scale:1}}
+
+  /* 01 - the frame composes the shot */
+  html.entering .canopy-top   {animation:e-frame-top .85s cubic-bezier(.16,1,.3,1) .05s both}
+  html.entering .canopy-bottom{animation:e-frame-bot .85s cubic-bezier(.16,1,.3,1) .05s both}
+  html.entering .footer-fill  {animation:e-fade      .70s ease .05s both}
+
+  /* 02 - navigation, understated: brand as one unit, then links */
+  html.entering .brand    {animation:e-rise-sm .55s cubic-bezier(.22,.9,.3,1) .20s both}
+  html.entering .navlink  {animation:e-rise-sm .50s cubic-bezier(.22,.9,.3,1) both}
+  html.entering .navlink:nth-of-type(1){animation-delay:.30s}
+  html.entering .navlink:nth-of-type(2){animation-delay:.345s}
+  html.entering .navlink:nth-of-type(3){animation-delay:.39s}
+  html.entering .navlink:nth-of-type(4){animation-delay:.435s}
+  html.entering .navlink:nth-of-type(5){animation-delay:.48s}
+  html.entering .searchbtn{animation:e-rise-sm .50s cubic-bezier(.22,.9,.3,1) .50s both}
+  html.entering .btn-sm   {animation:e-rise-sm .50s cubic-bezier(.22,.9,.3,1) .54s both}
+  html.entering .burger   {animation:e-rise-sm .50s cubic-bezier(.22,.9,.3,1) .50s both}
+
+  /* 03 - eyebrow sets context just before the headline */
+  html.entering .eyebrow{animation:e-rise .50s cubic-bezier(.22,.9,.3,1) .58s both}
+
+  /* 04 - the headline: wipes in reading order while rising into place */
+  html.entering .title{animation:e-title .85s cubic-bezier(.16,1,.3,1) .72s both}
+
+  /* 05 / 06 - supporting copy, then the action */
+  html.entering .sub   {animation:e-rise .55s cubic-bezier(.22,.9,.3,1) 1.12s both}
+  html.entering .btn-lg{animation:e-cta  .50s cubic-bezier(.33,.9,.5,1) 1.30s both}
+}
+
+/* ------------------------------------------------ mobile architecture ---
+   The hero stops being an absolutely-positioned composition and becomes a
+   flow-stacked column, so the subtitle is free to wrap and set its own
+   readable size without colliding with the CTA below it. Same elements,
+   same order, same components - different placement system. */
+@media (max-width:420px){
+  .stage{
+    position:relative;display:flex;flex-direction:column;align-items:center;
+    width:100%;height:auto;transform:translateY(calc(-30 * var(--s)));
+  }
+  .eyebrow,.title,.sub,.btn-lg{
+    position:relative;left:auto;right:auto;top:auto;transform:none;margin-left:0;
+  }
+  /* rhythm carried over from the desktop composition (12 / 15 / 28) */
+  .title{
+    margin-top:calc(12 * var(--s));
+    width:min(86vw, calc(378 * var(--s)));height:auto;aspect-ratio:378 / 101;
+  }
+  .sub{
+    margin-top:calc(16 * var(--s));
+    width:min(86vw, calc(352 * var(--s)));
+    white-space:normal;text-align:center;
+    text-wrap:balance;              /* avoids the orphaned last word */
+    font-size:max(13.5px, calc(15.4 * var(--s)));
+    line-height:1.36;
+  }
+  .btn-lg{margin-top:calc(26 * var(--s))}
+
+  /* menu spans the width on a phone, same panel treatment */
+  .navwrap{left:calc(26 * var(--s));width:auto}
+  .navlink{padding:calc(11 * var(--s)) calc(10 * var(--s))}
+}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+:focus-visible{outline:calc(2 * var(--s)) solid #FBB916;outline-offset:calc(2 * var(--s))}
+
+/* ------------------------------------------------- debug (ink measuring) */
+body.debug{background:#000}
+body.debug .hero-photo,body.debug .canopy,body.debug .hero-tint,
+body.debug .title,body.debug .brand-mark{visibility:hidden}
+body.debug .hero{background:#000;border-radius:0}
+body.debug .btn{background-image:none;background:#000;border-color:#000;box-shadow:none;clip-path:none}
+body.debug .bface,body.debug .bbase{background:none;clip-path:none}
+body.debug .bface::before,body.debug .bface::after,body.debug .bbase::before{background:none;clip-path:none}
+body.debug .chev,body.debug .searchbtn svg{stroke:#000}
+</style>
+</head>
+<body>
+<main class="screen">
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Design Up home">
+      <img class="brand-mark" src="assets/images/brand-mark.png" alt="">
+      <span class="brand-word">DESIGN UP</span>
+    </a>
+    <div class="navwrap" id="nav-menu">
+    <button class="navlink" style="left:calc(222 * var(--s));top:calc(29 * var(--s))">Learn<svg class="chev" viewBox="0 0 7 4" aria-hidden="true"><path d="M0 0h1v1H0zM1 1h1v1H1zM2 2h1v1H2zM3 3h1v1H3zM4 2h1v1H4zM5 1h1v1H5zM6 0h1v1H6z"/></svg></button><button class="navlink" style="left:calc(306 * var(--s));top:calc(30 * var(--s))">Practice<svg class="chev" viewBox="0 0 7 4" aria-hidden="true"><path d="M0 0h1v1H0zM1 1h1v1H1zM2 2h1v1H2zM3 3h1v1H3zM4 2h1v1H4zM5 1h1v1H5zM6 0h1v1H6z"/></svg></button><button class="navlink" style="left:calc(405 * var(--s));top:calc(30 * var(--s))">Build</button><button class="navlink" style="left:calc(463 * var(--s));top:calc(30 * var(--s))">Community<svg class="chev" viewBox="0 0 7 4" aria-hidden="true"><path d="M0 0h1v1H0zM1 1h1v1H1zM2 2h1v1H2zM3 3h1v1H3zM4 2h1v1H4zM5 1h1v1H5zM6 0h1v1H6z"/></svg></button><button class="navlink" style="left:calc(582 * var(--s));top:calc(30 * var(--s))">Pricing</button>
+    <a class="btn btn-sm" href="#"><span class="bface"><span class="lbl">Start For Free</span></span><span class="bbase"></span></a>
+    </div>
+    <button class="searchbtn" aria-label="Search">
+      <svg viewBox="0 0 10 10"><path fill-rule="evenodd" d="M2 0H6V1H7V2H8V6H7V7H6V8H2V7H1V6H0V2H1V1H2ZM2 1H6V2H7V6H6V7H2V6H1V2H2ZM7 7h1v1H7zM8 8h1v1H8zM9 9h1v1H9z"/></svg>
+    </button>
+    <button class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+      <svg viewBox="0 0 10 10" aria-hidden="true">
+        <rect class="bar t" x="0" y="0" width="10" height="2"/>
+        <rect class="bar m" x="0" y="4" width="10" height="2"/>
+        <rect class="bar b" x="0" y="8" width="10" height="2"/>
+      </svg>
+    </button>
+  </header>
+
+  <section class="hero">
+    <video class="hero-photo" autoplay muted loop playsinline preload="metadata" poster="assets/images/hero-original.webp" aria-label="Pixel-art landscape background">
+        <source src="assets/videos/design-up-background.mp4" type="video/mp4">
+      </video>
+    <div class="hero-tint"></div>
+    <img class="canopy canopy-top" src="assets/images/canopy-top.webp" alt="">
+    <img class="canopy canopy-bottom" src="assets/images/canopy-bottom.webp" alt="">
+    <div class="footer-fill"></div>
+
+    <div class="stage">
+      <div class="eyebrow">
+        <span class="by">By</span>
+        <svg class="ms-mark" viewBox="0 0 54 38" role="img" aria-label="motionsites">
+          <path fill="currentColor" fill-rule="evenodd" d="M1.25 4.25 1.0 4.75 1.0 33.0 3.25 35.25 4.0 35.5 6.25 35.25 8.25 33.5 9.75 30.5 12.75 26.0 15.75 20.5 16.5 19.75 16.75 18.75 20.5 13.0 21.75 9.75 22.5 9.25 23.25 10.0 23.25 30.5 24.5 33.5 26.5 35.75 28.25 36.75 30.5 37.25 34.5 36.75 36.25 35.75 38.75 33.0 39.75 30.75 42.75 26.25 43.75 23.75 45.0 22.5 45.5 22.5 46.0 23.25 45.75 31.5 46.0 32.75 46.75 34.0 49.0 35.5 50.5 35.5 51.75 35.0 53.75 33.0 53.75 4.5 53.25 4.5 52.25 3.0 51.5 2.5 48.75 2.25 47.75 2.75 46.25 4.25 43.75 9.0 39.0 16.5 38.75 17.5 34.0 25.0 32.5 28.25 32.0 28.25 31.25 27.5 31.5 25.0 31.25 24.75 31.25 7.25 30.25 4.5 28.75 2.5 27.0 1.25 24.75 0.5 24.5 0.0 21.75 0.0 21.5 0.5 19.25 1.25 16.0 4.5 15.75 5.5 11.25 12.5 10.75 14.0 9.75 15.0 8.75 14.75 8.75 5.5 8.0 4.0 6.0 2.25 3.5 2.25Z"/>
+        </svg>
+        <svg class="ms-word" viewBox="0 0 216 32" role="img" aria-label="motionsites">
+          <path fill="currentColor" fill-rule="evenodd" d="M199.5 9.25 197.0 11.5 196.25 13.25 196.25 15.25 197.25 17.75 199.5 19.75 210.0 23.0 211.0 24.0 211.0 25.0 210.25 26.0 209.5 26.25 198.75 26.25 197.25 27.5 197.0 28.25 197.25 29.5 198.5 30.75 199.25 31.0 209.25 31.0 211.75 30.5 213.25 29.75 215.75 27.25 215.75 22.5 212.5 19.5 205.25 17.0 203.5 16.75 201.5 15.75 201.0 14.5 201.5 13.75 202.5 13.25 212.25 13.25 213.0 13.0 214.5 11.5 214.25 9.75 212.75 8.5 202.0 8.5ZM182.5 8.5 180.25 9.0 178.0 10.0 175.0 12.75 173.0 16.5 172.75 21.0 173.0 22.75 174.0 24.5 174.0 25.25 176.75 28.5 180.25 30.5 184.75 31.0 188.25 30.25 191.75 28.0 192.75 26.0 192.25 24.5 191.0 23.5 189.75 23.5 186.25 25.75 184.75 26.25 183.25 26.25 180.0 24.75 178.25 22.75 178.25 21.75 178.75 21.25 193.25 21.25 194.0 21.0 195.0 20.0 195.5 18.75 193.75 13.75 191.0 10.75 188.0 9.0 185.75 8.5ZM178.0 17.0 180.75 14.0 184.25 13.0 186.25 13.5 187.5 14.25 189.75 16.5 190.0 17.5 189.5 18.0 188.25 18.25 187.75 18.0 180.0 18.0 179.5 18.25 178.5 18.0ZM151.5 8.5 150.25 9.25 149.75 10.5 149.75 29.0 150.0 29.75 151.0 30.75 152.5 31.0 154.0 30.0 154.75 28.0 154.5 27.75 154.75 12.75 154.25 9.75 152.75 8.5ZM131.0 9.25 129.0 11.0 127.75 13.25 127.75 15.5 129.0 18.0 130.75 19.5 133.5 20.75 135.5 21.0 136.75 21.75 138.5 22.0 141.25 23.0 142.5 24.25 142.5 24.75 141.5 26.0 140.75 26.25 130.25 26.25 128.75 27.5 128.75 29.5 129.25 30.25 130.75 31.0 140.75 31.0 144.0 30.25 146.25 28.5 147.5 26.0 147.5 23.75 146.25 21.25 143.5 19.25 140.75 18.25 139.0 18.0 137.75 17.25 135.75 17.0 133.5 16.0 132.75 15.25 132.75 14.25 134.0 13.25 144.5 13.0 145.5 12.25 146.0 11.25 145.5 9.5 144.25 8.5 133.25 8.5ZM110.5 9.75 107.25 12.75 105.5 16.5 105.5 29.25 106.75 30.75 107.5 31.0 109.0 30.75 109.75 30.0 110.25 29.0 110.5 16.75 112.5 14.25 113.75 13.5 116.0 13.0 118.75 14.25 120.0 15.5 121.0 17.75 121.0 29.0 122.25 30.75 123.75 31.0 124.75 30.5 125.5 29.75 126.0 28.5 126.0 23.0 125.75 22.75 126.0 17.5 125.25 14.5 124.5 13.25 121.5 10.25 119.25 9.0 117.5 8.5 114.0 8.5ZM90.5 8.5 86.75 9.75 83.0 13.0 81.25 16.5 81.0 21.5 82.25 25.25 85.75 29.0 88.5 30.5 93.5 31.0 95.75 30.5 98.0 29.5 101.5 26.25 102.75 24.0 103.25 22.25 103.5 18.0 103.0 16.0 101.75 13.5 98.75 10.5 96.0 9.0 94.25 8.5ZM91.5 13.0 93.0 13.0 95.0 13.75 97.25 15.75 98.25 17.5 98.25 21.75 97.75 23.0 95.25 25.5 93.25 26.25 91.0 26.25 88.75 25.25 86.25 22.25 85.5 19.75 86.0 17.5 87.0 15.75 89.0 14.0ZM75.5 8.5 74.25 9.25 73.75 11.0 73.75 28.5 74.25 30.0 75.0 30.75 76.75 31.0 77.75 30.25 78.5 28.5 78.5 10.5 77.75 9.0 76.75 8.5ZM42.5 8.5 38.25 10.0 35.0 13.0 34.0 14.5 34.0 15.25 33.0 17.25 33.0 22.25 35.0 26.5 37.0 28.5 40.5 30.5 45.25 31.0 47.75 30.5 50.0 29.5 53.0 26.75 54.75 24.0 54.75 22.75 55.5 21.0 55.5 18.75 54.5 14.75 53.5 13.0 51.25 10.75 47.25 8.75ZM43.0 13.25 45.5 13.25 47.75 14.25 50.0 16.5 50.75 19.0 50.25 22.0 49.0 24.0 47.25 25.5 45.0 26.25 43.5 26.25 40.75 25.25 39.25 24.0 37.75 21.25 38.0 17.25 40.25 14.5ZM1.5 12.75 0.75 14.25 0.75 15.0 0.0 16.0 0.0 28.75 1.5 30.75 3.25 31.0 4.75 29.75 5.0 29.0 5.0 16.5 5.75 15.0 8.25 13.0 9.75 13.0 10.75 13.5 13.0 16.0 13.25 16.75 13.25 29.5 14.5 30.75 16.0 31.0 17.75 29.5 18.0 28.25 18.0 16.0 20.0 13.75 21.75 13.0 22.5 13.0 24.0 13.75 26.0 15.75 26.0 28.75 26.25 29.5 28.0 31.0 29.25 31.0 30.5 30.0 30.75 29.5 30.75 14.75 29.75 12.5 27.25 10.0 23.75 8.5 20.5 8.5 17.75 9.5 16.0 11.0 15.0 11.0 12.25 9.0 10.25 8.5 7.75 8.5 5.75 9.0 3.75 10.25ZM152.5 1.0 151.5 1.0 150.5 1.5 149.5 3.0 149.75 5.25 151.75 6.75 153.5 6.25 154.5 5.25 154.75 4.5 154.5 2.5 154.0 1.75ZM76.0 1.0 74.75 1.5 74.0 2.25 73.5 3.25 73.5 4.5 74.75 6.25 76.25 6.75 77.5 6.25 78.75 4.75 78.75 3.25 77.25 1.25ZM163.5 0.75 162.5 1.5 162.0 2.75 162.0 7.5 161.25 8.5 157.75 8.5 156.75 9.0 156.25 9.75 156.0 11.25 156.5 12.5 157.5 13.25 161.25 13.25 162.0 14.0 162.25 14.75 162.0 15.0 162.0 28.25 162.25 29.5 163.25 30.75 165.0 31.0 166.25 30.0 166.75 29.0 166.75 14.5 167.75 13.25 171.0 13.25 172.0 12.75 172.75 11.75 172.75 10.25 171.0 8.5 168.5 8.75 167.0 7.75 166.75 7.25 166.75 2.5 166.25 1.5 165.25 0.75ZM63.5 0.5 62.0 1.25 61.5 2.25 61.25 7.75 60.5 8.5 56.5 8.75 55.25 10.25 55.25 11.5 57.0 13.25 60.5 13.25 61.5 14.5 61.5 29.25 62.5 30.75 64.25 31.0 65.75 29.75 66.25 28.5 66.25 14.0 67.0 13.25 71.0 13.0 71.75 12.25 72.0 10.0 71.0 8.75 70.25 8.5 67.25 8.75 66.5 8.0 66.0 2.25 65.0 1.0Z"/>
+        </svg>
+      </div>
+
+      <div class="title" role="img" aria-label="Level Up Your AI Design Skills">
+        <span class="title-shine"></span>
+      </div>
+
+      <p class="sub">Develop Your AI Design Skills That Stand Out.</p>
+
+      <a class="btn btn-lg" href="#"><span class="bface"><span class="lbl">Get Started</span></span><span class="bbase"></span></a>
+    </div>
+  </section>
+
+</main>
+<script>
+(function(){
+  var bar=document.querySelector('.topbar'),btn=document.querySelector('.burger');
+  if(!bar||!btn)return;
+  function set(o){bar.classList.toggle('open',o);
+    btn.setAttribute('aria-expanded',o?'true':'false');
+    btn.setAttribute('aria-label',o?'Close menu':'Open menu');}
+  btn.addEventListener('click',function(e){e.stopPropagation();set(!bar.classList.contains('open'));});
+  document.addEventListener('click',function(e){
+    if(bar.classList.contains('open')&&!bar.contains(e.target))set(false);});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&bar.classList.contains('open')){set(false);btn.focus();}});
+  addEventListener('resize',function(){if(innerWidth>900)set(false);});
+  // entrance ends here: drop the class so no animation state survives it
+  var root=document.documentElement;
+  if(root.classList.contains('entering')){
+    var done=function(){root.classList.remove('entering');};
+    if(matchMedia('(prefers-reduced-motion:reduce)').matches) done();
+    else setTimeout(done,2100);
+  }
+})();
+</script>
+</body>
+</html>

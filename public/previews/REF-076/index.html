@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-076/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Codex — Get your Codex Account</title>
+<style>
+/* ------------------------------------------------------------------
+   Fonts — Inter (variable, latin subset) embedded so the file is fully
+   self-contained and renders identically offline.
+------------------------------------------------------------------- */
+@font-face{
+  font-family:"Inter Codex";
+  src:url(asset/inter-codex.woff2) format("woff2");
+  font-weight:100 900;font-style:normal;font-display:block;
+}
+
+/* ------------------------------------------------------------------
+   Design tokens (all sampled from the reference)
+------------------------------------------------------------------- */
+:root{
+  color-scheme:dark;
+  --c-page:#000;
+  --c-frame:rgba(255,255,255,.18);         /* outer frame hairline */
+  --c-text:#fff;
+  --c-text-soft:rgba(255,255,255,.94);     /* footer body copy     */
+  --c-placeholder:#808081;
+  --c-input-bg:#000;
+  --c-input-border:rgba(255,255,255,.15);
+  --c-divider:rgba(255,255,255,.2);
+  --c-accent-top:#717efc;
+  --c-accent-bot:#5b66f6;
+  --card-border-a:rgba(103,115,240,.67);    /* card border, left    */
+  --card-border-b:rgba(103,115,240,.29);    /* card border, right   */
+  --font:"Inter Codex","Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--c-page)}
+body{
+  color:var(--c-text);font-family:var(--font);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  text-rendering:geometricPrecision;
+  font-feature-settings:"calt" 1;
+}
+h1,p,address{margin:0;font:inherit;font-style:normal}
+a{color:inherit;text-decoration:none}
+img,svg{display:block}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ------------------------------------------------------------------
+   Scaling architecture  —  "one screen, never a scrollbar"
+   ------------------------------------------------------------------
+   Every composition is authored on a fixed artboard and scaled with a
+   single fluid unit, so the whole page always fits exactly inside the
+   viewport (100dvh) — no scrolling, on any device.
+
+   DESKTOP / LANDSCAPE TABLET  (the reference composition)
+     artboard 1440 × 720 (the reference is this rendered at 1.232×)
+     --u : viewport width / 1440                 (outer gutters)
+     --v : min(width / 1240, height / 720)       (type, spacing, sizes)
+     At 2:1 the page is a pixel-exact scale of the reference.  Extra
+     height goes into the CTA card (flex-grow); extra width into the
+     gutters.  1240 (not 1440) is the narrowest width the composition
+     needs, which lets type stay larger on 16:9 / 16:10 / 4:3 screens.
+
+   COMPACT MODES  (portrait tablets, phones, landscape phones)
+     --m : min(width / --bw, height / --bh)
+     --bw × --bh is the artboard each compact layout was designed on;
+     --bh equals that layout's minimum content height, so the layout is
+     guaranteed to fit: if height is the binding axis everything scales
+     down together, if width is binding lines can only get shorter.
+     Inside a compact mode --v is simply re-pointed at --m, so every
+     component keeps one set of declarations.
+------------------------------------------------------------------- */
+html,body{height:100%;overflow:hidden;overscroll-behavior:none}
+.viewport{container-type:inline-size;height:100vh;height:100dvh}
+
+.page{
+  --bw:768;--bh:700;
+  --u:calc(100vw / 1440);
+  --v:min(calc(100vw / 1240), calc(100vh / 720));
+  --m:min(calc(100vw / var(--bw)), calc(100vh / var(--bh)), var(--mmax,100px));
+  position:relative;
+  display:flex;flex-direction:column;
+  height:100vh;height:100dvh;
+  padding:calc(62.09 * var(--v)) calc(56.6 * var(--u)) 0 calc(58.9 * var(--u));
+  border:1px solid var(--c-frame);
+  border-radius:calc(20 * var(--v));
+  /* fits by construction; if a user zooms / enlarges text, content can
+     still be reached, but no scrollbar is ever drawn */
+  overflow-x:hidden;overflow-y:auto;
+  scrollbar-width:none;-ms-overflow-style:none;
+}
+.page::-webkit-scrollbar{display:none;width:0;height:0}
+@supports (height:1dvh){
+  .page{
+    --v:min(calc(100vw / 1240), calc(100dvh / 720));
+    --m:min(calc(100vw / var(--bw)), calc(100dvh / var(--bh)), var(--mmax,100px));
+  }
+}
+@supports (width:1cqw) and (height:1dvh){
+  .page{
+    --u:calc(100cqw / 1440);
+    --v:min(calc(100cqw / 1240), calc(100dvh / 720));
+    --m:min(calc(100cqw / var(--bw)), calc(100dvh / var(--bh)), var(--mmax,100px));
+  }
+}
+
+/* ---------------------------- CTA card --------------------------- */
+.cta{
+  position:relative;isolation:isolate;
+  flex:1 1 auto;
+  min-height:calc(353.5 * var(--v) - 2px);   /* 2px give absorbs sub-pixel rounding */
+  margin-right:calc(1.5 * var(--u));
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:calc(62.5 * var(--v)) calc(24 * var(--v)) calc(77.35 * var(--v));
+  border-radius:calc(20 * var(--v));
+  background-color:rgba(255,255,255,.08);
+  -webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);
+  overflow:hidden;
+  text-align:center;
+}
+/* artwork — anchored bottom-right, inset to the measured placement,
+   shown at 80% through the frosted card fill */
+.cta::before{
+  content:"";position:absolute;z-index:-2;
+  inset:calc(2.6 * var(--v)) calc(1 * var(--v)) calc(.4 * var(--v)) 0;
+  background:url(asset/cta-background.webp) right bottom / cover no-repeat;
+  background-color:#050507;   /* matches the artwork's own black, so no seam when it doesn't fill */
+  opacity:.8;
+}
+/* glass sheen over the artwork */
+.cta::after{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:transparent;
+  border-radius:inherit;
+  pointer-events:none;
+}
+/* gradient hairline border (left → right fade) */
+.cta__border{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  border-radius:inherit;
+  padding:calc(1.5 * var(--v));
+  background:linear-gradient(90deg,var(--card-border-a) 0%,rgba(103,115,240,.68) 3%,rgba(103,115,240,.53) 32%,rgba(103,115,240,.37) 69%,rgba(103,115,240,.27) 97%,var(--card-border-b) 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+          mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+}
+
+.cta__title{
+  font-size:calc(48 * var(--v));
+  line-height:calc(56 * var(--v));
+  font-weight:580;
+  letter-spacing:calc(-1.3 * var(--v));
+  margin-right:calc(1.8 * var(--v));
+  color:var(--c-text);
+}
+.cta__lede{
+  margin-top:calc(14.1 * var(--v));
+  font-size:calc(18.16 * var(--v));
+  line-height:calc(24.2 * var(--v));
+  font-weight:400;
+  color:var(--c-text);
+}
+
+.waitlist{
+  margin-top:calc(35.15 * var(--v));
+  width:calc(598.2 * var(--v));
+  max-width:100%;
+  height:calc(60 * var(--v));
+  display:flex;align-items:center;
+  padding:calc(5 * var(--v));
+  background:var(--c-input-bg);
+  border:calc(1 * var(--v)) solid var(--c-input-border);
+  border-radius:999px;
+  box-shadow:0 0 calc(6 * var(--v)) rgba(0,0,0,.35);
+}
+.waitlist__input{
+  flex:1 1 auto;min-width:0;height:100%;
+  padding:0 calc(14 * var(--v)) calc(1.6 * var(--v)) calc(13.7 * var(--v));
+  background:transparent;border:0;outline:0;
+  color:var(--c-text);
+  font:400 calc(15.1 * var(--v))/1 var(--font);
+  letter-spacing:0;
+  border-radius:999px;
+}
+.waitlist__input::placeholder{color:var(--c-placeholder);opacity:1}
+.waitlist:focus-within{border-color:rgba(124,136,252,.55)}
+
+.btn{
+  flex:0 0 auto;
+  width:calc(170.5 * var(--v));
+  height:calc(48 * var(--v));
+  display:inline-flex;align-items:center;justify-content:center;
+  border:0;border-radius:999px;cursor:pointer;
+  font:440 calc(15.25 * var(--v))/1 var(--font);
+  padding:0 0 calc(1.6 * var(--v)) calc(.4 * var(--v));
+  color:#fff;
+  background:linear-gradient(180deg,var(--c-accent-top) 0%,#6875fa 50%,var(--c-accent-bot) 100%);
+  box-shadow:
+    inset 0 0 0 calc(1 * var(--v)) rgba(255,255,255,.14),
+    inset 0 calc(-1.5 * var(--v)) calc(2 * var(--v)) rgba(255,255,255,.22),
+    inset 0 calc(1 * var(--v)) calc(1.5 * var(--v)) rgba(255,255,255,.16);
+  transition:filter .2s ease, transform .2s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.btn:hover{filter:brightness(1.07)}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+
+/* ----------------------------- Footer ---------------------------- */
+.footer{flex:0 0 auto;display:flex;flex-direction:column;padding-left:calc(1.8 * var(--u))}
+.footer__top{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding-top:calc(62.7 * var(--v));
+}
+.brand{max-width:calc(480 * var(--v));margin-left:calc(-1.2 * var(--u))}
+.brand__logo{
+  width:calc(33.52 * var(--v));height:calc(31.86 * var(--v));
+  margin-left:calc(0 * var(--v));
+  color:#fff;
+}
+.brand__text{
+  margin-top:calc(16.4 * var(--v));
+  font-size:calc(15.4 * var(--v));
+  line-height:calc(19.25 * var(--v));
+  font-weight:400;
+  color:var(--c-text-soft);
+}
+.contact{
+  width:calc(182.7 * var(--v));
+  flex:0 0 auto;
+  padding-top:calc(2.25 * var(--v));
+  white-space:nowrap;
+}
+.contact__title{
+  font-size:calc(14 * var(--v));line-height:calc(17 * var(--v));font-weight:500;color:#fff;
+}
+.contact__phone{
+  display:block;margin-top:calc(16.85 * var(--v));
+  font-size:calc(13.5 * var(--v));line-height:calc(16 * var(--v));font-weight:400;color:var(--c-text-soft);
+}
+.contact__address{
+  margin-top:calc(19.37 * var(--v));
+  font-size:calc(13.3 * var(--v));line-height:calc(15.3 * var(--v));font-weight:400;color:var(--c-text-soft);
+}
+.footer__rule{
+  height:0;border:0;margin:calc(40.2 * var(--v)) 0 0;
+  border-top:max(1px, calc(1 * var(--v))) solid var(--c-divider);
+  margin-right:calc(-.4 * var(--u));
+}
+.footer__bottom{
+  position:relative;
+  display:flex;justify-content:space-between;align-items:flex-start;
+  height:calc(73.29 * var(--v));
+  flex:0 1 auto;min-height:0;   /* absorbs sub-pixel rounding so the frame never exceeds the viewport */
+  padding-top:calc(24.7 * var(--v));
+  white-space:nowrap;
+}
+.copyright{font-size:calc(14 * var(--v));line-height:calc(17 * var(--v));font-weight:500;color:#fff}
+.mail{
+  margin-top:calc(-3.4 * var(--v));margin-right:calc(.14 * var(--u));
+  font-size:calc(13.75 * var(--v));line-height:calc(17 * var(--v));font-weight:520;color:#fff;
+}
+.mail a:hover,.contact a:hover{text-decoration:underline;text-underline-offset:.2em}
+
+/* line breaks that exist only in the large-screen composition */
+br.lg{display:inline}
+
+/* ==================================================================
+   COMPACT MODES
+   Desktop composition is used when width ≥ 1200, or when the screen is
+   landscape with width ≥ 900 and height ≥ 560.  Everything else is
+   compact (the selector below is its exact complement):
+     portrait-ish (aspect ≤ 6:5)  → tablet (≥640 wide) or phone layout
+     landscape and short/narrow   → landscape phone layout
+================================================================== */
+@media (max-width:1199.98px) and (max-aspect-ratio:6/5), (max-width:899.98px), (max-height:559.98px){
+  .page{--v:var(--m);border-radius:calc(20 * var(--m))}
+  .cta{flex:1 1 auto;min-height:0;margin-right:0;border-radius:calc(18 * var(--m))}
+  .cta::before{inset:0;background-size:max(100%, calc(1000 * var(--m))) auto;background-position:right bottom}
+  .cta__title{margin-right:0}
+  .footer{padding-left:0}
+  .brand{margin-left:0}
+  .brand__text br.lg{display:none}
+  .contact{width:auto}
+  .footer__rule{margin-right:0}
+  .footer__bottom{height:auto;flex:0 0 auto;gap:calc(16 * var(--m))}
+  .mail{margin:0}
+}
+
+/* ---------- Portrait tablet · artboard 768 × --bh ---------------- */
+@media (min-width:640px) and (max-width:1199.98px) and (max-aspect-ratio:6/5){
+  .page{--bw:768;--bh:612;padding:calc(32 * var(--m)) calc(32 * var(--m)) 0}
+  .cta{padding:calc(48 * var(--m)) calc(40 * var(--m))}
+  .footer__top{padding-top:calc(40 * var(--m));gap:calc(40 * var(--m))}
+  .brand{max-width:calc(430 * var(--m))}
+  .footer__rule{margin-top:calc(36 * var(--m))}
+  .footer__bottom{padding:calc(22 * var(--m)) 0 calc(26 * var(--m))}
+}
+
+/* ---------- Phone portrait · artboard 390 × --bh ----------------- */
+@media (max-width:639.98px) and (max-aspect-ratio:6/5){
+  .page{--bw:390;--bh:655;--mmax:1.25px;padding:calc(14 * var(--m)) calc(14 * var(--m)) 0;border-radius:calc(18 * var(--m))}
+  .cta{padding:calc(34 * var(--m)) calc(18 * var(--m)) calc(26 * var(--m));border-radius:calc(16 * var(--m))}
+  .cta::before{background-size:max(100%, calc(760 * var(--m))) auto}
+  .cta__border{padding:max(1px, calc(1.25 * var(--m)))}
+  .cta__title{font-size:calc(30 * var(--m));line-height:calc(34 * var(--m));letter-spacing:calc(-.6 * var(--m))}
+  .cta__lede{margin-top:calc(12 * var(--m));font-size:calc(15 * var(--m));line-height:calc(21.5 * var(--m));max-width:calc(320 * var(--m))}
+  .cta__lede br.lg{display:none}
+  .waitlist{
+    flex-direction:column;width:100%;height:auto;margin-top:calc(24 * var(--m));
+    gap:calc(5 * var(--m));padding:calc(5 * var(--m));border-radius:calc(26 * var(--m));
+  }
+  .waitlist__input{
+    flex:0 0 auto;width:100%;height:calc(46 * var(--m));
+    padding:0 calc(12 * var(--m));font-size:calc(14.5 * var(--m));
+    text-align:center;text-overflow:ellipsis;
+  }
+  .btn{width:100%;height:calc(46 * var(--m));font-size:calc(15.25 * var(--m));padding:0 0 calc(1 * var(--m))}
+  .footer__top{flex-direction:column;padding-top:calc(24 * var(--m));gap:calc(20 * var(--m))}
+  .brand{max-width:none}
+  .brand__logo{width:calc(28 * var(--m));height:calc(26.6 * var(--m))}
+  .brand__text{margin-top:calc(12 * var(--m));font-size:calc(13.5 * var(--m));line-height:calc(19.5 * var(--m))}
+  .contact{display:grid;grid-template-columns:auto 1fr;column-gap:calc(28 * var(--m));row-gap:calc(8 * var(--m));padding-top:0}
+  .contact__title{grid-column:1 / -1;font-size:calc(13.5 * var(--m));line-height:calc(16 * var(--m))}
+  .contact__phone,.contact__address{margin:0;font-size:calc(13 * var(--m));line-height:calc(16 * var(--m))}
+  .footer__rule{margin-top:calc(20 * var(--m))}
+  .footer__bottom{flex-direction:column-reverse;align-items:flex-start;gap:calc(6 * var(--m));padding:calc(14 * var(--m)) 0 calc(16 * var(--m));white-space:normal}
+  .copyright,.mail{font-size:calc(12.5 * var(--m));line-height:calc(16 * var(--m))}
+}
+
+/* ---------- Landscape phone / short window · artboard 700 × 390 -- */
+@media (max-width:899.98px) and (min-aspect-ratio:6/5), (max-height:559.98px) and (min-aspect-ratio:6/5){
+  .page{--bw:700;--bh:390;--mmax:1.6px;flex-direction:row;gap:calc(20 * var(--m));padding:calc(12 * var(--m));border-radius:calc(18 * var(--m))}
+  .cta{flex:1.45 1 0;min-width:0;padding:calc(22 * var(--m)) calc(24 * var(--m));border-radius:calc(16 * var(--m))}
+  .cta::before{background-size:max(100%, calc(900 * var(--m))) auto}
+  .cta__border{padding:max(1px, calc(1.25 * var(--m)))}
+  .cta__title{font-size:calc(30 * var(--m));line-height:calc(35 * var(--m));letter-spacing:calc(-.7 * var(--m))}
+  .cta__lede{margin-top:calc(10 * var(--m));font-size:calc(14 * var(--m));line-height:calc(20 * var(--m));max-width:calc(400 * var(--m))}
+  .cta__lede br.lg{display:none}
+  .waitlist{margin-top:calc(22 * var(--m));width:100%;max-width:calc(440 * var(--m));height:calc(48 * var(--m));padding:calc(4 * var(--m))}
+  .waitlist__input{font-size:calc(13.5 * var(--m));padding:0 calc(10 * var(--m)) calc(1 * var(--m)) calc(14 * var(--m));text-overflow:ellipsis}
+  .btn{width:calc(138 * var(--m));height:calc(38 * var(--m));font-size:calc(13.5 * var(--m));padding:0 0 calc(1 * var(--m))}
+  .footer{flex:1 1 0;min-width:0;padding:calc(6 * var(--m)) calc(4 * var(--m)) 0 0}
+  .footer__top{flex-direction:column;padding-top:0;gap:calc(16 * var(--m))}
+  .brand{max-width:none}
+  .brand__logo{width:calc(26 * var(--m));height:calc(24.7 * var(--m))}
+  .brand__text{margin-top:calc(10 * var(--m));font-size:calc(12.5 * var(--m));line-height:calc(18 * var(--m))}
+  .contact{display:flex;flex-direction:column;gap:calc(5 * var(--m));padding-top:0}
+  .contact__title{font-size:calc(12.5 * var(--m));line-height:calc(15 * var(--m))}
+  .contact__phone,.contact__address{margin:0;font-size:calc(12 * var(--m));line-height:calc(15 * var(--m))}
+  .footer__rule{margin-top:auto}
+  .footer__bottom{flex-direction:column-reverse;align-items:flex-start;gap:calc(4 * var(--m));padding:calc(12 * var(--m)) 0 calc(2 * var(--m));white-space:normal}
+  .copyright,.mail{font-size:calc(11.5 * var(--m));line-height:calc(15 * var(--m))}
+}
+
+/* One opening sequence. The card artwork and page frame stay fixed; all
+   animated properties return to their authored values when each cue ends. */
+@media (prefers-reduced-motion:no-preference){
+  .cta__title{animation:title-enter .82s cubic-bezier(.2,.85,.2,1) .12s backwards}
+  .cta__lede{animation:copy-enter .66s cubic-bezier(.22,1,.36,1) .53s backwards}
+  .waitlist{animation:form-enter .72s cubic-bezier(.22,1,.36,1) .79s backwards}
+  .waitlist .btn{animation:button-enter .52s cubic-bezier(.22,1,.36,1) 1.07s backwards}
+  .brand__logo{animation:mark-enter .56s cubic-bezier(.22,1,.36,1) .91s backwards}
+  .brand__text{animation:copy-enter .62s cubic-bezier(.22,1,.36,1) 1.08s backwards}
+  .contact{animation:copy-enter .62s cubic-bezier(.22,1,.36,1) 1.22s backwards}
+  .footer__rule{animation:rule-enter .64s cubic-bezier(.22,1,.36,1) 1.31s backwards}
+  .footer__bottom{animation:copy-enter .56s cubic-bezier(.22,1,.36,1) 1.49s backwards}
+}
+@keyframes title-enter{
+  from{clip-path:inset(0 0 100% 0);transform:translateY(calc(14 * var(--v)))}
+  to{clip-path:inset(0 0 0 0);transform:none}
+}
+@keyframes copy-enter{
+  from{opacity:0;transform:translateY(calc(7 * var(--v)))}
+  to{opacity:1;transform:none}
+}
+@keyframes form-enter{
+  from{opacity:0;transform:translateY(calc(8 * var(--v))) scale(.985)}
+  to{opacity:1;transform:none}
+}
+@keyframes button-enter{
+  from{clip-path:inset(0 100% 0 0 round 999px)}
+  to{clip-path:inset(0 0 0 0 round 999px)}
+}
+@keyframes mark-enter{
+  from{opacity:0;transform:translateY(calc(5 * var(--v)))}
+  to{opacity:1;transform:none}
+}
+@keyframes rule-enter{
+  from{opacity:0;transform:scaleX(0);transform-origin:left center}
+  to{opacity:1;transform:none;transform-origin:left center}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="viewport">
+  <div class="page">
+
+    <section class="cta" aria-labelledby="cta-title">
+      <span class="cta__border" aria-hidden="true"></span>
+      <h1 class="cta__title" id="cta-title">Get your Codex Account</h1>
+      <p class="cta__lede">Join 200+ businesses like yours, powering their global<br class="lg"> transactions with Codex.</p>
+
+      <form class="waitlist" action="#" method="post" novalidate onsubmit="event.preventDefault()">
+        <label class="sr-only" for="waitlist-email">Email address</label>
+        <input class="waitlist__input" id="waitlist-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="Enter your email to join the waitlist" required>
+        <button class="btn" type="submit">Get Free Access</button>
+      </form>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__top">
+        <div class="brand">
+          <svg class="brand__logo" viewBox="0 0 41.3 39.25" fill="currentColor" role="img" aria-label="Codex">
+            <path d="M12.2 0H22.8A18.5 18.5 0 0 1 41.3 18.5V20.75A18.5 18.5 0 0 1 22.8 39.25H12.2V33.1H21.05V6.15H12.2Z"/>
+            <rect x="6" y="6.1" width="6.3" height="6.25"/>
+            <rect x="0" y="12.2" width="6.2" height="15.1"/>
+            <rect x="6" y="27.1" width="6.3" height="6.1"/>
+          </svg>
+          <p class="brand__text">Get paid for free from countries in the EU, Asia, and the US.<br class="lg"> There are no deposit charges. Create an account in your<br class="lg"> preferred currency and share the details to get paid. We make it<br class="lg"> easy to go international.</p>
+        </div>
+
+        <address class="contact">
+          <p class="contact__title">Contact Us</p>
+          <a class="contact__phone" href="tel:+2348020512538">+234(0)8020512538</a>
+          <p class="contact__address">Codex Technologies PBC, Inc<br>50 N 5th Street, Apt e20<br>Brooklyn, NYC, 11249, USA</p>
+        </address>
+      </div>
+
+      <hr class="footer__rule">
+
+      <div class="footer__bottom">
+        <p class="copyright">Copyright © Codex Chain. 2025. All Rights Reserved.</p>
+        <p class="mail">Email us: <a href="mailto:hello@codex.xyz">hello@codex.xyz</a></p>
+      </div>
+    </footer>
+
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="/previews/REF-090/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>framefutures — Digital progress made simple</title>
+<style>
+  /* ---------- Embedded type (offline) ---------- */
+  @font-face{font-family:"Urbanist";src:url(assets/font-01-7981ef90c2.woff2) format("woff2");font-weight:100 900;font-display:block}
+  @font-face{font-family:"Inter";src:url(assets/font-02-3100e775e8.woff2) format("woff2");font-weight:100 900;font-display:block}
+
+  /* ---------- Tokens ---------- */
+  :root{
+    --ink:#ffffff;            /* headline / brand            */
+    --ink-nav:#fafafa;        /* nav + button label          */
+    --ink-lede:#c3cbd9;       /* body copy                   */
+    --ink-mark:#cfd6e2;       /* client wordmarks            */
+    --ink-icon:#caced9;       /* client icons                */
+    --ink-kicker:#abb5c3;     /* "Our work story"            */
+    --ink-title:#f6f5f5;      /* story title                 */
+    --ember:#c8260f;          /* button stroke               */
+    --ember-arrow:#dc6c52;    /* button arrow                */
+    --glass:rgba(255,255,255,.10);
+    --glass-line:rgba(255,255,255,.28);
+    --display:"Urbanist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --text:"Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+    /* Reference canvas = 1280 x 800.
+       --u : 1 reference px, scaled so the UI always FITS the viewport.
+       --c : 1 reference px, scaled so the artwork always COVERS the viewport. */
+    --vh: 100vh;
+    --u: min(calc(100vw / 1280), calc(var(--vh) / 800));
+    --c: max(calc(100vw / 1280), calc(var(--vh) / 800));
+    /* small UI text never drops below 80% of its reference size (fluid floor) */
+    --ut: max(var(--u), .8px);
+  }
+  @supports (height:100dvh){ :root{ --vh:100dvh } }
+
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;background:#000;color:var(--ink)}
+  body{font-family:var(--text);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+  a{color:inherit;text-decoration:none}
+  ul{list-style:none;margin:0;padding:0}
+  h1,p{margin:0;font-weight:inherit}
+  img,svg{display:block}
+  :focus-visible{outline:2px solid #ff6a45;outline-offset:3px;border-radius:4px}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+  /* =========================================================
+     MOBILE (base, < 480px)
+     One semantic tree; the hero becomes a full-height grid:
+       top bar / copy / artwork window / client marks / story
+     ========================================================= */
+  .hero{
+    --pad:max(20px, env(safe-area-inset-left), env(safe-area-inset-right));
+    --k:.72;                               /* client-mark scale vs desktop */
+    --artw:230vw;                          /* rendered artwork width */
+    position:relative;isolation:isolate;
+    min-height:100vh;min-height:100svh;
+    display:grid;grid-template-columns:minmax(0,1fr);
+    grid-template-rows:auto auto 1fr auto auto;
+    grid-template-areas:"top" "copy" "space" "clients" "story";
+    padding:max(18px, env(safe-area-inset-top)) var(--pad) max(26px, env(safe-area-inset-bottom));
+  }
+  @supports (min-height:100dvh){ .hero{min-height:100dvh} }
+
+  /* Artwork: same asset, anchored bottom-right; its black field melts into
+     the page and the top edge is feathered so the ribbon never hard-cuts. */
+  .stage{position:absolute;inset:0;z-index:-1;pointer-events:none;
+    --ih:calc(var(--artw) * .6011);      /* rendered artwork height (972/1617) */
+    -webkit-mask-image:linear-gradient(to top, #000 0, #000 calc(var(--ih) * .6), rgba(0,0,0,.35) calc(var(--ih) * .82), transparent var(--ih));
+            mask-image:linear-gradient(to top, #000 0, #000 calc(var(--ih) * .6), rgba(0,0,0,.35) calc(var(--ih) * .82), transparent var(--ih))}
+  /* painted as a background inside the hero box, so the bleed is cropped by
+     background painting itself — nothing ever extends past the viewport */
+  .art{position:absolute;inset:0;background:url(assets/image-03-66219a25e1.webp) 0 0/100% 100% no-repeat;
+    background-size:var(--artw) auto;background-position:right bottom}
+  /* legibility veil over the artwork behind the headline (compact layouts only) */
+  .hero::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+    background:
+      linear-gradient(to bottom, rgba(0,0,0,.82) 0, rgba(0,0,0,.62) 38%, rgba(0,0,0,0) 62%),
+      linear-gradient(to top, rgba(0,0,0,.66) 0, rgba(0,0,0,.4) 20%, rgba(0,0,0,0) 40%)}
+
+  /* ---- top bar: logo + menu button; links + CTA live in the menu panel ---- */
+  .topbar{grid-area:top;position:relative;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{font-family:var(--display);font-weight:400;font-size:31.5px;letter-spacing:-.03em;line-height:1;color:var(--ink)}
+
+  .toggle{display:inline-grid;place-items:center;flex:none;width:44px;height:44px;padding:0;border-radius:999px;
+    border:1.5px solid var(--ember);background:var(--glass);color:var(--ink-nav);cursor:pointer;
+    -webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);
+    transition:background-color .25s, box-shadow .25s}
+  .burger{position:relative;width:16px;height:10px}
+  .burger i{position:absolute;left:0;width:100%;height:1.5px;border-radius:1px;background:currentColor;transition:transform .3s cubic-bezier(.2,.7,.2,1), top .3s cubic-bezier(.2,.7,.2,1)}
+  .burger i:first-child{top:1px}
+  .burger i:last-child{top:7.5px}
+  .is-open .burger i{top:4.25px}
+  .is-open .burger i:first-child{transform:rotate(45deg)}
+  .is-open .burger i:last-child{transform:rotate(-45deg)}
+
+  /* menu panel — same glass language as the CTA */
+  .nav{position:absolute;top:calc(100% + 12px);left:0;right:0;z-index:6;
+    display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:8px;
+    border-radius:20px;border:1px solid rgba(255,255,255,.12);
+    background:rgba(18,18,18,.72);-webkit-backdrop-filter:blur(22px) saturate(150%);backdrop-filter:blur(22px) saturate(150%);
+    box-shadow:0 24px 60px rgba(0,0,0,.55);
+    opacity:0;visibility:hidden;transform:translateY(-6px);
+    transition:opacity .25s ease, transform .3s cubic-bezier(.2,.7,.2,1), visibility 0s linear .3s}
+  .is-open .nav{opacity:1;visibility:visible;transform:none;transition:opacity .25s ease, transform .3s cubic-bezier(.2,.7,.2,1)}
+  .menu{display:flex;flex-direction:column;align-self:stretch}
+  .menu a{display:block;padding:14px 14px;border-radius:12px;font-family:var(--text);font-weight:400;font-size:17px;line-height:1.2;letter-spacing:-.01em;color:var(--ink-nav);white-space:nowrap;transition:color .2s, background-color .2s}
+
+  .cta{display:inline-flex;align-items:center;justify-content:flex-start;gap:10px;
+    width:147px;height:41px;padding:0 0 0 17px;border-radius:999px;
+    border:1.5px solid var(--ember);background:var(--glass);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);
+    color:var(--ink-nav);font:400 15.5px/1 var(--text);letter-spacing:-.01em;white-space:nowrap;
+    transition:background-color .25s, box-shadow .25s}
+  .cta svg{width:14px;height:11px;flex:none}
+  .nav .cta{margin:4px 6px 8px}
+
+  @media (hover:hover){
+    .menu a:hover{color:#fff}
+    .cta:hover,.toggle:hover{background:rgba(255,255,255,.16);box-shadow:0 0 0 4px rgba(200,38,15,.18)}
+    .story:hover .title{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+  }
+
+  /* ---- copy ---- */
+  .copy{grid-area:copy;margin-top:clamp(24px, 6svh, 64px)}
+  .headline{font-family:var(--display);font-weight:400;color:var(--ink);
+    font-size:clamp(38px, 6vw + 19px, 48px);line-height:1.05;letter-spacing:-.045em;
+    /* Measure between "refined by people" (6.94em) and "made simple, refined"
+       (8.32em): greedy wrapping then always yields the desktop phrasing
+       Digital progress / made simple, / refined by people / for good. */
+    max-width:7.6em}
+  .headline .ln,.lede .ln{display:inline}
+  .lede{margin-top:clamp(16px, 2.6svh, 24px);max-width:34em;color:var(--ink-lede);
+    font-size:16px;line-height:1.5;letter-spacing:-.015em;text-wrap:pretty}
+
+  .spacer{grid-area:space;min-height:clamp(24px, 12svh - 24px, 300px)}
+
+  /* ---- client marks: same marks, same per-brand type, compact grid ---- */
+  .clients-wrap{grid-area:clients}
+  /* at most three per row (3×2), dropping to two per row (2×3) when a third won't fit */
+  .clients{display:grid;grid-template-columns:repeat(auto-fit, minmax(max(100px, calc((100% - 20px) / 3)), 1fr));gap:18px 10px}
+  .clients li{display:flex;align-items:center;gap:calc(var(--k) * 12px);min-width:0;color:var(--ink-mark)}
+  .clients svg{flex:none;width:calc(var(--k) * var(--iw) * 1px);height:calc(var(--k) * var(--ih) * 1px);
+    margin-inline:calc(var(--k) * (34 - var(--iw)) * .5px);color:var(--ink-icon)}
+  .clients span{font-family:var(--text);font-size:calc(var(--k) * var(--fs) * 1px);font-weight:var(--fw);letter-spacing:var(--ls);line-height:1;white-space:nowrap}
+  .clients li:nth-child(1){--fs:19.5;--fw:500;--ls:-0.01em;--iw:31;--ih:30}
+  .clients li:nth-child(2){--fs:20;--fw:500;--ls:0.01em;--iw:25;--ih:27}
+  .clients li:nth-child(3){--fs:18.75;--fw:400;--ls:-0.02em;--iw:31;--ih:22}
+  .clients li:nth-child(4){--fs:22.5;--fw:600;--ls:-0.01em;--iw:26;--ih:27}
+  .clients li:nth-child(5){--fs:18.75;--fw:400;--ls:0.01em;--iw:28;--ih:28}
+  .clients li:nth-child(6){--fs:21.5;--fw:600;--ls:0em;--iw:33;--ih:23}
+
+  /* ---- work story: thumbnail beside its text, as on desktop ---- */
+  .story{grid-area:story;margin-top:clamp(18px, 3svh, 26px);display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto auto;
+    column-gap:14px;row-gap:7px;align-items:center;justify-self:start;max-width:520px}
+  .story img{grid-row:1 / span 2;width:103px;height:68px;object-fit:cover;border-radius:8px;border:1px solid var(--glass-line);background:#111}
+  .story .kicker{align-self:end;font:500 13px/1 var(--text);letter-spacing:.026em;text-transform:uppercase;color:var(--ink-kicker)}
+  .story .title{align-self:start;font:400 16px/1.35 var(--text);letter-spacing:-.02em;color:var(--ink-title);text-wrap:balance}
+
+  /* =========================================================
+     TABLET (≥ 480px, until the desktop canvas can take over)
+     480px = where this architecture really stops holding: below it the
+     three desktop-length lines would push the lede under 16px and the
+     headline under ~40px, and the story text column gets too narrow.
+     Desktop's composition, re-flowed: headline keeps its three
+     desktop lines, client marks keep their vertical column on
+     the right, the work story sits bottom-left beside them.
+     ========================================================= */
+  @media (min-width:480px){
+    .hero{--pad:max(clamp(28px, 5vw, 48px), env(safe-area-inset-left), env(safe-area-inset-right));--k:.82;--artw:205vw;
+      grid-template-columns:minmax(0,1fr) auto;
+      grid-template-rows:auto auto 1fr auto;
+      grid-template-areas:"top top" "copy copy" "space space" "story clients";
+      column-gap:clamp(24px, 5vw, 64px);
+      padding-top:max(24px, env(safe-area-inset-top));padding-bottom:max(36px, env(safe-area-inset-bottom))}
+    .nav{left:auto;width:300px}
+    .copy{margin-top:clamp(32px, 7svh, 112px)}
+    /* 10.7em = widest desktop line ("simple, refined by people") + optical slack */
+    .headline{max-width:none;font-size:min(84px, calc((100vw - 2 * var(--pad)) / 10.7), max(44px, calc(11svh + 10px)));line-height:1.0476;text-wrap:nowrap}
+    .headline .ln,.lede .ln{display:block}
+    .lede{margin-top:clamp(18px, 2.4svh, 26px);max-width:none;font-size:min(20.25px, calc((100vw - 2 * var(--pad)) / 26.5));line-height:1.48;letter-spacing:-.02em;text-wrap:nowrap}
+    .spacer{min-height:clamp(32px, 6svh, 360px)}
+    .clients-wrap{align-self:end}
+    .clients{display:flex;flex-direction:column;gap:clamp(14px, 2.6svh, calc(var(--k) * 32px))}
+    .story{align-self:end;margin-top:0}
+    .story .title{font-size:16.3px}
+  }
+
+  /* Short landscape phones (wide but < 540 tall): the client column would
+     be taller than the screen, so the marks run in one row and the story
+     sits beneath them. */
+  @media (min-width:560px) and (max-height:539px){
+    .hero{--k:.72;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto 1fr auto auto;
+      grid-template-areas:"top" "copy" "space" "clients" "story"}
+    .spacer{min-height:32px}
+    .hero::after{background:
+      linear-gradient(to bottom, rgba(0,0,0,.82) 0, rgba(0,0,0,.66) 62%, rgba(0,0,0,0) 82%),
+      linear-gradient(to top, rgba(0,0,0,.66) 0, rgba(0,0,0,0) 30%)}
+    .clients{display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between;gap:14px 20px}
+    .story{margin-top:18px}
+  }
+
+  /* =========================================================
+     TABLET — LANDSCAPE / NEAR-SQUARE (≥ 560 wide, ≥ 540 tall, w/h ≥ 5/6)
+     The desktop composition in flow layout: copy left, client
+     column right, both centred in the remaining height; story
+     along the bottom at its desktop inset; artwork placed with
+     the exact desktop transform, so crossing into the desktop
+     canvas at 4:3 is seamless.
+     ========================================================= */
+  @media (min-width:560px) and (min-aspect-ratio:5/6) and (min-height:540px){
+    .hero{--gap:clamp(32px, 5vw, 64px);--col:calc(100vw - 2 * var(--pad) - var(--gap) - 120px);
+      grid-template-rows:auto 1fr auto;
+      grid-template-areas:"top top" "copy clients" "story story";
+      column-gap:var(--gap)}
+    .hero::after{background:linear-gradient(90deg, rgba(0,0,0,.72) 0, rgba(0,0,0,.5) 50%, rgba(0,0,0,0) 76%)}
+    /* same geometry as the desktop canvas artwork, expressed as a background */
+    .stage{-webkit-mask-image:none;mask-image:none}
+    .art{background-size:calc(var(--c) * 1366.4) calc(var(--c) * 821.4);
+      background-position:calc(100% + var(--c) * 9.4) calc(50% - var(--c) * 10.3)}
+    .copy,.clients-wrap{align-self:center;margin:0}
+    .spacer{display:none}
+    .headline{font-size:max(34px, min(84px, calc(var(--col) / 10.7)));text-wrap:balance}
+    .lede{font-size:max(14px, min(20.25px, calc(var(--col) / 26.5)));text-wrap:pretty}
+    .story{justify-self:start;max-width:none;margin-left:max(0px, calc(26.5vw - var(--pad)))}
+  }
+
+  /* =========================================================
+     INLINE NAVIGATION (≥ 900px wide): the five links + CTA fit
+     on one row, so the burger is only used below this width.
+     ========================================================= */
+  @media (min-width:900px){
+    .toggle{display:none}
+    .topbar{gap:24px}
+    .nav{position:static;flex:1;display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:24px;
+      width:auto;padding:0;border:0;border-radius:0;background:none;box-shadow:none;
+      -webkit-backdrop-filter:none;backdrop-filter:none;opacity:1;visibility:visible;transform:none;transition:none}
+    .menu{flex-direction:row;align-self:auto;margin-inline:auto;gap:clamp(28px, 3.4vw, 44px)}
+    .menu a{position:relative;padding:0;border-radius:0;font-size:15px;line-height:1}
+    .menu a::after{content:"";position:absolute;inset:-12px -10px}
+    .nav .cta{margin:0}
+  }
+
+  /* =========================================================
+     CANVAS layout — desktop / landscape. Every value below is
+     the measured reference value (px @1280x800) multiplied by
+     --u. Elements are anchored to the edge they hug in the
+     reference (top bar → top, copy & logos → vertical centre,
+     story → bottom, logos & CTA → right), so the composition
+     fills ANY viewport with no letterboxing and is a 1:1 match
+     at 1280 x 800.
+     ========================================================= */
+  @media (min-width:900px) and (min-aspect-ratio:4/3) and (min-height:540px){
+    .hero{height:var(--vh);min-height:0;padding:0;display:block;overflow:hidden}
+    .hero::after{content:none}
+    .stage{inset:auto;right:0;top:50%;bottom:auto;transform:translateY(-50%);
+      width:calc(var(--c) * 1280);height:calc(var(--c) * 800);aspect-ratio:auto;overflow:hidden;
+      -webkit-mask-image:none;mask-image:none}
+    .art{inset:auto;left:calc(var(--c) * -77);top:calc(var(--c) * -21);
+      width:calc(var(--c) * 1366.4);height:calc(var(--c) * 821.4);background-size:100% 100%;background-position:0 0}
+    .topbar{position:static;display:block}
+    .brand,.menu li,.cta,.headline,.lede,.clients li,.story,.clients svg,.clients span,.story .kicker,.story .title{position:absolute}
+    .brand{line-height:1;margin:0}
+    /* the menu panel dissolves back into the inline desktop navigation */
+    .nav{position:static;display:block;width:auto;padding:0;border:0;border-radius:0;background:none;box-shadow:none;
+      -webkit-backdrop-filter:none;backdrop-filter:none;opacity:1;visibility:visible;transform:none;transition:none}
+    .menu{display:block}
+    .menu a{display:block;position:relative;padding:0;border-radius:0;line-height:1}
+    .cta{display:flex;justify-content:flex-start;padding-right:0;border-style:solid;line-height:1}
+    .nav .cta{margin:0}
+    /* invisible touch/click padding on the small nav links — no visual change */
+    .menu a::after{content:"";position:absolute;inset:-12px -10px}
+    .toggle{display:none}
+    .copy{margin:0;position:static}
+    .clients{position:static}
+    .headline{white-space:nowrap}
+    .headline .ln,.lede .ln{display:block}
+    .lede{margin:0;max-width:none;white-space:nowrap}
+    .spacer{display:none}
+    .clients{display:block;gap:0}
+    .clients li{display:block;width:0;height:0}
+    .clients svg{margin:0}
+    .clients span{line-height:1;overflow:visible}
+    .story{display:block;margin:0;padding:0;border:0;border-radius:0;background:none;max-width:none}
+    .story .kicker,.story .title{line-height:1;white-space:nowrap}
+    .story .title{font-weight:400}
+    .brand{left:calc(var(--u) * 48);top:calc(var(--u) * 25);font-size:calc(var(--u) * 31.5);letter-spacing:-0.03em}
+    .menu li:nth-child(1){left:calc(50% + var(--u) * -237);top:calc(var(--u) * 33.5);}
+    .menu li:nth-child(2){left:calc(50% + var(--u) * -132);top:calc(var(--u) * 33.5);}
+    .menu li:nth-child(3){left:calc(50% + var(--u) * -20);top:calc(var(--u) * 33.5);}
+    .menu li:nth-child(4){left:calc(50% + var(--u) * 60);top:calc(var(--u) * 33.5);}
+    .menu li:nth-child(5){left:calc(50% + var(--u) * 168.5);top:calc(var(--u) * 33.5);}
+    .menu a{font-size:calc(var(--ut) * 15);letter-spacing:-0.01em}
+    .cta{left:calc(100% - var(--u) * 197);top:calc(var(--u) * 21);width:calc(var(--u) * 147);height:calc(var(--u) * 41);font-size:calc(var(--ut) * 15.5);letter-spacing:-0.01em;padding-left:calc(var(--u) * 17);border-width:calc(var(--u) * 1.5);gap:calc(var(--u) * 10)}
+    .cta svg{width:calc(var(--u) * 14);height:calc(var(--u) * 11);margin-top:calc(var(--u) * 0)}
+    .headline{left:calc(var(--u) * 41);top:calc(50% + var(--u) * -188);font-size:calc(var(--u) * 84);line-height:calc(var(--u) * 88);letter-spacing:-0.045em}
+    .headline .ln:nth-child(1){margin-left:calc(var(--u) * 0);letter-spacing:-0.048em}
+    .headline .ln:nth-child(2){margin-left:calc(var(--u) * 0);letter-spacing:-0.042em}
+    .headline .ln:nth-child(3){margin-left:calc(var(--u) * 0);letter-spacing:-0.045em}
+    .lede{left:calc(var(--u) * 43);top:calc(50% + var(--u) * 97);font-size:calc(var(--ut) * 20.25);line-height:calc(var(--ut) * 30);letter-spacing:-0.02em}
+    .clients li:nth-child(1){left:calc(100% - var(--u) * 176);top:calc(50% + var(--u) * -171);}
+    .clients li:nth-child(1) svg{left:calc(var(--u) * 3);top:calc(var(--u) * 0);width:calc(var(--u) * 31);height:calc(var(--u) * 30)}
+    .clients li:nth-child(1) span{left:calc(var(--u) * 45);top:calc(var(--u) * 4.5);font-size:calc(var(--u) * 19.5);font-weight:500;letter-spacing:-0.01em}
+    .clients li:nth-child(2){left:calc(100% - var(--u) * 176);top:calc(50% + var(--u) * -107);}
+    .clients li:nth-child(2) svg{left:calc(var(--u) * 12);top:calc(var(--u) * 0);width:calc(var(--u) * 25);height:calc(var(--u) * 27)}
+    .clients li:nth-child(2) span{left:calc(var(--u) * 50);top:calc(var(--u) * 3.5);font-size:calc(var(--u) * 20);font-weight:500;letter-spacing:0.01em}
+    .clients li:nth-child(3){left:calc(100% - var(--u) * 176);top:calc(50% + var(--u) * -42);}
+    .clients li:nth-child(3) svg{left:calc(var(--u) * 3);top:calc(var(--u) * 0);width:calc(var(--u) * 31);height:calc(var(--u) * 22)}
+    .clients li:nth-child(3) span{left:calc(var(--u) * 46);top:calc(var(--u) * 3);font-size:calc(var(--u) * 18.75);font-weight:400;letter-spacing:-0.02em}
+    .clients li:nth-child(4){left:calc(100% - var(--u) * 176);top:calc(50% + var(--u) * 19);}
+    .clients li:nth-child(4) svg{left:calc(var(--u) * 7);top:calc(var(--u) * 0);width:calc(var(--u) * 26);height:calc(var(--u) * 27)}
+    .clients li:nth-child(4) span{left:calc(var(--u) * 47);top:calc(var(--u) * 3);font-size:calc(var(--u) * 22.5);font-weight:600;letter-spacing:-0.01em}
+    .clients li:nth-child(5){left:calc(100% - var(--u) * 176);top:calc(50% + var(--u) * 80);}
+    .clients li:nth-child(5) svg{left:calc(var(--u) * 6);top:calc(var(--u) * 0);width:calc(var(--u) * 28);height:calc(var(--u) * 28)}
+    .clients li:nth-child(5) span{left:calc(var(--u) * 46);top:calc(var(--u) * 5.5);font-size:calc(var(--u) * 18.75);font-weight:400;letter-spacing:0.01em}
+    .clients li:nth-child(6){left:calc(100% - var(--u) * 176);top:calc(50% + var(--u) * 142);}
+    .clients li:nth-child(6) svg{left:calc(var(--u) * 3.5);top:calc(var(--u) * 0);width:calc(var(--u) * 33);height:calc(var(--u) * 23)}
+    .clients li:nth-child(6) span{left:calc(var(--u) * 48);top:calc(var(--u) * 1);font-size:calc(var(--u) * 21.5);font-weight:600;letter-spacing:0em}
+    .lede .ln:nth-child(1){letter-spacing:-0.02em}
+    .lede .ln:nth-child(2){letter-spacing:-0.03em}
+    .lede .ln:nth-child(3){letter-spacing:-0.024em}
+    .story{left:calc(50% + var(--u) * -301);top:calc(100% - var(--u) * 115);}
+    .story img{width:calc(var(--u) * 103);height:calc(var(--u) * 68);border-radius:calc(var(--u) * 8);border-width:calc(var(--u) * 1)}
+    .story .kicker{left:calc(var(--u) * 126);top:calc(var(--u) * 14);font-size:calc(var(--ut) * 13);letter-spacing:0.026em}
+    .story .title{left:calc(var(--u) * 126);top:calc(var(--u) * 37);font-size:calc(var(--ut) * 16.3);letter-spacing:-0.02em}
+  }
+  /* Narrower landscape windows push the ribbon under the copy: add a soft
+     legibility scrim (inactive at the 16:10 reference ratio). */
+  @media (min-width:900px) and (min-aspect-ratio:4/3) and (min-height:540px) and (max-aspect-ratio:3/2){
+    .hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+      background:linear-gradient(90deg, rgba(0,0,0,.72) 0, rgba(0,0,0,.5) 50%, rgba(0,0,0,0) 76%)}
+  }
+  @media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+  /* ---------- Entrance (runs once on load, then the page is static) ----------
+     Pre-paint state only while the intro is pending. The class is added by a
+     tiny head script and removed by the timeline in the same frame it starts,
+     so: no flash, and if JavaScript never runs, nothing is ever hidden.
+     The artwork, scrims and veils are deliberately NOT listed: the background
+     is the stage and never moves. */
+  .intro .brand,.intro .menu li,.intro .cta,.intro .toggle,.intro .headline,.intro .lede,
+  .intro .clients li,.intro .story img,.intro .story .kicker,.intro .story .title{opacity:0}
+</style>
+<script>
+  (function(){
+    var d=document.documentElement;
+    if(!('animate' in d) || !window.matchMedia || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    d.classList.add('intro');
+    setTimeout(function(){ d.classList.remove('intro'); }, 4000);   /* safety net if the timeline never starts */
+  })();
+</script>
+</head>
+<body>
+<main class="hero">
+  <div class="stage" aria-hidden="true"><div class="art"></div></div>
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="framefutures home">framefutures</a>
+    <button class="toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu"><span class="burger" aria-hidden="true"><i></i><i></i></span></button>
+    <nav class="nav" id="site-nav" aria-label="Primary">
+      <ul class="menu">
+        <li><a href="#practice">Practice</a></li>
+        <li><a href="#expertise">Expertise</a></li>
+        <li><a href="#made">Made</a></li>
+        <li><a href="#team">Our team</a></li>
+        <li><a href="#thinking">Thinking</a></li>
+      </ul>
+      <a class="cta" href="#work">See us build<svg viewBox="0 0 14 11" aria-hidden="true"><path d="M.5 5.5h12.6M8 .6l5 4.9-5 4.9" fill="none" stroke="var(--ember-arrow)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </nav>
+  </header>
+
+  <section class="copy">
+    <h1 class="headline"><span class="ln">Digital progress made </span><span class="ln">simple, refined by people </span><span class="ln">for good.</span></h1>
+    <p class="lede"><span class="ln">Since 2019, crafting Web and Mobile innovations with </span><span class="ln">industry experts and next-gen innovators. We link human </span><span class="ln">expression with AI to test boundaries.</span></p>
+  </section>
+
+  <div class="spacer" aria-hidden="true"></div>
+
+  <section class="clients-wrap" aria-label="Clients">
+    <ul class="clients">
+      <li><svg viewBox="0 0 31 30" aria-hidden="true"><path d="M19.2 4.3A11.9 11.9 0 1 1 9.6 4.9" fill="none" stroke="currentColor" stroke-width="5.6" stroke-linecap="round"/><path d="M14.6 3.1c3.7-1.5 7.8-.9 10.3 1.2-2.6.1-4.9 1.2-6 3.3-.6-2.3-2.2-3.9-4.3-4.5z" fill="currentColor"/></svg><span>novafone</span></li>
+      <li><svg viewBox="0 0 25 27" aria-hidden="true"><mask id="mvx"><path d="M12.5 .6 23.6 7v13L12.5 26.4 1.4 20V7z" fill="#fff" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/><path d="M12.5 9.2 16.2 11.35v4.3L12.5 17.8 8.8 15.65v-4.3z" fill="#000"/><path d="M12.5 9.2V.6M16.2 11.35 23.6 7M16.2 15.65 23.6 20M12.5 17.8v8.6M8.8 15.65 1.4 20M8.8 11.35 1.4 7" stroke="#000" stroke-width="1.3"/></mask><rect width="25" height="27" fill="currentColor" mask="url(#mvx)"/></svg><span>vertex</span></li>
+      <li><svg viewBox="0 0 31 22" aria-hidden="true"><path d="M2.4 8.6C5.6 2.6 9.6 2.4 13.4 6.6s7.8 4.6 15.2-3.3M2.4 18.6c3.2-6 7.2-6.2 11-2s7.8 4.6 15.2-3.3" fill="none" stroke="currentColor" stroke-width="3.9" stroke-linecap="round"/></svg><span>ClearWave</span></li>
+      <li><svg viewBox="0 0 26 27" aria-hidden="true"><rect x=".5" y=".5" width="11.8" height="12.2" rx="4.6" fill="currentColor"/><rect x="13.7" y=".5" width="11.8" height="12.2" rx="4.6" fill="currentColor"/><rect x=".5" y="14.3" width="11.8" height="12.2" rx="4.6" fill="currentColor"/><rect x="13.7" y="14.3" width="11.8" height="12.2" rx="4.6" fill="currentColor"/></svg><span>forma</span></li>
+      <li><svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="12.3" fill="none" stroke="currentColor" stroke-width="3.1"/><circle cx="14" cy="14" r="6.9" fill="none" stroke="currentColor" stroke-width="2.7"/></svg><span>orbitcloud</span></li>
+      <li><svg viewBox="0 0 33 23" aria-hidden="true"><path d="M4.4 19.2 10.6 4.2M10.6 4.2l9.4 14.6" fill="none" stroke="currentColor" stroke-width="6.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M21.6 19 28.6 3.9" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg><span>nexora</span></li>
+    </ul>
+  </section>
+
+  <a class="story" href="#kite">
+    <img alt="Team workshop around a table at the Delhi Tech Lab" width="103" height="68" src="assets/image-04-766bc27fd0.jpg">
+    <span class="kicker">Our work story</span>
+    <span class="title">Transforming KITE’s digital future through a Tech Lab in Delhi.</span>
+  </a>
+</main>
+<script>
+  /* ===== Entrance timeline — one pass, Web Animations API, no dependencies =====
+     Motion vocabulary
+       A  masked line rise ...... headline (each line climbs out of its own mask)
+       B  short rise + fade ...... lede, client marks, story text
+       C  settle from above ...... top bar (it is anchored to the top edge)
+       D  vertical unmask ........ story thumbnail
+     Everything is transform / opacity / clip-path / mask only — no layout. */
+  (function(){
+    var root=document.documentElement;
+    if(!root.classList.contains('intro')) return;
+    var EXPO='cubic-bezier(.16,1,.3,1)', QUINT='cubic-bezier(.22,1,.36,1)';
+    var anims=[];
+    function shown(el){
+      if(!el) return false;
+      var cs=getComputedStyle(el);
+      return cs.display!=='none' && cs.visibility!=='hidden' && el.getClientRects().length>0;
+    }
+    function play(el, frames, at, dur, ease){
+      if(!shown(el)) return;
+      anims.push(el.animate(frames,{delay:at*1000,duration:dur*1000,easing:ease,fill:'backwards'}));
+    }
+    var C_IN =[{opacity:0,transform:'translateY(-6px)'},{opacity:1,transform:'none'}];
+    var B_IN =function(dist){ return [{opacity:0,transform:'translateY('+dist+')'},{opacity:1,transform:'none'}]; };
+    /* the mask stays fixed on the line's own box (+0.3em for ascenders/descenders)
+       while the glyphs travel up through it */
+    var A_IN =[{transform:'translateY(140%)',clipPath:'inset(-0.3em -0.3em calc(140% - 0.3em) -0.3em)'},
+               {transform:'translateY(0%)',  clipPath:'inset(-0.3em -0.3em -0.3em -0.3em)'}];
+
+    function start(){
+      var q=function(s){ return document.querySelector(s); };
+      var qa=function(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); };
+
+      /* 1 — top bar settles: logo, then links, CTA last (it should follow the message) */
+      play(q('.brand'), C_IN, .10, .80, QUINT);
+      qa('.menu li').forEach(function(li,i){ play(li, C_IN, .30+i*.045, .65, QUINT); });
+      /* (no scale on the glass pills: Chromium keeps a re-rastered layer after a
+         scale animation, which would leave the final frame sub-pixel different) */
+      play(q('.cta'),    C_IN, .64, .80, QUINT);
+      play(q('.toggle'), C_IN, .40, .80, QUINT);
+
+      /* 2 — headline: the primary beat */
+      var lines=qa('.headline .ln');
+      if(lines.length && getComputedStyle(lines[0]).display==='block'){
+        lines.forEach(function(ln,i){ play(ln, A_IN, .18+i*.10, 1.10, EXPO); });
+      }else{
+        /* phones: lines are reflowed text, so the same top-to-bottom reveal is
+           done with one feathered mask sweeping down the block */
+        var G='linear-gradient(to bottom, #000 40%, transparent 60%)';
+        play(q('.headline'), [
+          {maskImage:G,webkitMaskImage:G,maskSize:'100% 300%',webkitMaskSize:'100% 300%',maskRepeat:'no-repeat',webkitMaskRepeat:'no-repeat',
+           maskPosition:'0 100%',webkitMaskPosition:'0 100%',transform:'translateY(.18em)'},
+          {maskImage:G,webkitMaskImage:G,maskSize:'100% 300%',webkitMaskSize:'100% 300%',maskRepeat:'no-repeat',webkitMaskRepeat:'no-repeat',
+           maskPosition:'0 0',webkitMaskPosition:'0 0',transform:'none'}], .18, 1.30, QUINT);
+      }
+
+      /* 3 — supporting copy picks up while the last headline line is still settling */
+      var ll=qa('.lede .ln');
+      if(ll.length && getComputedStyle(ll[0]).display==='block'){
+        ll.forEach(function(ln,i){ play(ln, B_IN('.7em'), .62+i*.06, .90, QUINT); });
+      }else{
+        play(q('.lede'), B_IN('14px'), .62, .90, QUINT);
+      }
+
+      /* 4 — client marks cascade in reading order */
+      qa('.clients li').forEach(function(li,i){ play(li, B_IN('10px'), .82+i*.06, .70, QUINT); });
+
+      /* 5 — the work story closes the composition: image unmasks upward, text follows */
+      var img=q('.story img');
+      if(shown(img)){
+        var r=getComputedStyle(img).borderTopLeftRadius;
+        play(img, [{clipPath:'inset(100% 0 0 0 round '+r+')'},{clipPath:'inset(0 0 0 0 round '+r+')'}], 1.00, 1.00, EXPO);
+      }
+      play(q('.story .kicker'), B_IN('.5em'), 1.10, .75, QUINT);
+      play(q('.story .title'),  B_IN('.5em'), 1.17, .75, QUINT);
+
+      /* initial frames are now held by the animations (fill: backwards) */
+      root.classList.remove('intro');
+
+      /* entrance complete → drop every effect; only authored styles remain */
+      Promise.all(anims.map(function(a){ return a.finished; })).then(function(){
+        anims.forEach(function(a){ a.cancel(); }); anims.length=0;
+        /* one paint invalidation so no tile rastered mid-animation survives */
+        var b=document.body; b.style.outline='0 solid transparent';
+        requestAnimationFrame(function(){ requestAnimationFrame(function(){ b.style.removeProperty('outline'); }); });
+      }, function(){});
+    }
+
+    /* start once the embedded faces are ready (capped, so we never block) */
+    var started=false;
+    function go(){ if(!started){ started=true; requestAnimationFrame(start); } }
+    if(document.fonts && document.fonts.ready){ document.fonts.ready.then(go, go); setTimeout(go, 800); } else { go(); }
+  })();
+</script>
+<script>
+  (function(){
+    var bar=document.querySelector('.topbar'), btn=bar.querySelector('.toggle'), nav=document.getElementById('site-nav');
+    var desktop=window.matchMedia('(min-width:900px)');   /* inline nav from here up */
+    function set(open, refocus){
+      bar.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', open);
+      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      if(open){ var first=nav.querySelector('a'); first && first.focus({preventScroll:true}); }
+      else if(refocus){ btn.focus({preventScroll:true}); }
+    }
+    btn.addEventListener('click', function(){ set(btn.getAttribute('aria-expanded')!=='true'); });
+    nav.addEventListener('click', function(e){ if(e.target.closest('a') && !desktop.matches) set(false); });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape' && bar.classList.contains('is-open')) set(false, true); });
+    document.addEventListener('pointerdown', function(e){ if(bar.classList.contains('is-open') && !bar.contains(e.target)) set(false); });
+    bar.addEventListener('focusout', function(e){ if(bar.classList.contains('is-open') && e.relatedTarget && !bar.contains(e.relatedTarget)) set(false); });
+    (desktop.addEventListener ? desktop.addEventListener('change', onMQ) : desktop.addListener(onMQ));
+    function onMQ(e){ if(e.matches) set(false); }
+  })();
+</script>
+</body>
+</html>

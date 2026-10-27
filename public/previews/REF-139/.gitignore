@@ -1,0 +1,14 @@
+# Local tools and machine-specific files
+.wrangler/
+node_modules/
+.vscode/
+.idea/
+.env
+.env.*
+*.log
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Generated deployment output
+dist/

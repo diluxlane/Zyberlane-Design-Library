@@ -1,0 +1,375 @@
+@font-face{font-family:'PInter';font-weight:500;font-display:block;src:url(fonts/pinter-500.woff2) format('woff2')}
+@font-face{font-family:'PInter';font-weight:600;font-display:block;src:url(fonts/pinter-600.woff2) format('woff2')}
+@font-face{font-family:'PInterTight';font-weight:700;font-display:block;src:url(fonts/pinter-tight-700.woff2) format('woff2')}
+
+/* ------------------------------------------------------------------
+   UNIT SYSTEM
+   --u  : 1 reference pixel (reference frame = 1280 x 800)
+   --au : 1 reference pixel inside the hero "art" box (title + stickers)
+   Desktop: the whole composition is the reference, scaled to the
+   viewport (fit by width or height). Extra space on either axis is
+   absorbed by the full-bleed card + background — never letterboxed.
+   ------------------------------------------------------------------ */
+:root{
+  --vh: 100vh;
+  --u: min(calc(100vw / 1280), calc(var(--vh) / 800));
+  --au: var(--u);
+  --ink:#000;
+  --title:#060606;
+  --paper:#F7EFDC;
+  --pill:#FFFFFF;
+  --btn:#FDFDFD;
+  --ticker:#FDF087;
+  --line: calc(1.5 * var(--u));
+}
+@supports (height: 100dvh){ :root{ --vh: 100dvh; } }
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:#000;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision}
+body{font-family:'PInter',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif;color:var(--ink)}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+.stage{position:fixed;inset:0;overflow:hidden;background:#000}
+
+/* ---------- Ticker ---------- */
+.ticker{position:absolute;left:0;right:0;top:0;height:calc(28.4 * var(--u));background:var(--ticker);overflow:hidden;z-index:3}
+.track{position:absolute;top:0;left:0;height:100%;display:flex;will-change:transform;
+  transform:translate3d(calc(-125.3 * var(--u)),0,0);animation:tick 9s linear infinite}
+.track span{flex:0 0 calc(180.3 * var(--u));font:700 calc(11 * var(--u))/calc(28.4 * var(--u)) 'PInterTight','PInter',sans-serif;letter-spacing:calc(-0.18 * var(--u));white-space:nowrap;padding-top:calc(1 * var(--u));color:#000}
+@keyframes tick{from{transform:translate3d(calc(-125.3 * var(--u)),0,0)}to{transform:translate3d(calc(-305.6 * var(--u)),0,0)}}
+
+/* ---------- Card ---------- */
+.card{position:absolute;top:calc(38.5 * var(--u));left:calc(11 * var(--u));right:calc(11 * var(--u));bottom:calc(-40 * var(--u));border-radius:calc(36 * var(--u));overflow:hidden;background:var(--paper);isolation:isolate}
+.bg{position:absolute;left:calc(-11 * var(--u));top:calc(-38.5 * var(--u));width:100vw;height:var(--vh);
+  background:url(images/background.webp) calc(50% + calc(3.5 * var(--u))) 0 / cover no-repeat;z-index:0}
+
+/* ---------- Nav ---------- */
+.logo{position:absolute;left:calc(20.86 * var(--u));top:calc(22.93 * var(--u));width:calc(51.41 * var(--u));height:calc(49.33 * var(--u));transform:rotate(4.92deg);z-index:4;display:block}
+.logo>img{width:100%;height:100%;display:block}
+.navr{position:absolute;right:calc(24 * var(--u));top:0;width:calc(863.5 * var(--u));height:calc(110 * var(--u));z-index:4}
+.pill{position:absolute;top:calc(26.5 * var(--u));height:calc(41 * var(--u));--h:calc(41 * var(--u));--fpt:calc(4 * var(--u));
+  font:600 calc(13.5 * var(--u))/1 'PInter',sans-serif;letter-spacing:calc(-0.42 * var(--u));text-transform:uppercase;white-space:nowrap}
+.p1{left:calc(0 * var(--u));width:calc(142 * var(--u))}
+.p2{left:calc(143.5 * var(--u));width:calc(92 * var(--u))}
+.p3{left:calc(236.3 * var(--u));width:calc(82.4 * var(--u))}
+.p4{left:calc(322 * var(--u));width:calc(117.5 * var(--u))}
+.p5{left:calc(442.3 * var(--u));width:calc(103.4 * var(--u))}
+.p6{left:calc(546.3 * var(--u));width:calc(130.4 * var(--u))}
+.plus{position:absolute;left:calc(680 * var(--u));top:calc(25.3 * var(--u));width:calc(44.5 * var(--u));height:calc(44.5 * var(--u));border-radius:50%;background:var(--pill);border:var(--line) solid #000;display:block;padding:0;transition:background-color .18s ease}
+.plus svg{position:absolute;inset:0;width:100%;height:100%;display:block;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.plus[aria-expanded="true"] svg{transform:rotate(45deg)}
+.plus:hover{background:#f1f1f1}
+.cta{position:absolute;left:calc(727.5 * var(--u));top:calc(25.5 * var(--u));width:calc(136 * var(--u));height:calc(44 * var(--u));--h:calc(44 * var(--u));--fpt:calc(4 * var(--u));--fb:#000;--fc:#fff;
+  font:600 calc(13.5 * var(--u))/1 'PInter',sans-serif;letter-spacing:calc(-0.42 * var(--u));white-space:nowrap}
+
+/* ---------- Menu (opened by +) : glass panel ---------- */
+.menu{position:absolute;right:calc(24 * var(--u));top:calc(78 * var(--u));z-index:5;min-width:calc(250 * var(--u));padding:calc(10 * var(--u));border-radius:calc(26 * var(--u));
+  background:rgba(255,255,255,.62);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);
+  border:var(--line) solid #000;display:flex;flex-direction:column;gap:calc(6 * var(--u));
+  opacity:0;visibility:hidden;transform:translateY(calc(-8 * var(--u))) scale(.98);transform-origin:top right;
+  transition:opacity .2s ease,transform .25s cubic-bezier(.2,.8,.2,1),visibility 0s linear .25s}
+.menu.open{opacity:1;visibility:visible;transform:none;transition:opacity .2s ease,transform .25s cubic-bezier(.2,.8,.2,1)}
+.menu a{display:flex;align-items:center;justify-content:space-between;height:calc(44 * var(--u));padding:0 calc(18 * var(--u));border-radius:999px;
+  background:rgba(255,255,255,.9);border:var(--line) solid #000;font:600 calc(13 * var(--u))/1 'PInter',sans-serif;letter-spacing:calc(-0.22 * var(--u));text-transform:uppercase}
+.menu a:hover{background:#000;color:#fff}
+.menu .pri{display:none}
+.menu .mcta{display:none}
+.plus .bgr{display:none}
+
+/* ---------- Hero (reference-frame coordinates) ---------- */
+.hero{position:absolute;left:calc(50% - calc(640 * var(--u)));top:calc(calc(-38.5 * var(--u)) + (var(--vh) - calc(800 * var(--u))) / 2);width:calc(1280 * var(--u));height:calc(800 * var(--u));z-index:2;pointer-events:none}
+.art{position:absolute;left:calc(240 * var(--u));top:calc(140 * var(--u));width:calc(810 * var(--au));height:calc(400 * var(--au))}
+.art svg.word{position:absolute;left:calc(60 * var(--au));top:calc(10 * var(--au));width:calc(700 * var(--au));height:calc(400 * var(--au));overflow:visible;display:block}
+.stk{position:absolute;display:block;max-width:none;pointer-events:none;user-select:none}
+.rocket{left:calc(-45.13 * var(--au));top:calc(-27.43 * var(--au));width:calc(210.65 * var(--au));height:calc(197.29 * var(--au));transform:rotate(-0.565deg)}
+.smile{left:calc(409.96 * var(--au));top:calc(83.33 * var(--au));width:calc(110.70 * var(--au));height:calc(107.68 * var(--au));transform:rotate(-6.967deg)}
+.wallet{left:calc(670.66 * var(--au));top:calc(168.12 * var(--au));width:calc(156.51 * var(--au));height:calc(142.79 * var(--au));transform:rotate(-4.546deg)}
+.coin{left:calc(7.18 * var(--au));top:calc(278.19 * var(--au));width:calc(125.96 * var(--au));height:calc(114.68 * var(--au));transform:rotate(0.922deg)}
+
+.tag span{display:inline-block}
+.tag{position:absolute;left:calc(2.2 * var(--u));top:calc(548.3 * var(--u));width:calc(1280 * var(--u));text-align:center;
+  font:500 calc(56 * var(--u))/1 'PInter',sans-serif;letter-spacing:calc(-1.9 * var(--u));color:#000;white-space:nowrap}
+.btns{position:absolute;left:calc(402.5 * var(--u));top:calc(636.5 * var(--u));display:flex;gap:calc(8.5 * var(--u));pointer-events:auto}
+.btn{height:calc(59.5 * var(--u));--h:calc(59.5 * var(--u));--fpt:calc(3 * var(--u));--fb:var(--btn);
+  font:600 calc(13 * var(--u))/1 'PInter',sans-serif;letter-spacing:0;text-transform:uppercase;white-space:nowrap}
+.b1{width:calc(175.5 * var(--u))}
+.b2{width:calc(290.5 * var(--u))}
+.fx.b2 .f{justify-content:flex-start;padding-left:calc(27.7 * var(--u));gap:calc(12 * var(--u))}
+.b2 svg{width:calc(8 * var(--u));height:calc(8 * var(--u));display:block;overflow:visible}
+
+/* ------------------------------------------------------------------
+   HOVER — "cube roll" (from the reference capture): each control is a
+   2-face cube; on hover it rolls 90° about X so the white face tips up
+   and away while the coloured face rolls up from underneath (~0.22s),
+   both faces ghosting mid-roll. Reverses on leave.
+   ------------------------------------------------------------------ */
+.fx{display:block;perspective:calc(520 * var(--u));-webkit-tap-highlight-color:transparent;outline:none}
+.fx .cube{position:relative;display:flex;height:100%;transform-style:preserve-3d;
+  transform:translateZ(calc(var(--h) / -2)) rotateX(0deg);transition:transform .22s cubic-bezier(.45,0,.2,1)}
+.fx .face{display:flex;align-items:center;justify-content:center;border:var(--line) solid #000;border-radius:999px;
+  padding-top:var(--fpt,0);-webkit-backface-visibility:hidden;backface-visibility:hidden;transition:opacity .22s cubic-bezier(.45,0,.2,1)}
+.fx .f{position:relative;flex:1 1 auto;background:var(--fb,var(--pill));color:var(--fc,#000);transform:translateZ(calc(var(--h) / 2))}
+.fx .b{position:absolute;inset:0;background:var(--hc);color:var(--hcol,#000);opacity:.35;
+  transform:rotateX(-90deg) translateZ(calc(var(--h) / 2))}
+.fx:focus-visible .cube{transform:translateZ(calc(var(--h) / -2)) rotateX(90deg)}
+.fx:focus-visible .f{opacity:.35}.fx:focus-visible .b{opacity:1}
+@media (hover:hover){
+  .fx:hover .cube{transform:translateZ(calc(var(--h) / -2)) rotateX(90deg)}
+  .fx:hover .f{opacity:.35}
+  .fx:hover .b{opacity:1}
+}
+
+/* + : cross spins and collapses into a minus */
+.plus .pl{transform-origin:22.25px 22.75px;transition:transform .34s cubic-bezier(.3,.7,.3,1)}
+.plus .pv{transform-box:view-box;transform-origin:22.25px 22.75px;transition:transform .34s cubic-bezier(.3,.7,.3,1)}
+@media (hover:hover){
+  .plus[aria-expanded="false"]:hover .pl{transform:rotate(180deg)}
+  .plus[aria-expanded="false"]:hover .pv{transform:rotate(90deg)}
+}
+
+/* logo : inner glyph spins on Y, ring stays put */
+.logo{perspective:calc(200 * var(--u))}
+.logo .lg-disc,.logo .lg-spin{position:absolute;inset:0;border-radius:50%}
+.logo .lg-disc{background:#fff;clip-path:circle(40.5% at 50.7% 49.8%)}
+.logo .lg-spin{clip-path:circle(40.5% at 50.7% 49.8%);transform-style:preserve-3d}
+.logo .lg-spin img{width:100%;height:100%;display:block}
+@media (hover:hover){ .logo:hover .lg-spin{animation:glyphspin .95s cubic-bezier(.2,.75,.25,1)} }
+@keyframes glyphspin{from{transform:rotateY(0deg)}to{transform:rotateY(720deg)}}
+
+/* ==================================================================
+   FLOW LAYOUT — portrait screens (phones / tablets) and short
+   landscape phones. Same components, re-parameterised units;
+   the hero becomes a vertically centred column that always fills
+   the card, so there is never dead space above or below.
+   ================================================================== */
+@media (max-width: 520px), (max-aspect-ratio: 1/1) and (min-width: 1041px), (orientation: landscape) and (max-height: 540px){
+  :root{ --u: calc(min(100vw, 520px) / 390);
+         --au: min(calc((100vw - calc(38 * var(--u))) / 900), calc((var(--vh) - calc(380 * var(--u))) / 470)); }
+  .navr .pill{display:none}
+  .menu .pri{display:flex}
+  .menu{left:calc(12 * var(--u));right:calc(12 * var(--u));min-width:0;top:calc(76 * var(--u))}
+  .hero{position:absolute;left:0;right:0;width:auto;height:auto;top:calc(88 * var(--u));bottom:calc(40 * var(--u));
+        display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 calc(12 * var(--u)) calc(26 * var(--u))}
+  .art{position:relative;left:auto;top:auto;flex:none}
+  .tag{position:static;width:auto;font-size:calc(55 * 1.18 * var(--au));letter-spacing:calc(-1.3 * 1.18 * var(--au));
+       margin-top:calc(22 * var(--u));padding-left:0}
+  .btns{position:static;margin-top:calc(26 * var(--u));flex-wrap:wrap;justify-content:center;gap:calc(10 * var(--u))}
+  .btn{height:calc(54 * var(--u));--h:calc(54 * var(--u))}
+  .b1,.b2{width:auto}
+  .fx.b1 .f{padding-left:calc(32 * var(--u));padding-right:calc(32 * var(--u))}
+  .fx.b2 .f{padding:var(--fpt) calc(27 * var(--u)) 0 calc(30 * var(--u))}
+}
+@media (orientation: landscape) and (max-height: 540px){
+  :root{ --u: calc(min(var(--vh), 430px) / 430);
+         --au: min(calc((100vw - calc(38 * var(--u))) / 900), calc((var(--vh) - calc(212 * var(--u))) / 475)); }
+  .hero{top:calc(70 * var(--u));padding-bottom:calc(22 * var(--u))}
+  .tag{font-size:calc(55 * var(--au));letter-spacing:calc(-1.3 * var(--au));margin-top:calc(12 * var(--u))}
+  .btns{margin-top:calc(14 * var(--u));flex-wrap:nowrap}
+  .btn{height:calc(46 * var(--u));--h:calc(46 * var(--u))}
+}
+
+/* tall phones: stacked headline + full-width actions fill the column */
+@media (max-aspect-ratio: 2/3) and (min-width: 1041px){
+  :root{ --au: min(calc((100vw - calc(38 * var(--u))) / 900), calc((var(--vh) - calc(470 * var(--u))) / 470)); }
+  .tag{font-size:min(calc(55 * 2 * var(--au)), 12.5vw);line-height:1.02;letter-spacing:-0.035em;margin-top:max(calc(22 * var(--u)), 3.2vh)}
+  .tag span{display:block}
+  .btns{flex-direction:column;align-items:stretch;width:min(100%, calc(340 * var(--u)));margin-top:max(calc(26 * var(--u)), 4vh)}
+  .btn{height:calc(56 * var(--u));--h:calc(56 * var(--u))}
+  .fx.b2 .f{justify-content:center}
+}
+/* ==================================================================
+   ENTRY CHOREOGRAPHY (reverse-engineered from the reference capture,
+   t = 0 at first paint, 30 fps):
+   0.00s  wordmark shutter: word cut into 6 horizontal bands per letter,
+          each band's content scrolls up & out (staggered, in-out)
+   0.33s  rocket pop · 0.40 smiley · 0.60 wallet · 0.73 coin (+ sparkles)
+   0.33s  button 1 rises · 0.60s button 2
+   0.53s  logo + nav drop in from under the card edge
+   0.60s  letters rise from below baseline mask, 65 ms stagger, expo-out
+   1.27s  "Make moves." · 1.53s "Unbound."
+   ================================================================== */
+.word{position:absolute;left:0;top:0;width:calc(810 * var(--au));height:calc(400 * var(--au))}
+.lt{position:absolute;top:calc(-19 * var(--au));height:calc(452 * var(--au));overflow:hidden}
+.lt svg{position:absolute;left:0;top:0;width:100%;height:calc(452 * var(--au));display:block;overflow:visible}
+.rise{position:absolute;inset:0}
+.bands{position:absolute;inset:0;display:none}
+.band{position:absolute;left:0;right:0;overflow:hidden}
+.bin{position:absolute;left:0;right:0;height:calc(452 * var(--au))}
+.spark{position:absolute;display:block;opacity:0;pointer-events:none}
+
+.intro .bands{display:block}
+.intro .rise{translate:0 calc(452 * var(--au))}
+.intro .stk,.intro .btn,.intro .tag span{opacity:0}
+.intro .logo,.intro .navr{translate:0 calc(-84 * var(--u))}
+
+.intro.play .bin{animation:shutter .62s cubic-bezier(.55,0,.35,1) both}
+.intro.play .rise{animation:rise .95s cubic-bezier(.16,1,.3,1) both}
+.intro.play .stk{animation:pop .66s cubic-bezier(.3,.7,.4,1) both}
+.intro.play .rocket{--r0:-55deg;animation-delay:.33s}
+.intro.play .smile{--r0:-28deg;animation-delay:.40s}
+.intro.play .wallet{--r0:26deg;animation-delay:.60s}
+.intro.play .coin{--r0:-22deg;animation-delay:.73s}
+.intro.play .spark{animation:twinkle .62s cubic-bezier(.3,.7,.4,1) both}
+.intro.play .btn{animation:lift .55s cubic-bezier(.3,1.35,.5,1) both,fade .25s linear both}
+.intro.play .b1{animation-delay:.33s,.33s}
+.intro.play .b2{animation-delay:.60s,.60s}
+.intro.play .logo,.intro.play .navr{animation:drop .5s cubic-bezier(.16,1,.3,1) .53s both}
+.intro.play .tag span{animation:lift .5s cubic-bezier(.2,.9,.3,1) both,fade .3s linear both}
+.intro.play .tag span:nth-child(1){animation-delay:1.27s,1.27s}
+.intro.play .tag span:nth-child(2){animation-delay:1.53s,1.53s}
+
+@keyframes shutter{from{translate:0 0}to{translate:0 calc(-390 * var(--au))}}
+@keyframes rise{from{translate:0 calc(452 * var(--au))}to{translate:0 0}}
+@keyframes pop{
+  0%{opacity:0;scale:.55;rotate:var(--r0)}
+  22%{opacity:1}
+  40%{scale:1.14;rotate:calc(var(--r0) * -0.12)}
+  68%{scale:.97;rotate:calc(var(--r0) * 0.04)}
+  100%{opacity:1;scale:1;rotate:0deg}}
+@keyframes twinkle{0%{opacity:0;scale:0;rotate:-45deg}35%{opacity:1;scale:1.15}70%{opacity:1;scale:.9}100%{opacity:0;scale:0;rotate:60deg}}
+@keyframes lift{from{translate:0 calc(32 * var(--u))}to{translate:0 0}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes drop{from{translate:0 calc(-84 * var(--u))}to{translate:0 0}}
+
+/* ==================================================================
+   COMPACT NAV — shared by tablet and mobile architectures.
+   Logo unchanged; the six links + ACCESS APP leave the bar and live in
+   the menu; the round + control becomes the burger (same circle, same
+   2px stroke language) and morphs to an × when open.
+   ================================================================== */
+@media (min-width: 521px) and (max-width: 1040px) and (min-height: 541px),
+       (max-width: 520px),
+       (orientation: landscape) and (max-height: 540px) and (max-width: 1040px){
+  /* nav: logo stays, links + CTA collapse into the burger */
+  .navr .pill,.cta{display:none}
+  .plus{left:auto;right:0;top:calc(25.3 * var(--u))}
+  .plus .pl{display:none}
+  .plus .bgr{display:inline}
+  .plus[aria-expanded="true"] svg{transform:none}
+  .plus .bgr path{transform-box:view-box;transform-origin:22.25px 22.75px;
+    transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .2s ease}
+  .plus[aria-expanded="true"] .b1l{transform:translateY(6px) rotate(45deg)}
+  .plus[aria-expanded="true"] .b2l{opacity:0}
+  .plus[aria-expanded="true"] .b3l{transform:translateY(-6px) rotate(-45deg)}
+
+  /* menu: same glass panel, laid out as a 2-up pill grid + full CTA */
+  .menu{left:auto;right:calc(24 * var(--u));top:calc(80 * var(--u));width:min(calc(452 * var(--u)), calc(100% - calc(48 * var(--u))));min-width:0;
+    display:grid;grid-template-columns:1fr 1fr;gap:calc(8 * var(--u));padding:calc(12 * var(--u))}
+  .menu .pri{display:flex}
+  .menu a{justify-content:center;height:calc(46 * var(--u));padding:0 calc(14 * var(--u))}
+  .menu .mcta{display:flex;grid-column:1 / -1;background:#000;color:#fff}
+  .menu .mcta:hover{background:#222}
+}
+
+/* ==================================================================
+   TABLET ARCHITECTURE  (701px – 1040px wide, height > 540px)
+   Breakpoint derived from content: the scaled desktop nav reaches
+   11px labels / 33px hit targets at ~1040px and keeps shrinking, so
+   below that the bar collapses to logo + burger and the hero is
+   re-composed as a centred column sized from BOTH available width and
+   height. Same components, tokens, motion — new arrangement.
+   ================================================================== */
+@media (min-width: 521px) and (max-width: 1040px) and (min-height: 541px){
+  :root{
+    /* chrome unit: readable, touch-sized, gently fluid (≈0.90–0.95px) */
+    --u: clamp(0.9px, calc(100vw / 1100), 0.95px);
+    /* art unit: largest composition that fits width AND height budget */
+    --au: min(0.92px,
+              calc((100vw - calc(22 * var(--u)) - calc(64 * var(--u))) / 900),
+              calc((var(--vh) - calc(290 * var(--u))) / (400 + 55 * var(--tk) * 1.1)));
+    --tk: 1;                       /* tagline scale relative to the art */
+  }
+
+  /* hero: centred column that fills the card between nav and bottom */
+  .hero{position:absolute;left:0;right:0;width:auto;height:auto;top:calc(96 * var(--u));bottom:calc(40 * var(--u));
+    display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 calc(32 * var(--u)) calc(30 * var(--u))}
+  .art{position:relative;left:auto;top:auto;flex:none}
+  .tag{position:static;width:auto;padding-left:0;
+    font-size:calc(55 * var(--tk) * var(--au));letter-spacing:calc(-1.9 * var(--tk) * var(--au));
+    margin-top:clamp(calc(18 * var(--u)), 2.6vh, calc(40 * var(--u)))}
+  .btns{position:static;margin-top:clamp(calc(22 * var(--u)), 3.4vh, calc(52 * var(--u)));gap:calc(10 * var(--u))}
+  .btn{height:calc(54 * var(--u));--h:calc(54 * var(--u))}
+  .b1,.b2{width:auto}
+  .fx.b1 .f{padding-left:calc(32 * var(--u));padding-right:calc(32 * var(--u))}
+  .fx.b2 .f{padding:var(--fpt) calc(27 * var(--u)) 0 calc(30 * var(--u))}
+}
+/* portrait tablets: more height than width — let the headline carry more weight */
+@media (min-width: 521px) and (max-width: 1040px) and (min-height: 541px) and (max-aspect-ratio: 1/1){
+  :root{ --tk: 1.14;
+    --au: min(1.1px,
+              calc((100vw - calc(22 * var(--u)) - calc(64 * var(--u))) / 900),
+              calc((var(--vh) - calc(290 * var(--u))) / (400 + 55 * var(--tk) * 1.1))); }
+  .hero{padding-bottom:max(calc(30 * var(--u)), 6vh)}
+  .btns{margin-top:clamp(calc(26 * var(--u)), 4vh, calc(60 * var(--u)))}
+}
+
+/* ==================================================================
+   MOBILE ARCHITECTURE — PORTRAIT  (≤520px)
+   Breakpoint from content: below ~520px the tablet's side-by-side
+   actions lose their margins (33px → 13px → overflow at 430px) and the
+   single-line tagline shrinks toward 22px. Mobile re-composes the same
+   pieces: the wordmark takes the width, the tagline breaks at its own
+   full stop into two balanced lines, and the two actions stack as an
+   equal-width pair.
+   ================================================================== */
+@media (max-width: 520px){
+  :root{
+    --u: clamp(0.9px, calc(100vw / 390), 1px);
+    --au: min(calc((100vw - calc(54 * var(--u))) / 900), calc((var(--vh) - calc(400 * var(--u))) / 480));
+  }
+  .menu{left:calc(12 * var(--u));right:calc(12 * var(--u));width:auto;top:calc(76 * var(--u))}
+  .hero{top:calc(88 * var(--u));bottom:calc(40 * var(--u));padding:0 calc(12 * var(--u)) max(calc(26 * var(--u)), 5vh)}
+  .tag{font-size:min(calc(110 * var(--au)), 12.5vw, 48px);line-height:1.02;letter-spacing:-0.035em;
+    margin-top:max(calc(20 * var(--u)), 3vh);text-wrap:balance}
+  .tag span{display:block}
+  .btns{flex-direction:column;align-items:stretch;flex-wrap:nowrap;width:min(100%, calc(340 * var(--u)));
+    margin-top:max(calc(24 * var(--u)), 3.6vh);gap:calc(10 * var(--u))}
+  .btn{height:calc(52 * var(--u));--h:calc(52 * var(--u))}
+  .fx.b2 .f{justify-content:center}
+}
+
+/* ==================================================================
+   MOBILE ARCHITECTURE — LANDSCAPE  (height ≤540px, width ≤1040px)
+   Height is the scarce axis, so instead of a squeezed column the
+   wordmark sits beside a compact text column (tagline over the stacked
+   actions). Grid areas — DOM and reading order unchanged.
+   ================================================================== */
+@media (orientation: landscape) and (max-height: 540px) and (max-width: 1040px){
+  :root{
+    --u: clamp(0.86px, calc(var(--vh) / 430), 0.95px);
+    --au: min(calc((var(--vh) - calc(150 * var(--u))) / 410), calc((100vw - calc(22 * var(--u)) - calc(48 * var(--u)) - calc(300 * var(--u)) - calc(36 * var(--u))) / 900));
+  }
+  .menu{grid-template-columns:repeat(3, 1fr);width:min(calc(600 * var(--u)), calc(100% - calc(48 * var(--u))));top:calc(74 * var(--u))}
+  .menu a{height:calc(44 * var(--u))}
+  .hero{top:calc(70 * var(--u));bottom:calc(40 * var(--u));padding:0 calc(24 * var(--u)) calc(16 * var(--u));display:grid;
+    grid-template-areas:"art tag" "art btns";grid-template-columns:auto auto;grid-template-rows:auto auto;
+    align-content:center;justify-content:center;align-items:center;column-gap:calc(36 * var(--u))}
+  .art{grid-area:art}
+  .tag{grid-area:tag;align-self:end;margin:0 0 calc(14 * var(--u));
+    font-size:min(calc(55 * 1.3 * var(--au)), 40px);letter-spacing:calc(-1.9 * 1.3 * var(--au));line-height:1.02}
+  .tag span{display:block}
+  .btns{grid-area:btns;align-self:start;margin-top:0;flex-direction:column;align-items:stretch;flex-wrap:nowrap;gap:calc(8 * var(--u))}
+  .btn{height:calc(44 * var(--u));--h:calc(44 * var(--u))}
+  .fx.b2 .f{justify-content:center}
+}
+
+/* narrow landscape phones (≤740px): measured crossover — beside-layout
+   would shrink the wordmark below the actions, so keep the wordmark on
+   top with a one-line tagline and the actions as a compact pair. */
+@media (orientation: landscape) and (max-height: 540px) and (max-width: 740px){
+  :root{ --au: min(calc((var(--vh) - calc(236 * var(--u))) / 410), calc((100vw - calc(22 * var(--u)) - calc(60 * var(--u))) / 900)); }
+  .hero{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 calc(24 * var(--u)) calc(18 * var(--u))}
+  .tag{align-self:center;margin:calc(8 * var(--u)) 0 0;font-size:calc(55 * 1.2 * var(--au));letter-spacing:calc(-1.9 * 1.2 * var(--au))}
+  .tag span{display:inline-block}
+  .btns{align-self:center;flex-direction:row;align-items:center;margin-top:calc(12 * var(--u));gap:calc(10 * var(--u))}
+  .btn{height:calc(44 * var(--u));--h:calc(44 * var(--u))}
+  .fx.b1 .f{padding-left:calc(26 * var(--u));padding-right:calc(26 * var(--u))}
+  .fx.b2 .f{padding:var(--fpt) calc(24 * var(--u)) 0 calc(26 * var(--u))}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .track{animation:none}
+  .menu,.plus svg,.fx .cube,.fx .face,.plus .pl,.plus .pv,.plus .bgr path{transition:none}
+  .logo:hover .lg-spin{animation:none}
+}

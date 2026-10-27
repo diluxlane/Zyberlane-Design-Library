@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="/previews/REF-072/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1a2b">
+<title>Camper — Overnight Camp</title>
+<link rel="preload" href="assets/fonts/gelasio-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/outfit-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/outfit-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/outfit-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/outfit-700.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:'GelasioX';src:url(assets/fonts/gelasio-700.woff2) format('woff2');font-weight:700;font-style:normal;font-display:block}
+@font-face{font-family:'OutfitX';src:url(assets/fonts/outfit-400.woff2) format('woff2');font-weight:400;font-style:normal;font-display:block}
+@font-face{font-family:'OutfitX';src:url(assets/fonts/outfit-500.woff2) format('woff2');font-weight:500;font-style:normal;font-display:block}
+@font-face{font-family:'OutfitX';src:url(assets/fonts/outfit-600.woff2) format('woff2');font-weight:600;font-style:normal;font-display:block}
+@font-face{font-family:'OutfitX';src:url(assets/fonts/outfit-700.woff2) format('woff2');font-weight:700;font-style:normal;font-display:block}
+
+:root{
+  --orange:#ec4f30;
+  --orange-hi:#f15a3c;
+  --underline:#7e80d7;
+  --ink:#ffffff;
+  --ink-soft:rgba(255,255,255,.92);
+  --rule:rgba(255,255,255,.92);
+  --night:#0b1a2b;
+  /* measured type + layout constants (design px on a 1280x960 canvas) */
+  --h1-size:104.64;  --h1-ls:1.72;   --h1-lh:101;   --h1-off:2.1;
+  --p-size:16.6;    --p-lh:24.7;     --p-w:322;       --p-gap:32;
+  --btn-gap:30;  --btn-w:178;         --btn-h:51;          --btn-size:17.48;
+  --nav-size:13.79;--nav-gap:93.9;--nav-shift:3;
+  --logo-size:23.34; --logo-shift:1;
+  --su-size:14.34;  --su-w:122;          --su-h:41;           --su-bw:1.5;
+  --head-top:25; --head-left:65.6; --head-right:69;
+  --ul-w:37; --ul-h:2; --ul-top:31.5;
+  --u:1;
+  --hero-top:272px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:var(--night)}
+body{overflow:hidden;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
+img{display:block}
+a{text-decoration:none;color:inherit}
+
+#app{position:fixed;inset:0;overflow:hidden;background:var(--night)}
+
+/* ---------- background ---------- */
+#stage{position:absolute;top:0;left:0;width:1280px;height:960px;transform-origin:0 0;
+       transform:translate(var(--tx,0px),var(--ty,0px)) scale(var(--s,1));will-change:transform}
+#bg{width:1280px;height:960px;user-select:none;-webkit-user-drag:none}
+
+/* ---------- crop scrim (0 at the reference 1280x960 framing) ---------- */
+#topscrim{position:absolute;left:0;right:0;top:0;height:calc(178px * var(--u));pointer-events:none;
+  opacity:var(--scrim,0);
+  background:linear-gradient(180deg,rgba(8,17,29,.88) 0%,rgba(8,17,29,.52) 42%,rgba(8,17,29,.18) 74%,rgba(8,17,29,0) 100%)}
+#app[data-mode="compact"] #topscrim{height:132px;opacity:.5}
+
+/* ---------- header ---------- */
+#masthead{position:absolute;top:calc(var(--head-top) * 1px * var(--u));left:calc(var(--head-left) * 1px * var(--u));right:calc(var(--head-right) * 1px * var(--u));
+          display:flex;align-items:center;justify-content:space-between;gap:calc(24px * var(--u))}
+.logo{font-family:'OutfitX','Century Gothic','Poppins',system-ui,sans-serif;font-weight:700;
+      font-size:calc(var(--logo-size) * 1px * var(--u));line-height:calc(var(--su-h) * 1px * var(--u));
+      transform:translateY(calc(var(--logo-shift) * 1px * var(--u)));
+      color:var(--ink);white-space:nowrap}
+.cluster{display:flex;align-items:center;gap:calc(var(--nav-gap) * 1px * var(--u))}
+.links{display:flex;align-items:center;gap:calc(var(--nav-gap) * 1px * var(--u))}
+.links a{font-family:'OutfitX','Century Gothic','Poppins',system-ui,sans-serif;font-weight:600;
+         font-size:calc(var(--nav-size) * 1px * var(--u));line-height:calc(var(--su-h) * 1px * var(--u));color:var(--ink-soft);
+         transform:translateY(calc(var(--nav-shift) * 1px * var(--u)));
+         white-space:nowrap;position:relative}
+.links a.is-active{color:var(--ink)}
+.links a.is-active::after{content:"";position:absolute;left:50%;transform:translateX(-50%);
+   top:calc(var(--ul-top) * 1px * var(--u));width:calc(var(--ul-w) * 1px * var(--u));height:calc(var(--ul-h) * 1px * var(--u));background:var(--underline)}
+.signup{font-family:'OutfitX','Century Gothic','Poppins',system-ui,sans-serif;font-weight:500;
+   font-size:calc(var(--su-size) * 1px * var(--u));color:var(--ink-soft);white-space:nowrap;
+   display:flex;align-items:center;justify-content:center;
+   width:calc(var(--su-w) * 1px * var(--u));height:calc(var(--su-h) * 1px * var(--u));
+   border:calc(var(--su-bw) * 1px * var(--u)) solid var(--rule);border-radius:0;
+   transition:background-color .18s ease,color .18s ease}
+@media (hover:hover){.signup:hover{background:var(--rule);color:var(--night)}}
+
+/* ---------- hero ---------- */
+#hero{position:absolute;left:calc(72px * var(--u));top:var(--hero-top);width:calc(620px * var(--u))}
+#hero h1 .ln,#hero h1 .ln>span{display:block}
+#hero h1{font-family:'GelasioX',Georgia,'Times New Roman',serif;font-weight:700;
+   font-size:calc(var(--h1-size) * 1px * var(--u));line-height:calc(var(--h1-lh) * 1px * var(--u));
+   letter-spacing:calc(var(--h1-ls) * 1px * var(--u));color:var(--ink);
+   margin-top:calc(var(--h1-off) * -1px * var(--u))}
+#hero p{font-family:'OutfitX','Century Gothic','Poppins',system-ui,sans-serif;font-weight:400;
+   font-size:calc(var(--p-size) * 1px * var(--u));line-height:calc(var(--p-lh) * 1px * var(--u));color:var(--ink-soft);
+   width:calc(var(--p-w) * 1px * var(--u));margin-top:calc(var(--p-gap) * 1px * var(--u))}
+.explore{display:flex;align-items:center;justify-content:center;
+   width:calc(var(--btn-w) * 1px * var(--u));height:calc(var(--btn-h) * 1px * var(--u));margin-top:calc(var(--btn-gap) * 1px * var(--u));
+   background:var(--orange);color:var(--ink);
+   font-family:'OutfitX','Century Gothic','Poppins',system-ui,sans-serif;font-weight:400;
+   font-size:calc(var(--btn-size) * 1px * var(--u));
+   transition:background-color .18s ease,transform .18s ease}
+@media (hover:hover){.explore:hover{background:var(--orange-hi)}}
+.explore:active{transform:translateY(1px)}
+
+:where(a):focus-visible{outline:calc(2px * var(--u)) solid #fff;outline-offset:calc(3px * var(--u))}
+
+/* ============================================================================
+   RESPONSIVE ARCHITECTURE
+   Three states, all driven by the same tokens and the same markup.
+
+   exact    the reference composition, art-locked. Holds while the UI unit stays
+            above U_DESK (0.874) - the point where nav type would fall under 12px
+            and body type under 14.5px. That is vw >= ~1120px, not a device width.
+   tablet   the same composition and the same spacing rhythm, re-scaled on a
+            tablet unit with a legibility floor, art crop biased so the fire and
+            the dog stay in frame, and the nav collapsed into a burger panel.
+   compact  reflowed for phones, below the width where the two-line headline can
+            no longer hold its measure (~560px).
+   ========================================================================== */
+
+/* ---------- collapsed navigation: tablet + compact ---------- */
+#menu-btn{display:none}
+#app:not([data-mode="exact"]) .cluster{
+   position:fixed;top:0;right:0;bottom:0;z-index:6;width:min(64vw,360px);
+   flex-direction:column;align-items:flex-start;justify-content:center;
+   gap:clamp(24px,3.6vh,38px);padding:0 clamp(26px,4.4vw,44px);
+   background:rgba(9,20,34,.93);backdrop-filter:blur(16px) saturate(140%);
+   -webkit-backdrop-filter:blur(16px) saturate(140%);border-left:1px solid rgba(255,255,255,.14);
+   transform:translateX(102%);visibility:hidden;
+   transition:transform .34s cubic-bezier(.4,0,.2,1),visibility 0s linear .34s}
+#app:not([data-mode="exact"])[data-menu="open"] .cluster{transform:none;visibility:visible;transition-delay:0s}
+#app:not([data-mode="exact"]) .links{flex-direction:column;align-items:flex-start;gap:clamp(22px,3.2vh,34px)}
+#app:not([data-mode="exact"]) .links a{font-size:clamp(19px,2.3vw,23px);line-height:1.2;color:var(--ink);transform:none}
+#app:not([data-mode="exact"]) .links a.is-active::after{top:calc(100% + 8px);left:0;transform:none;width:36px;height:2px}
+#app:not([data-mode="exact"]) .signup{width:clamp(126px,17vw,158px);height:clamp(44px,5.2vh,52px);
+   font-size:clamp(15px,1.9vw,17px);border-width:1.5px;margin-top:clamp(4px,1.2vh,14px)}
+#app:not([data-mode="exact"]) #menu-btn{display:flex;flex-direction:column;justify-content:center;
+   width:calc(34px * var(--u));height:calc(34px * var(--u));gap:calc(5px * var(--u));
+   padding:0 calc(3px * var(--u));background:none;border:0;cursor:pointer;z-index:8}
+#app:not([data-mode="exact"]) #menu-btn span{display:block;height:calc(1.6px * var(--u));background:var(--ink);
+   border-radius:2px;transition:transform .28s ease,width .28s ease}
+#app:not([data-mode="exact"]) #menu-btn span:nth-child(1){width:calc(28px * var(--u))}
+#app:not([data-mode="exact"]) #menu-btn span:nth-child(2){width:calc(20px * var(--u))}
+#app:not([data-mode="exact"])[data-menu="open"] #menu-btn span:nth-child(1){transform:translateY(calc(3.3px * var(--u))) rotate(45deg);width:calc(24px * var(--u))}
+#app:not([data-mode="exact"])[data-menu="open"] #menu-btn span:nth-child(2){transform:translateY(calc(-3.3px * var(--u))) rotate(-45deg);width:calc(24px * var(--u))}
+/* touch targets: 44px minimum, added as an invisible hit area so nothing moves */
+#app:not([data-mode="exact"]) #menu-btn{position:relative}
+#app:not([data-mode="exact"]) #menu-btn::before,
+#app:not([data-mode="exact"]) .links a::before{content:"";position:absolute;left:50%;top:50%;
+   width:max(100%,44px);height:max(100%,44px);transform:translate(-50%,-50%)}
+#app:not([data-mode="exact"]) .links a::before{width:max(100% + 32px,44px)}
+#app:not([data-mode="exact"]) #scrim{position:fixed;inset:0;background:rgba(5,12,22,.5);opacity:0;
+   pointer-events:none;transition:opacity .3s ease;z-index:5}
+#app:not([data-mode="exact"])[data-menu="open"] #scrim{opacity:1;pointer-events:auto}
+
+/* ---------- tablet: reference composition, tablet unit ---------- */
+/* nothing else to declare - the exact-mode rules already scale off --u */
+
+/* ---------- mobile ----------------------------------------------------------
+   Below 600px the tablet unit can no longer hold the headline measure, so the
+   composition is rebuilt in normal flow: a two-row grid pins the header to the
+   top and gives the hero the night-sky half of the frame, leaving the fire and
+   the dog to own the lower half. Spacing runs off one fluid token that watches
+   both axes, so landscape phones tighten without anything being scaled down.
+   The crop anchor moves to 72%: measured, that is the point where the dog's
+   head comes into frame while the headline still sits on dark sky (p85 27).
+   --------------------------------------------------------------------------- */
+#app[data-mode="compact"]{
+   --mpad:clamp(22px,5.6vw,34px);                      /* outer margin        */
+   --mgap:clamp(18px,min(6vw,3.2vh),34px);             /* rhythm inside hero  */
+   display:grid;grid-template-rows:auto 1fr}
+#app[data-mode="compact"] #stage{width:100%;height:100%;transform:none}
+#app[data-mode="compact"] #bg{width:100%;height:100%;object-fit:cover;object-position:72% 50%}
+/* the same scrim the cropped desktop framing uses, extended to cover the mobile
+   text band: measured, it lifts the worst-case backdrop behind the paragraph
+   from 4.5:1 to ~6:1 and fades out well above the fire */
+#app[data-mode="compact"] #topscrim{height:clamp(240px,52vh,520px);opacity:.55}
+
+#app[data-mode="compact"] #masthead{position:relative;top:auto;left:auto;right:auto;
+   margin:calc(clamp(14px,min(4.4vw,2.6vh),28px) + env(safe-area-inset-top)) var(--mpad) 0}
+#app[data-mode="compact"] .logo{font-size:clamp(23px,min(4.4vw,5.4vh),34px);line-height:1.2;letter-spacing:0}
+#app[data-mode="compact"] #menu-btn{width:clamp(34px,6vw,44px);height:clamp(34px,6vw,44px);gap:5px;padding:0 3px}
+#app[data-mode="compact"] #menu-btn span{height:1.6px}
+#app[data-mode="compact"] #menu-btn span:nth-child(1){width:28px}
+#app[data-mode="compact"] #menu-btn span:nth-child(2){width:20px}
+#app[data-mode="compact"][data-menu="open"] #menu-btn span:nth-child(1){transform:translateY(3.3px) rotate(45deg);width:24px}
+#app[data-mode="compact"][data-menu="open"] #menu-btn span:nth-child(2){transform:translateY(-3.3px) rotate(-45deg);width:24px}
+
+#app[data-mode="compact"] #hero{position:relative;top:auto;left:auto;right:auto;width:auto;
+   align-self:start;margin:clamp(20px,min(7.4vh,8vw),72px) var(--mpad)
+   calc(clamp(18px,3vh,30px) + env(safe-area-inset-bottom))}
+#app[data-mode="compact"] #hero h1{font-size:clamp(40px,min(14.2vw,15vh),112px);
+   line-height:.96;letter-spacing:0;margin-top:0;margin-left:-.02em}
+#app[data-mode="compact"] #hero p{font-size:clamp(14px,min(3.9vw,2.3vh),19px);line-height:1.47;
+   width:min(100%,38ch);margin-top:var(--mgap)}
+#app[data-mode="compact"] .explore{width:clamp(150px,44vw,196px);height:clamp(46px,min(12vw,11vh),58px);
+   font-size:clamp(15px,min(4vw,3.4vh),18px);margin-top:var(--mgap)}
+
+/* Landscape phones: the viewport is wide and short, so the hero takes a left
+   column - the same left-anchored relationship the desktop composition has -
+   instead of eating the whole height, and the fire and dog stay visible beside it. */
+@media (orientation:landscape) and (max-height:520px){
+  #app[data-mode="compact"]{--mgap:clamp(14px,2.6vh,24px)}
+  #app[data-mode="compact"] #hero{max-width:min(60vw,460px);margin-top:clamp(16px,5vh,40px)}
+  #app[data-mode="compact"] #hero h1{font-size:clamp(38px,min(11vw,13.5vh),72px)}
+  #app[data-mode="compact"] #hero p{width:min(100%,36ch)}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01ms !important}}
+</style>
+</head>
+<body>
+<div id="app" data-mode="exact" data-menu="closed">
+  <div id="stage"><img id="bg" src="assets/images/moonlit-winter-camp.jpg" alt="Moonlit winter camp: a dog watching a campfire beside cabins below snowy peaks" width="1280" height="960"></div>
+
+  <div id="topscrim"></div>
+  <div id="scrim"></div>
+
+  <header id="masthead">
+    <a class="logo" href="#">Camper</a>
+    <div class="cluster" id="nav-panel">
+      <nav class="links" id="links" aria-label="Main">
+        <a class="is-active" href="#" aria-current="page">Home</a>
+        <a href="#">Travel</a>
+        <a href="#">Location</a>
+        <a href="#">Companions</a>
+      </nav>
+      <a class="signup" href="#">Sign up</a>
+    </div>
+    <button id="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-panel"><span></span><span></span></button>
+  </header>
+
+  <section id="hero">
+    <h1><span class="ln"><span>Overnight</span></span><span class="ln"><span>Camp</span></span></h1>
+    <p>Campers enjoy fun evening programs and sleep in our cabins. All cabins are separated by both age and gender ensuring a fun atmosphere.</p>
+    <a class="explore" href="#">Explore</a>
+  </section>
+</div>
+
+<script>
+(function(){
+  var app=document.getElementById('app'), root=document.documentElement;
+  var hero=document.getElementById('hero'), mast=document.getElementById('masthead');
+  /* ---- design-derived constants (all measured off the reference canvas) ---- */
+  var DW=1280, DH=960;        // reference canvas
+  var HERO_H=411;             // headline ink-top -> CTA bottom
+  var HEAD_H=66;              // header top offset (25) + header height (41)
+  var UI_MIN_H=560;           // header + hero + breathing room, in design px
+  // the desktop architecture is legible while nav type >= 12px (13.79 x u) and
+  // body type >= 14.5px (16.6 x u). Both bottom out at u = 0.874, i.e. vw ~ 1120.
+  var U_DESK=0.874;
+  // the tablet unit obeys the same 14.5px body floor as the desktop one, so it
+  // bottoms out at 0.873. "Overnight" is then 551 x 0.873 = 481px, which stops
+  // holding its measure inside the side margins below ~600px of viewport.
+  var PHONE_W=600;
+  var TAB_REF=840;             // tablet unit: the headline keeps ~66% of the width
+  var T_MIN=0.873, T_MAX=1.08; // legibility floor / ceiling for the tablet unit
+
+  function layout(){
+    var vw=window.innerWidth, vh=window.innerHeight;
+    if(window.visualViewport){ vw=window.visualViewport.width; vh=window.visualViewport.height; }
+
+    // s*k reduces to vw/DW, so the UI unit the desktop architecture would get is
+    // exactly vw/DW - that is what decides which architecture can still be used.
+    var uw = vw/DW;
+    // the tablet unit, floored for legibility and capped by the vertical room
+    var ut = Math.min(Math.min(Math.max(vw/TAB_REF, T_MIN), T_MAX), vh/UI_MIN_H);
+    var mode = uw >= U_DESK ? 'exact'
+             : (vw >= PHONE_W && ut >= T_MIN) ? 'tablet'   // short panes fall through
+             : 'compact';
+    app.dataset.mode = mode;
+
+    if(mode==='compact'){
+      // the mobile architecture is laid out entirely in CSS - nothing to position
+      root.style.setProperty('--u',1);
+      hero.style.transform='';
+      return;
+    }
+
+    // cover-scale the artwork: never a band at any edge
+    var s = Math.max(vw/DW, vh/DH);
+    // visible slice of the design canvas, in design units
+    var visW = Math.min(DW, vw/s), visH = Math.min(DH, vh/s);
+    var u, bias=0;
+
+    if(mode==='exact'){
+      // shrink the UI only when the canvas is cropped horizontally, and never
+      // let it outgrow the vertical room it needs
+      var k = Math.min(1, visW/DW);
+      u = Math.min(s*k, vh/UI_MIN_H);
+    }else{
+      u = ut;
+      // a narrow canvas crops the sides, so bias the crop to keep the fire and
+      // the dog - the composition's focal points - inside the frame
+      bias = 0.22*(1 - visW/DW);
+    }
+
+    var tx = vw/2 - DW*(0.5+bias)*s, ty = (vh - DH*s)/2;
+    tx = Math.min(0, Math.max(vw - DW*s, tx));
+    root.style.setProperty('--s', s);
+    root.style.setProperty('--tx', tx+'px');
+    root.style.setProperty('--ty', ty+'px');
+    root.style.setProperty('--u', u);
+    // the moon and the peaks climb into the header band only when the art is cropped
+    // vertically; at the reference framing (visH === 960) this is exactly 0.
+    root.style.setProperty('--scrim', (Math.min(1,Math.max(0,(DH - visH)/240))*0.45).toFixed(4));
+
+    // one vertical rule for both architectures: the reference share of the
+    // leftover height (272/549 at 1280x960). On tablet it also lands the
+    // headline on the dark slope rather than the lit peaks.
+    var top = Math.max(0,(vh - HERO_H*u))*0.495449;
+    if(mode==='exact'){
+      hero.style.transform='';
+    }else{
+      top = Math.min(Math.max(top, HEAD_H*u + 28*u), vh - HERO_H*u - 28*u);
+    }
+    root.style.setProperty('--hero-top', top + 'px');
+    if(mode!=='exact') fitHero(vh,u);
+  }
+
+  // last-resort guard for short windows (phone landscape, small panes):
+  // scale the hero group down rather than letting it run past the fold
+  function fitHero(vh,u){
+    hero.style.transform='';
+    var headBottom = mast.getBoundingClientRect().bottom;
+    var h = hero.getBoundingClientRect().height;
+    var avail = vh - headBottom - 30*u;
+    var f = 1;
+    if(h > avail){ f = Math.max(0.55, avail/h); hero.style.transformOrigin='left top'; hero.style.transform='scale('+f+')'; }
+    var cur = parseFloat(getComputedStyle(root).getPropertyValue('--hero-top')) || 0;
+    var top = Math.min(cur, vh - h*f - 18*u);
+    root.style.setProperty('--hero-top', Math.max(headBottom + 14*u, top) + 'px');
+  }
+
+  var tick=false;
+  function onResize(){ if(tick) return; tick=true; requestAnimationFrame(function(){ tick=false; layout(); }); }
+  window.addEventListener('resize',onResize,{passive:true});
+  window.addEventListener('orientationchange',onResize,{passive:true});
+  if(window.visualViewport){ window.visualViewport.addEventListener('resize',onResize,{passive:true}); }
+
+  /* =========================================================================
+     ENTRANCE - one timeline, once, then the page is completely static.
+
+     The artwork is the stage and never moves: the interface arrives onto a
+     scene that is already there. Three behaviours, no more:
+       A  masked line rise   the headline, each line sliding up behind a fixed
+                             window - the reveal direction echoes the stacked,
+                             left-aligned type
+       B  soft rise          logo, nav, Sign up, paragraph - same upward
+                             direction as A, a fraction of the distance
+       C  edge wipe          the Explore block, drawn left to right along the
+                             composition's left anchor. A solid colour field
+                             reads better drawn than nudged.
+     Initial states are set synchronously here, before first paint, so there is
+     no flash; if this script never runs, the page simply renders finished.
+     ========================================================================= */
+  (function entrance(){
+    var EXPO='cubic-bezier(.16,1,.3,1)', SOFT='cubic-bezier(.22,.75,.2,1)';
+    var q=function(s){return document.querySelector(s);};
+    var lines=[].slice.call(document.querySelectorAll('#hero h1 .ln')),
+        para=q('#hero p'), cta=q('.explore'), logo=q('.logo'), signup=q('.signup'),
+        links=[].slice.call(document.querySelectorAll('.links a'));
+    if(!lines.length||!para||!cta) return;
+
+    var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var touched=[], anims=[], wd;
+    function set(el,p,v){ el.style[p]=v; if(touched.indexOf(el)<0) touched.push(el); }
+    function done(){
+      clearTimeout(wd);
+      touched.forEach(function(el){ el.style.opacity=''; el.style.transform='';
+        el.style.clipPath=''; el.style.webkitClipPath=''; });
+      anims.forEach(function(a){ try{ a.cancel(); }catch(e){} });
+      anims.length=0; touched.length=0;            /* nothing left running */
+    }
+    function play(el,frames,opt){ var a=el.animate(frames,opt); anims.push(a); return a; }
+
+    try{
+      if(reduce){
+        /* no travel, just a brief settle */
+        [mast,hero].forEach(function(el){ set(el,'opacity','0'); });
+        [mast,hero].forEach(function(el){
+          play(el,[{opacity:0},{opacity:1}],{duration:240,easing:'linear',fill:'both'});
+        });
+      }else{
+        /* the header group: whichever of it is actually on screen in this mode */
+        var head = app.dataset.mode==='exact'
+                 ? [logo].concat(links,[signup])
+                 : [logo, document.getElementById('menu-btn')];
+        head.forEach(function(el){ if(el){ set(el,'opacity','0'); set(el,'transform','translateY(9px)'); } });
+        lines.forEach(function(ln){
+          set(ln,'clipPath','inset(-40% -8% -8% -8%)');        /* fixed window  */
+          set(ln.firstElementChild,'transform','translateY(112%)');/* below it   */
+        });
+        set(para,'opacity','0'); set(para,'transform','translateY(12px)');
+        set(cta,'clipPath','inset(0 100% 0 0)');
+      }
+    }catch(e){ done(); return; }
+
+    function run(){
+      try{
+        if(!reduce){
+          head.forEach(function(el,i){
+            if(!el) return;
+            play(el,[{opacity:0,transform:'translateY(9px)'},{opacity:1,transform:'none'}],
+                 {duration:540,delay:90+i*55,easing:SOFT,fill:'both'});
+          });
+          lines.forEach(function(ln,i){
+            play(ln.firstElementChild,[{transform:'translateY(112%)'},{transform:'none'}],
+                 {duration:900,delay:380+i*120,easing:EXPO,fill:'both'});
+          });
+          play(para,[{opacity:0,transform:'translateY(12px)'},{opacity:1,transform:'none'}],
+               {duration:680,delay:860,easing:SOFT,fill:'both'});
+          play(cta,[{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0 0 0)'}],
+               {duration:600,delay:1060,easing:EXPO,fill:'both'});
+        }
+        Promise.all(anims.map(function(a){return a.finished;})).then(done,done);
+      }catch(e){ done(); }
+    }
+
+    wd=setTimeout(done,3500);                       /* safety net, cleared on finish */
+    /* the scene is the stage, so it has to be painted before the cast walks on:
+       wait for the fonts and the artwork to decode, capped so a slow decode
+       can never hold the page hostage */
+    var bg=document.getElementById('bg');
+    var ready=Promise.all([document.fonts.ready,
+                           bg&&bg.decode?bg.decode().catch(function(){}):Promise.resolve()]);
+    Promise.race([ready, new Promise(function(r){ setTimeout(r,1000); })])
+           .then(function(){ requestAnimationFrame(run); }, function(){ requestAnimationFrame(run); });
+  })();
+
+  var btn=document.getElementById('menu-btn'), scrim=document.getElementById('scrim');
+  function setMenu(open){ app.dataset.menu = open?'open':'closed'; btn.setAttribute('aria-expanded',open?'true':'false'); }
+  btn.addEventListener('click',function(){ setMenu(app.dataset.menu!=='open'); });
+  scrim.addEventListener('click',function(){ setMenu(false); });
+  document.getElementById('links').addEventListener('click',function(e){ if(e.target.tagName==='A') setMenu(false); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') setMenu(false); });
+
+  layout();
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(layout); }
+})();
+</script>
+</body>
+</html>

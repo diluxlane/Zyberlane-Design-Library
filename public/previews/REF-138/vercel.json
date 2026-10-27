@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/previews/REF-138/mobile",
+      "destination": "/previews/REF-138/mobile.html"
+    },
+    {
+      "source": "/img",
+      "destination": "/previews/REF-138/index.html"
+    },
+    {
+      "source": "/",
+      "destination": "/previews/REF-138/index.html"
+    }
+  ]
+}

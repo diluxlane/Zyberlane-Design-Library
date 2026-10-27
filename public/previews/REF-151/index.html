@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-151/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#171112">
+<title>Velora AI — Sign in</title>
+<script>
+if (Element.prototype.animate && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const entrance = { animations: [] };
+  document.documentElement.classList.add('entrance-pending');
+  entrance.guard = setTimeout(() => {
+    document.documentElement.classList.remove('entrance-pending');
+    entrance.animations.forEach(animation => animation.cancel());
+  }, 4000);
+  window.__veloraEntrance = entrance;
+}
+</script>
+<style>
+@font-face{font-family:'Jost';font-weight:100 900;font-display:block;src:url(assets/jost.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Sans';font-weight:100 700;font-display:block;src:url(assets/ibm-plex-sans.woff2) format('woff2')}
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  /* 1 design px (reference = 1505 x 1045). Whole composition scales off this unit. */
+  --vh:1vh;
+  --u:min(calc(var(--vh) * 100 / 980), calc(clamp(32.0266vw, 32.0266vw + (1505px - 100vw) * .35, 42vw) / 482));
+  --panel:482;
+  --ink:#ffffff;
+  --btn-fill:rgba(36,36,38,.92); --btn-hover:rgba(48,48,51,.94);
+  --badge-fill:rgba(22,22,24,.97);
+  color-scheme:dark;
+}
+@supports (height:1dvh){:root{--vh:1dvh}}
+html,body{margin:0;height:100%;background:#171112;overflow:hidden}
+body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision}
+.stage{position:fixed;inset:0;overflow:hidden;background:#171112}
+.photo{position:absolute;inset:0;background:#e9cf1a url(assets/hero.jpg) 66% 30%/cover no-repeat}
+.panel{position:absolute;left:0;top:0;bottom:0;width:calc(var(--u) * 482);
+  background:#1a1314 url(assets/panel-texture.png) 0 0/100% 100% no-repeat;overflow:hidden;
+  box-shadow:inset calc(var(--u) * -1) 0 0 rgba(0,0,10,.82),inset calc(var(--u) * -2) 0 0 rgba(255,240,225,.05)}
+.stage::after{content:"";position:absolute;top:0;bottom:0;left:calc(var(--u) * 482);width:calc(var(--u) * 1);background:rgba(8,4,14,.58);pointer-events:none}
+.content{position:absolute;left:0;top:50%;width:calc(var(--u) * 482);height:calc(var(--u) * 1045);transform:translateY(-50%)}
+.content>*,.btn>*,.badge>*,.logo,.btn,.badge{position:absolute}
+.content>h1,.content>nav{display:contents;margin:0}
+.logo{left:calc(var(--u) * 149);top:calc(var(--u) * 134);width:calc(var(--u) * 186);height:calc(var(--u) * 22.5);fill:#fff;overflow:visible;filter:drop-shadow(0 0 calc(var(--u) * 0.8) rgba(0,0,0,.6))}
+.tx{margin:0;white-space:nowrap;line-height:1;text-decoration:none;font-kerning:normal;text-shadow:0 0 calc(var(--u) * 0.8) rgba(0,0,0,.6)}
+.ico{display:block;overflow:visible;filter:drop-shadow(0 0 calc(var(--u) * 0.8) rgba(0,0,0,.6))}
+.btn{left:calc(var(--u) * 77);width:calc(var(--u) * 330);height:calc(var(--u) * 57.8);border-radius:calc(var(--u) * 12);background:var(--btn-fill);
+  -webkit-backdrop-filter:blur(calc(var(--u) * 18)) saturate(.6);backdrop-filter:blur(calc(var(--u) * 18)) saturate(.6);
+  box-shadow:inset 0 calc(var(--u) * 1) 0 rgba(255,255,255,.012);color:var(--ink);text-decoration:none;
+  transition:background-color .18s ease,transform .18s ease}
+.badge{top:calc(var(--u) * 817.2);width:calc(var(--u) * 185.5);height:calc(var(--u) * 59);border-radius:calc(var(--u) * 8);background:var(--badge-fill);
+  -webkit-backdrop-filter:blur(calc(var(--u) * 12));backdrop-filter:blur(calc(var(--u) * 12));text-decoration:none;transition:background-color .18s ease}
+.btn:hover{background:var(--btn-hover)} .badge:hover{background:rgba(34,34,37,.97)}
+.btn:active{transform:scale(.99)}
+.btn:focus-visible,.badge:focus-visible,.tx:focus-visible{outline:2px solid #a6c2f7;outline-offset:2px}
+a.tx:hover{text-decoration:underline;text-underline-offset:.18em}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- tablet portrait: keep the split, give the panel 60% ---------- */
+@media (max-aspect-ratio:1/1) and (min-width:700px){
+  :root{--u:min(calc(var(--vh) * 100 / 960), calc(60vw / 482))}
+  .photo{background-position:64% 30%}
+}
+/* ---------- phones (portrait): full-bleed photo, panel becomes a frosted glass bottom sheet ---------- */
+@media (max-width:699px) and (min-height:521px), (max-aspect-ratio:1/1) and (max-width:699px){
+  :root{--sheet:783;
+    --u:min(calc((100vw - 32px) / 380), max(calc(var(--vh) * 76 / 783), min(.9px, calc(var(--vh) * 100 / 795))), 1.1px);
+    --sheetH:min(calc(var(--u) * var(--sheet) + env(safe-area-inset-bottom)), calc(var(--vh) * 100));
+    --strip:calc(var(--vh) * 100 - var(--sheetH) + var(--u) * 32);
+    --pw:max(175vw, calc(var(--strip) * 1.441));}
+  .photo{background-size:var(--pw) auto;background-position:calc(50vw - var(--pw) * .647) calc(var(--strip) * .5 - var(--pw) * .229)}
+  .panel{top:auto;left:0;right:0;bottom:0;width:auto;height:var(--sheetH);overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;
+    border-radius:calc(var(--u) * 30) calc(var(--u) * 30) 0 0;
+    background:linear-gradient(180deg,rgba(22,16,17,.74) 0%,rgba(25,18,19,.9) 40%,rgba(32,27,27,.97) 100%);
+    -webkit-backdrop-filter:blur(30px) saturate(1.1);backdrop-filter:blur(30px) saturate(1.1);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 -24px 60px rgba(0,0,0,.35)}
+  .stage::after{display:none}
+  .panel::before{content:"";position:absolute;left:50%;top:calc(var(--u) * 14);width:calc(var(--u) * 44);height:calc(var(--u) * 5);
+    margin-left:calc(var(--u) * -22);border-radius:99px;background:rgba(255,255,255,.2)}
+  .content{top:calc(var(--u) * -90);left:50%;transform:translateX(-50%);height:calc(var(--u) * 873)}
+  .g2{translate:0 calc(var(--u) * -30)} .g3{translate:0 calc(var(--u) * -70)}
+}
+/* ---------- short landscape (phones on their side): keep the split, let the panel scroll ---------- */
+@media (min-aspect-ratio:1/1) and (max-height:520px){
+  :root{--u:min(calc(46vw / 482), calc(var(--vh) * 100 / 520))}
+  .panel{overflow-y:auto;overscroll-behavior:contain}
+  .content{top:calc(var(--u) * -96);transform:none;height:calc(var(--u) * 1005)}
+  .photo{background-position:72% 26%}
+}
+@media (prefers-reduced-motion:reduce){.btn,.badge{transition:none}}
+
+/* The backgrounds never join the entrance; only foreground content is staged. */
+html.entrance-pending .logo{clip-path:inset(0 100% 0 0)}
+html.entrance-pending [data-k="signup"]{opacity:0;transform:translate3d(0,calc(var(--u) * 8),0)}
+html.entrance-pending .btn{opacity:0;transform:translate3d(calc(var(--u) * -12),0,0)}
+html.entrance-pending [data-k="help"],
+html.entrance-pending [data-k="privacy"],
+html.entrance-pending [data-k="terms"]{opacity:0}
+html.entrance-pending [data-k="now"]{opacity:0;transform:translate3d(0,calc(var(--u) * 6),0)}
+html.entrance-pending .badge{opacity:0;transform:translate3d(0,calc(var(--u) * 8),0)}
+</style>
+</head>
+<body>
+<main class="stage">
+  <div class="photo" role="img" aria-label="Woman in round sunglasses and an orange tropical shirt against a yellow and blue wall"></div>
+  <section class="panel" aria-labelledby="ttl">
+    <div class="content">
+      <h1 id="ttl"><span class="sr">Velora AI</span><svg class="logo" viewBox="149 134 186 22.5" aria-hidden="true" focusable="false">
+<path d="M149.8 134.7h6.2l6.8 13.9 6.8-13.9h6l-10 20.8h-5.4z"/>
+<path d="M177 134.7h20v4.3h-14.7v4h12.85v4h-12.85v3.9h14.75v4.6h-20z"/>
+<path d="M199.9 134.7h5.2v16.2h14v4.6h-19.2z"/>
+<path fill-rule="evenodd" d="M229.9 134.5h4.4a10 10 0 0 1 10 10v1a10 10 0 0 1-10 10h-4.4a10 10 0 0 1-10-10v-1a10 10 0 0 1 10-10zM231.1 138.8h1.9a6 6 0 0 1 6 6a6 6 0 0 1-6 6h-1.9a6 6 0 0 1-6-6a6 6 0 0 1 6-6z"/>
+<path d="M247 134.7h16.1a4.9 4.9 0 0 1 4.9 4.9v4.3a4.9 4.9 0 0 1-4.9 4.9h-16.3v-4.2h16.1v-3.1a2.5 2.5 0 0 0-2.5-2.5h-13.4z"/>
+<path d="M246.8 141.6h5.3v13.9h-5.3z"/>
+<path d="M257.3 148.6h6.4l5.3 6.9h-6.6z"/>
+<path id="vA" d="M278.2 134.7h5.2l10.2 20.8h-5.8l-7.1-14.6-7.1 14.6h-5.6zM279.5 147.9h10.2v4h-12.2z"/>
+<use href="#vA" x="33.45"/>
+<path d="M328 134.7h5.2v20.8h-5.2z"/>
+</svg></h1>
+      <p class="tx g2" data-k="signup" style="left:calc(var(--u) * 157.55);top:calc(var(--u) * 229.331);font-family:'Jost',system-ui,sans-serif;font-weight:393;font-size:calc(var(--u) * 18.395);letter-spacing:0;color:#ffffff">Sign up or Login with</p>
+      <nav aria-label="Sign-in providers">
+<a class="btn g2" href="#" aria-label="Continue with Canva" style="top:calc(var(--u) * 276.9)"><svg class="ico" viewBox="0 0 28 27.5" preserveAspectRatio="none" aria-hidden="true" focusable="false" style="left:calc(var(--u) * 13);top:calc(var(--u) * 15.1);width:calc(var(--u) * 28);height:calc(var(--u) * 27.5)"><circle cx="14" cy="13.75" r="13.75" fill="#fff"/>
+<path fill="none" stroke="#242426" stroke-width="2.7" stroke-linecap="round" d="M19 11.2C19.4 8 17.6 5.4 15.4 5.6 12.2 5.9 9.6 9.6 9.4 13.6 9.2 17.6 10.6 21.2 14.2 21.5 16.6 21.7 19.4 20.4 20.6 16.6"/></svg><span class="tx" data-k="canva" style="left:calc(var(--u) * 52.587);top:calc(var(--u) * 20.993);font-family:'Jost',system-ui,sans-serif;font-weight:428;font-size:calc(var(--u) * 15.718);letter-spacing:calc(var(--u) * 0.9);color:#ffffff">Canva</span></a>
+<a class="btn g2" href="#" aria-label="Continue with Google" style="top:calc(var(--u) * 353.4)"><svg class="ico" viewBox="90 368.25 27.5 27.5" preserveAspectRatio="none" aria-hidden="true" focusable="false" style="left:calc(var(--u) * 12.69);top:calc(var(--u) * 14.79);width:calc(var(--u) * 28.12);height:calc(var(--u) * 27.62)"><g fill="#fff"><path fill="none" stroke="#fff" stroke-width="5.75" d="M110.36 373.41A10.875 10.875 0 1 0 114.625 382.4"/><path d="M104 380h13.5v4.9H104z"/></g></svg><span class="tx" data-k="google" style="left:calc(var(--u) * 52.158);top:calc(var(--u) * 21.484);font-family:'Jost',system-ui,sans-serif;font-weight:388;font-size:calc(var(--u) * 15.922);letter-spacing:0;color:#ffffff">Google</span></a>
+<a class="btn g2" href="#" aria-label="Continue with Apple" style="top:calc(var(--u) * 429.9)"><svg class="ico" viewBox="3.864 2 16.226 20.001" preserveAspectRatio="none" aria-hidden="true" focusable="false" style="left:calc(var(--u) * 15.875);top:calc(var(--u) * 15.665);width:calc(var(--u) * 22.45);height:calc(var(--u) * 26.87)"><path fill="#fff" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg><span class="tx" data-k="apple" style="left:calc(var(--u) * 52.526);top:calc(var(--u) * 22.009);font-family:'Jost',system-ui,sans-serif;font-weight:398;font-size:calc(var(--u) * 15.974);letter-spacing:0;color:#ffffff">Apple</span></a>
+<a class="btn g2" href="#" aria-label="Continue with Microsoft" style="top:calc(var(--u) * 506.4)"><svg class="ico" viewBox="0 0 25 25" preserveAspectRatio="none" aria-hidden="true" focusable="false" style="left:calc(var(--u) * 14.19);top:calc(var(--u) * 15.475);width:calc(var(--u) * 24.62);height:calc(var(--u) * 25.25)"><g fill="#fff"><rect width="11.6" height="11.6"/><rect x="13.4" width="11.6" height="11.6"/><rect y="13.4" width="11.6" height="11.6"/><rect x="13.4" y="13.4" width="11.6" height="11.6"/></g></svg><span class="tx" data-k="microsoft" style="left:calc(var(--u) * 55.079);top:calc(var(--u) * 21.745);font-family:'Jost',system-ui,sans-serif;font-weight:412;font-size:calc(var(--u) * 16.028);letter-spacing:0;color:#ffffff">Microsoft</span></a>
+<a class="btn g2" href="#" aria-label="Continue with Email" style="top:calc(var(--u) * 582.9)"><svg class="ico" viewBox="0 0 22 18" preserveAspectRatio="none" aria-hidden="true" focusable="false" style="left:calc(var(--u) * 16.065);top:calc(var(--u) * 20.04);width:calc(var(--u) * 21.87);height:calc(var(--u) * 18.12)"><rect width="22" height="18" rx="1.2" fill="#fff"/><path d="M3.4 4.1 11 9.9l7.6-5.8" fill="none" stroke="#232326" stroke-width="1.7" stroke-linecap="square"/></svg><span class="tx" data-k="continue" style="left:calc(var(--u) * 56.858);top:calc(var(--u) * 22.541);font-family:'Jost',system-ui,sans-serif;font-weight:401;font-size:calc(var(--u) * 16.316);letter-spacing:0;color:#ffffff">Continue with Email</span></a>
+      </nav>
+      <a class="tx g2" data-k="help" style="left:calc(var(--u) * 194.617);top:calc(var(--u) * 669.939);font-family:'Jost',system-ui,sans-serif;font-weight:360;font-size:calc(var(--u) * 18.658);letter-spacing:0;color:#a6c2f7" href="#">Need help?</a>
+      <p class="tx g3" data-k="now" style="left:calc(var(--u) * 107.206);top:calc(var(--u) * 773.787);font-family:'IBM Plex Sans',system-ui,sans-serif;font-weight:489;font-size:calc(var(--u) * 18.447);letter-spacing:calc(var(--u) * 0.15);color:#ffffff">Now available on iOS &amp; Android</p>
+      <a class="badge g3" href="#" aria-label="Download on the App Store" style="left:calc(var(--u) * 52.75)"><svg class="ico" viewBox="3.864 2 16.226 20.001" preserveAspectRatio="none" aria-hidden="true" focusable="false" style="left:calc(var(--u) * 23.375);top:calc(var(--u) * 14.61);width:calc(var(--u) * 25.05);height:calc(var(--u) * 30.58)"><path fill="#fff" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg><span class="tx" data-k="download" style="left:calc(var(--u) * 58.95);top:calc(var(--u) * 12.797);font-family:'IBM Plex Sans',system-ui,sans-serif;font-weight:494;font-size:calc(var(--u) * 12.264);letter-spacing:0;color:#ffffff">Download on the</span><span class="tx" data-k="appstore" style="left:calc(var(--u) * 58.428);top:calc(var(--u) * 29.247);font-family:'IBM Plex Sans',system-ui,sans-serif;font-weight:468;font-size:calc(var(--u) * 19.885);letter-spacing:0;color:#ffffff">App Store</span></a><a class="badge g3" href="#" aria-label="Get it on Google Play" style="left:calc(var(--u) * 246.5)"><svg class="ico" viewBox="0 0 30 30" preserveAspectRatio="none" aria-hidden="true" focusable="false" style="left:calc(var(--u) * 18.625);top:calc(var(--u) * 14.3);width:calc(var(--u) * 28.75);height:calc(var(--u) * 31)"><defs><clipPath id="pc"><path d="M2.4 .55 28.2 13.6a1.6 1.6 0 0 1 0 2.8L2.4 29.45A1 1 0 0 1 1 28.6V1.4A1 1 0 0 1 2.4 .55z"/></clipPath>
+<linearGradient id="pb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d98f8"/><stop offset="1" stop-color="#2f86e6"/></linearGradient></defs>
+<g clip-path="url(#pc)"><path fill="url(#pb)" d="M-2-2 14.8 15-2 32z"/><path fill="#03bc5a" d="M-2-2 14.8 15l5.7-4.8L25-2z"/>
+<path fill="#f3363f" d="M-2 32 14.8 15l5.7 4.8L25 32z"/><path fill="#fbcd03" d="M14.8 15l5.7-4.8L32 15l-11.5 4.8z"/></g></svg><span class="tx" data-k="getit" style="left:calc(var(--u) * 55.486);top:calc(var(--u) * 13.683);font-family:'IBM Plex Sans',system-ui,sans-serif;font-weight:507;font-size:calc(var(--u) * 12.108);letter-spacing:0;color:#ffffff">Get it on</span><span class="tx" data-k="gplay" style="left:calc(var(--u) * 55.548);top:calc(var(--u) * 29.214);font-family:'IBM Plex Sans',system-ui,sans-serif;font-weight:467;font-size:calc(var(--u) * 19.771);letter-spacing:0;color:#ffffff">Google play</span></a>
+      <a class="tx g3" data-k="privacy" style="left:calc(var(--u) * 92.013);top:calc(var(--u) * 890.93);font-family:'IBM Plex Sans',system-ui,sans-serif;font-weight:386;font-size:calc(var(--u) * 17.704);letter-spacing:calc(var(--u) * -0.15);color:rgba(255,255,255,0.74)" href="#">Privacy Policy</a>
+      <a class="tx g3" data-k="terms" style="left:calc(var(--u) * 273.094);top:calc(var(--u) * 890.706);font-family:'IBM Plex Sans',system-ui,sans-serif;font-weight:396;font-size:calc(var(--u) * 17.253);letter-spacing:calc(var(--u) * -0.15);color:rgba(255,255,255,0.74)" href="#">Terms of Service</a>
+    </div>
+  </section>
+</main>
+<script>
+(() => {
+  const entrance = window.__veloraEntrance;
+  if (!entrance) return;
+
+  let finished = false;
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    clearTimeout(entrance.guard);
+    document.documentElement.classList.remove('entrance-pending');
+    entrance.animations.forEach(animation => animation.cancel());
+    delete window.__veloraEntrance;
+  };
+
+  const ease = 'cubic-bezier(.22,.76,.25,1)';
+  const quietEase = 'cubic-bezier(.25,.72,.32,1)';
+  const stages = [
+    { selector: '.logo', at: 80, duration: 700, easing: ease,
+      frames: [{ clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0 0 0)' }] },
+    { selector: '[data-k="signup"]', at: 370, duration: 500, easing: ease,
+      frames: [{ opacity: 0, transform: 'translate3d(0,calc(var(--u) * 8),0)' },
+               { opacity: 1, transform: 'none' }] },
+    ...Array.from(document.querySelectorAll('.btn'), (target, index) => ({
+      target, at: 610 + index * 95,
+      duration: 540, easing: ease,
+      frames: [{ opacity: 0, transform: 'translate3d(calc(var(--u) * -12),0,0)' },
+               { opacity: 1, transform: 'none' }]
+    })),
+    { selector: '[data-k="help"]', at: 1130, duration: 360, easing: quietEase,
+      frames: [{ opacity: 0 }, { opacity: 1 }] },
+    { selector: '[data-k="now"]', at: 1240, duration: 430, easing: ease,
+      frames: [{ opacity: 0, transform: 'translate3d(0,calc(var(--u) * 6),0)' },
+               { opacity: 1, transform: 'none' }] },
+    ...Array.from(document.querySelectorAll('.badge'), (target, index) => ({
+      target, at: 1370 + index * 85, duration: 430, easing: ease,
+      frames: [{ opacity: 0, transform: 'translate3d(0,calc(var(--u) * 8),0)' },
+               { opacity: 1, transform: 'none' }]
+    })),
+    ...['privacy', 'terms'].map((key, index) => ({
+      selector: `[data-k="${key}"]`, at: 1580 + index * 65,
+      duration: 300, easing: quietEase,
+      frames: [{ opacity: 0 }, { opacity: 1 }]
+    }))
+  ];
+
+  try {
+    for (const stage of stages) {
+      const target = stage.target || document.querySelector(stage.selector);
+      if (!target) throw new Error('Entrance target missing');
+      entrance.animations.push(target.animate(stage.frames, {
+        delay: stage.at, duration: stage.duration, easing: stage.easing, fill: 'both'
+      }));
+    }
+    Promise.all(entrance.animations.map(animation => animation.finished)).then(finish, finish);
+  } catch (_) {
+    finish();
+  }
+})();
+</script>
+</body>
+</html>

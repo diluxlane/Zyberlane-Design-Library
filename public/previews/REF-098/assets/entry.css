@@ -1,0 +1,65 @@
+/* Keep the invoice's gradient surfaces still; introduce only their contents. */
+@keyframes invoice-ui {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes invoice-heading {
+  from { opacity: 0; clip-path: inset(100% 0 0); transform: translateY(10px); }
+  to { opacity: 1; clip-path: inset(0); transform: none; }
+}
+@keyframes invoice-text {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes invoice-lines {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0); }
+}
+
+html.entry-motion .brand,
+html.entry-motion .nav,
+html.entry-motion .search,
+html.entry-motion .settings {
+  animation: invoice-ui .55s cubic-bezier(.22,1,.36,1) both;
+}
+html.entry-motion .brand { animation-delay: .04s; }
+html.entry-motion .nav { animation-delay: .13s; }
+html.entry-motion .search,
+html.entry-motion .settings { animation-delay: .22s; }
+html.entry-motion .card-title {
+  animation: invoice-heading .73s cubic-bezier(.19,1,.22,1) .20s both;
+}
+html.entry-motion .head-actions {
+  animation: invoice-ui .56s cubic-bezier(.22,1,.36,1) .47s both;
+}
+html.entry-motion .form {
+  animation: invoice-ui .74s cubic-bezier(.22,1,.36,1) .57s both;
+}
+html.entry-motion .invoice .inv-logo,
+html.entry-motion .invoice .inv-dates {
+  animation: invoice-text .42s cubic-bezier(.22,1,.36,1) .70s both;
+}
+html.entry-motion .invoice .inv-no {
+  animation: invoice-heading .70s cubic-bezier(.19,1,.22,1) .82s both;
+}
+html.entry-motion .invoice .inv-proj {
+  animation: invoice-ui .48s cubic-bezier(.22,1,.36,1) 1.03s both;
+}
+html.entry-motion .invoice .party {
+  animation: invoice-ui .53s cubic-bezier(.22,1,.36,1) 1.13s both;
+}
+html.entry-motion .invoice .inv-body {
+  animation: invoice-lines .78s cubic-bezier(.19,1,.22,1) 1.02s both;
+}
+
+@media (max-width:1099.98px) {
+  html.entry-motion .invoice .inv-logo,
+  html.entry-motion .invoice .inv-dates,
+  html.entry-motion .invoice .inv-no,
+  html.entry-motion .invoice .inv-proj,
+  html.entry-motion .invoice .party,
+  html.entry-motion .invoice .inv-body { animation: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.entry-motion * { animation: none !important; }
+}

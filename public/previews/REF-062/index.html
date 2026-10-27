@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-062/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111111">
+<title>anfalova.art</title>
+<meta name="description" content="Design subscription or a one-off project — 14 years in UI/UX design, 1000+ projects shipped.">
+<style>
+@font-face{font-family:"Inter";src:url(assets/font-01.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:block}
+@font-face{font-family:"Instrument Serif";src:url(assets/font-02.woff2) format("woff2");font-weight:400;font-style:italic;font-display:block}
+
+/* ------------------------------------------------------------------
+   Tokens — sampled from the reference
+   ------------------------------------------------------------------ */
+:root{
+  --bg:#111111;      /* page              rgb(17,17,17)      */
+  --ink:#fefefe;     /* white type        rgb(254,254,254)   */
+  --mute:#9d9d9d;    /* grey headline     rgb(157,157,157)   */
+  --soft:#959595;    /* Dribbble/Behance  rgb(149,149,149)   */
+  --red:#f0141b;     /* serif accent      rgb(240,20,27)     */
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  --serif:"Instrument Serif","Times New Roman",serif;
+
+  /* Reference artboard 1451 × 1084 → 1u = one reference pixel.
+     u is the largest scale at which the artboard fits the viewport;
+     the spare axis is absorbed by edge-anchored layers, so nothing
+     letterboxes and nothing is cropped. */
+  --vw:100vw; --vh:100vh;
+  --u:min(calc(var(--vw) / 1451), calc(var(--vh) / 1084));
+}
+@supports (height:100dvh){:root{--vh:100dvh}}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg)}
+body{color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision;overflow:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;user-select:none;-webkit-user-drag:none}
+[hidden]{display:none!important}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:2px}
+
+/* ==================================================================
+   ARTBOARD MODE (landscape ≥ 960 × 600)
+   Anchor layers: each is an artboard-sized frame pinned to a viewport
+   edge; children use raw reference coordinates × u.
+   ================================================================== */
+.hero{position:relative;width:var(--vw);height:var(--vh);overflow:hidden;background:var(--bg);isolation:isolate}
+.ly{position:absolute;width:calc(1451 * var(--u));height:calc(1084 * var(--u));pointer-events:none}
+.ly > *{pointer-events:auto}
+.ly.tl{left:0;top:0}
+.ly.tr{left:calc(100% - 1451 * var(--u));top:0}
+.ly.bl{left:0;top:calc(100% - 1084 * var(--u))}
+.ly.band{left:0;width:100%;top:calc((100% - 1084 * var(--u)) / 2)}   /* centre band, full width */
+.track{display:contents}
+
+/* positioned type: --x/--y = text-box origin, --fs size, --ls tracking (ref px) */
+.t{position:absolute;left:calc(var(--x) * var(--u));top:calc(var(--y) * var(--u));font-size:calc(var(--fs) * var(--u));letter-spacing:calc(var(--ls) * var(--u));line-height:1;white-space:pre;font-variation-settings:"opsz" 14}
+.sv{font-family:var(--serif);font-style:italic;font-weight:400;font-variation-settings:normal}
+
+.logo .t{font-weight:700}
+.logo .red{color:var(--red)}
+.logo .sv{font-weight:400}
+
+.nav .t{font-weight:500;transition:opacity .25s,color .25s}
+.social .t{color:var(--soft)}
+.nav a.t:hover{opacity:.55}
+.menu a.t:hover{opacity:1;color:var(--red)}
+
+.avatar{position:absolute;left:calc(992 * var(--u));top:calc(148.5 * var(--u));width:calc(36.5 * var(--u));height:calc(36.5 * var(--u));border-radius:50%;overflow:hidden;background:#8a8a8a;box-shadow:0 0 0 calc(.75 * var(--u)) rgba(0,0,0,.6)}
+.avatar img{position:absolute;width:250%;height:auto;left:-58%;top:-16%;max-width:none;filter:grayscale(1) contrast(1.05) brightness(1.18)}
+.cred .t{font-weight:500}
+
+/* project rail */
+.card{position:absolute;top:calc(370 * var(--u));height:calc(224 * var(--u));border-radius:calc(3 * var(--u));overflow:hidden;background:#1d1d1d;
+  box-shadow:0 0 0 calc(1 * var(--u)) rgba(0,0,0,.8);
+  transition:transform .6s cubic-bezier(.2,.7,.2,1),filter .6s}
+.card img{position:absolute;max-width:none;object-fit:cover}
+/* glass rim — 1px specular edge, brightest top-left */
+.card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  box-shadow:inset 0 calc(1 * var(--u)) 0 rgba(255,255,255,0.45),inset calc(1 * var(--u)) 0 0 rgba(255,255,255,0.5),
+             inset calc(-1 * var(--u)) 0 0 rgba(255,255,255,0.07),inset 0 calc(-1 * var(--u)) 0 rgba(255,255,255,0.05)}
+.card:hover{transform:translateY(calc(-4 * var(--u)));filter:brightness(1.07)}
+.c-syn{display:none}
+.c-cad{left:calc(219 * var(--u));width:calc(335 * var(--u))}
+.c-cad img{width:102.69%;height:102.23%;left:-1.79%;top:0}
+.mid{position:absolute;left:calc(566 * var(--u));top:calc(370 * var(--u));height:calc(224 * var(--u));width:calc(100% - (566 + 1451 - 908) * var(--u));display:flex;gap:calc(12 * var(--u))}
+.mid .card{position:relative;top:0;flex:1 1 0;min-width:0;height:100%}
+.mid .card[hidden]{display:none}
+.mid .card img{width:102.34%;height:104%;left:-1.75%;top:0}
+.c-fr{left:calc(100% - (1451 - 920) * var(--u));width:calc(338 * var(--u))}
+.c-fr{clip-path:inset(0 calc(104 * var(--u)) 0 0)}   /* the rest of it is inside the ribbon glass */
+.c-fr img{width:101.8%;height:102.3%;left:-0.9%;top:-0.4%}
+
+/* refraction layers: liquid-glass lens over card 1, prismatic ribbon curling out of the last card */
+.lens,.ribbon{position:absolute;pointer-events:none!important}
+.lens{left:0;top:calc(360 * var(--u));width:calc(262 * var(--u));height:calc(410 * var(--u))}
+.ribbon{left:calc(100% - (1451 - 1120) * var(--u));top:calc(80 * var(--u));width:calc(331 * var(--u));height:calc(550 * var(--u))}
+.lens img,.ribbon img{position:absolute;left:0;top:0;width:100%;height:100%}
+/* live rail: one canvas draws the moving strip, the lens wave and the ribbon curl */
+.railfx{position:absolute;left:0;top:calc(80 * var(--u));width:100%;height:calc(700 * var(--u));pointer-events:none;opacity:0;transition:opacity .5s}
+.fx-on .railfx{opacity:1}
+.fx-on .card,.fx-on .lens,.fx-on .ribbon{visibility:hidden}
+.lip,.tab{display:none!important}
+.band.on-card{cursor:pointer}
+/* Cadvel's bottom-left corner drawn down into the lens wave (same image, same placement) */
+.lip{position:absolute;left:calc(216 * var(--u));top:calc(590 * var(--u));width:calc(53 * var(--u));height:calc(18 * var(--u));pointer-events:none!important;
+  background:url(assets/image-01.webp) no-repeat calc(-3 * var(--u)) calc(-220 * var(--u))/calc(344 * var(--u)) calc(229 * var(--u));
+  clip-path:polygon(5.66% 0,100% 0,100% 22.2%,90.6% 25%,79.2% 28.9%,67.9% 35%,56.6% 42.2%,45.3% 47.8%,34% 61.1%,22.6% 73.3%,11.3% 84.4%,6.2% 91.7%,5.66% 55%)}
+/* Freshness' top-right corner lifted into the ribbon: its own top rows, stretched upward */
+.tab{position:absolute;left:calc(100% - (1451 - 1150) * var(--u));top:calc(292 * var(--u));width:calc(110 * var(--u));height:calc(81 * var(--u));pointer-events:none!important;
+  background:linear-gradient(180deg,rgba(17,17,17,.15),rgba(17,17,17,0) 60%),url(assets/image-02.webp) no-repeat;
+  background-size:100% 100%,calc(344.1 * var(--u)) calc(1150 * var(--u));background-position:0 0,calc(-233 * var(--u)) 0;
+  clip-path:polygon(0 96.9%,27.3% 95%,45.5% 89.5%,59.1% 77.8%,70.9% 63%,79.1% 44.4%,84.5% 24.7%,88.2% 7.4%,90.9% 1.2%,93.6% 9.9%,96.4% 46.9%,98.6% 96.3%,98.6% 100%,0 100%)}
+
+.dot{position:absolute;left:calc(100% - (1451 - 1410.5) * var(--u));top:calc(550 * var(--u));width:calc(30 * var(--u));height:calc(30 * var(--u));border-radius:50%;
+  border:calc(1.2 * var(--u)) solid rgba(255,255,255,.16);background:transparent;cursor:pointer;display:grid;place-items:center;transition:border-color .3s,transform .3s}
+.dot::before{content:"";width:calc(6 * var(--u));height:calc(6 * var(--u));border-radius:calc(1.6 * var(--u));background:#fff}
+.dot:hover{border-color:rgba(255,255,255,.45);transform:scale(1.08)}
+
+/* hover tooltips on the two offers (as in the prototype): a red badge rides the cursor and a
+   card unfolds out of it; text arrives a beat later */
+.hot{position:absolute;pointer-events:auto;cursor:none}
+.hot-sub{left:calc(330 * var(--u));top:calc(722 * var(--u));width:calc(448 * var(--u));height:calc(110 * var(--u))}
+.hot-one{left:calc(98 * var(--u));top:calc(826 * var(--u));width:calc(636 * var(--u));height:calc(100 * var(--u))}
+.tip{--k:var(--u);position:fixed;left:0;top:0;z-index:50;pointer-events:none;transform:translate3d(var(--tx,-999px),var(--ty,-999px),0)}
+.tip-dot{position:absolute;left:calc(-29 * var(--k));top:calc(-29 * var(--k));width:calc(58 * var(--k));height:calc(58 * var(--k));border-radius:calc(22 * var(--k));
+  background:linear-gradient(160deg,#f2272b,#d9161b 70%);box-shadow:0 calc(8 * var(--k)) calc(24 * var(--k)) rgba(0,0,0,.35);display:grid;place-items:center;
+  transform:scale(0);transition:transform .32s cubic-bezier(.2,.9,.25,1.15)}
+.tip-dot svg{width:calc(17 * var(--k));height:calc(17 * var(--k))}
+.tip-card{position:absolute;left:calc(-9 * var(--k));bottom:calc(3 * var(--k));width:calc(316 * var(--k));min-height:calc(143 * var(--k));border-radius:calc(16 * var(--k));
+  padding:calc(19 * var(--k)) calc(22 * var(--k)) calc(40 * var(--k));color:#fff;background:linear-gradient(180deg,#e01b1f 0%,#b5151a 38%,#561114 78%,#2a1012 100%);
+  box-shadow:0 calc(24 * var(--k)) calc(60 * var(--k)) rgba(0,0,0,.5);transform-origin:calc(20 * var(--k)) 100%;
+  transform:scale(.18) translateY(calc(10 * var(--k)));opacity:0;transition:transform .42s cubic-bezier(.2,.85,.2,1),opacity .25s}
+.tip-card p{font:500 calc(18.5 * var(--k))/1.18 var(--sans);letter-spacing:-.01em;opacity:0;transform:translateY(calc(6 * var(--k)));transition:opacity .25s,transform .35s cubic-bezier(.2,.8,.2,1)}
+.tip.on .tip-dot{transform:scale(1)}
+.tip.open .tip-card{transform:none;opacity:.97}
+.tip.open .tip-card p{opacity:1;transform:none;transition-delay:.14s}
+.tip-dot{z-index:2}
+@media (hover:none){.hot{cursor:auto}}
+@media (prefers-reduced-motion:reduce){.tip-dot,.tip-card,.tip-card p{transition:none}}
+
+/* headline */
+.headline{font-weight:660;color:var(--mute)}
+.headline .w{color:var(--ink)}
+.headline .sv{color:var(--red)}
+.lb{display:none}
+.ul{position:absolute;pointer-events:none!important;background-repeat:repeat-x;background-position:0 0}
+.ul-w{left:calc(101 * var(--u));top:calc(917 * var(--u));width:calc(629 * var(--u));height:calc(2 * var(--u));
+  background-image:linear-gradient(90deg,var(--ink) 0 calc(3 * var(--u)),transparent 0);background-size:calc(4 * var(--u)) 100%}
+.ul-r{left:calc(336 * var(--u));top:calc(825.5 * var(--u));width:calc(434 * var(--u));height:calc(1.5 * var(--u));
+  background-image:linear-gradient(90deg,var(--red) 0 calc(3 * var(--u)),transparent 0);background-size:calc(4 * var(--u)) 100%}
+
+/* ==================================================================
+   FLOW MODE — phones, portrait tablets, short landscape windows.
+   Same art direction re-flowed into a full-height column: header on
+   top, headline on the floor, rail between — no dead bands.
+   ================================================================== */
+@media (max-width:959px),(max-height:599px),(max-aspect-ratio:1/1){
+  :root{--g:clamp(16px,4.6vw,36px);}
+  .hero{height:var(--vh);min-height:0;display:flex;flex-direction:column;
+    padding:calc(var(--g) * .9 + env(safe-area-inset-top)) var(--g) calc(var(--g) + env(safe-area-inset-bottom));gap:clamp(18px,4.2vw,36px)}
+  .ly{position:relative;left:auto!important;top:auto!important;width:auto;height:auto;pointer-events:auto}
+  .t{position:static;font-size:calc(var(--fs) / var(--base) * 1em);letter-spacing:calc(var(--ls) / var(--fs) * 1em)}
+
+  .tl{order:1}
+  .logo{display:flex;align-items:baseline;--base:115;font-size:min(calc((100vw - 2 * var(--g)) / 5.1),108px,15vh);line-height:1}
+  .tr{order:2;display:flex;flex-wrap:wrap;align-items:flex-end;column-gap:16px;row-gap:clamp(14px,5vw,56px)}
+  .tr .menu{flex:1 0 100%;order:1}
+  .tr .cred{order:2}
+  .tr .social{margin-left:auto;order:3}   /* wraps under the credentials only when the row is too narrow */
+  .nav{display:flex;align-items:baseline;--base:19.2;font-size:clamp(14px,3.9vw,19px)}
+  .menu{grid-area:menu;flex-wrap:wrap;column-gap:clamp(14px,5vw,44px);row-gap:6px}
+  .social{grid-area:social;gap:8px}
+  .cred{grid-area:cred;display:flex;align-items:center;gap:12px;--base:19.2;font-size:clamp(14px,3.9vw,19px)}
+  .avatar{position:relative;left:auto;top:auto;width:2.3em;height:2.3em;flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.6)}
+  .cred p{display:flex;flex-direction:column}
+  .cred .t{line-height:1.22}
+
+  .tl,.tr,.bl{position:relative;z-index:2}
+  .band{order:3;flex:1 1 0;min-height:0;margin:0 calc(-1 * var(--g));width:auto!important;height:auto;container-type:size;z-index:1}
+  .track{display:flex;gap:12px;height:100%;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding:2px var(--g);scroll-padding-inline:var(--g);scrollbar-width:none;position:relative;z-index:1}
+  .track::-webkit-scrollbar{display:none}
+  .card,.mid .card{position:relative;left:auto;top:auto;flex:none;height:calc(100cqh - 4px);width:min(calc((100cqh - 4px) * var(--ar)),calc(100vw - 2 * var(--g) - 44px));border-radius:4px;scroll-snap-align:start;box-shadow:0 0 0 1px rgba(0,0,0,.8)}
+  :root{--ar:.95}
+  .card::after{box-shadow:inset 0 1px 0 rgba(255,255,255,0.45),inset 1px 0 0 rgba(255,255,255,0.5),inset -1px 0 0 rgba(255,255,255,0.07),inset 0 -1px 0 rgba(255,255,255,0.05)}
+  .card img,.mid .card img{position:static;width:100%!important;height:100%!important;object-position:var(--op,50% 50%)}
+  .c-fr{clip-path:none}
+  .c-syn{display:block;--op:0% 50%}
+  .mid{display:contents}
+  .mid .card[hidden]{display:block}
+  .track > .spacer{flex:none;width:1px}
+  .lens,.lip,.tab,.hot{display:none}
+  /* live rail: the whole glass composition, scaled to the free band (keeps ≥ ~1 flat card visible) */
+  .railfx{display:block;left:0;top:50%;width:100%;height:min(100cqh, 100cqw * 700 / 820);transform:translateY(-50%);pointer-events:none}
+  .fx-on .band{touch-action:pan-y}
+  .fx-on .track{visibility:hidden}
+  .fx-on .dot{top:calc(var(--rtop, 0px) + 470px * var(--rk, .5));right:max(calc(25.5px * var(--rk, .5)), 22px);bottom:auto;transform:translate(50%,-50%);
+    width:max(30px, calc(30px * var(--rk, .5)));height:max(30px, calc(30px * var(--rk, .5)));background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
+  .fx-on .dot:hover{transform:translate(50%,-50%) scale(1.08)}
+  .tip{--k:.82px}
+  .ribbon{display:none}
+  .track.auto{scroll-snap-type:none}
+  .ribbon img{object-fit:contain}
+  .dot{position:absolute;z-index:3;left:auto;top:auto;right:calc(var(--g) * .6);bottom:14px;width:34px;height:34px;border-width:1.2px;background:rgba(17,17,17,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+  .dot::before{width:6px;height:6px;border-radius:1.6px}
+  .lb{display:none}
+
+  .bl{order:4}
+  .headline{--base:97.3;font-size:clamp(32px,min(11.4vw,7.4vh),92px);line-height:.98;color:var(--mute)}
+  .headline .t{display:inline}
+  .headline{word-spacing:-.015em}
+  @media (min-width:600px){
+    .headline{white-space:nowrap}
+    :root{--ar:1.25}
+    .lb{display:inline}
+    .headline{font-size:min(calc((100vw - 2 * var(--g)) / 11.4),9vh)}   /* keeps the reference 3-line break */
+  }
+  .ul{display:none}
+  .uw{background:linear-gradient(90deg,var(--ink) 0 3px,transparent 0) 0 calc(100% - .02em)/4px 2px repeat-x}
+  .ur{background:linear-gradient(90deg,var(--red) 0 3px,transparent 0) 0 84%/4px 1.5px repeat-x}
+}
+@media (max-width:959px) and (min-aspect-ratio:1/1),(max-height:599px) and (min-aspect-ratio:1/1){
+  /* landscape phones & short windows: text column on the left, the rail on the right */
+  :root{--ar:1.5;--g:clamp(14px,2.6vw,28px)}
+  .hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);grid-template-rows:auto auto 1fr auto;
+    grid-template-areas:"logo band" "nav band" "cred band" "head band";column-gap:clamp(14px,2.4vw,32px);row-gap:clamp(8px,2.2vh,18px);
+    padding:calc(var(--g) * .8 + env(safe-area-inset-top)) calc(env(safe-area-inset-right)) calc(var(--g) * .8 + env(safe-area-inset-bottom)) calc(var(--g) + env(safe-area-inset-left))}
+  .tl{grid-area:logo}
+  .tr{display:contents}
+  .menu{grid-area:nav;font-size:clamp(12px,min(1.9vw,3.6vh),17px);column-gap:clamp(10px,2.2vw,28px)}
+  .cred{grid-area:cred;align-self:start;font-size:clamp(12px,min(1.9vw,3.6vh),17px)}
+  .social{grid-area:cred;justify-self:end;align-self:start;font-size:clamp(12px,min(1.9vw,3.6vh),17px);margin-top:.35em}
+  .logo{font-size:min(calc((50vw - 2 * var(--g)) / 5.1),13vh,96px)}
+  .bl{grid-area:head;align-self:end}
+  .headline{font-size:min(calc((47vw - var(--g)) / 11.6),9.4vh);white-space:nowrap}
+  .lb{display:inline}
+  .band{grid-area:band;margin:calc(var(--g) * -.8) 0 calc(var(--g) * -.8) 0;align-self:stretch}
+}
+
+/* ==================================================================
+   ENTRY CHOREOGRAPHY (all layouts) — masked rises, a red sweep, the glass
+   wiping in from the right while the cards rush out of the ribbon.
+   Starts on first paint; skipped entirely for reduced-motion users.
+   ================================================================== */
+@media (prefers-reduced-motion:no-preference){
+  [data-in]{animation:var(--in-name) var(--in-dur, 1s) cubic-bezier(.16,1,.3,1) var(--d,0s) both;will-change:transform,clip-path,opacity}
+  [data-in="rise"]{--in-name:in-rise;--in-dur:1.05s}
+  [data-in="drop"]{--in-name:in-drop;--in-dur:.8s}
+  [data-in="sweep"]{--in-name:in-sweep;--in-dur:1.2s}
+  [data-in="pop"]{--in-name:in-pop;--in-dur:.7s;transform-origin:50% 80%}
+  .headline .t{display:inline-block}
+  @keyframes in-rise{from{transform:translateY(105%);clip-path:inset(-25% -12% 105% -12%)}to{transform:none;clip-path:inset(-25% -12% -25% -12%)}}
+  @keyframes in-drop{from{transform:translateY(-70%);opacity:0;filter:blur(4px)}to{transform:none;opacity:1;filter:none}}
+  @keyframes in-sweep{0%{transform:translateX(18%) skewX(-12deg);opacity:0;filter:blur(10px);clip-path:inset(-30% -10% -30% 100%)}
+    60%{opacity:1}100%{transform:none;opacity:1;filter:none;clip-path:inset(-30% -10% -30% -10%)}}
+  @keyframes in-pop{0%{transform:scale(0);opacity:0}70%{transform:scale(1.25);opacity:1}100%{transform:none;opacity:1}}
+  /* credentials avatar */
+  .avatar{animation:in-avatar .9s cubic-bezier(.2,.9,.25,1.2) .52s both}
+  @keyframes in-avatar{from{transform:scale(.4) rotate(-12deg);opacity:0;filter:blur(6px)}to{transform:none;opacity:1;filter:none}}
+  /* dotted underlines draw in from the left once their words have landed */
+  .ul{animation:in-line .9s cubic-bezier(.65,0,.35,1) both;transform-origin:0 50%}
+  .ul-r{animation-delay:1.25s}.ul-w{animation-delay:1.4s}
+  @keyframes in-line{from{transform:scaleX(0)}to{transform:none}}
+  .ur,.uw{animation:in-bgline 1s cubic-bezier(.65,0,.35,1) 1.3s both}
+  @keyframes in-bgline{from{background-size:0 0}}
+  /* live rail: the glass wipes in from the right edge (the cards' rush is driven in JS) */
+  .fx-on .railfx{animation:in-rail 1.5s cubic-bezier(.7,0,.2,1) .15s both}
+  @keyframes in-rail{from{clip-path:inset(-5% -5% -5% 100%);opacity:.2}to{clip-path:inset(-5% -5% -5% -5%);opacity:1}}
+  /* no-WebGL rail: cards and glass slide in one after another */
+  .hero:not(.fx-on) .card{animation:in-card 1.1s cubic-bezier(.16,1,.3,1) both}
+  .hero:not(.fx-on) .c-cad{animation-delay:.35s}.hero:not(.fx-on) .mid .card{animation-delay:.45s}.hero:not(.fx-on) .c-fr{animation-delay:.55s}
+  .hero:not(.fx-on) .lens,.hero:not(.fx-on) .ribbon{animation:in-drop 1s cubic-bezier(.16,1,.3,1) .6s both}
+  @keyframes in-card{from{transform:translateX(120px);opacity:0}to{transform:none;opacity:1}}
+  .dot{animation:in-pop .7s cubic-bezier(.2,.9,.25,1.2) 1.6s both}
+  .fx-on .dot{animation-name:in-pop-c}
+  @keyframes in-pop-c{0%{scale:0;opacity:0}70%{scale:1.2;opacity:1}100%{scale:1;opacity:1}}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<main class="hero" id="hero">
+  <div class="ly tl">
+    <a class="logo" href="#" aria-label="anfalova.art — home"><span class="t " data-in="rise" style="--x:42.0;--y:17.0;--fs:115.0;--ls:-9.571;--d:0.1s">anfalova</span><span class="t red" data-in="pop" style="--x:457.0;--y:25.5;--fs:104;--ls:0.0;--d:0.55s">.</span><span class="t sv red" data-in="sweep" style="--x:494.0;--y:8.0;--fs:128.59;--ls:-7.0;--d:0.42s">art</span></a>
+  </div>
+
+  <div class="ly tr">
+    <nav class="nav social" aria-label="Portfolios"><a class="t " href="https://dribbble.com/" data-in="drop" style="--x:729.0;--y:33.5;--fs:19.2;--ls:-1.143;--d:0.3s" target="_blank" rel="noopener">Dribbble</a><span class="t " data-in="drop" style="--x:814.0;--y:33.0;--fs:19.2;--ls:0.0;--d:0.34s" aria-hidden="true">/</span><a class="t " href="https://www.behance.net/" data-in="drop" style="--x:837.0;--y:33.0;--fs:19.2;--ls:-1.5;--d:0.38s" target="_blank" rel="noopener">Behance</a></nav>
+    <nav class="nav menu" aria-label="Primary"><a class="t " href="#projects" data-in="drop" style="--x:989.0;--y:33.0;--fs:19.2;--ls:-1.143;--d:0.36s">Projects</a><a class="t " href="#services" data-in="drop" style="--x:1099.0;--y:33.0;--fs:19.2;--ls:-1.429;--d:0.42s">Services</a><a class="t " href="#subscription" data-in="drop" style="--x:1212.0;--y:33.0;--fs:19.2;--ls:-1.273;--d:0.48s">Subscription</a><a class="t " href="#contact" data-in="drop" style="--x:1357.0;--y:33.0;--fs:19.2;--ls:-1.167;--d:0.54s">Contact</a></nav>
+    <aside class="cred">
+      <div class="avatar"><img src="assets/image-03.webp" alt="Portrait of the designer"></div>
+      <p><span class="t " data-in="rise" style="--x:992.0;--y:208.0;--fs:19.2;--ls:-1.208;--d:0.62s">14 years in UI/UX design,</span><span class="t " data-in="rise" style="--x:992.0;--y:230.0;--fs:19.2;--ls:-1.095;--d:0.7s">1000+ projects shipped</span></p>
+    </aside>
+  </div>
+
+  <section class="ly band" id="projects" aria-label="Selected projects">
+   <div class="track">
+    <a class="card c-syn" data-p="0" href="#"><img src="assets/image-04.webp" alt="Synergy — clean energy website"></a>
+    <div class="lens" aria-hidden="true"><img src="assets/image-05.webp" alt=""></div>
+    <span class="lip" aria-hidden="true"></span>
+    <a class="card c-cad" data-p="1" href="#"><img src="assets/image-01.webp" alt="Cadvel — brand identity"></a>
+    <div class="mid">
+      <a class="card" data-p="2" href="#"><img src="assets/image-06.webp" alt="XCube — autonomous security website"></a>
+      <a class="card" data-p="4" href="#" hidden><img src="assets/image-07.webp" alt="Prism — independent design studio"></a>
+      <a class="card" href="#" hidden><img src="assets/image-04.webp" alt="Synergy — clean energy website"></a>
+      <a class="card" href="#" hidden><img src="assets/image-01.webp" alt="Cadvel — brand identity"></a>
+    </div>
+    <a class="card c-fr" data-p="3" href="#"><img src="assets/image-02.webp" alt="Breathe the Freshness — beverage landing page"></a>
+    <span class="tab" aria-hidden="true"></span>
+    <div class="ribbon" aria-hidden="true"><img src="assets/image-08.webp" alt=""></div>
+    <span class="spacer" aria-hidden="true"></span>
+   </div>
+    <canvas class="railfx" aria-hidden="true"></canvas>
+    <button class="dot" type="button" aria-label="Next project"></button>
+  </section>
+
+  <div class="ly bl">
+    <h1 class="headline"><span class="t w" data-in="rise" style="--x:33.0;--y:730.0;--fs:97.3;--ls:-7.8;--d:0.7s">Design</span> <span class="ur"><span class="t sv" data-in="sweep" style="--x:335.0;--y:716.5;--fs:116.66;--ls:-7.546;--d:0.8s">subscription</span></span> <span class="t " data-in="rise" style="--x:783.0;--y:729.0;--fs:97.3;--ls:0.0;--d:0.9s">—</span> <span class="t " data-in="rise" style="--x:892.0;--y:731.0;--fs:97.3;--ls:-8.0;--d:0.94s">or</span><br class="lb"> <span class="t " data-in="rise" style="--x:34.0;--y:823.5;--fs:97.3;--ls:0.0;--d:0.86s">a</span> <span class="uw"><span class="t w" data-in="rise" style="--x:99.0;--y:823.5;--fs:97.3;--ls:-7.5;--d:0.9s">one-off</span> <span class="t w" data-in="rise" style="--x:418.0;--y:823.5;--fs:97.3;--ls:-7.286;--d:0.96s">project,</span></span> <span class="t " data-in="rise" style="--x:743.0;--y:823.5;--fs:97.3;--ls:-9.0;--d:1.02s">if</span> <span class="t " data-in="rise" style="--x:807.0;--y:823.5;--fs:97.3;--ls:-9.0;--d:1.06s">you</span> <span class="t " data-in="rise" style="--x:974.0;--y:823.5;--fs:97.3;--ls:-8.333;--d:1.1s">just</span><br class="lb"> <span class="t " data-in="rise" style="--x:34.0;--y:917.0;--fs:97.3;--ls:-7.667;--d:1.02s">need</span> <span class="t " data-in="rise" style="--x:258.0;--y:917.0;--fs:97.3;--ls:-8.5;--d:1.08s">one</span> <span class="t " data-in="rise" style="--x:430.0;--y:917.0;--fs:97.3;--ls:-7.5;--d:1.14s">task.</span></h1>
+    <span class="ul ul-r" aria-hidden="true"></span>
+    <span class="ul ul-w" aria-hidden="true"></span>
+    <span class="hot hot-sub" data-tip="One flat monthly payment. Tasks delivered one by one. Pause or cancel anytime." aria-hidden="true"></span>
+    <span class="hot hot-one" data-tip="For one specific task — of any size or kind." aria-hidden="true"></span>
+  </div>
+</main>
+<div class="tip" aria-hidden="true"><div class="tip-card"><p></p></div><span class="tip-dot"><svg viewBox="0 0 17 17" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l8-8M6 4.5h6.5V11"/></svg></span></div>
+<img id="tx-atlas" src="assets/image-09.webp" alt="" hidden><img id="tx-lensmap" src="assets/image-10.png" alt="" hidden><img id="tx-ribmap" src="assets/image-11.png" alt="" hidden>
+<script>/* RailFX v5 — two fixed pieces of liquid glass (lens left, ribbon right) over the moving
+   project strip, as in the prototype video.
+   Glass material: precomputed smooth silhouette + dome normals (no pixel-traced edges),
+   frosted interior, refraction strongest at the rim, faint chromatic split only at the rim,
+   top-left key highlight and soft shadow side. Units: reference px (1451×1084 artboard). */
+(function (global) {
+  const CW = 338, CH = 224, PITCH = 350, TOP = 370, S0 = -131, N = 5;
+  const AT = { cw: 676, ch: 448, pad: 12 };
+  const Y0 = 80, H = 700;
+
+  const VS = `#version 300 es
+in vec2 p; out vec2 vP;
+void main(){ vP = p; gl_Position = vec4(p*2.-1., 0., 1.); }`;
+
+  const FS = `#version 300 es
+precision highp float;
+in vec2 vP; out vec4 o;
+uniform sampler2D uAtlas, uLens, uRib, uCols;
+uniform vec2 uAtlasSize;
+uniform float uWu, uScroll, uPx, uBias, uT;
+uniform vec4 uLensR, uRibR;          // map regions (x0, y0, w, h) — ribbon x0 already right-anchored
+uniform float uLensN, uRibN;         // column counts
+const float CW = ${CW}., CH = ${CH}., PITCH = ${PITCH}., TOP = ${TOP}., S0 = ${S0}.;
+const vec3 BG = vec3(17./255.);
+const vec2 LIGHT = vec2(-.56, -.83);
+
+vec2 cell(float id){ return vec2(mod(id, 2.), floor(id/2.)) * vec2(${AT.cw + 2 * AT.pad}., ${AT.ch + 2 * AT.pad}.) + vec2(${AT.pad}.); }
+// strip colour at strip coordinate s and card-local y; gaps between cards are page colour
+vec3 stripS(float s, float ly, float bias, float soft){
+  float k = floor((s - S0)/PITCH); float lx = s - S0 - k*PITCH;
+  float edge = clamp(min(lx, CW - lx)/soft + .5, 0., 1.) * clamp(min(ly, CH - ly)/soft + .5, 0., 1.);
+  if (edge <= 0.) return BG;
+  vec2 uv = (cell(mod(k, ${N}.)) + vec2(clamp(lx, .5, CW-.5)/CW*${AT.cw}., clamp(ly, .5, CH-.5)/CH*${AT.ch}.)) / uAtlasSize;
+  return mix(BG, texture(uAtlas, uv, bias).rgb, edge);
+}
+vec3 strip(float s, float ly, float bias){ return stripS(s, ly, bias, 1.); }
+vec4 flatCard(vec2 P){
+  float s = P.x + uScroll; float k = floor((s - S0)/PITCH); float lx = s - S0 - k*PITCH; float ly = P.y - TOP;
+  vec2 c = vec2(lx, ly) - vec2(CW, CH)*.5; vec2 q = abs(c) - vec2(CW, CH)*.5 + 3.;
+  float d = length(max(q, 0.)) + min(max(q.x, q.y), 0.) - 3.;
+  float a = clamp(.5 - d/uPx, 0., 1.);
+  if (a <= 0.) return vec4(0);
+  vec3 col = strip(s, ly, 0.);
+  float inner = clamp(1. + d/1.1, 0., 1.);
+  float side = c.y < -CH*.5 + 1.5 ? .45 : (c.x < -CW*.5 + 1.5 ? .5 : (c.x > CW*.5 - 1.5 ? .07 : .05));
+  col = mix(col, vec3(1.), inner*side);
+  return vec4(col*a, a);
+}
+vec2 cols(float x, float x0, float n, float row){        // silhouette top/bottom at column x
+  float t = clamp((x - x0)/2., 0., n - 2.); int i = int(floor(t)); float f = t - float(i);
+  return mix(texelFetch(uCols, ivec2(i, int(row)), 0).rg, texelFetch(uCols, ivec2(i+1, int(row)), 0).rg, f);
+}
+// map a point seen through the glass to the strip (x, card-local y)
+vec2 throughLens(vec2 Q){
+  vec2 tb = cols(Q.x, uLensR.x, uLensN, 0.);
+  float bot = max(tb.y, TOP + CH);
+  // upper part of the card stays level; only its last rows are drawn down into the bulge
+  float y0 = TOP + CH - 46.;
+  float ly = Q.y < y0 ? Q.y - TOP : (CH - 46.) + (Q.y - y0)/max(bot - y0, 1.)*46.;
+  // convex glass: vertical lines bow and the left side is squeezed
+  float w = smoothstep(250., 30., Q.x);
+  float yb = clamp(Q.y, 370., 600.) - 485.;
+  float x = Q.x - w*w*(52. + .0012*yb*yb) - max(Q.y - 600., 0.)*.25*w;
+  return vec2(x, ly);
+}
+vec2 throughRib(vec2 Q){
+  // one smooth vertical stretch across the whole ribbon (no per-column jumps)
+  float top = mix(250., 110., smoothstep(uRibR.x + 90., uRibR.x + 150., Q.x));
+  float yy = clamp(Q.y, top, 598.);
+  float ly = Q.y >= TOP ? Q.y - TOP : (yy - top)/(TOP - top)*20.;   // above the row: the card's top edge drawn up
+  ly = mix((yy - top)/(598. - top)*CH, ly, smoothstep(uRibR.x + 150., uRibR.x + 90., Q.x));
+  return vec2(Q.x, ly);              // the card is stretched up the ribbon
+}
+vec3 spectral(float x){ return .5 + .5*cos(6.2832*(x + vec3(0., .33, .67))); }
+
+vec4 glass(vec2 P, sampler2D map, vec4 R, bool isLens){
+  vec2 uv = (P - R.xy)/R.zw;
+  if (any(lessThan(uv, vec2(0.))) || any(greaterThan(uv, vec2(1.)))) return vec4(0);
+  vec4 g = texture(map, uv);
+  float a = g.a;
+  if (a < .003) return vec4(0);
+  vec2 n = g.rg*2. - 1.;                                // outward, |n| largest at the rim
+  float e = g.b;                                        // 1 at the rim, 0 inside
+  float nl = length(n); vec2 nu = nl > 1e-4 ? n/nl : vec2(0.);
+  // refraction: the rim shows content from further out, squeezed; a slow liquid drift
+  float wob = sin(P.y*.018 + uT*.7)*.6 + sin(P.x*.02 - uT*.5)*.6;
+  vec2 Q = P - n*(isLens ? 26. : 22.) + vec2(wob, 0.)*e;   // rim magnifies what lies just inside
+  float ca = 2.2*e*e;
+  float bias = uBias + 1.1 + 1.6*e + (isLens ? 1.4*smoothstep(170., 20., P.x) : .9);
+  float soft = isLens ? 2. : 9.;
+  vec3 col = vec3(0);
+  // frosted: a small rotated 5-tap kernel on top of the mip blur
+  for (int i = 0; i < 5; i++) {
+    vec2 o = i == 0 ? vec2(0.) : vec2(cos(float(i)*1.5708 + .4), sin(float(i)*1.5708 + .4))*(1.6 + 2.*e);
+    vec2 Qr = Q + o + nu*ca, Qb = Q + o - nu*ca;
+    vec2 sr = isLens ? throughLens(Qr) : throughRib(Qr);
+    vec2 sg = isLens ? throughLens(Q + o) : throughRib(Q + o);
+    vec2 sb = isLens ? throughLens(Qb) : throughRib(Qb);
+    col += vec3(stripS(sr.x + uScroll, sr.y, bias, soft).r, stripS(sg.x + uScroll, sg.y, bias, soft).g, stripS(sb.x + uScroll, sb.y, bias, soft).b) * (i == 0 ? .36 : .16);
+  }
+  // glass body: a touch darker and warmer, gently lifted blacks
+  col = col*.9 + vec3(.018, .016, .014);
+  // light: key highlight on the top-left facing rim, soft shadow on the far side
+  float facing = dot(nu, LIGHT);
+  float hi = pow(max(facing, 0.), 2.5) * smoothstep(.15, .9, e);
+  float sh = max(-facing, 0.) * e;
+  col *= 1. - .38*sh;
+  vec3 tint = mix(vec3(1.), spectral(e*1.2 + P.y*.002 + .1), .35);
+  col += hi*.42*tint;
+  col += smoothstep(.82, 1., e)*.07;                    // thin fresnel line on the very edge
+  // a soft caustic sheen across the glass, drifting slowly
+  float sheen = exp(-pow((dot(P - R.xy, normalize(vec2(1., -2.2)))/R.w*3.2 + .9 - .08*sin(uT*.3)), 2.)*3.);
+  col += sheen*.05*(1. - e);
+  if (!isLens) {                                        // prismatic flare in the upper-right lobe
+    vec2 c0 = vec2(R.x + 282., 205.);
+    float blob = exp(-dot((P - c0)/vec2(40., 58.), (P - c0)/vec2(40., 58.))) * (1. - e*e);
+    vec3 band = mix(spectral(dot(P - c0, normalize(vec2(.8, -.6)))/90. + .58 + .03*sin(uT*.35)), vec3(1.), .35);
+    col = 1. - (1. - col)*(1. - band*blob*.32);
+  }
+  return vec4(clamp(col, 0., 1.)*a, a);
+}
+
+void main(){
+  vec2 P = vec2(vP.x*uWu, ${Y0}. + (1. - vP.y)*${H}.);
+  vec4 c = vec4(0);
+  if (P.y > TOP - 2. && P.y < TOP + CH + 2. && P.x < uRibR.x + 100. && P.x > 17.) c = flatCard(P);   // cards slide into the ribbon
+  if (P.x < uLensR.x + uLensR.z) {
+    vec4 l = glass(P, uLens, uLensR, true);
+    float fade = smoothstep(305., 262., P.x);          // the lens melts into the flat row on its right
+    c = mix(c, l + c*(1. - l.a), fade);
+  }
+  vec4 r = glass(P, uRib, uRibR, false);
+  float fadeR = smoothstep(uRibR.x + 30., uRibR.x + 96., P.x);   // the last card turns into the ribbon
+  c = mix(c, r + c*(1. - r.a), fadeR);
+  o = c;
+}`;
+
+  function sh(gl, t, s) { const x = gl.createShader(t); gl.shaderSource(x, s); gl.compileShader(x); if (!gl.getShaderParameter(x, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(x)); return x; }
+  function prog(gl) { const p = gl.createProgram(); gl.attachShader(p, sh(gl, gl.VERTEX_SHADER, VS)); gl.attachShader(p, sh(gl, gl.FRAGMENT_SHADER, FS)); gl.linkProgram(p); if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p)); return p; }
+  function imgTex(gl, src, mip) {
+    const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, src);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    if (mip) { gl.generateMipmap(gl.TEXTURE_2D); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR); }
+    else gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    return t;
+  }
+  function cardAt(x, y, scroll, wu) {
+    if (y < TOP || y > TOP + CH || x < 262 || x > wu - 1451 + 1215) return -1;
+    const s = x + scroll, k = Math.floor((s - S0) / PITCH), lx = s - S0 - k * PITCH;
+    if (lx > CW) return -1;
+    return ((k % N) + N) % N;
+  }
+
+  global.RailFX = function (canvas, atlasImg, lensImg, ribImg, G) {
+    const gl = canvas.getContext('webgl2', { premultipliedAlpha: true, alpha: true, antialias: false });
+    if (!gl) return null;
+    const p = prog(gl); gl.useProgram(p);
+    const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0, 0, 1, 0, 0, 1, 1, 1]), gl.STATIC_DRAW);
+    const loc = gl.getAttribLocation(p, 'aP') >= 0 ? gl.getAttribLocation(p, 'aP') : gl.getAttribLocation(p, 'p');
+    gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    const U = n => gl.getUniformLocation(p, n);
+    // silhouette columns → 2-row float texture (row 0 lens, row 1 ribbon)
+    const nL = G.lens.cols.length, nR = G.rib.cols.length, W = Math.max(nL, nR);
+    const cd = new Float32Array(W * 2 * 4);
+    function fill(arr, row) {
+      let last = [TOP, TOP + CH];
+      for (let i = 0; i < W; i++) { const c = arr[Math.min(i, arr.length - 1)] || last; last = c; cd[(row * W + i) * 4] = c[0]; cd[(row * W + i) * 4 + 1] = c[1]; }
+      // fill leading gaps (columns outside the shape) with the first valid value
+      const first = arr.find(Boolean); for (let i = 0; i < arr.length && !arr[i]; i++) { cd[(row * W + i) * 4] = first[0]; cd[(row * W + i) * 4 + 1] = first[1]; }
+    }
+    fill(G.lens.cols, 0); fill(G.rib.cols, 1);
+    const tC = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tC);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, W, 2, 0, gl.RGBA, gl.FLOAT, cd);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    const tex = { uAtlas: imgTex(gl, atlasImg, true), uLens: imgTex(gl, lensImg, false), uRib: imgTex(gl, ribImg, false), uCols: tC };
+    function draw(wu, scroll, t) {
+      const s = canvas.height / H;
+      gl.viewport(0, 0, canvas.width, canvas.height); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
+      let unit = 0;
+      for (const k in tex) { gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, tex[k]); gl.uniform1i(U(k), unit); unit++; }
+      gl.uniform2f(U('uAtlasSize'), atlasImg.naturalWidth || atlasImg.width, atlasImg.naturalHeight || atlasImg.height);
+      gl.uniform1f(U('uWu'), wu); gl.uniform1f(U('uScroll'), scroll); gl.uniform1f(U('uPx'), 1 / s);
+      gl.uniform1f(U('uBias'), Math.log2(Math.max(s, .25) / 2)); gl.uniform1f(U('uT'), t || 0);
+      const L = G.lens.region, R = G.rib.region, dx = wu - 1451;
+      gl.uniform4f(U('uLensR'), L[0], L[1], L[2], L[3]); gl.uniform4f(U('uRibR'), R[0] + dx, R[1], R[2], R[3]);
+      gl.uniform1f(U('uLensN'), nL); gl.uniform1f(U('uRibN'), nR);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    }
+    return { draw, cardAt, Y0, H, cycle: PITCH * N };
+  };
+})(window);
+
+window.GLASS={"lens": {"region": [0, 350, 340, 430], "cols": [null, null, null, null, null, null, null, [373.0, 703.3], [370.3, 712.3], [370.0, 720.3], [370.0, 725.3], [370.0, 728.0], [370.0, 730.7], [370.0, 733.3], [370.0, 736.0], [370.0, 738.7], [370.0, 740.7], [370.0, 742.0], [370.0, 743.3], [370.0, 745.0], [370.0, 746.3], [370.0, 747.7], [370.0, 749.0], [370.0, 750.3], [370.0, 751.7], [370.0, 752.7], [370.0, 753.3], [370.0, 754.0], [370.0, 754.7], [370.0, 755.3], [370.0, 756.0], [370.0, 756.7], [370.0, 757.3], [370.0, 758.0], [370.0, 758.7], [370.0, 759.0], [370.0, 759.0], [370.0, 759.0], [370.0, 759.3], [370.0, 759.3], [370.0, 759.3], [370.0, 759.3], [370.0, 759.7], [370.0, 759.7], [370.0, 759.7], [370.0, 759.7], [370.0, 759.3], [370.0, 759.0], [370.0, 758.3], [370.0, 758.0], [370.0, 757.3], [370.0, 757.0], [370.0, 756.3], [370.0, 756.0], [370.0, 755.3], [370.0, 754.7], [370.0, 753.3], [370.0, 752.0], [370.0, 750.7], [370.0, 749.3], [370.0, 747.7], [370.0, 746.3], [370.0, 745.0], [370.0, 743.3], [370.0, 741.7], [370.0, 739.3], [370.0, 737.0], [370.0, 734.3], [370.0, 732.0], [370.0, 729.3], [370.0, 727.0], [370.0, 724.3], [370.0, 721.3], [370.0, 717.3], [370.0, 713.7], [370.0, 709.7], [370.0, 706.0], [370.0, 702.0], [370.0, 698.0], [370.0, 693.3], [370.0, 688.3], [370.0, 683.3], [370.0, 678.3], [370.0, 673.3], [370.0, 668.3], [370.0, 664.0], [370.0, 659.7], [370.0, 655.3], [370.0, 651.0], [370.0, 646.7], [370.0, 642.3], [370.0, 638.7], [370.0, 636.0], [370.0, 633.3], [370.0, 630.7], [370.0, 628.0], [370.0, 625.0], [370.0, 622.3], [370.0, 620.0], [370.0, 618.3], [370.0, 616.3], [370.0, 614.3], [370.0, 612.7], [370.0, 610.7], [370.0, 609.0], [370.0, 607.3], [370.0, 606.0], [370.0, 604.7], [370.0, 603.7], [370.0, 602.7], [370.0, 601.7], [370.0, 600.7], [370.0, 599.3], [370.0, 598.7], [370.0, 598.0], [370.0, 597.3], [370.0, 596.7], [370.0, 596.0], [370.0, 595.3], [370.0, 594.7], [370.0, 594.3], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0], [370.0, 594.0]]}, "rib": {"region": [1120, 80, 331, 550], "cols": [[353.3, 612.3], [353.7, 612.3], [353.7, 612.0], [354.0, 611.7], [354.3, 611.7], [354.7, 611.3], [355.3, 611.0], [355.7, 610.7], [356.0, 610.3], [356.7, 610.0], [357.0, 609.3], [357.7, 609.0], [358.3, 608.3], [358.7, 607.7], [359.3, 607.3], [360.0, 606.7], [360.7, 606.0], [361.3, 605.7], [362.0, 605.0], [362.3, 604.3], [363.3, 604.0], [364.0, 603.3], [364.7, 602.7], [365.3, 602.0], [366.0, 601.3], [366.7, 601.0], [367.3, 600.3], [367.7, 600.0], [368.3, 599.3], [368.7, 599.0], [369.3, 598.3], [369.7, 598.0], [370.0, 597.7], [370.0, 597.0], [369.7, 596.7], [369.7, 596.3], [369.7, 596.0], [369.7, 596.0], [369.3, 596.0], [369.3, 596.0], [368.7, 596.0], [368.0, 596.0], [367.0, 596.0], [366.0, 596.0], [364.7, 596.0], [363.7, 596.0], [362.0, 596.0], [360.3, 596.0], [358.7, 596.0], [356.7, 596.0], [354.3, 596.0], [351.3, 596.0], [348.0, 596.0], [344.0, 596.3], [339.3, 596.3], [333.3, 596.3], [324.3, 596.3], [309.0, 596.3], [216.7, 596.3], [201.7, 596.7], [190.3, 596.7], [181.0, 596.7], [172.7, 596.7], [165.0, 596.7], [159.3, 596.7], [153.3, 597.0], [148.7, 597.0], [143.7, 597.0], [139.7, 597.0], [135.7, 597.0], [132.0, 597.0], [129.0, 597.0], [125.7, 597.0], [122.7, 597.3], [120.0, 597.3], [117.7, 597.3], [115.7, 597.3], [113.3, 597.3], [111.7, 597.3], [110.0, 597.7], [108.3, 597.7], [107.0, 597.7], [105.7, 597.7], [104.3, 597.7], [103.3, 597.7], [102.7, 597.7], [101.7, 597.7], [101.0, 597.7], [100.3, 597.7], [99.7, 597.7], [99.0, 598.0], [98.7, 598.0], [98.3, 598.0], [98.0, 598.0], [97.7, 598.0], [97.7, 598.0], [97.7, 598.0], [97.7, 598.0], [98.0, 598.0], [98.0, 598.0], [98.3, 598.0], [98.7, 598.0], [99.0, 598.0], [99.3, 598.0], [99.7, 598.0], [100.3, 598.0], [100.7, 598.0], [101.0, 598.0], [101.7, 598.0], [102.0, 598.0], [102.7, 598.0], [103.3, 598.0], [104.0, 598.0], [104.7, 598.0], [105.3, 598.0], [106.3, 598.0], [107.0, 598.0], [108.0, 598.0], [109.0, 598.0], [110.0, 598.0], [111.0, 598.0], [112.0, 598.0], [113.0, 598.0], [114.0, 598.0], [115.0, 598.0], [116.3, 598.0], [117.3, 598.0], [118.7, 598.0], [120.0, 598.0], [121.0, 598.0], [122.3, 598.0], [123.7, 598.0], [125.3, 598.0], [126.7, 598.0], [128.0, 598.0], [129.3, 598.0], [130.7, 598.0], [132.0, 598.0], [133.3, 598.0], [134.7, 598.0], [136.0, 598.0], [137.3, 598.0], [138.7, 598.0], [140.0, 598.0], [141.3, 598.0], [143.0, 598.0], [144.3, 598.0], [145.7, 598.0], [147.0, 598.0], [148.3, 598.0], [150.0, 598.0], [151.3, 598.0], [152.7, 598.0], [154.0, 598.0], [155.3, 598.0], [156.3, 598.0], [157.7, 598.0], [159.0, 598.0], [160.0, 598.0], [161.0, 598.0], [162.0, 598.0], [163.0, 598.0], [164.0, 598.0], [164.7, 598.0], [165.7, 598.0], [166.0, 598.0]]}};</script>
+<script>
+(function(){
+  var root=document.documentElement, hero=document.getElementById('hero');
+  var mid=hero.querySelector('.mid'), rail=hero.querySelector('.track');
+  var flow=matchMedia('(max-width:959px),(max-height:599px),(max-aspect-ratio:1/1)');
+  function cards(){return [].slice.call(mid.children)}
+  function fit(){
+    /* use the real inner box — immune to mobile URL bars and scrollbars */
+    root.style.setProperty('--vw',root.clientWidth+'px');
+    root.style.setProperty('--vh',innerHeight+'px');
+    if(flow.matches){cards().forEach(function(c){c.hidden=false});return}
+    var u=Math.min(root.clientWidth/1451,innerHeight/1084);
+    var track=(root.clientWidth/u)-566-(1451-908);            /* reference px available */
+    var n=Math.max(1,Math.min(4,Math.round((track+12)/(342+12))));
+    cards().forEach(function(c,i){c.hidden=i>=n});
+  }
+  addEventListener('resize',fit,{passive:true});
+  addEventListener('orientationchange',fit);
+  if(flow.addEventListener)flow.addEventListener('change',fit);
+  fit();
+  hero.querySelector('.dot').addEventListener('click',function(){
+    if(flow.matches){rail.scrollBy({left:rail.clientWidth*.8,behavior:'smooth'});return}
+    mid.appendChild(mid.firstElementChild); fit();             /* rotate the projects */
+  });
+
+  /* ---- continuous rail: cards flow out of the ribbon curl, across, and into the lens wave ----
+     One renderer for every layout: the canvas is laid out by CSS (artboard band on desktop,
+     the space between header and headline on tablets/phones); k = canvas px per reference px. */
+  (function(){
+    var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+    var band=hero.querySelector('.band'), cv=hero.querySelector('.railfx');
+    var atlas=document.getElementById('tx-atlas'), lmap=document.getElementById('tx-lensmap'), rmap=document.getElementById('tx-ribmap');
+    var fx=null, raf=0, last=0, t=0, scroll=0, speed=0, BASE=30, slow=false, inView=true, drag=null;
+    var box={w:1,h:1,k:1};
+    function measure(){ var r=cv.getBoundingClientRect(); box={l:r.left,t:r.top,w:Math.max(1,r.width),h:Math.max(1,r.height)}; box.k=box.h/700; return box; }
+    function wu(){ return box.w/box.k; }
+    function ready(img){return img.decode?img.decode().catch(function(){}):Promise.resolve()}
+    Promise.all([ready(atlas),ready(lmap),ready(rmap)]).then(function(){
+      try{ fx=window.RailFX&&RailFX(cv,atlas,lmap,rmap,window.GLASS); }catch(e){ if(window.console) console.warn("rail fx off:", e); fx=null; }
+      if(!fx) return;                                         /* no WebGL2: static layout stays */
+      hero.classList.add('fx-on'); size(); if(!reduce){ speed=1500; scroll=-1180; } run();   /* entry: rush, then ease to cruise */
+    });
+    function size(){
+      if(!fx) return;
+      measure();
+      var dpr=Math.min(window.devicePixelRatio||1,2);
+      var w=Math.max(2,Math.round(box.w*dpr)), h=Math.max(2,Math.round(box.h*dpr));
+      if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h}
+      /* flow layouts place the round button on the ribbon in canvas coordinates */
+      var br=band.getBoundingClientRect();
+      band.style.setProperty('--rk',box.k); band.style.setProperty('--rtop',(box.t-br.top)+'px');
+      draw();
+    }
+    function pos(){ return ((scroll%1750)+1750)%1750; }
+    function draw(){ fx.draw(wu(), pos(), t, 0); }
+    function tick(now){
+      raf=0; if(document.hidden||!inView){last=0;return}
+      var dt=Math.min(.2,(now-(last||now))/1000); last=now; t+=dt;
+      var target=(reduce||drag)?0:BASE*(slow?.22:1);
+      speed+=(target-speed)*Math.min(1,dt*2.5);               /* eases in at start and on hover */
+      scroll+=speed*dt; draw();
+      if(!reduce||Math.abs(speed)>.01||drag) raf=requestAnimationFrame(tick);
+    }
+    function run(){ if(fx&&!raf) raf=requestAnimationFrame(tick); }
+    addEventListener('resize',function(){ size(); run(); },{passive:true});
+    if(flow.addEventListener)flow.addEventListener('change',function(){ setTimeout(function(){ size(); run(); },0); });
+    if('ResizeObserver' in window) new ResizeObserver(function(){ if(fx) size(); }).observe(cv);
+    document.addEventListener('visibilitychange',function(){ if(!document.hidden) run(); });
+    if('IntersectionObserver' in window) new IntersectionObserver(function(es){ inView=es[0].isIntersecting; if(inView) run(); }).observe(band);
+    /* links + cursor on the drawn cards */
+    function hit(e){
+      if(!fx) return -1; measure();
+      return fx.cardAt((e.clientX-box.l)/box.k, 80+(e.clientY-box.t)/box.k, pos(), wu());
+    }
+    band.addEventListener('pointermove',function(e){
+      if(drag&&e.pointerId===drag.id){ var dx=e.clientX-drag.x; drag.x=e.clientX; drag.moved+=Math.abs(dx); scroll-=dx/box.k; run(); return; }
+      if(e.pointerType==='mouse'){ var id=hit(e); band.classList.toggle('on-card',id>=0); slow=id>=0; run(); }
+    });
+    band.addEventListener('pointerleave',function(){ band.classList.remove('on-card'); slow=false; });
+    /* touch: the rail can be dragged sideways; vertical gestures stay with the page */
+    band.addEventListener('pointerdown',function(e){ if(!fx||e.pointerType==='mouse'||e.target.closest('.dot')) return; drag={id:e.pointerId,x:e.clientX,moved:0}; run(); });
+    function endDrag(e){ if(drag&&e.pointerId===drag.id){ var m=drag.moved; drag=null; band.dataset.dragged=m>8?'1':''; run(); } }
+    band.addEventListener('pointerup',endDrag); band.addEventListener('pointercancel',endDrag);
+    band.addEventListener('click',function(e){
+      if(band.dataset.dragged==='1'){ band.dataset.dragged=''; return; }
+      var id=hit(e); if(id<0) return;
+      var a=hero.querySelector('.card[data-p="'+id+'"]'); if(a&&!e.target.closest('.dot')) location.href=a.href;
+    });
+    hero.querySelector('.dot').addEventListener('click',function(e){
+      if(!fx) return; e.stopImmediatePropagation();
+      var from=scroll, to=scroll+350, st=performance.now();          /* glide one card */
+      (function step(n){ var p=Math.min(1,(n-st)/700), ez=1-Math.pow(1-p,3); scroll=from+(to-from)*ez; draw(); if(p<1) requestAnimationFrame(step); })(st);
+    },true);
+  })();
+
+  /* ---- phones/tablets: the swipe row drifts on its own, loops, and yields to touch ---- */
+  (function(){
+    var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+    var track=hero.querySelector('.track'), cloned=false, pauseUntil=0, raf=0, last=0, acc=0;
+    function setup(){
+      if(cloned) return; cloned=true;
+      [].slice.call(track.querySelectorAll('.card')).forEach(function(c){
+        var k=c.cloneNode(true); k.hidden=false; k.setAttribute('aria-hidden','true'); k.tabIndex=-1; k.classList.add('clone');
+        track.insertBefore(k, track.querySelector('.ribbon'));
+      });
+    }
+    function tick(now){
+      raf=0; if(!flow.matches||reduce||hero.classList.contains('fx-on')) return;
+      var dt=Math.min(.05,(now-(last||now))/1000); last=now;
+      if(now>pauseUntil && !document.hidden){
+        track.classList.add('auto');
+        acc+=dt*22; var step=Math.floor(acc); acc-=step;
+        if(step){ track.scrollLeft+=step;
+          var half=track.querySelector('.clone'); if(half&&track.scrollLeft>=half.offsetLeft-track.firstElementChild.offsetLeft) track.scrollLeft-=half.offsetLeft-track.firstElementChild.offsetLeft; }
+      } else track.classList.remove('auto');
+      raf=requestAnimationFrame(tick);
+    }
+    function start(){ if(flow.matches&&!reduce){ setup(); if(!raf) raf=requestAnimationFrame(tick); } }
+    ['pointerdown','touchstart','wheel'].forEach(function(ev){ track.addEventListener(ev,function(){ pauseUntil=performance.now()+3500; track.classList.remove('auto'); },{passive:true}); });
+    if(flow.addEventListener)flow.addEventListener('change',start);
+    start();
+  })();
+
+  /* ---- offer tooltips ---- */
+  (function(){
+    var tip=document.querySelector('.tip'), p=tip.querySelector('p');
+    var x=-999,y=-999,tx=-999,ty=-999,raf=0,cur=null,timer=0;
+    var card=tip.querySelector('.tip-card');
+    function loop(){ x+=(tx-x)*.28; y+=(ty-y)*.28; tip.style.setProperty('--tx',x+'px'); tip.style.setProperty('--ty',y+'px');
+      /* keep the card on screen: slide it left if it would run past the right edge */
+      var cw=card.offsetWidth, k=parseFloat(getComputedStyle(card).left)||0, over=x+k+cw-(innerWidth-12), under=12-(x+k);
+      card.style.translate=(over>0?(-over)+'px':(under>0?under+'px':'0px'))+' 0';
+      raf=(Math.abs(tx-x)+Math.abs(ty-y)>.3)?requestAnimationFrame(loop):0; }
+    function move(e){ tx=e.clientX; ty=e.clientY; if(x<-900){x=tx;y=ty} if(!raf) raf=requestAnimationFrame(loop); }
+    function show(el){
+      clearTimeout(timer);
+      if(cur&&cur!==el){ tip.classList.remove('open'); timer=setTimeout(function(){ p.textContent=el.dataset.tip; tip.classList.add('open'); },200); }
+      else { p.textContent=el.dataset.tip; tip.classList.add('on'); requestAnimationFrame(function(){ tip.classList.add('open'); }); }
+      cur=el; tip.classList.add('on');
+    }
+    function hide(){ clearTimeout(timer); tip.classList.remove('open'); timer=setTimeout(function(){ if(!tip.classList.contains('open')) tip.classList.remove('on'); cur=null; },180); }
+    function bind(el){
+      el.addEventListener('pointerenter',function(e){ if(e.pointerType==='touch') return; move(e); show(el); });
+      el.addEventListener('pointermove',move);
+      el.addEventListener('pointerleave',function(e){ if(e.pointerType==='touch') return; hide(); });
+      el.addEventListener('click',function(e){ if(!matchMedia('(hover:none)').matches) return;
+        var r=el.getBoundingClientRect(); tx=x=r.left+Math.min(r.width*.4,160); ty=y=r.top+r.height*.6; loop();
+        if(cur===el&&tip.classList.contains('open')) hide(); else show(el); });
+    }
+    [].slice.call(document.querySelectorAll('.hot')).forEach(bind);
+    /* flow layout: the words themselves are the targets */
+    var map={'ur':document.querySelector('.hot-sub').dataset.tip,'uw':document.querySelector('.hot-one').dataset.tip};
+    Object.keys(map).forEach(function(c){ var el=document.querySelector('.headline .'+c); if(!el) return; el.dataset.tip=map[c];
+      el.addEventListener('pointerenter',function(e){ if(!flow.matches||e.pointerType==='touch') return; move(e); show(el); });
+      el.addEventListener('pointermove',function(e){ if(flow.matches) move(e); });
+      el.addEventListener('pointerleave',function(e){ if(flow.matches&&e.pointerType!=='touch') hide(); });
+      el.addEventListener('click',function(){ if(!flow.matches) return; var r=el.getBoundingClientRect(); tx=x=r.left+Math.min(r.width*.4,140); ty=y=r.top+r.height*.55; loop();
+        if(cur===el&&tip.classList.contains('open')) hide(); else show(el); });
+    });
+    document.addEventListener('pointerdown',function(e){ if(!e.target.closest('.hot,.ur,.uw')) hide(); });
+  })();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Pipeline Orchestrator</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    background: #000;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow: hidden;
+  }
+  #viewport { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; }
+  #stage {
+    width: 1456px; height: 1138px; flex: none; transform-origin: center center;
+    background: #060606; border-radius: 38px; padding: 12px;
+    display: flex; gap: 14px; position: relative;
+    box-shadow: 0 40px 120px rgba(0,0,0,.6);
+  }
+  /* top speaker notch */
+  #stage::before {
+    content: ""; position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+    width: 96px; height: 5px; border-radius: 3px; background: #1c1c1c;
+  }
+
+  /* ============ SIDEBAR ============ */
+  .sidebar {
+    width: 268px; flex: none; background: #1b1e25; border-radius: 22px;
+    display: flex; flex-direction: column; padding: 22px 18px 18px;
+    color: #cfd2d8;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; padding: 2px 6px 0; }
+  .brand .logo {
+    width: 38px; height: 38px; border-radius: 50%; flex: none;
+    border: 1.5px solid #3a3e47; display: flex; align-items: center; justify-content: center;
+    color: #d7dadf;
+  }
+  .brand .logo svg { width: 19px; height: 19px; }
+  .brand .name { font-size: 19px; font-weight: 700; color: #f4f5f7; line-height: 1.1; }
+  .brand .sub { font-size: 12.5px; color: #82868f; margin-top: 1px; }
+
+  .navlist { margin-top: 22px; display: flex; flex-direction: column; gap: 3px; }
+  .navitem {
+    display: flex; align-items: center; gap: 13px; padding: 10px 11px; border-radius: 10px;
+    font-size: 15px; color: #c5c8cf; cursor: pointer; position: relative; font-weight: 450;
+  }
+  .navitem .ic { width: 20px; height: 20px; flex: none; color: #aeb2bb; }
+  .navitem .chev { margin-left: auto; width: 17px; height: 17px; color: #595d66; }
+  .navitem.active { background: #2c2f38; color: #fff; font-weight: 500; }
+  .navitem.active .ic { color: #fff; }
+  .navitem.home .ic { color: #f2f3f5; }
+
+  .seclabel { font-size: 11px; letter-spacing: 1.3px; font-weight: 600; color: #6b6f78; padding: 0 11px; margin: 22px 0 9px; }
+
+  .userrow {
+    margin-top: auto; display: flex; align-items: center; gap: 12px; padding: 16px 6px 2px;
+    border-top: 1px solid #2a2d35;
+  }
+  .avatar {
+    width: 40px; height: 40px; border-radius: 50%; flex: none; object-fit: cover;
+    background: linear-gradient(135deg,#7c8aa0,#566074); display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:13px; font-weight:600;
+  }
+  .userrow .uname { font-size: 14.5px; font-weight: 600; color: #f1f2f4; line-height: 1.15; }
+  .userrow .umail { font-size: 12.5px; color: #82868f; }
+  .userrow .dots { margin-left: auto; width: 18px; height: 18px; color: #6b6f78; }
+
+  /* ============ MAIN PANEL ============ */
+  .main { flex: 1; background: #fff; border-radius: 18px; display: flex; flex-direction: column; overflow: hidden; }
+  .header { padding: 32px 34px 22px; flex: none; }
+  .header h1 { font-size: 26px; font-weight: 600; color: #1c1e23; letter-spacing: -0.2px; }
+  .header p { font-size: 15px; color: #9aa0a8; margin-top: 7px; }
+
+  .body { flex: 1; display: flex; min-height: 0; }
+
+  /* ----- list panel ----- */
+  .list { width: 374px; flex: none; border-right: 1px solid #eee; padding: 2px 22px 18px; overflow: hidden; }
+  .envcard {
+    display: flex; align-items: center; gap: 14px; border: 1px solid #e9e9ec; border-radius: 12px;
+    padding: 14px 16px; color: #2b2d33;
+  }
+  .envcard .cloud { width: 22px; height: 22px; color: #6f7682; flex: none; }
+  .envcard .etext { font-size: 15.5px; font-weight: 600; color: #2b2d33; white-space: nowrap; }
+  .envcard .copy { margin-left: auto; width: 19px; height: 19px; color: #b6bbc2; }
+
+  .search {
+    display: flex; align-items: center; gap: 11px; border: 1px solid #e9e9ec; border-radius: 10px;
+    padding: 11px 14px; margin-top: 14px; color: #aab0b8;
+  }
+  .search .ic { width: 17px; height: 17px; flex: none; }
+  .search span { font-size: 14.5px; }
+
+  .sechead {
+    display: flex; align-items: center; padding: 13px 2px 12px; margin-top: 4px;
+    font-size: 15.5px; font-weight: 600; color: #20232a;
+  }
+  .sechead .chev { margin-left: auto; width: 18px; height: 18px; color: #aab0b8; }
+
+  .item {
+    display: flex; align-items: center; gap: 13px; border: 1px solid #ededf0; border-radius: 12px;
+    padding: 11px 13px; margin-bottom: 9px;
+  }
+  .iconbox { width: 40px; height: 40px; border-radius: 11px; flex: none; display: flex; align-items: center; justify-content: center; }
+  .iconbox svg { width: 21px; height: 21px; }
+  .item .it { flex: 1; min-width: 0; }
+  .item .ititle { font-size: 14.5px; font-weight: 600; color: #2a2c32; line-height: 1.2; }
+  .item .isub { font-size: 12.5px; color: #a4a9b1; margin-top: 3px; }
+  .item .star { width: 19px; height: 19px; color: #cfd3d9; flex: none; }
+
+  /* ----- canvas ----- */
+  .canvas {
+    flex: 1; position: relative; background-color: #fafafa;
+    background-image: radial-gradient(circle, #dcdce0 1.2px, transparent 1.2px);
+    background-size: 22px 22px; background-position: 8px 8px; overflow: hidden;
+  }
+  .flow { position: absolute; inset: 0; }
+  .flow svg.wires { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+
+  .node {
+    position: absolute; width: 220px; background: #fff; border: 1px solid #ececef;
+    border-radius: 12px; padding: 10px 13px; display: flex; align-items: center; gap: 11px;
+    box-shadow: 0 1px 2px rgba(20,20,40,.05), 0 6px 16px rgba(20,20,40,.04);
+  }
+  .nicon { width: 34px; height: 34px; border-radius: 9px; flex: none; display: flex; align-items: center; justify-content: center; }
+  .nicon svg { width: 19px; height: 19px; }
+  .ntext { flex: 1; min-width: 0; }
+  .nlabel { font-size: 11.5px; font-weight: 600; line-height: 1.1; }
+  .ntitle { font-size: 14px; font-weight: 500; color: #2c2e34; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ntime { font-size: 12px; color: #b9bdc4; font-weight: 500; align-self: center; }
+
+  .pill {
+    position: absolute; display: flex; align-items: center; gap: 6px; border-radius: 8px;
+    font-size: 13.5px; font-weight: 600; color: #fff; padding: 6px 13px; white-space: nowrap;
+    box-shadow: 0 1px 3px rgba(0,0,0,.12);
+  }
+  .pill svg { width: 14px; height: 14px; }
+  .pill span { width: 14px; height: 14px; flex: none; display: flex; }
+  .pill.start { background: #134e30; padding: 7px 16px; font-size: 14px; }
+  .pill.pass  { background: #1f9d57; }
+  .pill.fail  { background: #f0794a; }
+  .pill.end   { background: #f47b4a; }
+
+  .zoom {
+    position: absolute; left: 25px; bottom: 24px; background: #fff; border: 1px solid #ececef;
+    border-radius: 12px; display: flex; align-items: center; padding: 7px 6px; gap: 2px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+  }
+  .zoom button { width: 40px; height: 30px; border: none; background: none; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #5a5f68; }
+  .zoom button svg { width: 18px; height: 18px; }
+</style>
+</head>
+<body>
+<div id="viewport">
+  <div id="stage">
+
+    <!-- ===================== SIDEBAR ===================== -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo" data-i="logo"></div>
+        <div>
+          <div class="name">DataFlow</div>
+          <div class="sub">Orchestrator</div>
+        </div>
+      </div>
+
+      <div class="navlist" style="margin-top:24px;">
+        <div class="navitem home"><span class="ic" data-i="home"></span>Home</div>
+      </div>
+
+      <div class="seclabel">PIPELINES</div>
+      <div class="navlist">
+        <div class="navitem active"><span class="ic" data-i="dash"></span>Dashboard</div>
+        <div class="navitem"><span class="ic" data-i="sources"></span>Sources<span class="chev" data-i="chevright"></span></div>
+        <div class="navitem"><span class="ic" data-i="jobs"></span>Jobs<span class="chev" data-i="chevright"></span></div>
+        <div class="navitem"><span class="ic" data-i="dest"></span>Destinations<span class="chev" data-i="chevright"></span></div>
+        <div class="navitem"><span class="ic" data-i="sched"></span>Schedules<span class="chev" data-i="chevright"></span></div>
+        <div class="navitem"><span class="ic" data-i="alert"></span>Alerts<span class="chev" data-i="chevright"></span></div>
+      </div>
+
+      <div class="seclabel">MANAGEMENT</div>
+      <div class="navlist">
+        <div class="navitem"><span class="ic" data-i="env"></span>Environments</div>
+        <div class="navitem"><span class="ic" data-i="settings"></span>Settings</div>
+      </div>
+
+      <div class="userrow">
+        <img class="avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop&crop=faces" alt="Alex Morgan">
+        <div>
+          <div class="uname">Alex Morgan</div>
+          <div class="umail">alex.morgan@dataflow.io</div>
+        </div>
+        <span class="dots" data-i="dots"></span>
+      </div>
+    </aside>
+
+    <!-- ===================== MAIN ===================== -->
+    <section class="main">
+      <div class="header">
+        <h1>Data Pipeline Orchestrator</h1>
+        <p>Monitor, schedule, and automate your data workflows ...</p>
+      </div>
+
+      <div class="body">
+        <!-- ---------- LIST ---------- -->
+        <div class="list">
+          <div class="envcard">
+            <span class="cloud" data-i="cloud"></span>
+            <span class="etext">Production Environment</span>
+            <span class="copy" data-i="copy"></span>
+          </div>
+
+          <div class="search">
+            <span class="ic" data-i="search"></span><span>Find pipelines</span>
+          </div>
+
+          <div class="sechead">Favorites<span class="chev" data-i="chevdown"></span></div>
+
+          <div class="sechead">Ingestion<span class="chev" data-i="chevup"></span></div>
+          <div class="item">
+            <div class="iconbox" style="background:#e6f6ee;color:#16a36a;" data-i="bucket"></div>
+            <div class="it"><div class="ititle">S3 Ingestion</div><div class="isub">Ingest data from S3 to Data Lake</div></div>
+            <span class="star" data-i="star"></span>
+          </div>
+          <div class="item">
+            <div class="iconbox" style="background:#eee9fd;color:#7c5cf7;" data-i="globe"></div>
+            <div class="it"><div class="ititle">API Collector</div><div class="isub">Collect data from external APIs</div></div>
+            <span class="star" data-i="star"></span>
+          </div>
+          <div class="item">
+            <div class="iconbox" style="background:#e7f0fe;color:#3d82f5;" data-i="database"></div>
+            <div class="it"><div class="ititle">Database CDC</div><div class="isub">Capture changes from databases</div></div>
+            <span class="star" data-i="star"></span>
+          </div>
+
+          <div class="sechead">Processing<span class="chev" data-i="chevup"></span></div>
+          <div class="item">
+            <div class="iconbox" style="background:#fdeede;color:#f3851f;" data-i="blocks"></div>
+            <div class="it"><div class="ititle">Data Enrichment</div><div class="isub">Enrich and transform raw data</div></div>
+            <span class="star" data-i="star"></span>
+          </div>
+          <div class="item">
+            <div class="iconbox" style="background:transparent;" data-i="check"></div>
+            <div class="it"><div class="ititle">Data Validation</div><div class="isub">Validate data quality rules</div></div>
+            <span class="star" data-i="star"></span>
+          </div>
+          <div class="item">
+            <div class="iconbox" style="background:#fdf4e3;color:#e8b22e;" data-i="bars"></div>
+            <div class="it"><div class="ititle">Aggregation Job</div><div class="isub">Aggregate metrics and summaries</div></div>
+            <span class="star" data-i="star"></span>
+          </div>
+
+          <div class="sechead">Delivery<span class="chev" data-i="chevup"></span></div>
+          <div class="item">
+            <div class="iconbox" style="background:#e6f6fc;color:#29b5e8;" data-i="snow"></div>
+            <div class="it"><div class="ititle">Warehouse Loader</div><div class="isub">Load data to Snowflake</div></div>
+            <span class="star" data-i="star"></span>
+          </div>
+          <div class="item">
+            <div class="iconbox" style="background:#ecebfd;color:#6366f1;" data-i="chart"></div>
+            <div class="it"><div class="ititle">BI Dataset Refresh</div><div class="isub">Refresh datasets for BI tools</div></div>
+            <span class="star" data-i="star"></span>
+          </div>
+          <div class="item">
+            <div class="iconbox" style="background:#fdeaef;color:#e0506e;" data-i="bell"></div>
+            <div class="it"><div class="ititle">Notification Service</div><div class="isub">Send pipeline status notifications</div></div>
+            <span class="star" data-i="star"></span>
+          </div>
+        </div>
+
+        <!-- ---------- CANVAS ---------- -->
+        <div class="canvas">
+          <div class="flow">
+            <svg class="wires" viewBox="0 0 778 1006" preserveAspectRatio="none">
+              <g fill="none" stroke="#d6d8dc" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <!-- start -> s3 (dashed) -->
+                <path d="M154 135 L222 135" stroke-dasharray="5 5"/>
+                <polyline points="217,131 223,135 217,139"/>
+                <!-- vertical chain -->
+                <path d="M337 161 L337 213"/><polyline points="332,208 337,213 342,208"/>
+                <path d="M337 266 L337 318"/><polyline points="332,313 337,318 342,313"/>
+                <path d="M337 371 L337 423"/><polyline points="332,418 337,423 342,418"/>
+                <path d="M337 476 L337 522"/><polyline points="332,517 337,522 342,517"/>
+                <!-- condition branch bus -->
+                <path d="M337 575 L337 607"/>
+                <path d="M126 607 L606 607"/>
+                <path d="M126 607 L126 668"/><polyline points="121,663 126,668 131,663"/>
+                <path d="M350 607 L350 668"/><polyline points="345,663 350,668 355,663"/>
+                <path d="M606 607 L606 668"/><polyline points="601,663 606,668 611,663"/>
+                <!-- bottom merges -->
+                <path d="M126 718 L126 762 Q126 772 136 772 L226 772 Q236 772 236 782 L236 793"/>
+                <polyline points="231,788 236,793 241,788"/>
+                <path d="M350 718 L350 762 Q350 772 340 772 L246 772"/>
+                <path d="M606 718 L606 793"/><polyline points="601,788 606,793 611,788"/>
+              </g>
+            </svg>
+
+            <!-- Start -->
+            <div class="pill start" style="left:96px;top:122px;">Start</div>
+
+            <!-- S3 Ingestion (Source) -->
+            <div class="node" style="left:227px;top:111px;">
+              <div class="nicon" style="background:#e6f6ee;color:#16a36a;" data-i="bucket"></div>
+              <div class="ntext"><div class="nlabel" style="color:#17a877;">Source</div><div class="ntitle">S3 Ingestion</div></div>
+              <div class="ntime">8m</div>
+            </div>
+            <!-- Data Validation (Job) -->
+            <div class="node" style="left:227px;top:216px;">
+              <div class="nicon" style="background:#eee9fd;color:#7c5cf7;" data-i="globe"></div>
+              <div class="ntext"><div class="nlabel" style="color:#9aa0a8;">Job</div><div class="ntitle">Data Validation</div></div>
+              <div class="ntime">4m</div>
+            </div>
+            <!-- Data Enrichment (Job) -->
+            <div class="node" style="left:227px;top:321px;">
+              <div class="nicon" style="background:#fdeede;color:#f3851f;" data-i="blocks"></div>
+              <div class="ntext"><div class="nlabel" style="color:#9aa0a8;">Job</div><div class="ntitle">Data Enrichment</div></div>
+              <div class="ntime">12m</div>
+            </div>
+            <!-- Aggregation Job -->
+            <div class="node" style="left:227px;top:426px;">
+              <div class="nicon" style="background:#fdf4e3;color:#e8b22e;" data-i="bars"></div>
+              <div class="ntext"><div class="nlabel" style="color:#9aa0a8;">Job</div><div class="ntitle">Aggregation Job</div></div>
+              <div class="ntime">6m</div>
+            </div>
+            <!-- Data Quality Check (Condition) -->
+            <div class="node" style="left:227px;top:525px;">
+              <div class="nicon" style="background:#e3f6f3;color:#13b09c;" data-i="gem"></div>
+              <div class="ntext"><div class="nlabel" style="color:#13a89a;">Condition</div><div class="ntitle">Data Quality Check</div></div>
+            </div>
+
+            <!-- Pass / Fail -->
+            <div class="pill pass" style="left:213px;top:594px;">Pass</div>
+            <div class="pill fail" style="left:413px;top:594px;">Fail</div>
+
+            <!-- Warehouse Loader (Destination) -->
+            <div class="node" style="left:14px;top:672px;width:224px;">
+              <div class="nicon" style="background:#e6f6f5;color:#14b3a3;" data-i="sliders"></div>
+              <div class="ntext"><div class="nlabel" style="color:#13a89a;">Destination</div><div class="ntitle">Warehouse Loader</div></div>
+              <div class="ntime">3m</div>
+            </div>
+            <!-- BI Dataset Refresh (Destination) -->
+            <div class="node" style="left:238px;top:672px;width:224px;">
+              <div class="nicon" style="background:#ecebfd;color:#6366f1;" data-i="chart"></div>
+              <div class="ntext"><div class="nlabel" style="color:#13a89a;">Destination</div><div class="ntitle">BI Dataset Refresh</div></div>
+              <div class="ntime">2m</div>
+            </div>
+            <!-- Notification Service (Job) -->
+            <div class="node" style="left:494px;top:672px;width:224px;">
+              <div class="nicon" style="background:#fdeede;color:#f3851f;" data-i="blocks"></div>
+              <div class="ntext"><div class="nlabel" style="color:#9aa0a8;">Job</div><div class="ntitle">Notification Service</div></div>
+              <div class="ntime">1m</div>
+            </div>
+
+            <!-- End pills -->
+            <div class="pill end" style="left:208px;top:797px;"><span data-i="endicon"></span>End</div>
+            <div class="pill end" style="left:579px;top:783px;"><span data-i="endicon"></span>End</div>
+
+            <!-- zoom controls -->
+            <div class="zoom">
+              <button data-i="minus"></button>
+              <button data-i="plus"></button>
+              <button data-i="expand"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  const ICONS = {
+    logo:    '<circle cx="12" cy="12" r="9.3"/><polygon points="15.8 8.2 13.7 13.7 8.2 15.8 10.3 10.3 15.8 8.2"/><circle cx="12" cy="12" r="1.1" fill="currentColor" stroke="none"/>',
+    home:    '<path d="M3 10.4 12 3l9 7.4V20a1 1 0 0 1-1 1h-5v-6.5H9V21H4a1 1 0 0 1-1-1Z" fill="currentColor" stroke="none"/>',
+    dash:    '<rect x="3" y="3" width="7" height="18" rx="1.6"/><rect x="13" y="3" width="8" height="8" rx="1.6"/><rect x="13" y="14" width="8" height="7" rx="1.6"/>',
+    sources: '<line x1="3.5" y1="6.5" x2="20.5" y2="6.5"/><line x1="3.5" y1="12" x2="20.5" y2="12"/><line x1="3.5" y1="17.5" x2="20.5" y2="17.5"/><circle cx="9" cy="6.5" r="2.3" fill="#1b1e25"/><circle cx="15" cy="12" r="2.3" fill="#1b1e25"/><circle cx="8" cy="17.5" r="2.3" fill="#1b1e25"/>',
+    jobs:    '<rect x="3" y="3" width="18" height="18" rx="3.5"/><path d="M12 7.5v6"/><path d="m9 10.5 3 3 3-3"/>',
+    dest:    '<rect x="3" y="3" width="7.5" height="7.5" rx="1.8"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.8"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.8"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.8"/>',
+    sched:   '<circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.4 2"/>',
+    alert:   '<path d="M18 8.5a6 6 0 1 0-12 0c0 6.5-2.6 8.5-2.6 8.5h17.2S18 15 18 8.5"/><path d="M13.6 20.5a2 2 0 0 1-3.2 0"/>',
+    env:     '<path d="M12 3 5 6v5.2c0 4.4 3 7.4 7 8.8 4-1.4 7-4.4 7-8.8V6Z"/><circle cx="12" cy="11" r="2.3" fill="currentColor" stroke="none"/>',
+    settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 0 1-4 0v-.1A1.6 1.6 0 0 0 7 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 4.6 14a1.6 1.6 0 0 0-1.5-1H3a2 2 0 0 1 0-4h.1A1.6 1.6 0 0 0 4.6 7a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 9 2.6h.1A1.6 1.6 0 0 0 10 1.1V1a2 2 0 0 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V7a1.6 1.6 0 0 0 1.5 1H23a2 2 0 0 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1Z"/>',
+    cloud:   '<path d="M17.5 19a4.3 4.3 0 0 0 .2-8.6 6 6 0 0 0-11.5 1.4A3.8 3.8 0 0 0 6.5 19Z"/>',
+    copy:    '<rect x="8.5" y="8.5" width="11.5" height="11.5" rx="2.4"/><path d="M5 15.5V6a2 2 0 0 1 2-2h8.5"/>',
+    search:  '<circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-3.8-3.8"/>',
+    chevright:'<path d="m9 6 6 6-6 6"/>',
+    chevdown:'<path d="m6 9 6 6 6-6"/>',
+    chevup:  '<path d="m6 15 6-6 6 6"/>',
+    dots:    '<circle cx="12" cy="5" r="1.7" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.7" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="1.7" fill="currentColor" stroke="none"/>',
+    star:    '<path d="M12 3.5 14.5 9l6 .6-4.5 4 1.3 5.9L12 16.5 6.7 19.5 8 13.6 3.5 9.6l6-.6Z"/>',
+    bucket:  '<path d="M5 6.5h14l-1.2 12.4a1.3 1.3 0 0 1-1.3 1.1H7.5a1.3 1.3 0 0 1-1.3-1.1Z"/><path d="M3.8 6.5h16.4"/><path d="M9 6.5V4.6A1.1 1.1 0 0 1 10.1 3.5h3.8A1.1 1.1 0 0 1 15 4.6V6.5"/>',
+    globe:   '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.6 2.6 15 0 18M12 3c-2.6 2.6-2.6 15 0 18"/>',
+    database:'<ellipse cx="12" cy="5.8" rx="7.5" ry="2.8"/><path d="M4.5 5.8v12.4c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8V5.8"/><path d="M4.5 12c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8"/>',
+    blocks:  '<rect x="3.5" y="3.5" width="7.2" height="7.2" rx="2" fill="currentColor" stroke="none"/><rect x="13.3" y="3.5" width="7.2" height="7.2" rx="2" fill="currentColor" stroke="none"/><rect x="3.5" y="13.3" width="7.2" height="7.2" rx="2" fill="currentColor" stroke="none"/><rect x="13.3" y="13.3" width="7.2" height="7.2" rx="2" fill="currentColor" stroke="none"/>',
+    check:   '<circle cx="12" cy="12" r="10" fill="#1bbf6f" stroke="none"/><path d="m7.8 12.2 2.7 2.7 5.7-5.8" fill="none" stroke="#fff" stroke-width="2.2"/>',
+    bars:    '<rect x="4" y="11" width="3.6" height="9" rx="1" fill="currentColor" stroke="none"/><rect x="10.2" y="5.5" width="3.6" height="14.5" rx="1" fill="currentColor" stroke="none"/><rect x="16.4" y="8.5" width="3.6" height="11.5" rx="1" fill="currentColor" stroke="none"/>',
+    snow:    '<path d="M12 2v20"/><path d="M2.7 7 21.3 17"/><path d="M21.3 7 2.7 17"/><path d="m9.2 4 2.8 2 2.8-2M9.2 20l2.8-2 2.8 2M4 9.5l.8 3.3M20 9.5l-.8 3.3M4 14.5l.8-3.3M20 14.5l-.8-3.3"/>',
+    chart:   '<path d="M4 4v16h16"/><path d="m6.5 14 3.5-3.8 3 2.8 5-5.5"/>',
+    bell:    '<path d="M18 8.5a6 6 0 1 0-12 0c0 6.5-2.6 8.5-2.6 8.5h17.2S18 15 18 8.5"/><path d="M13.6 20.5a2 2 0 0 1-3.2 0"/>',
+    gem:     '<path d="M5.5 3.5h13l3 5.5L12 21 2.5 9Z"/><path d="M2.5 9h19"/><path d="M9.5 3.5 7.5 9 12 21l4.5-12-2-5.5"/>',
+    sliders: '<line x1="4" y1="6.5" x2="20" y2="6.5"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17.5" x2="20" y2="17.5"/><circle cx="15" cy="6.5" r="2.3" fill="#fff"/><circle cx="9" cy="12" r="2.3" fill="#fff"/><circle cx="14" cy="17.5" r="2.3" fill="#fff"/>',
+    minus:   '<path d="M5 12h14"/>',
+    plus:    '<path d="M12 5v14M5 12h14"/>',
+    expand:  '<path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M3 16v3a2 2 0 0 0 2 2h3"/>',
+    endicon: '<path d="M14 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8"/><path d="m13 16 4-4-4-4M17 12H8"/>'
+  };
+  document.querySelectorAll('[data-i]').forEach(el => {
+    const k = el.getAttribute('data-i');
+    if (!ICONS[k]) return;
+    el.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%;display:block">' + ICONS[k] + '</svg>';
+  });
+
+  // scale stage to fit viewport
+  function fit() {
+    const s = document.getElementById('stage');
+    const scale = Math.min(window.innerWidth / 1456, window.innerHeight / 1138);
+    s.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  fit();
+</script>
+</body>
+</html>

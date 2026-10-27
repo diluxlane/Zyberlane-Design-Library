@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="/previews/REF-065/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d0905">
+<title>Atelier Unit — Craftwork, Technology, Design</title>
+<script>
+/* Entrance: armed before first paint so nothing flashes. If this never runs (no JS),
+   the page is simply static; if anything later fails, the failsafe reveals everything. */
+(function(){var d=document.documentElement;
+  if(!window.matchMedia||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  d.classList.add('is-entering');
+  window.__auFailsafe=setTimeout(function(){d.classList.remove('is-entering','is-playing')},4500);
+})();
+</script>
+<style>
+/* Type: TeX Gyre Heros (GUST Font License), a Helvetica-lineage grotesque — closest open match
+   to the reference's Neue Haas / Helvetica display face. Subset to Latin, embedded for offline use. */
+@font-face{font-family:"AU Grotesk";src:url(assets/au-grotesk-regular.woff2) format("woff2");font-weight:400;font-style:normal;font-display:block}
+@font-face{font-family:"AU Grotesk";src:url(assets/au-grotesk-bold.woff2) format("woff2");font-weight:700;font-style:normal;font-display:block}
+
+/* ---------------------------------------------------------------------------
+   Scale architecture
+   The reference is a 1280 × 800 frame. 1 design px = --u real px, where --u is
+   the largest uniform scale at which the whole frame fits the viewport. Heights
+   therefore always map 1:1 to the screen (no bands top/bottom); spare width is
+   absorbed by edge-anchored elements and a seamlessly extended backdrop.
+   ------------------------------------------------------------------------- */
+:root{
+  --vh:1vh;
+  --ink:#ffffff;
+  --base-bot:#130e09;
+  --rule:rgba(255,255,255,0.115);
+  --grid:rgba(255,255,255,0.0265);
+  --menu-bg:#fcfcfc;
+  --menu-ink:#141414;
+  --small-min:10px;
+}
+@supports (height:100dvh){ :root{ --vh:1dvh; } }
+/* Readability floor for tablet-sized screens (≥480px tall excludes landscape phones).
+   It engages only below ~90% frame scale, so every common laptop viewport is unaffected. */
+@media (min-height:480px){ :root{ --small-min:11.28px; } }
+:root{
+  --u:min(calc(100vw / 1280), calc(var(--vh) * 100 / 800));
+  --small:max(var(--small-min), calc(12.6 * var(--u)));
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%;background:var(--base-bot)}
+body{
+  font-family:"AU Grotesk","Helvetica Neue",Helvetica,Arial,sans-serif;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  text-rendering:geometricPrecision;
+  font-kerning:normal;
+}
+a,button{color:inherit;font:inherit}
+a{text-decoration:none}
+button{background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
+
+.hero{
+  position:relative;isolation:isolate;overflow:hidden;
+  width:100%;height:100vh;height:100dvh;min-height:320px;
+  background:linear-gradient(180deg,#0d0905 0%,#0f0a05 15%,#0d0a05 30%,#0d0905 45%,#0e0a06 60%,#0f0c07 75%,#130e08 90%,#130e09 100%);
+}
+
+/* Photograph (graded full-frame 16:10 plate): spans the frame width and covers the height, anchored
+   so the helmet always sits at 52.93% across — exactly where it sits in the reference. */
+.hero__photo{
+  --pw:max(min(100vw, calc(1536 * var(--u))), calc(var(--vh) * 160));
+  --fade:clamp(0px, calc(100vw - var(--pw)), calc(var(--pw) * .08));
+  position:absolute;z-index:-3;top:var(--photo-top,0px);
+  left:calc((100vw - var(--pw)) * .5293);
+  width:var(--pw);aspect-ratio:16/10;
+  background:url(assets/atelier-unit-hero.jpg) 0 0/100% 100% no-repeat;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 var(--fade),#000 calc(100% - var(--fade)),transparent 100%);
+          mask-image:linear-gradient(90deg,transparent 0,#000 var(--fade),#000 calc(100% - var(--fade)),transparent 100%);
+}
+/* 48-column hairline grid, first line at ¾ of a column (20px @1280); soft 2px stroke, ~2.5% white. */
+.hero__grid{
+  position:absolute;inset:0;z-index:-1;pointer-events:none;
+  display:grid;grid-template-columns:repeat(48,1fr);
+  /* lines recede behind the subject/headline, as in the reference (≈70% at centre-bottom) */
+  -webkit-mask-image:radial-gradient(ellipse 62% 95% at 50% 62%,rgba(0,0,0,0.83) 0%,#000 100%);
+          mask-image:radial-gradient(ellipse 62% 95% at 50% 62%,rgba(0,0,0,0.83) 0%,#000 100%);
+}
+.hero__grid i{position:relative}
+.hero__grid i::after{content:"";position:absolute;top:0;bottom:0;left:calc(75% - .5px);width:2px;background:var(--grid)}
+
+/* ---------- Top bar ---------- */
+.logo{position:absolute;left:calc(20.65 * var(--u));top:calc(12.8 * var(--u));
+  width:max(calc(142.60 * var(--u)), 96px);display:block;line-height:0}
+.logo svg{width:100%;height:auto;fill:var(--logo-ink,#ffffff)}
+
+.small,.actions{letter-spacing:var(--ls,-.051em);-webkit-text-stroke:0.022em currentColor}
+.small{font-size:var(--small);line-height:1.0;font-weight:400;margin:0}
+.small span,.small a,.small li,.actions button{letter-spacing:var(--ls,-.051em)}
+.tagline{position:absolute;left:calc(100% * 386.5 / 1280);top:calc(12.6 * var(--u))}
+.contact{position:absolute;left:calc(100% * 798.5 / 1280);top:calc(12.5 * var(--u));font-style:normal}
+.tagline span,.contact>*{display:block}
+
+.actions{position:absolute;right:calc(32 * var(--u));top:calc(13 * var(--u));
+  display:flex;align-items:center;gap:1.22em;font-size:var(--small)}
+.lang{line-height:1;transform:translate(0em,0.139em);-webkit-text-stroke-width:0.01em}
+.menu{display:block;width:6.349em;height:1.508em;background:var(--menu-bg);color:var(--menu-ink);
+  text-align:left;padding:0 0 0 0.33em;line-height:1.508em}
+.menu span{display:inline-block;transform:translateY(0em)}
+@media (hover:hover){ .menu:hover{background:#fff} }
+
+/* ---------- Services row + hairline rule ---------- */
+.services{list-style:none;margin:0;padding:0;position:absolute;left:0;right:0;
+  top:calc(211.75 * var(--u));font-size:max(calc(var(--small-min) * 1.06), calc(13.3 * var(--u)));line-height:1}
+.services li{position:absolute;top:0;white-space:nowrap;-webkit-text-stroke-width:0.008em}
+.services li:nth-child(1){left:calc(20 * var(--u))}
+.services li:nth-child(2){left:calc(50% + -3 * var(--u));transform:translateX(-50%)}
+.services li:nth-child(3){right:calc(33.25 * var(--u))}
+.rule{position:absolute;left:0;right:0;top:calc(239 * var(--u));height:1px;background:var(--rule);z-index:-1;
+  box-shadow:0 -1px 0 rgba(255,255,255,.038),0 1px 0 rgba(255,255,255,.014)}
+
+/* ---------- Headline: per-glyph placement in em, so it scales as one unit ---------- */
+.hl{position:absolute;left:50%;bottom:0.49140em;margin:0;width:0;height:0;
+  font-size:calc(170.94 * var(--u));font-weight:700;line-height:1;letter-spacing:0;white-space:nowrap}
+.hl__line{position:absolute;left:0;bottom:var(--b);height:0;display:block}
+.hl__clip,.hl__track{position:absolute;left:0;top:0;display:block}
+.hl__clip{width:0;height:0}
+.hl__track > span{position:absolute;left:var(--x);top:-0.909em;display:block;
+  transform-origin:0 0;
+  transform:translateY(calc(0.909em + var(--dy,0em))) scale(var(--sx),var(--sy)) translateY(-0.909em) translateY(0.5445em) scaleY(var(--k,1)) translateY(-0.5445em)}
+
+/* ---------- Tablet architecture ----------
+   Breakpoint is set by the composition, not a device width: the frame scales with
+   width while the photograph covers height, so as the screen gets taller the helmet
+   grows into the services row. Measured across 640–1366px widths, the centre label
+   stays on the dark collar at 1.14:1 and above, and lands on bright chrome by 1.12:1 — at
+   every width. Wider than that, every landscape tablet keeps the desktop composition.
+   Here the photograph re-anchors below a top bar with tablet margins, the services row
+   drops to the collar line and the headline spans the width. */
+@media (max-aspect-ratio:114/100){
+  :root{--small-min:12px;--m:clamp(16px, 3.2vw, 32px);--bar-top:calc(var(--m) * .64)}
+  .logo{left:var(--m);top:var(--bar-top)}
+  .tagline,.contact{top:var(--bar-top)}
+  .actions{right:var(--m);top:var(--bar-top)}
+  .hero__photo{--pw:calc(var(--vh) * 138.6);--photo-top:calc(var(--vh) * 15);
+    -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 11%);
+            mask-image:linear-gradient(180deg,transparent 0,#000 11%)}
+  .services{top:calc(var(--vh) * 44)}
+  .services li:nth-child(1){left:var(--m)}
+  .services li:nth-child(2){left:50%}
+  .services li:nth-child(3){right:var(--m)}
+  .rule{top:calc(var(--vh) * 44 + 2.1em);font-size:var(--small)}
+  .hl{font-size:calc((100vw - 2 * var(--m)) / 6.3063);bottom:max(0.49140em, calc(18px + env(safe-area-inset-bottom)))}
+}
+/* ---------- Two-row top bar (narrow tablets and portrait phones) ----------
+   Below 680px the single-row bar can no longer keep a 2em gap between the contact
+   block and EN (measured), so the tagline and contact move to a second row. Measured
+   down the phone range, this arrangement keeps every gap at 2em or more until 310px,
+   so portrait phones use it unchanged rather than switching at a conventional width. */
+@media (max-width:679px) and (max-aspect-ratio:114/100){
+  :root{--small-min:11.5px;--bar-top:calc(var(--m) * .64 + env(safe-area-inset-top, 0px))}
+  .logo{left:var(--m);top:var(--bar-top);width:104px}
+  .actions{right:var(--m);top:var(--bar-top);gap:14px}
+  .tagline{left:var(--m);top:calc(70px + env(safe-area-inset-top, 0px));max-width:none}
+  .tagline span{display:block}
+  .contact{left:auto;right:var(--m);top:calc(70px + env(safe-area-inset-top, 0px));text-align:right}
+}
+/* Narrow phones (<310px, e.g. fold cover screens): measured, the second row and the
+   services row fall below a 2em gap here. The contact block drops beneath the tagline
+   (still right-aligned), and each service label breaks onto two lines in place, which
+   keeps the single left/centre/right row, its reading order and its rule. */
+@media (max-width:309px) and (max-aspect-ratio:114/100){
+  .contact{top:calc(70px + 3em + 12px + env(safe-area-inset-top, 0px))}
+  .services li{white-space:normal;width:min-content}
+  .services li:nth-child(2){text-align:center}
+  .services li:nth-child(3){text-align:right}
+  /* the stacked top block is taller here, so the photograph (and the collar-aligned
+     services row with it) starts below it rather than at a fixed 15% */
+  /* capped so the services row always keeps a clear gap above the headline:
+     headline top = 100vh − bottom offset − 2.30em (cap top of its first line) */
+  :root{--F:calc((100vw - 2 * var(--m)) / 6.3063);
+    --ptop:max(calc(var(--vh) * 15), min(calc(150px + env(safe-area-inset-top, 0px)),
+      calc(var(--vh) * 71 - max(calc(var(--F) * 0.49140), calc(18px + env(safe-area-inset-bottom))) - var(--F) * 2.30 - 56px)))}
+  .hero__photo{--photo-top:var(--ptop)}
+  .services{top:calc(var(--ptop) + var(--vh) * 29)}
+  .rule{top:calc(var(--ptop) + var(--vh) * 29 + 3.1em)}
+}
+
+/* ---------- Landscape phones (short screens) ----------
+   The desktop composition itself holds on landscape phones (helmet top-centre, services
+   at the collar, headline below), but at this scale its small type falls to 10px and its
+   edge margins to 8–13px, and with viewport-fit=cover the notch overlaps the edges.
+   Keep the composition; give it a readable type floor and safe-area-aware margins, and
+   anchor the tagline/contact to the logo and controls so they flank the helmet, as they
+   do on desktop, instead of drifting over it at fixed percentages. */
+@media (max-height:479px) and (min-aspect-ratio:1141/1000){
+  :root{--small-min:11.5px;
+    --mL:max(16px, env(safe-area-inset-left, 0px));
+    --mR:max(16px, env(safe-area-inset-right, 0px));
+    --bar-top:calc(16px * .64)}
+  .logo{left:var(--mL);top:var(--bar-top)}
+  .tagline{left:calc(var(--mL) + 96px + 2em);top:var(--bar-top)}
+  .contact{left:auto;right:calc(var(--mR) + 8.83em + 2em);top:var(--bar-top)}
+  .actions{right:var(--mR);top:var(--bar-top)}
+  .services li:nth-child(1){left:var(--mL)}
+  .services li:nth-child(2){left:calc(var(--mL) + (100% - var(--mL) - var(--mR)) / 2)}
+  .services li:nth-child(3){right:var(--mR)}
+  .hl{left:calc(var(--mL) + (100% - var(--mL) - var(--mR)) / 2);
+      bottom:max(0.49140em, calc(8px + env(safe-area-inset-bottom, 0px)))}
+}
+/* Narrow landscape (<560px): measured, one row needs 552px, so the contact block
+   tucks beneath the controls, still right-aligned. */
+@media (max-height:479px) and (min-aspect-ratio:1141/1000) and (max-width:559px){
+  .contact{right:var(--mR);top:calc(var(--bar-top) + 2.6em);text-align:right}
+}
+/* ---------- Touch: generous hit areas without changing what is drawn ---------- */
+@media (pointer:coarse){
+  .lang,.menu,.logo,.contact a{position:relative}
+  .lang::after,.menu::after,.logo::after,.contact a::after{content:"";position:absolute;top:50%;height:44px;transform:translateY(-50%)}
+  .lang::after{left:-12px;right:calc(1.22em * -.5)}
+  .menu::after{left:calc(1.22em * -.5);right:-10px}
+  .logo::after{left:-10px;right:-10px}
+  .contact a::after{left:-6px;right:-6px;height:max(100%, 32px)}
+}
+
+/* ---------- Entrance (runs once on load, then removes itself) ----------
+   The photograph and grid are the stage and never move. Foreground only:
+   A masked rise  - headline lines, services labels (content rises out of a still line mask)
+   B soft rise    - tagline, contact, EN (short travel + opacity)
+   C draw / wipe  - divider rule, Menu surface (left to right, reading direction)
+   D switch-on    - logo pixels, scanned left to right in step with the rule
+   All states live under html.is-entering; removing that class restores the authored page. */
+@keyframes au-rise{from{translate:0 var(--rise)}to{translate:0 0}}
+@keyframes au-soft{from{translate:0 var(--rise);opacity:0}to{translate:0 0;opacity:1}}
+@keyframes au-draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes au-wipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes au-on{from{opacity:0}to{opacity:1}}
+html.is-entering{--au-state:paused;
+  --e-expo:cubic-bezier(.16,1,.3,1);      /* primary reveals: quick start, long settle */
+  --e-quint:cubic-bezier(.22,1,.36,1);    /* supporting reveals */
+  --e-sweep:cubic-bezier(.76,0,.24,1)}    /* structural draw: eased both ends */
+html.is-entering.is-playing{--au-state:running}
+html.is-entering .hero *{animation-play-state:var(--au-state)}
+
+/* C - the rule draws beneath the rising type, ready for the labels that land on it */
+html.is-entering .rule{transform-origin:0 50%;animation:au-draw .85s var(--e-sweep) .24s both}
+/* A - headline, one mask per line, top line first */
+html.is-entering .hl__clip{clip-path:inset(-.8em -3.6em -.05em -3.6em)}
+html.is-entering .hl__track{--rise:1em;animation:au-rise 1.05s var(--e-expo) both}
+html.is-entering .hl__line:nth-child(1) .hl__track{animation-delay:.10s}
+html.is-entering .hl__line:nth-child(2) .hl__track{animation-delay:.18s}
+html.is-entering .hl__line:nth-child(3) .hl__track{animation-delay:.26s}
+/* A - services labels rise onto the freshly drawn rule, left to right */
+html.is-entering .services li{clip-path:inset(-.25em -.4em -.35em -.4em)}
+html.is-entering .services .rv{display:inline-block;--rise:calc(100% + .6em);animation:au-rise .8s var(--e-quint) both}
+html.is-entering .services li:nth-child(1) .rv{animation-delay:.56s}
+html.is-entering .services li:nth-child(2) .rv{animation-delay:.62s}
+html.is-entering .services li:nth-child(3) .rv{animation-delay:.68s}
+/* D - logo pixels switch on in a left-to-right scan (delay by grid column) */
+html.is-entering .logo rect{animation:au-on .14s ease-out both}
+html.is-entering .logo rect:nth-child(1){animation-delay:0.700s}
+html.is-entering .logo rect:nth-child(2){animation-delay:0.735s}
+html.is-entering .logo rect:nth-child(3){animation-delay:0.840s}
+html.is-entering .logo rect:nth-child(4){animation-delay:0.910s}
+html.is-entering .logo rect:nth-child(5){animation-delay:0.805s}
+html.is-entering .logo rect:nth-child(6){animation-delay:0.945s}
+html.is-entering .logo rect:nth-child(7){animation-delay:0.700s}
+/* B - top-bar copy, line by line */
+html.is-entering .tagline span,html.is-entering .contact>*,html.is-entering .lang{--rise:.55em;animation:au-soft .75s var(--e-quint) both}
+html.is-entering .tagline span:nth-child(1){animation-delay:.78s}
+html.is-entering .tagline span:nth-child(2){animation-delay:.83s}
+html.is-entering .tagline span:nth-child(3){animation-delay:.88s}
+html.is-entering .contact>:nth-child(1){animation-delay:.88s}
+html.is-entering .contact>:nth-child(2){animation-delay:.93s}
+html.is-entering .lang{animation-duration:.6s;animation-delay:.98s}
+/* C - the Menu surface wipes open last */
+html.is-entering .menu{animation:au-wipe .6s cubic-bezier(.25,1,.5,1) 1.02s both}
+html.is-entering .hl__track,html.is-entering .rule,html.is-entering .rv{will-change:translate,transform}
+@media (prefers-reduced-motion:no-preference){
+  .menu{transition:background-color .15s ease}
+}
+</style>
+</head>
+<body>
+<main class="hero">
+  <div class="hero__photo" role="presentation"></div>
+  <div class="hero__grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+  <a class="logo" href="#" aria-label="Atelier Unit — home">
+    <svg viewBox="0 0 142.60 30.00" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" shape-rendering="geometricPrecision"><rect x="0.00" y="0.00" width="8.2" height="8.2"/><rect x="19.20" y="0.00" width="8.2" height="8.2"/><rect x="76.80" y="0.00" width="8.2" height="8.2"/><rect x="115.20" y="0.00" width="8.2" height="8.2"/><rect x="57.60" y="10.90" width="8.2" height="8.2"/><rect x="134.40" y="10.90" width="8.2" height="8.2"/><rect x="0.00" y="21.80" width="8.2" height="8.2"/></svg>
+  </a>
+
+  <p class="tagline small"><span style="--ls:-0.045em">Craftwork and brand systems.</span> <span style="--ls:-0.051em">Shaped by culture. Built with detail</span> <span style="--ls:-0.045em">and technology.</span></p>
+
+  <address class="contact small"><a href="mailto:hello@atelierunit.com" style="--ls:-0.047em">hello@atelierunit.com</a><span style="--ls:-0.069em">Milano, EST 2013</span></address>
+
+  <div class="actions">
+    <button class="lang" type="button" aria-label="Language: English" style="--ls:-0.064em">EN</button>
+    <button class="menu" type="button" aria-expanded="false" style="--ls:-0.055em"><span>Menu</span></button>
+  </div>
+
+  <ul class="services small" aria-label="Services">
+    <li style="--ls:-0.047em"><span class="rv">Brand Direction</span></li>
+    <li style="--ls:-0.0485em"><span class="rv">Digital Products</span></li>
+    <li style="--ls:-0.064em"><span class="rv">Advanced Tech</span></li>
+  </ul>
+  <div class="rule" aria-hidden="true"></div>
+
+  <h1 class="hl" aria-label="Craftwork, technology, design">
+      <span class="hl__line" style="--b:1.56780em;--dy:-0.00275em;--sy:1.0063" aria-hidden="true"><span class="hl__clip"><span class="hl__track"><span style="--x:-3.04844em;--sx:1.0769;--k:1.0055">C</span><span style="--x:-2.35055em;--sx:1.0093">R</span><span style="--x:-1.68881em;--sx:1.0542">A</span><span style="--x:-1.00202em;--sx:0.9712">F</span><span style="--x:-0.41697em;--sx:0.9516">T</span><span style="--x:0.15715em;--sx:0.9612">W</span><span style="--x:1.01367em;--sx:0.9833;--k:1.0055">O</span><span style="--x:1.69181em;--sx:1.0093">R</span><span style="--x:2.33501em;--sx:0.9371">K</span></span></span></span>
+      <span class="hl__line" style="--b:0.78390em;--dy:0.00059em;--sy:0.9950" aria-hidden="true"><span class="hl__clip"><span class="hl__track"><span style="--x:-3.16648em;--sx:0.9516">T</span><span style="--x:-2.64032em;--sx:0.9875">E</span><span style="--x:-2.06523em;--sx:1.0678;--k:1.0055">C</span><span style="--x:-1.36691em;--sx:1.0031">H</span><span style="--x:-0.71845em;--sx:1.0161">N</span><span style="--x:-0.05103em;--sx:0.9833;--k:1.0055">O</span><span style="--x:0.62228em;--sx:0.9965">L</span><span style="--x:1.14822em;--sx:0.9833;--k:1.0055">O</span><span style="--x:1.85243em;--sx:1.0231;--k:1.0055">G</span><span style="--x:2.50618em;--sx:0.9953">Y</span></span></span></span>
+      <span class="hl__line" style="--b:0.00000em;--dy:-0.00281em;--sy:0.9918" aria-hidden="true"><span class="hl__clip"><span class="hl__track"><span style="--x:-1.77928em;--sx:1.0751">D</span><span style="--x:-1.09091em;--sx:0.9983">E</span><span style="--x:-0.48284em;--sx:1.0123;--k:1.0055">S</span><span style="--x:0.11501em;--sx:1.0530">I</span><span style="--x:0.32558em;--sx:1.0231;--k:1.0055">G</span><span style="--x:1.03138em;--sx:1.0062">N</span></span></span></span>
+  </h1>
+</main>
+<script>
+(function(){var d=document.documentElement;
+  if(!d.classList.contains('is-entering'))return;
+  var done=false;
+  function finish(){if(done)return;done=true;clearTimeout(window.__auFailsafe);
+    d.classList.remove('is-entering','is-playing');}   /* authored styles resume; nothing keeps running */
+  function play(){if(done||!d.classList.contains('is-entering'))return;
+    requestAnimationFrame(function(){
+      d.classList.add('is-playing');
+      var a=d.getAnimations?d.getAnimations({subtree:true}).filter(function(x){return x.animationName&&x.animationName.indexOf('au-')===0}):[];
+      if(a.length){Promise.all(a.map(function(x){return x.finished})).then(finish,finish);}
+      setTimeout(finish,2200);   /* timeline is 1.7s; this only covers browsers without getAnimations */
+    });}
+  var ready=document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve();
+  Promise.race([ready,new Promise(function(r){setTimeout(r,1200)})]).then(play);
+})();
+</script>
+</body>
+</html>

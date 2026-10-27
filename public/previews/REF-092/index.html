@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-092/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#eef4fd">
+<title>hevn — Global business banking</title>
+<script>
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  document.documentElement.classList.add('entrance-ready');
+}
+</script>
+<style>
+/* ==========================================================================
+   hevn hero — precision build
+   Reference frame: 886 × 523 px. Every measured value below is written in
+   reference pixels and multiplied by --u (one reference pixel).
+   --u = min(vw/886, vh/523): at the reference aspect ratio the page is an
+   exact scaled replica; on wider screens it is height-driven, on taller
+   screens width-driven with the extra height absorbed by the panel, so
+   there is never empty space at the top or bottom.
+   ========================================================================== */
+@font-face{
+  font-family:"Figtree";
+  font-style:normal;font-weight:300 900;font-display:block;
+  src:url(assets/figtree.woff2) format("woff2");
+}
+
+:root{
+  /* measured colours */
+  --ink:#0a1624;            /* headline line 1–2 */
+  --ink-soft:#667f97;       /* headline line 3–4 */
+  --body:#272d35;           /* right column copy */
+  --nav:#6f8094;            /* nav links */
+  --btn:#08182b;            /* dark buttons */
+  --btn-bottom:#0c1e30;     /* dark buttons, lower edge */
+  --logo:#0b1622;
+  --yc:#fb651e;
+  --fog:222 233 247;        /* panel fog / ambient floor (rgb) */
+
+  /* the one design unit */
+  --u:min(calc(100vw / 886), calc(100vh / 523));
+  --vh:100vh;
+}
+@supports (height:100dvh){
+  :root{ --u:min(calc(100vw / 886), calc(100dvh / 523)); --vh:100dvh; }
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  font-family:"Figtree",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:var(--ink);
+  background:#eef4fd;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:geometricPrecision;
+  overflow:hidden;
+}
+a{color:inherit;text-decoration:none}
+img{display:block}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- stage ------------------------------------------------------- */
+.hero{
+  position:relative;
+  width:100vw;height:var(--vh);
+  overflow:hidden;
+  isolation:isolate;
+  /* vertical slack when the viewport is taller than 886:523 */
+  --dy:calc((var(--vh) - 523 * var(--u)) / 2);
+}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:rgba(255,255,255,.1);pointer-events:none}
+.ambient{
+  position:absolute;inset:0;z-index:-1;
+  width:100%;height:100%;object-fit:cover;object-position:50% 50%;
+  pointer-events:none;user-select:none;
+}
+
+/* ---------- header ------------------------------------------------------ */
+.top{
+  position:absolute;left:0;right:0;top:0;z-index:5;
+  height:calc(35.4 * var(--u));
+  padding:0 calc(7.1 * var(--u)) 0 calc(8 * var(--u));
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{display:block;width:calc(76 * var(--u));height:calc(19 * var(--u));margin-top:calc(-0.4 * var(--u))}
+.logo svg{display:block;width:100%;height:100%}
+.nav{display:flex;gap:calc(29.05 * var(--u));position:relative;left:calc(-0.78 * var(--u))}
+.nav a{
+  font-size:calc(7.4 * var(--u));font-weight:400;line-height:calc(27.4 * var(--u));
+  color:var(--nav);white-space:nowrap;transition:color .2s;
+}
+@media (hover:hover){ .nav a:hover{color:var(--ink)} }
+.actions{display:flex;gap:calc(3.7 * var(--u))}
+.btn{
+  display:grid;place-items:center;
+  height:calc(27.4 * var(--u));
+  font-size:calc(7.4 * var(--u));line-height:1;white-space:nowrap;
+  border-radius:calc(1.2 * var(--u));
+  transition:transform .2s, box-shadow .2s, background-color .2s;
+}
+.btn-login{width:calc(45.5 * var(--u));background:#fff;color:#2c3237;font-weight:425;padding-top:calc(0.35 * var(--u))}
+.btn-signin{width:calc(49.7 * var(--u));background:var(--btn);color:#d8e0e8;font-weight:475;letter-spacing:calc(-0.05 * var(--u))}
+.btn:hover{transform:translateY(-1px)}
+.menu{display:contents}
+.menu-toggle{display:none}
+
+/* ---------- headline (left column) -------------------------------------- */
+.headline{
+  position:absolute;margin:0;
+  left:calc(100vw * 148 / 886);
+  top:calc(var(--dy) + 223.3 * var(--u));
+  transform:translateX(-50%);
+  width:max-content;text-align:center;
+  font-weight:550;
+  font-size:calc(25 * var(--u));
+  line-height:calc(25 * var(--u));
+  letter-spacing:calc(0.1 * var(--u));
+  color:var(--ink);
+}
+.headline span{display:block}
+.headline .soft{color:var(--ink-soft)}
+.headline .soft:nth-child(3){margin-top:calc(3 * var(--u))}
+
+/* ---------- copy + CTA (right column) ----------------------------------- */
+.pitch{
+  position:absolute;
+  left:calc(100vw * 729.5 / 886);
+  top:calc(var(--dy) + 227.9 * var(--u));
+  transform:translateX(-50%);
+  width:calc(150 * var(--u));
+  display:flex;flex-direction:column;align-items:center;
+}
+.pitch p{
+  margin:0;text-align:center;
+  font-size:calc(9.8 * var(--u));font-weight:450;
+  line-height:calc(11 * var(--u));
+  letter-spacing:calc(-0.05 * var(--u));
+  color:var(--body);
+}
+.cta{
+  position:relative;
+  margin-top:calc(18.4 * var(--u));     /* 279.3 − (227.9 + 33) */
+  left:calc(-0.4 * var(--u));
+  width:calc(99.8 * var(--u));height:calc(43.03 * var(--u));
+  border-radius:calc(3.5 * var(--u));
+  background:linear-gradient(180deg,var(--btn) 0%,var(--btn) 35%,var(--btn-bottom) 100%);
+  box-shadow:0 calc(1 * var(--u)) calc(1.4 * var(--u)) rgba(8,24,43,.05);
+  color:#f4f7fa;
+  transition:transform .2s, box-shadow .2s;
+}
+.cta:hover{transform:translateY(-1px);box-shadow:0 calc(4 * var(--u)) calc(10 * var(--u)) rgba(8,24,43,.22)}
+.cta-label{
+  position:absolute;left:calc(17.89 * var(--u));top:calc(16.29 * var(--u));
+  font-size:calc(10.3 * var(--u));font-weight:400;line-height:calc(10.3 * var(--u));
+  letter-spacing:calc(-0.1 * var(--u));white-space:nowrap;
+}
+.cta-arrow{
+  position:absolute;left:calc(69.8 * var(--u));top:calc(18.3 * var(--u));
+  width:calc(10 * var(--u));height:calc(7 * var(--u));overflow:visible;
+  transition:transform .2s;
+}
+.cta:hover .cta-arrow{transform:translateX(2px)}
+
+/* ---------- central panel ----------------------------------------------- */
+.panel{
+  position:absolute;z-index:1;margin:0;
+  left:calc(100vw * 441.7 / 886 - 117.9 * var(--u));
+  top:calc(64 * var(--u));
+  bottom:0;
+  transform:translateY(calc(0.53 * var(--u)));will-change:transform;
+  width:calc(235.8 * var(--u));
+  border-radius:calc(6 * var(--u)) calc(6 * var(--u)) 0 0;
+  overflow:hidden;
+  background:rgb(var(--fog));
+  /* thin cool highlight just above the top edge */
+  box-shadow:0 calc(-1 * var(--u)) 0 rgba(255,255,255,.35);
+}
+.art{position:absolute;inset:calc(0.15 * var(--u)) 0 calc(-0.15 * var(--u));z-index:0}
+.art .symbol{filter:brightness(1.035)}
+.art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
+/* overlays measured from the reference: a pale veil over the photo and a
+   fog that resolves into the ambient colour at the viewport floor */
+.panel::before,.panel::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none}
+.panel::before{
+  background:
+    linear-gradient(180deg,rgba(236,242,250,.044) 0%,rgba(236,242,250,.03) 10%,rgba(236,242,250,.022) 21%,rgba(236,242,250,.014) 26%,rgba(236,242,250,0) 30%),
+    linear-gradient(180deg,rgba(6,14,26,0) 30%,rgba(6,14,26,.01) 33%,rgba(6,14,26,.02) 40%,rgba(6,14,26,.04) 47%,rgba(6,14,26,.02) 57%,rgba(6,14,26,.03) 63%,rgba(6,14,26,.01) 68%,rgba(6,14,26,0) 72%),
+    rgba(192,198,208,.13);
+}
+.panel::after{
+  background:linear-gradient(180deg,
+    rgb(var(--fog) / 0) 73%,
+    rgb(var(--fog) / .03) 75%,
+    rgb(var(--fog) / .07) 78.6%,
+    rgb(var(--fog) / .13) 83.8%,
+    rgb(var(--fog) / .17) 85.6%,
+    rgb(var(--fog) / .45) 92.5%,
+    rgb(var(--fog) / .66) 96%,
+    rgb(var(--fog) / .82) 97.8%,
+    rgb(var(--fog) / 1) 100%);
+}
+.badge{
+  position:absolute;z-index:2;
+  left:calc(50% - 0.73 * var(--u));bottom:calc(31.635 * var(--u));
+  transform:translateX(-50%);
+  width:calc(106.05 * var(--u));height:calc(27.83 * var(--u));
+  border-radius:calc(1.5 * var(--u));
+  background:rgba(255,255,255,.88);
+  -webkit-backdrop-filter:blur(calc(6 * var(--u))) saturate(1.1);
+  backdrop-filter:blur(calc(6 * var(--u))) saturate(1.1);
+  display:flex;align-items:center;
+  padding-left:calc(8.24 * var(--u));
+  white-space:nowrap;
+}
+.badge-text{
+  font-size:calc(7.1 * var(--u));font-weight:600;line-height:1;margin-top:calc(-0.06 * var(--u));
+  letter-spacing:calc(0.15 * var(--u));color:#444a4f;
+}
+.yc{display:flex;align-items:center;margin-left:calc(4.1 * var(--u));color:var(--yc)}
+.yc svg{width:calc(10.5 * var(--u));height:calc(10.5 * var(--u));display:block;margin-top:calc(-0.52 * var(--u))}
+.yc span{
+  margin-left:calc(1.6 * var(--u));margin-top:calc(-0.88 * var(--u));
+  font-size:calc(7.3 * var(--u));font-weight:420;line-height:1;letter-spacing:calc(-0.12 * var(--u));color:#e07f55;
+}
+
+/* focus */
+a:focus-visible,button:focus-visible{outline:2px solid #4f7cff;outline-offset:2px}
+
+/* ==========================================================================
+   RESPONSIVE ARCHITECTURE
+   --------------------------------------------------------------------------
+   Desktop (above) is locked: it is the measured 886×523 composition scaled by
+   --u. It stays active while --u ≥ 1.2, i.e. vw ≥ 1064, vh ≥ 628 and a
+   landscape frame (aspect ≥ 6:5). Below a scale of 1.2 the composition is still
+   collision-free but fails on absolute size: nav/button labels (7.4u) drop
+   under 9px, body copy (9.8u) under 12px and header controls (27.4u) under
+   33px tall.
+
+   Every component's internal geometry is written in --u, so the responsive
+   states never restyle a component — they only give it a different --u and
+   a different place in the layout:
+
+   B  tablet landscape   aspect ≥ 6:5, width ≥ 640   three-column, as desktop
+   C  tablet portrait    aspect < 6:5, width ≥ 600   headline | offer, panel below
+   D  mobile             everything narrower         stacked, header → burger
+   ========================================================================== */
+
+/* hover feedback only where hover exists (desktop visuals unchanged) */
+@media (hover: none){
+  .btn:hover,.cta:hover{transform:none}
+  .cta:hover .cta-arrow{transform:none}
+}
+
+/* ---------- shared by every non-desktop state --------------------------- */
+@media (width < 1064px) or (height < 628px) or (aspect-ratio < 6/5){
+  :root{
+    /* header scale: as large as the row allows, 1.45–1.8 */
+    --hu:clamp(1.45px, min(calc((100vw - 48px) / 360), calc(var(--vh) / 230)), 1.8px);
+  }
+  body{overflow:visible}
+  .hero{
+    height:auto;min-height:var(--vh);
+    overflow:visible;
+    display:grid;
+  }
+  .top{
+    --u:var(--hu);
+    position:relative;left:auto;right:auto;top:auto;
+    grid-column:1 / -1;grid-row:1;
+    padding:0 calc(11 * var(--u));
+  }
+  .nav{gap:calc(15 * var(--u))}
+  .headline,.pitch{position:relative;left:auto;top:auto;transform:none;justify-self:center;align-self:center}
+  .pitch{--u:var(--pu);width:max-content}
+  .cta{--u:min(var(--pu), 1.35px)}
+  .panel{
+    --u:1.4px;                    /* own radius + top highlight */
+    position:relative;left:auto;top:auto;bottom:auto;
+    width:auto;transform:none;will-change:auto;
+    container-type:size;          /* artwork + badge scale with the panel */
+    justify-self:center;
+  }
+  .art{--u:calc(100cqw / 235.8)}
+  .badge{--u:min(max(calc(100cqw / 235.8), 1.4px), calc(100cqw * .8 / 105.3), 2px)}
+}
+
+/* ---------- B · tablet landscape: the desktop composition, re-gridded ----- */
+@media ((width < 1064px) or (height < 628px)) and (aspect-ratio >= 6/5) and (width >= 640px){
+  .hero{
+    --hdr:calc(35.4 * var(--hu));
+    --gap:clamp(12px, 4.5vh, 36px);                         /* desktop: 29u */
+    --ph:calc(var(--vh) - var(--hdr) - var(--gap));
+    --pw:min(calc(var(--ph) * 236 / 458), 34vw);           /* artwork ratio */
+    --col:calc((100vw - var(--pw)) / 2);
+    height:var(--vh);
+    grid-template-columns:minmax(0,1fr) var(--pw) minmax(0,1fr);
+    grid-template-rows:var(--hdr) var(--gap) minmax(0,1fr);
+  }
+  .top{height:var(--hdr)}
+  .headline{
+    --u:clamp(.86px, calc(var(--col) * .0043), 1.6px);
+    grid-column:1;grid-row:2 / 4;
+  }
+  .pitch{--pu:clamp(1.3px, calc(var(--col) * .0062), 1.6px);grid-column:3;grid-row:2 / 4}
+  .panel{grid-column:2;grid-row:3;width:var(--pw);height:var(--ph)}
+}
+
+/* ---------- C · tablet portrait: offer beside headline, panel to the floor */
+@media (aspect-ratio < 6/5) and (width >= 600px){
+  .hero{
+    --g:clamp(24px, 5vw, 56px);
+    --cg:clamp(24px, 4vw, 48px);
+    --col:calc((100vw - 2 * var(--g) - var(--cg)) / 2);
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    grid-template-rows:auto auto minmax(calc(320px + 10vh), 1fr);
+    column-gap:var(--cg);
+    padding:0 var(--g);
+  }
+  .top{height:calc(35.4 * var(--u));margin:0 calc(-1 * var(--g))}
+  .headline{
+    --u:clamp(1.1px, calc(var(--col) * .0043), 1.7px);
+    grid-column:1;grid-row:2;
+    margin:clamp(28px, 5vh, 72px) 0 clamp(28px, 4.5vh, 64px);
+  }
+  .pitch{--pu:clamp(1.3px, calc(var(--col) * .0062), 1.6px);grid-column:2;grid-row:2}
+  .panel{
+    grid-column:1 / -1;grid-row:3;
+    align-self:stretch;aspect-ratio:236 / 458;max-width:100%;
+  }
+}
+
+/* ---------- D · mobile: stacked hero, panel fills to the floor ----------- */
+@media (width < 600px), (aspect-ratio >= 6/5) and (width < 640px){
+  .hero{
+    --g:clamp(16px, 5.2vw, 28px);
+    grid-template-columns:minmax(0,1fr);
+    grid-template-rows:auto auto auto minmax(250px, 1fr);
+    padding:0 var(--g);
+  }
+  .top{
+    --u:clamp(1.3px, calc(100vw / 270), 1.5px);
+    height:calc(35.4 * var(--u) + 10px);
+    margin:0 calc(-1 * var(--g));
+    padding:0 var(--g);
+  }
+  .menu-toggle{
+    display:grid;place-items:center;
+    width:44px;height:44px;padding:0;border:0;
+    border-radius:calc(1.2 * var(--u));
+    background:#fff;color:var(--ink);cursor:pointer;
+    transition:background-color .2s;
+  }
+  .menu-toggle svg{width:18px;height:18px;overflow:visible}
+  .menu-toggle path{transition:transform .25s, opacity .2s;transform-origin:9px 9px}
+  .top.open .menu-toggle .l1{transform:translateY(3.25px) rotate(45deg)}
+  .top.open .menu-toggle .l2{transform:translateY(-3.25px) rotate(-45deg)}
+
+  /* the same nav + actions, gathered into one glass surface (badge glass) */
+  .menu{
+    --u:calc(44px / 27.4);         /* header buttons reach a 44px touch target */
+    position:absolute;z-index:10;
+    top:calc(100% - 2px);right:var(--g);
+    width:min(calc(100vw - 2 * var(--g)), 300px);
+    display:flex;flex-direction:column;gap:10px;
+    padding:8px;
+    border-radius:6px;
+    background:rgba(255,255,255,.88);
+    -webkit-backdrop-filter:blur(14px) saturate(1.1);backdrop-filter:blur(14px) saturate(1.1);
+    box-shadow:0 1px 0 rgba(255,255,255,.6) inset, 0 18px 40px rgba(8,24,43,.14);
+    opacity:0;visibility:hidden;transform:translateY(-6px);
+    transition:opacity .2s, transform .2s, visibility 0s .2s;
+  }
+  .top.open .menu{opacity:1;visibility:visible;transform:none;transition:opacity .2s, transform .2s}
+  .menu .nav{flex-direction:column;gap:0;left:0}
+  .menu .nav a{
+    font-size:15px;line-height:20px;padding:12px;border-radius:4px;
+  }
+  .menu .nav a:hover,.menu .nav a:focus-visible{background:rgba(238,244,253,.9);color:var(--ink)}
+  .menu .actions{gap:6px;padding:2px 4px 4px}
+  .menu .btn{flex:1;width:auto;font-size:14px}
+  .menu .btn-login{box-shadow:inset 0 0 0 1px rgba(8,24,43,.08)}
+
+  .headline{
+    --u:clamp(1.12px, calc(100vw * .00344), 1.44px);
+    grid-row:2;
+    margin-top:clamp(18px, 4.6vh, 48px);
+  }
+  .pitch{--pu:clamp(1.3px, calc(100vw * .004), 1.6px);grid-row:3;margin-top:clamp(14px, 3vh, 28px)}
+  .panel{
+    --u:1.2px;
+    grid-row:4;
+    margin-top:clamp(18px, 3.2vh, 32px);
+    align-self:stretch;
+    /* phone card: same tall card, width tied to the screen so short phones
+       crop the photo top/bottom around the symbol instead of shrinking it */
+    width:clamp(180px, 58vw, 100%);
+  }
+  .art img{object-position:50% 72%}   /* keeps the symbol clear of the badge when cropped */
+}
+/* One opening composition. The ambient image remains the still backdrop. */
+@keyframes hevn-nav-enter{
+  from{opacity:0;transform:translateY(6px)}
+  to{opacity:1;transform:none}
+}
+@keyframes hevn-line-enter{
+  from{opacity:0;clip-path:inset(0 0 100% 0);transform:translateY(.32em)}
+  to{opacity:1;clip-path:inset(0);transform:none}
+}
+@keyframes hevn-panel-enter{
+  from{-webkit-mask-position:0 0;mask-position:0 0}
+  to{-webkit-mask-position:0 100%;mask-position:0 100%}
+}
+@keyframes hevn-support-enter{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:none}
+}
+@keyframes hevn-badge-enter{
+  from{opacity:0}
+  to{opacity:1}
+}
+:root.entrance-ready .top .logo{
+  animation:hevn-nav-enter .62s cubic-bezier(.22,1,.36,1) .04s both;
+}
+:root.entrance-ready .top .nav{
+  animation:hevn-nav-enter .58s cubic-bezier(.22,1,.36,1) .16s both;
+}
+:root.entrance-ready .top .actions,
+:root.entrance-ready .top .menu-toggle{
+  animation:hevn-nav-enter .58s cubic-bezier(.22,1,.36,1) .26s both;
+}
+:root.entrance-ready .panel{
+  -webkit-mask-image:linear-gradient(to bottom,transparent 40%,#000 50%);
+  mask-image:linear-gradient(to bottom,transparent 40%,#000 50%);
+  -webkit-mask-size:100% 300%;mask-size:100% 300%;
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  animation:hevn-panel-enter 1.46s cubic-bezier(.4,0,.2,1) .18s both;
+}
+:root.entrance-ready .headline span{
+  animation:hevn-line-enter .86s cubic-bezier(.22,1,.36,1) both;
+}
+:root.entrance-ready .headline span:nth-child(1){animation-delay:.34s}
+:root.entrance-ready .headline span:nth-child(2){animation-delay:.47s}
+:root.entrance-ready .headline span:nth-child(3){animation-delay:.70s}
+:root.entrance-ready .headline span:nth-child(4){animation-delay:.83s}
+:root.entrance-ready .pitch p{
+  animation:hevn-support-enter .68s cubic-bezier(.22,1,.36,1) 1.02s both;
+}
+:root.entrance-ready .pitch .cta{
+  animation:hevn-support-enter .68s cubic-bezier(.22,1,.36,1) 1.27s both;
+}
+:root.entrance-ready .panel .badge{
+  animation:hevn-badge-enter .58s cubic-bezier(.22,1,.36,1) 1.62s both;
+}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important}
+  :root.entrance-ready *{animation:none!important}
+}
+</style>
+</head>
+<body>
+<main class="hero">
+  <img class="ambient" src="assets/ambient.webp" alt="" aria-hidden="true">
+
+  <header class="top" id="top">
+    <a class="logo" href="#" aria-label="hevn home">
+      <svg viewBox="8 8 76 19" aria-hidden="true">
+        <g fill="var(--logo)">
+          <path d="M22.3 9H22.4V12.3L11 23.7H14.7L22.4 16V19.2L17.9 23.7H22.4V26.3H10.6Q8.6 26.3 8.6 24.3V22.7Z"/>
+          <path d="M55.35 13.2H58.3L61.6 22.5L64.9 13.2H67.85L63 26.3H60.2Z"/>
+        </g>
+        <g fill="none" stroke="var(--logo)">
+          <path stroke-width="2.45" d="M28.7 9V26.4M28.7 14.8H37.4Q38.75 14.8 38.75 16.15V26.4M71.4 26.4V14.7H80.4Q81.7 14.7 81.7 16V26.4"/>
+          <path stroke-width="1.9" d="M42.3 19.5H54.1"/>
+          <path stroke-width="2.3" d="M54 19.6A5.7 5.2 0 1 0 52.4 23.15"/>
+        </g>
+      </svg>
+    </a>
+    <div class="menu" id="menu">
+      <nav class="nav" aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#solution">Solution</a>
+        <a href="#contact">Contact</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="actions">
+        <a class="btn btn-login" href="#login">Login</a>
+        <a class="btn btn-signin" href="#signin">Sign in</a>
+      </div>
+    </div>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+      <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path class="l1" d="M2.5 5.75h13"/><path class="l2" d="M2.5 12.25h13"/></svg>
+    </button>
+  </header>
+
+  <h1 class="headline">
+    <span>Your company</span>
+    <span>operates globally.</span>
+    <span class="soft">Your bank</span>
+    <span class="soft">should too.</span>
+  </h1>
+
+  <section class="pitch" aria-label="Offer">
+    <p>Local IBANs, international<br>payments, corporate cards. 0%<br>FX Markup.</p>
+    <a class="cta" href="#signup">
+      <span class="cta-label">Sign up</span>
+      <svg class="cta-arrow" viewBox="0 0 10 7" fill="none" stroke="#e6edf4" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M0.5 3.5H9.3M6.2 0.5L9.3 3.5L6.2 6.5"/>
+      </svg>
+    </a>
+  </section>
+
+  <figure class="panel" aria-label="Burj Khalifa in the fog behind the hevn mark">
+    <div class="art">
+      <img src="assets/tower.webp" alt="">
+      <img src="assets/tower-overlay.png" alt="">
+      <img class="symbol" src="assets/hevn-symbol.svg" alt="">
+    </div>
+    <div class="badge">
+      <span class="badge-text">Backed by:</span>
+      <span class="yc">
+        <svg viewBox="0 0 10.5 10.5" aria-hidden="true"><rect width="10.5" height="10.5" fill="#fb651e"/><path d="M3.1 2.6L5.25 6.1L7.4 2.6M5.25 6.1V8.3" fill="none" stroke="#fff" stroke-width=".85"/></svg>
+        <span>Combinator</span>
+      </span>
+      <span class="sr">Y Combinator</span>
+    </div>
+  </figure>
+</main>
+<script>
+(function(){
+  var badge=document.querySelector('.panel .badge');
+  badge.addEventListener('animationend',function(event){
+    if(event.animationName==='hevn-badge-enter'){
+      document.documentElement.classList.remove('entrance-ready');
+    }
+  });
+  var top=document.getElementById('top'),
+      btn=top.querySelector('.menu-toggle'),
+      menu=document.getElementById('menu');
+  function set(open,returnFocus){
+    top.classList.toggle('open',open);
+    btn.setAttribute('aria-expanded',open);
+    btn.setAttribute('aria-label',open?'Close menu':'Open menu');
+    if(open){var f=menu.querySelector('a');if(f)f.focus({preventScroll:true});}
+    else if(returnFocus){btn.focus({preventScroll:true});}
+  }
+  btn.addEventListener('click',function(){set(!top.classList.contains('open'),false);});
+  menu.addEventListener('click',function(e){if(e.target.closest('a'))set(false,false);});
+  document.addEventListener('click',function(e){if(top.classList.contains('open')&&!top.contains(e.target))set(false,false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&top.classList.contains('open'))set(false,true);});
+  /* leaving the burger layout (rotation, resize) closes the menu */
+  var mq=window.matchMedia('(width < 600px), (aspect-ratio >= 6/5) and (width < 640px)');
+  (mq.addEventListener?mq.addEventListener('change',function(){set(false,false);}):mq.addListener(function(){set(false,false);}));
+})();
+</script>
+</body>
+</html>

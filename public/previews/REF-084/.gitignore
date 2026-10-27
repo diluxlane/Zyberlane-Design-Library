@@ -1,0 +1,20 @@
+# Local tools and caches
+node_modules/
+.wrangler/
+.cache/
+dist/
+.tmp/
+*.log
+
+# Editor and operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local credentials
+.env
+.env.*
+.dev.vars
+.dev.vars.*

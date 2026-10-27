@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="/previews/REF-114/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#020816">
+<title>Meridian — Move payments forward together</title>
+<style>
+/* ---------- Embedded type (subset, offline) ----------
+   Display : TeX Gyre Adventor (ITC Avant Garde Gothic design — identified from the reference glyphs)
+   Body    : TeX Gyre Heros      (Helvetica metrics/design)
+   Labels  : TeX Gyre Cursor Bold (Courier New Bold design) */
+@font-face{font-family:"M Display";src:url(assets/fonts/m-display.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:"M Sans";src:url(assets/fonts/m-sans.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:"M Mono";src:url(assets/fonts/m-mono-bold.woff2) format("woff2");font-weight:700;font-display:block}
+
+/* ---------- Tokens (sampled from the reference at 1280×800) ---------- */
+:root{
+  --ink-bg:#020816;          /* page / sky */
+  --glass:rgba(51,52,74,.6); /* renders #1f2235 over the sky */
+  --glass-blur:14px;
+  --navy:rgba(45,56,92,.85); /* renders #263151 over the sky */
+  --peach:#f2b380;
+  --cta:#f93f28;             /* "Discuss a plan" button fill */
+  --peach-ink:#331200;
+  --white:#ffffff;
+  --display:#f6f8fc;
+  --body:#cfd3e0;
+  --chip:#c9ccd4;
+  --rail:#989eac;
+  --u:1;                     /* uniform stage scale, set by the layout engine */
+  --vh:100vh;
+  --cap-shift:-0.055em;       /* optical cap-height centring for the mono labels (Courier metrics) */
+  --f-display:"M Display","ITC Avant Garde Gothic","Avant Garde","URW Gothic","Century Gothic",sans-serif;
+  --f-sans:"M Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --f-mono:"M Mono","Courier New",Courier,monospace;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--ink-bg);color:var(--white)}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--peach);outline-offset:3px}
+
+/* ---------- Hero: always exactly one viewport tall, never letterboxed ---------- */
+.hero{position:relative;width:100%;height:100vh;height:100dvh;height:var(--vh);min-height:100%;overflow:hidden;background:var(--ink-bg);isolation:isolate}
+
+/* Photo plate: cover-fitted, subject-anchored by the layout engine */
+.photo{position:absolute;left:0;top:0;width:100%;height:100%;z-index:0;will-change:transform;transform-origin:0 0}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 100%;display:block;user-select:none;-webkit-user-drag:none}
+.js .photo{width:calc(1586px * var(--s,1));height:calc(992px * var(--s,1));transform:translate3d(var(--x0,0px),var(--y0,0px),0)}
+/* Asset carries the colour grade measured from the reference; this only feathers the top edge into the sky tone */
+.photo::after{content:"";position:absolute;inset:-1px;pointer-events:none;background:linear-gradient(180deg,rgba(2,8,22,1) 0%, rgba(2,8,22,0.55) 6%, rgba(2,8,22,0.15) 14%, rgba(2,8,22,0) 22%, rgba(2,8,22,0) 100%)}
+
+/* ---------- Top chrome (edge-anchored, scaled with the stage) ---------- */
+.nav-l,.nav-r{position:absolute;top:0;z-index:3;width:0;height:0}
+.nav-l{left:0;transform-origin:0 0;transform:scale(var(--u))}
+.nav-r{right:0;transform-origin:100% 0;transform:scale(var(--u))}
+.brand{position:absolute;left:16px;top:29.3px;display:flex;align-items:flex-start;white-space:nowrap}
+.brand svg{width:24px;height:24px;flex:none;display:block;overflow:visible}
+.brand span{font-family:var(--f-sans);font-size:21px;letter-spacing:-0.1px;line-height:1;margin-left:4px;position:relative;left:var(--nx);top:var(--ny)}
+.more{position:absolute;right:29.65px;top:23.83px;width:80.45px;height:35.35px;display:flex;align-items:center;padding:0 14.76px 0 15.14px;background:var(--glass);-webkit-backdrop-filter:blur(var(--glass-blur));backdrop-filter:blur(var(--glass-blur));white-space:nowrap;transition:background-color .2s}
+@media (hover:hover){.more:hover{background:rgba(66,66,96,.66)}}
+.dots{width:8.4px;height:8.4px;flex:none;display:block;position:relative;left:0.2px;top:0;transform:translateY(0.31px)}
+.more span{font-family:var(--f-mono);font-weight:700;font-size:12px;letter-spacing:0.2px;line-height:1;margin-left:13.4px;position:relative;left:var(--nx);top:calc(var(--ny) + var(--cap-shift))}
+.rail{position:absolute;right:8.7px;top:11.9px;width:1.9px;height:47.2px;background:var(--rail);border-radius:1px;pointer-events:none}
+
+/* ---------- Stage: the 1280×800 composition, scaled uniformly ---------- */
+.stage{position:absolute;left:50%;top:0;width:1280px;height:800px;z-index:2;transform-origin:50% 0;transform:translateX(-50%) scale(var(--u))}
+.pill{position:absolute;left:506px;top:99.76px;height:35.3px;display:flex;align-items:center;padding:0 11.78px 0 11.92px;background:var(--glass);-webkit-backdrop-filter:blur(var(--glass-blur));backdrop-filter:blur(var(--glass-blur));white-space:nowrap;transition:background-color .2s}
+@media (hover:hover){.pill:hover{background:rgba(66,66,96,.66)}}
+.pill .sq{width:9.3px;height:11.1px;background:var(--chip);flex:none;position:relative;top:0.1px}
+.pill span{font-family:var(--f-mono);font-weight:700;font-size:12px;letter-spacing:0.6px;line-height:1;margin-left:18.3px;position:relative;left:var(--nx);top:calc(var(--ny) + var(--cap-shift))}
+.pill svg{width:11px;height:10.5px;margin-left:13.5px;flex:none;position:relative;top:0.15px}
+h1{position:absolute;left:0;top:0;width:1280px;margin:0;color:var(--display);text-align:center;font-family:var(--f-display);font-weight:400;font-size:53px;letter-spacing:0px;line-height:1;white-space:nowrap;transform:translate(var(--nx),var(--ny))}
+.lede{position:absolute;left:0;top:0;width:1280px;margin:0;text-align:center;font-family:var(--f-sans);font-size:18px;line-height:23px;color:var(--body);transform:translate(var(--nx),var(--ny))}
+.cta{position:absolute;left:441.1px;top:326.55px;display:flex;gap:8.76px}
+.btn{height:51.2px;display:inline-flex;align-items:center;white-space:nowrap;font-family:var(--f-mono);font-weight:700;font-size:13.5px;letter-spacing:0.4px;line-height:1;transition:filter .2s,background-color .2s}
+.btn span{position:relative;left:var(--nx);top:calc(var(--ny) + var(--cap-shift))}
+.b1{padding:0 30.35px;background:var(--navy);-webkit-backdrop-filter:blur(var(--glass-blur));backdrop-filter:blur(var(--glass-blur));color:var(--white)}
+@media (hover:hover){.b1:hover{background:rgba(58,72,114,.9)}}
+.b2{padding:0 25.92px 0 25.78px;background:var(--cta);color:var(--peach-ink)}
+@media (hover:hover){.b2:hover{filter:brightness(1.05)}}
+.b2 svg{width:12px;height:12px;flex:none;margin-right:22.5px;position:relative;top:0.34px}
+br.d{display:inline}
+
+/* =====================================================================
+   RESPONSIVE ARCHITECTURE
+   Desktop (base styles above) = the 1280×800 composition scaled uniformly by
+   u = min(vw/1280, vh/800). It stays active while u ≥ 0.9, i.e. while body copy
+   is ≥16.2px, the smallest labels ≥10.8px and the CTAs ≥46px tall (touch-safe).
+   That is exactly (min-width:1152px) and (min-height:720px).
+   Below that the composition stops shrinking and re-flows instead.
+   ===================================================================== */
+
+/* ---------- Tablet: 511px → desktop threshold (either axis) ----------
+   Same centred column, same components, frozen at the desktop's threshold
+   scale (k = .9) so the hand-off from desktop is size-continuous; the
+   headline and spacing then flex with the space that is actually available. */
+@media (min-width:511px) and (max-width:1151.98px), (min-width:511px) and (max-height:719.98px){
+  :root{--k:.9;--gut:clamp(32px,5vw,48px)}
+  .hero{height:auto;min-height:var(--vh)}
+  .nav-l,.nav-r{transform:scale(var(--k))}
+  .stage{position:relative;left:auto;top:auto;width:auto;height:auto;transform:none;
+    display:flex;flex-direction:column;align-items:center;text-align:center;
+    padding:calc(clamp(70px,12.47vh,89.8px) + env(safe-area-inset-top,0px)) var(--gut) 0}
+  .pill,h1,.lede,.cta{position:relative;left:auto;top:auto;transform:none}
+  /* components keep their exact desktop build; zoom scales layout + paint together */
+  .pill,.cta{zoom:var(--k)}
+  .pill span,.btn span{left:0;top:var(--cap-shift)}
+  /* one-line headline: shrinks with the column, never below 40px */
+  h1{width:auto;margin-top:min(calc(24.44px * var(--k)),2.9vh);
+    font-size:clamp(40px,calc((100vw - 2 * var(--gut)) / 16.4),calc(53px * var(--k)))}
+  /* keeps the desktop's three authored line breaks; eases down only if the longest line would not fit */
+  .lede{width:auto;margin-top:min(calc(24px * var(--k)),2.85vh);
+    font-size:min(calc(18px * var(--k)),calc((100vw - 2 * var(--gut)) / 27.9));line-height:1.278}
+  .cta{margin-top:min(21.05px,2.8vh)}
+  /* touch: extend the hit area of the compact controls to ≥44px without changing how they look */
+  .more::after,.pill::after{content:"";position:absolute;inset:-6px -2px}
+}
+/* Narrow tablet: a 40px single line no longer fits → balanced two-line headline */
+@media (min-width:511px) and (max-width:719.98px){
+  h1{white-space:normal;font-size:clamp(40px,6.9vw,46px);line-height:1.06;max-width:9.6em;text-wrap:balance}
+}
+
+/* Portrait tablet: height is plentiful, width is the constraint → components return to their
+   true 1:1 desktop size and the headline becomes a balanced two-line lock-up that uses the
+   width, so the type (not the photograph) stays the dominant element. */
+@media (min-width:511px) and (max-width:1151.98px) and (orientation:portrait){
+  :root{--k:1}
+  .stage{padding-top:calc(clamp(96px,10.5vh,150px) + env(safe-area-inset-top,0px))}
+  h1{white-space:normal;font-size:clamp(44px,7.6vw,78px);line-height:1.04;max-width:9.6em;text-wrap:balance;margin-top:clamp(24px,2.6vh,34px)}
+  .lede{margin-top:clamp(22px,2.4vh,30px)}
+  .cta{margin-top:clamp(24px,2.6vh,34px)}
+}
+
+/* ---------- Phone: < 511px ----------
+   Why 511: the tablet column keeps the desktop's three authored lede lines and eases the copy
+   down to fit them; below 511px that would push body text under 16px (15.6px at 500, 13.1px at
+   430), and the paired CTAs would reach the gutter at ~449px and overflow at ~390px.
+   Phone architecture = same centred column, same components, but the copy re-wraps naturally,
+   the headline keeps its two-line lock-up sized to the width, and the CTA pair stays side by side
+   (tightening only its inner padding) until it genuinely cannot, then stacks as an equal pair. */
+@media (max-width:510.98px){
+  :root{--gut:clamp(20px,5.5vw,24px)}
+  .hero{height:auto;min-height:100svh;min-height:var(--vh)}
+  .nav-l,.nav-r{transform:scale(.88);top:env(safe-area-inset-top,0px)}
+  .stage{position:relative;left:auto;top:auto;width:auto;height:auto;transform:none;
+    display:flex;flex-direction:column;align-items:center;text-align:center;
+    padding:calc(clamp(80px,10.5vh,94px) + env(safe-area-inset-top,0px)) var(--gut) 0}
+  .pill,h1,.lede,.cta{position:relative;left:auto;top:auto;transform:none}
+  .pill span,.btn span{left:0;top:var(--cap-shift)}
+  .pill{zoom:.86}
+  /* Compact phone typography: retains the authored hierarchy without carrying
+     tablet-scale type and controls into the narrow viewport. */
+  h1{width:auto;margin-top:clamp(17px,2.2vh,21px);white-space:normal;
+    font-size:clamp(32px,9.25vw,37px);line-height:1.06;max-width:9.6em;text-wrap:balance}
+  .lede{width:auto;margin-top:clamp(13px,1.8vh,16px);font-size:clamp(14px,3.72vw,15px);line-height:1.42;max-width:32em;text-wrap:pretty}
+  br.d{display:none}
+  .cta{margin-top:clamp(18px,2.4vh,22px);gap:8px;flex-wrap:wrap;justify-content:center;width:100%;max-width:330px}
+  .btn{height:46px;flex:1 1 auto;justify-content:center;font-size:11.5px;letter-spacing:.35px}
+  .b1{padding:0 clamp(13px,3.5vw,20px)}
+  .b2{padding:0 calc(clamp(13px,3.5vw,20px) - .34px) 0 calc(clamp(13px,3.5vw,20px) + .34px)}
+  .b2 svg{width:11px;height:11px;margin-right:clamp(12px,3.5vw,16px)}
+  /* touch: ≥44px hit areas for the compact controls, visuals unchanged */
+  .more::after,.pill::after{content:"";position:absolute;inset:-8px -4px}
+  .pill{position:relative}
+}
+
+
+/* ---------- Entrance (runs once on load; nothing here applies at rest) ----------
+   html.intro only exists from first paint until the timeline has been built (a few ms),
+   and is removed by a failsafe even if the script never runs. */
+html.intro .brand,html.intro .more,html.intro .rail,html.intro .pill,html.intro h1,html.intro .lede,html.intro .btn{opacity:0}
+.rail{transform-origin:50% 0}
+/* temporary word masks for the headline reveal — padding/negative-margin pairs keep the
+   line box identical so descenders are never clipped and nothing shifts */
+h1 .w{display:inline-block;overflow:hidden;vertical-align:top;padding:.08em 0 .2em;margin:-.08em 0 -.2em}
+h1 .w>span{display:inline-block}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<script>
+/* Desktop scale before first paint (no flash). Mode itself is decided by CSS media queries. */
+(function(d){var r=d.documentElement,w=r.clientWidth||innerWidth,h=innerHeight;
+r.classList.add('js');r.style.setProperty('--u',Math.min(w/1280,h/800));r.style.setProperty('--vh',h+'px');
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&'animate' in r){r.classList.add('intro');setTimeout(function(){r.classList.remove('intro')},4000);}})(document);
+</script>
+</head>
+<body>
+<section class="hero" id="hero" aria-label="Meridian">
+  <div class="photo" id="photo" aria-hidden="true"><img alt="" src="assets/images/meridian-hero.jpg" width="1586" height="992" decoding="sync" fetchpriority="high"></div>
+
+  <div class="nav-l">
+    <a class="brand" href="#" aria-label="Meridian home" style="--nx:-0.5px;--ny:-2.75px">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#fff">
+        <circle cx="12.2" cy="11.9" r="8.45" stroke-width="2"/>
+        <path d="M12.2 0.1V24" stroke-width="1.9"/>
+        <path d="M0 11.9H24.4" stroke-width="1.95"/>
+      </svg>
+      <span>meridian</span>
+    </a>
+  </div>
+  <div class="nav-r">
+    <button class="more" type="button" aria-haspopup="true" style="--nx:0.25px;--ny:-1.0px"><svg class="dots" viewBox="0 0 8.4 8.4" aria-hidden="true" fill="#fff"><rect width="2.4" height="2.4"/><rect x="6" width="2.4" height="2.4"/><rect y="6" width="2.4" height="2.4"/><rect x="6" y="6" width="2.4" height="2.4"/></svg><span>MORE</span></button>
+    <span class="rail" aria-hidden="true"></span>
+  </div>
+
+  <main class="stage" id="stage">
+    <a class="pill" href="#work" style="--nx:0.75px;--ny:0px"><i class="sq" aria-hidden="true"></i><span>VIEW OUR MERIDIAN* WORK</span>
+      <svg viewBox="0 0 11 10.5" aria-hidden="true" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="square" stroke-linejoin="miter"><path d="M1 0.9l4.2 4.35L1 9.6"/><path d="M6.2 0.9l4.2 4.35L6.2 9.6"/></svg>
+    </a>
+    <h1 style="--nx:-3.0px;--ny:159.5px">Move payments forward together</h1>
+    <p class="lede" style="--nx:-3.0px;--ny:236.5px">Smart reports from teams using Meridian to manage spending,<br class="d"> issue cards, and stay in control as they grow. Accounts stay<br class="d"> secure, orderly, and dependable.</p>
+    <div class="cta" id="cta">
+      <a class="btn b1" href="#demo" style="--nx:-0.25px;--ny:0px"><span>SEE IT HAPPEN</span></a>
+      <a class="btn b2" href="#contact" style="--nx:0.5px;--ny:0px">
+        <svg viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.05"><circle cx="2.3" cy="2.3" r="1.75"/><circle cx="9.7" cy="2.3" r="1.75"/><circle cx="2.3" cy="9.7" r="1.75"/><circle cx="9.7" cy="9.7" r="1.75"/><path d="M3.6 3.9L8.4 8.1"/></svg>
+        <span>DISCUSS A PLAN</span>
+      </a>
+    </div>
+  </main>
+</section>
+<script>
+/* Layout engine — mode is owned by CSS; JS only supplies what CSS cannot compute:
+   the unitless desktop scale u, the dynamic viewport height, and the photo placement.
+   Desktop : 1280×800 composition scaled by u = min(vw/1280, vh/800) — exact 1:1 at 1280×800.
+   Tablet  : re-flowed column at scale k = .9 (the desktop threshold scale).
+   Phone   : re-flowed column at 1:1.
+   Photo   : always covers the whole hero. Scaled/placed so the subject's crown sits a fixed gap
+             below the CTA row, as in the reference; on very tall screens the subject is capped at
+             1.4× cover and the remaining height is carried by the matching sky tone. */
+(function(){
+  var R=document.documentElement,hero=document.getElementById('hero'),photo=document.getElementById('photo'),cta=document.getElementById('cta');
+  var IW=1586,IH=992,CROWN=530,GAP_D=49.24,GAP_M=26,OVERSCAN=1.00078,K_T=.9,MAX_ZOOM=1.4; /* overscan+gap registered against the reference photo to ±0.5px */
+  var DESK=matchMedia('(min-width:1152px) and (min-height:720px)'), PHONE=matchMedia('(max-width:510.98px)');
+  function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+  function layout(){
+    var vw=R.clientWidth, vh=window.innerHeight;
+    var mode=DESK.matches?'d':(PHONE.matches?'m':'t');
+    var u=Math.min(vw/1280,vh/800);
+    R.style.setProperty('--u',u); R.style.setProperty('--vh',vh+'px');
+    var H=hero.offsetHeight, top=hero.getBoundingClientRect().top;
+    var cb=cta.getBoundingClientRect().bottom-top;
+    var k=parseFloat(getComputedStyle(R).getPropertyValue('--k'))||K_T;
+    var crown=cb+(mode==='d'?GAP_D*u:mode==='t'?GAP_D*k:GAP_M);
+    var cover=Math.max(vw/IW, H/IH);
+    var s=Math.max(cover,(H-crown)/(IH-CROWN));
+    if(s>cover*MAX_ZOOM){s=cover*MAX_ZOOM;crown=H-(IH-CROWN)*s;}
+    s*=OVERSCAN;
+    var fx=(vw/H<1)?815:IW/2;
+    var x0=clamp(vw/2-fx*s, vw-IW*s, 0);
+    var y0=crown-CROWN*s;
+    photo.style.setProperty('--s',s); photo.style.setProperty('--x0',x0+'px'); photo.style.setProperty('--y0',y0+'px');
+  }
+  var raf=0;function schedule(){cancelAnimationFrame(raf);raf=requestAnimationFrame(layout)}
+  layout();
+  addEventListener('resize',schedule,{passive:true});
+  if(window.visualViewport) visualViewport.addEventListener('resize',schedule,{passive:true});
+  DESK.addEventListener&&DESK.addEventListener('change',schedule); PHONE.addEventListener&&PHONE.addEventListener('change',schedule);
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(layout);
+  if('ResizeObserver' in window) new ResizeObserver(schedule).observe(document.getElementById('stage'));
+})();
+</script>
+<script>
+/* =====================================================================
+   ENTRANCE — one choreographed timeline, Web Animations API, no dependencies.
+   The photograph is the stage and never moves; only foreground content performs.
+
+   Motion vocabulary
+     A  Type reveal     headline words rise inside their own masks (expo-out)
+     B  Copy settle     lede: short rise + fade
+     C  Surface wipe    glass/solid surfaces open like a shutter: the pill left→right
+                        (its reading direction, toward its » arrow), the CTAs bottom→top
+     D  Chrome drop     logo + MORE ease down from the top edge; the rail draws itself
+
+   Timeline (s)   0.15 logo · 0.25 MORE · 0.30 pill wipe · 0.35 rail
+                  0.45→0.67 headline words · 0.85 lede · 1.05 / 1.13 CTAs · done ≈1.95
+   Every tween uses fill:"backwards" → once finished it leaves no trace; the page's
+   own CSS is the final frame. Afterwards the headline's DOM is restored verbatim.
+   ===================================================================== */
+(function(){
+  var R=document.documentElement;
+  if(!R.classList.contains('intro')) return;
+  var EXPO='cubic-bezier(.16,1,.3,1)', QUART='cubic-bezier(.25,1,.5,1)', SHUTTER='cubic-bezier(.76,0,.24,1)';
+  var q=function(s){return document.querySelector(s)};
+  var anims=[];
+  function tw(el,kf,delay,dur,ease){
+    anims.push(el.animate(kf,{delay:delay*1000,duration:dur*1000,easing:ease,fill:'backwards'}));
+  }
+  function run(){
+    var phone=matchMedia('(max-width:510.98px)').matches, d=phone?.75:1; /* shorter travel on phones */
+    var h1=q('h1'), original=h1.innerHTML;
+    // wrap headline words in masks (text + wrapping identical; restored at the end)
+    h1.innerHTML=h1.textContent.trim().split(/\s+/).map(function(w){return '<span class="w"><span>'+w+'</span></span>'}).join(' ');
+
+    // D — chrome
+    tw(q('.brand'),[{opacity:0,translate:'0 '+(-8*d)+'px'},{opacity:1,translate:'0 0'}],.15,.8,QUART);
+    tw(q('.more'), [{opacity:0,translate:'0 '+(-8*d)+'px'},{opacity:1,translate:'0 0'}],.25,.8,QUART);
+    tw(q('.rail'), [{scale:'1 0'},{scale:'1 1'}],.35,.9,EXPO);
+    // C — eyebrow pill opens toward its arrow
+    tw(q('.pill'), [{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)'}],.30,.75,SHUTTER);
+    // A — headline, word by word inside masks
+    h1.querySelectorAll('.w>span').forEach(function(el,i){
+      tw(el,[{translate:'0 132%'},{translate:'0 0'}],.45+i*.055,1.05,EXPO);
+    });
+    // B — supporting copy
+    tw(q('.lede'), [{opacity:0,translate:'0 '+(12*d)+'px'},{opacity:1,translate:'0 0'}],.85,.9,QUART);
+    // C — CTAs rise into place from their own base, label follows a beat later
+    [['.b1',1.05],['.b2',1.13]].forEach(function(b){
+      var el=q(b[0]);
+      tw(el,[{clipPath:'inset(100% 0 0 0)'},{clipPath:'inset(0% 0 0 0)'}],b[1],.75,EXPO);
+      tw(el.querySelector('span'),[{opacity:0,translate:'0 '+(8*d)+'px'},{opacity:1,translate:'0 0'}],b[1]+.1,.7,QUART);
+      var ic=el.querySelector('svg'); if(ic) tw(ic,[{opacity:0,translate:'0 '+(8*d)+'px'},{opacity:1,translate:'0 0'}],b[1]+.1,.7,QUART);
+    });
+
+    // from-states are now held by the animations themselves → reveal the layer (same frame)
+    R.classList.remove('intro');
+
+    // restore the headline's authored markup the moment its words are at rest
+    // (while the CTAs are still settling, so the swap is never looked at)
+    var words=anims.filter(function(a){return a.effect.target.parentNode&&a.effect.target.parentNode.classList.contains('w')});
+    Promise.all(words.map(function(a){return a.finished})).then(function(){ h1.innerHTML=original; });
+    Promise.all(anims.map(function(a){return a.finished})).then(function(){
+      anims.forEach(function(a){a.cancel()}); anims=[]; // release; nothing keeps running
+      R.classList.add('intro-done');
+    });
+  }
+  var start=function(){requestAnimationFrame(run)};
+  (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(start,start);
+})();
+</script>
+</body>
+</html>

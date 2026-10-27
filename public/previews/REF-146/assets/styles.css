@@ -1,0 +1,250 @@
+@font-face{font-family:"Talkie Serif";src:url(./talkie-serif.woff2) format("woff2");font-weight:100 900;font-stretch:50% 150%;font-display:block}
+@font-face{font-family:"Talkie Sans";src:url(./talkie-sans.woff2) format("woff2");font-weight:100 900;font-display:block}
+
+/* ------------------------------------------------------------------
+   Architecture
+   The reference is a 957 x 582 frame. Every measurement is expressed in
+   reference px and multiplied by a scale unit:
+     --s  = min(width/957, height/582)          (fit the frame)
+   The frame is split into two anchored bands so no viewport ever shows
+   empty space:
+     top band    (nav, headline, CTAs)  -> pinned to the top edge
+     bottom band (equalizer, fog, silhouette, cards) -> pinned to the bottom
+   The 24px of gradient between them (y 282-306) is the only part that
+   stretches when the viewport is taller than the frame's aspect ratio.
+   Horizontally the backdrop + equalizer are wider than the frame, so wide
+   screens extend the scene instead of letterboxing it.
+------------------------------------------------------------------- */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#fff}
+body{font-family:"Talkie Sans",Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+.hero{
+  position:relative;width:100%;height:100vh;height:100svh;min-height:548px;overflow:hidden;overflow:clip;
+  background:#fff;isolation:isolate;container-type:size;container-name:hero;
+}
+.hero{--W:100vw;--H:100vh}
+@supports (width:1cqw){ .hero > *{--W:100cqw;--H:100cqh} }
+.hero > *{
+  --s:min(calc(var(--W) / 957),calc(var(--H) / 582));   /* frame fit                         */
+  --st:var(--s);                                         /* top band scale                    */
+  /* bottom band may grow into spare height (4:3, 16:10 ...) but never wider than the viewport allows */
+  --sb:max(var(--s),min(calc((var(--H) - 306 * var(--s)) / 276),calc((var(--W) / 2 - 16px) / 328)));
+  --sa:var(--st);                                        /* backdrop scale for the top slice  */
+  --lift:0px;
+}
+
+/* ---------- backdrop: measured light field in 3 slices ----------
+   A = rows 0-306 (top-anchored)   B = row 306 stretched (only if a gap exists)
+   C = rows 282-582 (bottom-anchored, top 40 rows feathered so A/C blend seamlessly) */
+.bg{position:absolute;left:0;right:0;z-index:0;pointer-events:none;
+  background-image:url(./hero-background.png);background-repeat:no-repeat}
+.bg-a{top:0;height:calc(306 * var(--sa) + 1px);background-size:calc(2235 * var(--sa)) calc(582 * var(--sa));background-position:50% 0;background-color:#1b1b1c}
+.bg-b{--bh:max(1px,calc(var(--H) - 306 * var(--sa) - var(--lift)));top:calc(306 * var(--sa));height:var(--bh);
+  background-size:calc(2235 * var(--sa)) calc(var(--bh) * 582);background-position:50% calc(var(--bh) * -305.5);background-color:#464661}
+.bg-c{bottom:var(--lift);height:calc(300 * var(--sb) + 1px);background-size:calc(2235 * var(--sb)) calc(582 * var(--sb));background-position:50% 100%;
+  -webkit-mask-image:linear-gradient(#0000,#000 calc(40 * var(--sb)));mask-image:linear-gradient(#0000,#000 calc(40 * var(--sb)))}
+
+/* ---------- navigation ---------- */
+.nav{position:absolute;inset:0 0 auto 0;height:calc(40 * var(--st));z-index:20}
+.brand{position:absolute;left:calc(42.5 * var(--st) + env(safe-area-inset-left,0px));top:calc(9.5 * var(--st) + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:calc(5.2 * var(--st));
+  color:#f2f2f2;font-weight:600;font-size:calc(15.8 * var(--st));letter-spacing:-0.045em;line-height:1}
+.brand svg{width:calc(15 * var(--st));height:calc(19 * var(--st));flex:none}
+.brand span{position:relative;top:calc(2 * var(--st))}
+.links{position:absolute;left:50%;top:calc(7.5 * var(--st));width:calc(957 * var(--st));margin-left:calc(-478.5 * var(--st));height:0;list-style:none}
+.links li{position:absolute;top:0;white-space:nowrap}
+.links a{display:inline-flex;align-items:center;gap:calc(5 * var(--st));font-size:calc(11 * var(--st));font-weight:400;letter-spacing:-0.04em;line-height:1;color:#b2b4b4;transition:color .2s}
+.links svg{width:calc(9 * var(--st));height:calc(5.5 * var(--st));margin-top:calc(1 * var(--st))}
+.menu-btn{position:absolute;right:calc(43 * var(--st) + env(safe-area-inset-right,0px));top:calc(14.4 * var(--st) + env(safe-area-inset-top,0px));width:calc(28 * var(--st));height:calc(10 * var(--st));display:block}
+.menu-btn i{position:absolute;left:0;height:calc(2 * var(--st));border-radius:9px;background:#ebebeb;transition:transform .3s,width .3s,top .3s}
+.menu-btn i:first-child{top:0;width:100%}
+.menu-btn i:last-child{top:calc(8.1 * var(--st));width:calc(18.6 * var(--st))}
+.menu-btn[aria-expanded=true] i:first-child{top:calc(4 * var(--st));transform:rotate(45deg)}
+.menu-btn[aria-expanded=true] i:last-child{top:calc(4 * var(--st));width:100%;transform:rotate(-45deg)}
+.sheet{position:absolute;z-index:19;right:calc(20 * var(--st));top:calc(40 * var(--st));min-width:200px;padding:10px;border-radius:14px;
+  background:rgba(28,28,34,.82);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);
+  box-shadow:0 20px 50px rgba(0,0,0,.35);opacity:0;visibility:hidden;transform:translateY(-6px);pointer-events:none;transition:opacity .25s,transform .25s,visibility 0s .25s}
+.sheet.open{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition:opacity .25s,transform .25s}
+.sheet a{display:block;padding:10px 12px;border-radius:9px;color:#e8e8ea;font-size:15px}
+
+/* ---------- headline block (top band) ---------- */
+.copy{position:absolute;left:50%;top:0;width:calc(957 * var(--st));margin-left:calc(-478.5 * var(--st));height:calc(282 * var(--st));z-index:10;text-align:center}
+.copy h1{position:absolute;left:calc(2.2 * var(--st));right:calc(-2.2 * var(--st));top:calc(103 * var(--st));
+  font-family:"Talkie Serif",Georgia,serif;font-weight:330;font-size:calc(41.0 * var(--st));line-height:calc(44 * var(--st));
+  font-variation-settings:"wdth" 74,"opsz" 28,"GRAD" 0;letter-spacing:0.007em;color:#fff;font-kerning:normal}
+.copy h1 span{display:block;white-space:nowrap}
+.copy p{position:absolute;left:calc(2.2 * var(--st));right:calc(-2.2 * var(--st));top:calc(208 * var(--st));font-size:calc(12 * var(--st));line-height:1;font-weight:400;letter-spacing:-0.03em;color:#c4c5d0;white-space:nowrap}
+.ctas{position:absolute;left:calc(392.5 * var(--st));top:calc(249.5 * var(--st));display:flex;gap:calc(6.5 * var(--st))}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;height:calc(27 * var(--st));border-radius:calc(4.5 * var(--st));
+  font-size:calc(11 * var(--st));font-weight:500;letter-spacing:-0.03em;line-height:1;overflow:hidden;transition:transform .2s,box-shadow .2s,background-color .2s}
+.btn::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1.4 -.55'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");background-size:calc(60 * var(--st));mix-blend-mode:soft-light}
+.btn-primary{width:calc(98 * var(--st));background:#e0dad1;color:#211c16;box-shadow:inset 0 0 0 calc(1 * var(--st)) rgba(255,255,255,.38),0 calc(1*var(--st)) calc(2*var(--st)) rgba(0,0,0,.18)}
+.btn-primary::after{opacity:.55}
+.btn-ghost{width:calc(72 * var(--st));letter-spacing:-0.065em;color:#eceef4;background:rgba(255,255,255,0.06);
+  box-shadow:inset 0 0 0 calc(1 * var(--st)) rgba(255,255,255,0.07);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.btn-ghost::after{opacity:0.55;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='1' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 9 -7.2'/%3E%3C/filter%3E%3Crect width='90' height='90' filter='url(%23n)'/%3E%3C/svg%3E");mix-blend-mode:screen}
+
+/* ---------- bottom band (pinned to bottom) ---------- */
+.stage{position:absolute;left:50%;bottom:var(--lift);width:calc(957 * var(--sb));height:calc(582 * var(--sb));margin-left:calc(-478.5 * var(--sb));z-index:5;pointer-events:none}
+.stage > *{position:absolute}
+.eq{left:calc(-957 * var(--sb));top:calc(290 * var(--sb));width:calc(2871 * var(--sb));height:calc(160 * var(--sb))}
+.person{left:calc(250 * var(--sb));top:calc(330 * var(--sb));width:calc(370 * var(--sb));height:calc(500 * var(--sb));overflow:visible}
+
+/* glass card: create agent */
+.card{--u:var(--sb);pointer-events:auto;font-family:"Talkie Sans",Inter,sans-serif}
+.agent{left:max(calc(291.5 * var(--sb)),calc(14px - var(--W) / 2 + 478.5 * var(--sb)));top:calc(463.2 * var(--sb));width:calc(147.2 * var(--u));height:calc(78.6 * var(--u));
+  /* frosted rim: translucent white over whatever sits behind it (reads grey over the silhouette, invisible over the fog) */
+  border:calc(3.6 * var(--u)) solid rgba(255,255,255,0.22);border-bottom-width:calc(4.3 * var(--u));border-radius:calc(8.5 * var(--u));
+  background:transparent;box-shadow:0 0 calc(5 * var(--u)) rgba(40,30,60,0.1)}
+.agent::before{content:"";position:absolute;inset:0;border-radius:calc(5 * var(--u));
+  /* glass pane: iridescent pink -> lavender -> white sheen, 98.5% opaque with backdrop blur */
+  background:linear-gradient(45deg,rgba(255,243,249,.985) 0%,rgba(254,241,248,.985) 14%,rgba(252,240,248,.985) 24%,rgba(245,236,247,.985) 33%,rgba(242,236,252,.985) 43%,rgba(238,234,254,.985) 52%,rgba(239,238,254,.985) 62%,rgba(245,245,254,.985) 72%,rgba(250,249,254,.985) 82%,rgba(251,250,254,.985) 100%);
+  backdrop-filter:blur(14px) saturate(160%);-webkit-backdrop-filter:blur(14px) saturate(160%);box-shadow:inset 0 0 0 calc(.6 * var(--u)) rgba(90,70,110,.06)}
+.agent > *{z-index:1}
+.agent .ic{position:absolute;left:calc(8.1 * var(--u));top:calc(6.8 * var(--u));width:calc(11 * var(--u));height:calc(14.5 * var(--u))}
+.agent h3{position:absolute;left:calc(7.7 * var(--u));top:calc(31 * var(--u));font-size:calc(9.2 * var(--u));font-weight:700;letter-spacing:-0.01em;line-height:1;color:#2b232d;white-space:nowrap}
+.agent .sel{position:absolute;left:calc(6.5 * var(--u));top:calc(46.8 * var(--u));width:calc(76 * var(--u));height:calc(17.5 * var(--u));border-radius:calc(4 * var(--u));background:#fff;
+  display:flex;align-items:center;justify-content:space-between;padding:0 calc(6.6 * var(--u)) 0 calc(7.6 * var(--u));font-size:calc(8.7 * var(--u));letter-spacing:-0.01em;font-weight:500;color:#a3a4a6;white-space:nowrap}
+.agent .sel svg{width:calc(6.2 * var(--u));height:calc(3.6 * var(--u))}
+.agent .deploy{position:absolute;left:calc(91.3 * var(--u));top:calc(46.8 * var(--u));width:calc(43 * var(--u));height:calc(17.6 * var(--u));border-radius:calc(4 * var(--u));background:#3c3c50;
+  color:#d6d8e4;font-size:calc(7.8 * var(--u));font-weight:700;letter-spacing:-0.01em;display:flex;align-items:center;justify-content:center;line-height:1;padding-top:calc(1.6 * var(--u))}
+
+/* chat card */
+.chat{--push:max(0px,calc(322 * var(--sb) - var(--W) / 2 + 14px));--low:min(var(--push),calc(47 * var(--sb)));
+  left:min(calc(594.5 * var(--sb)),calc(var(--W) / 2 - 14px + 478.5 * var(--sb) - 206 * var(--u)));top:calc(481 * var(--sb) + var(--low));
+  width:calc(206 * var(--u));height:calc(81.5 * var(--u));border-radius:calc(7 * var(--u));
+  background-color:#f3f3f3;background-image:radial-gradient(circle at center,rgba(0,0,0,0.03) 0 calc(.7 * var(--u)),transparent calc(.8 * var(--u)));
+  background-size:calc(3.45 * var(--u)) calc(3.45 * var(--u));box-shadow:0 0 calc(2 * var(--u)) rgba(0,0,0,.05)}
+.chat .tools{position:absolute;right:calc(10.5 * var(--u));top:calc(7 * var(--u));display:flex;gap:calc(4.2 * var(--u));align-items:center;color:#5f5f62}
+.chat .tools svg{height:calc(9 * var(--u));width:auto}
+.chat .bubble{position:absolute;left:calc(7 * var(--u));top:calc(22.5 * var(--u));width:calc(132.5 * var(--u));height:calc(24.5 * var(--u));border-radius:calc(4.5 * var(--u));background:#2c2c2c;
+  padding:calc(5.6 * var(--u)) 0 0 calc(7.2 * var(--u));color:#c4c4c4;font-size:calc(6.7 * var(--u));line-height:calc(8.2 * var(--u));letter-spacing:-0.01em;font-weight:400;white-space:nowrap}
+.chat .input{position:absolute;left:calc(7 * var(--u));top:calc(54.5 * var(--u));width:calc(167 * var(--u));height:calc(20 * var(--u));border-radius:calc(5 * var(--u));background:#fff;
+  display:flex;align-items:center;justify-content:space-between;padding:0 calc(4.2 * var(--u)) 0 calc(8.5 * var(--u));font-size:calc(6.65 * var(--u));letter-spacing:-0.01em;font-weight:600;color:#555558;white-space:nowrap}
+.chat .input svg{width:calc(11 * var(--u));height:calc(11 * var(--u))}
+.chat .mic{position:absolute;left:calc(180 * var(--u));top:calc(55 * var(--u));width:calc(18.5 * var(--u));height:calc(18.5 * var(--u));border-radius:50%;background:#323232;display:grid;place-items:center}
+.chat .mic svg{width:calc(9.5 * var(--u));height:calc(11.5 * var(--u))}
+
+/* ==================================================================
+   RESPONSIVE TIERS (desktop rules above are untouched)
+
+   Desktop frame  : width >= 900px AND aspect >= 5:4
+                    The fitted 957x582 frame. Below 900px wide its text
+                    drops under ~10px; below 5:4 a dead band opens
+                    between the CTAs and the visual. Short windows keep
+                    the frame at a 548px floor (scale >= 0.94) and scroll.
+
+   Tablet (stacked): everything else >= 550px wide
+                    Same nav row, same two-line headline, same CTAs,
+                    same scene - stacked so spare height is used, and
+                    scaled by width so nothing shrinks below desktop size.
+
+   Mobile         : < 550px wide - the point where the headline can no
+                    longer hold its two desktop lines and the centred
+                    links collide with the logo / menu button.
+   ================================================================== */
+@media (max-width: 899.98px), (max-aspect-ratio: 1249/1000){
+  .hero{display:flex;flex-direction:column;height:auto;min-height:100vh;min-height:100svh;container-type:inline-size}
+  .hero > *{
+    --H:100vh;
+    --gut:clamp(20px,4vw,40px);                                        /* outer margin            */
+    --sn:clamp(1.2px,calc(var(--W) / 680),1.5px);                     /* nav unit                */
+    --st:clamp(.94px,min(calc((var(--W) - 2 * var(--gut)) / 500),calc(var(--H) / 480)),1.6px);   /* headline unit: 2 lines fit, short screens stay calm */
+    --bs:1.48px;                                                       /* CTA unit (40px tall)    */
+    --sb:min(calc(var(--W) / 430),calc(max(var(--H) * .5,300px) / 279));   /* scene unit (>=300px tall) */
+    --sa:var(--sb);
+    --sc:min(clamp(1.45px,calc(var(--W) / 520),2px),calc(var(--sb) * 1.45));   /* card unit: text stays readable */
+    --lift:max(0px,calc(81.5 * var(--sc) - 60 * var(--sb) + var(--gut)));     /* room for the lower card */
+  }
+  @supports (height:1svh){ .hero > *{--H:100svh} }
+
+  /* backdrop: B now fills any height the stacked content creates */
+  .bg-b{height:auto;bottom:var(--lift);background-size:calc(2235 * var(--sa)) 58200%;background-position:50% 52.58%}
+
+  /* nav row: logo | centred links | menu button, on a grid instead of frame coordinates */
+  .nav{position:relative;inset:auto;flex:none;height:auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;column-gap:16px;
+    padding:calc(18px + env(safe-area-inset-top,0px)) calc(var(--gut) + env(safe-area-inset-right,0px)) 10px calc(var(--gut) + env(safe-area-inset-left,0px))}
+  .brand{position:relative;left:auto;top:auto;justify-self:start;gap:calc(5.2 * var(--sn));font-size:calc(15.8 * var(--sn))}
+  .brand svg{width:calc(15 * var(--sn));height:calc(19 * var(--sn))}
+  .brand span{top:calc(2 * var(--sn))}
+  .links{position:static;width:auto;height:auto;margin:0;display:flex;align-items:center;gap:calc(19 * var(--sn))}
+  .links li{position:static}
+  .links a{gap:calc(5 * var(--sn));font-size:calc(11 * var(--sn))}
+  .links svg{width:calc(9 * var(--sn));height:calc(5.5 * var(--sn));margin-top:calc(1 * var(--sn))}
+  .menu-btn{position:relative;right:auto;top:auto;justify-self:end;width:calc(28 * var(--sn));height:calc(10 * var(--sn))}
+  .menu-btn i{height:calc(2 * var(--sn))}
+  .menu-btn i:last-child{top:calc(8.1 * var(--sn));width:calc(18.6 * var(--sn))}
+  .menu-btn[aria-expanded=true] i:first-child,.menu-btn[aria-expanded=true] i:last-child{top:calc(4 * var(--sn))}
+  .sheet{top:calc(54px + env(safe-area-inset-top,0px));right:calc(var(--gut) - 8px + env(safe-area-inset-right,0px))}
+
+  /* copy: same order and proportions as the frame (h1 -17- sub -29.5- CTAs), centred in the free height */
+  .copy{position:relative;left:auto;top:auto;width:auto;height:auto;margin:0;flex:1 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:clamp(28px,6vh,72px) calc(var(--gut) + env(safe-area-inset-right,0px)) clamp(36px,7vh,88px) calc(var(--gut) + env(safe-area-inset-left,0px))}
+  .copy h1,.copy p{position:static}
+  .copy h1{font-size:calc(41.0 * var(--st));line-height:calc(44 * var(--st))}
+  .copy p{margin-top:calc(17 * var(--st));font-size:max(calc(12 * var(--st)),15px);line-height:1.45;white-space:normal;max-width:none;text-wrap:balance}
+  .ctas{position:static;margin-top:calc(29.5 * var(--st));gap:calc(6.5 * var(--bs))}
+  .btn{height:calc(27 * var(--bs));border-radius:calc(4.5 * var(--bs));font-size:calc(11 * var(--bs))}
+  .btn::after{background-size:calc(60 * var(--bs))}
+  .btn-primary{width:calc(98 * var(--bs));box-shadow:inset 0 0 0 1px rgba(255,255,255,.38),0 1px 2px rgba(0,0,0,.18)}
+  .btn-ghost{width:calc(72 * var(--bs));box-shadow:inset 0 0 0 1px rgba(255,255,255,0.07)}
+
+  /* scene: same frame coordinates, now a flow item whose empty upper rows tuck under the copy */
+  .stage{position:relative;left:auto;bottom:auto;flex:none;margin:calc(-300 * var(--sb)) 0 var(--lift) calc(50% - 478.5 * var(--sb))}
+
+  /* cards keep the desktop stagger (Create Agent high-left, chat low-right), anchored to the margins,
+     chat dropped just below the chin so the profile stays readable */
+  .card{--u:var(--sc)}
+  .agent{left:max(calc(291.5 * var(--sb)),calc(var(--gut) - var(--W) / 2 + 478.5 * var(--sb)));top:calc(515 * var(--sb) - 78.6 * var(--sc))}
+  .chat{left:min(calc(594.5 * var(--sb)),calc(var(--W) / 2 - var(--gut) + 478.5 * var(--sb) - 206 * var(--sc)));top:calc(522 * var(--sb))}
+}
+
+@media (max-width: 549.98px){
+  .hero > *{
+    --gut:clamp(18px,5.5vw,24px);
+    --sn:1.25px;
+    --sc:clamp(1.2px,calc(var(--W) / 300),1.45px);
+  }
+  .links{display:none}                 /* destinations live in the menu sheet */
+  .nav{padding-top:calc(20px + env(safe-area-inset-top,0px))}
+  .copy h1{font-size:clamp(30px,calc(28px + 2.2vw),40px);line-height:1.1;max-width:11.5em;text-wrap:balance}
+  .copy h1 span{display:inline;white-space:normal}
+  .copy{padding-top:clamp(16px,4vh,56px);padding-bottom:clamp(26px,5.5vh,72px)}
+  .copy p{margin-top:16px;font-size:15px;max-width:31ch}
+  .ctas{margin-top:26px}
+}
+.links a:focus-visible,.btn:focus-visible,.menu-btn:focus-visible,.brand:focus-visible,.sheet a:focus-visible{outline:2px solid rgba(214,208,255,.9);outline-offset:3px;border-radius:4px}
+@media (hover:hover){
+  .links a:hover{color:#fff}
+  .sheet a:hover{background:rgba(255,255,255,.08)}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-ghost:hover{background:rgba(255,255,255,.09)}
+}
+/* touch: enlarge hit areas invisibly, never the drawn component */
+@media (pointer:coarse){
+  .links a,.menu-btn{position:relative}
+  .links a::before,.menu-btn::before{content:"";position:absolute;inset:-12px -8px}
+  .btn{overflow:visible}
+  .btn::before{content:"";position:absolute;inset:-8px -3px}
+}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* The opening frame is prepared before the stylesheet loads. The foreground
+   returns to the authored styles when the single entrance sequence ends. */
+@media (prefers-reduced-motion: no-preference){
+  .intro-pending .brand,
+  .intro-pending .links li,
+  .intro-pending .menu-btn{opacity:0;transform:translateY(-6px)}
+  .intro-pending .copy h1 span{opacity:0;clip-path:inset(0 0 100% 0);transform:translateY(12px)}
+  .intro-pending .copy p{opacity:0;transform:translateY(8px)}
+  .intro-pending .ctas .btn{opacity:0;transform:translateY(8px)}
+  .intro-pending .eq{opacity:0}
+  .intro-pending .person{opacity:0;transform:translateY(14px)}
+  .intro-pending .card{opacity:0;transform:translateY(10px)}
+}
+@media (max-width:549.98px) and (prefers-reduced-motion: no-preference){
+  .intro-pending .copy h1{opacity:0;clip-path:inset(0 0 100% 0);transform:translateY(10px)}
+  .intro-pending .copy h1 span{opacity:1;clip-path:none;transform:none}
+}

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="/previews/REF-123/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ORDIVA — Autonomous Lab System</title>
+<meta name="description" content="ORDIVA engineers robotic laboratory environments that bring instruments, samples, and experiments together.">
+<link rel="preload" as="image" href="assets/c6e6d86c5c666a83.webp" fetchpriority="high">
+<style>
+@font-face{font-family:"InterV";font-style:normal;font-weight:100 900;font-display:block;src:url(assets/f052ee44c3728dfd.woff2) format("woff2")}
+@font-face{font-family:"InterTightV";font-style:normal;font-weight:100 900;font-display:block;src:url(assets/ca34455f82a5c81d.woff2) format("woff2")}
+
+:root{
+  /* ---- design tokens (sampled from reference) ---- */
+  --bg:#FEFEFE;
+  --blue:#1350F6;          /* button fills */
+  --blue-ink:#0035E8;      /* line-2 / icons */
+  --blue-ink-1:#002AE8;    /* headline line 1 */
+  --blue-link:#0023EB;      /* headline / link ink */
+  --blue-nav:#0A47F7;      /* nav "+" glyphs */
+  --pink:#FB5CD0;
+  --ink:#070606;           /* nav labels */
+  --slate:#363F54;         /* body copy */
+  --slate-2:#3A435A;
+  --slate-3:#3E465C;       /* eyebrow / scroll cue */
+  --ff:"InterV",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --ff-d:"InterTightV","InterV",ui-sans-serif,system-ui,sans-serif;
+
+  /* ---- 1 reference pixel (frame = 1586 x 992) ---- */
+  --vh:100vh;
+  --u:min(calc(100vw / 1586), calc(var(--vh) / 992));
+  /* robot grows a little when the viewport is taller than the reference ratio */
+  --ru:min(max(var(--u), calc(var(--vh) / 1000)), calc(var(--u) * 1.3), calc((100vw - var(--u) * 730) / 855.4));
+}
+@supports (height:100svh){:root{--vh:100svh}}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg)}
+body{font-family:var(--ff);color:var(--ink);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+img,svg{display:block}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ================================================================
+   STAGE — fills the viewport exactly; every child is placed in
+   reference units and anchored to the edge it belongs to.
+   ================================================================ */
+.hero{position:relative;width:100%;height:var(--vh);overflow:hidden;background:var(--bg);isolation:isolate}
+
+/* ---------- robot blueprint ---------- */
+.robot{position:absolute;z-index:0;pointer-events:none;
+  width:calc(var(--ru) * 979.7);height:auto;
+  right:calc(var(--ru) * -124.3);
+  top:calc(50% + var(--ru) * -466);
+  opacity:.8;user-select:none}
+
+/* ---------- header ---------- */
+.hdr{position:absolute;inset:0 0 auto 0;height:calc(var(--u) * 90);z-index:5}
+.logo{position:absolute;left:calc(var(--u) * 24);top:calc(var(--u) * 24);width:calc(var(--u) * 242);height:calc(var(--u) * 42);color:var(--blue)}
+.logo svg{width:100%;height:100%}
+.nav{position:absolute;top:0;left:calc(50% + calc(var(--u) * -273));height:calc(var(--u) * 90);margin:0;padding:0;list-style:none}
+.nav li{position:absolute;top:0;left:calc(var(--x) * var(--u));white-space:nowrap}
+.nav a{display:flex;align-items:center;gap:calc(var(--u) * 13);height:calc(var(--u) * 90);font-size:calc(var(--u) * 18.4);font-weight:450;letter-spacing:-.045em;color:var(--ink);transition:color .2s}
+.nav a svg{width:calc(var(--u) * 16.2);height:calc(var(--u) * 16.6);color:var(--blue-nav);transition:transform .3s}
+.nav a:hover{color:var(--blue)}
+.nav a:hover svg{transform:rotate(90deg)}
+.nav a span{transform:translateY(calc(var(--u) * .3))}
+.act{position:absolute;top:calc(var(--u) * 14);right:calc(var(--u) * 12);display:flex;gap:calc(var(--u) * 9)}
+.ibtn{width:calc(var(--u) * 62);height:calc(var(--u) * 62);border:calc(var(--u) * 1.5) solid rgba(19,80,246,.85);border-radius:calc(var(--u) * 14);display:grid;place-items:center;color:var(--blue-ink);background:rgba(255,255,255,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:background .2s,box-shadow .2s}
+.ibtn svg{width:calc(var(--u) * 25);height:calc(var(--u) * 25)}
+.ibtn:hover{background:#fff;box-shadow:0 calc(var(--u) * 6) calc(var(--u) * 18) rgba(19,80,246,.18)}
+.cbtn{width:calc(var(--u) * 154);height:calc(var(--u) * 62);border-radius:calc(var(--u) * 14);background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;gap:calc(var(--u) * 16);padding-left:calc(var(--u) * 2);font-size:calc(var(--u) * 19.4);font-weight:450;letter-spacing:-.004em;transition:background .2s,box-shadow .2s}
+.cbtn svg{width:calc(var(--u) * 21);height:calc(var(--u) * 18);transition:transform .25s}
+.cbtn:hover{background:#0B44E6;box-shadow:0 calc(var(--u) * 8) calc(var(--u) * 22) rgba(19,80,246,.32)}
+.cbtn:hover svg,.btn:hover svg{transform:translateX(calc(var(--u) * 3))}
+.menu{display:none}
+.stage{display:contents}
+.sheet{display:none}
+
+/* ---------- hero copy (vertically centred block) ---------- */
+.copy{position:absolute;z-index:3;left:calc(var(--u) * 105);top:calc(50% + calc(var(--u) * -232));width:calc(var(--u) * 660)}
+.eyebrow{display:flex;align-items:center;gap:calc(var(--u) * 10);margin:0;padding-top:calc(var(--u) * 2);height:calc(var(--u) * 22);font-size:calc(var(--u) * 15.3);font-weight:620;letter-spacing:.098em;color:var(--slate-2);text-transform:uppercase}
+.eyebrow i{flex:none;width:calc(var(--u) * 11);height:calc(var(--u) * 11);border-radius:50%;background:var(--pink);margin-left:calc(var(--u) * 1)}
+h1{margin:calc(var(--u) * 42) 0 0 calc(var(--u) * -1);font-family:var(--ff-d);font-size:calc(var(--u) * 81.5);line-height:calc(var(--u) * 95);letter-spacing:-.0131em;color:var(--blue-ink-1);font-weight:500;white-space:nowrap}
+h1 .l1{display:block}
+h1 .l2{display:block;color:var(--blue-ink);margin-left:calc(var(--u) * 2.5);font-weight:340;letter-spacing:-.0163em}
+h1 .dot{display:inline-block;width:.11em;height:.098em;margin-left:.012em;background:var(--pink);vertical-align:baseline}
+.lede{margin:calc(var(--u) * 19) 0 0 calc(var(--u) * 1);font-size:calc(var(--u) * 23.2);line-height:calc(var(--u) * 37);font-weight:400;letter-spacing:-.0135em;color:var(--slate);width:calc(var(--u) * 640)}
+.ctas{display:flex;align-items:center;margin-top:calc(var(--u) * 38)}
+.btn{display:flex;align-items:center;justify-content:center;gap:calc(var(--u) * 16.5);width:calc(var(--u) * 263);height:calc(var(--u) * 69);border-radius:calc(var(--u) * 15);background:var(--blue);color:#fff;font-size:calc(var(--u) * 22.6);font-weight:450;letter-spacing:-.012em;padding-left:calc(var(--u) * 3);transition:background .2s,box-shadow .2s}
+.btn svg{width:calc(var(--u) * 24);height:calc(var(--u) * 20);transition:transform .25s}
+.btn:hover{background:#0B44E6;box-shadow:0 calc(var(--u) * 10) calc(var(--u) * 26) rgba(19,80,246,.3)}
+.link{display:flex;align-items:center;gap:calc(var(--u) * 19);margin-left:calc(var(--u) * 37);font-size:calc(var(--u) * 22.6);font-weight:520;letter-spacing:-.034em;color:var(--blue-link)}
+.link svg{width:calc(var(--u) * 30);height:calc(var(--u) * 30);transition:transform .25s}
+.link:hover svg{transform:scale(1.1)}
+.link span{background:linear-gradient(currentColor,currentColor) 0 100%/0 calc(var(--u) * 1.5) no-repeat;transition:background-size .3s}
+.link:hover span{background-size:100% calc(var(--u) * 1.5)}
+
+/* ---------- scroll cue ---------- */
+.scroll{position:absolute;z-index:3;left:calc(var(--u) * 31);bottom:calc(var(--u) * 31);display:flex;align-items:center;gap:calc(var(--u) * 12.5);font-size:calc(var(--u) * 14.6);font-weight:620;letter-spacing:.14em;color:var(--slate-3);text-transform:uppercase}
+.scroll svg{width:calc(var(--u) * 22);height:calc(var(--u) * 33)}
+
+/* ---------- glass video card ---------- */
+.video{position:absolute;z-index:4;right:calc(var(--u) * 20);bottom:calc(var(--u) * 31);width:calc(var(--u) * 279);height:calc(var(--u) * 156);border-radius:calc(var(--u) * 14);overflow:hidden;
+  box-shadow:0 0 0 calc(var(--u) * 1.2) rgba(255,255,255,.85),0 calc(var(--u) * 10) calc(var(--u) * 28) rgba(16,44,130,.16);
+  background:#c9d3e6;cursor:pointer}
+.video img{position:absolute;left:-22.2%;top:-10.9%;width:122.9%;height:auto;transition:transform .6s ease}
+.video:hover img{transform:scale(1.04)}
+.video .tint{position:absolute;inset:0;background:rgba(127,143,172,.40)}
+.video .glass{position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 calc(var(--u) * 1) rgba(255,255,255,.55),inset 0 calc(var(--u) * 1) calc(var(--u) * 10) rgba(255,255,255,.25)}
+.video .play{position:absolute;left:calc(var(--u) * 113.5);top:calc(var(--u) * 55.5);width:calc(var(--u) * 43);height:calc(var(--u) * 43);transition:transform .25s}
+.video:hover .play{transform:scale(1.08)}
+.video .count{position:absolute;right:calc(var(--u) * 9.5);top:calc(var(--u) * 128);font-size:calc(var(--u) * 16.4);line-height:1;font-weight:450;letter-spacing:.157em;color:#fff}
+.video .bar{position:absolute;left:calc(var(--u) * 16);right:calc(var(--u) * 14);top:calc(var(--u) * 148);height:calc(var(--u) * 2);border-radius:calc(var(--u) * 2);background:rgba(255,255,255,.28)}
+.video .bar b{position:absolute;inset:0 auto 0 0;width:49%;border-radius:inherit;background:rgba(255,255,255,.95)}
+
+:focus-visible{outline:2px solid var(--pink);outline-offset:3px;border-radius:6px}
+
+/* ================================================================
+   PORTRAIT / NARROW — stacked composition, still full-height
+   ================================================================ */
+@media (max-aspect-ratio:1/1),(max-width:760px){
+  :root{--g:clamp(18px,5.2vw,48px)}
+  .hero{height:auto;min-height:var(--vh);display:flex;flex-direction:column}
+  .hdr{position:relative;inset:auto;height:auto;display:flex;align-items:center;justify-content:space-between;padding:clamp(14px,3.4vw,28px) var(--g)}
+  .logo{position:static;width:clamp(120px,30vw,220px);height:auto;aspect-ratio:242/42}
+  .nav{display:none}
+  .act{position:static;gap:clamp(8px,1.6vw,12px)}
+  .ibtn,.menu{width:clamp(42px,9vw,58px);height:clamp(42px,9vw,58px);border-radius:clamp(11px,2.2vw,14px)}
+  .ibtn{border-width:1.5px}
+  .ibtn svg{width:46%;height:46%}
+  .cbtn{display:none}
+  .menu{display:grid;place-items:center;background:var(--blue);color:#fff}
+  .menu svg{width:44%;height:44%}
+
+  .copy{position:relative;left:auto;top:auto;width:auto;padding:clamp(8px,4vw,56px) var(--g) 0}
+  .eyebrow{height:auto;gap:10px;font-size:clamp(11px,2.9vw,15px);letter-spacing:.16em}
+  .eyebrow i{width:clamp(8px,2vw,11px);height:clamp(8px,2vw,11px);margin:0}
+  h1{margin:clamp(14px,3.6vw,34px) 0 0 -.04em;font-size:clamp(38px,11.4vw,96px);line-height:1.12;white-space:normal}
+  .lede{width:auto;max-width:36em;margin:clamp(12px,3vw,22px) 0 0;font-size:clamp(15.5px,4.1vw,22px);line-height:1.6}
+  .ctas{flex-wrap:wrap;gap:14px 26px;margin-top:clamp(20px,5vw,34px)}
+  .btn{width:auto;height:clamp(52px,12vw,66px);padding:0 clamp(20px,5vw,30px);border-radius:clamp(12px,2.6vw,15px);gap:16px;font-size:clamp(16px,4.2vw,21px)}
+  .btn svg{width:1.05em;height:.9em}
+  .link{margin:0;gap:12px;font-size:clamp(16px,4.2vw,21px)}
+  .link svg{width:1.3em;height:1.3em}
+
+  /* visual zone absorbs all remaining height: no blank band at the bottom */
+  .stage{display:block;position:relative;flex:1 1 auto;min-height:clamp(210px,46vw,520px);margin-top:clamp(8px,3vw,24px)}
+  .robot{width:100%;height:100%;right:0;top:0;left:0;object-fit:cover;object-position:28% 12%;opacity:.8}
+  .scroll{left:var(--g);bottom:clamp(16px,4vw,32px);gap:12px;font-size:clamp(10.5px,2.7vw,14px);letter-spacing:.2em}
+  .scroll svg{width:clamp(16px,3.6vw,22px);height:auto}
+  .video{right:var(--g);bottom:clamp(16px,4vw,32px);width:clamp(170px,46vw,330px);height:auto;aspect-ratio:279/156;border-radius:clamp(10px,2.4vw,14px)}
+  .video .play{left:50%;top:50%;width:27%;height:auto;aspect-ratio:1;transform:translate(-50%,-50%)}
+  .video:hover .play{transform:translate(-50%,-50%) scale(1.08)}
+  .video .count{right:5%;top:auto;bottom:16%;font-size:clamp(11px,2.6vw,16px)}
+  .video .bar{left:6%;right:5%;top:auto;bottom:7%;height:2px}
+
+  /* mobile menu sheet */
+  .sheet{position:fixed;inset:0;z-index:50;display:flex;background:rgba(254,254,254,.86);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);flex-direction:column;padding:clamp(80px,22vw,120px) var(--g) 32px;gap:6px;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+  .sheet a{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid rgba(19,80,246,.12);font-size:clamp(22px,6.4vw,32px);font-weight:450;letter-spacing:-.02em}
+  .sheet a svg{width:.6em;height:.6em;color:var(--blue-nav)}
+  .sheet .cbtn{display:flex;width:100%;height:58px;margin-top:22px;font-size:18px;border-radius:14px;gap:14px;border:0;color:#fff}
+  .sheet .cbtn svg{width:20px;height:16px}
+  .sheet-close{position:absolute;top:clamp(14px,3.4vw,28px);right:var(--g);width:clamp(42px,9vw,58px);height:clamp(42px,9vw,58px);border-radius:12px;display:grid;place-items:center;color:var(--blue-ink);border:1.5px solid rgba(19,80,246,.85)}
+  .sheet-close svg{width:40%;height:40%}
+  body.open .sheet{opacity:1;visibility:visible}
+  body.open{overflow:hidden}
+}
+@media (max-width:440px) and (max-aspect-ratio:1/1){.scroll span{display:none}.stage{min-height:200px}}
+/* Opening timeline: identity and context, two editorial lines, then the
+   laboratory visual and its supporting card. No animation remains afterward. */
+@media (prefers-reduced-motion:no-preference){
+  .hdr .logo{animation:ord-soft .48s cubic-bezier(.22,1,.36,1) .03s backwards}
+  .nav li:nth-child(1){animation:ord-soft .48s cubic-bezier(.22,1,.36,1) .1s backwards}
+  .nav li:nth-child(2){animation:ord-soft .48s cubic-bezier(.22,1,.36,1) .15s backwards}
+  .nav li:nth-child(3){animation:ord-soft .48s cubic-bezier(.22,1,.36,1) .2s backwards}
+  .nav li:nth-child(4){animation:ord-soft .48s cubic-bezier(.22,1,.36,1) .25s backwards}
+  .hdr .act{animation:ord-soft .52s cubic-bezier(.22,1,.36,1) .2s backwards}
+  .copy .eyebrow{animation:ord-soft .5s cubic-bezier(.22,1,.36,1) .24s backwards}
+  .copy h1 .l1{animation:ord-line .77s cubic-bezier(.16,1,.3,1) .38s backwards}
+  .copy h1 .l2{animation:ord-line .82s cubic-bezier(.16,1,.3,1) .53s backwards}
+  .copy .lede{animation:ord-soft .62s cubic-bezier(.22,1,.36,1) .73s backwards}
+  .ctas .btn{animation:ord-soft .55s cubic-bezier(.22,1,.36,1) .88s backwards}
+  .ctas .link{animation:ord-soft .55s cubic-bezier(.22,1,.36,1) .98s backwards}
+  .robot{animation:ord-visual 1.05s cubic-bezier(.16,1,.3,1) .53s backwards}
+  .video{animation:ord-card .72s cubic-bezier(.22,1,.36,1) 1.1s backwards}
+  .scroll{animation:ord-soft .5s cubic-bezier(.22,1,.36,1) 1.18s backwards}
+  @keyframes ord-soft{from{opacity:0;transform:translate3d(0,8px,0)}to{opacity:1;transform:none}}
+  @keyframes ord-line{from{opacity:0;transform:translate3d(0,.16em,0);clip-path:inset(100% 0 0)}to{opacity:1;transform:none;clip-path:inset(0)}}
+  @keyframes ord-visual{from{opacity:0;transform:translate3d(0,14px,0) scale(.986)}to{opacity:.8;transform:none}}
+  @keyframes ord-card{from{opacity:0;transform:translate3d(0,12px,0) scale(.985)}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<section class="hero">
+  <header class="hdr">
+    <a class="logo" href="#" aria-label="ORDIVA home">
+      <svg viewBox="24 24 242 42" aria-hidden="true">
+        <defs><mask id="lg-hole"><rect x="24" y="24" width="70" height="42" fill="#fff"/><path d="M44.2 38.6H68.4L73.9 44.6L68.4 50.6H44.2L38.7 44.6Z" fill="#000" stroke="#000" stroke-width="1.2" stroke-linejoin="round"/></mask></defs>
+        <g fill="currentColor" mask="url(#lg-hole)">
+          <path d="M45.8 26.8H67.8C72.5 26.8 76.2 30.5 76.2 35.2V54.6C76.2 59.3 72.5 63 67.8 63H45.8C41.1 63 37.4 59.3 37.4 54.6V35.2C37.4 30.5 41.1 26.8 45.8 26.8Z"/>
+          <rect x="27.8" y="38.2" width="57.6" height="12.8" rx="6.2"/>
+        </g>
+        <g fill="none" stroke="currentColor" stroke-width="5">
+          <ellipse cx="108.6" cy="45.2" rx="10.4" ry="7.95"/>
+          <path d="M132.6 55.6V37.6H144.2A4.7 3.95 0 0 1 144.2 45.5H132.6M141.4 45.6L149.3 55.6"/>
+          <path d="M162.6 37.6H171.4A7.6 7.75 0 0 1 171.4 53.1H162.6Z" stroke-linejoin="miter"/>
+        </g>
+        <path fill="currentColor" d="M190 35.1h5v20.5h-5zM200.9 35.1H206.6L213.9 50.7L221.1 35.1H226.8L216.8 55.6H210.9ZM239.1 35.1H244.6L254.6 55.6H249L247 51.4H236.3L234.3 55.6H228.8ZM238.4 47.4H245L241.7 40.4Z"/>
+        <circle cx="257.6" cy="37.4" r="2.9" fill="none" stroke="currentColor" stroke-width="1"/><circle cx="257.6" cy="37.4" r="1.15" fill="currentColor"/>
+      </svg>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav">
+        <li style="--x:0"><a href="#technology"><svg viewBox="0 0 15 15" aria-hidden="true"><path d="M7.5 0v15M0 7.5h15" stroke="currentColor" stroke-width="1.9"/></svg><span>Technology</span></a></li>
+        <li style="--x:179"><a href="#process"><svg viewBox="0 0 15 15" aria-hidden="true"><path d="M7.5 0v15M0 7.5h15" stroke="currentColor" stroke-width="1.9"/></svg><span>Process</span></a></li>
+        <li style="--x:329"><a href="#applications"><svg viewBox="0 0 15 15" aria-hidden="true"><path d="M7.5 0v15M0 7.5h15" stroke="currentColor" stroke-width="1.9"/></svg><span>Applications</span></a></li>
+        <li style="--x:520"><a href="#about"><svg viewBox="0 0 15 15" aria-hidden="true"><path d="M7.5 0v15M0 7.5h15" stroke="currentColor" stroke-width="1.9"/></svg><span>About</span></a></li>
+      </ul>
+    </nav>
+    <div class="act">
+      <button class="ibtn" type="button" aria-label="Search"><svg viewBox="0 0 25 25" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><circle cx="10.6" cy="10.6" r="7.4"/><path d="M16.2 16.2l5.6 5.6"/></svg></button>
+      <a class="cbtn" href="#contact"><span>Contact</span><svg viewBox="0 0 21 18" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 9h18M12 1.6L19.5 9 12 16.4"/></svg></a>
+      <button class="menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sheet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h12"/></svg></button>
+    </div>
+  </header>
+
+  <div class="copy">
+    <p class="eyebrow"><i aria-hidden="true"></i>Autonomous Lab System</p>
+    <h1><span class="l1">A New Rhythm of</span><span class="l2">Drug Discovery<span class="dot" aria-hidden="true"></span><span class="sr">.</span></span></h1>
+    <p class="lede">We engineer robotic laboratory environments that bring instruments, samples, and experiments together—moving scientific discovery forward with precision.</p>
+    <div class="ctas">
+      <a class="btn" href="#explore"><span>Explore ORDIVA</span><svg viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.6 10h20.6M13.4 1.8L22 10l-8.6 8.2"/></svg></a>
+      <a class="link" href="#how"><span>See how it works</span><svg viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="12.6" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M12 9.4v11.2l8.8-5.6z" fill="currentColor"/></svg></a>
+    </div>
+  </div>
+
+  <div class="stage">
+    <img class="robot" src="assets/c6e6d86c5c666a83.webp" alt="" width="1205" height="1305" decoding="sync" fetchpriority="high">
+    <a class="scroll" href="#technology"><span>Scroll down</span><svg viewBox="0 0 22 33" aria-hidden="true"><rect x="1.6" y="1.6" width="18.8" height="29.8" rx="9.4" fill="none" stroke="currentColor" stroke-width="2.2"/><g class="wheel" fill="currentColor"><path d="M8 9.4a3 3 0 0 1 6 0v4.6H8z"/><path d="M8 17.4h6v3.2a3 3 0 0 1-6 0z"/></g></svg></a>
+    <a class="video" href="#how" aria-label="Play video 1 of 4: automated pipetting">
+      <img src="assets/2d259a119c9ee49a.webp" alt="" decoding="async">
+      <span class="tint"></span><span class="glass"></span>
+      <svg class="play" viewBox="0 0 43 43" aria-hidden="true"><circle cx="21.5" cy="21.5" r="19.9" fill="rgba(255,255,255,.06)" stroke="#fff" stroke-width="3.1"/><path d="M17.4 13.3v16.6l13.2-8.3z" fill="#fff"/></svg>
+      <span class="count">01/04</span>
+      <span class="bar"><b></b></span>
+    </a>
+  </div>
+</section>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Menu">
+  <button class="sheet-close" type="button" aria-label="Close menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+  <a href="#technology"><svg viewBox="0 0 15 15"><path d="M7.5 0v15M0 7.5h15" stroke="currentColor" stroke-width="2"/></svg>Technology</a>
+  <a href="#process"><svg viewBox="0 0 15 15"><path d="M7.5 0v15M0 7.5h15" stroke="currentColor" stroke-width="2"/></svg>Process</a>
+  <a href="#applications"><svg viewBox="0 0 15 15"><path d="M7.5 0v15M0 7.5h15" stroke="currentColor" stroke-width="2"/></svg>Applications</a>
+  <a href="#about"><svg viewBox="0 0 15 15"><path d="M7.5 0v15M0 7.5h15" stroke="currentColor" stroke-width="2"/></svg>About</a>
+  <a class="cbtn" href="#contact">Contact <svg viewBox="0 0 21 18" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 9h18M12 1.6L19.5 9 12 16.4"/></svg></a>
+</div>
+
+<script>
+(function(){
+  var b=document.body,m=document.querySelector('.menu'),s=document.getElementById('sheet');
+  function set(o){b.classList.toggle('open',o);m.setAttribute('aria-expanded',o);if(o){s.querySelector('a').focus()}else{m.focus()}}
+  m.addEventListener('click',function(){set(true)});
+  s.querySelector('.sheet-close').addEventListener('click',function(){set(false)});
+  s.addEventListener('click',function(e){if(e.target.closest('a'))b.classList.remove('open')});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&b.classList.contains('open'))set(false)});
+})();
+</script>
+</body>
+</html>

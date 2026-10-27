@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-088/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FDFDFD">
+<title>Log in · Flexitee</title>
+<style>
+/* ---------- Embedded fonts (subset, variable) ---------- */
+@font-face{font-family:"Inter";src:url(assets/inter-variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:block}
+@font-face{font-family:"Newsreader";src:url(assets/newsreader-variable.woff2) format("woff2");font-weight:200 800;font-style:normal;font-display:block}
+
+/* ---------- Scale system ----------
+   Every measurement below is in reference pixels of the 1237 x 822 design (written as N_u).
+   --u is the size of one reference pixel on the current screen:
+   - desktop & tablet: the composition scales up uniformly with the viewport (aspect ratio preserved) and is
+     never drawn below true size (1px), so type and controls never shrink;
+   - below 416px the mobile architecture at the end of this sheet takes over (it does not scale anything down). */
+:root{
+  --fit: min(calc(100vw / 1237), calc(100vh / 822));
+  --u: max(var(--fit), 1px);
+
+  --page: #FDFDFD;
+  --ink: #000000;
+  --text-2: #2B2B2B;
+  --muted: #5E5E5E;
+  --subtle: #757575;
+  --line: #ECECEC;
+  --divider: #F2F2F2;
+  --btn-top: #313131;
+  --btn-bot: #242424;
+}
+@supports (height: 100svh){
+  :root{ --fit: min(calc(100vw / 1237), calc(100svh / 822)); }
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{background:var(--page);-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  background:var(--page);
+  color:var(--ink);
+  font-family:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-optical-sizing:none;
+  font-variation-settings:"opsz" 32;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+}
+button,input{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+
+/* ---------- Page shell: always exactly fills the screen, grows (scrolls) only if content needs it ---------- */
+.page{
+  position:relative;
+  min-height:100vh;
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  isolation:isolate;
+}
+/* decorative layer: the scene is intentionally wider than narrow screens (centre crop), so only this
+   layer clips; content never sits inside a clipping box */
+.backdrop{position:absolute;inset:0;overflow:hidden;z-index:-1;pointer-events:none}
+
+/* ---------- Scenery: bottom-anchored, full-bleed; never leaves a gap ---------- */
+.scene{
+  position:absolute;
+  left:50%;
+  bottom:0;
+  /* width-fit like the reference, but tall enough on portrait screens */
+  width:max(100%, 112vh);
+  aspect-ratio:1542 / 1020;
+  transform:translate(-50%, 0.611%);      /* reference: image overhangs the bottom edge by 5/818 */
+  z-index:-1;
+  pointer-events:none;
+}
+@supports (height: 100svh){ .scene{ width:max(100%, 112svh); } }
+.scene img{display:block;width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-drag:none}
+/* white mist measured off the reference: solid page colour down to 28.6% of the image, then a soft falloff */
+.scene::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(to bottom,
+    rgba(253,253,253,1) 0%,
+    rgba(253,253,253,1) 28.4%,
+    rgba(253,253,253,.62) 29.6%,
+    rgba(253,253,253,.47) 33%,
+    rgba(253,253,253,.38) 39%,
+    rgba(253,253,253,.30) 46%,
+    rgba(253,253,253,.18) 52%,
+    rgba(253,253,253,.08) 58%,
+    rgba(253,253,253,.02) 64%,
+    rgba(253,253,253,0) 70%,
+    rgba(253,253,253,.012) 100%);
+}
+/* viewport-anchored top haze: keeps the clean white header band on wide/short screens where the
+   scene is taller than the viewport. At the reference size it sits entirely inside the scene's own
+   solid band (ends at 29.6% = 243px of 822), so it changes nothing there. */
+.haze{
+  position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(to bottom, var(--page) 0%, var(--page) 21%, rgba(253,253,253,0) 29.6%);
+}
+/* page colour above the image (only visible on tall screens) */
+.page::before{content:"";position:absolute;inset:0;background:var(--page);z-index:-2}
+
+/* ---------- Top bar ---------- */
+.topbar{
+  position:absolute;top:0;left:0;right:0;
+  height:calc(67 * var(--u));
+  z-index:2;
+}
+.back{
+  position:absolute;left:max(calc(35.6 * var(--u)), env(safe-area-inset-left) + 12px);top:calc(23.7 * var(--u));
+  display:flex;align-items:center;gap:0;
+  height:calc(20 * var(--u));
+  font-size:calc(12.6 * var(--u));line-height:calc(20 * var(--u));font-weight:450;letter-spacing:calc(.33 * var(--u));
+  color:#363636;
+  border-radius:calc(6 * var(--u));
+}
+.back svg{width:calc(11 * var(--u));height:calc(9 * var(--u));margin-right:calc(8.6 * var(--u));flex:none;overflow:visible}
+.brand{
+  position:absolute;left:50%;top:calc(24 * var(--u));
+  margin-left:calc(-50.5 * var(--u));
+  display:flex;align-items:flex-start;
+  height:calc(21 * var(--u));
+  color:var(--ink);
+}
+.brand svg{width:calc(18 * var(--u));height:calc(21 * var(--u));flex:none;overflow:visible}
+.brand span{
+  margin-left:calc(5.4 * var(--u));
+  font-size:calc(20.6 * var(--u));line-height:calc(20 * var(--u));font-weight:440;letter-spacing:calc(-.28 * var(--u));
+  position:relative;top:calc(-1.5 * var(--u));
+}
+.support{
+  position:absolute;right:max(calc(30.3 * var(--u)), env(safe-area-inset-right) + 12px);top:calc(22.8 * var(--u));
+  height:calc(20 * var(--u));
+  font-size:calc(12.6 * var(--u));line-height:calc(20 * var(--u));font-weight:450;letter-spacing:calc(.43 * var(--u));
+  color:var(--text-2);
+  border-radius:calc(6 * var(--u));
+}
+@media (hover:hover){ .back:hover,.support:hover{color:var(--ink)} }
+
+/* ---------- Centre stage ---------- */
+.stage{
+  position:relative;z-index:1;
+  flex:1 0 auto;
+  display:flex;align-items:center;justify-content:center;
+  padding:calc(72 * var(--u)) 16px calc(70 * var(--u)); /* reference: card spans 199.5 → 624.5 of 822 */
+}
+
+/* ---------- Card (frosted white glass) ---------- */
+.card{
+  width:calc(375 * var(--u));
+  padding:calc(19 * var(--u)) calc(21 * var(--u)) calc(21 * var(--u)) calc(20 * var(--u));
+  border-radius:calc(15 * var(--u));
+  background:rgba(255,255,255,.965);
+  -webkit-backdrop-filter:blur(20px) saturate(140%);
+  backdrop-filter:blur(20px) saturate(140%);
+  box-shadow:
+    0 0 0 max(1px, calc(1 * var(--u))) rgba(0,0,0,.010),
+    0 0 calc(3 * var(--u)) rgba(0,0,0,.022),
+    0 calc(1 * var(--u)) calc(2 * var(--u)) rgba(0,0,0,.010),
+    0 calc(12 * var(--u)) calc(32 * var(--u)) rgba(15,23,12,.025);
+}
+.title{
+  margin:0;
+  font-family:"Newsreader",ui-serif,Georgia,"Times New Roman",serif;
+  font-optical-sizing:none;
+  font-variation-settings:"opsz" 16;
+  font-size:calc(24.2 * var(--u));line-height:calc(30 * var(--u));font-weight:390;letter-spacing:calc(.37 * var(--u));
+  position:relative;top:calc(-1.1 * var(--u));
+  color:var(--ink);
+}
+.subtitle{
+  margin:calc(3.75 * var(--u)) 0 0;
+  font-size:calc(13 * var(--u));line-height:calc(18 * var(--u));font-weight:400;letter-spacing:calc(.2 * var(--u));
+  color:#7C7C7C;
+}
+.social{
+  margin-top:calc(28.25 * var(--u));
+  display:grid;grid-template-columns:repeat(3,1fr);gap:calc(9 * var(--u));
+}
+.social button{
+  height:calc(32 * var(--u));
+  display:flex;align-items:center;justify-content:center;
+  background:#fff;
+  border:max(1px, calc(1 * var(--u))) solid var(--line);
+  border-radius:calc(6 * var(--u));
+  box-shadow:0 calc(1 * var(--u)) calc(1.5 * var(--u)) rgba(0,0,0,.025);
+  cursor:pointer;padding:0;
+  transition:background-color .15s ease,border-color .15s ease;
+}
+@media (hover:hover){ .social button:hover{background:#FAFAFA;border-color:#E2E2E2} }
+.social svg{display:block;overflow:visible}
+.ico-x{width:calc(14 * var(--u));height:calc(14 * var(--u))}
+.ico-apple{width:calc(12.2 * var(--u));height:calc(15 * var(--u))}
+.ico-g{width:calc(16 * var(--u));height:calc(16 * var(--u))}
+
+.divider{
+  margin-top:calc(18.5 * var(--u));height:calc(20 * var(--u));
+  display:flex;align-items:center;justify-content:center;
+}
+.divider i{
+  display:block;width:calc(102 * var(--u));height:max(1px, calc(1 * var(--u)));
+  background:linear-gradient(to right, rgba(242,242,242,0), var(--divider) calc(5 * var(--u)), var(--divider) calc(100% - calc(4 * var(--u))), rgba(242,242,242,0));
+}
+.divider span{
+  margin:0 calc(14 * var(--u));
+  font-size:calc(11.6 * var(--u));line-height:calc(20 * var(--u));color:#626262;
+  position:relative;top:calc(-.6 * var(--u));
+}
+
+.field{display:block}
+.field + .field{margin-top:calc(12.6 * var(--u))}
+.label{
+  display:block;margin-top:calc(17.1 * var(--u));
+  font-size:calc(11.6 * var(--u));line-height:calc(16 * var(--u));font-weight:400;letter-spacing:0;
+  color:#636363;
+  position:relative;top:calc(.3 * var(--u));
+}
+.field + .field .label{margin-top:0}
+.input{
+  display:block;width:100%;
+  height:calc(32 * var(--u));margin-top:calc(5.4 * var(--u));
+  padding:0 calc(11 * var(--u));
+  font-size:calc(13 * var(--u));color:var(--ink);
+  background:#fff;
+  border:max(1px, calc(1 * var(--u))) solid var(--line);
+  border-radius:calc(6 * var(--u));
+  box-shadow:0 calc(1 * var(--u)) calc(1.5 * var(--u)) rgba(0,0,0,.02);
+  outline:none;
+  transition:border-color .15s ease, box-shadow .15s ease;
+}
+@media (hover:hover){ .input:hover{border-color:#E1E1E1} }
+.input:focus{border-color:#BDBDBD;box-shadow:0 0 0 calc(3 * var(--u)) rgba(0,0,0,.05)}
+
+.primary{
+  display:flex;align-items:center;justify-content:center;
+  width:100%;height:calc(32 * var(--u));margin-top:calc(27 * var(--u));
+  border:max(1px, calc(1 * var(--u))) solid #1A1A1A;
+  border-radius:calc(6 * var(--u));
+  background:linear-gradient(to bottom, var(--btn-top), var(--btn-bot));
+  box-shadow:inset 0 max(1px, calc(1 * var(--u))) 0 rgba(255,255,255,.13), 0 calc(1 * var(--u)) calc(2 * var(--u)) rgba(0,0,0,.08);
+  color:#fff;
+  font-size:calc(13.6 * var(--u));line-height:calc(20 * var(--u));font-weight:500;letter-spacing:calc(-.2 * var(--u));
+  cursor:pointer;padding:0;
+  transition:filter .15s ease;
+}
+@media (hover:hover){ .primary:hover{filter:brightness(1.12)} }
+.primary:active{filter:brightness(.95)}
+
+.foot{
+  margin:calc(20.3 * var(--u)) 0 0;
+  text-align:center;
+  font-size:calc(13 * var(--u));line-height:calc(18 * var(--u));letter-spacing:calc(.2 * var(--u));
+  color:#565656;
+}
+.foot a{color:#2E2E2E;font-weight:450}
+@media (hover:hover){ .foot a:hover{text-decoration:underline;text-underline-offset:calc(2 * var(--u))} }
+
+:focus-visible{outline:2px solid #1F1F1F;outline-offset:2px}
+.input:focus-visible{outline:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* =====================================================================================
+   RESPONSIVE LAYERS
+   Desktop and tablet share the measured architecture above, untouched. Analysis showed it
+   holds from 2560px wide down to 416px (card at true size, fits the viewport on every
+   tablet in both orientations), so there is no tablet breakpoint.
+   Two content-driven layers follow, plus touch provisions that change no pixels.
+   ===================================================================================== */
+
+/* ---------- Touch provisions for the desktop/tablet architecture (no visual change) ----------
+   Hit areas grow to ~44px with invisible pseudo-elements; input text uses 16px so iOS
+   does not zoom the page on focus (the fields are empty until typed into). */
+@media (pointer: coarse){
+  .input{font-size:16px}
+  .social button,.primary{position:relative}
+  .social button::after,.primary::after{content:"";position:absolute;inset:-6px -2px}
+  .back::after,.support::after{content:"";position:absolute;inset:-12px -8px}
+}
+
+/* ---------- Mobile (portrait phones) ----------
+   Breaks at 416px: below it the 375px card can no longer keep 20px side gutters.
+   Same card, same components, same order; true-size type, 44px touch targets, fluid gutters. */
+@media (max-width: 415.98px){
+  :root{
+    --u: 1px;
+    --gutter: clamp(14px, 4.4vw, 20px);
+  }
+
+  /* header: same three items in one row, logo centred; the side tracks never shrink below
+     their content, so on the narrowest phones the logo yields a few px instead of colliding */
+  .topbar{
+    height:auto;
+    display:grid;
+    grid-template-columns:minmax(max-content,1fr) auto minmax(max-content,1fr);
+    align-items:center;
+    column-gap:10px;
+    padding:calc(16px + env(safe-area-inset-top)) max(var(--gutter), env(safe-area-inset-right)) 0 max(var(--gutter), env(safe-area-inset-left));
+  }
+  .back,.brand,.support{position:relative;inset:auto;margin:0}
+  .back{justify-self:start;font-size:13px;letter-spacing:.2px}
+  .brand{justify-self:center}
+  .support{justify-self:end;font-size:13px;letter-spacing:.2px;white-space:nowrap}
+  .back::after,.support::after{content:"";position:absolute;inset:-12px -8px}   /* 44px tap height */
+
+  .stage{
+    padding:calc(60px + env(safe-area-inset-top)) max(var(--gutter), env(safe-area-inset-right))
+            calc(var(--gutter) + env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left));
+  }
+
+  .card{width:100%;padding:22px clamp(16px, 5vw, 20px)}
+  .title{font-size:clamp(22px, 6.2vw, 24.2px);line-height:1.24;letter-spacing:.3px;top:0}
+  .subtitle{margin-top:4px;font-size:13.5px;line-height:19px;letter-spacing:.15px}
+
+  .social{margin-top:24px;gap:8px}               /* stays three-across: icon buttons need no more width */
+  .social button{height:44px}
+  .ico-x{width:16px;height:16px}
+  .ico-apple{width:13.8px;height:17px}
+  .ico-g{width:18px;height:18px}
+
+  .divider{margin-top:18px}
+  .divider i{width:auto;flex:0 1 102px}
+  .divider span{font-size:12px;top:0}
+
+  .label{margin-top:16px;font-size:12.5px;line-height:17px;top:0}
+  .field + .field{margin-top:14px}
+  .input{height:44px;margin-top:6px;padding:0 12px;font-size:16px}
+  .primary{height:44px;margin-top:22px;font-size:14.5px;letter-spacing:-.1px}
+
+  .foot{margin-top:18px;font-size:13.5px;line-height:20px;letter-spacing:.1px}
+}
+
+/* ---------- Phones in landscape ----------
+   Height-driven: the stacked card plus header needs ~566px, these screens have 340–440px.
+   The same card re-flows into two columns (identity + social sign-in | email form), split by
+   the same "or" divider turned vertical, so it fits without scrolling. Touch devices only,
+   so a short desktop browser window keeps the locked desktop layout. */
+@media (pointer: coarse) and (orientation: landscape) and (max-height: 499.98px) and (min-width: 540px){
+  .stage{
+    padding:52px max(16px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  }
+  .card{
+    width:min(100%, 680px);
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto minmax(0,1.08fr);
+    grid-template-rows:auto auto 1fr auto;
+  }
+  .title{grid-column:1;grid-row:1}
+  .subtitle{grid-column:1;grid-row:2}
+  .social{grid-column:1;grid-row:3;align-self:end;margin-top:20px}   /* aligns with the email button row */
+  .divider{
+    grid-column:2;grid-row:1 / 5;
+    flex-direction:column;height:auto;margin:0 22px;
+  }
+  .divider i{width:max(1px, calc(1 * var(--u)));height:auto;flex:1 1 0;
+    background:linear-gradient(to bottom, rgba(242,242,242,0), var(--divider) 10px, var(--divider) calc(100% - 10px), rgba(242,242,242,0))}
+  .divider span{margin:8px 0;top:0}
+  form{grid-column:3;grid-row:1 / 4}
+  .field:first-child .label{margin-top:0}
+  .foot{grid-column:3;grid-row:4;margin-top:14px}
+  .social button,.input,.primary{height:40px}
+  .primary{margin-top:20px}
+}
+
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="backdrop" aria-hidden="true">
+    <div class="scene"><img src="assets/landscape.webp" alt="" decoding="async"></div>
+    <div class="haze"></div>
+  </div>
+
+  <header class="topbar">
+    <a class="back" href="#" onclick="history.length>1&&history.back();return false;">
+      <svg viewBox="0 0 11 9" aria-hidden="true"><path d="M10.4 4.6H.9M4.65.85.9 4.6l3.75 3.75" fill="none" stroke="#7A7A7A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back
+    </a>
+    <a class="brand" href="#" aria-label="Flexitee home">
+      <svg viewBox="0 0 18 21" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4.56 12.4A6.25 6.25 0 1 1 13.44 12.4"/>
+        <path d="M4.56 12.4 9 8.55l4.44 3.85"/>
+        <ellipse cx="9" cy="16.55" rx="7.25" ry="2.45"/>
+      </svg>
+      <span>Flexitee</span>
+    </a>
+    <a class="support" href="#">Contact support</a>
+  </header>
+
+  <main class="stage">
+    <section class="card" aria-labelledby="t">
+      <h1 class="title" id="t">Log in to Flexitee</h1>
+      <p class="subtitle">Your tee time starts here</p>
+
+      <div class="social">
+        <button type="button" aria-label="Continue with X">
+          <svg class="ico-x" viewBox="0 1.153 24 21.693" preserveAspectRatio="none" aria-hidden="true"><path fill="#000" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+        </button>
+        <button type="button" aria-label="Continue with Apple">
+          <svg class="ico-apple" viewBox="2.225 0 19.55 24" aria-hidden="true"><path fill="#000" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
+        </button>
+        <button type="button" aria-label="Continue with Google">
+          <svg class="ico-g" viewBox="1 1 22 22" aria-hidden="true">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="divider" role="separator"><i></i><span>or</span><i></i></div>
+
+      <form onsubmit="return false" novalidate>
+        <label class="field"><span class="label">Email address</span><input class="input" type="email" name="email" autocomplete="email" inputmode="email"></label>
+        <label class="field"><span class="label">Password</span><input class="input" type="password" name="password" autocomplete="current-password"></label>
+        <button class="primary" type="submit">Continue with Email</button>
+      </form>
+
+      <p class="foot">Don’t have an account? <a href="#">Sign up</a></p>
+    </section>
+  </main>
+</div>
+</body>
+</html>

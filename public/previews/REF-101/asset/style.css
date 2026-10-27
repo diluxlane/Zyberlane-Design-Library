@@ -1,0 +1,524 @@
+@font-face{font-family:"Inter";font-style:normal;font-weight:300;font-display:swap;src:url(./inter-300.woff2) format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:400;font-display:swap;src:url(./inter-400.woff2) format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:500;font-display:swap;src:url(./inter-500.woff2) format("woff2");}
+@font-face{font-family:"Inter";font-style:normal;font-weight:600;font-display:swap;src:url(./inter-600.woff2) format("woff2");}
+
+
+/* =====================================================================
+   DESIGN TOKENS
+   Reference frame: 842 × 565 (two 421-wide panels).
+   Every length is expressed in reference pixels × var(--u), where --u is
+   the size of one reference pixel on the current viewport.
+   ===================================================================== */
+:root{
+  --u: min(calc(100vw / 842), calc(100vh / 565));
+  --su: var(--u);                         /* showcase unit (split mode = same) */
+
+  --bg-auth:      #090909;
+  --surface:      #111111;
+  --border:       rgba(255,255,255,.065);  /* ≈ #191919 on #090909 */
+  --border-input: rgba(255,255,255,.07);   /* ≈ #1a1a1a */
+  --divider:      rgba(255,255,255,.05);   /* ≈ #161616 */
+  --text:         #fafafa;
+  --text-2:       #dedede;
+  --text-sub:     #c9c9c9;
+  --text-muted:   #b9b9b9;
+  --placeholder:  #4d4d4d;
+  --or:           #6b6b6b;
+  --disabled-txt: #3b3b3b;
+  --link:         #aba6c2;
+  --brand:        #a494f9;
+  --brand-ink:    #0a0820;
+  --font: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+@supports (height: 100dvh){
+  :root{ --u: min(calc(100vw / 842), calc(100dvh / 565)); }
+}
+
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+html,body{ height:100%; background:var(--bg-auth); }
+body{
+  font-family:var(--font);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+  font-feature-settings:"cv11","ss01" 0;
+  overflow:hidden;
+}
+button,input,select{ font:inherit; color:inherit; background:none; border:0; outline:0; }
+a{ color:inherit; }
+.sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+/* =====================================================================
+   PAGE: two full-bleed panels, no letterboxing.
+   Panels always fill the viewport; only the content inside is scaled.
+   ===================================================================== */
+.page{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  width:100vw;
+  height:100vh;
+  height:100dvh;
+}
+.panel{ position:relative; overflow:hidden; min-width:0; }
+
+/* ---------------------------- LEFT: AUTH ---------------------------- */
+.auth{ background:var(--bg-auth); }
+
+.brand{
+  position:absolute;
+  top:calc(20 * var(--u));
+  left:calc(13 * var(--u));
+  display:flex; align-items:center;
+  gap:calc(6.6 * var(--u));
+  text-decoration:none;
+}
+.brand svg{ width:calc(18 * var(--u)); height:calc(20 * var(--u)); display:block; flex:none; }
+.brand-word{
+  font-size:calc(17.4 * var(--u));
+  line-height:1;
+  letter-spacing:-.03em;
+  white-space:nowrap;
+  font-weight:600;
+}
+.brand-word span{ font-weight:300; letter-spacing:-.01em; }
+
+.lang{
+  position:absolute;
+  top:calc(17.3 * var(--u));
+  right:calc(20 * var(--u));
+  width:calc(76 * var(--u));
+  height:calc(25 * var(--u));
+}
+.lang select{
+  -webkit-appearance:none; appearance:none;
+  width:100%; height:100%;
+  padding:0 0 0 calc(9 * var(--u));
+  border:1px solid rgba(255,255,255,.085);
+  border-radius:calc(4.5 * var(--u));
+  background:var(--bg-auth);
+  font-size:calc(8.0 * var(--u));
+  font-weight:500;
+  color:#f2f2f2;
+  cursor:pointer;
+  transition:border-color .15s ease, background-color .15s ease;
+}
+@media (hover: hover){ .lang select:hover{ border-color:rgba(255,255,255,.14); } }
+.lang select:focus-visible{ border-color:var(--brand); box-shadow:0 0 0 calc(2*var(--u)) rgba(165,150,242,.25); }
+.lang select option{ background:#111; color:#eee; }
+.lang svg{
+  position:absolute; pointer-events:none;
+  right:calc(12 * var(--u)); top:50%;
+  width:calc(7 * var(--u)); height:calc(5 * var(--u));
+  transform:translateY(-45%);
+}
+
+/* The form block is a fixed 226 × 330 reference box, centred on the panel
+   with the same offset it has in the reference (5px left, 43.5px low). */
+.form{
+  position:absolute;
+  width:calc(226 * var(--u));
+  height:calc(330 * var(--u));
+  left:calc(50% - 117.5 * var(--u));
+  top:calc(50% - 122.5 * var(--u));     /* ref y = 160 */
+}
+.form > *{ position:absolute; left:0; }
+.t{ line-height:1; white-space:nowrap; }
+
+.title{ top:calc(3.0 * var(--u)); font-size:calc(18.6 * var(--u)); font-weight:500; letter-spacing:-.02em; color:var(--text); }
+.subtitle{ top:calc(29.7 * var(--u)); font-size:calc(8.6 * var(--u)); font-weight:400; letter-spacing:-.03em; color:var(--text-sub); }
+
+.btn{
+  width:100%;
+  height:calc(28.6 * var(--u));
+  display:flex; align-items:center; justify-content:center;
+  border-radius:calc(4.5 * var(--u));
+  background:var(--surface);
+  border:1px solid var(--border);
+  font-size:calc(9.35 * var(--u));
+  font-weight:500;
+  letter-spacing:-.025em;
+  color:var(--text-2);
+  cursor:pointer;
+  transition:background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+@media (hover: hover){ .btn:hover{ background:#161616; border-color:rgba(255,255,255,.1); } }
+.btn:focus-visible{ border-color:var(--brand); box-shadow:0 0 0 calc(2*var(--u)) rgba(165,150,242,.25); }
+.btn svg{ display:block; flex:none; }
+.btn-google{ top:calc(58 * var(--u)); gap:calc(7.2 * var(--u)); padding-right:calc(1 * var(--u)); }
+.btn-google svg{ width:calc(16.6 * var(--u)); height:calc(16.6 * var(--u)); margin-top:calc(-1.6 * var(--u)); }
+.btn-apple{ top:calc(95.4 * var(--u)); gap:calc(7.6 * var(--u)); }
+.btn-apple svg{ width:calc(12 * var(--u)); height:calc(15 * var(--u)); margin-top:calc(-.2 * var(--u)); }
+
+.or{
+  top:calc(137.6 * var(--u));
+  width:100%;
+  display:flex; align-items:center;
+  gap:calc(6 * var(--u));
+  font-size:calc(8.9 * var(--u));
+  line-height:1;
+  letter-spacing:.02em;
+  color:var(--or);
+}
+.or::before,.or::after{ content:""; flex:1; height:1px; background:var(--divider); }
+
+.label{ font-size:calc(8.8 * var(--u)); font-weight:500; letter-spacing:-.03em; color:#ededed; }
+.label-email{ top:calc(161.6 * var(--u)); }
+.label-pass{ top:calc(216.5 * var(--u)); }
+.forgot{
+  left:auto; right:0;
+  top:calc(216.4 * var(--u));
+  font-size:calc(8.9 * var(--u));
+  letter-spacing:-.015em;
+  color:#c9c4de;
+  text-decoration:underline;
+  text-underline-offset:calc(1.6 * var(--u));
+  text-decoration-thickness:1px;
+  text-decoration-color:rgba(201,196,222,.7);
+  transition:color .15s ease;
+}
+@media (hover: hover){ .forgot:hover{ color:#d6d0f5; } }
+
+.field{
+  width:100%;
+  height:calc(28.8 * var(--u));
+  border:1px solid var(--border-input);
+  border-radius:calc(4.5 * var(--u));
+  background:#080808;
+  transition:border-color .15s ease, box-shadow .15s ease;
+}
+.field:focus-within{ border-color:rgba(165,150,242,.55); box-shadow:0 0 0 calc(2*var(--u)) rgba(165,150,242,.12); }
+.field-email{ top:calc(175 * var(--u)); }
+.field-pass{ top:calc(229.3 * var(--u)); }
+.field input{
+  width:100%; height:100%;
+  padding:0 calc(7.6 * var(--u));
+  font-size:calc(8.8 * var(--u));
+  letter-spacing:-.015em;
+  color:#ededed;
+  caret-color:var(--brand);
+}
+.field-pass input{ padding-right:calc(30 * var(--u)); }
+.field input::placeholder{ color:var(--placeholder); opacity:1; }
+.field input:-webkit-autofill{ -webkit-text-fill-color:#ededed; box-shadow:0 0 0 100px #080808 inset; }
+.eye{
+  position:absolute; right:calc(4.5 * var(--u)); top:50%;
+  width:calc(20 * var(--u)); height:calc(20 * var(--u));
+  transform:translateY(-50%);
+  display:grid; place-items:center;
+  color:#ababab; cursor:pointer; border-radius:calc(3*var(--u));
+}
+@media (hover: hover){ .eye:hover{ color:#cfcfcf; } }
+.eye svg{ width:calc(11.5 * var(--u)); height:calc(9 * var(--u)); display:block; }
+.eye .slash{ opacity:0; transition:opacity .15s; }
+.eye[aria-pressed="true"] .slash{ opacity:1; }
+
+.btn-login{ top:calc(278 * var(--u)); font-size:calc(9.7 * var(--u)); font-weight:400; color:var(--disabled-txt); cursor:not-allowed; }
+@media (hover: hover){ .btn-login:hover{ background:var(--surface); border-color:var(--border); } }
+.btn-login.ready{ background:var(--brand); border-color:transparent; color:var(--brand-ink); font-weight:500; cursor:pointer; }
+@media (hover: hover){ .btn-login.ready:hover{ background:#b3a6f6; } }
+
+.signup{
+  top:calc(318.0 * var(--u));
+  width:100%; text-align:center;
+  font-size:calc(8.75 * var(--u));
+  letter-spacing:-.02em;
+  color:var(--text-muted);
+}
+.signup a{
+  margin-left:calc(2.2*var(--u));
+  color:var(--link);
+  text-decoration:underline;
+  text-underline-offset:calc(1.6 * var(--u));
+  text-decoration-thickness:1px;
+}
+@media (hover: hover){ .signup a:hover{ color:#d6d0f5; } }
+
+/* -------------------------- RIGHT: SHOWCASE ------------------------- */
+.showcase{
+  background:
+    linear-gradient(180deg,
+      #000000 0%, #000000 18%, #010101 27%, #020204 36%, #030306 43%,
+      #050407 50%, #060508 57%, #07060b 65%, #08070c 72%,
+      #09080e 79%, #0a0911 86%, #0b0a12 93%, #0c0a12 100%);
+}
+/* soft violet floor glow */
+.showcase::after{
+  content:""; position:absolute; inset:auto 0 0 0; height:45%;
+  background:radial-gradient(120% 90% at 50% 100%, rgba(60,48,120,.035), rgba(60,48,120,0) 70%);
+  pointer-events:none;
+}
+.stage{
+  position:absolute;
+  width:calc(421 * var(--su));
+  height:calc(565 * var(--su));
+  left:calc(50% - 210.5 * var(--su));
+  top:calc(50% - 282.5 * var(--su));
+  z-index:1;
+}
+.headline{
+  position:absolute; left:0; right:0;
+  top:calc(88.2 * var(--su));
+  text-align:center;
+  font-size:calc(30.6 * var(--su));
+  line-height:calc(37.6 * var(--su));
+  font-weight:500;
+  letter-spacing:-.058em;
+  padding-left:calc(6 * var(--su));
+}
+.headline{
+  /* one continuous vertical luminance ramp across both lines (sampled: 244 → 60) */
+  background:linear-gradient(180deg, #f4f4f4 0%, #3c3c3c 100%);
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent;
+}
+.headline .l1{ display:block; }
+.headline .l2{ display:block; letter-spacing:-.066em; }
+
+.join{
+  position:absolute;
+  left:calc(286 * var(--su));
+  top:calc(181 * var(--su));
+  text-decoration:none;
+}
+.join .cursor{
+  position:absolute; left:0; top:0;
+  width:calc(17.5 * var(--su)); height:calc(13.5 * var(--su));
+  display:block;
+}
+.join .pill{
+  position:absolute;
+  left:calc(12 * var(--su));
+  top:calc(7 * var(--su));
+  width:calc(57 * var(--su));
+  height:calc(23 * var(--su));
+  display:grid; place-items:center;
+  border-radius:calc(5 * var(--su));
+  background:var(--brand);
+  color:var(--brand-ink);
+  font-size:calc(10.4 * var(--su));
+  font-weight:500;
+  letter-spacing:-.02em;
+  white-space:nowrap;
+  line-height:1;
+  padding-top:calc(1.6 * var(--su));
+  transition:background-color .15s ease, transform .2s ease;
+}
+@media (hover: hover){ .join:hover .pill{ background:#b5a9f7; } }
+.join:focus-visible .pill{ box-shadow:0 0 0 calc(2*var(--su)) rgba(165,150,242,.35); }
+
+.scene{
+  position:absolute; left:0; top:0;
+  width:calc(421 * var(--su));
+  height:calc(1200 * var(--su));        /* cube & guides run past the fold */
+  display:block;
+  pointer-events:none;
+}
+
+/* header & body wrappers are transparent to layout in the split
+   architectures (desktop, tablet); the mobile architecture gives them flow. */
+.auth-head,.auth-body{ display:contents; }
+
+/* =====================================================================
+   RESPONSIVE ARCHITECTURE
+   ---------------------------------------------------------------------
+   Every breakpoint below is derived from the design, not from devices.
+
+   Readability floor  U_MIN = 1.25px per reference px
+     → smallest copy (subtitle 8.6u / labels 8.8u) ≈ 11px,
+       controls (28u) ≈ 35px tall.
+   The desktop split scales by u = min(vw/842, vh/565); width-driven u
+   drops under U_MIN below 842 × 1.25 = 1053px → that is where the
+   desktop architecture stops working.
+
+   Auth column needs  235u wide (form 226 + centring offset) + 2×24 gutter
+                      430u tall (header + form + breathing room)
+     at U_MIN → 684px wide (two columns), 538px tall.
+   The one-screen portrait stack must never be less readable than the
+   scrolling phone layout (which floors at 1.4u), so it needs
+     430 × 1.4 = 602px for auth + ≥ 300px band (headline ≥ 22px) = 902px,
+     235 × 1.4 + 48 = 377px wide.
+
+   DESKTOP  (base, locked)   landscape, ≥1053 wide, ≥481 tall
+   TABLET · split            landscape, 684–1052 wide, ≥538 tall
+   TABLET · stacked          portrait, ≥377 wide, ≥902 tall
+   MOBILE · stacked          portrait that cannot hold both in one screen
+   MOBILE · split-scroll     landscape too short / narrow for TABLET
+   ===================================================================== */
+
+/* ---------- TABLET · split ------------------------------------------
+   Same composition as desktop. The showcase keeps scaling exactly like
+   desktop; only the auth column stops shrinking at U_MIN, so the form
+   stays readable and tappable. Continuous with desktop at 1053px. */
+@media (min-aspect-ratio: 1/1) and (min-width: 684px) and (max-width: 1052.98px) and (min-height: 538px){
+  .auth{
+    container-type:size;
+    --u: min(1.25px, calc((100cqw - 48px) / 235), calc(100cqh / 430));
+  }
+}
+
+/* ---------- TABLET · stacked ----------------------------------------
+   Portrait: the split turns 90°. Auth keeps the top of the screen, the
+   showcase becomes a full-bleed band along the bottom edge (its column
+   still runs off the edge, as on desktop). One screen, no scrolling. */
+@media (max-aspect-ratio: 999/1000) and (min-width: 377px) and (min-height: 902px){
+  .page{
+    grid-template-columns:minmax(0,1fr);
+    grid-template-rows:minmax(0,1fr) clamp(300px, 42vh, 100vh - 602px);
+    grid-template-rows:minmax(0,1fr) clamp(300px, 42dvh, 100dvh - 602px);
+  }
+  .auth{
+    container-type:size;
+    --u: min(1.5px, calc((100cqw - 48px) / 235), calc(100cqh / 430));
+  }
+  .showcase{
+    container-type:size;
+    --su: min(calc(100cqw / 421), calc(100cqh / 432));
+  }
+  /* frame the 56→488 slice of the stage (headline → orbit) in the band */
+  .stage{ top:calc(50% - 272 * var(--su)); }
+}
+
+/* ---------- MOBILE · shared -----------------------------------------
+   The form no longer fits beside/above the showcase at a readable size,
+   so the page scrolls: header + form own the first screen. */
+@media (max-aspect-ratio: 999/1000) and (max-height: 901.98px),
+       (max-aspect-ratio: 999/1000) and (max-width: 376.98px),
+       (min-aspect-ratio: 1/1) and (max-height: 480.98px),
+       (min-aspect-ratio: 1/1) and (max-width: 1052.98px) and (max-height: 537.98px),
+       (min-aspect-ratio: 1/1) and (max-width: 683.98px){
+  body{ overflow:auto; }
+  .page{ width:100%; height:auto; min-height:100vh; min-height:100svh; }
+  .auth{
+    min-height:100vh; min-height:100svh;
+    display:flex; flex-direction:column;
+    padding:
+      max(calc(18 * var(--u)), env(safe-area-inset-top))
+      var(--g)
+      max(calc(24 * var(--u)), env(safe-area-inset-bottom))
+      max(var(--g), env(safe-area-inset-left));
+  }
+  .auth-head{ display:flex; align-items:center; justify-content:space-between; flex:none; }
+  .brand{ position:static; }
+  .lang{ position:relative; top:auto; right:auto; flex:none; }
+  .auth-body{ display:flex; flex:1; align-items:center; justify-content:center; padding-block:calc(24 * var(--u)); }
+  .form{ position:relative; left:auto; top:auto; width:min(calc(226 * var(--u)), 100%); }
+  .stage{ top:calc(50% - 272 * var(--su)); }
+}
+
+/* ---------- MOBILE · stacked (portrait) -----------------------------
+   Form sized to the phone (fills the column between gutters, text 12.6–
+   14.4px, 40–45px controls); showcase follows as a full-bleed band. */
+@media (max-aspect-ratio: 999/1000) and (max-height: 901.98px),
+       (max-aspect-ratio: 999/1000) and (max-width: 376.98px){
+  .page{ display:flex; flex-direction:column; }
+  .auth{
+    --g: clamp(16px, 5.2vw, 32px);
+    --u: clamp(1.4px, calc((100vw - 2 * var(--g)) / 226), 1.6px);
+  }
+  .showcase{
+    flex:none;
+    --su: min(calc(100vw / 421), 1.5px);
+    height:calc(432 * var(--su));
+  }
+}
+
+/* ---------- MOBILE · split-scroll (landscape) -----------------------
+   Keeps the desktop's side-by-side identity: the auth column scrolls,
+   the showcase stays pinned beside it for the full screen height. */
+@media (min-aspect-ratio: 1/1) and (max-height: 480.98px),
+       (min-aspect-ratio: 1/1) and (max-width: 1052.98px) and (max-height: 537.98px),
+       (min-aspect-ratio: 1/1) and (max-width: 683.98px){
+  .page{ align-items:start; }
+  .auth{
+    --g: clamp(16px, 3vw, 28px);
+    --u: clamp(1.25px, calc((50vw - 2 * var(--g)) / 226), 1.5px);
+  }
+  .showcase{
+    position:sticky; top:0;
+    height:100vh; height:100dvh;
+    container-type:size;
+    --su: min(calc(100cqw / 421), calc(100cqh / 432));
+  }
+}
+
+/* ---------- touch ----------------------------------------------------
+   Invisible hit-slop on the small targets (no visual change), and 16px
+   input text so iOS doesn't zoom the page when a field is focused. */
+@media (pointer: coarse){
+  .signup a{ position:relative; }
+  .eye::after,.join .pill::after,.forgot::after,.signup a::after{ content:""; position:absolute; inset:-8px -6px; }
+}
+@media (hover: none) and (pointer: coarse){
+  .field input{ font-size:max(16px, calc(8.8 * var(--u))); }
+}
+
+/* One first-load entrance. The authored layout is the resting frame.
+   Backwards fill holds each opening pose through its delay; when an
+   animation ends, its styles fall away completely. */
+@media (prefers-reduced-motion: no-preference){
+  @keyframes entry-type{
+    from{ opacity:0; transform:translateY(var(--entry-rise)); clip-path:inset(0 0 100% 0); }
+    to{ opacity:1; transform:none; clip-path:inset(0); }
+  }
+  @keyframes entry-soft{
+    from{ opacity:0; transform:translateY(var(--entry-rise)); }
+    to{ opacity:1; transform:none; }
+  }
+  @keyframes entry-control{
+    from{ opacity:0; transform:translateY(var(--entry-rise)) scale(.985); }
+    to{ opacity:1; transform:none; }
+  }
+  @keyframes entry-scene{
+    from{ opacity:0; transform:translateY(calc(12 * var(--su))); }
+    to{ opacity:1; transform:none; }
+  }
+
+  .brand,.lang,.subtitle,.or,.label-email,.label-pass,.forgot,.signup,.join{
+    --entry-rise:calc(5 * var(--u));
+    animation:entry-soft .48s cubic-bezier(.22,1,.36,1) backwards;
+  }
+  .brand{ animation-delay:.06s; }
+  .lang{ animation-delay:.14s; }
+  .subtitle{ animation-delay:.38s; }
+  .or{ animation-delay:.83s; }
+  .label-email{ animation-delay:.91s; }
+  .label-pass,.forgot{ animation-delay:1.07s; }
+  .signup{ animation-delay:1.39s; }
+
+  .title,.headline{
+    --entry-rise:calc(9 * var(--u));
+    animation:entry-type .78s cubic-bezier(.22,1,.36,1) backwards;
+  }
+  .title{ animation-delay:.18s; }
+  .headline{
+    --entry-rise:calc(10 * var(--su));
+    animation-duration:.9s;
+    animation-delay:.34s;
+  }
+
+  .btn-google,.btn-apple,.field-email,.field-pass,.btn-login{
+    --entry-rise:calc(7 * var(--u));
+    animation:entry-control .62s cubic-bezier(.22,1,.36,1) backwards;
+  }
+  .btn-google{ animation-delay:.53s; }
+  .btn-apple{ animation-delay:.63s; }
+  .field-email{ animation-delay:.95s; }
+  .field-pass{ animation-delay:1.11s; }
+  .btn-login{ animation-delay:1.25s; }
+
+  .scene{ animation:entry-scene 1.05s cubic-bezier(.22,1,.36,1) .63s backwards; }
+  .join{
+    --entry-rise:calc(5 * var(--su));
+    animation-delay:1.15s;
+    animation-duration:.56s;
+  }
+}
+
+/* The showcase begins below the opening viewport in the scrolling phone
+   layout, so it is already in its final state when the user reaches it. */
+@media (prefers-reduced-motion: no-preference) and (max-aspect-ratio: 999/1000) and (max-height: 901.98px),
+       (prefers-reduced-motion: no-preference) and (max-aspect-ratio: 999/1000) and (max-width: 376.98px){
+  .headline,.scene,.join{ animation:none; }
+}

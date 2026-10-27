@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-155/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Voicelab Login</title>
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+<script>
+  // Set before first paint. With JavaScript disabled, the page stays visible.
+  if (window.matchMedia && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('entry-intro');
+  }
+</script>
+<style>
+@font-face{font-family:"Figtree";font-weight:500;font-display:block;src:url(assets/fonts/figtree-500.woff2) format("woff2")}
+@font-face{font-family:"Figtree";font-weight:600;font-display:block;src:url(assets/fonts/figtree-600.woff2) format("woff2")}
+@font-face{font-family:"Figtree";font-weight:700;font-display:block;src:url(assets/fonts/figtree-700.woff2) format("woff2")}
+@font-face{font-family:"PwDot";src:url(assets/fonts/pwdot.woff2) format("woff2")}
+@font-face{font-family:"Red Hat Display";font-weight:400;font-display:block;src:url(assets/fonts/red-hat-display-400.woff2) format("woff2")}
+@font-face{font-family:"Red Hat Display";font-weight:600;font-display:block;src:url(assets/fonts/red-hat-display-600.woff2) format("woff2")}
+@font-face{font-family:"Red Hat Display";font-weight:700;font-display:block;src:url(assets/fonts/red-hat-display-700.woff2) format("woff2")}
+@font-face{font-family:"Red Hat Display";font-weight:500;font-display:block;src:url(assets/fonts/red-hat-display-500.woff2) format("woff2")}
+
+/* ------------------------------------------------------------------
+   Scale system
+   The reference artboard is 2048 x 1389. Every measurement below is a
+   reference pixel multiplied by --u, so at the reference aspect ratio
+   the page is a 1:1 reproduction, and on any other viewport the layout
+   stays full-bleed (no letterboxing): columns stretch, content scales.
+   ------------------------------------------------------------------ */
+:root{
+  --u: min(100vw / 2048, 100dvh / 1389);
+  --ink:#0b0c14;
+  --ink-2:#26282c;
+  --ink-3:#3b3d42;
+  --line:#dedfe2;
+  --brand:#7b4ff2;
+  --brand-ink:#6a3fe4;
+  --page:#ffffff;
+  color-scheme: light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--page);
+  font-family:"Figtree",system-ui,sans-serif;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+button,input{font:inherit;color:inherit;background:none;border:0;outline:0}
+button{cursor:pointer}
+svg{display:block}
+
+.screen{position:relative;width:100vw;height:100dvh;min-height:calc(var(--u)*1389)}
+
+/* ---------------- LEFT COLUMN ---------------- */
+.left{position:absolute;inset:0 50% 0 0}
+.brand{position:absolute;left:calc(var(--u)*68);top:calc(var(--u)*75);display:flex;align-items:center;gap:calc(var(--u)*17);text-decoration:none}
+.brand-mark{width:calc(var(--u)*46);height:calc(var(--u)*46);border-radius:calc(var(--u)*10);
+  background:linear-gradient(135deg,#8c64fb 0%,#7a52f6 55%,#6d45ee 100%);
+  display:grid;place-items:center;box-shadow:inset 0 0 0 calc(var(--u)*1) rgba(255,255,255,.14)}
+.brand-mark svg{width:calc(var(--u)*30);height:calc(var(--u)*30)}
+.brand-name{font-weight:700;font-size:calc(var(--u)*31.4);letter-spacing:calc(var(--u)*-.2);color:var(--brand-ink);line-height:1}
+
+.form-wrap{position:absolute;left:calc(46.484% - var(--u)*303);top:calc(50% - var(--u)*414.5);width:calc(var(--u)*606)}
+.title{font-weight:700;font-size:calc(var(--u)*58.5);line-height:1;letter-spacing:calc(var(--u)*-.6);text-align:center;color:var(--ink);white-space:nowrap}
+.subtitle{margin-top:calc(var(--u)*19);font-weight:500;font-size:calc(var(--u)*23.2);line-height:1.3;text-align:center;color:var(--ink-2);white-space:nowrap}
+
+.field{display:block}
+.field + .field{margin-top:calc(var(--u)*36)}
+.fields{margin-top:calc(var(--u)*92)}
+.label{display:block;font-weight:500;font-size:calc(var(--u)*19);line-height:1;color:var(--ink-3);margin-bottom:calc(var(--u)*13)}
+.input{position:relative;height:calc(var(--u)*60);border:calc(var(--u)*2) solid var(--line);border-radius:calc(var(--u)*11);background:#fff;display:flex;align-items:center;transition:border-color .15s, box-shadow .15s}
+.input.pw{height:calc(var(--u)*55)}
+.input:focus-within{border-color:#b9a3fb;box-shadow:0 0 0 calc(var(--u)*4) rgba(123,79,242,.12)}
+.input input{width:100%;height:100%;padding:0 calc(var(--u)*19);font-weight:500;font-size:calc(var(--u)*18.7);color:#0e0f12}
+.input.pw input{font-family:"PwDot","Figtree",sans-serif;font-size:calc(var(--u)*32);letter-spacing:calc(var(--u)*3.1);padding-left:calc(var(--u)*15);padding-bottom:calc(var(--u)*5)}
+.input.pw input.shown{font-size:calc(var(--u)*18.7);letter-spacing:0;font-family:"Figtree",sans-serif;padding-right:calc(var(--u)*60)}
+.eye{position:absolute;right:calc(var(--u)*18);top:50%;transform:translateY(-50%);width:calc(var(--u)*19.5);height:calc(var(--u)*21);display:grid;place-items:center}
+.eye svg{width:100%;height:100%}
+.forgot{display:block;margin-top:calc(var(--u)*11);text-align:right;font-weight:500;font-size:calc(var(--u)*18.7);line-height:1.2;color:#111316;text-decoration:none}
+
+.btn-primary{display:block;width:100%;height:calc(var(--u)*83);margin-top:calc(var(--u)*46);padding-bottom:calc(var(--u)*4);border-radius:calc(var(--u)*15);
+  background:linear-gradient(180deg,#9676f8 0%,#8a68f7 45%,#7d57f4 100%);
+  color:#fff;font-weight:600;font-size:calc(var(--u)*25.5);letter-spacing:calc(var(--u)*.1);
+  box-shadow:inset 0 calc(var(--u)*1.5) 0 rgba(255,255,255,.18), 0 calc(var(--u)*4) calc(var(--u)*14) rgba(123,79,242,.18);
+  transition:filter .15s, transform .15s}
+.btn-primary:hover{filter:brightness(1.05)}
+.btn-primary:active{transform:translateY(calc(var(--u)*1))}
+
+.divider{display:flex;align-items:center;gap:calc(var(--u)*23);margin-top:calc(var(--u)*34);font-weight:500;font-size:calc(var(--u)*22.7);color:#0d0e10;line-height:1}
+.divider::before,.divider::after{content:"";flex:1;height:calc(var(--u)*2.5);background:#e6e6e8;position:relative;top:calc(var(--u)*2)}
+
+.btn-social{display:flex;align-items:center;justify-content:center;gap:calc(var(--u)*14);width:100%;height:calc(var(--u)*74);border:calc(var(--u)*2) solid #e3e3e5;border-radius:calc(var(--u)*11);background:#fafafa;font-weight:600;font-size:calc(var(--u)*23.2);color:#0c0d10;transition:background .15s}
+.btn-social:hover{background:#f3f3f5}
+.btn-social svg{width:calc(var(--u)*29);height:calc(var(--u)*29);position:relative}
+.btn-social{padding-top:calc(var(--u)*4)}
+.btn-social.g svg{top:calc(var(--u)*-3)}
+.btn-social.g{margin-top:calc(var(--u)*39)}
+.btn-social.a{margin-top:calc(var(--u)*17);padding-left:calc(var(--u)*4)}
+.btn-social.a svg{width:calc(var(--u)*26);height:calc(var(--u)*30);top:calc(var(--u)*-3)}
+.signup{margin-top:calc(var(--u)*44);text-align:center;font-weight:500;font-size:calc(var(--u)*23.7);color:#0d0e10;line-height:1.2}
+.signup a{color:#7449ef;text-decoration:underline;text-decoration-thickness:calc(var(--u)*1.5);text-underline-offset:calc(var(--u)*5)}
+
+.foot{position:absolute;left:calc(var(--u)*70);right:calc(var(--u)*69);bottom:calc(var(--u)*53);display:flex;justify-content:space-between;align-items:center;font-weight:500;font-size:calc(var(--u)*22.8);color:#25272b;line-height:1}
+.foot span{display:flex;align-items:center;gap:calc(var(--u)*10)}
+.foot svg{width:calc(var(--u)*25);height:calc(var(--u)*25)}
+.foot a{color:#26282c;text-decoration:none}
+
+/* ---------------- RIGHT PANEL ---------------- */
+.panel{position:absolute;left:50%;right:calc(var(--u)*12);top:calc(var(--u)*11);bottom:calc(var(--u)*12);
+  border-radius:calc(var(--u)*22);overflow:hidden;isolation:isolate;
+  background:#0a0e3a url(assets/images/ai-builder-bg.webp) center/cover no-repeat;
+  font-family:"Red Hat Display",sans-serif;color:#fff}
+.panel-inner{position:absolute;left:0;right:0;bottom:calc(var(--u)*63);display:flex;flex-direction:column;align-items:center}
+.ask{font-family:"Figtree",sans-serif;font-weight:700;font-size:calc(var(--u)*57.2);line-height:1;letter-spacing:calc(var(--u)*-.6);white-space:nowrap;margin-right:calc(var(--u)*39);color:#fff;text-shadow:0 calc(var(--u)*2) calc(var(--u)*18) rgba(0,0,20,.25)}
+.chips{display:flex;gap:calc(var(--u)*17);margin-top:calc(var(--u)*35);margin-right:calc(var(--u)*39);justify-content:center}
+.chip{display:flex;align-items:center;gap:calc(var(--u)*14);height:calc(var(--u)*46);padding:0 0 0 calc(var(--u)*9.5);border-radius:999px;
+  background:linear-gradient(180deg,rgba(78,80,100,.34),rgba(66,68,88,.26));
+  border:calc(var(--u)*2) solid rgba(255,255,255,.24);
+  box-shadow:inset 0 calc(var(--u)*1) 0 rgba(255,255,255,.08), 0 calc(var(--u)*4) calc(var(--u)*14) rgba(0,0,0,.18);
+  -webkit-backdrop-filter:blur(calc(var(--u)*12));backdrop-filter:blur(calc(var(--u)*12));
+  font-weight:600;font-size:calc(var(--u)*17.1);color:#f4f4fa;white-space:nowrap;transition:background .15s, border-color .15s}
+.chip:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3)}
+.chip:nth-child(1){width:calc(var(--u)*164)}.chip:nth-child(2){width:calc(var(--u)*177)}.chip:nth-child(3){width:calc(var(--u)*182)}.chip:nth-child(4){width:calc(var(--u)*198)}
+.chip i{flex:none;width:calc(var(--u)*27);height:calc(var(--u)*27);border-radius:50%;background:#fff;display:grid;place-items:center}
+.chip i svg{width:calc(var(--u)*17);height:calc(var(--u)*17)}
+
+.prompt{position:relative;margin-top:calc(var(--u)*68);width:min(calc(var(--u)*886), calc(100% - var(--u)*126));height:calc(var(--u)*332);border-radius:calc(var(--u)*32);
+  background:
+    linear-gradient(90deg, rgba(70,70,92,.30) 0%, rgba(70,70,92,0) 30%),
+    linear-gradient(180deg, rgba(40,40,62,.66) 0%, rgba(42,42,66,.60) 60%, rgba(48,48,64,.60) 100%);
+  -webkit-backdrop-filter:blur(calc(var(--u)*22)) saturate(1.2);backdrop-filter:blur(calc(var(--u)*22)) saturate(1.2);
+  box-shadow:
+    inset 0 0 calc(var(--u)*24) rgba(255,255,255,.05),
+    inset calc(var(--u)*-34) 0 calc(var(--u)*46) calc(var(--u)*-28) rgba(150,155,210,.30),
+    inset 0 calc(var(--u)*-24) calc(var(--u)*40) calc(var(--u)*-24) rgba(150,155,210,.10),
+    0 calc(var(--u)*20) calc(var(--u)*50) rgba(0,0,20,.35)}
+/* gradient glass rim: brighter along the top edge, fading down the sides */
+.prompt::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:calc(var(--u)*3);pointer-events:none;
+  background:linear-gradient(90deg,rgba(255,255,255,0) 72%,rgba(255,255,255,.34) 100%),linear-gradient(180deg,rgba(255,255,255,.52) 0%,rgba(255,255,255,.30) 25%,rgba(255,255,255,.24) 70%,rgba(255,255,255,.34) 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.prompt textarea{position:absolute;left:calc(var(--u)*39);right:calc(var(--u)*36);top:calc(var(--u)*36);height:calc(var(--u)*170);resize:none;background:none;border:0;outline:0;color:#fff;
+  font-family:"Red Hat Display",sans-serif;font-weight:500;font-size:calc(var(--u)*23.2);line-height:1.4}
+.prompt textarea::placeholder{color:#eceaf4;opacity:1}
+.tools{position:absolute;left:calc(var(--u)*39);right:calc(var(--u)*26);bottom:calc(var(--u)*26);display:flex;align-items:center;gap:calc(var(--u)*17)}
+.pill{display:flex;align-items:center;gap:calc(var(--u)*17);height:calc(var(--u)*58);padding:calc(var(--u)*2) 0 0 calc(var(--u)*19);border-radius:999px;
+  background:linear-gradient(180deg,rgba(80,82,96,.24),rgba(72,74,90,.18));
+  border:calc(var(--u)*2) solid rgba(255,255,255,.24);
+  box-shadow:inset 0 calc(var(--u)*1) 0 rgba(255,255,255,.08);
+  font-weight:600;font-size:calc(var(--u)*19.8);color:#f5f5fa;white-space:nowrap;transition:background .15s}
+.pill:hover{background:rgba(255,255,255,.13)}
+.pill svg{flex:none;width:calc(var(--u)*26);height:calc(var(--u)*26)}
+.chip i,.wave,.send{flex:none}
+.pill:nth-child(2){width:calc(var(--u)*138)}.pill:nth-child(3){width:calc(var(--u)*174)}
+.pill.sq{width:calc(var(--u)*74);padding:0 !important;justify-content:center}
+.pill.sq svg{width:calc(var(--u)*30);height:calc(var(--u)*30)}
+.spacer{flex:1}
+.wave{width:calc(var(--u)*25);height:calc(var(--u)*26);margin-right:calc(var(--u)*7);opacity:.92}
+.send{width:calc(var(--u)*57);height:calc(var(--u)*57);border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 calc(var(--u)*4) calc(var(--u)*14) rgba(0,0,0,.25);transition:transform .15s}
+.send:hover{transform:scale(1.04)}
+.send svg{width:calc(var(--u)*30);height:calc(var(--u)*30)}
+
+/* Viewport architecture
+   Wide screens retain the reference composition above. Tablets keep both
+   panels in one viewport. Phones prioritize the login; the builder artwork
+   is decorative, so it is removed before it can displace the form. */
+.social-actions{width:100%}
+
+/* Compact desktop and tablet: the form and artwork share one viewport. */
+@media (min-width:700px) and (max-width:1600px), (min-width:700px) and (max-height:1000px){
+  :root{--u:.7px}
+  .screen{width:100%;height:100dvh;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);overflow:hidden}
+  .left{position:relative;inset:auto;min-width:0;min-height:0;display:flex;flex-direction:column;align-items:center;padding:clamp(16px,2.6dvh,30px) clamp(18px,3vw,42px) clamp(16px,2.6dvh,28px)}
+  .brand{position:static;align-self:flex-start;gap:10px;flex:none}
+  .brand-mark{width:34px;height:34px;border-radius:8px}
+  .brand-mark svg{width:22px;height:22px}
+  .brand-name{font-size:22px}
+  .form-wrap{position:static;width:min(100%,clamp(390px,27vw,480px));min-width:0;margin:auto 0;padding:10px 0}
+  .title{font-size:clamp(30px,3.3vw,42px);white-space:normal}
+  .subtitle{margin-top:9px;font-size:clamp(13px,1.4vw,16px);line-height:1.35;white-space:normal;text-wrap:balance}
+  .fields{margin-top:clamp(18px,3.8dvh,34px)}
+  .field + .field{margin-top:clamp(10px,2.2dvh,18px)}
+  .label{font-size:14px;margin-bottom:6px}
+  .input,.input.pw{height:clamp(42px,6dvh,50px);border-width:1.5px;border-radius:10px}
+  .input:focus-within{box-shadow:0 0 0 3px rgba(123,79,242,.12)}
+  .input input,.input.pw input.shown{font-size:16px;padding:0 14px}
+  .input.pw input:not(.shown){font-size:26px;letter-spacing:2.5px;padding-left:12px;padding-bottom:3px;padding-right:48px}
+  .eye{right:4px;width:40px;height:40px}
+  .eye svg{width:19px;height:20px}
+  .forgot{margin-top:4px;padding:4px 0;font-size:13.5px}
+  .btn-primary{height:clamp(44px,6dvh,52px);margin-top:clamp(12px,2.4dvh,20px);padding-bottom:0;border-radius:11px;font-size:17px}
+  .divider{margin-top:clamp(12px,2.5dvh,20px);gap:13px;font-size:14px}
+  .divider::before,.divider::after{height:1.5px;top:1px}
+  .btn-social{height:clamp(44px,6dvh,50px);gap:10px;padding-top:0;border-width:1.5px;border-radius:10px;font-size:15px}
+  .btn-social svg{width:20px;height:20px;top:0!important}
+  .btn-social.g{margin-top:clamp(10px,2dvh,18px)}
+  .btn-social.a{margin-top:8px;padding-left:2px}
+  .btn-social.a svg{width:18px;height:21px}
+  .signup{margin-top:clamp(12px,2.4dvh,20px);font-size:14.5px}
+  .foot{position:static;align-self:stretch;flex:none;font-size:13px;line-height:1.1}
+  .foot svg{width:17px;height:17px}
+  .foot span{gap:6px}
+
+  .panel{position:relative;inset:auto;min-width:0;height:calc(100% - 20px);margin:10px 10px 10px 0;border-radius:18px}
+  .panel-inner{left:18px;right:18px;bottom:clamp(20px,5dvh,46px)}
+  .ask{margin-right:0;font-size:clamp(24px,3vw,36px);line-height:1.1;white-space:normal;text-align:center}
+  .chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;width:min(100%,360px);margin:clamp(12px,2.2dvh,22px) 0 0}
+  .chip,.chip:nth-child(n){width:auto;min-width:0;height:38px;padding:0 7px;gap:6px;border-width:1.5px;font-size:12.5px}
+  .chip i{width:24px;height:24px}
+  .chip i svg{width:15px;height:15px}
+  .prompt{width:min(100%,420px);height:clamp(185px,31dvh,270px);margin-top:clamp(16px,3.2dvh,30px);border-radius:23px}
+  .prompt textarea{left:20px;right:20px;top:18px;height:calc(100% - 92px);font-size:15px;line-height:1.35}
+  .tools{left:16px;right:16px;bottom:16px;gap:6px}
+  .pill,.pill:nth-child(n){width:auto;height:36px;padding:0 8px;gap:5px;border-width:1.5px;font-size:12px}
+  .pill svg{width:16px;height:16px}
+  .pill.sq{width:36px;padding:0}
+  .pill.sq svg{width:20px;height:20px}
+  .wave{display:none}
+  .send{width:36px;height:36px}
+  .send svg{width:20px;height:20px}
+}
+
+/* Short desktop windows use the same vertical rhythm as tablets. */
+@media (min-width:700px) and (max-height:680px){
+  .form-wrap{padding:0}
+  .subtitle{margin-top:6px}
+  .fields{margin-top:14px}
+  .field + .field{margin-top:8px}
+  .btn-primary{margin-top:10px}
+  .divider{margin-top:10px}
+  .btn-social.g{margin-top:8px}
+  .signup{margin-top:10px}
+}
+
+/* Wider laptops can keep the reference artwork's single chip row. */
+@media (min-width:1360px) and (max-width:1600px), (min-width:1360px) and (max-height:1000px){
+  .panel-inner{left:40px;right:40px}
+  .chips{grid-template-columns:repeat(4,minmax(0,1fr));width:min(100%,clamp(580px,35vw,700px))}
+  .chip,.chip:nth-child(n){font-size:12px}
+  .prompt{width:min(100%,clamp(580px,35vw,700px));height:clamp(220px,31dvh,300px)}
+}
+
+/* Phones: one focused login surface; social choices share a row. */
+@media (max-width:699px){
+  :root{--u:1px;--gutter:clamp(16px,5vw,28px)}
+  .screen{width:100%;height:100dvh;min-height:0;display:block;overflow:hidden}
+  .left{position:relative;inset:auto;width:100%;height:100%;min-height:0;display:flex;flex-direction:column;align-items:center;padding:max(12px,env(safe-area-inset-top)) var(--gutter) max(12px,env(safe-area-inset-bottom))}
+  .brand{position:static;align-self:flex-start;gap:10px;flex:none}
+  .brand-mark{width:32px;height:32px;border-radius:8px}
+  .brand-mark svg{width:21px;height:21px}
+  .brand-name{font-size:21px;letter-spacing:-.1px}
+  .form-wrap{position:static;width:min(100%,440px);min-width:0;margin:auto 0;padding:8px 0}
+  .title{font-size:clamp(28px,8vw,40px);letter-spacing:-.02em;white-space:normal}
+  .subtitle{margin:8px auto 0;font-size:14px;line-height:1.35;white-space:normal;text-wrap:balance}
+  .fields{margin-top:clamp(12px,2.4dvh,24px)}
+  .field + .field{margin-top:clamp(10px,1.8dvh,16px)}
+  .label{font-size:13.5px;margin-bottom:6px}
+  .input,.input.pw{height:clamp(44px,6dvh,48px);border-width:1.5px;border-radius:10px}
+  .input:focus-within{box-shadow:0 0 0 3px rgba(123,79,242,.12)}
+  .input input,.input.pw input.shown{padding:0 14px;font-size:16px}
+  .input.pw input:not(.shown){font-size:26px;letter-spacing:2.5px;padding-left:12px;padding-bottom:3px;padding-right:48px}
+  .eye{right:2px;width:44px;height:44px}
+  .eye svg{width:19px;height:20px}
+  .forgot{margin-top:3px;padding:3px 0;font-size:13.5px}
+  .btn-primary{height:clamp(44px,6dvh,52px);margin-top:clamp(10px,2dvh,20px);padding-bottom:0;border-radius:11px;font-size:17px}
+  .divider{margin-top:clamp(12px,2dvh,24px);gap:12px;font-size:14px}
+  .divider::before,.divider::after{height:1.5px;top:1px}
+  .social-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:clamp(10px,1.8dvh,20px)}
+  .btn-social,.btn-social.g,.btn-social.a{width:100%;height:clamp(44px,6dvh,48px);margin:0;padding:0 6px;gap:7px;border-width:1.5px;border-radius:10px;font-size:14px;white-space:nowrap}
+  .btn-social svg,.btn-social.g svg,.btn-social.a svg{width:20px;height:20px;top:0}
+  .btn-social.a svg{width:17px;height:21px}
+  .social-prefix{display:none}
+  .signup{margin-top:clamp(12px,2dvh,24px);font-size:14px}
+  .signup a{text-decoration-thickness:1px;text-underline-offset:3px}
+  .foot{position:static;align-self:stretch;flex:none;font-size:12.5px;line-height:1.1}
+  .foot span{gap:5px}
+  .foot svg{width:15px;height:15px}
+  .panel{display:none}
+}
+
+/* Compact phones: preserve the full form without shrinking tap targets. */
+@media (max-width:699px) and (max-height:600px){
+  .brand-mark{width:29px;height:29px}
+  .brand-name{font-size:20px}
+  .form-wrap{padding:0}
+  .title{font-size:28px}
+  .subtitle{font-size:13px;line-height:1.25;margin-top:5px}
+  .fields{margin-top:10px}
+  .field + .field{margin-top:8px}
+  .label{margin-bottom:4px}
+  .input,.input.pw{height:44px}
+  .btn-primary{height:44px;margin-top:9px}
+  .divider{margin-top:10px}
+  .social-actions{margin-top:9px}
+  .btn-social,.btn-social.g,.btn-social.a{height:44px}
+  .signup{margin-top:10px}
+}
+
+/* Short landscape screens use the horizontal space for the full login. */
+@media (min-width:600px) and (max-height:580px){
+  :root{--u:1px}
+  .screen{display:block;width:100%;height:100dvh;min-height:0;overflow:hidden}
+  .left{position:relative;inset:auto;width:100%;height:100%;min-height:0;display:flex;flex-direction:column;align-items:center;padding:10px clamp(18px,4vw,38px)}
+  .brand{position:static;align-self:flex-start;gap:8px;flex:none}
+  .brand-mark{width:28px;height:28px;border-radius:7px}
+  .brand-mark svg{width:19px;height:19px}
+  .brand-name{font-size:19px}
+  .form-wrap{position:static;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:'title divider' 'subtitle socials' 'form socials' 'form signup';column-gap:clamp(24px,5vw,64px);width:min(100%,920px);max-width:none;min-width:0;margin:auto 0;padding:0}
+  .title{grid-area:title;text-align:left;font-size:clamp(25px,3vw,32px);white-space:normal}
+  .subtitle{grid-area:subtitle;text-align:left;margin:4px 0 0;font-size:13px;line-height:1.2;white-space:normal}
+  .form-wrap form{grid-area:form}
+  .fields{margin-top:10px}
+  .field + .field{margin-top:8px}
+  .label{font-size:12.5px;margin-bottom:4px}
+  .input,.input.pw{height:43px;border-width:1.5px;border-radius:9px}
+  .input input,.input.pw input.shown{font-size:16px;padding:0 12px}
+  .input.pw input:not(.shown){font-size:24px;letter-spacing:2px;padding-left:12px;padding-right:46px}
+  .eye{right:2px;width:40px;height:40px}
+  .eye svg{width:19px;height:20px}
+  .forgot{margin-top:2px;padding:2px 0;font-size:12.5px}
+  .btn-primary{height:43px;margin-top:8px;padding:0;border-radius:9px;font-size:16px}
+  .divider{grid-area:divider;margin:0;align-self:center;font-size:14px}
+  .social-actions{grid-area:socials;display:flex;flex-direction:column;gap:8px;margin:12px 0 0}
+  .btn-social,.btn-social.g,.btn-social.a{width:100%;height:43px;margin:0;padding:0 8px;gap:8px;border-width:1.5px;border-radius:9px;font-size:14px}
+  .btn-social svg,.btn-social.g svg,.btn-social.a svg{width:19px;height:19px;top:0}
+  .social-prefix{display:inline}
+  .signup{grid-area:signup;margin:12px 0 0;text-align:left;font-size:13.5px}
+  .foot{position:static;align-self:stretch;flex:none;font-size:12px}
+  .foot span{gap:5px}
+  .foot svg{width:14px;height:14px}
+  .panel{display:none}
+}
+
+/* The keyboard or extreme zoom can reduce the viewport below the form's
+   physical minimum. Keep controls reachable without a visible scrollbar. */
+@media (max-height:440px) and (max-width:599px), (max-height:340px) and (max-width:1132px){
+  .left{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none}
+  .left::-webkit-scrollbar{display:none}
+  .form-wrap{margin:8px 0}
+  .foot{margin-top:auto}
+}
+
+/* Keyboard users need a visible target on every action. */
+:where(button,a,textarea):focus-visible{outline:3px solid #a88bff;outline-offset:3px}
+.panel :where(button,textarea):focus-visible{outline-color:#fff}
+
+/* One opening timeline. The blue panel background never animates. Each
+   animation uses backwards fill only, so the final frame is authored CSS. */
+@keyframes entry-rise{
+  from{opacity:0;transform:translate3d(0,var(--entry-offset,8px),0)}
+  to{opacity:1;transform:none}
+}
+@keyframes entry-type{
+  from{opacity:0;clip-path:inset(0 0 100% 0);transform:translate3d(0,12px,0)}
+  to{opacity:1;clip-path:inset(0);transform:none}
+}
+@keyframes entry-interface{
+  from{opacity:0;transform:translate3d(0,10px,0) scale(.988)}
+  to{opacity:1;transform:none}
+}
+@keyframes entry-quiet{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:no-preference){
+  .entry-intro :is(.brand,.title,.subtitle,.fields,.forgot,.btn-primary,.divider,.social-actions,.signup,.foot,.ask,.chips,.prompt){
+    animation-timing-function:cubic-bezier(.22,1,.36,1);
+    animation-fill-mode:backwards;
+    animation-iteration-count:1;
+  }
+  .entry-intro .brand{--entry-offset:6px;animation-name:entry-rise;animation-duration:.52s;animation-delay:.02s}
+  .entry-intro .title{animation-name:entry-type;animation-duration:.72s;animation-delay:.16s}
+  .entry-intro .subtitle{--entry-offset:7px;animation-name:entry-rise;animation-duration:.50s;animation-delay:.38s}
+  .entry-intro .fields{--entry-offset:10px;animation-name:entry-rise;animation-duration:.60s;animation-delay:.49s}
+  .entry-intro .forgot{animation-name:entry-quiet;animation-duration:.38s;animation-delay:.65s}
+  .entry-intro .btn-primary{--entry-offset:6px;animation-name:entry-rise;animation-duration:.54s;animation-delay:.73s}
+  .entry-intro .divider{animation-name:entry-quiet;animation-duration:.40s;animation-delay:.84s}
+  .entry-intro .social-actions{--entry-offset:7px;animation-name:entry-rise;animation-duration:.52s;animation-delay:.91s}
+  .entry-intro .signup{animation-name:entry-quiet;animation-duration:.42s;animation-delay:1.10s}
+  .entry-intro .foot{animation-name:entry-quiet;animation-duration:.42s;animation-delay:1.20s}
+  .entry-intro .ask{--entry-offset:9px;animation-name:entry-rise;animation-duration:.65s;animation-delay:.70s}
+  .entry-intro .chips{--entry-offset:7px;animation-name:entry-rise;animation-duration:.52s;animation-delay:.94s}
+  .entry-intro .prompt{animation-name:entry-interface;animation-duration:.72s;animation-delay:1.05s}
+}
+
+/* ---- touch devices: hover styles would stick after a tap, so the same
+   feedback moves to :active; mouse users keep the desktop hover ---- */
+@media (hover: none){
+  .chip:hover{background:linear-gradient(180deg,rgba(78,80,100,.34),rgba(66,68,88,.26));border-color:rgba(255,255,255,.24)}
+  .pill:hover{background:linear-gradient(180deg,rgba(80,82,96,.24),rgba(72,74,90,.18))}
+  .btn-social:hover{background:#fafafa}
+  .btn-primary:hover{filter:none}
+  .send:hover{transform:none}
+  .chip:active{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3)}
+  .pill:active{background:rgba(255,255,255,.13)}
+  .btn-social:active{background:#f3f3f5}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main class="screen">
+  <section class="left">
+    <a class="brand" href="#" aria-label="Voicelab.AI home">
+      <span class="brand-mark">
+        <svg viewBox="0 0 30 30" fill="#fff" aria-hidden="true">
+          <path d="M13.2 4.5c.55 4.6 3.05 7.45 7.6 8.15-4.55.7-7.05 3.55-7.6 8.15-.55-4.6-3.05-7.45-7.6-8.15 4.55-.7 7.05-3.55 7.6-8.15z" transform="translate(1.4 2.3)"/>
+          <path d="M22.6 4.2c.25 1.95 1.3 3.15 3.2 3.45-1.9.3-2.95 1.5-3.2 3.45-.25-1.95-1.3-3.15-3.2-3.45 1.9-.3 2.95-1.5 3.2-3.45z" opacity=".95"/>
+        </svg>
+      </span>
+      <span class="brand-name">Voicelab.AI</span>
+    </a>
+
+    <div class="form-wrap">
+      <h1 class="title">Welcome Back</h1>
+      <p class="subtitle">Enter your email and password to access your account.</p>
+
+      <form onsubmit="event.preventDefault()">
+        <div class="fields">
+          <label class="field">
+            <span class="label">Email</span>
+            <span class="input"><input type="email" value="hello@wavespace" autocomplete="email"></span>
+          </label>
+          <label class="field">
+            <span class="label" style="letter-spacing:calc(var(--u)*.5)">Password</span>
+            <span class="input pw">
+              <input id="pw" type="password" value="password" autocomplete="current-password">
+              <button class="eye" type="button" aria-label="Show password" onclick="var p=document.getElementById('pw');p.type=p.type==='password'?'text':'password';p.classList.toggle('shown',p.type==='text');this.setAttribute('aria-label',p.type==='password'?'Show password':'Hide password')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#0b0c10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M2.5 11.5C4.6 7.9 8 6 12 6s7.4 1.9 9.5 5.5"/><path d="M2.5 12.5C4.6 16.1 8 18 12 18s7.4-1.9 9.5-5.5"/>
+                  <circle cx="12" cy="12" r="3"/><path d="M4 20 20 4"/>
+                </svg>
+              </button>
+            </span>
+          </label>
+        </div>
+        <a class="forgot" href="#">Forget Your Password</a>
+        <button class="btn-primary" type="submit">Log in</button>
+      </form>
+
+      <div class="divider">Or Login With</div>
+
+      <div class="social-actions">
+        <button class="btn-social g" type="button" aria-label="Continue with Google">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>
+          <span><span class="social-prefix">Continue with </span>Google</span>
+        </button>
+        <button class="btn-social a" type="button" aria-label="Continue with Apple">
+          <svg viewBox="0 0 384 512" aria-hidden="true"><path fill="#000" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+          <span><span class="social-prefix">Continue with </span>Apple</span>
+        </button>
+      </div>
+
+      <p class="signup">Don’t have an account? <a href="#">Signup</a></p>
+    </div>
+
+    <footer class="foot">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="#26282c" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M15 9.4A4 4 0 1 0 15 14.6" stroke-linecap="round"/></svg>2025 Voicelab</span>
+      <a href="#">Privacy Policy</a>
+    </footer>
+  </section>
+
+  <section class="panel" aria-label="AI Builder">
+    <div class="panel-inner">
+      <h2 class="ask">What can i help with?</h2>
+      <div class="chips">
+        <button class="chip" type="button"><i><svg viewBox="0 0 16 16" fill="none" stroke="#5b3df0" stroke-width="1.7"><rect x="2" y="2.5" width="12" height="11" rx="2.2"/><path d="M2 6.3h12M5 9.5h6"/></svg></i>Wireframes</button>
+        <button class="chip" type="button"><i><svg viewBox="0 0 16 16" fill="#22b7ee"><path d="M13.9 2.1c-3.1-.3-5.9 1.1-7.7 3.6L4 5.9 2.3 7.6l2.6.9 2.6 2.6.9 2.6 1.7-1.7.2-2.2c2.5-1.8 3.9-4.6 3.6-7.7zM10.6 6.6a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4z"/><path d="M4.6 10.4c-1.2.3-2 1.4-2.3 3.3 1.9-.3 3-1.1 3.3-2.3z"/></svg></i>Plan my MVP</button>
+        <button class="chip" type="button"><i><svg viewBox="0 0 16 16" fill="none" stroke="#e43cc8" stroke-width="1.6" stroke-linejoin="round"><path d="M13.5 8V4.2a1.7 1.7 0 0 0-1.7-1.7H4.2a1.7 1.7 0 0 0-1.7 1.7v6.6a1.7 1.7 0 0 0 1.7 1.7H7"/><path d="M2.5 5.6h11"/><path d="m9 9 4.8 1.7-2 .7-.8 2z" fill="#e43cc8"/></svg></i>Landing Page</button>
+        <button class="chip" type="button"><i><svg viewBox="0 0 16 16" fill="none" stroke="#8a3ff0" stroke-width="1.6"><rect x="2.5" y="4.3" width="11" height="8.6" rx="2.6"/><path d="M8 4.3V2.4" stroke-linecap="round"/><circle cx="8" cy="2.1" r=".7" fill="#8a3ff0"/><circle cx="5.9" cy="8.2" r=".9" fill="#8a3ff0" stroke="none"/><circle cx="10.1" cy="8.2" r=".9" fill="#8a3ff0" stroke="none"/><path d="M6.4 10.6h3.2" stroke-linecap="round"/></svg></i>Chatbot Builder</button>
+      </div>
+
+      <div class="prompt">
+        <textarea aria-label="Prompt" placeholder="Ask AI Builder to Create a Prototype..."></textarea>
+        <div class="tools">
+          <button class="pill sq" type="button" aria-label="Attach"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M12 3.5v17M3.5 12h17" stroke-width="2"/></svg></button>
+          <button class="pill" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><circle cx="12" cy="12" r="9.2"/><ellipse cx="12" cy="12" rx="4" ry="9.2"/><path d="M2.8 12h18.4"/></svg>Public</button>
+          <button class="pill" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><ellipse cx="12" cy="5.3" rx="8.2" ry="2.9"/><path d="M3.8 5.3v13.2c0 1.6 3.7 2.9 8.2 2.9s8.2-1.3 8.2-2.9V5.3"/><path d="M3.8 11.9c0 1.6 3.7 2.9 8.2 2.9s8.2-1.3 8.2-2.9"/></svg>Supabase</button>
+          <span class="spacer"></span>
+          <svg class="wave" viewBox="0 0 25 26" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" aria-hidden="true"><path d="M1.5 9.5v7M6 3.5v19M10.3 6.5v13M14.6 1.2v23.6M19 6v14M23.5 9.5v7"/></svg>
+          <button class="send" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="#0b0b12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V4M5.5 10.5 12 4l6.5 6.5"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+  // Finish on interaction or resize so the entrance never blocks the form or
+  // replays across layouts. Backwards fill makes failed cleanup harmless.
+  (() => {
+    const root = document.documentElement;
+    if (root.classList.contains('entry-intro')) {
+      let timeout;
+      const finish = () => {
+        root.classList.remove('entry-intro');
+        window.removeEventListener('pointerdown', finish);
+        window.removeEventListener('keydown', finish);
+        window.removeEventListener('resize', finish);
+        document.removeEventListener('visibilitychange', finish);
+        window.clearTimeout(timeout);
+      };
+      window.addEventListener('pointerdown', finish, {once:true});
+      window.addEventListener('keydown', finish, {once:true});
+      window.addEventListener('resize', finish, {once:true});
+      document.addEventListener('visibilitychange', finish, {once:true});
+      timeout = window.setTimeout(finish, 2050);
+    }
+  })();
+</script>
+</body>
+</html>

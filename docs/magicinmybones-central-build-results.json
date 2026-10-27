@@ -1,0 +1,872 @@
+{
+  "generatedAt": "2026-10-27T15:49:52.402Z",
+  "built": 96,
+  "failed": 0,
+  "results": [
+    {
+      "id": "REF-060",
+      "repo": "ai-assistant-motionsitesv5",
+      "commit": "1f233df35f341808aae97a0b970da490681e01d7",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-061",
+      "repo": "ai-verse",
+      "commit": "9bc6b71282c373bd0194c02313e6277ed9dce126",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-062",
+      "repo": "anfalova-art",
+      "commit": "c91b24de9672a94cd8c4986d76eac4ae6c00ff87",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-063",
+      "repo": "anveril",
+      "commit": "42d76c51f92ae0c254872a5b6e7d11d0baa614e5",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-064",
+      "repo": "artifact-museum-hero",
+      "commit": "eaeff455e565338e1a7461ae1cb150732e801119",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-065",
+      "repo": "atelier-unit-hero",
+      "commit": "0444a24db6cdafd50b934ce3d3a7d51311f92d30",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-066",
+      "repo": "atlas_workspace_ui",
+      "commit": "a5f8251a5719ebd6d3bc3e426acd0af9e1ef1022",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "",
+      "skippedLargeAssets": 1
+    },
+    {
+      "id": "REF-067",
+      "repo": "automify-hero",
+      "commit": "9569a752958e3c08f764486572055232dd9cbd6a",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-068",
+      "repo": "banklio",
+      "commit": "a8d194d365b258a90f28f179147dd7321b3701b0",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-069",
+      "repo": "blinq",
+      "commit": "97b88ce9d2c84efac588818872672892a9a73006",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-070",
+      "repo": "blossom-ai-growth-platform",
+      "commit": "c5b9be1294044dde5acaad4ac69159e0852813ec",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-071",
+      "repo": "campaigns-dashboard",
+      "commit": "c14826c8235115c68bdd12a5710add0a100bc75c",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-072",
+      "repo": "camper-overnight-camp",
+      "commit": "dd2b45b539032d2d520414db2a76af8dac240893",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-073",
+      "repo": "clawd-hero",
+      "commit": "27122548c67e372fc960461018e90a932f588311",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-074",
+      "repo": "cleargate-hero",
+      "commit": "530b18d3ea5105b23b786672074e6f86018bd8c7",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-075",
+      "repo": "cloud-cards",
+      "commit": "771d29eb62d42d5cbc2527f95471c3c2e3838a53",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "site"
+    },
+    {
+      "id": "REF-076",
+      "repo": "codex-signup",
+      "commit": "8d7f7fde26efa96a72c77dccaa2b5b1ee83f68cf",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-077",
+      "repo": "designup",
+      "commit": "a3afc9eb52e3f385f962b697b029408c2bbbb5aa",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "site"
+    },
+    {
+      "id": "REF-078",
+      "repo": "dreamflow-footer",
+      "commit": "20c934f8c46e6e1928232141dfc9c20f36858e06",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-079",
+      "repo": "ecommerce-dashboard",
+      "commit": "18b88c13cc8ab57ff4d27626fe7f8d143538fc40",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "site"
+    },
+    {
+      "id": "REF-080",
+      "repo": "effortless-crypto-hero",
+      "commit": "d49c564edb8b5ade076f407e0e2a4ab487bcddfb",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-081",
+      "repo": "else-landing",
+      "commit": "3658053b61a24a6bd34d83d3db6299dd818131d1",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-082",
+      "repo": "espace-mtl",
+      "commit": "098c9626c57d4d6db76b132699e9778a459d548d",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-083",
+      "repo": "evcarlandingpage",
+      "commit": "41e0389ff2367ad8f19e14a00ae9a48a8c61d370",
+      "status": "built",
+      "strategy": "vite",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-084",
+      "repo": "extent-ai-hero",
+      "commit": "0a9518daea1aff68f8c68e2f299e0f3a7c3a2143",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-085",
+      "repo": "feature-cards",
+      "commit": "082c74213f4708d7d988b248b4eb4090c8a9af09",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-086",
+      "repo": "finance-signup",
+      "commit": "0486a68e65fef4a6a8df775971e6502bccd87efc",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-087",
+      "repo": "finns",
+      "commit": "feb10448dfb84b17f9f2dc03bdda413742409847",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-088",
+      "repo": "flexitee-login-responsive",
+      "commit": "7155cdb55a4c4a5aa9f9639fe5df40f61aa6a008",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-089",
+      "repo": "flux-hero",
+      "commit": "a05d75162ecb790fba396521e798621b3a3895c9",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-090",
+      "repo": "framefutures",
+      "commit": "b35355e656c60d5b2bba76c97fd576822dabfd17",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-091",
+      "repo": "hero_section_09",
+      "commit": "d4081a499a1a3f1f647514f07e3c7b0d8a2b5202",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-092",
+      "repo": "hevn",
+      "commit": "045c1d789d49caf3a9d53d217fa8c8752bcb3f8a",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-093",
+      "repo": "highframe",
+      "commit": "28715dddbf462382bf947f6c01a35eb9e4627007",
+      "status": "built",
+      "strategy": "vite",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-094",
+      "repo": "hinata-sakai",
+      "commit": "e2da703ca9229e7f1f409651ef38afc219744406",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-095",
+      "repo": "insight-signup",
+      "commit": "4e61f8dfea90e317af4edcc76799a8542a65e232",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-096",
+      "repo": "insuria-hero",
+      "commit": "981e279d073da32480acc1b6c1efbfb37a4be82c",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-097",
+      "repo": "interior",
+      "commit": "fcd478737c6c9b6ba9fbab21cbe95ddf4bb40452",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-098",
+      "repo": "invopilot-create-invoice",
+      "commit": "8a581b9eb01aef585b708d053bfd2ae599bb47de",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "site"
+    },
+    {
+      "id": "REF-099",
+      "repo": "karu-creative-studio",
+      "commit": "8291aed30adbbf6d6775ed69873676b040a2cfd0",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-100",
+      "repo": "kaultai",
+      "commit": "acec16b749ed117ba84c4871ca9e0b34711c49a2",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-101",
+      "repo": "kindle3d-login",
+      "commit": "ec31fa7371313ffe5a099592f704e94516f2c349",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-102",
+      "repo": "kora-ai",
+      "commit": "1a3cb08bbd55ba80eed5d1d5f9a2fd6428b0c1d3",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-103",
+      "repo": "la-consulting",
+      "commit": "3e59295abb7f3150db7466174c57e2208d85678e",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-104",
+      "repo": "lab-post-train-agents",
+      "commit": "76c3404a82eca84b933ed01d9b554a96302c93b1",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-105",
+      "repo": "logistics-freight-hero",
+      "commit": "b70669c03bb302c4f35c34cbb04932627ae86ae3",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-106",
+      "repo": "loomix-footer",
+      "commit": "3d2399e3b28de4626afaa00064ee62d204d27bb5",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-107",
+      "repo": "lumen-hero",
+      "commit": "44839765d52a0be976fb394976ecdfe6fead2e59",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-108",
+      "repo": "lumen-studio",
+      "commit": "47d18a567365aad92c6e2899c38c059b5f17fed2",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-109",
+      "repo": "lumenkey-login",
+      "commit": "3ce138aa46cba31d9efbef91cc46be8fc7de1479",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-110",
+      "repo": "lumo-landing",
+      "commit": "5c1a0b84a94ba61971007c89aa458efeed22ec3a",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-111",
+      "repo": "medical-center-dashboard",
+      "commit": "408bf8b07a6a6b30327b83a821af3a19045552fa",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-112",
+      "repo": "mentoxy",
+      "commit": "b38b07b68fb43c8f1161e3cacb3c363bb00d7c32",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-113",
+      "repo": "Meridial",
+      "commit": "f149cfe761a18922bd7f289ba74d923fa610a919",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "src"
+    },
+    {
+      "id": "REF-114",
+      "repo": "meridian",
+      "commit": "f953cdd5c6edc3fbb1a3ac91706663c663bf5bf5",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-115",
+      "repo": "meshora-hero",
+      "commit": "d5da90f4f4458386a97b02d2cc5a9c1cb26e9387",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-116",
+      "repo": "mindease",
+      "commit": "fce00cd5b5e7708813915ab866cf3482545f381a",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-117",
+      "repo": "new-collection",
+      "commit": "b4ae4554449952d36b51464de30aefeaaed888d5",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-118",
+      "repo": "nexora",
+      "commit": "8412a74c6840dcf5c2f2b9b686b5c4ac5db0a036",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-119",
+      "repo": "nexusai",
+      "commit": "f9ac01864888ebf0d0ac3a1c0136d19ca4d13ab1",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-120",
+      "repo": "Nike-Style-Shoe-Landing-Page",
+      "commit": "52306835dad2c1e81722987f5b84316aec9a0829",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-121",
+      "repo": "orbit-see-beyond",
+      "commit": "5cea7f97fa1913fb7574a54934022cacdd498228",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-122",
+      "repo": "orbitals",
+      "commit": "05442ac49eb777939c01ad1508418ba6264a44ed",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-123",
+      "repo": "ordiva-hero",
+      "commit": "63f72c9e6df5fd6c3ad171f1599b07704be4106f",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "site"
+    },
+    {
+      "id": "REF-124",
+      "repo": "orinex",
+      "commit": "11a2a158819b8b3e3d72f20eea5ccc845f2b08ee",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-125",
+      "repo": "orvixa",
+      "commit": "64ae4aa5a7fa6196c05bc3b2a6ef821c1842b04b",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-126",
+      "repo": "oryn-studio",
+      "commit": "9f163d5afd5519bc7dd8ecd9608406ada7a3ae0e",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-127",
+      "repo": "parallax",
+      "commit": "d5fdca264c7392c6de84b1663dd39f26fa8667e6",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-128",
+      "repo": "polu-testimonials",
+      "commit": "6a1dccc9c09688e78847a64ac376b76e30d2fdaf",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-129",
+      "repo": "pulse",
+      "commit": "6ca296e7c4d253a784da7d6f7b13c1947e944363",
+      "status": "built",
+      "strategy": "package-build",
+      "error": null,
+      "fallbackRoot": "dist"
+    },
+    {
+      "id": "REF-130",
+      "repo": "pulse-prototype",
+      "commit": "baa42d2cddf02eeb6d9a2934c97dd5674d88927f",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "site"
+    },
+    {
+      "id": "REF-131",
+      "repo": "pulse-tennis-club",
+      "commit": "b1fc222c839813edcfa29d1371355848afe102c9",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-132",
+      "repo": "quantom_landing",
+      "commit": "a41b4a0b1f0a01063a41403784a652cb5fa3269e",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-133",
+      "repo": "rift",
+      "commit": "c731540e521ccb704c141b6c109b0a3151dbef50",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "site"
+    },
+    {
+      "id": "REF-134",
+      "repo": "riverine",
+      "commit": "6589e7507d4d64f512b449fc84048c3c9516a5ab",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-135",
+      "repo": "securemind-hero",
+      "commit": "1b38a4ba4aa19843c09e6ab5f40c6a4cfe456134",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-136",
+      "repo": "sendit-hero",
+      "commit": "ca1b0260c9b21ebda1ce5d1c0a12ba6e55cad6ec",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "site"
+    },
+    {
+      "id": "REF-137",
+      "repo": "shoes-v2",
+      "commit": "c7d3d08bb11bd8dc7430bd80b1efe2e193305286",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-138",
+      "repo": "shoe_gradient",
+      "commit": "fd9e41c0d55c7eae703f8d1f849cdd742770f0cf",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-139",
+      "repo": "smart-pricing",
+      "commit": "4dcd5590d5655b800377ddbfd51ea150483069c2",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-140",
+      "repo": "soma-hero",
+      "commit": "d112d5b31404e684778dfb088af771f5caedb6d2",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "site"
+    },
+    {
+      "id": "REF-141",
+      "repo": "stakekit",
+      "commit": "f1f59afdb7ab47e4093c9c07a33ab024359bd543",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-142",
+      "repo": "starform",
+      "commit": "c54e4d14d7e846d333beaafbbfe4ab32dcbf1ff9",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-143",
+      "repo": "stridr",
+      "commit": "6de715e904443c840e7159b4db68dc127940c26d",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-144",
+      "repo": "sundi-headphones",
+      "commit": "b766b210a234d1bd3ffd963ade8948d217e2cfb9",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-145",
+      "repo": "suttere-hero",
+      "commit": "eda0957be7528eadb9e27ff4477f7fc78cd08e4e",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-146",
+      "repo": "talkie-hero",
+      "commit": "0236cb78dc958419d61981e963067d0c8d181959",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-147",
+      "repo": "testimonials",
+      "commit": "01871fab68c81442c655f1f49cf679e82f92cdd8",
+      "status": "built",
+      "strategy": "vite",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-148",
+      "repo": "timon-footer",
+      "commit": "ea80de17144431c0201baca2d5d5dc765e4ff874",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-149",
+      "repo": "total-mortgages",
+      "commit": "57944d9fff3a89a5499c445ef3f22d2ed30740db",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-150",
+      "repo": "valta-hero",
+      "commit": "62fbc1702198fd9b693774cb9b118126c003c45b",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "site"
+    },
+    {
+      "id": "REF-151",
+      "repo": "velora-login",
+      "commit": "382360802d921412ae0e78ba446e68ff161f56e0",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-152",
+      "repo": "vidpro-login",
+      "commit": "e3d35f5b2a5b07c8ee7fb7458263eaede4f3b79c",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-153",
+      "repo": "visionos-prototype",
+      "commit": "41103f0135c5f4de4bacc9b06cdf6aecea452d88",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": "public"
+    },
+    {
+      "id": "REF-154",
+      "repo": "vitalyn-landing",
+      "commit": "816b0bfcb385a6bdc97632f9a89b97d5053bd3ec",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    },
+    {
+      "id": "REF-155",
+      "repo": "voicelab-login",
+      "commit": "2e8e915d6051b79f3242a04819b5204549f7049a",
+      "status": "built",
+      "strategy": "static",
+      "error": null,
+      "fallbackRoot": ""
+    }
+  ]
+}

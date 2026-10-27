@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-078/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dreamflow — Your next app starts now</title>
+<meta name="description" content="Describe it, shape it in the canvas or code, ship it to the App Store, Play Store, or web.">
+<style>
+/* ------------------------------------------------------------------
+   Font — Google Sans Flex (variable: opsz 6–144, wght 1–1000), embedded for offline use
+------------------------------------------------------------------- */
+@font-face{
+  font-family:"GSF";
+  src:url(assets/google-sans-flex.woff2) format("woff2");
+  font-weight:1 1000;font-style:normal;font-display:block;
+}
+
+/* ------------------------------------------------------------------
+   Design tokens (sampled from the reference)
+------------------------------------------------------------------- */
+:root{
+  --bg:#0d0d0d;
+  --ink:#ffffff;            /* headline                       */
+  --ink-2:#ececec;          /* logo word, newsletter title     */
+  --ink-3:#dcdcdc;          /* column headings                 */
+  --ink-pill:#c6c6c6;       /* pill label                      */
+  --ink-sub:#adadad;        /* hero paragraph                  */
+  --ink-mute:#717171;       /* footer links                    */
+  --ink-desc:#7d7d7d;       /* brand blurb                     */
+  --ink-legal:#6e6e6e;      /* copyright block                 */
+  --ink-news:#d2d2d2;       /* newsletter title                */
+  --ink-faint:#777777;      /* placeholder, unsubscribe        */
+  --icon:#868686;           /* social glyphs                   */
+  --water:#292929;          /* giant wordmark                  */
+  --violet:#9a9ad6;         /* sparkle                         */
+  --ref-w:787;              /* reference artboard width        */
+  --ref-h:753;              /* reference artboard height       */
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);min-height:100%}
+body{
+  font-family:"GSF","Google Sans","Product Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  text-rendering:geometricPrecision;
+  font-optical-sizing:none;           /* opsz pinned per element so widths never drift with viewport */
+  overflow-x:hidden;
+}
+img{display:block;max-width:none;user-select:none;-webkit-user-drag:none}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+button,input{font:inherit;color:inherit;background:none;border:0;outline:0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ------------------------------------------------------------------
+   Page shell — fills the viewport, no letterbox bands.
+   The two bands (hero / footer) are pinned top & bottom; on viewports
+   taller than the artboard the extra height opens up between them.
+------------------------------------------------------------------- */
+.page{
+  container-type:inline-size;
+  min-height:100vh;min-height:100svh;
+  display:flex;flex-direction:column;justify-content:space-between;
+  background:var(--bg);
+  overflow:hidden;
+  --px:1px;
+}
+
+/* ------------- shared component skins (both layouts) -------------
+   --px = one artboard pixel (Layout A) so hairlines / glows scale with the design. */
+.pill{
+  display:inline-flex;align-items:center;
+  border-radius:999px;
+  background:#191919;                                  /* fill  rgb 25 */
+  position:relative;
+  color:var(--ink-pill);font-weight:430;white-space:nowrap;
+}
+.pill::before{ /* hairline: top rgba(255,255,255,.21) → bottom .14, sides .13 */
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  padding:calc(1 * var(--px));
+  background:linear-gradient(180deg,rgba(255,255,255,.21),rgba(255,255,255,.12) 45%,rgba(255,255,255,.12) 60%,rgba(255,255,255,.15));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+}
+.pill__dot{
+  flex:none;border-radius:50%;
+  background:#2f2f2f;                                  /* disc rgb 47 */
+  box-shadow:inset 0 0 0 calc(.8 * var(--px)) rgba(255,255,255,.035);
+  display:grid;place-items:center;
+}
+.pill__dot svg{display:block;width:76%;height:76%}
+
+.btn{ /* glossy glass CTA — fill ramps rgb 74 → 131, lit rim top .68 / bottom .5 */
+  display:inline-flex;align-items:center;justify-content:center;
+  position:relative;white-space:nowrap;
+  color:#e6e6e6;font-weight:500;
+  background:linear-gradient(180deg,#484848 0%,#4a4a4a 5%,#606060 41%,#646464 50%,#6c6c6c 57%,#797979 75%,#838383 90%,#858585 100%);
+  box-shadow:
+    inset 0 calc(1.1 * var(--px)) 0 rgba(255,255,255,.66),
+    inset 0 calc(-1.2 * var(--px)) 0 rgba(255,255,255,.2),
+    inset 0 calc(-2.2 * var(--px)) calc(1 * var(--px)) rgba(255,255,255,.07),
+    inset calc(1.3 * var(--px)) 0 calc(.6 * var(--px)) rgba(0,0,0,.28),
+    inset calc(-1.3 * var(--px)) 0 calc(.6 * var(--px)) rgba(0,0,0,.28),
+    0 0 0 calc(.45 * var(--px)) rgba(0,0,0,.55);
+  text-shadow:0 calc(.5 * var(--px)) calc(.5 * var(--px)) rgba(0,0,0,.25);
+  transition:filter .2s ease,transform .2s ease;
+}
+.btn::before{ /* outer rim */
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  padding:calc(.9 * var(--px));
+  background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.26) 30%,rgba(255,255,255,.22) 70%,rgba(255,255,255,.38));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:translateY(1px)}
+
+.field{ /* newsletter glass input — dark well with a cool top-centre sheen */
+  position:relative;display:flex;align-items:center;
+  background:
+    radial-gradient(48% 105% at 50% 0%,rgba(255,255,255,.095),rgba(255,255,255,.03) 55%,rgba(255,255,255,0) 100%),
+    radial-gradient(30% 40% at 50% 100%,rgba(255,255,255,.012),rgba(255,255,255,0)),
+    #0d0d0d;
+}
+.field::before{ /* lit edge: top highlight peaks at 27% (α .58), bottom at 60% (α .61) */
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  padding:calc(1.5 * var(--px));
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.30) 0%,rgba(255,255,255,.36) 4.6%,rgba(255,255,255,.53) 18.3%,rgba(255,255,255,.58) 27.5%,rgba(255,255,255,.48) 41.3%,rgba(255,255,255,.34) 55%,rgba(255,255,255,.18) 68.8%,rgba(255,255,255,.13) 78%,rgba(255,255,255,.09) 96%,rgba(255,255,255,.1) 100%) top/100% 50% no-repeat,
+    linear-gradient(90deg,rgba(255,255,255,.04) 0%,rgba(255,255,255,.09) 4.6%,rgba(255,255,255,.24) 18.3%,rgba(255,255,255,.43) 32.1%,rgba(255,255,255,.55) 45.8%,rgba(255,255,255,.61) 59.6%,rgba(255,255,255,.58) 73.4%,rgba(255,255,255,.51) 87.1%,rgba(255,255,255,.44) 96.3%,rgba(255,255,255,.40) 100%) bottom/100% 50% no-repeat;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+}
+.field input{flex:1;min-width:0;height:100%;color:#d8d8d8;position:relative}
+.field input::placeholder{color:var(--ink-faint);opacity:1}
+.field__go{ /* glossy key — fill rgb 73 → 140, 3px lit top band, soft white halo */
+  flex:none;display:grid;place-items:center;position:relative;cursor:pointer;
+  background:linear-gradient(180deg,#494949 0%,#494949 15%,#585858 35%,#747474 60%,#7f7f7f 80%,#8c8c8c 92%,#8c8c8c 100%);
+  box-shadow:
+    inset 0 calc(1.2 * var(--px)) 0 rgba(255,255,255,.85),
+    inset 0 calc(3.5 * var(--px)) calc(.6 * var(--px)) rgba(255,255,255,.6),
+    inset 0 calc(-2 * var(--px)) calc(.4 * var(--px)) rgba(0,0,0,.36),
+    inset 0 calc(-2.7 * var(--px)) calc(.3 * var(--px)) rgba(255,255,255,.42),
+    inset calc(1.6 * var(--px)) 0 calc(1 * var(--px)) rgba(0,0,0,.16),
+    inset calc(-1.6 * var(--px)) 0 calc(1 * var(--px)) rgba(0,0,0,.16),
+    0 0 calc(9 * var(--px)) calc(1 * var(--px)) rgba(255,255,255,.12);
+  transition:filter .2s ease;
+}
+.field__go::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  padding:calc(.9 * var(--px));
+  background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,.45) 30%,rgba(255,255,255,.4) 70%,rgba(255,255,255,.2));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+}
+.field__go:hover{filter:brightness(1.1)}
+.field:focus-within{box-shadow:0 0 0 calc(2 * var(--px)) rgba(154,154,214,.18)}
+a:focus-visible,button:focus-visible{outline:calc(1.5 * var(--px)) solid var(--violet);outline-offset:calc(2 * var(--px))}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.field__go svg{display:block}
+
+.social a{display:block;color:var(--icon);transition:color .2s}
+.social a:hover,.cols a:hover{color:#cfcfcf}
+.social svg{display:block;width:100%;height:100%}
+.cols a{color:var(--ink-mute);transition:color .2s}
+.cols h3{color:var(--ink-3);font-weight:500}
+
+.logo{display:flex;align-items:center;color:var(--ink-2)}
+.logo svg{display:block;flex:none}
+
+.legal{color:var(--ink-legal);text-align:center}
+.water{
+  color:var(--water);font-variation-settings:'opsz' 144;white-space:nowrap;pointer-events:none;user-select:none;
+  line-height:1;
+}
+.hand{pointer-events:none;position:absolute}
+
+/* ==================================================================
+   LAYOUT A — Artboard (≥ 900px wide and not taller than ~1.09× the width)
+   1 artboard px  =  var(--u)  =  container width / 787.
+   Every value below is a measured reference coordinate.
+=================================================================== */
+@media (min-width:900px) and (min-aspect-ratio:787/860){
+  .page{--u:calc(100cqw / var(--ref-w));--px:var(--u)}
+  .band{position:relative;width:100%;flex:none}
+  .band--hero{height:calc(375 * var(--u))}
+  .band--foot{height:calc(378 * var(--u));overflow:hidden}   /* artboard y 375 → 753 */
+  .A{position:absolute;left:calc(var(--x) * var(--u));top:calc(var(--y) * var(--u))}
+  .T{font-size:calc(var(--fs) * var(--u));line-height:calc(var(--lh) * var(--u));letter-spacing:calc(var(--ls,0) * var(--u))}
+  .S{width:calc(var(--w) * var(--u));height:calc(var(--h) * var(--u))}
+
+  /* hero */
+  .editor{--x:331;--y:25;--w:456;--h:350}
+  .pill{--x:61.1;--y:83.6;--w:90.5;--h:20.7;--fs:9;--lh:22.3;--ls:0;padding-left:calc(18.8 * var(--u))}
+  .pill__dot{position:absolute;left:calc(3 * var(--u));top:calc(3.2 * var(--u));width:calc(14 * var(--u));height:calc(14 * var(--u))}
+  .pill__label{position:relative;left:calc(4.25 * var(--u));top:calc(0.6 * var(--u))}
+  .h1{--x:61.0;--y:117.95;--fs:30;--lh:35.6;--ls:-0.3;font-weight:500;white-space:nowrap}
+  .sub{--x:62;--y:200.3;--fs:9.6;--lh:15;--ls:0.14;color:var(--ink-sub);white-space:nowrap}
+  .btn{--x:61.2;--y:252.3;--w:95.6;--h:30.8;--fs:9.3;--lh:30.8;padding-top:calc(.5 * var(--u));--ls:0;border-radius:calc(9.5 * var(--u))}
+
+  /* footer (y relative to band top = artboard y − 375) */
+  .logo{--x:61.9;--y:16.3;--w:120;--h:20;gap:calc(6.95 * var(--u))}
+  .logo svg{width:calc(22.5 * var(--u));height:calc(18.6 * var(--u))}
+  .logo span{font-size:calc(17 * var(--u));letter-spacing:calc(0.05 * var(--u));font-weight:380;line-height:1;position:relative;top:calc(-0.5 * var(--u))}
+  .desc{--x:62.25;--y:47.85;--fs:8.6;--lh:13;--ls:0.21;color:var(--ink-desc);white-space:nowrap}
+  .social{--x:0;--y:0;display:block}
+  .social a{position:absolute}
+  .social .li{left:calc(62.9 * var(--u));top:calc(88.2 * var(--u));width:calc(10.1 * var(--u));height:calc(10.4 * var(--u))}
+  .social .ig{left:calc(80.1 * var(--u));top:calc(87.4 * var(--u));width:calc(10.8 * var(--u));height:calc(11.2 * var(--u))}
+  .social .yt{left:calc(98.1 * var(--u));top:calc(87.8 * var(--u));width:calc(13.6 * var(--u));height:calc(9.9 * var(--u))}
+
+  .cols{--x:0;--y:0}
+  .col{position:absolute;top:calc(15.35 * var(--u))}
+  .col:nth-child(1){left:calc(268.35 * var(--u))}
+  .col:nth-child(2){left:calc(351.85 * var(--u))}
+  .col:nth-child(3){left:calc(434.85 * var(--u))}
+  .cols h3{font-size:calc(9.1 * var(--u));line-height:calc(12 * var(--u));letter-spacing:calc(0 * var(--u));margin-bottom:calc(5.6 * var(--u));white-space:nowrap}
+  .cols li{font-size:calc(9.0 * var(--u));line-height:calc(18.7 * var(--u));letter-spacing:calc(0.03 * var(--u));white-space:nowrap}
+
+  .news{--x:553.25;--y:17.25}
+  .news h3{font-size:calc(10 * var(--u));line-height:calc(13 * var(--u));letter-spacing:calc(0 * var(--u));font-weight:500;color:var(--ink-news);white-space:nowrap}
+  .field{position:absolute;left:calc(-1.25 * var(--u));top:calc(19.05 * var(--u));width:calc(174.5 * var(--u));height:calc(33.1 * var(--u));border-radius:calc(7.5 * var(--u));padding-left:calc(8.15 * var(--u));padding-right:calc(3.2 * var(--u))}
+  .field input{top:calc(-.5 * var(--u));font-size:calc(9.1 * var(--u));letter-spacing:calc(0 * var(--u))}
+  .field__go{width:calc(25.2 * var(--u));height:calc(26.4 * var(--u));border-radius:calc(6.2 * var(--u));margin-top:calc(-.3 * var(--u))}
+  .field__go svg{width:calc(10.4 * var(--u));height:calc(10.4 * var(--u));position:relative;top:calc(-.9 * var(--u))}
+  .news p{position:absolute;left:calc(0.25 * var(--u));top:calc(56.7 * var(--u));font-size:calc(8.2 * var(--u));line-height:calc(10 * var(--u));letter-spacing:calc(0 * var(--u));color:var(--ink-faint);white-space:nowrap}
+
+  .legal{--x:0;--y:201.35;width:100%;--fs:9.0;--lh:14;--ls:0;padding-left:calc(-0.5 * var(--u))}
+
+  .hand--l{left:0;top:calc(133 * var(--u));width:calc(291 * var(--u));height:calc(145 * var(--u));z-index:2}
+  .hand--r{left:calc(508 * var(--u));top:calc(175 * var(--u));width:calc(279 * var(--u));height:calc(164 * var(--u));z-index:2}
+  .water{--x:49.5;--y:268.55;font-size:calc(158 * var(--u));letter-spacing:calc(-1.4 * var(--u));font-weight:245;z-index:1}
+}
+
+/* ==================================================================
+   LAYOUT B — Fluid stack (< 900px, or portrait screens): phones & tablets.
+   Same components, re-flowed; fills the viewport top-to-bottom.
+=================================================================== */
+@media (max-width:899.98px), (max-aspect-ratio:786.9/860){
+  .page{--g:clamp(16px,5.2cqw,40px);--px:1.6px}
+  .band--hero{
+    position:relative;display:flex;flex-direction:column;align-items:flex-start;
+    padding:clamp(40px,11cqw,88px) var(--g) 0;
+  }
+  .editor{order:5;position:relative;width:min(118cqw,760px);height:auto;margin:clamp(28px,7cqw,56px) calc(var(--g) * -1) 0 auto;align-self:flex-end;
+    -webkit-mask:linear-gradient(90deg,transparent 0,#000 12%);mask:linear-gradient(90deg,transparent 0,#000 12%)}
+  .pill{height:34px;padding:0 14px 0 34px;font-size:14px}
+  .pill__dot{position:absolute;left:5px;top:5px;width:24px;height:24px}
+  .h1{margin-top:22px;font-size:clamp(40px,11.4cqw,64px);line-height:1.18;font-weight:500;letter-spacing:-.01em}
+  .sub br,.desc br{display:none}
+  .sub{margin-top:16px;font-size:clamp(15px,4.1cqw,18px);line-height:1.55;color:var(--ink-sub);max-width:34em}
+  .btn{margin-top:28px;height:50px;padding:0 26px;border-radius:13px;font-size:16px}
+
+  .band--foot{
+    position:relative;display:grid;gap:36px 20px;
+    grid-template-columns:repeat(3,auto);justify-content:space-between;
+    padding:clamp(44px,10cqw,72px) var(--g) 0;
+  }
+  .brand{grid-column:1 / -1}
+  .logo{gap:12px}
+  .logo svg{width:38px;height:31px}
+  .logo span{font-size:28px;letter-spacing:-.01em}
+  .desc{margin-top:14px;font-size:15px;line-height:1.5;color:var(--ink-desc);max-width:24em}
+  .social{display:flex;gap:16px;margin-top:20px}
+  .social a{width:22px;height:22px}
+  .cols{display:contents}
+  .col h3{font-size:15px;margin-bottom:14px}
+  .col li{font-size:14.5px;line-height:2.1}
+  .news{grid-column:1 / -1}
+  .news h3{font-size:17px;font-weight:500;color:var(--ink-news)}
+  .field{margin-top:14px;height:56px;border-radius:13px;padding:0 6px 0 18px;width:100%;max-width:440px}
+  .field input{font-size:15.5px}
+  .field__go{width:44px;height:44px;border-radius:10px}
+  .field__go svg{width:16px;height:16px}
+  .news p{margin-top:10px;font-size:13px;color:var(--ink-faint)}
+  .legal{grid-column:1 / -1;font-size:13px;line-height:1.7;margin-top:8px;position:relative;z-index:3}
+  .art{grid-column:1 / -1;position:relative;height:clamp(150px,44cqw,330px);margin:0 calc(var(--g) * -1)}
+  .hand--l{left:0;top:0;width:52cqw;height:auto}
+  .hand--r{right:0;top:12%;width:50cqw;height:auto}
+  .water{position:absolute;left:50%;bottom:0;transform:translate(-50%,24%);font-size:22.4cqw;letter-spacing:-.009em}
+}
+/* Fluid stack, roomier screens (large phones landscape / tablets): brand beside the link columns */
+@media (min-width:640px) and (max-width:899.98px), (min-width:640px) and (max-aspect-ratio:786.9/860){
+  .band--foot{grid-template-columns:minmax(0,1.4fr) repeat(3,auto);column-gap:clamp(24px,5cqw,56px)}
+  .brand{grid-column:auto}
+  .news{grid-column:1 / 2}
+  .legal{grid-column:2 / -1;align-self:end;text-align:right}
+  .art{height:clamp(220px,36cqw,420px)}
+}
+
+/* One opening sequence. The page background and below-the-fold art stay still. */
+.h1-line{display:block;overflow:hidden}
+.h1-line > span{display:block}
+@media (prefers-reduced-motion:no-preference){
+  .band--hero .pill{
+    animation:entrance-context .48s cubic-bezier(.22,1,.36,1) .06s backwards;
+  }
+  .h1-line:first-child > span{
+    animation:entrance-type .78s cubic-bezier(.22,1,.36,1) .20s backwards;
+  }
+  .h1-line:last-child > span{
+    animation:entrance-type .78s cubic-bezier(.22,1,.36,1) .32s backwards;
+  }
+  .band--hero .sub{
+    animation:entrance-soft .58s cubic-bezier(.22,1,.36,1) .66s backwards;
+  }
+  .band--hero .btn{
+    animation:entrance-soft .56s cubic-bezier(.22,1,.36,1) .84s backwards;
+  }
+  .band--hero .editor{
+    animation:entrance-editor 1s cubic-bezier(.2,.8,.2,1) .56s backwards;
+  }
+}
+@keyframes entrance-type{
+  from{transform:translate3d(0,105%,0)}
+  to{transform:none}
+}
+@keyframes entrance-context{
+  from{opacity:0}
+  to{opacity:1}
+}
+@keyframes entrance-soft{
+  from{opacity:0;transform:translate3d(0,9px,0)}
+  to{opacity:1;transform:none}
+}
+@keyframes entrance-editor{
+  from{opacity:0;transform:translate3d(12px,8px,0) scale(.985)}
+  to{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<main class="page">
+
+  <section class="band band--hero" aria-labelledby="cta-title">
+    <img class="editor A S" alt="Dreamflow editor: widget tree beside generated Flutter code" width="912" height="700"
+         src="assets/dreamflow-editor.png">
+
+    <span class="pill A S T">
+      <span class="pill__dot" aria-hidden="true">
+        <svg viewBox="0 0 20 20" fill="none">
+          <g transform="rotate(28 10 10)" stroke="var(--violet)" stroke-width="1.35" stroke-linejoin="round">
+            <path d="M10 2.6 C10.7 7 13 9.3 17.4 10 C13 10.7 10.7 13 10 17.4 C9.3 13 7 10.7 2.6 10 C7 9.3 9.3 7 10 2.6Z" fill="rgba(140,140,230,.18)"/>
+          </g>
+        </svg>
+      </span>
+      <span class="pill__label">Ship Your Idea</span>
+    </span>
+
+    <h1 id="cta-title" class="h1 A T"><span class="h1-line"><span>Your next app</span></span><span class="h1-line"><span>starts now.</span></span></h1>
+    <p class="sub A T">Describe it, shape it in the canvas or code, ship it to the App <br>Store, Play Store, or web. No install, no credit card.</p>
+    <a class="btn A S T" href="#start">Get started now</a>
+  </section>
+
+  <footer class="band band--foot">
+    <div class="brand">
+      <a class="logo A S" href="#" aria-label="Dreamflow home">
+        <svg viewBox="62 391 24.2 20" aria-hidden="true">
+          <path fill="currentColor" stroke="currentColor" stroke-width=".5" stroke-linejoin="round"
+                d="M80.3 391.1 L86.3 391.1 L82.4 405.1 L78.7 405.8 L78.3 410.5 L67.3 410.5 L64.5 404.6 L62.6 400.4 L71.6 394.1 L76.1 398.9 L69.7 404.4 L76.4 404.4 Z"/>
+        </svg>
+        <span>dreamflow</span>
+      </a>
+      <p class="desc A T">Dreamflow keeps every surface in sync, <br>so you never rebuild from scratch.</p>
+      <nav class="social A" aria-label="Social">
+        <a class="li" href="#" aria-label="LinkedIn">
+          <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="1" y="1" width="20" height="20" rx="1"/>
+            <path d="M5.4 9.2v9.6M11.7 18.8V9.2M11.7 13c0-2.4 1.3-3.8 3.2-3.8s3.1 1.3 3.1 3.6v6"/>
+            <circle cx="5.4" cy="5.9" r="1.25" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a class="ig" href="#" aria-label="Instagram">
+          <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" preserveAspectRatio="none">
+            <rect x="1.1" y="1.1" width="19.8" height="19.8" rx="5.4"/>
+            <circle cx="11" cy="11" r="4.9"/>
+            <circle cx="16.6" cy="5.4" r=".7" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a class="yt" href="#" aria-label="YouTube">
+          <svg viewBox="0 0 28 20" fill="none" stroke="currentColor" stroke-width="1.95">
+            <rect x="1.1" y="1.1" width="25.8" height="17.8" rx="4.4"/>
+            <path d="M11.6 6.2v7.6l6.2-3.8z" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+      </nav>
+    </div>
+
+    <div class="cols A">
+      <nav class="col" aria-label="Product"><h3>Product</h3>
+        <ul><li><a href="#">Preview</a></li><li><a href="#">Features</a></li><li><a href="#">How it works</a></li><li><a href="#">Developers</a></li></ul></nav>
+      <nav class="col" aria-label="Resources"><h3>Resources</h3>
+        <ul><li><a href="#">Blog</a></li><li><a href="#">Documentation</a></li><li><a href="#">Videos</a></li><li><a href="#">Community</a></li></ul></nav>
+      <nav class="col" aria-label="Company"><h3>Company</h3>
+        <ul><li><a href="#">Contact</a></li><li><a href="#">Privacy</a></li><li><a href="#">Terms of Service</a></li></ul></nav>
+    </div>
+
+    <form class="news A" onsubmit="event.preventDefault();this.querySelector('input').value='';">
+      <h3 id="news-t">Subscribe to our newsletter</h3>
+      <label class="field">
+        <span class="sr">Email address</span>
+        <input type="email" placeholder="Johndoe@gmail.com" aria-describedby="news-t" autocomplete="email">
+        <button class="field__go" type="submit" aria-label="Subscribe">
+          <svg viewBox="0 0 16 16" fill="none" stroke="#dadada" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M8.6 3.6 13 8l-4.4 4.4"/></svg>
+        </button>
+      </label>
+      <p>Unsubscribe anytyime</p>
+    </form>
+
+    <p class="legal A T">©&#8202;2026<br>Dreamflow<br>Build a real app, fast.</p>
+
+    <div class="art" aria-hidden="true">
+      <img class="hand hand--l" alt="" width="582" height="290" src="assets/hand-left.png">
+      <img class="hand hand--r" alt="" width="558" height="328" src="assets/hand-right.png">
+      <div class="water A">Dreamflow</div>
+    </div>
+  </footer>
+
+</main>
+</body>
+</html>

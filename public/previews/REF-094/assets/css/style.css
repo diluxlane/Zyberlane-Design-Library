@@ -1,0 +1,356 @@
+@font-face{font-family:'GSans';src:url(../fonts/gsans-400.woff2) format('woff2');font-weight:400;font-style:normal;font-display:block}
+@font-face{font-family:'GSans';src:url(../fonts/gsans-500.woff2) format('woff2');font-weight:500;font-style:normal;font-display:block}
+@font-face{font-family:'GSans';src:url(../fonts/gsans-600.woff2) format('woff2');font-weight:600;font-style:normal;font-display:block}
+@font-face{font-family:'Oswald';src:url(../fonts/oswald-700.woff2) format('woff2');font-weight:700;font-style:normal;font-display:block}
+@font-face{font-family:'SairaXC';src:url(../fonts/saira-xc-900.woff2) format('woff2');font-weight:900;font-style:normal;font-display:block}
+@font-face{font-family:'Alumni';src:url(../fonts/alumni-900.woff2) format('woff2');font-weight:900;font-style:normal;font-display:block}
+@font-face{font-family:'Playfair';src:url(../fonts/playfair-600-italic.woff2) format('woff2');font-weight:600;font-style:italic;font-display:block}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-400-01.woff2) format('woff2');font-weight:400;font-style:normal;font-display:block;unicode-range:U+7DD2}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-400-02.woff2) format('woff2');font-weight:400;font-style:normal;font-display:block;unicode-range:U+60F3,U+8449}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-400-03.woff2) format('woff2');font-weight:400;font-style:normal;font-display:block;unicode-range:U+672A,U+7D4C}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-400-04.woff2) format('woff2');font-weight:400;font-style:normal;font-display:block;unicode-range:U+8A00}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-400-05.woff2) format('woff2');font-weight:400;font-style:normal;font-display:block;unicode-range:U+4FE1,U+5FC3,U+6765}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-400-06.woff2) format('woff2');font-weight:400;font-style:normal;font-display:block;unicode-range:U+529B,U+5909,U+8A71}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-400-07.woff2) format('woff2');font-weight:400;font-style:normal;font-display:block;unicode-range:U+81EA}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-400-08.woff2) format('woff2');font-weight:400;font-style:normal;font-display:block;unicode-range:U+300C,U+300D,U+4E00,U+4EBA,U+4F1A,U+51FA,U+5206,U+52D5,U+751F,U+793E,U+884C}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-400-09.woff2) format('woff2');font-weight:400;font-style:normal;font-display:block;unicode-range:U+65E5}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-400-10.woff2) format('woff2');font-weight:400;font-style:normal;font-display:block;unicode-range:U+3001,U+3002,U+3044,U+3046,U+3048,U+304B,U+304C,U+304D,U+304F,U+3051,U+3053,U+3057,U+3058,U+3059,U+3063,U+3064,U+3066,U+3067,U+3068,U+306B,U+306E,U+3072,U+307E,U+307F,U+3087,U+3089,U+308A,U+308B,U+3092,U+30FB}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-400-11.woff2) format('woff2');font-weight:400;font-style:normal;font-display:block;unicode-range:U+8F1D}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-500-01.woff2) format('woff2');font-weight:500;font-style:normal;font-display:block;unicode-range:U+7DD2}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-500-02.woff2) format('woff2');font-weight:500;font-style:normal;font-display:block;unicode-range:U+60F3,U+8449}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-500-03.woff2) format('woff2');font-weight:500;font-style:normal;font-display:block;unicode-range:U+672A,U+7D4C}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-500-04.woff2) format('woff2');font-weight:500;font-style:normal;font-display:block;unicode-range:U+8A00}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-500-05.woff2) format('woff2');font-weight:500;font-style:normal;font-display:block;unicode-range:U+4FE1,U+5FC3,U+6765}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-500-06.woff2) format('woff2');font-weight:500;font-style:normal;font-display:block;unicode-range:U+529B,U+5909,U+8A71}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-500-07.woff2) format('woff2');font-weight:500;font-style:normal;font-display:block;unicode-range:U+81EA}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-500-08.woff2) format('woff2');font-weight:500;font-style:normal;font-display:block;unicode-range:U+300C,U+300D,U+4E00,U+4EBA,U+4F1A,U+51FA,U+5206,U+52D5,U+751F,U+793E,U+884C}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-500-09.woff2) format('woff2');font-weight:500;font-style:normal;font-display:block;unicode-range:U+65E5}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-500-10.woff2) format('woff2');font-weight:500;font-style:normal;font-display:block;unicode-range:U+3001,U+3002,U+3044,U+3046,U+3048,U+304B,U+304C,U+304D,U+304F,U+3051,U+3053,U+3057,U+3058,U+3059,U+3063,U+3064,U+3066,U+3067,U+3068,U+306B,U+306E,U+3072,U+307E,U+307F,U+3087,U+3089,U+308A,U+308B,U+3092,U+30FB}
+@font-face{font-family:'NotoJP';src:url(../fonts/noto-jp-500-11.woff2) format('woff2');font-weight:500;font-style:normal;font-display:block;unicode-range:U+8F1D}
+
+/* ============================================================
+   Tokens
+   ============================================================ */
+:root{
+  --accent:#F64518;          /* button fills */
+  --accent-text:#F03E12;  /* orange type */
+  --btn-ink:rgba(255,255,255,.78);
+  --ink:#fff;
+  --paper:#b3acab;             /* backdrop sampled from the photograph */
+  --jacket:#d23a17;            /* jacket orange, used below the photo on narrow screens */
+  --vh:100vh;
+  /* --u : 1 reference pixel (artboard 2048 x 1536) scaled with "contain" logic.
+     --t : same, but never smaller than 0.5px so UI copy stays legible on small laptops. */
+  --u:min(calc(100vw / 2048), calc(var(--vh) / 1536));
+  --t:max(var(--u), 0.5px);
+}
+@supports (height:100dvh){:root{--vh:100dvh}}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--paper)}
+body{color:var(--ink);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision;font-synthesis:none}
+a{color:inherit;text-decoration:none}
+h1,h2,p,dl,dd,ul{margin:0}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.hero{position:relative;overflow:hidden;isolation:isolate}
+.bg{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.bg img{display:block;width:100%;height:100%;object-fit:cover;filter:url(#grade)}
+a:focus-visible,button:focus-visible{outline:2px solid #fff;outline-offset:4px}
+.btn{background:var(--accent);color:var(--btn-ink);font-family:GSans,sans-serif;font-weight:400;line-height:1;text-decoration:none}
+.btn svg{display:block}
+.nav a,.btn,.social a{transition:opacity .2s ease}
+@media (hover:hover){.nav a:hover,.social a:hover{opacity:.72}.btn:hover{filter:brightness(1.06)}}
+
+/* name lockup geometry (shared by both modes; --U is set per mode) */
+.name{margin:0;font-weight:900}
+.name .n1,.name .n2{position:absolute;white-space:nowrap}
+.name .n1 span,.name .n2 span{position:absolute;left:0;top:0;transform-origin:0 0}
+.name .n1{left:calc(-22.6 * var(--U));top:calc(-103 * var(--U));font:900 calc(653.6 * var(--U))/1 SairaXC,sans-serif}
+.name .n2{left:calc(1379.7 * var(--U));top:calc(-26 * var(--U));font:900 calc(477.7 * var(--U))/1 Alumni,sans-serif}
+.name .n1 span:nth-child(1){left:calc(0.0 * var(--U));transform:scale(1.021,1)}
+.name .n1 span:nth-child(2){left:calc(265.8 * var(--U));transform:scale(1.03,1)}
+.name .n1 span:nth-child(3){left:calc(392.7 * var(--U));transform:scale(1.037,1)}
+.name .n1 span:nth-child(4){left:calc(673.7 * var(--U));transform:scale(0.93,1)}
+.name .n1 span:nth-child(5){left:calc(902.5 * var(--U));transform:scale(1.009,1)}
+.name .n1 span:nth-child(6){left:calc(1106.7 * var(--U));transform:scale(0.934,1)}
+.name .n2 span:nth-child(1){left:calc(0.0 * var(--U));transform:scale(0.4,1)}
+.name .n2 span:nth-child(2){left:calc(81.4 * var(--U));transform:scale(0.394,1.0106)}
+.name .n2 span:nth-child(3){left:calc(161.2 * var(--U));transform:scale(0.385,1.0106)}
+.name .n2 span:nth-child(4){left:calc(245.4 * var(--U));transform:scale(0.399,1.0106)}
+.name .n2 span:nth-child(5){left:calc(324.7 * var(--U));transform:scale(0.421,1.0106)}
+
+/* ============================================================
+   MODE A — landscape / desktop: pixel-exact artboard.
+   Every block is pinned to the viewport edge it lives on in the
+   design and sized in reference pixels (--u). At 4:3 the layout is
+   identical to the 2048x1536 comp; other ratios keep the hero full
+   bleed (photo = cover) while blocks stay pinned to their edges.
+   ============================================================ */
+@media (min-width:1000px) and (min-height:640px) and (min-aspect-ratio:11/10){
+  html,body{height:100%;overflow:hidden}
+  .hero{width:100vw;height:var(--vh)}
+  .nav a{color:rgba(255,255,255,.9)}
+  .intro h1{color:#ffffff}
+.g{position:absolute;width:0;height:0}
+.g>*{position:absolute;white-space:nowrap;margin:0}
+.brand{left:0;top:0;--U:var(--t)}
+.brand .logo-name{left:calc(80 * var(--U));top:calc(48 * var(--U));font:700 calc(42.2 * var(--U))/1 Oswald,sans-serif;letter-spacing:0em}
+.brand .logo-sub{left:calc(81 * var(--U));top:calc(98 * var(--U));font:500 calc(18.67 * var(--U))/1 GSans,NotoJP,sans-serif;letter-spacing:0.053em;color:rgba(240,62,18,.87)}
+.nav{left:50%;top:0;--U:var(--t)}
+.nav ul{left:0;top:0;list-style:none;padding:0}
+.nav li{position:absolute;top:calc(57 * var(--U));white-space:nowrap}
+.nav li:nth-child(1){left:calc(-384 * var(--U))}
+.nav li:nth-child(2){left:calc(-252 * var(--U))}
+.nav li:nth-child(3){left:calc(-75 * var(--U))}
+.nav li:nth-child(4){left:calc(66 * var(--U))}
+.nav li:nth-child(5){left:calc(203 * var(--U))}
+.nav li:nth-child(6){left:calc(333 * var(--U))}
+.nav a{font:600 calc(19.4 * var(--U))/1 GSans,sans-serif;letter-spacing:0.077em}
+.btn-top{left:calc(100% + calc(-344 * var(--t)));top:calc(31 * var(--t));width:calc(273 * var(--t));height:calc(75 * var(--t));--U:var(--t)}
+.btn-top .lbl{left:calc(42 * var(--U));top:calc(31 * var(--U));font-size:calc(18.67 * var(--U));letter-spacing:0.072em}
+.btn-top svg{left:calc(216.3 * var(--U));top:calc(30 * var(--U));width:calc(16 * var(--U));height:calc(16 * var(--U))}
+.intro{left:0;top:50%;--U:var(--t)}
+.intro .tag{left:calc(100 * var(--U));top:calc(-495 * var(--U));font:500 calc(23.5 * var(--U))/1 NotoJP,sans-serif;letter-spacing:0em;color:rgba(240,62,18,.92)}
+.intro h1{left:0;top:0;font:500 calc(77 * var(--U))/calc(82.5 * var(--U)) GSans,sans-serif;letter-spacing:-0.031em}
+.intro h1 .l1{position:absolute;left:calc(99 * var(--U));top:calc(-458 * var(--U));letter-spacing:-0.031em}
+.intro h1 .l2{position:absolute;left:calc(99 * var(--U));top:calc(-376 * var(--U));letter-spacing:-0.041em}
+.intro h1 .l3{position:absolute;left:calc(98 * var(--U));top:calc(-303 * var(--U));letter-spacing:-0.024em}
+.intro h1 em{font:italic 600 calc(83 * var(--U))/1 Playfair,serif;letter-spacing:0.02em;color:var(--accent-text);margin-left:calc(3 * var(--U));position:relative;top:calc(4 * var(--U))}
+.intro .rule{left:calc(101 * var(--U));top:calc(-188.5 * var(--U));width:calc(77 * var(--U));height:calc(2 * var(--U));background:rgba(240,62,18,.42);border:0}
+.intro .lead{left:calc(98.5 * var(--U));top:calc(-165 * var(--U));font:500 calc(17.9 * var(--U))/calc(33.5 * var(--U)) NotoJP,sans-serif;letter-spacing:0.017em;color:rgba(255,255,255,.86)}
+.intro .lead .p1{display:block;letter-spacing:0.017em}
+.intro .lead .p2{display:block;letter-spacing:0.003em}
+.intro .lead .p3{display:block;letter-spacing:0.03em}
+.btn-cta{left:calc(100 * var(--U));top:calc(-27 * var(--U));width:calc(266 * var(--U));height:calc(75 * var(--U))}
+.btn-cta .lbl{left:calc(41 * var(--U));top:calc(30 * var(--U));font-size:calc(18.67 * var(--U));letter-spacing:0.05em}
+.btn-cta svg{left:calc(210.3 * var(--U));top:calc(29 * var(--U));width:calc(16 * var(--U));height:calc(16 * var(--U))}
+.btn{position:absolute;display:block}
+.btn>*{position:absolute;white-space:nowrap}
+.facts{left:100%;top:50%;--U:var(--t)}
+.facts dt,.facts dd{position:absolute;margin:0;white-space:nowrap;line-height:1}
+.facts dt{font:500 calc(18.67 * var(--U))/1 GSans,NotoJP,sans-serif;letter-spacing:0.0em;color:rgba(240,62,18,.85)}
+.facts dd{font:500 calc(18.67 * var(--U))/1 GSans,NotoJP,sans-serif;letter-spacing:0.02em;color:rgba(255,255,255,.84)}
+.facts .fact{position:static}
+.facts .f1l{left:calc(-301 * var(--U));top:calc(-496 * var(--U));letter-spacing:-0.012em}
+.facts .f1a{left:calc(-301 * var(--U));top:calc(-465 * var(--U));letter-spacing:0.033em}
+.facts .f1b{left:calc(-301 * var(--U));top:calc(-436 * var(--U));letter-spacing:0.02em}
+.facts .f2l{left:calc(-300 * var(--U));top:calc(-328 * var(--U));letter-spacing:-0.025em}
+.facts .f2a{left:calc(-305 * var(--U));top:calc(-293 * var(--U));letter-spacing:-0.02em}
+.facts .f2b{left:calc(-300 * var(--U));top:calc(-264 * var(--U));letter-spacing:0.02em}
+.facts .f3l{left:calc(-300 * var(--U));top:calc(-146 * var(--U));letter-spacing:-0.005em}
+.facts .f3a{left:calc(-299 * var(--U));top:calc(-112 * var(--U));letter-spacing:0.008em}
+.facts .f3b{left:calc(-299 * var(--U));top:calc(-84 * var(--U));letter-spacing:0.031em}
+.facts .d1{position:absolute;left:calc(-300 * var(--U));top:calc(-377 * var(--U));width:calc(28 * var(--U));height:calc(2 * var(--U));background:rgba(240,62,18,.3)}
+.facts .d2{position:absolute;left:calc(-300 * var(--U));top:calc(-197 * var(--U));width:calc(30 * var(--U));height:calc(2 * var(--U));background:rgba(240,62,18,.42)}
+.name{left:calc(101 * var(--u));top:calc(100% + calc(-630 * var(--u)));--U:var(--u)}
+.roles{left:0;top:100%;--U:var(--t)}
+.roles .r1,.roles .r2{font:400 calc(20.6 * var(--U))/1 GSans,sans-serif;color:rgba(255,255,255,.68)}
+.roles .r1{left:calc(113 * var(--U));top:calc(-140 * var(--U));letter-spacing:0.04em;word-spacing:0em}
+.roles .r2{left:calc(114 * var(--U));top:calc(-110 * var(--U));letter-spacing:0.09em;word-spacing:0em}
+.roles .rl{left:calc(112 * var(--U));top:calc(-49 * var(--U));width:calc(94 * var(--U));height:calc(2 * var(--U));background:rgba(255,255,255,.27)}
+.roles .rj{left:calc(245 * var(--U));top:calc(-55 * var(--U));font:400 calc(18.5 * var(--U))/1 NotoJP,sans-serif;letter-spacing:0em;color:rgba(255,255,255,.8)}
+.social{left:100%;top:100%;--U:var(--t)}
+.social .fl{left:calc(-301 * var(--U));top:calc(-108 * var(--U));font:500 calc(18.67 * var(--U))/1 GSans,sans-serif;letter-spacing:0.021em;color:#F64518}
+.social ul{left:0;top:0;list-style:none;margin:0;padding:0}
+.social li{position:absolute}
+.social .i-ig{left:calc(-297 * var(--U));top:calc(-61 * var(--U));width:calc(24.5 * var(--U));height:calc(25.5 * var(--U))}
+.social .i-yt{left:calc(-238 * var(--U));top:calc(-58 * var(--U));width:calc(27.5 * var(--U));height:calc(20.5 * var(--U))}
+.social .i-li{left:calc(-177 * var(--U));top:calc(-62 * var(--U));width:calc(24.5 * var(--U));height:calc(25.5 * var(--U))}
+.social .i-x{left:calc(-118 * var(--U));top:calc(-61 * var(--U));width:calc(25.5 * var(--U));height:calc(25 * var(--U))}
+.social a,.social svg{display:block;width:100%;height:100%}
+.bg img{object-position:50% 12%}
+.burger,.menu{display:none}
+}
+
+/* ============================================================
+   NON-DESKTOP — one viewport, no scrolling.
+   The hero is a single-screen composition on every device, so each
+   architecture below is laid out on a CSS grid sized in its own
+   "design pixel" (--s). --s is the smaller of the width- and the
+   height-ratio, so the composition always fits inside 100dvh and any
+   spare height flows into the photograph row (1fr).
+     • Tablet  (portrait / squarish, >= 600px): intro left + highlights right,
+                photo band, lockup, roles + social footer  (base 768 x 960)
+     • Mobile  (portrait, < 600px): stacked intro, highlights row, photo band,
+                lockup, roles + social footer               (base 390 x 720)
+     • Short landscape (phones on their side, short windows): desktop-like
+                full-bleed photo with left intro / right highlights (base 740 x 390)
+   Components keep their desktop styling; only placement and scale change.
+   ============================================================ */
+@media not all and (min-width:1000px) and (min-height:640px) and (min-aspect-ratio:11/10){
+  html,body{height:100%}
+  .hero{height:var(--vh);display:grid;--x:calc(var(--padx) * var(--s));
+        padding:calc(var(--padt) * var(--s) + env(safe-area-inset-top)) calc(var(--x) + env(safe-area-inset-right)) calc(var(--padb) * var(--s) + env(safe-area-inset-bottom)) calc(var(--x) + env(safe-area-inset-left))}
+  .g{display:block}
+  .intro{display:contents}
+  .hero>*,.intro>*{position:relative;z-index:1;margin:0}
+  .bg{position:relative;inset:auto;z-index:0;overflow:visible}
+  /* portrait: the photo is anchored to the bottom and never shorter than --phmin,
+     which keeps the chin clear of the name lockup on short screens */
+  .bg img{position:absolute;left:0;right:0;bottom:0;width:100%;height:max(100%, var(--phmin, 0px));object-position:46% 100%}
+  /* header: logo left, menu button right */
+  .brand{display:flex;flex-direction:column;align-self:start;gap:calc(var(--s) * var(--logo) * .17)}
+  .logo-name{font:700 calc(var(--s) * var(--logo))/1 Oswald,sans-serif}
+  .logo-sub{font:500 calc(var(--s) * var(--logo) * .4)/1 GSans,sans-serif;letter-spacing:.053em;color:rgba(240,62,18,.87)}
+  .burger{display:flex;align-self:start;justify-self:end;width:calc(var(--s) * var(--bgr));height:calc(var(--s) * var(--bgr));flex-direction:column;align-items:center;justify-content:center;gap:calc(var(--s) * var(--bgr) * .16);
+          background:var(--accent);border:0;padding:0;cursor:pointer;z-index:7!important;-webkit-tap-highlight-color:transparent}
+  .burger i{display:block;width:44%;height:2px;background:#fff;transition:transform .3s ease}
+  .menu-open .burger i:first-child{transform:translateY(calc(var(--s) * var(--bgr) * .09)) rotate(45deg)}
+  .menu-open .burger i:last-child{transform:translateY(calc(var(--s) * var(--bgr) * -.09)) rotate(-45deg)}
+  /* menu: same paper surface, same nav type, same Book CTA */
+  .nav{position:fixed!important;inset:0;z-index:5!important;display:flex;flex-direction:column;justify-content:center;
+       padding:0 calc(var(--x) + env(safe-area-inset-left));background:rgba(179,172,171,.94);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+       opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s}
+  .menu-open .nav{opacity:1;visibility:visible}
+  .nav ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:calc(var(--s) * var(--menu) * .55)}
+  .nav a{display:inline-block;font:600 calc(var(--s) * var(--menu))/1.15 GSans,sans-serif;letter-spacing:.09em;color:#fff;padding:calc(var(--s) * 4) 0}
+  .btn.btn-top{display:none}
+  .menu-open .btn.btn-top{display:flex;position:fixed;z-index:6;left:calc(var(--x) + env(safe-area-inset-left));bottom:calc(var(--padb) * var(--s) * 2.4 + env(safe-area-inset-bottom))}
+  /* intro */
+  .tag{font:500 calc(var(--s) * var(--tag))/1.35 NotoJP,sans-serif;color:rgba(240,62,18,.92)}
+  .intro h1{font:500 calc(var(--s) * var(--h1))/1.07 GSans,sans-serif;letter-spacing:-.03em;color:#fff}
+  .intro h1 .l1,.intro h1 .l2,.intro h1 .l3{display:block;white-space:nowrap}
+  .intro h1 em{font:italic 600 calc(var(--s) * var(--h1) * 1.078)/1 Playfair,serif;letter-spacing:.02em;color:var(--accent-text)}
+  .rule{width:calc(var(--s) * var(--h1) * 1.0);height:2px;border:0;background:rgba(240,62,18,.42);align-self:start}
+  .lead{font:500 calc(var(--s) * var(--lead))/var(--lead-lh) NotoJP,sans-serif;letter-spacing:.01em;color:rgba(255,255,255,.86)}
+  .lead span{display:block;white-space:nowrap}
+  .btn{display:inline-flex;align-items:center;justify-content:space-between;gap:calc(var(--s) * var(--cta) * 2.6);height:calc(var(--s) * var(--cta) * 4);
+       padding:0 calc(var(--s) * var(--cta) * 2.25);font-size:calc(var(--s) * var(--cta));letter-spacing:.06em;white-space:nowrap}
+  .btn svg{width:calc(var(--s) * var(--cta) * .82);height:calc(var(--s) * var(--cta) * .82)}
+  .btn-cta{justify-self:start;align-self:start}
+  /* highlights keep their desktop treatment: orange labels, white values, orange dashes */
+  .facts dt{font:500 calc(var(--s) * var(--dt))/1.25 GSans,NotoJP,sans-serif;letter-spacing:.02em;color:rgba(240,62,18,.85);white-space:nowrap}
+  .facts dd{font:500 calc(var(--s) * var(--dd))/1.5 GSans,NotoJP,sans-serif;letter-spacing:.02em;color:rgba(255,255,255,.84);white-space:nowrap}
+  .fact dt{margin-bottom:calc(var(--s) * var(--dd) * .35)}
+  .facts .dash{display:block;width:calc(var(--s) * var(--dd) * 2);height:2px;background:rgba(240,62,18,.36)}
+  /* name lockup: identical letter geometry to desktop, scaled to the available width */
+  .name{position:relative;--U:calc(var(--nw) / 1741);width:var(--nw);height:calc(452 * var(--U));justify-self:start;align-self:end}
+  /* roles + social */
+  .r1,.r2{font:400 calc(var(--s) * var(--role))/1.6 GSans,sans-serif;letter-spacing:.06em;color:rgba(255,255,255,.68);white-space:nowrap}
+  .roles{display:grid;grid-template-columns:auto auto;justify-content:start;align-items:center;column-gap:calc(var(--s) * var(--role) * 1.4);align-self:end}
+  .r1,.r2{grid-column:1 / -1}
+  .rl{width:calc(var(--s) * var(--role) * 4.8);height:2px;background:rgba(255,255,255,.27);margin-top:calc(var(--s) * var(--role) * .55)}
+  .rj{font:400 calc(var(--s) * var(--role) * 1.13)/1 NotoJP,sans-serif;color:rgba(255,255,255,.8);margin-top:calc(var(--s) * var(--role) * .55);white-space:nowrap}
+  .social{display:flex;flex-direction:column;align-items:flex-start;gap:calc(var(--s) * var(--role) * 1.2);align-self:end;justify-self:end}
+  .fl{font:500 calc(var(--s) * var(--role))/1 GSans,sans-serif;letter-spacing:.02em;color:var(--accent)}
+  .social ul{list-style:none;padding:0;display:flex;align-items:center;gap:calc(var(--s) * var(--icon) * 1.15)}
+  .social li{display:block}
+  .social a{display:block;position:relative;width:calc(var(--s) * var(--icon));height:calc(var(--s) * var(--icon))}
+  .social a::after{content:"";position:absolute;inset:calc(var(--s) * var(--icon) * -.45)}  /* comfortable touch target, no visual change */
+  .social svg{display:block;width:100%;height:100%}
+  .i-yt a{width:calc(var(--s) * var(--icon) * 1.12)}
+  .i-yt svg{height:76%;margin-top:12%}
+  .i-x a{width:calc(var(--s) * var(--icon) * .94)}
+
+  /* ---------- TABLET : portrait & squarish screens from 600px ---------- */
+  @media (min-width:600px) and (max-aspect-ratio:10999/10000){
+    :root{--s:min(calc(100vw / 768), calc(var(--vh) / 960));
+          --padx:44;--padt:30;--padb:30;--logo:34;--bgr:54;--menu:34;--tag:17;--h1:52;--lead:15;--lead-lh:1.85;--cta:14.5;
+          --dt:12.5;--dd:14;--role:12.5;--icon:25}
+    .hero{grid-template-columns:1fr auto;grid-template-rows:auto auto auto auto auto auto minmax(0,1fr) auto auto;
+          --nw:min(calc(100vw - 2 * var(--x)), calc(var(--s) * 700));--phmin:calc(var(--s) * 237 + var(--nw) * .5)}
+    .brand{grid-area:1 / 1}
+    .burger{grid-area:1 / 2}
+    .tag{grid-area:2 / 1;margin-top:calc(var(--s) * 50)}
+    .intro h1{grid-area:3 / 1;margin-top:calc(var(--s) * 10)}
+    .rule{grid-area:4 / 1;margin-top:calc(var(--s) * 24)}
+    .lead{grid-area:5 / 1;margin-top:calc(var(--s) * 20)}
+    .btn-cta{grid-area:6 / 1;margin-top:calc(var(--s) * 28)}
+    .facts{grid-area:2 / 2 / 7 / 3;margin-top:calc(var(--s) * 54);display:flex;flex-direction:column;gap:calc(var(--s) * 24)}
+    .facts .dash{width:calc(var(--s) * 30)}
+    .bg{grid-area:7 / 1 / 10 / 3;margin:calc(var(--s) * -96) calc(-1 * var(--x)) calc(-30 * var(--s) - env(safe-area-inset-bottom))}
+    .bg img{-webkit-mask-image:linear-gradient(#0000 0,#000 calc(var(--s) * 120));mask-image:linear-gradient(#0000 0,#000 calc(var(--s) * 120))}
+    .name{grid-area:8 / 1 / 9 / 3;margin-bottom:calc(var(--s) * 22)}
+    .roles{grid-area:9 / 1}
+    .social{grid-area:9 / 2}
+  }
+
+  /* ---------- MOBILE : portrait phones below 600px ---------- */
+  @media (max-width:599.98px) and (max-aspect-ratio:10999/10000){
+    :root{--s:min(calc(100vw / 390), calc(var(--vh) / 720), 1.1px);
+          --padx:20;--padt:14;--padb:16;--logo:24;--bgr:42;--menu:28;--tag:13;--h1:34;--lead:12;--lead-lh:1.7;--cta:11.5;
+          --dt:9.5;--dd:10.5;--role:9.5;--icon:18}
+    .hero{grid-template-columns:1fr auto;grid-template-rows:auto auto auto auto auto auto auto minmax(0,1fr) auto auto;--nw:calc(100vw - 2 * var(--x));--phmin:calc(var(--s) * 142 + 50vw)}
+    .brand{grid-area:1 / 1}
+    .burger{grid-area:1 / 2}
+    .tag{grid-area:2 / 1 / 3 / 3;margin-top:calc(var(--s) * 24)}
+    .intro h1{grid-area:3 / 1 / 4 / 3;margin-top:calc(var(--s) * 6)}
+    .rule{grid-area:4 / 1 / 5 / 3;margin-top:calc(var(--s) * 15)}
+    .lead{grid-area:5 / 1 / 6 / 3;margin-top:calc(var(--s) * 12)}
+    .btn-cta{grid-area:6 / 1 / 7 / 3;margin-top:calc(var(--s) * 16)}
+    .facts{grid-area:7 / 1 / 8 / 3;margin-top:calc(var(--s) * 22);display:flex;align-items:flex-start;justify-content:space-between;gap:calc(var(--s) * 8)}
+    .facts .dash{width:calc(var(--s) * 12);margin-top:calc(var(--s) * 5.5);flex:none}
+    .bg{grid-area:8 / 1 / 11 / 3;margin:calc(var(--s) * -40) calc(-1 * var(--x)) calc(-16 * var(--s) - env(safe-area-inset-bottom))}
+    .bg img{-webkit-mask-image:linear-gradient(#0000 0,#000 calc(var(--s) * 64));mask-image:linear-gradient(#0000 0,#000 calc(var(--s) * 64))}
+    .name{grid-area:9 / 1 / 10 / 3;margin-bottom:calc(var(--s) * 12)}
+    .roles{grid-area:10 / 1}
+    .social{grid-area:10 / 2}
+  }
+
+  /* ---------- SHORT LANDSCAPE : phones on their side, short windows ---------- */
+  @media (min-aspect-ratio:11/10){
+    :root{--s:min(calc(100vw / 680), calc(var(--vh) / 390));
+          --padx:24;--padt:14;--padb:14;--logo:20;--bgr:34;--menu:22;--tag:11;--h1:23;--lead:10;--lead-lh:1.6;--cta:9.5;
+          --dt:8.5;--dd:9.5;--role:8.5;--icon:15}
+    .hero{grid-template-columns:auto 1fr auto auto;grid-template-rows:auto auto auto auto auto auto minmax(0,1fr) auto;--nw:calc(var(--s) * 300)}
+    .bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+    .bg img{position:static;height:100%;object-position:50% 22%;-webkit-mask-image:none;mask-image:none}
+    .brand{grid-area:1 / 1}
+    .burger{grid-area:1 / 4}
+    .tag{grid-area:2 / 1;margin-top:calc(var(--s) * 14)}
+    .intro h1{grid-area:3 / 1;margin-top:calc(var(--s) * 4)}
+    .rule{grid-area:4 / 1;margin-top:calc(var(--s) * 11)}
+    .lead{grid-area:5 / 1;margin-top:calc(var(--s) * 9)}
+    .btn-cta{grid-area:6 / 1;margin-top:calc(var(--s) * 12)}
+    .facts{grid-area:2 / 4 / 7 / 5;margin-top:calc(var(--s) * 16);display:flex;flex-direction:column;gap:calc(var(--s) * 12)}
+    .facts .dash{width:calc(var(--s) * 18)}
+    .name{grid-area:8 / 1 / 9 / 3;margin-top:calc(var(--s) * 10)}
+    .roles{grid-area:8 / 3;margin:0 calc(var(--s) * 16)}
+    .social{grid-area:8 / 4}
+  }
+}
+/* One opening sequence. The photograph is the fixed stage; only foreground
+   groups enter. Backwards fill hides each group before its cue, then the
+   authored styles take over when the animation and opt-in class end. */
+@media (prefers-reduced-motion:no-preference){
+  html.intro-pending .brand{animation:intro-soft .54s cubic-bezier(.22,1,.36,1) .06s backwards}
+  @media (min-width:1000px) and (min-height:640px) and (min-aspect-ratio:11/10){
+    html.intro-pending .nav{animation:intro-soft .52s cubic-bezier(.22,1,.36,1) .16s backwards}
+    html.intro-pending .btn-top{animation:intro-soft .54s cubic-bezier(.22,1,.36,1) .48s backwards}
+  }
+  @media not all and (min-width:1000px) and (min-height:640px) and (min-aspect-ratio:11/10){
+    html.intro-pending .burger{animation:intro-soft .52s cubic-bezier(.22,1,.36,1) .16s backwards}
+  }
+  html.intro-pending .tag{animation:intro-soft .48s cubic-bezier(.22,1,.36,1) .24s backwards}
+  html.intro-pending .intro h1 .l1{animation:intro-type .82s cubic-bezier(.19,1,.22,1) .34s backwards}
+  html.intro-pending .intro h1 .l2{animation:intro-type .82s cubic-bezier(.19,1,.22,1) .48s backwards}
+  html.intro-pending .intro h1 .l3{animation:intro-type .86s cubic-bezier(.19,1,.22,1) .62s backwards}
+  html.intro-pending .rule{animation:intro-rule .52s cubic-bezier(.22,1,.36,1) .86s backwards}
+  html.intro-pending .lead{animation:intro-copy .6s cubic-bezier(.22,1,.36,1) .94s backwards}
+  html.intro-pending .btn-cta{animation:intro-soft .62s cubic-bezier(.22,1,.36,1) 1.14s backwards}
+  html.intro-pending .facts{animation:intro-copy .62s cubic-bezier(.22,1,.36,1) 1.10s backwards}
+  html.intro-pending .name{animation:intro-lockup .86s cubic-bezier(.22,1,.36,1) 1.22s backwards}
+  html.intro-pending .roles{animation:intro-soft .5s cubic-bezier(.22,1,.36,1) 1.72s backwards}
+  html.intro-pending .social{animation:intro-soft .5s cubic-bezier(.22,1,.36,1) 1.76s backwards}
+  @keyframes intro-soft{
+    from{opacity:0;transform:translate3d(0,6px,0)}
+    to{opacity:1;transform:none}
+  }
+  @keyframes intro-type{
+    from{opacity:0;clip-path:inset(0 0 100% 0);transform:translate3d(0,.16em,0)}
+    to{opacity:1;clip-path:inset(0 0 0 0);transform:none}
+  }
+  @keyframes intro-rule{
+    from{opacity:0;transform:scaleX(0)}
+    to{opacity:1;transform:none}
+  }
+  @keyframes intro-copy{
+    from{opacity:0;transform:translate3d(0,4px,0)}
+    to{opacity:1;transform:none}
+  }
+  @keyframes intro-lockup{
+    from{opacity:0}
+    to{opacity:1}
+  }
+  .intro-pending .rule{transform-origin:left center}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}

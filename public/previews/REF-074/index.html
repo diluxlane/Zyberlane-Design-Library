@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-074/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ClearGate — The AI Communication Firewall</title>
+<meta name="description" content="Check every email, document, and post against your policies while people write. Fix problems before send. Generate exam-ready evidence automatically.">
+<meta name="theme-color" content="#060607">
+<script>
+/* Opt in before the first paint; if the entrance cannot run, reveal the original page. */
+(function(){
+  if(!Element.prototype.animate || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.documentElement.classList.add('entrance-pending');
+  window.__entranceFallback=setTimeout(function(){
+    if(window.__entranceCleanup) window.__entranceCleanup();
+    else document.documentElement.classList.remove('entrance-pending');
+  },3500);
+})();
+</script>
+<style>
+/* ───────────────────────── Fonts (embedded, subset) ───────────────────────── */
+@font-face{font-family:"Inter";font-weight:400;font-style:normal;font-display:block;src:url(assets/inter-400.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-weight:500;font-style:normal;font-display:block;src:url(assets/inter-500.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-weight:600;font-style:normal;font-display:block;src:url(assets/inter-600.woff2) format("woff2")}
+@font-face{font-family:"Inter Display";font-weight:600;font-style:normal;font-display:block;src:url(assets/inter-display-600.woff2) format("woff2")}
+@font-face{font-family:"Inter Display";font-weight:700;font-style:normal;font-display:block;src:url(assets/inter-display-700.woff2) format("woff2")}
+
+/* ───────────────────────── Design tokens ─────────────────────────
+   Every measurement below is taken from the 1586 × 992 reference and
+   expressed in design units (--u). On a 1586 × 992 viewport 1u = 1px,
+   so the layout is a 1:1 reproduction; elsewhere --u scales everything
+   proportionally while the background and spacing flex to fill the
+   whole viewport (no letter-boxing, no blank bands).                    */
+:root{
+  --ref-w:1586; --ref-h:992;
+  --u:min(calc(100vw / 1586), calc(100svh / 992));
+
+  --c-page:#060607;
+  --c-white:#ffffff;
+  --c-ink:#000000;
+  --c-sub:#d6d7e6;
+  --c-badge:rgba(232,226,250,.74);
+  --c-line:rgba(255,255,255,.42);
+  --c-cyan:#08cffe;
+
+  --c-card:rgba(24,25,26,.80);
+  --c-card-edge:rgba(255,255,255,.05);
+  --c-pill:rgba(59,61,65,.62);
+  --c-pill-edge:rgba(255,255,255,.055);
+  --c-pill-ok:rgba(12,60,82,.62);
+  --c-pill-ok-edge:rgba(40,170,230,.16);
+
+  --f-text:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --f-display:"Inter Display","Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--c-page);color:var(--c-white)}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-family:var(--f-text);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+svg{display:block;flex:none}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ───────────────────────── Hero shell ───────────────────────── */
+.hero{
+  position:relative; isolation:isolate; overflow:hidden;
+  height:100vh; height:100dvh; min-height:calc(var(--u) * 560);
+  display:flex; justify-content:center;
+}
+.hero__bg{position:absolute; inset:0; z-index:-1; pointer-events:none; background:var(--c-page)}
+.hero__bg::after{content:""; position:absolute; inset:0; background:rgba(12,12,13,.20)} /* tonal scrim measured from the reference: bg × 0.80 */
+.hero__bg img{width:100%; height:100%; object-fit:cover; object-position:50% 0%; display:block; user-select:none}
+
+/* The stage is the 1586-unit-wide design frame. It is centred and its
+   rows are a flex column: fixed-height rows come straight from the
+   reference, the two spacer rows absorb any extra viewport height.     */
+.stage{
+  position:relative; width:calc(var(--u) * 1586); height:100%;
+  display:flex; flex-direction:column;
+}
+.spacer{flex:1 1 0; min-height:0}
+.spacer--top{flex-basis:calc(var(--u) * var(--gap-top, 160))}
+.spacer--mid{flex-basis:calc(var(--u) * var(--gap-mid, 51))}
+
+/* ───────────────────────── Navigation ───────────────────────── */
+.nav{
+  flex:none; display:flex; align-items:center;
+  height:calc(var(--u) * 52); margin-top:calc(var(--u) * 32);
+  padding:0 calc(var(--u) * 146.5) 0 calc(var(--u) * 132.9);
+}
+.brand{display:flex; align-items:center; gap:calc(var(--u) * var(--brand-gap,7)); margin-top:calc(var(--u) * -0.5)}
+.brand__mark{width:calc(var(--u) * 58.55); height:calc(var(--u) * 37.51); fill:currentColor; transform:translateY(calc(var(--u) * -0.1))}
+.brand__name{font-family:var(--f-display); font-weight:700; font-size:calc(var(--u) * var(--brand-fs,26.5)); letter-spacing:calc(var(--u) * var(--brand-ls,0)); line-height:1; transform:translateY(calc(var(--u) * var(--brand-dy,-0.6)))}
+
+.nav__links{display:flex; align-items:center; list-style:none; margin:0 0 0 calc(var(--u) * var(--links-x,215)); padding:0; gap:calc(var(--u) * var(--links-gap,44))}
+.nav__links li{margin-left:calc(var(--u) * var(--mx,0))}
+.nav__links li:nth-child(2){--mx:0}
+.nav__links li:nth-child(3){--mx:-2}
+.nav__links li:nth-child(4){--mx:-5}
+.nav__links li:nth-child(4) svg{margin-left:calc(var(--u) * -3.5)}
+.nav__links li:nth-child(2) svg{margin-left:calc(var(--u) * -3)}
+.nav__link{display:flex; align-items:center; gap:calc(var(--u) * var(--chev-gap,8)); font-size:calc(var(--u) * var(--nav-fs,16)); font-weight:var(--nav-fw,400); line-height:1; letter-spacing:calc(var(--u) * var(--nav-ls,0)); transform:translateY(calc(var(--u) * var(--nav-dy,1)))}
+.nav__link svg{width:calc(var(--u) * 12.5); height:calc(var(--u) * 6.5); transform:translateY(calc(var(--u) * 1)); stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; overflow:visible}
+.nav__cta{
+  margin-left:auto; display:inline-flex; align-items:center; justify-content:center;
+  width:calc(var(--u) * 136); height:calc(var(--u) * 52); border-radius:999px;
+  background:#fdfdfd; color:var(--c-ink);
+  font-size:calc(var(--u) * var(--signin-fs,17)); font-weight:500; line-height:1;
+}
+.nav__menu{display:none}
+
+/* ───────────────────────── Intro copy ───────────────────────── */
+.intro{flex:none; display:flex; flex-direction:column; align-items:center; text-align:center}
+.intro__title{
+  margin:0; font-family:var(--f-display); font-weight:var(--t-fw,700);
+  font-size:calc(var(--u) * 93.5); line-height:calc(var(--u) * 106);
+  letter-spacing:calc(var(--u) * var(--t-ls,-0.9));
+  -webkit-text-stroke:calc(var(--u) * var(--t-stroke,0)) currentColor;
+}
+.intro__title span{display:block; white-space:nowrap; transform:translateX(calc(var(--u) * var(--t1-dx,3)))}
+.intro__title span + span{transform:translateX(calc(var(--u) * var(--t2-dx,15)))}
+.intro__sub{
+  margin:calc(var(--u) * var(--sub-mt,24)) 0 0; color:var(--c-sub);
+  font-size:calc(var(--u) * var(--sub-fs,22)); line-height:calc(var(--u) * 35);
+  letter-spacing:calc(var(--u) * var(--sub-ls,0.44)); font-weight:400;
+  width:calc(var(--u) * 960); text-wrap:balance;
+}
+.intro__sub span{display:block; white-space:nowrap; transform:translateX(calc(var(--u) * var(--sub-dx,1.5)))}
+.ctas{display:flex; gap:calc(var(--u) * 18); margin-top:calc(var(--u) * var(--cta-mt,19)); transform:translateX(calc(var(--u) * var(--cta-dx,9)))}
+.btn{
+  display:inline-flex; align-items:center; height:calc(var(--u) * 60); border-radius:999px;
+  font-size:calc(var(--u) * var(--btn-fs,20)); font-weight:var(--btn-fw,400); line-height:1; letter-spacing:calc(var(--u) * var(--btn-ls,0));
+  transition:transform .2s ease, background-color .2s ease, box-shadow .2s ease;
+}
+.btn--primary{width:calc(var(--u) * 204); padding:0 calc(var(--u) * 7) 0 calc(var(--u) * var(--btn1-pl,35.5)); background:#fdfefd; color:var(--c-ink); justify-content:space-between}
+.btn__icon{width:calc(var(--u) * 42); height:calc(var(--u) * 42); border-radius:50%; background:#000; color:#fff; display:grid; place-items:center}
+.btn__icon svg{width:calc(var(--u) * 17); height:calc(var(--u) * 17); stroke:currentColor; stroke-width:2.1; fill:none; stroke-linecap:round; stroke-linejoin:round}
+.btn--ghost{width:calc(var(--u) * 188); justify-content:center; color:var(--c-white); border:calc(var(--u) * 1.5) solid rgba(255,255,255,.96); background:rgba(0,0,0,.08)}
+.btn:hover{transform:translateY(-1px)}
+.btn--ghost:hover{background:rgba(255,255,255,.06)}
+.btn:focus-visible,.nav__cta:focus-visible,.nav__link:focus-visible{outline:2px solid var(--c-cyan); outline-offset:3px}
+
+.badge{display:flex; align-items:center; gap:calc(var(--u) * var(--badge-gap,10)); margin-top:calc(var(--u) * var(--badge-mt,22)); color:var(--c-badge); transform:translateX(calc(var(--u) * var(--badge-dx,8)))}
+.badge svg{width:calc(var(--u) * 22); height:calc(var(--u) * 22); stroke:rgba(243,239,249,.95); fill:none; stroke-width:1.5}
+.badge p{transform:translateY(calc(var(--u) * 1.5)); margin:0; font-size:calc(var(--u) * var(--badge-fs,15.5)); letter-spacing:calc(var(--u) * var(--badge-ls,-0.15)); line-height:1; text-transform:uppercase; font-weight:400; white-space:nowrap}
+
+/* ───────────────────────── Flow card ───────────────────────── */
+.flow-wrap{flex:none; height:calc(var(--u) * 268); display:flex; justify-content:center}
+.flow{
+  position:relative; margin:0; width:calc(var(--u) * 864); height:calc(100% + var(--u) * 80);
+  border-radius:calc(var(--u) * 24); background:var(--c-card);
+  box-shadow:inset 0 0 0 1px var(--c-card-edge);
+  -webkit-backdrop-filter:blur(calc(var(--u) * 28)) saturate(115%); backdrop-filter:blur(calc(var(--u) * 28)) saturate(115%);
+  --row1:29; --row2:112; --row3:193;
+  display:grid; grid-template-columns:calc(var(--u) * 140) 1fr calc(var(--u) * 95) 1fr calc(var(--u) * 141);
+  padding:calc(var(--u) * 32) calc(var(--u) * 44.5) 0 calc(var(--u) * 45.5);
+  align-items:start;
+}
+.flow__col{display:flex; flex-direction:column}
+.flow__col > :nth-child(2){margin-top:calc(var(--u) * 26)}
+.flow__col > :nth-child(3){margin-top:calc(var(--u) * 24)}
+.pill{
+  height:calc(var(--u) * 57); border-radius:999px; display:flex; align-items:center;
+  background:var(--c-pill); box-shadow:inset 0 0 0 1px var(--c-pill-edge), inset 0 -1px 0 rgba(255,255,255,.035);
+  -webkit-backdrop-filter:blur(calc(var(--u) * 12)); backdrop-filter:blur(calc(var(--u) * 12));
+  font-size:calc(var(--u) * var(--pill-fs,19)); line-height:1; letter-spacing:calc(var(--u) * var(--pill-ls,0));
+  padding-left:calc(var(--u) * var(--pill-pl,20)); gap:calc(var(--u) * var(--pill-gap,15));
+}
+.pill svg{width:calc(var(--u) * 26); height:calc(var(--u) * 26); stroke:currentColor; fill:none; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round}
+.pill--ok{background:var(--c-pill-ok); box-shadow:inset 0 0 0 1px var(--c-pill-ok-edge), 0 0 calc(var(--u) * 14) rgba(0,170,255,.10); color:var(--c-cyan); padding-left:calc(var(--u) * var(--ok-pl,20.5))}
+.pill--ok svg{stroke-width:2.2; transform:translateY(calc(var(--u) * -0.6))}
+
+/* connectors */
+.links{position:relative; height:calc(var(--u) * 249)}
+.links i{position:absolute; display:block}
+.links .dot{width:calc(var(--u) * 8.6); height:calc(var(--u) * 8.6); border-radius:50%; background:#f7f7f7; margin:calc(var(--u) * -4.3) 0 0 calc(var(--u) * -4.3)}
+.links .h{height:0; border-top:1px solid var(--c-line)}
+.links .bracket{border:1px solid var(--c-line); top:calc(var(--u) * var(--row1)); height:calc(var(--u) * (var(--row3) - var(--row1)) + 1px)}
+.links--in .bracket{left:calc(var(--u) * 8.5); width:calc(var(--u) * 61.5); border-left:0; border-radius:0 calc(var(--u) * 16) calc(var(--u) * 16) 0}
+.links--out .bracket{right:calc(var(--u) * 11.5); width:calc(var(--u) * 58.5); border-right:0; border-radius:calc(var(--u) * 16) 0 0 calc(var(--u) * 16)}
+.links .h--mid{top:calc(var(--u) * var(--row2)); left:calc(var(--u) * 8.5); right:0}
+.links--out .h--mid{left:0; right:calc(var(--u) * 11.5)}
+.links .dot--1{top:calc(var(--u) * var(--row1))}
+.links .dot--2{top:calc(var(--u) * var(--row2))}
+.links .dot--3{top:calc(var(--u) * var(--row3))}
+.links--in .dot{left:calc(var(--u) * 9)}
+.links--out .dot{right:calc(var(--u) * 11); margin:calc(var(--u) * -4.3) calc(var(--u) * -4.3) 0 0}
+
+.hub{position:relative; display:flex; flex-direction:column; align-items:center; padding-top:calc(var(--u) * 63.5)}
+.hub__tile{
+  width:calc(var(--u) * 95.4); height:calc(var(--u) * 98.2); border-radius:calc(var(--u) * 21); background:#fdfdfd; color:#000;
+  display:grid; place-items:center;
+  box-shadow:0 0 calc(var(--u) * 30) rgba(255,255,255,.26), 0 0 calc(var(--u) * 8) rgba(255,255,255,.26);
+}
+.hub__tile svg{width:calc(var(--u) * 69.67); height:calc(var(--u) * 41.17); fill:currentColor; transform:translate(calc(var(--u) * -0.4), calc(var(--u) * -0.9))}
+.hub__stem{width:0; flex:1; min-height:calc(var(--u) * 400); border-left:1px solid rgba(255,255,255,.58); box-shadow:1px 0 0 rgba(255,255,255,.22)}
+
+/* ───────────────────────── Tablet / phone (flow layout) ─────────────────────────
+   Below the desktop stage the composition reflows instead of shrinking:
+   the type is set on a fluid scale, the CTAs and badge wrap, and the
+   card keeps its geometry at a legible size. The hero still fills the
+   viewport exactly — spacers distribute the remaining height.            */
+@media (max-width:899.98px), (max-height:599.98px), (max-aspect-ratio:11/10){
+  :root{--u:clamp(0.72px, min(calc(100vw / 430), calc(100svh / 880)), 1.7px)}
+  .hero{height:auto; min-height:100vh; min-height:100dvh}
+  .hero__bg img{object-position:22% 0%}
+  .stage{width:100%; max-width:calc(var(--u) * 430 + 0px); min-height:100vh; min-height:100dvh; height:auto; padding:0 calc(var(--u) * 20)}
+  .nav{margin-top:calc(var(--u) * 14); height:calc(var(--u) * 46); padding:0}
+  .brand{gap:calc(var(--u) * 6)}
+  .brand__mark{width:calc(var(--u) * 40); height:calc(var(--u) * 25.6)}
+  .brand__name{font-size:calc(var(--u) * 20)}
+  .nav__links{display:none}
+  .nav__cta{width:auto; height:calc(var(--u) * 40); padding:0 calc(var(--u) * 18); font-size:calc(var(--u) * 15)}
+  .nav__menu{display:grid; place-items:center; margin-left:calc(var(--u) * 10); width:calc(var(--u) * 40); height:calc(var(--u) * 40); border-radius:50%; border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.04)}
+  .nav__menu svg{width:calc(var(--u) * 18); height:calc(var(--u) * 18); stroke:#fff; stroke-width:1.8; stroke-linecap:round; fill:none}
+  .nav__links.is-open{display:flex; position:absolute; z-index:5; top:calc(var(--u) * 68); left:calc(var(--u) * 20); right:calc(var(--u) * 20); margin:0; flex-direction:column; align-items:stretch; gap:0; padding:calc(var(--u) * 8); border-radius:calc(var(--u) * 20); background:rgba(20,20,24,.86); box-shadow:inset 0 0 0 1px rgba(255,255,255,.08), 0 20px 40px rgba(0,0,0,.4); -webkit-backdrop-filter:blur(20px); backdrop-filter:blur(20px)}
+  .nav__links.is-open .nav__link{justify-content:space-between; padding:calc(var(--u) * 14) calc(var(--u) * 14); font-size:calc(var(--u) * 17); transform:none}
+
+  .spacer--top{flex-basis:calc(var(--u) * 56)}
+  .spacer--mid{flex-basis:calc(var(--u) * 40)}
+  .intro__title{font-size:calc(var(--u) * 47); line-height:calc(var(--u) * 52); letter-spacing:calc(var(--u) * -0.9); -webkit-text-stroke:0}
+  .intro__title span{white-space:normal}
+  .intro__title span + span{transform:none}
+  .intro__sub{width:auto; max-width:calc(var(--u) * 390); font-size:calc(var(--u) * 17); line-height:calc(var(--u) * 27); letter-spacing:0; margin-top:calc(var(--u) * 18)}
+  .intro__sub span{display:inline; white-space:normal}
+  .ctas{flex-wrap:wrap; justify-content:center; gap:calc(var(--u) * 12); margin-top:calc(var(--u) * 28); transform:none}
+  .btn{height:calc(var(--u) * 52); font-size:calc(var(--u) * 17)}
+  .btn--primary{width:calc(var(--u) * 172); padding:0 calc(var(--u) * 6) 0 calc(var(--u) * 26)}
+  .btn__icon{width:calc(var(--u) * 40); height:calc(var(--u) * 40)}
+  .btn--ghost{width:calc(var(--u) * 164); border-width:1.5px}
+  .badge{margin-top:calc(var(--u) * 22); transform:none; gap:calc(var(--u) * 8); max-width:calc(var(--u) * 340); flex-direction:column; align-items:center}
+  .badge svg{width:calc(var(--u) * 18); height:calc(var(--u) * 18)}
+  .badge p{transform:none; font-size:calc(var(--u) * 12); line-height:calc(var(--u) * 18); letter-spacing:calc(var(--u) * .5); white-space:normal; text-align:center}
+
+  .flow-wrap{height:calc(var(--u) * 232); margin:0 calc(var(--u) * -4)}
+  .flow{width:100%; border-radius:calc(var(--u) * 20);
+        grid-template-columns:calc(var(--u) * 104) 1fr calc(var(--u) * 66) 1fr calc(var(--u) * 104);
+        padding:calc(var(--u) * 22) calc(var(--u) * 14) 0; --row1:21; --row2:81; --row3:141}
+  .flow__col > :nth-child(2),.flow__col > :nth-child(3){margin-top:calc(var(--u) * 18)}
+  .pill{height:calc(var(--u) * 42); font-size:calc(var(--u) * 14.5); padding-left:calc(var(--u) * 13); gap:calc(var(--u) * 9)}
+  .pill--ok{padding-left:calc(var(--u) * 12)}
+  .pill svg{width:calc(var(--u) * 19); height:calc(var(--u) * 19)}
+  .links{height:calc(var(--u) * 162)}
+  .links--in .bracket{left:calc(var(--u) * 7); width:calc(var(--u) * 26); border-radius:0 calc(var(--u) * 12) calc(var(--u) * 12) 0}
+  .links--out .bracket{right:calc(var(--u) * 7); width:calc(var(--u) * 26); border-radius:calc(var(--u) * 12) 0 0 calc(var(--u) * 12)}
+  .links .h--mid{left:calc(var(--u) * 7)}
+  .links--out .h--mid{left:0; right:calc(var(--u) * 7)}
+  .links .dot{width:calc(var(--u) * 7); height:calc(var(--u) * 7); margin:calc(var(--u) * -3.5) 0 0 calc(var(--u) * -3.5)}
+  .links--in .dot{left:calc(var(--u) * 7)}
+  .links--out .dot{right:calc(var(--u) * 7); margin:calc(var(--u) * -3.5) calc(var(--u) * -3.5) 0 0}
+  .hub{padding-top:calc(var(--u) * 48)}
+  .hub__tile{width:calc(var(--u) * 66); height:calc(var(--u) * 66); border-radius:calc(var(--u) * 15)}
+  .hub__tile svg{width:calc(var(--u) * 46); height:calc(var(--u) * 27.2); transform:none}
+}
+/* short landscape screens (phones on their side): use the width */
+@media (max-height:599.98px) and (min-aspect-ratio:11/10){
+  :root{--u:clamp(0.72px, calc(100vw / 860), 1.2px)}
+  .stage{max-width:calc(var(--u) * 860)}
+  .intro__sub{max-width:calc(var(--u) * 640)}
+  .badge{max-width:calc(var(--u) * 640)}
+  .spacer--top{flex-basis:calc(var(--u) * 36)}
+  .flow{max-width:calc(var(--u) * 640)}
+}
+/* very small phones: let the long title words breathe */
+@media (max-width:359.98px){
+  .intro__title{font-size:calc(var(--u) * 43)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Only temporary first-paint states. The script removes this class at completion. */
+html.entrance-pending .brand,
+html.entrance-pending .nav__links li,
+html.entrance-pending .nav__cta,
+html.entrance-pending .nav__menu,
+html.entrance-pending .intro__sub,
+html.entrance-pending .ctas .btn,
+html.entrance-pending .badge{opacity:0}
+html.entrance-pending .intro__title > span{opacity:0;clip-path:inset(0 0 100% 0)}
+html.entrance-pending:not(.entrance-skip-flow) .flow,
+html.entrance-pending:not(.entrance-skip-flow) .flow > *{opacity:0}
+@media (max-width:899.98px), (max-height:599.98px), (max-aspect-ratio:11/10){
+  html.entrance-pending .nav__links li{opacity:1}
+}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero__bg" aria-hidden="true"><img src="assets/hero-background.webp" alt="" width="1586" height="992" decoding="async" fetchpriority="high"></div>
+
+  <div class="stage">
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="#" aria-label="ClearGate home">
+        <svg class="brand__mark" viewBox="0 0 58.55 37.51" aria-hidden="true"><path d="M24.90 19.84 L14.56 11.24 L8.81 18.15 L20.22 27.65 L0.00 27.65 L0.00 37.51 L20.50 37.51 L29.27 28.74 L38.05 37.51 L58.55 37.51 L58.55 27.65 L38.33 27.65 L49.74 18.15 L43.99 11.24 L33.65 19.84 L33.65 0.00 L24.90 0.00Z"/></svg>
+        <span class="brand__name">ClearGate</span>
+      </a>
+      <ul class="nav__links" id="primary-links">
+        <li><a class="nav__link" href="#">Platform<svg viewBox="0 0 11 6.5" aria-hidden="true"><path d="M1 .9l4.5 4.6L10 .9"/></svg></a></li>
+        <li><a class="nav__link" href="#">Solutions<svg viewBox="0 0 11 6.5" aria-hidden="true"><path d="M1 .9l4.5 4.6L10 .9"/></svg></a></li>
+        <li><a class="nav__link" href="#">Developers</a></li>
+        <li><a class="nav__link" href="#">Company<svg viewBox="0 0 11 6.5" aria-hidden="true"><path d="M1 .9l4.5 4.6L10 .9"/></svg></a></li>
+      </ul>
+      <a class="nav__cta" href="#">Sign In</a>
+      <button class="nav__menu" type="button" aria-controls="primary-links" aria-expanded="false" aria-label="Open menu">
+        <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5.5h14M2 12.5h14"/></svg>
+      </button>
+    </nav>
+
+    <div class="spacer spacer--top"></div>
+
+    <section class="intro" aria-labelledby="hero-title">
+      <h1 class="intro__title" id="hero-title"><span>The AI Communication</span> <span>Firewall</span></h1>
+      <p class="intro__sub"><span>Check every email, document, and post against your policies while people write. Fix</span> <span>problems before send. Generate exam-ready evidence automatically.</span></p>
+      <div class="ctas">
+        <a class="btn btn--primary" href="#">Get Demo<span class="btn__icon" aria-hidden="true"><svg viewBox="0 0 17 17"><path d="M2.8 14.2L14.2 2.8M5 2.8h9.2V12"/></svg></span></a>
+        <a class="btn btn--ghost" href="#">Watch Demo</a>
+      </div>
+      <div class="badge">
+        <svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="10.5"/><circle cx="11" cy="11" r="5.8"/></svg>
+        <p>Built by Microsoft AI, Google, Goldman Sachs leaders.</p>
+      </div>
+    </section>
+
+    <div class="spacer spacer--mid"></div>
+
+    <div class="flow-wrap">
+      <figure class="flow" aria-label="Every email, doc and post passes through ClearGate and comes out clean">
+        <div class="flow__col">
+          <div class="pill"><svg viewBox="0 0 26 26" aria-hidden="true"><rect x="1.3" y="3.3" width="23.4" height="19.4" rx="1.6"/><path d="M1.6 3.8l11.4 10 11.4-10M1.8 22.2l8.6-10M24.2 22.2l-8.6-10"/></svg><span>Email</span></div>
+          <div class="pill"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M3.6 9.7V1.4a1.1 1.1 0 0 1 1.1-1.1h8.4l5.9 5.9v3.5M13.1 .3v5.9h5.9" /><text x="1.3" y="23.1" fill="currentColor" stroke="none" font-family="Inter,Arial,sans-serif" font-weight="700" font-size="10.8" letter-spacing=".1">DOC</text></svg><span>Doc</span></div>
+          <div class="pill"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M17.4 24.4H4.9a1.3 1.3 0 0 1-1.3-1.3V2.9a1.3 1.3 0 0 1 1.3-1.3h17a1.3 1.3 0 0 1 1.3 1.3v15.6zM17.4 24.4v-5.9h5.8M8 8.4h10.4M8 13h10.4M8 17.6h5.4"/></svg><span>Post</span></div>
+        </div>
+
+        <div class="links links--in" aria-hidden="true">
+          <i class="bracket"></i><i class="h h--mid"></i>
+          <i class="dot dot--1"></i>
+          <i class="dot dot--2"></i>
+          <i class="dot dot--3"></i>
+        </div>
+
+        <div class="hub">
+          <div class="hub__tile"><svg viewBox="0 0 69.67 41.17" aria-hidden="true"><path d="M29.77 21.44 L17.59 11.97 L11.03 20.41 L23.87 30.39 L0.00 30.39 L0.00 41.17 L24.67 41.17 L34.83 31.00 L45.00 41.17 L69.67 41.17 L69.67 30.39 L45.80 30.39 L58.64 20.41 L52.08 11.97 L39.90 21.44 L39.90 0.00 L29.77 0.00Z"/></svg></div>
+          <i class="hub__stem" aria-hidden="true"></i>
+        </div>
+
+        <div class="links links--out" aria-hidden="true">
+          <i class="bracket"></i><i class="h h--mid"></i>
+          <i class="dot dot--1"></i>
+          <i class="dot dot--2"></i>
+          <i class="dot dot--3"></i>
+        </div>
+
+        <div class="flow__col">
+          <div class="pill pill--ok"><svg viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11.6"/><path d="M8.3 13.4l3.3 3.3 6.2-6.6"/></svg><span>Clean</span></div>
+          <div class="pill pill--ok"><svg viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11.6"/><path d="M8.3 13.4l3.3 3.3 6.2-6.6"/></svg><span>Clean</span></div>
+          <div class="pill pill--ok"><svg viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11.6"/><path d="M8.3 13.4l3.3 3.3 6.2-6.6"/></svg><span>Clean</span></div>
+        </div>
+      </figure>
+    </div>
+  </div>
+</header>
+<script>
+(function(){
+  var b=document.querySelector('.nav__menu'), l=document.getElementById('primary-links');
+  if(!b||!l) return;
+  b.addEventListener('click',function(){var o=l.classList.toggle('is-open'); b.setAttribute('aria-expanded',o); b.setAttribute('aria-label',o?'Close menu':'Open menu');});
+})();
+
+/* A single opening composition: identity, message, actions, then the product flow. */
+(function(){
+  var root=document.documentElement;
+  if(!root.classList.contains('entrance-pending')) return;
+  var l=document.getElementById('primary-links'), b=document.querySelector('.nav__menu');
+  var animations=[];
+  var ease='cubic-bezier(.22,1,.36,1)';
+  function one(selector,frames,delay,duration){
+    var el=typeof selector==='string'?document.querySelector(selector):selector;
+    if(el) animations.push(el.animate(frames,{delay:delay,duration:duration,easing:ease,fill:'both'}));
+  }
+  function finish(){
+    clearTimeout(window.__entranceFallback);
+    root.classList.remove('entrance-pending','entrance-skip-flow');
+    animations.forEach(function(animation){animation.cancel()});
+    window.__entranceCleanup=null;
+  }
+  window.__entranceCleanup=finish;
+  try{
+    var rise=[{opacity:0,transform:'translateY(9px)'},{opacity:1,transform:'none'}];
+    one('.brand',rise,40,520);
+    if(getComputedStyle(l).display!=='none'){
+      l.querySelectorAll('li').forEach(function(item,index){one(item,rise,125+index*55,440)});
+    }
+    one('.nav__cta',rise,260,450);
+    if(getComputedStyle(b).display!=='none') one(b,rise,180,450);
+
+    var lines=document.querySelectorAll('.intro__title > span');
+    lines.forEach(function(line,index){
+      one(line,[{opacity:0,clipPath:'inset(0 0 100% 0)'},{opacity:1,clipPath:'inset(0 0 0 0)'}],245+index*135,820);
+    });
+    one('.intro__sub',[{opacity:0,transform:'translateY(12px)'},{opacity:1,transform:'none'}],710,610);
+    one('.btn--primary',rise,945,510);
+    one('.btn--ghost',rise,1035,510);
+    one('.badge',[{opacity:0},{opacity:1}],1160,430);
+
+    var flow=document.querySelector('.flow');
+    if(flow.getBoundingClientRect().top>=innerHeight){
+      root.classList.add('entrance-skip-flow');
+    }else{
+      one(flow,[{opacity:0,transform:'translateY(14px)'},{opacity:1,transform:'none'}],1000,690);
+      one('.flow__col:first-child',rise,1250,510);
+      one('.links--in',[{opacity:0,clipPath:'inset(0 100% 0 0)'},{opacity:1,clipPath:'inset(0 0 0 0)'}],1370,440);
+      one('.hub',[{opacity:0,transform:'scale(.97)'},{opacity:1,transform:'none'}],1500,500);
+      one('.links--out',[{opacity:0,clipPath:'inset(0 100% 0 0)'},{opacity:1,clipPath:'inset(0 0 0 0)'}],1640,400);
+      one('.flow__col:last-child',rise,1740,500);
+    }
+    Promise.allSettled(animations.map(function(animation){return animation.finished})).then(finish);
+  }catch(error){finish()}
+})();
+</script>
+</body>
+</html>

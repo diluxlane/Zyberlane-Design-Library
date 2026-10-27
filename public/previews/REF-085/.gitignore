@@ -1,0 +1,22 @@
+# Local tools and generated deployment output
+node_modules/
+.wrangler/
+dist/
+.cache/
+coverage/
+
+# Local credentials and environment files
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+
+# Editor and operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.log
+*.tmp

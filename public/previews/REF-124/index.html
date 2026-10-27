@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-124/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f4f4f4">
+<script>
+(function(d){var r=d.documentElement;
+  if(!window.matchMedia||matchMedia('(prefers-reduced-motion: reduce)').matches||!('animate' in r))return;
+  r.classList.add('intro');
+  window.__orinexIntroGuard=setTimeout(function(){r.classList.remove('intro')},4000);
+})(document);
+</script>
+<title>Orinex — Know Your Body</title>
+<meta name="description" content="Orinex smart ring — sleep, recovery, stress, heart rate and activity tracked continuously and turned into insights you can actually use.">
+<style>
+/* ───────────────────────── Fonts (embedded, offline) ───────────────────────── */
+@font-face{font-family:"Orinex Grotesk";src:url(assets/orinex-grotesk-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:block}
+@font-face{font-family:"Orinex Display";src:url(assets/orinex-display-300.woff2) format("woff2");font-weight:300;font-style:normal;font-display:block}
+@font-face{font-family:"Orinex Display";src:url(assets/orinex-display-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:block}
+@font-face{font-family:"Orinex Display";src:url(assets/orinex-display-500.woff2) format("woff2");font-weight:500;font-style:normal;font-display:block}
+
+/* ───────────────────────── Design tokens ─────────────────────────
+   Every stage measurement below is the reference pixel value (2048×1152 artboard)
+   multiplied by --s, the artboard→viewport scale.                                   */
+:root{
+  --bg:#f4f4f4;
+  --ink:#161616;           /* logo, nav, headline  */
+  --ink-soft:#363636;      /* eyebrow, paragraph   */
+  --ink-metric:#000;       /* metric numerals      */
+  --accent:#9a6c4c;        /* GOOD / KCAL          */
+  --btn:#171717;
+  --btn-ghost:rgba(18,18,18,.505);
+  --glass-fill:rgba(228,228,228,.27);
+  --glass-line:rgba(0,0,0,.14);
+  --glass-hi:rgba(255,255,255,.55);
+  --f-grotesk:"Orinex Grotesk","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --f-display:"Orinex Display","Red Hat Display","Helvetica Neue",Arial,sans-serif;
+  --vh:100vh;
+}
+@supports (height:100dvh){:root{--vh:100dvh}}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg)}
+body{color:var(--ink);font-family:var(--f-grotesk);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+a{color:inherit;text-decoration:none}
+img,svg{display:block}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2px solid #121212;outline-offset:3px;border-radius:999px}
+
+/* ═════════════════════════ STAGE TIER (landscape) ═════════════════════════
+   One artboard, scaled as a whole. The viewport is always filled edge to edge:
+   chrome is anchored to the edges it lives on (top / left / right) and the
+   hero + metric column are anchored to the vertical centre, so there is never
+   a letterbox band above or below.                                            */
+.hero{
+  --s-min:.45px;
+  --s:max(min(calc(100vw / 2048), calc(var(--vh) / 1152)), var(--s-min));
+  position:relative;height:var(--vh);overflow:hidden;isolation:isolate;background:var(--bg);
+}
+@media (min-width:1000px){.hero{--s-min:.55px}}
+
+/* Scene: the photograph is fitted to the viewport height and bottom-anchored
+   (the arm always leaves the frame at the bottom edge). Up to ~2:1 it behaves as
+   cover; on ultra-wide screens it stops growing and its sides dissolve into
+   the matching backdrop colour so the hand never balloons past the UI.        */
+.scene{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.scene img{
+  position:absolute;left:50%;bottom:0;transform:translateX(-50%);
+  height:100%;max-width:none;
+  width:max(calc(var(--vh) * 1.77683), min(100vw, calc(var(--vh) * 2.0967)));
+  object-fit:cover;object-position:50% 30%;
+  user-select:none;-webkit-user-drag:none;
+}
+@media (min-aspect-ratio:2/1){
+  .scene img{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%)}
+}
+
+/* Frame: the UI layer. Equal to the viewport up to 16:9, then capped so the
+   chrome doesn't drift to the far edges of ultra-wide displays.               */
+.frame{position:absolute;top:0;bottom:0;left:0;right:0;margin-inline:auto;width:min(100%, calc(var(--s) * 2458));z-index:1}
+
+/* — Header — */
+.bar{position:absolute;inset:0 0 auto 0;height:calc(120 * var(--s))}
+.brand{position:absolute;left:calc(41 * var(--s));top:calc(38 * var(--s));display:flex;align-items:center;gap:calc(11 * var(--s))}
+.brand svg{width:calc(41 * var(--s));height:calc(43 * var(--s));flex:none}
+.brand b{font-weight:400;font-size:calc(35.4 * var(--s));letter-spacing:-.03em;line-height:1;color:var(--ink);margin-top:calc(-1 * var(--s))}
+.links{position:absolute;top:calc(46.4 * var(--s));left:calc(50% + -249 * var(--s));display:flex;gap:calc(64 * var(--s));margin:0;padding:0;list-style:none}
+.links a{display:block;font-size:calc(22.4 * var(--s));line-height:calc(26 * var(--s));letter-spacing:-.05em;color:var(--ink);transition:opacity .2s}
+.links li:first-child{margin-right:calc(2 * var(--s))}
+.links li:nth-child(3) a{letter-spacing:-.022em}
+.actions{position:absolute;right:calc(44 * var(--s));top:0;height:100%}
+.pill{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;color:#fff;font-size:calc(22 * var(--s));letter-spacing:-.03em;line-height:1;white-space:nowrap;transition:transform .2s, background-color .2s}
+@media (hover:hover){.links a:hover{opacity:.6}.pill:hover{transform:translateY(-1px)}}
+.cart{position:absolute;right:calc(198 * var(--s));top:calc(33 * var(--s));width:calc(116 * var(--s));height:calc(58 * var(--s));gap:calc(11 * var(--s));padding-bottom:calc(2 * var(--s));background:var(--btn-ghost);-webkit-backdrop-filter:blur(calc(12 * var(--s))) saturate(1.1);backdrop-filter:blur(calc(12 * var(--s))) saturate(1.1)}
+.cart svg{width:calc(22 * var(--s));height:calc(22 * var(--s));flex:none;margin-top:calc(1 * var(--s))}
+.shop{position:absolute;right:0;top:calc(31 * var(--s));width:calc(180 * var(--s));height:calc(56 * var(--s));background:var(--btn)}
+.nav-panel{display:contents}
+.menu-btn{display:none}
+
+/* — Copy — */
+.copy{position:absolute;left:calc(52 * var(--s));top:calc(50% + -182 * var(--s));width:calc(640 * var(--s))}
+.eyebrow{display:flex;align-items:center;gap:calc(8 * var(--s));margin:0;font-size:calc(22.6 * var(--s));line-height:calc(28 * var(--s));letter-spacing:0;color:var(--ink-soft)}
+.eyebrow i{width:calc(10 * var(--s));height:calc(10 * var(--s));margin-left:calc(3 * var(--s));margin-top:calc(4 * var(--s));border-radius:50%;background:var(--ink-soft);flex:none}
+h1{margin:calc(17 * var(--s)) 0 0;font-weight:400;font-size:calc(68.7 * var(--s));line-height:calc(74 * var(--s));letter-spacing:0;color:var(--ink)}
+h1 span{display:block}
+.lede{margin:calc(31 * var(--s)) 0 0;font-size:calc(22.7 * var(--s));line-height:calc(28 * var(--s));letter-spacing:0;color:var(--ink-soft)}
+.cta{margin-top:calc(37 * var(--s));margin-left:calc(-10 * var(--s));width:calc(213 * var(--s));height:calc(59 * var(--s));background:var(--btn);font-size:calc(23.6 * var(--s));letter-spacing:-.025em;padding-bottom:calc(2.5 * var(--s))}
+
+/* — Metrics (glass) — */
+.metrics{position:absolute;right:calc(43 * var(--s));top:calc(50% + -248 * var(--s));width:calc(222.5 * var(--s));display:grid;gap:calc(14 * var(--s));margin:0;padding:0;list-style:none}
+.card{
+  position:relative;height:calc(160 * var(--s));padding:calc(22 * var(--s)) calc(20 * var(--s)) 0 calc(20 * var(--s));
+  border-radius:calc(20 * var(--s));
+  background:var(--glass-fill);
+  border:max(1px, calc(1 * var(--s))) solid var(--glass-line);
+  box-shadow:0 0 calc(18 * var(--s)) rgba(255,255,255,.3);
+  -webkit-backdrop-filter:blur(calc(14 * var(--s))) saturate(1.15);backdrop-filter:blur(calc(14 * var(--s))) saturate(1.15);
+  font-family:var(--f-display);color:var(--ink-metric);
+}
+.card h2{display:flex;align-items:center;gap:calc(9 * var(--s));margin:0;font-weight:500;font-size:calc(15.2 * var(--s));line-height:calc(15 * var(--s));letter-spacing:.13em;white-space:nowrap;text-transform:uppercase}
+.card h2 svg{width:calc(15 * var(--s));height:calc(15 * var(--s));flex:none;margin-top:calc(-2 * var(--s));overflow:visible}
+.card h2 svg.flame{width:calc(12.6 * var(--s));height:calc(16.5 * var(--s));margin:calc(-1 * var(--s)) calc(1.4 * var(--s)) calc(-1 * var(--s)) calc(.8 * var(--s))}
+.val{display:block;margin:calc(24 * var(--s)) 0 0 calc(3.5 * var(--s));font-weight:300;font-size:calc(52 * var(--s));line-height:calc(40 * var(--s));letter-spacing:-.01em;white-space:nowrap;font-variant-numeric:lining-nums}
+.val small{font-size:calc(19.5 * var(--s));line-height:0;font-weight:400;letter-spacing:.02em;margin:0 calc(10.5 * var(--s)) 0 0}
+.val small:last-child{margin-right:0}
+.sub{display:block;margin-top:calc(23 * var(--s));font-weight:500;font-size:calc(15.2 * var(--s));line-height:calc(15 * var(--s));letter-spacing:.13em;color:var(--accent);text-transform:uppercase}
+.sub.mono{color:var(--ink-metric)}
+
+/* ═════════════════════════ BELOW THE DESKTOP STAGE ═════════════════════════
+   The stage above stays in charge while its scale s ≥ ~0.585 (≥1200px wide at
+   ≥1.3:1). Below that, the scaled composition starts producing sub-9px card
+   labels and sub-13px body copy, so the same elements are re-laid out with
+   readable floors instead of being shrunk further.
+
+   Two architectures, chosen by available space, not by device:
+   · LANDSCAPE  — the desktop composition kept intact (copy | hand | metrics),
+                  rebuilt as a fluid grid. Covers tablet landscape, small
+                  laptop windows and phones on their side.
+   · PORTRAIT   — copy, a row of three metric cards, then the hand filling the
+                  rest of the screen. Covers tablet and phone portrait.
+   The header keeps its links and CTAs until they stop fitting (~820px) and
+   only then folds them into a menu.                                          */
+
+/* — shared by both architectures — */
+@media (max-width:1199.98px), (max-aspect-ratio:13/10){
+  .hero{
+    --pad:clamp(18px, 3.6vw, 44px);
+    --t-nav:clamp(14px, 1.3vw, 16px);
+    --pill-h:clamp(40px, 3.6vw, 44px);
+    height:auto;min-height:var(--vh);
+  }
+  .frame{position:relative;inset:auto;width:100%;margin:0;padding:env(safe-area-inset-top) max(var(--pad), env(safe-area-inset-right)) 0 max(var(--pad), env(safe-area-inset-left))}
+
+  .bar{position:relative;inset:auto;height:auto;display:flex;align-items:center;gap:clamp(20px, 3vw, 40px);padding-top:clamp(14px, 2vw, 24px)}
+  .brand{position:static;flex:none;gap:clamp(7px, .8vw, 10px)}
+  .brand svg{width:clamp(28px, 2.6vw, 34px);height:auto;aspect-ratio:41/43}
+  .brand b{font-size:clamp(22px, 2.15vw, 28px);margin:0}
+  .links{position:static;margin-inline:auto;gap:clamp(20px, 2.8vw, 40px)}
+  .links li:first-child{margin-right:0}
+  .links a{font-size:var(--t-nav);line-height:1.2;letter-spacing:-.03em;padding-block:12px;margin-block:-12px}
+  .links li:nth-child(3) a{letter-spacing:-.015em}
+  .actions{position:static;height:auto;display:flex;align-items:center;gap:10px;flex:none}
+  .pill{position:static;font-size:var(--t-nav);letter-spacing:-.02em}
+  .cart{width:auto;height:var(--pill-h);padding:0 clamp(16px, 1.6vw, 20px) 1px;gap:.55em;-webkit-backdrop-filter:blur(12px) saturate(1.1);backdrop-filter:blur(12px) saturate(1.1)}
+  .cart svg{width:1.15em;height:1.15em;margin:0}
+  .shop{width:auto;height:var(--pill-h);padding:0 clamp(18px, 1.8vw, 24px)}
+
+  .copy{position:static;width:auto}
+  .eyebrow{line-height:1.3;gap:.36em}
+  .eyebrow i{width:.44em;height:.44em;margin:0 0 0 .13em}
+  h1{line-height:1.07}
+  h1 span{white-space:nowrap}
+  .lede{line-height:1.42;text-wrap:pretty}
+  .cta{display:inline-flex;width:auto;margin-left:0;padding:0 1.15em 1px;letter-spacing:-.02em}
+
+  .metrics{position:static;width:auto}
+  .card{height:auto;border-width:1px;box-shadow:0 0 18px rgba(255,255,255,.3);-webkit-backdrop-filter:blur(20px) saturate(1.15);backdrop-filter:blur(20px) saturate(1.15)}
+  .card h2{line-height:1.2;gap:.6em}
+  .card h2 svg{width:1.05em;height:1.05em;margin:0}
+  .card h2 svg.flame{width:.86em;height:1.12em;margin:-.06em .1em -.06em .06em}
+  .val{line-height:1;margin-left:0}
+  .val small{font-size:.375em;margin:0 .54em 0 .02em}
+  .val small:last-child{margin-right:0}
+  .sub{line-height:1.2}
+}
+
+/* — LANDSCAPE: copy | hand | metrics as a fluid three-zone grid — */
+@media (orientation:landscape) and (max-width:1199.98px), (orientation:landscape) and (max-aspect-ratio:13/10){
+  .hero{
+    --copy-w:clamp(272px, min(33vw, 50vh), 480px);
+    --cards-w:clamp(124px, min(13vw, 21vh), 190px);
+  }
+  .frame{min-height:var(--vh);display:grid;grid-template-columns:var(--copy-w) minmax(0, 1fr) var(--cards-w);grid-template-rows:auto 1fr;align-items:center;padding-bottom:clamp(20px, 4vh, 48px)}
+  .bar{grid-column:1 / -1;align-self:start}
+  .copy{grid-column:1}
+  .eyebrow{font-size:clamp(12.5px, min(1.15vw, 2vh), 16px)}
+  h1{margin-top:clamp(8px, 1.6vh, 16px);font-size:clamp(28px, min(3.7vw, 6vh), 54px)}
+  .lede{margin-top:clamp(10px, 2.4vh, 22px);font-size:clamp(13px, min(1.22vw, 2.1vh), 17px)}
+  .cta{margin-top:clamp(14px, 3.2vh, 30px);height:clamp(40px, min(3.9vw, 6.6vh), 50px);font-size:clamp(14px, min(1.3vw, 2.2vh), 17px)}
+  .metrics{grid-column:3;gap:clamp(8px, 1.6vh, 14px)}
+  .card{padding:clamp(10px, min(1.2vw, 2vh), 18px);border-radius:clamp(14px, 1.5vw, 20px)}
+  .card h2,.sub{font-size:clamp(9.5px, min(.78vw, 1.5vh), 12px);letter-spacing:.13em}
+  .val{margin-top:clamp(8px, min(1.2vw, 2vh), 16px);font-size:clamp(22px, min(2.6vw, 4.5vh), 38px)}
+  .sub{margin-top:clamp(7px, min(1vw, 1.7vh), 14px)}
+  /* the hand is centred in the middle zone, whatever the zone widths are */
+  .scene img{
+    left:calc(var(--pad) + var(--copy-w) + (100% - 2 * var(--pad) - var(--copy-w) - var(--cards-w)) / 2);
+    transform:translateX(-48.83%);width:auto;height:100%;
+    -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 91%,transparent 100%);
+    mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 91%,transparent 100%);
+  }
+}
+
+/* — PORTRAIT: copy, metric row, then the hand absorbs the remaining height — */
+@media (orientation:portrait){
+  .hero{display:flex;flex-direction:column;--t-nav:clamp(14px, 1.75vw, 17px);--pill-h:clamp(40px, 5.2vw, 48px)}
+  .brand svg{width:clamp(28px, 3.6vw, 38px)}
+  .brand b{font-size:clamp(22px, 3vw, 31px)}
+  .frame{display:flex;flex-direction:column}
+  .copy{max-width:780px;padding-top:clamp(24px, min(6vw, 4.6vh), 64px)}
+  .eyebrow{font-size:clamp(14px, 2.4vw, 19px)}
+  h1{margin-top:clamp(12px, 2.4vw, 22px);font-size:clamp(32px, min(9.2vw, 6.2vh), 72px)}
+  .lede{margin-top:clamp(14px, 3vw, 24px);font-size:clamp(15px, min(2.6vw, 2vh), 20px);max-width:34em}
+  .cta{margin-top:clamp(20px, 4.4vw, 32px);height:clamp(46px, 7vw, 56px);font-size:clamp(15px, 2.5vw, 19px)}
+  .metrics{max-width:min(820px, 92vh);grid-template-columns:repeat(3, minmax(0, 1fr));gap:clamp(8px, 2vw, 16px);margin-top:clamp(20px, min(5vw, 3.6vh), 48px);container-type:inline-size}
+  .card{padding:clamp(11px, 2.6vw, 20px) clamp(11px, 2.6vw, 20px) clamp(12px, 2.8vw, 20px);border-radius:clamp(14px, 2.8vw, 20px)}
+  .card h2,.sub{font-size:clamp(9.5px, 2.5vw, 14px);letter-spacing:.14em}
+  .val{margin-top:clamp(10px, min(2.6vw, 1.8vh), 20px);font-size:clamp(24px, min(7vw, 4.6vh), 50px)}
+  .sub{margin-top:clamp(8px, 2.2vw, 18px)}
+  /* narrow phones: when "CALORIES" can't sit beside its icon, every card puts
+     the icon above the label so the three cards stay aligned */
+  @container (max-width:339px){.card h2{flex-direction:column;align-items:flex-start;gap:6px}}
+
+  .scene{position:relative;inset:auto;flex:1 0 clamp(190px, 30vh, 560px);margin-top:clamp(4px, 1.5vw, 20px);
+    -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 28px);mask-image:linear-gradient(180deg,transparent 0,#000 28px)}
+  .scene img{height:132%;width:auto;
+    -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%);
+    mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%)}
+}
+
+/* — NAVIGATION: links + CTAs fold into a glass panel once they stop fitting.
+     Measured need: logo ≈130 + four links ≈290 + both pills ≈230 + gaps and
+     margins ≈ 790px, so the fold happens below 820px.                       — */
+@media (max-width:819.98px){
+  .menu-btn{display:inline-flex;align-items:center;justify-content:center;flex:none;margin-left:auto;width:44px;height:44px;padding:0;border-radius:999px;border:1px solid var(--glass-line);background:rgba(255,255,255,.4);color:var(--ink);cursor:pointer;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+  .menu-btn svg{width:18px;height:18px;overflow:visible}
+  .menu-btn path{transform-box:view-box;transform-origin:9px 9px;transition:transform .25s ease}
+  .bar[data-open] .menu-btn path:first-child{transform:rotate(45deg) translateY(3px)}
+  .bar[data-open] .menu-btn path:last-child{transform:rotate(-45deg) translateY(-3px)}
+
+  .nav-panel{position:absolute;top:calc(100% + 10px);left:0;right:0;z-index:5;display:grid;gap:6px;padding:8px;border-radius:20px;
+    background:rgba(244,244,244,.93);border:1px solid var(--glass-line);
+    box-shadow:0 0 18px rgba(255,255,255,.3),0 24px 48px rgba(0,0,0,.1);
+    -webkit-backdrop-filter:blur(24px) saturate(1.2);backdrop-filter:blur(24px) saturate(1.2);
+    opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .2s,transform .2s,visibility 0s .2s}
+  .bar[data-open] .nav-panel{opacity:1;visibility:visible;transform:none;transition:opacity .2s,transform .2s}
+  .links{flex-direction:column;gap:0;margin:0}
+  .links a{font-size:17px;letter-spacing:-.02em;padding:13px 14px;margin:0;border-radius:12px}
+  .links li:nth-child(3) a{letter-spacing:-.01em}
+  .links a:active{background:rgba(0,0,0,.05)}
+  .actions{display:grid;grid-template-columns:auto 1fr;gap:8px;padding:10px 6px 6px;border-top:1px solid var(--glass-line)}
+  .actions .pill{height:46px;font-size:15px}
+}
+/* phones on their side: two link columns keep the open panel inside the screen */
+@media (max-width:819.98px) and (orientation:landscape){
+  .links{display:grid;grid-template-columns:1fr 1fr}
+}
+/* ═════════════════════════ ENTRANCE (runs once, then removed) ═════════════════════════
+   .intro      — set in <head> before first paint: foreground UI waits, invisible.
+   .intro-run  — while the timeline plays: each headline line is masked so it can
+                 rise from inside its own line box. Both classes are gone when the
+                 timeline ends; nothing here applies to the resting page.          */
+h1 .ln{display:block}
+.intro [data-enter],.intro h1 .ln{opacity:0}
+.intro-run h1 > span{clip-path:inset(-.14em -.4em -.26em -.4em)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="hero">
+  <div class="frame">
+    <header class="bar" id="bar">
+      <a class="brand" href="#" aria-label="Orinex home" data-enter>
+        <svg viewBox="0 0 41 43" aria-hidden="true">
+          <g fill="#121212" transform="translate(20.5 21.5)">
+            <ellipse cx="0" cy="-17.6" rx="6.6" ry="2.75"/>
+            <ellipse cx="0" cy="17.6" rx="6.6" ry="2.75"/>
+            <ellipse cx="15.24" cy="-8.8" rx="6.6" ry="2.75" transform="rotate(60 15.24 -8.8)"/>
+            <ellipse cx="15.24" cy="8.8" rx="6.6" ry="2.75" transform="rotate(-60 15.24 8.8)"/>
+            <ellipse cx="-15.24" cy="8.8" rx="6.6" ry="2.75" transform="rotate(60 -15.24 8.8)"/>
+            <ellipse cx="-15.24" cy="-8.8" rx="6.6" ry="2.75" transform="rotate(-60 -15.24 -8.8)"/>
+          </g>
+        </svg>
+        <b>Orinex</b>
+      </a>
+      <div class="nav-panel" id="menu">
+        <ul class="links" aria-label="Primary">
+          <li data-enter><a href="#technology">Technology</a></li>
+          <li data-enter><a href="#health">Health</a></li>
+          <li data-enter><a href="#activity">Activity</a></li>
+          <li data-enter><a href="#insights">Insights</a></li>
+        </ul>
+        <div class="actions">
+          <a class="pill cart" href="#cart" data-enter><span class="t">Cart</span>
+            <svg viewBox="0 0 22 22" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M.3 .9h3.8l2.7 13.3h11.5L20.5 4.7H5.2"/><circle cx="8.4" cy="19.4" r="1.75"/><circle cx="17" cy="19.4" r="1.75"/></svg>
+          </a>
+          <a class="pill shop" href="#shop" data-enter>Shop the Ring</a>
+        </div>
+      </div>
+      <button class="menu-btn" type="button" data-enter aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+        <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 6h14"/><path d="M2 12h14"/></svg>
+      </button>
+    </header>
+
+    <section class="copy" aria-labelledby="headline">
+      <p class="eyebrow"><i aria-hidden="true" data-enter></i><span data-enter>Tracking 24/7</span></p>
+      <h1 id="headline"><span><span class="ln">Know Your Body.</span></span><span><span class="ln">Move With It.</span></span></h1>
+      <p class="lede" data-enter>Sleep, recovery, stress, heart rate and activity — tracked continuously and turned into insights you can actually use.</p>
+      <a class="pill cta" href="#technology" data-enter>Explore the Ring</a>
+    </section>
+
+    <ul class="metrics" aria-label="Today's readings">
+      <li class="card" data-enter>
+        <h2><svg viewBox="0 0 15 15" fill="none" stroke="#000" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.1 2.1A5.9 5.9 0 1 0 13.1 9.4 4.5 4.5 0 0 1 7.1 2.1Z"/><path d="M8.6 5.3h2l-2 2.3h2M11.4 1h1.8l-1.8 2.1h1.8" stroke-width="1.15"/></svg>Sleep</h2>
+        <p class="val" style="margin-bottom:0">7<small>H</small>42<small>M</small></p>
+        <p class="sub" style="margin-bottom:0">Good</p>
+      </li>
+      <li class="card" data-enter>
+        <h2><svg class="flame" viewBox="4.5 2.4 15 19.6" fill="none" stroke="#000" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>Calories</h2>
+        <p class="val" style="margin-bottom:0">1642</p>
+        <p class="sub" style="margin-bottom:0">Kcal</p>
+      </li>
+      <li class="card" data-enter>
+        <h2><svg viewBox="0 0 15 15" fill="none" stroke="#000" stroke-width="1.15" stroke-linecap="round" aria-hidden="true"><path d="M1.2 5v5.5M4.2 0.8v13.6M7.3 5v5.5M10.4 3v8.6M13.4 5v5.5"/></svg>HRV</h2>
+        <p class="val" style="margin-bottom:0">68</p>
+        <p class="sub mono" style="margin-bottom:0">ms</p>
+      </li>
+    </ul>
+  </div>
+
+  <div class="scene">
+    <img src="assets/orinex-hero.webp" width="1672" height="941" alt="A hand reaching for the Orinex smart ring as it floats in mid-air" decoding="async" fetchpriority="high">
+  </div>
+</main>
+<script>
+(function(){
+  var bar=document.getElementById('bar'),btn=bar.querySelector('.menu-btn'),panel=document.getElementById('menu'),
+      folded=window.matchMedia('(max-width: 819.98px)');
+  function open(){return bar.hasAttribute('data-open')}
+  function set(state,returnFocus,focusFirst){
+    if(state)bar.setAttribute('data-open','');else bar.removeAttribute('data-open');
+    btn.setAttribute('aria-expanded',state);btn.setAttribute('aria-label',state?'Close menu':'Open menu');
+    if(state&&focusFirst){var first=panel.querySelector('a');if(first)setTimeout(function(){first.focus({preventScroll:true})},30)}
+    if(!state&&returnFocus)btn.focus();
+  }
+  /* detail===0 means the button was activated from the keyboard */
+  btn.addEventListener('click',function(e){set(!open(),false,e.detail===0)});
+  panel.addEventListener('click',function(e){if(e.target.closest('a')&&folded.matches)set(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&open())set(false,true)});
+  document.addEventListener('click',function(e){if(open()&&!bar.contains(e.target))set(false)});
+  var onChange=function(){if(!folded.matches&&open())set(false)};
+  if(folded.addEventListener)folded.addEventListener('change',onChange);else folded.addListener(onChange);
+})();
+</script>
+<script>
+/* Entrance — one master timeline, played once on load.
+   The photograph is the stage and never moves; only foreground UI performs.
+   Motion vocabulary (one easing family; travel + fade only, so every element
+   lands on exactly its authored pixels; directions follow the layout):
+     LINE    headline lines rise from inside their own mask        expo-out
+     SETTLE  copy, CTA and header: short travel + fade              quint-out
+     SURFACE glass metric cards: a longer rise, sized to each card   quint-out
+     SPARK   the "tracking" dot switches on (circular clip)         quart-out
+   Distances are derived from each element's own size, so the same choreography
+   reads correctly from 2048px desktop down to a 320px phone.                    */
+(function(){
+  var root=document.documentElement;
+  if(!root.classList.contains('intro')||window.__orinexEntrance)return;
+  window.__orinexEntrance=true;
+
+  var EXPO='cubic-bezier(0.16, 1, 0.3, 1)', QUINT='cubic-bezier(0.22, 1, 0.36, 1)', QUART='cubic-bezier(0.25, 1, 0.5, 1)';
+  var $=function(s){return document.querySelector(s)}, $$=function(s){return [].slice.call(document.querySelectorAll(s))};
+  var size=function(el){return parseFloat(getComputedStyle(el).fontSize)||16};
+  var visible=function(el){return el&&el.getClientRects().length>0&&getComputedStyle(el).visibility!=='hidden'};
+
+  function run(){
+    clearTimeout(window.__orinexIntroGuard);
+    var anims=[], portrait=matchMedia('(orientation: portrait)').matches,
+        tempo=Math.min(window.innerWidth,window.innerHeight)<500?.88:1;   /* phones: slightly brisker */
+    function play(el,frames,at,dur,ease){
+      if(!visible(el))return;
+      anims.push(el.animate(frames,{delay:at*tempo*1000,duration:dur*tempo*1000,easing:ease,fill:'backwards'}));
+    }
+    function settle(el,at,dur,dy){
+      var from={opacity:0,transform:'translateY('+dy+'px)'};
+      play(el,[from,{opacity:1,transform:'none'}],at,dur,QUINT);
+    }
+
+    /* 01 · header: drops in from the edge it is anchored to */
+    var brand=$('.brand'); settle(brand,.08,.75,-.32*size(brand.querySelector('b')));
+    $$('.links li').forEach(function(li,i){settle(li,.18+i*.05,.65,-.45*size(li.firstElementChild))});
+    settle($('.cart'),.36,.65,-.4*size($('.cart')));
+    settle($('.shop'),.41,.65,-.4*size($('.shop')));
+    settle($('.menu-btn'),.24,.65,-10);
+
+    /* 02 · context: the tracking dot switches on, its label follows */
+    play($('.eyebrow i'),[{opacity:0,clipPath:'circle(0% at 50% 50%)'},{opacity:1,clipPath:'circle(71% at 50% 50%)'}],.30,.55,QUART);
+    var eb=$('.eyebrow span'); settle(eb,.34,.7,.5*size(eb));
+
+    /* 03 · headline: each line rises inside its own mask, overlapping */
+    $$('h1 .ln').forEach(function(ln,i){
+      play(ln,[{opacity:1,transform:'translateY(112%)'},{opacity:1,transform:'none'}],.42+i*.1,1.05,EXPO);
+    });
+
+    /* 04 · supporting copy, then the action */
+    var lede=$('.lede'); settle(lede,.80,.85,.6*size(lede));
+    var cta=$('.cta'); settle(cta,.98,.8,.5*size(cta));
+
+    /* 05 · readings surface on the glass — beside the hand on wide screens,
+           after the call to action when they sit below it */
+    $$('.card').forEach(function(card,i){
+      play(card,[{opacity:0,transform:'translateY('+(.09*card.offsetHeight)+'px)'},{opacity:1,transform:'none'}],
+           (portrait?1.06:.9)+i*.09,.95,QUINT);
+    });
+
+    /* initial frames are now held by the animations themselves */
+    root.classList.add('intro-run'); root.classList.remove('intro');
+
+    Promise.all(anims.map(function(a){return a.finished})).then(function(){
+      root.classList.remove('intro-run');
+      anims.forEach(function(a){a.cancel()});   /* no fill-forwards: the page is back to its authored styles */
+    },function(){root.classList.remove('intro','intro-run')});
+  }
+
+  /* start once fonts and the stage photograph are ready, so the first frame is final-quality */
+  var img=$('.scene img'), ready=[document.fonts?document.fonts.ready:null, img&&img.decode?img.decode().catch(function(){}):null];
+  var capId, cap=new Promise(function(r){capId=setTimeout(r,700)});
+  Promise.race([Promise.all(ready),cap]).then(function(){clearTimeout(capId);requestAnimationFrame(function(){requestAnimationFrame(run)})});
+})();
+</script>
+</body>
+</html>

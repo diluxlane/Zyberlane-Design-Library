@@ -1,0 +1,572 @@
+/* ---------------------------------------------------------------
+   Fonts (embedded, subset to Latin) — Inter / Inter Display
+---------------------------------------------------------------- */
+@font-face{font-family:"Clawd Text";font-weight:400;font-style:normal;font-display:block;src:url(fonts/clawd-text-400.woff2) format("woff2")}
+@font-face{font-family:"Clawd Text";font-weight:500;font-style:normal;font-display:block;src:url(fonts/clawd-text-500.woff2) format("woff2")}
+@font-face{font-family:"Clawd Text";font-weight:600;font-style:normal;font-display:block;src:url(fonts/clawd-text-600.woff2) format("woff2")}
+@font-face{font-family:"Clawd Display";font-weight:400;font-style:normal;font-display:block;src:url(fonts/clawd-display-400.woff2) format("woff2")}
+@font-face{font-family:"Clawd Display";font-weight:500;font-style:normal;font-display:block;src:url(fonts/clawd-display-500.woff2) format("woff2")}
+@font-face{font-family:"Clawd Display";font-weight:600;font-style:normal;font-display:block;src:url(fonts/clawd-display-600.woff2) format("woff2")}
+@font-face{font-family:"Clawd Display";font-weight:700;font-style:normal;font-display:block;src:url(fonts/clawd-display-700.woff2) format("woff2")}
+
+/* ---------------------------------------------------------------
+   Tokens (all values measured from the 1570 × 1002 reference)
+---------------------------------------------------------------- */
+:root{
+  --ink:#020305;
+  --white:#ffffff;
+  --orange:#f96b03;
+  --text-font:"Clawd Text","Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --display-font:"Clawd Display","Inter Display","Clawd Text","Inter",system-ui,-apple-system,sans-serif;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--ink);height:100%}
+body{
+  color:var(--white);
+  font-family:var(--text-font);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:geometricPrecision;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+
+/* ---------------------------------------------------------------
+   Hero shell — always exactly the viewport: no gaps top or bottom
+---------------------------------------------------------------- */
+.hero{
+  position:relative;
+  width:100%;
+  height:100vh;                  /* fallback */
+  height:100dvh;                 /* tracks mobile browser chrome */
+  overflow:hidden;
+  isolation:isolate;
+  background:var(--ink);
+  container:hero / size;
+}
+/* Art: covers the whole hero, focal point = the claw */
+.hero__art{
+  position:absolute;inset:0;z-index:-2;
+  width:100%;height:100%;
+  object-fit:cover;object-position:50% 50%;
+  user-select:none;pointer-events:none;
+}
+.hero__scrim{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:0}
+
+/* ---------------------------------------------------------------
+   Stage — one scale unit drives every measurement.
+   --u === 1px at the 1570 × 1002 reference.
+   Horizontal: the layout spans the full width (1570 units).
+   Vertical: the layout needs ≥ 800 units (top group + air + bottom group),
+   so very wide / short screens never overlap.
+---------------------------------------------------------------- */
+.stage{
+  --u:min(calc(100vw / 1570), calc(100vh / 800));
+  position:absolute;inset:0;
+}
+@supports (width:1cqw){
+  .stage{--u:min(calc(100cqw / 1570), calc(100cqh / 800))}
+}
+
+/* --- Brand ---------------------------------------------------- */
+.brand{
+  position:absolute;
+  left:calc(44 * var(--u));
+  top:calc(39.5 * var(--u));
+  display:flex;align-items:center;
+  gap:calc(11 * var(--u));
+  height:calc(38 * var(--u));
+}
+.brand__mark{width:calc(44 * var(--u));height:calc(38 * var(--u));display:block;flex:none}
+.brand__name{
+  font-family:var(--display-font);
+  font-weight:700;
+  font-size:calc(32.9 * var(--u));
+  letter-spacing:-0.06em;
+  line-height:1;
+  position:relative;top:calc(-1 * var(--u));
+  text-shadow:0 calc(1 * var(--u)) calc(3 * var(--u)) rgba(0,0,0,.45);
+}
+
+/* --- Nav (glass pills) ---------------------------------------- */
+.nav{
+  position:absolute;
+  left:calc(50% + -135.5 * var(--u));   /* pills are centred on the claw axis */
+  top:calc(31.4 * var(--u));
+  display:flex;
+  gap:calc(8.5 * var(--u));
+  margin:0;padding:0;list-style:none;
+}
+.pill{
+  display:flex;align-items:center;justify-content:center;
+  height:calc(44.9 * var(--u));
+  min-width:calc(var(--w) * var(--u));   /* exact measured width; grows if a min font-size kicks in */
+  padding:calc(1 * 2 * var(--u)) max(6px, calc(8 * var(--u))) 0;
+  border-radius:calc(9.5 * var(--u));
+  font-family:var(--text-font);
+  font-weight:400;
+  font-size:max(calc(14.4 * var(--u)), 11px);
+  letter-spacing:0.005em;
+  line-height:1;
+  color:#fff;
+  background:rgba(255,255,255,0.05);
+  -webkit-backdrop-filter:blur(calc(24 * var(--u))) saturate(0.75);
+  backdrop-filter:blur(calc(24 * var(--u))) saturate(0.75);
+  text-shadow:0 calc(1 * var(--u)) calc(2 * var(--u)) rgba(0,0,0,.35);
+  transition:background-color .2s ease;
+  white-space:nowrap;
+}
+.pill:focus-visible{background:rgba(255,255,255,0.16)}
+@media (hover:hover){.pill:hover{background:rgba(255,255,255,0.16)}}
+
+/* --- Header CTA (outline) ------------------------------------- */
+.cta-ghost{
+  position:absolute;
+  right:calc(29 * var(--u));
+  top:calc(31.5 * var(--u));
+  height:calc(46.5 * var(--u));
+  min-width:calc(151.5 * var(--u));
+  padding:calc(1 * 2 * var(--u)) calc(12 * var(--u)) 0 calc(12 * var(--u) + 0 * 2 * var(--u));
+  display:flex;align-items:center;justify-content:center;
+  border:max(1px, calc(1 * var(--u))) solid rgba(255,255,255,0.33);
+  border-radius:calc(9.5 * var(--u));
+  font-family:var(--display-font);
+  font-weight:500;
+  font-size:max(calc(15.75 * var(--u)), 11px);
+  letter-spacing:-0.0085em;
+  line-height:1;
+  white-space:nowrap;
+  transition:background-color .2s ease,border-color .2s ease;
+}
+.cta-ghost:focus-visible{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.5)}
+@media (hover:hover){.cta-ghost:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.5)}}
+
+/* --- Headline ------------------------------------------------- */
+.headline{
+  position:absolute;
+  left:calc(49 * var(--u));
+  top:calc(179.5 * var(--u));
+  margin:0;
+  font-family:var(--display-font);
+  font-weight:700;
+  font-size:calc(95.9 * var(--u));
+  line-height:calc(90.5 * var(--u));
+  letter-spacing:-0.045em;
+  color:#fff;
+  text-shadow:0 calc(2 * var(--u)) calc(6 * var(--u)) rgba(0,0,0,.35);
+  white-space:nowrap;
+}
+.headline span{display:block;letter-spacing:calc(var(--ls) * 1em)}
+.headline .l1{margin-left:calc(-4 * var(--u))}
+
+/* --- Right column: pitch + CTA row ---------------------------- */
+.pitch{
+  position:absolute;
+  right:calc((1570 - 372 - 1168) * var(--u));   /* right-anchored: stays clear of the claw on ultrawide screens */
+  top:calc(203 * var(--u));
+  width:calc(372 * var(--u));
+}
+.pitch__copy .dash{display:inline-block;transform:scaleX(1.25)}
+.pitch__copy{
+  margin:0;
+  font-family:var(--display-font);
+  font-weight:400;
+  font-size:max(calc(21.5 * var(--u)), 11px);
+  line-height:calc(28.3 * var(--u));
+  letter-spacing:0.017em;
+  color:#fff;
+}
+.cta-row{
+  position:absolute;
+  right:calc(143 * var(--u));
+  top:calc(382.5 * var(--u));
+  display:flex;
+  gap:calc(5.5 * var(--u));
+}
+.cta-primary{
+  height:calc(59 * var(--u));
+  min-width:calc(192.5 * var(--u));
+  display:flex;align-items:center;justify-content:center;
+  background:#fefefe;
+  color:#0b0b0c;
+  border-radius:calc(6.5 * var(--u));
+  font-family:var(--display-font);
+  font-weight:700;
+  padding:calc(1 * 2 * var(--u)) max(10px, calc(16 * var(--u))) 0 calc(max(10px, calc(16 * var(--u))) + 1 * 2 * var(--u));
+  font-size:max(calc(18.5 * var(--u)), 11px);
+  letter-spacing:0.007em;
+  line-height:1;
+  white-space:nowrap;
+  transition:transform .2s ease, background-color .2s ease;
+}
+.cta-primary:focus-visible{background:#fff}
+@media (hover:hover){.cta-primary:hover{background:#fff;transform:translateY(-1px)}}
+.cta-arrow{
+  width:calc(58 * var(--u));height:calc(59 * var(--u));
+  display:grid;place-items:center;
+  border-radius:calc(6.5 * var(--u));
+  background:rgba(255,255,255,0.075);
+  -webkit-backdrop-filter:blur(calc(16 * var(--u)));
+  backdrop-filter:blur(calc(16 * var(--u)));
+  transition:background-color .2s ease;
+}
+.cta-arrow svg{width:calc(17 * var(--u));height:calc(13 * var(--u));display:block;transform:translate(calc(-1.5 * var(--u)), calc(0 * var(--u)))}
+.cta-arrow:focus-visible{background:rgba(255,255,255,.14)}
+@media (hover:hover){.cta-arrow:hover{background:rgba(255,255,255,.14)}}
+
+/* --- Tagline -------------------------------------------------- */
+.tagline{
+  position:absolute;
+  left:calc(46 * var(--u));
+  bottom:calc(72 * var(--u));
+  margin:0;
+  font-family:var(--display-font);
+  font-weight:500;
+  font-size:calc(31.1 * var(--u));
+  line-height:calc(37 * var(--u));
+  letter-spacing:0.006em;
+  color:#fff;
+  text-shadow:0 calc(1 * var(--u)) calc(4 * var(--u)) rgba(0,0,0,.3);
+}
+.tagline span{display:block;white-space:nowrap;letter-spacing:calc(var(--ls) * 1em)}
+
+/* --- Stats (frosted glass) ------------------------------------ */
+.stats{
+  position:absolute;
+  right:calc(26.5 * var(--u));
+  bottom:calc(68 * var(--u));
+  display:flex;
+  gap:calc(5.5 * var(--u));
+  margin:0;padding:0;list-style:none;
+}
+.stat{
+  position:relative;
+  min-width:calc(192 * var(--u));
+  height:calc(120 * var(--u));
+  border-radius:calc(10 * var(--u));
+  background:rgba(255,255,255,0.08);
+  -webkit-backdrop-filter:blur(calc(28 * var(--u))) saturate(1) brightness(0.9);
+  backdrop-filter:blur(calc(28 * var(--u))) saturate(1) brightness(0.9);
+  box-shadow:inset 0 0 0 max(1px, calc(1 * var(--u))) rgba(255,255,255,0.12);
+  padding:calc(24 * var(--u)) calc(27 * var(--u)) 0 calc(27 * var(--u));
+  overflow:hidden;
+}
+.stat + .stat{min-width:calc(194 * var(--u))}
+.stat__value{
+  display:block;
+  font-variant-numeric:tabular-nums;
+  font-family:var(--display-font);
+  font-weight:700;
+  font-size:calc(41.1 * var(--u));
+  letter-spacing:-0.05em;
+  line-height:1;
+}
+.stat__label{
+  display:block;
+  margin-top:calc(14 * var(--u));
+  font-family:var(--text-font);
+  font-weight:400;
+  font-size:max(calc(15.07 * var(--u)), 10px);
+  letter-spacing:-0.02em;
+  line-height:1;
+  white-space:nowrap;
+}
+
+/* In the desktop composition the wrappers are transparent to positioning */
+.topbar,.menu,.bottom{display:contents}
+.spacer,.burger{display:none}
+
+/* ===============================================================
+   RESPONSIVE ARCHITECTURE
+   ---------------------------------------------------------------
+   Desktop (all rules above) stays active while it still reads well.
+   Measured failure points of the desktop composition:
+     • width  < 1178px or height < 600px  → --u < 0.75, the smallest
+       type (nav 14.4u, labels 15u) drops under 11px and the floors
+       start distorting the composition;
+     • aspect-ratio < 6/5 → the art is scaled by height while the UI is
+       scaled by width, and the claw's left arm runs into the headline.
+   Everything else uses the tablet architecture; below 600px wide the
+   header (logo + 3 pills + CTA) no longer fits and the mobile
+   architecture takes over.
+================================================================ */
+
+/* ---------- TABLET (and short landscape phones) ---------------- */
+@media not all and (min-width:1178px) and (min-height:600px) and (min-aspect-ratio:6/5){
+  .hero{
+    height:auto;
+    min-height:100vh;min-height:100dvh;   /* never shorter than the screen, may grow */
+    container-type:normal;
+    display:flex;flex-direction:column;
+  }
+  .stage{
+    /* one fluid tablet unit: 1px at 1000 × 700 */
+    --t:min(calc(100vw / 1000), calc(100vh / 700), .9px);   /* capped so sizes meet desktop's at the breakpoint */
+    position:relative;inset:auto;
+    flex:1 0 auto;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    grid-template-rows:auto auto auto minmax(max(28px, calc(72 * var(--t))), 1fr) auto;
+    grid-template-areas:
+      "top    top"
+      "head   pitch"
+      "head   cta"
+      "space  space"
+      "bottom bottom";
+    column-gap:max(24px, calc(48 * var(--t)));
+    padding:
+      max(max(14px, calc(24 * var(--t))), env(safe-area-inset-top))
+      max(max(22px, calc(36 * var(--t))), env(safe-area-inset-right))
+      max(max(18px, calc(32 * var(--t))), env(safe-area-inset-bottom))
+      max(max(22px, calc(36 * var(--t))), env(safe-area-inset-left));
+  }
+  @supports (height:1dvh){ .stage{--t:min(calc(100vw / 1000), calc(100dvh / 700), .9px)} }
+
+  /* Header: logo · centred pills · CTA — same three groups as desktop */
+  .topbar{
+    grid-area:top;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+    align-items:center;
+    column-gap:max(12px, calc(16 * var(--t)));
+  }
+  .menu{display:contents}
+  .brand{position:static;height:auto;justify-self:start;gap:max(7px, calc(9 * var(--t)))}
+  .brand__mark{width:max(30px, calc(40 * var(--t)));height:auto;aspect-ratio:44 / 38}
+  .brand__name{font-size:max(22px, calc(30 * var(--t)));top:0}
+  .navwrap{justify-self:center}
+  .nav{position:static;gap:max(6px, calc(7.5 * var(--t)))}
+  .pill{
+    min-width:0;
+    height:max(40px, calc(42 * var(--t)));
+    padding:0 max(12px, calc(15 * var(--t)));
+    font-size:max(13px, calc(14 * var(--t)));
+    border-radius:max(8px, calc(9 * var(--t)));
+  }
+  .cta-ghost{
+    position:static;justify-self:end;
+    height:max(40px, calc(44 * var(--t)));
+    min-width:0;
+    padding:0 max(14px, calc(17 * var(--t)));
+    font-size:max(13px, calc(15 * var(--t)));
+    border-radius:max(8px, calc(9.5 * var(--t)));
+  }
+
+  /* Top band: headline left, pitch + CTA right (desktop's asymmetry) */
+  .headline{
+    grid-area:head;position:static;align-self:start;
+    margin-top:max(22px, calc(64 * var(--t)));
+    font-size:max(40px, calc(86 * var(--t)));
+    line-height:.94;
+  }
+  .headline .l1{margin-left:-.042em}
+  .pitch,.cta-row{
+    --col:min(100%, max(250px, calc(372 * var(--t))));
+    justify-self:end;width:var(--col);
+  }
+  .pitch{grid-area:pitch;position:static;align-self:start;margin-top:calc(max(22px, calc(64 * var(--t))) + .12em)}
+  .pitch__copy{font-size:max(14px, calc(19.5 * var(--t)));line-height:1.32;text-wrap:pretty}
+  .cta-row{
+    grid-area:cta;position:static;align-self:end;
+    margin-top:max(16px, calc(24 * var(--t)));
+    gap:max(4px, calc(5.5 * var(--t)));
+  }
+  .cta-primary{
+    min-width:0;
+    height:max(44px, calc(54 * var(--t)));
+    padding:0 max(18px, calc(24 * var(--t)));
+    font-size:max(14.5px, calc(17 * var(--t)));
+    border-radius:max(6px, calc(6.5 * var(--t)));
+  }
+  .cta-arrow{
+    width:max(44px, calc(54 * var(--t)));height:max(44px, calc(54 * var(--t)));
+    border-radius:max(6px, calc(6.5 * var(--t)));
+  }
+  .cta-arrow svg{width:max(15px, calc(17 * var(--t)));height:auto;aspect-ratio:17 / 13;transform:none}
+
+  .spacer{display:block;grid-area:space}
+
+  /* Bottom band: tagline left, stats right — same corners as desktop */
+  .bottom{
+    grid-area:bottom;
+    display:flex;align-items:flex-end;justify-content:space-between;
+    gap:max(20px, calc(32 * var(--t)));
+  }
+  .tagline{position:static;flex:1 1 auto;min-width:0;font-size:max(18px, calc(28 * var(--t)));line-height:1.19}
+  .stats{position:static;flex:none;gap:max(5px, calc(5.5 * var(--t)))}
+  .stat,.stat + .stat{
+    min-width:max(148px, calc(178 * var(--t)));
+    height:max(86px, calc(110 * var(--t)));
+    padding:max(16px, calc(24 * var(--t))) max(16px, calc(22 * var(--t))) 0;
+    border-radius:max(9px, calc(10 * var(--t)));
+  }
+  .stat + .stat{min-width:max(150px, calc(180 * var(--t)))}
+  .stat__value{font-size:max(28px, calc(38 * var(--t)))}
+  .stat__label{margin-top:max(10px, calc(17 * var(--t)));font-size:max(12px, calc(14 * var(--t)))}
+}
+/* Landscape tablets & phones: the claw sits between the two text
+   columns exactly as on desktop. The art scales by max(vw/1570, vh/1002),
+   so the claw's arms reach 290 art-px either side of centre; both
+   columns are sized to stay clear of them. */
+@media not all and (min-width:1178px) and (min-height:600px) and (min-aspect-ratio:6/5){
+  @media (min-aspect-ratio:1/1){
+    .stage{
+      --side:calc(50vw - max(18.47vw, 28.94vh) - max(22px, calc(36 * var(--t))));
+    }
+    @supports (height:1dvh){ .stage{--side:calc(50vw - max(18.47vw, 28.94dvh) - max(22px, calc(36 * var(--t))))} }
+    .headline{font-size:max(40px, min(calc(86 * var(--t)), calc(var(--side) * .24)))}
+    .pitch,.cta-row{--col:max(220px, min(calc(372 * var(--t)), calc(var(--side) - 12px)))}
+  }
+}
+/* Portrait tablets: the copy sits over the bright pipe / coil, so the
+   existing scrim layer is used lightly to keep it legible. */
+@media not all and (min-width:1178px) and (min-height:600px) and (min-aspect-ratio:6/5){
+  @media (orientation:portrait){
+    .hero__scrim{
+      opacity:1;
+      background:
+        linear-gradient(180deg, rgba(2,3,5,.6) 0%, rgba(2,3,5,.28) 26%, rgba(2,3,5,0) 40%),
+        linear-gradient(0deg, rgba(2,3,5,.6) 0%, rgba(2,3,5,.2) 22%, rgba(2,3,5,0) 34%);
+    }
+  }
+}
+
+/* ---------- MOBILE ------------------------------------------------- */
+@media (max-width:599.98px){
+  .stage{
+    grid-template-columns:minmax(0,1fr);
+    grid-template-rows:auto auto auto auto minmax(clamp(110px, 20svh, 300px), 1fr) auto;
+    grid-template-areas:"top" "head" "pitch" "cta" "space" "bottom";
+    column-gap:0;
+    padding:
+      max(14px, env(safe-area-inset-top))
+      max(clamp(16px, 5.2vw, 24px), env(safe-area-inset-right))
+      max(20px, env(safe-area-inset-bottom))
+      max(clamp(16px, 5.2vw, 24px), env(safe-area-inset-left));
+  }
+  .hero__art{height:100%;object-position:50% 0}
+  .hero__scrim{
+    opacity:1;
+    background:
+      linear-gradient(180deg, rgba(2,3,5,.74) 0%, rgba(2,3,5,.42) 34%, rgba(2,3,5,0) 50%),
+      linear-gradient(0deg, rgba(2,3,5,.85) 0%, rgba(2,3,5,.5) 22%, rgba(2,3,5,0) 38%);
+  }
+
+  /* Header: logo ……… menu button; links + CTA move into the menu */
+  .topbar{
+    display:flex;justify-content:space-between;align-items:center;
+    position:relative;z-index:20;
+  }
+  .brand{gap:9px}
+  .brand__mark{width:34px}
+  .brand__name{font-size:25px}
+  .burger{
+    display:grid;place-items:center;flex:none;
+    width:44px;height:44px;
+    border-radius:9.5px;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.33);   /* same outline as the header CTA */
+    transition:background-color .2s ease, box-shadow .2s ease;
+  }
+  .burger__lines{position:relative;width:18px;height:12px;display:block}
+  .burger__lines::before,.burger__lines::after{
+    content:"";position:absolute;left:0;right:0;height:2px;border-radius:2px;background:#fff;
+    transition:transform .25s cubic-bezier(.2,.7,.2,1), top .25s cubic-bezier(.2,.7,.2,1);
+  }
+  .burger__lines::before{top:1px}
+  .burger__lines::after{top:9px}
+  .topbar[data-open] .burger{background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.5)}
+  .topbar[data-open] .burger__lines::before{top:5px;transform:rotate(45deg)}
+  .topbar[data-open] .burger__lines::after{top:5px;transform:rotate(-45deg)}
+
+  /* Menu: a floating glass panel built from the same surfaces */
+  .menu{
+    display:flex;flex-direction:column;gap:6px;
+    position:absolute;top:calc(100% + 10px);left:0;right:0;
+    padding:8px;
+    border-radius:16px;
+    background:rgba(12,12,14,.55);
+    -webkit-backdrop-filter:blur(24px) saturate(.75);
+    backdrop-filter:blur(24px) saturate(.75);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.12), 0 24px 48px rgba(0,0,0,.45);
+    opacity:0;visibility:hidden;transform:translateY(-6px);
+    transition:opacity .2s ease, transform .2s ease, visibility 0s linear .2s;
+  }
+  .topbar[data-open] .menu{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+  .nav{flex-direction:column;gap:6px}
+  .pill{
+    width:100%;height:50px;
+    justify-content:flex-start;
+    padding:0 16px;
+    font-size:16px;
+    border-radius:9.5px;
+  }
+  .menu .cta-ghost{width:100%;height:50px;font-size:16px;border-radius:9.5px}
+
+  /* Content */
+  .headline{
+    margin-top:clamp(26px, 8vw, 44px);
+    font-size:clamp(42px, 14vw, 64px);
+  }
+  .pitch,.cta-row{--col:auto;justify-self:start;width:auto}
+  .pitch{margin-top:clamp(14px, 4.2vw, 22px);max-width:36ch}
+  .pitch__copy{font-size:clamp(15px, 4.1vw, 17px);line-height:1.4}
+  .cta-row{align-self:start;margin-top:clamp(18px, 5.4vw, 26px);gap:5px}
+  .cta-primary{height:52px;padding:0 24px;font-size:16.5px}
+  .cta-arrow{width:52px;height:52px}
+  .cta-arrow svg{width:16px}
+
+  .bottom{flex-direction:column;align-items:stretch;justify-content:flex-end;gap:clamp(14px, 4vw, 18px)}
+  .tagline{font-size:clamp(21px, 6vw, 26px);line-height:1.2}
+  .stats{display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:6px}
+  .stat,.stat + .stat{
+    min-width:0;
+    height:clamp(96px, 27vw, 118px);
+    padding:clamp(15px, 4.4vw, 20px) clamp(14px, 4vw, 18px) 0;
+    border-radius:10px;
+  }
+  .stat__value{font-size:clamp(28px, 8.6vw, 36px)}
+  .stat__label{margin-top:clamp(10px, 3.4vw, 14px);font-size:clamp(12.5px, 3.5vw, 14px);white-space:normal;line-height:1.25}
+}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+
+/* Opening frame only. The entrance script removes this class at completion. */
+html.entrance-pending .brand,
+html.entrance-pending .nav li,
+html.entrance-pending .cta-ghost,
+html.entrance-pending .burger{
+  opacity:0;
+  transform:translate3d(0,8px,0);
+}
+html.entrance-pending .headline span{
+  clip-path:inset(0 0 100% 0);
+  transform:translate3d(0,.18em,0);
+}
+html.entrance-pending .pitch,
+html.entrance-pending .cta-row,
+html.entrance-pending .tagline{
+  opacity:0;
+  transform:translate3d(0,12px,0);
+}
+html.entrance-pending .stat{
+  opacity:0;
+  transform:translate3d(0,12px,0) scale(.985);
+}
+@media (prefers-reduced-motion:reduce){
+  html.entrance-pending .brand,
+  html.entrance-pending .nav li,
+  html.entrance-pending .cta-ghost,
+  html.entrance-pending .burger,
+  html.entrance-pending .headline span,
+  html.entrance-pending .pitch,
+  html.entrance-pending .cta-row,
+  html.entrance-pending .tagline,
+  html.entrance-pending .stat{
+    opacity:1;
+    transform:none;
+    clip-path:none;
+  }
+}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}

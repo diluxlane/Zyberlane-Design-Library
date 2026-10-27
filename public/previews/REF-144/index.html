@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-144/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SUNDI® — Headphones</title>
+<meta name="description" content="Experience crystal-clear sound and unparalleled comfort, whether you're at home or on the go.">
+<meta name="theme-color" content="#D0E3E6">
+<script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('has-entrance')</script>
+<style>
+/* ---------- Fonts (local assets) ---------- */
+@font-face{font-family:"Inter";font-style:normal;font-weight:100 900;font-display:block;src:url(assets/inter.woff2) format("woff2")}
+@font-face{font-family:"Arimo";font-style:normal;font-weight:700;font-display:block;src:url(assets/arimo-bold.woff2) format("woff2")}
+
+/* ---------- Design tokens (sampled from reference) ---------- */
+:root{
+  --bg:#D0E3E6;          /* page background  rgb(208,227,230) */
+  --paper:#FEFEFE;       /* mosaic blocks / white surfaces rgb(254,254,254) */
+  --ink:#070B0C;         /* body + nav text  */
+  --brand:#074342;       /* SUNDI wordmark   */
+  --teal:#449896;        /* card + CTA tile  rgb(68,152,150) */
+  --teal-ink:#3E9795;    /* arrow inside white circle */
+  --rule:#A3C6C9;        /* nav dividers */
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --font-logo:"Arimo","Helvetica Neue",Helvetica,Arial,sans-serif;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--bg);-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,body{margin:0;min-height:100%}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--font);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  text-rendering:geometricPrecision;font-kerning:normal;
+  container-type:inline-size;   /* lets the stage size from the real content width (no scrollbar error) */
+  overflow-x:hidden;
+}
+img,svg{display:block}
+a{color:inherit;text-decoration:none}
+ul{list-style:none;margin:0;padding:0}
+p{margin:0}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* =====================================================================
+   STAGE ARCHITECTURE (landscape / desktop)
+   The artboard is 1449 × 1086 design units. 1 unit = --u CSS px.
+   --u fits the artboard to the viewport, and every element is pinned to
+   the edge it belongs to (top/middle/bottom × left/centre/right), so at the
+   reference aspect ratio the layout is pixel-identical, and at any other
+   ratio the extra room is absorbed by the background + mosaic — never by
+   empty bands at the top or bottom.
+   ===================================================================== */
+.hero{
+  --vw:100cqw;
+  --u:min(var(--vw) / 1449, max(100dvh / 1086, .56px));
+  position:relative;width:100%;
+  height:max(100vh, calc(1086 * var(--u)));
+  height:max(100dvh, calc(1086 * var(--u)));
+  overflow:hidden;isolation:isolate;
+}
+@supports not (width:1cqw){.hero{--vw:100vw}}
+
+.layer{position:absolute;width:calc(1449 * var(--u));height:calc(1086 * var(--u));pointer-events:none}
+.layer>*{pointer-events:auto}
+.L-tl{left:0;top:0}
+.L-tc{left:calc(50% - 724.5 * var(--u));top:0}
+.L-tr{right:0;top:0}
+.L-ml{left:0;top:calc(50% - 543 * var(--u))}
+.L-mc{left:calc(50% - 724.5 * var(--u));top:calc(50% - 543 * var(--u))}
+.L-bl{left:0;bottom:0}
+
+/* absolute placement helper: style="--x:..;--y:..;--w:..;--h:.." in design px */
+.abs{position:absolute;left:calc(var(--x) * var(--u));top:calc(var(--y) * var(--u))}
+.sized{width:calc(var(--w) * var(--u));height:calc(var(--h) * var(--u))}
+.t{position:absolute;white-space:nowrap;line-height:1;font-size:calc(var(--fs) * var(--u));
+   left:calc(var(--x) * var(--u));top:calc(var(--y) * var(--u));letter-spacing:calc(var(--ls,0) * var(--u))}
+
+/* ---------- Mosaic (pixel-step backdrop) ---------- */
+.mosaic{position:absolute;z-index:-1;bottom:0;
+  width:calc(4347 * var(--u));height:calc(526 * var(--u));
+  left:calc(50% - (724.5 + 1449) * var(--u))}
+.mosaic rect{fill:var(--paper)}
+
+/* ---------- Nav ---------- */
+.nav li{position:absolute;left:calc(42.5 * var(--u));width:calc(272.5 * var(--u))}
+.nav a{display:block;position:relative;height:100%}
+.nav .rule{position:absolute;left:0;right:0;bottom:0;height:calc(1.5 * var(--u));background:var(--rule)}
+.nav .lbl{font-size:calc(var(--fs) * var(--u));line-height:1;position:absolute;left:calc(var(--lx) * var(--u));top:calc(var(--ly) * var(--u));white-space:nowrap;letter-spacing:calc(var(--ls,0) * var(--u))}
+.nav .go{position:absolute;opacity:0;transition:opacity .25s,transform .25s}
+.nav li.is-active .go{opacity:1}
+.nav a:hover .go,.nav a:focus-visible .go{opacity:1;transform:translate(calc(2*var(--u)),calc(-2*var(--u)))}
+.nav a:hover .lbl{transform:translateX(calc(3*var(--u)))}
+.nav .lbl{transition:transform .25s}
+
+/* ---------- Brand ---------- */
+.logo{font-family:var(--font-logo);font-weight:700;color:var(--brand)}
+.logo .reg{position:absolute;overflow:visible}
+
+/* ---------- CTA ---------- */
+.shop{display:block}
+.shop .pill{position:absolute;background:var(--paper);border-radius:calc(var(--r) * var(--u))}
+.shop .tile{position:absolute;background:var(--teal);border-radius:calc(var(--r) * var(--u));transition:filter .2s}
+.shop:hover .tile{filter:brightness(1.08)}
+.shop .tile svg{transition:transform .25s}
+.shop:hover .tile svg{transform:translate(calc(2*var(--u)),calc(-2*var(--u)))}
+
+/* ---------- Hero image ---------- */
+.hp{position:absolute;max-width:none;user-select:none;-webkit-user-drag:none}
+
+/* ---------- Product card ---------- */
+.card{position:absolute;background:var(--teal);color:#fff}
+.card .thumb{position:absolute;background:var(--paper);overflow:hidden}
+.card .thumb img{position:absolute;max-width:none}
+.card .desc{white-space:normal;color:rgba(255,255,255,var(--da,.92))}
+.card .go{position:absolute;border-radius:50%;background:var(--paper);transition:transform .25s}
+.card .go:hover{transform:rotate(45deg)}
+
+:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+.menu-btn{display:none}
+
+/* =====================================================================
+   PORTRAIT / NARROW LAYOUT
+   Same components, reflowed into a column that always fills the screen.
+   1 unit = --m CSS px (390-wide phone baseline).
+   ===================================================================== */
+@media (max-aspect-ratio: 11/10), (max-height: 540px) and (max-width: 1000px){
+  .hero{
+    --m:clamp(.82px, min(var(--vw) / 390, 100dvh / 600), 1.45px);
+    /* re-express the desktop unit so shared components scale with --m */
+    --u:calc(var(--m) * .98);
+    height:auto;min-height:100vh;min-height:100dvh;
+    display:grid;
+    grid-template-columns:calc(20 * var(--m)) auto 1fr auto calc(20 * var(--m));
+    grid-template-rows:auto minmax(calc(250 * var(--m)), 1fr) auto auto;
+    grid-template-areas:
+      ". menu logo cart ."
+      ". hp   hp   hp   ."
+      ". lede lede lede ."
+      ". card card card .";
+    row-gap:calc(18 * var(--m));
+    padding:calc(18 * var(--m)) 0 calc(22 * var(--m));
+    padding-top:max(calc(18 * var(--m)), env(safe-area-inset-top));
+    padding-bottom:max(calc(22 * var(--m)), env(safe-area-inset-bottom));
+  }
+  .layer{display:contents}
+  .logo,.cart,.lede{position:relative!important;left:auto!important;top:auto!important}
+  .mosaic{--k:calc(var(--m) * .5);width:calc(4347 * var(--k));height:calc(526 * var(--k));
+          left:calc(50% - (1449 + 360) * var(--k));bottom:calc(-12 * var(--m))}
+
+  .menu-btn{grid-area:menu;display:flex;align-items:center;gap:calc(8*var(--m));align-self:center;
+    background:none;border:0;padding:calc(6*var(--m)) 0;font:inherit;color:var(--ink);cursor:pointer;
+    font-size:calc(15*var(--m))}
+  .menu-btn i{display:block;width:calc(22*var(--m));height:calc(10*var(--m));position:relative}
+  .menu-btn i::before,.menu-btn i::after{content:"";position:absolute;left:0;right:0;height:calc(1.6*var(--m));background:currentColor;transition:transform .25s}
+  .menu-btn i::before{top:0}.menu-btn i::after{bottom:0}
+  .hero.nav-open .menu-btn i::before{transform:translateY(calc(4.2*var(--m))) rotate(45deg)}
+  .hero.nav-open .menu-btn i::after{transform:translateY(calc(-4.2*var(--m))) rotate(-45deg)}
+
+  .logo{grid-area:logo;justify-self:center;align-self:center;position:relative;font-size:calc(30*var(--m))!important;line-height:1}
+  .cart{grid-area:cart;align-self:center;font-size:calc(15*var(--m))!important}
+
+  .nav{position:absolute;z-index:5;left:0;right:0;top:calc(64*var(--m));padding:calc(4*var(--m)) calc(20*var(--m)) calc(20*var(--m));
+       background:var(--bg);box-shadow:0 calc(16*var(--m)) calc(24*var(--m)) calc(-18*var(--m)) rgba(7,67,66,.25);
+       opacity:0;visibility:hidden;transform:translateY(calc(-8*var(--m)));transition:opacity .25s,transform .25s,visibility .25s}
+  .hero.nav-open .nav{opacity:1;visibility:visible;transform:none}
+  .nav ul{display:block}
+  .nav li{position:relative;left:auto!important;top:auto!important;width:auto;height:calc(64*var(--m))!important}
+  .nav .lbl{left:calc(14*var(--m))!important;top:calc(21*var(--m))!important;font-size:calc(20*var(--m))!important}
+  .nav .go{left:auto!important;right:calc(14*var(--m));top:calc(24*var(--m))!important;width:calc(14*var(--m))!important;height:calc(14*var(--m))!important}
+  .nav .rule{height:1.5px}
+
+  .hp-wrap{grid-area:hp;position:relative!important;left:auto!important;top:auto!important;width:auto!important;height:auto!important;min-height:0}
+  .hp{inset:0;width:100%!important;height:100%!important;object-fit:contain;left:0!important;top:0!important}
+  .shop{position:absolute;left:auto!important;top:auto!important;right:0;bottom:4%;width:calc(252*var(--u));height:calc(64*var(--u))}
+  .shop .pill{left:0!important;top:calc(2*var(--u))!important}
+  .shop .tile{left:calc(186.5*var(--u))!important;top:0!important}
+  .shop .t{position:absolute;left:calc(24.7*var(--u))!important;top:calc(20*var(--u))!important}
+
+  .lede{grid-area:lede;white-space:normal!important;max-width:calc(350*var(--m));font-size:calc(17*var(--m))!important;line-height:1.62!important}
+  .lede br{display:none}
+
+  .card{grid-area:card;position:relative!important;left:auto!important;top:auto!important;justify-self:start}
+}
+/* One opening sequence. The original composition is restored when the last beat ends. */
+html.has-entrance .logo{animation:sundi-brand-in .72s cubic-bezier(.22,1,.36,1) .05s both}
+html.has-entrance .nav li{animation:sundi-quiet-in .5s cubic-bezier(.22,1,.36,1) both}
+html.has-entrance .nav li:nth-child(1){animation-delay:.18s}
+html.has-entrance .nav li:nth-child(2){animation-delay:.25s}
+html.has-entrance .nav li:nth-child(3){animation-delay:.32s}
+html.has-entrance .nav li:nth-child(4){animation-delay:.39s}
+html.has-entrance .cart,html.has-entrance .menu-btn{animation:sundi-quiet-in .5s cubic-bezier(.22,1,.36,1) .24s both}
+html.has-entrance .hp{animation:sundi-product-in 1.06s cubic-bezier(.16,1,.3,1) .27s both}
+html.has-entrance .lede{animation:sundi-copy-in .8s cubic-bezier(.22,1,.36,1) .53s both}
+html.has-entrance .shop{animation:sundi-quiet-in .52s cubic-bezier(.22,1,.36,1) 1.02s both}
+html.has-entrance .card{animation:sundi-card-in .66s cubic-bezier(.22,1,.36,1) 1.15s both}
+@keyframes sundi-brand-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes sundi-quiet-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@keyframes sundi-product-in{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes sundi-copy-in{from{opacity:0;clip-path:inset(0 0 100% 0);transform:translateY(9px)}to{opacity:1;clip-path:inset(0);transform:none}}
+@keyframes sundi-card-in{from{opacity:0;clip-path:inset(0 7% 0 0);transform:translateY(8px)}to{opacity:1;clip-path:inset(0);transform:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}html.has-entrance .logo,html.has-entrance .nav li,html.has-entrance .cart,html.has-entrance .menu-btn,html.has-entrance .hp,html.has-entrance .lede,html.has-entrance .shop,html.has-entrance .card{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="hero" id="top">
+  <!-- Mosaic backdrop: measured rectangles (design px), mirrored left/right so it extends on ultra-wide screens -->
+  <svg class="mosaic" viewBox="-1449 560 4347 526" preserveAspectRatio="none" aria-hidden="true" shape-rendering="crispEdges"><rect x="0" y="681.4" width="49.3" height="300"/><rect x="-49.3" y="681.4" width="49.3" height="300"/><rect x="2848.7" y="681.4" width="49.3" height="300"/><rect x="0" y="1033.8" width="49.3" height="52.2"/><rect x="-49.3" y="1033.8" width="49.3" height="52.2"/><rect x="2848.7" y="1033.8" width="49.3" height="52.2"/><rect x="49.3" y="681.4" width="101.7" height="100"/><rect x="-151" y="681.4" width="101.7" height="100"/><rect x="2747" y="681.4" width="101.7" height="100"/><rect x="49.3" y="827" width="53.2" height="206.8"/><rect x="-102.5" y="827" width="53.2" height="206.8"/><rect x="2795.5" y="827" width="53.2" height="206.8"/><rect x="102.5" y="827" width="48.5" height="259"/><rect x="-151" y="827" width="48.5" height="259"/><rect x="2747" y="827" width="48.5" height="259"/><rect x="151" y="681.4" width="46.3" height="145.6"/><rect x="-197.3" y="681.4" width="46.3" height="145.6"/><rect x="2700.7" y="681.4" width="46.3" height="145.6"/><rect x="197.3" y="736.8" width="61.1" height="90.2"/><rect x="-258.4" y="736.8" width="61.1" height="90.2"/><rect x="2639.6" y="736.8" width="61.1" height="90.2"/><rect x="151" y="987" width="54.9" height="99"/><rect x="-205.9" y="987" width="54.9" height="99"/><rect x="2692.1" y="987" width="54.9" height="99"/><rect x="205.9" y="1033.8" width="52.5" height="52.2"/><rect x="-258.4" y="1033.8" width="52.5" height="52.2"/><rect x="2639.6" y="1033.8" width="52.5" height="52.2"/><rect x="312.2" y="834.5" width="105.7" height="251.5"/><rect x="-417.9" y="834.5" width="105.7" height="251.5"/><rect x="2480.1" y="834.5" width="105.7" height="251.5"/><rect x="511.3" y="920" width="110.3" height="166"/><rect x="-621.6" y="920" width="110.3" height="166"/><rect x="2276.4" y="920" width="110.3" height="166"/><rect x="671.1" y="900" width="103.6" height="186"/><rect x="-774.7" y="900" width="103.6" height="186"/><rect x="2123.3" y="900" width="103.6" height="186"/><rect x="774.7" y="900" width="56.9" height="89.4"/><rect x="-831.6" y="900" width="56.9" height="89.4"/><rect x="2066.4" y="900" width="56.9" height="89.4"/><rect x="883.2" y="900" width="102.8" height="186"/><rect x="-986" y="900" width="102.8" height="186"/><rect x="1912" y="900" width="102.8" height="186"/><rect x="1043.1" y="834.5" width="102.6" height="251.5"/><rect x="-1145.7" y="834.5" width="102.6" height="251.5"/><rect x="1752.3" y="834.5" width="102.6" height="251.5"/><rect x="1145.7" y="834.5" width="55.8" height="94.9"/><rect x="-1201.5" y="834.5" width="55.8" height="94.9"/><rect x="1696.5" y="834.5" width="55.8" height="94.9"/><rect x="1201.5" y="834.5" width="54.3" height="146.9"/><rect x="-1255.8" y="834.5" width="54.3" height="146.9"/><rect x="1642.2" y="834.5" width="54.3" height="146.9"/><rect x="1255.8" y="834.5" width="12.2" height="251.5"/><rect x="-1268" y="834.5" width="12.2" height="251.5"/><rect x="1630" y="834.5" width="12.2" height="251.5"/><rect x="1268" y="628.5" width="93.8" height="457.5"/><rect x="-1361.8" y="628.5" width="93.8" height="457.5"/><rect x="1536.2" y="628.5" width="93.8" height="457.5"/><rect x="1404.8" y="681.4" width="44.2" height="404.6"/><rect x="-1449" y="681.4" width="44.2" height="404.6"/><rect x="1449" y="681.4" width="44.2" height="404.6"/></svg>
+
+  <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav"><i></i><span>Menu</span></button>
+
+  <div class="layer L-tl">
+    <nav class="nav" id="site-nav" aria-label="Primary">
+      <ul>
+        <li class="is-active" style="top:calc(31.8 * var(--u));height:calc(85.5 * var(--u))"><a href="#top" aria-current="page"><span class="lbl" style="--fs:24.5;--lx:16.50;--ly:32.74;--ls:-1.1">Home</span>
+          <svg class="go" style="left:calc(233 * var(--u));top:calc(38.2 * var(--u));width:calc(16 * var(--u));height:calc(16 * var(--u))" viewBox="276 70 16 16" aria-hidden="true"><path d="M279 73H290V84M290 73L277.5 85.5" fill="none" stroke="#070B0C" stroke-width="2"/></svg>
+          <span class="rule"></span></a></li>
+        <li style="top:calc(117.35 * var(--u));height:calc(85 * var(--u))"><a href="#category"><span class="lbl" style="--fs:24.5;--lx:16.50;--ly:34.19;--ls:-1.1">Category</span>
+          <svg class="go" style="left:calc(233 * var(--u));top:calc(38 * var(--u));width:calc(16 * var(--u));height:calc(16 * var(--u))" viewBox="276 70 16 16" aria-hidden="true"><path d="M279 73H290V84M290 73L277.5 85.5" fill="none" stroke="#070B0C" stroke-width="2"/></svg>
+          <span class="rule"></span></a></li>
+        <li style="top:calc(202.35 * var(--u));height:calc(84.4 * var(--u))"><a href="#brands"><span class="lbl" style="--fs:24.5;--lx:16.50;--ly:33.19;--ls:-1.1">Brands</span>
+          <svg class="go" style="left:calc(233 * var(--u));top:calc(38 * var(--u));width:calc(16 * var(--u));height:calc(16 * var(--u))" viewBox="276 70 16 16" aria-hidden="true"><path d="M279 73H290V84M290 73L277.5 85.5" fill="none" stroke="#070B0C" stroke-width="2"/></svg>
+          <span class="rule"></span></a></li>
+        <li style="top:calc(286.75 * var(--u));height:calc(84.1 * var(--u))"><a href="#catalogue"><span class="lbl" style="--fs:24.5;--lx:16.50;--ly:33.39;--ls:-1.1">Catalogue</span>
+          <svg class="go" style="left:calc(233 * var(--u));top:calc(38 * var(--u));width:calc(16 * var(--u));height:calc(16 * var(--u))" viewBox="276 70 16 16" aria-hidden="true"><path d="M279 73H290V84M290 73L277.5 85.5" fill="none" stroke="#070B0C" stroke-width="2"/></svg>
+          <span class="rule"></span></a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="layer L-tc">
+    <a class="logo t" href="#top" style="--fs:45.400;--x:646.00;--y:35.57;line-height:calc(45.4 * var(--u));--ls:-0.75" aria-label="SUNDI home">SUNDI<svg class="reg" style="left:3.0396em;top:0.0535em;width:0.5286em;height:0.5286em" viewBox="784 38 24 24" aria-hidden="true"><circle cx="795" cy="50.5" r="8.1" fill="none" stroke="currentColor" stroke-width="1.9"/><text x="795.3" y="55" text-anchor="middle" font-family="Inter" font-weight="650" font-size="12.4" fill="currentColor">R</text></svg></a>
+  </div>
+
+  <div class="layer L-tr">
+    <a class="cart t" href="#cart" style="--fs:24.500;--x:1310.00;--y:66.34;line-height:calc(24.5 * var(--u));--ls:-0.55">Cart ( 0 )</a>
+  </div>
+
+  <div class="layer L-ml">
+    <p class="lede t" style="--fs:21.500;--x:43.50;--y:458.93;line-height:calc(34.5 * var(--u));--ls:-0.9">Experience crystal-clear sound and <br>unparalleled comfort, whether you’re <br>at home or on the go.</p>
+  </div>
+
+  <div class="layer L-mc">
+    <div class="hp-wrap abs sized" style="--x:391.1;--y:117.0;--w:867.77;--h:867.77">
+      <img class="hp" style="left:0;top:0;width:100%;height:100%" src="assets/mint-headphones.webp" alt="Mint over-ear wireless headphones" decoding="async" fetchpriority="high">
+      <a class="shop abs" href="#shop" style="--x:693.2;--y:326.3">
+        <span class="pill" style="--r:10;left:0;top:calc(2 * var(--u));width:calc(185.3 * var(--u));height:calc(60.2 * var(--u))"></span>
+        <span class="t" style="--fs:23.000;--x:23.20;--y:20.83;line-height:calc(23 * var(--u));--ls:-0.57">Shop Now</span>
+        <span class="tile" style="--r:12;left:calc(186.5 * var(--u));top:0;width:calc(66 * var(--u));height:calc(64.1 * var(--u))">
+          <svg style="position:absolute;left:calc(23.2 * var(--u));top:calc(21.7 * var(--u));width:calc(20 * var(--u));height:calc(20 * var(--u))" viewBox="1294 465 20 20" aria-hidden="true"><path d="M1298 468H1311V480.5M1311 468L1295.8 483.2" fill="none" stroke="#fff" stroke-width="2"/></svg>
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <div class="layer L-bl">
+    <article class="card sized" style="left:calc(42.5 * var(--u));top:calc(827.6 * var(--u));--w:362.4;--h:125.2;border-radius:calc(11 * var(--u))" aria-label="Featured product">
+      <div class="thumb" style="left:calc(7.7 * var(--u));top:calc(6.8 * var(--u));width:calc(111.1 * var(--u));height:calc(110.9 * var(--u));border-radius:calc(7 * var(--u))">
+        <img src="assets/sony-x390.webp" alt="Silver Sony X390 headphones" style="left:calc(3.8 * var(--u));top:calc(3.6 * var(--u));width:calc(100.9 * var(--u));height:calc(100.9 * var(--u))">
+      </div>
+      <h2 class="t" style="--fs:24.200;--x:130.00;--y:13.50;line-height:calc(24.2 * var(--u));--ls:-0.85;margin:0;font-weight:400">SONY X390</h2>
+      <p class="t desc" style="--fs:13.750;--x:130.50;--y:46.90;line-height:calc(17 * var(--u));--ls:-0.32">Enjoy pristine audio quality and <br>unmatched comfort.</p>
+      <p class="t" style="--fs:18.600;--x:130.50;--y:93.33;line-height:calc(18.6 * var(--u));--ls:-0.4"><span class="sr-only">Price: </span>$ 600.00</p>
+      <a class="go" href="#sony-x390" aria-label="View SONY X390" style="left:calc(311.0 * var(--u));top:calc(80.1 * var(--u));width:calc(38.2 * var(--u));height:calc(38.2 * var(--u))">
+        <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="353.5 907.6999999999999 38.2 38.2" aria-hidden="true"><path d="M368 921.2H376.6V930.6M376.6 921.2L366.4 932.4" fill="none" stroke="#3E9795" stroke-width="2.6"/></svg>
+      </a>
+    </article>
+  </div>
+</div>
+<script>
+(()=>{const h=document.querySelector('.hero'),b=document.querySelector('.menu-btn');
+b.addEventListener('click',()=>{const o=h.classList.toggle('nav-open');b.setAttribute('aria-expanded',o)});
+document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',()=>{h.classList.remove('nav-open');b.setAttribute('aria-expanded','false')}));
+addEventListener('keydown',e=>{if(e.key==='Escape'){h.classList.remove('nav-open');b.setAttribute('aria-expanded','false')}});})();
+if(document.documentElement.classList.contains('has-entrance')){
+ document.querySelector('.card').addEventListener('animationend',e=>{
+  if(e.animationName==='sundi-card-in')document.documentElement.classList.remove('has-entrance');
+ },{once:true});
+}
+</script>
+</body>
+</html>

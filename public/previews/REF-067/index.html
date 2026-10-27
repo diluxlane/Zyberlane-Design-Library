@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-067/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Automify — Practical AI Solutions</title>
+<script>
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches && Element.prototype.animate) {
+  document.documentElement.classList.add('entrance-pending');
+  window.automifyEntranceFallback = setTimeout(function () {
+    if (window.automifyEntranceFinish) window.automifyEntranceFinish();
+    else document.documentElement.classList.remove('entrance-pending');
+  }, 3000);
+}
+</script>
+<style>
+/* ==========================================================================
+   Automify hero — single-file, offline, responsive reproduction
+   --------------------------------------------------------------------------
+   Two layout regimes share one component tree:
+
+   1. STAGE (desktop / laptop / tablet-landscape)
+      The composition is authored in reference pixels ("rp") measured from
+      the 894 × 541 reference. One unit, --p, maps 1rp to screen pixels:
+          --p = min(100vw / 894, 100svh / 541)
+      so the whole frame scales uniformly and keeps its exact proportions.
+      Surplus space never shows as blank bands: the nav stays pinned to the
+      top, the glow stays pinned to the bottom, the content block floats in
+      the middle, and on ultra-wide screens a matched floor gradient extends
+      the glow edge-to-edge.
+
+   2. FLUID (phones, tablet-portrait, short windows)
+      Intrinsic layout with clamp()-based type, a glass drop-down menu,
+      and the glow scaled up and anchored to the bottom of the viewport.
+   ========================================================================== */
+
+@font-face{
+  font-family:"Anta";
+  font-style:normal;font-weight:400;font-display:block;
+  src:url(assets/anta.woff2) format("woff2");
+}
+
+:root{
+  /* palette — sampled from reference */
+  --c-bg:#000000;
+  --c-text:#ffffff;
+  --c-ink:#030103;                         /* text on white pills          */
+  --c-badge:rgba(140,80,200,.15);          /* = #150C1E over black         */
+  --c-glass:rgba(255,255,255,.15);         /* Watch Demo glass             */
+  --c-sun:#FAD53E;
+  --c-floor-0:rgb(45,16,152);              /* glow edge profile, bottom→up */
+  --c-floor-1:rgb(42,8,146);
+  --c-floor-2:rgb(27,4,104);
+  --c-floor-3:rgb(15,2,62);
+  --c-floor-4:rgb(2,0,12);
+
+  --font:"Anta", "Saira", "Segoe UI", system-ui, sans-serif;
+  --vh:100vh;
+  --bg-ratio:calc(945 / 1663);             /* glow asset aspect             */
+}
+@supports (height:100svh){ :root{ --vh:100svh; } }
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;background:var(--c-bg);color:var(--c-text)}
+body{
+  font-family:var(--font);font-weight:400;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+svg{display:block}
+:focus-visible{outline:2px solid rgba(190,160,255,.9);outline-offset:3px;border-radius:999px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ---------- hero shell ---------- */
+.hero{
+  position:relative;isolation:isolate;overflow:hidden;
+  min-height:var(--vh);
+  background:var(--c-bg);
+}
+.hero__glow,.hero__floor{position:absolute;pointer-events:none;z-index:-1}
+.hero__glow{
+  left:50%;bottom:0;
+  background:url(assets/hero-glow.webp) center bottom / 100% 100% no-repeat;
+}
+.hero__floor{
+  left:0;right:0;bottom:0;
+  background:linear-gradient(to top,
+    var(--c-floor-0) 0%, var(--c-floor-1) 1.06%, var(--c-floor-2) 2.65%,
+    var(--c-floor-3) 4.76%, var(--c-floor-4) 10%, transparent 15.5%);
+}
+
+/* ---------- shared components ---------- */
+.logo{display:inline-flex;align-items:center;white-space:nowrap}
+.logo__mark{flex:none}
+.nav__links{list-style:none;margin:0;padding:0;display:flex}
+.nav__links a,.login{transition:opacity .2s ease}
+.nav__links a:hover,.login:hover{opacity:.72}
+.login{display:inline-flex;align-items:center;white-space:nowrap}
+
+.badge{
+  display:inline-flex;align-items:center;white-space:nowrap;
+  background:var(--c-badge);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  border-radius:999px;
+}
+.badge__new{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:#fff;color:var(--c-ink);border-radius:999px;
+  box-shadow:0 0 0 .6px rgba(0,0,0,.55);
+}
+.badge__sun{flex:none}
+
+.hero__title{margin:0;font-weight:400;text-align:center;letter-spacing:0}
+.hero__lede{margin:0;text-align:center}
+.cta{display:flex;justify-content:center}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  border-radius:999px;white-space:nowrap;
+  transition:transform .2s ease, background-color .2s ease, box-shadow .2s ease;
+}
+.btn:active{transform:translateY(1px)}
+.btn--solid{background:#fff;color:var(--c-ink)}
+.btn--solid:hover{box-shadow:0 0 24px rgba(186,140,255,.45)}
+.btn--glass{
+  background:var(--c-glass);
+  -webkit-backdrop-filter:blur(12px) saturate(120%);backdrop-filter:blur(12px) saturate(120%);
+}
+.btn--glass:hover{background:rgba(255,255,255,.2)}
+
+.menu-toggle,.menu-panel{display:none}
+
+/* ==========================================================================
+   STAGE regime
+   ========================================================================== */
+@media (min-width:1024px) and (min-height:560px) and (min-aspect-ratio:6/5){
+  html,body{height:100%;overflow:hidden}
+  .hero{
+    height:var(--vh);
+    --p:min(calc(100vw / 894), calc(var(--vh) / 541));
+    --extra:calc(var(--vh) - 541 * var(--p));   /* vertical surplus */
+  }
+  .stage{
+    position:absolute;top:0;bottom:0;left:50%;
+    width:calc(894 * var(--p));
+    margin-left:calc(-447 * var(--p));
+  }
+  .hero__glow{
+    width:calc(906 * var(--p));height:calc(515 * var(--p));
+    margin-left:calc(-453 * var(--p));
+  }
+  .hero__floor{height:calc(515 * var(--p))}
+
+  /* --- nav --- */
+  .logo{position:absolute;left:calc(40 * var(--p));top:calc(24 * var(--p));gap:calc(8.6 * var(--p))}
+  .logo__mark{width:calc(24 * var(--p));height:calc(24 * var(--p))}
+  .logo__word{font-size:calc(23.8 * var(--p));line-height:1;transform:translateY(calc(0.1 * var(--p)))}
+  .nav__links{position:absolute;left:calc(293.4 * var(--p));top:calc(28.7 * var(--p));gap:calc(26 * var(--p))}
+  .nav__links a{display:block;font-size:calc(10.7 * var(--p));line-height:calc(14 * var(--p))}
+  .nav__links li:nth-child(2){margin-left:calc(3 * var(--p))}
+  .login{position:absolute;right:calc(42.5 * var(--p));top:calc(27 * var(--p));gap:calc(15.5 * var(--p));font-size:calc(10.7 * var(--p));line-height:calc(14 * var(--p))}
+  .login svg{width:calc(17 * var(--p));height:calc(18 * var(--p));transform:translateY(calc(-1 * var(--p)))}
+
+  /* --- content column --- */
+  .content{
+    position:absolute;left:0;right:0;
+    top:calc(84 * var(--p) + var(--extra) * .5);
+    display:flex;flex-direction:column;align-items:center;
+  }
+  .badge{height:calc(31.5 * var(--p));padding:0 calc(16.6 * var(--p)) 0 calc(10.5 * var(--p));transform:translateX(calc(.1 * var(--p)))}
+  .badge__new{height:calc(20.5 * var(--p));width:calc(37 * var(--p));font-size:calc(12.4 * var(--p));padding-top:calc(0.5 * var(--p))}
+  .badge__text{font-size:calc(12 * var(--p));margin-left:calc(5.4 * var(--p));padding-top:calc(0.5 * var(--p))}
+  .badge__sun{width:calc(8.2 * var(--p));height:calc(8.2 * var(--p));margin-left:calc(4.4 * var(--p));transform:translateY(calc(0 * var(--p)))}
+
+  .hero__title{font-size:calc(38 * var(--p));line-height:calc(47 * var(--p));margin-top:calc(24.8 * var(--p))}
+  .hero__title .br{display:block}
+  .hero__title .br + .br{transform:translateX(calc(5.5 * var(--p)))}
+  .hero__lede{font-size:calc(10.74 * var(--p));line-height:calc(13 * var(--p));margin-top:calc(17 * var(--p))}
+  .hero__lede .br{display:block}
+  .cta{gap:calc(9.3 * var(--p));margin-top:calc(29.2 * var(--p))}
+  .btn{height:calc(29.4 * var(--p));padding-top:calc(0.5 * var(--p))}
+  .btn--solid{width:calc(85 * var(--p));font-size:calc(12.1 * var(--p))}
+  .btn--glass{width:calc(108.5 * var(--p));font-size:calc(12.1 * var(--p));gap:calc(7 * var(--p));padding-left:calc(11.2 * var(--p));justify-content:flex-start}
+  .btn--glass svg{width:calc(11 * var(--p));height:calc(11 * var(--p));transform:translateY(calc(0 * var(--p)))}
+}
+/* ultra-wide: blend the glow's side edges into the full-width floor */
+@media (min-width:1024px) and (min-height:560px) and (min-aspect-ratio:900/541){
+  .hero__glow{
+    -webkit-mask-image:linear-gradient(to right,transparent 0,#000 7%,#000 93%,transparent 100%);
+            mask-image:linear-gradient(to right,transparent 0,#000 7%,#000 93%,transparent 100%);
+  }
+}
+@media (min-width:1024px) and (min-height:560px) and (min-aspect-ratio:6/5) and (max-aspect-ratio:900/541){
+  .hero__floor{display:none}
+}
+
+/* ==========================================================================
+   FLUID regime (everything that is not STAGE)
+   ========================================================================== */
+@media not all and (min-width:1024px) and (min-height:560px) and (min-aspect-ratio:6/5){
+  .hero{
+    display:flex;flex-direction:column;
+    --gw:max(101.34vw, calc(var(--vh) * .95), 560px);   /* glow width */
+    --gh:calc(var(--gw) * var(--bg-ratio));
+  }
+  .hero__glow{width:var(--gw);height:var(--gh);margin-left:calc(var(--gw) / -2)}
+  .hero__floor{height:var(--gh)}
+
+  .stage{display:contents}
+  .topbar{
+    position:relative;z-index:5;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:max(18px, env(safe-area-inset-top)) clamp(18px, 5vw, 40px) 0;
+  }
+  .logo{gap:10px}
+  .logo__mark{width:clamp(30px, 7vw, 38px);height:clamp(30px, 7vw, 38px)}
+  .logo__word{font-size:clamp(25px, 5.6vw, 34px);line-height:1;transform:translateY(-1px)}
+  .nav,.login{display:none}
+
+  .menu-toggle{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:44px;height:44px;border-radius:999px;
+    background:var(--c-badge);
+    -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  }
+  .menu-toggle span{position:relative;width:18px;height:1.6px;background:#fff;border-radius:2px;transition:background .2s}
+  .menu-toggle span::before,.menu-toggle span::after{content:"";position:absolute;left:0;width:18px;height:1.6px;background:#fff;border-radius:2px;transition:transform .25s ease}
+  .menu-toggle span::before{transform:translateY(-6px)}
+  .menu-toggle span::after{transform:translateY(6px)}
+  .menu-open .menu-toggle span{background:transparent}
+  .menu-open .menu-toggle span::before{transform:rotate(45deg)}
+  .menu-open .menu-toggle span::after{transform:rotate(-45deg)}
+
+  .menu-panel{
+    display:block;position:absolute;z-index:4;
+    top:calc(max(18px, env(safe-area-inset-top)) + 54px);
+    left:clamp(18px, 5vw, 40px);right:clamp(18px, 5vw, 40px);
+    padding:10px;border-radius:22px;
+    background:rgba(24,14,36,.72);
+    border:1px solid rgba(255,255,255,.08);
+    -webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%);
+    box-shadow:0 20px 50px rgba(0,0,0,.5);
+    opacity:0;transform:translateY(-8px);visibility:hidden;
+    transition:opacity .22s ease, transform .22s ease, visibility 0s linear .22s;
+  }
+  .menu-open .menu-panel{opacity:1;transform:none;visibility:visible;transition:opacity .22s ease, transform .22s ease}
+  .menu-panel ul{list-style:none;margin:0;padding:0}
+  .menu-panel a{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-radius:14px;font-size:17px}
+  .menu-panel a:hover{background:rgba(255,255,255,.06)}
+  .menu-panel hr{border:0;height:1px;background:rgba(255,255,255,.08);margin:6px 8px}
+  .menu-panel svg{width:18px;height:19px}
+
+  .content{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:clamp(28px, 6svh, 64px) clamp(20px, 6vw, 48px) calc(var(--gh) * .36 + 12px);
+  }
+  .badge{height:36px;padding:0 16px 0 7px;gap:0}
+  .badge__new{height:24px;padding:1px 10px 0;font-size:13px}
+  .badge__text{font-size:13.5px;margin-left:9px;padding-top:1px}
+  .badge__sun{width:10px;height:10px;margin-left:8px}
+  .hero__title{
+    font-size:clamp(31px, 8.6vw, 62px);line-height:1.2;
+    margin-top:clamp(20px, 3.4svh, 30px);max-width:15ch;text-wrap:balance;
+  }
+  .hero__title .br{display:inline}
+  .hero__lede{
+    font-size:clamp(14px, 3.8vw, 17px);line-height:1.55;color:rgba(255,255,255,.9);
+    margin-top:clamp(14px, 2.4svh, 22px);max-width:34em;text-wrap:balance;
+  }
+  .hero__lede .br{display:inline}
+  .cta{gap:10px;margin-top:clamp(24px, 4svh, 36px);flex-wrap:wrap}
+  .btn{height:48px;padding:1px 24px 0;font-size:16px}
+  .btn--glass{gap:10px;padding-left:16px}
+  .btn--glass svg{width:18px;height:18px}
+}
+@media (min-width:600px) and (max-width:1023.98px), (min-width:1024px) and (max-height:559.98px), (min-width:1024px) and (max-aspect-ratio:6/5){
+  .hero__title{max-width:18ch}
+}
+/* tablet & short-desktop: show inline nav instead of a hamburger when it fits */
+@media (min-width:860px) and (max-height:559.98px), (min-width:860px) and (max-aspect-ratio:6/5) and (min-width:1024px){
+  .menu-toggle,.menu-panel{display:none}
+  .nav{display:block}.login{display:inline-flex;gap:12px;font-size:15px}
+  .nav__links{gap:30px}.nav__links a{font-size:15px}
+  .login svg{width:20px;height:21px}
+}
+@media (max-height:520px) and (orientation:landscape){
+  /* phone landscape: keep the whole hero inside one screen */
+  .hero{--gw:max(72vw, 560px)}
+  .hero__glow{
+    -webkit-mask-image:linear-gradient(to right,transparent 0,#000 8%,#000 92%,transparent 100%);
+            mask-image:linear-gradient(to right,transparent 0,#000 8%,#000 92%,transparent 100%);
+  }
+  .topbar{padding-top:max(12px, env(safe-area-inset-top))}
+  .menu-toggle{width:40px;height:40px}
+  .menu-panel{top:calc(max(12px, env(safe-area-inset-top)) + 48px);left:auto;width:300px;max-height:calc(var(--vh) - 70px);overflow:auto}
+  .content{padding:6px 24px calc(var(--gh) * .2)}
+  .badge{height:30px}.badge__new{height:20px;font-size:12px}.badge__text{font-size:12.5px}
+  .hero__title{font-size:clamp(26px, 4.4vw, 38px);max-width:24ch;margin-top:12px}
+  .hero__lede{font-size:13.5px;line-height:1.5;max-width:46em;margin-top:10px}
+  .cta{margin-top:16px}.btn{height:40px;font-size:15px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Initial states exist only while the one-time entrance is being prepared. */
+.entrance-pending .logo,
+.entrance-pending .nav__links,
+.entrance-pending .login,
+.entrance-pending .menu-toggle,
+.entrance-pending .badge,
+.entrance-pending .hero__title,
+.entrance-pending .hero__lede,
+.entrance-pending .cta .btn{opacity:0}
+.entrance-pending .hero__title{clip-path:inset(0 0 100% 0)}
+@media (prefers-reduced-motion:reduce){
+  .entrance-pending .logo,
+  .entrance-pending .nav__links,
+  .entrance-pending .login,
+  .entrance-pending .menu-toggle,
+  .entrance-pending .badge,
+  .entrance-pending .hero__title,
+  .entrance-pending .hero__lede,
+  .entrance-pending .cta .btn{opacity:1!important;clip-path:none!important}
+}
+</style>
+</head>
+<body>
+<header class="hero" id="top">
+  <div class="hero__floor" aria-hidden="true"></div>
+  <div class="hero__glow" aria-hidden="true"></div>
+
+  <div class="stage">
+    <div class="topbar">
+      <a class="logo" href="#top" aria-label="Automify home">
+        <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="#fff" fill-rule="evenodd" d="M0 12a12 12 0 1 0 24 0a12 12 0 1 0-24 0ZM10.9 6.8Q12.4 11 16.6 12.5Q12.4 14 10.9 18.2Q9.4 14 5.2 12.5Q9.4 11 10.9 6.8ZM14.8 8a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0 -3.2 0Z"/>
+        </svg>
+        <span class="logo__word">Automify</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <ul class="nav__links">
+          <li><a href="#start">Start</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#resources">Resources</a></li>
+          <li><a href="#help">Help</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+        </ul>
+      </nav>
+
+      <a class="login" href="#login">
+        <span>Log in</span>
+        <svg viewBox="0 0 17 18" fill="none" stroke="#fff" stroke-width="1.3" aria-hidden="true">
+          <circle cx="8.5" cy="6.25" r="4.1"/>
+          <path d="M1.2 17.3A7.3 4.3 0 0 1 15.8 17.3" stroke-linecap="round"/>
+        </svg>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu"><span></span><b class="sr-only">Menu</b></button>
+    </div>
+
+    <div class="menu-panel" id="menu">
+      <ul>
+        <li><a href="#start">Start</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#resources">Resources</a></li>
+        <li><a href="#help">Help</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+      </ul>
+      <hr>
+      <a href="#login">Log in
+        <svg viewBox="0 0 17 18" fill="none" stroke="#fff" stroke-width="1.3" aria-hidden="true"><circle cx="8.5" cy="6.25" r="4.1"/><path d="M1.2 17.3A7.3 4.3 0 0 1 15.8 17.3" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+
+    <main class="content">
+      <a class="badge" href="#pricing">
+        <span class="badge__new">New</span>
+        <span class="badge__text">Simple Pricing</span>
+        <svg class="badge__sun" viewBox="0 0 9 9" aria-hidden="true">
+          <g fill="var(--c-sun)"><circle cx="4.5" cy="4.5" r="2.4"/><circle cx="7.9" cy="4.5" r="0.7"/><circle cx="6.904" cy="6.904" r="0.7"/><circle cx="4.5" cy="7.9" r="0.7"/><circle cx="2.096" cy="6.904" r="0.7"/><circle cx="1.1" cy="4.5" r="0.7"/><circle cx="2.096" cy="2.096" r="0.7"/><circle cx="4.5" cy="1.1" r="0.7"/><circle cx="6.904" cy="2.096" r="0.7"/></g>
+        </svg>
+      </a>
+
+      <h1 class="hero__title"><span class="br">Empowering businesses with</span> <span class="br">practical AI solutions</span></h1>
+
+      <p class="hero__lede"><span class="br">We help teams design, develop and launch intelligent products with reliable infrastructure</span> <span class="br">and real-world impact.</span></p>
+
+      <div class="cta">
+        <a class="btn btn--solid" href="#start">Start Free</a>
+        <a class="btn btn--glass" href="#demo">
+          <svg viewBox="0 0 11 11" aria-hidden="true"><path fill="#fff" fill-rule="evenodd" d="M0 5.5a5.5 5.5 0 1 0 11 0a5.5 5.5 0 1 0-11 0ZM4.2 3.4L7.8 5.5L4.2 7.6Z"/></svg>
+          <span>Watch Demo</span>
+        </a>
+      </div>
+    </main>
+  </div>
+</header>
+<script>
+(function(){
+  var hero=document.querySelector('.hero'),btn=document.querySelector('.menu-toggle'),panel=document.getElementById('menu');
+  function set(open){hero.classList.toggle('menu-open',open);btn.setAttribute('aria-expanded',open?'true':'false');btn.querySelector('.sr-only').textContent=open?'Close menu':'Menu';}
+  btn.addEventListener('click',function(){set(!hero.classList.contains('menu-open'))});
+  panel.addEventListener('click',function(e){if(e.target.closest('a'))set(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+  document.addEventListener('click',function(e){if(!e.target.closest('.menu-panel,.menu-toggle'))set(false)});
+})();
+</script>
+<script>
+(function () {
+  var root = document.documentElement;
+  if (!root.classList.contains('entrance-pending')) return;
+
+  var easing = 'cubic-bezier(.22, 1, .36, 1)';
+  var animations = [];
+  var completed = false;
+  function reveal(selector, from, to, delay, duration) {
+    var element = document.querySelector(selector);
+    if (!element || !element.getClientRects().length) return;
+    animations.push(element.animate([from, to], {
+      duration: duration,
+      delay: delay,
+      easing: easing,
+      fill: 'both'
+    }));
+  }
+  function finish() {
+    if (completed) return;
+    completed = true;
+    clearTimeout(window.automifyEntranceFallback);
+    root.classList.remove('entrance-pending');
+    animations.forEach(function (animation) { animation.cancel(); });
+    delete window.automifyEntranceFinish;
+  }
+  window.automifyEntranceFinish = finish;
+
+  /* The background stays fixed; the foreground enters in visual reading order. */
+  reveal('.logo', {opacity: 0, translate: '0 6px'}, {opacity: 1, translate: 'none'}, 40, 540);
+  reveal('.nav__links', {opacity: 0, translate: '0 5px'}, {opacity: 1, translate: 'none'}, 120, 570);
+  reveal('.login', {opacity: 0}, {opacity: 1}, 210, 480);
+  reveal('.menu-toggle', {opacity: 0}, {opacity: 1}, 160, 500);
+  reveal('.badge',
+    {opacity: 0, clipPath: 'inset(0 48% 0 48% round 100px)'},
+    {opacity: 1, clipPath: 'inset(0 0 0 0 round 100px)'}, 280, 560);
+  reveal('.hero__title',
+    {opacity: 0, clipPath: 'inset(0 0 100% 0)', translate: '0 10px'},
+    {opacity: 1, clipPath: 'inset(0 0 0 0)', translate: 'none'}, 460, 920);
+  reveal('.hero__lede', {opacity: 0}, {opacity: 1}, 1000, 570);
+  reveal('.btn--solid', {opacity: 0, translate: '0 8px'}, {opacity: 1, translate: 'none'}, 1270, 560);
+  reveal('.btn--glass', {opacity: 0, translate: '0 8px'}, {opacity: 1, translate: 'none'}, 1360, 560);
+
+  Promise.all(animations.map(function (animation) { return animation.finished; })).then(finish, finish);
+})();
+</script>
+</body>
+</html>

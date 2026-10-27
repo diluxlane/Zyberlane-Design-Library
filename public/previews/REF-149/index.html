@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-149/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Total — Mortgages Built Around AI</title>
+<meta name="description" content="Total has reimagined mortgage by eliminating complexity and unlocking efficiency.">
+<style>
+@font-face{font-family:"Google Sans Flex";src:url(assets/font-01.woff2) format("woff2");font-weight:1 1000;font-style:normal;font-display:block}
+:root{
+  --page:#ffffff; --card:#f5f5f5; --ink:#000000; --ink-nav:#1c1c1c; --ink-muted:#5c5c5c; --ink-soft:#777779;
+  --btn-dark:#1e1d16; --panel:rgba(255,255,255,.995); --tile:#efefef; --blue:#3886fe; --arrow:#0a5ef8;
+  --line:#c7d7fa; --violet:#b69cfb; --yellow:#fefb48; --yellow-soft:#fefdcb; --olive:#7e7a5d;
+  --vh:100vh;
+  --u:min(calc(100vw / 1427), calc(var(--vh) / 1102)); /* 1 reference pixel, fitted to the viewport */
+  --gap:calc(16 * var(--u));
+  color-scheme:light;
+}
+@supports (height:100svh){:root{--vh:100svh}}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;background:var(--page)}
+body{background:var(--page);color:var(--ink);font-family:"Google Sans Flex","Google Sans","Product Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-weight:400;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision;overflow:hidden}
+a{color:inherit;text-decoration:none}
+img,svg{display:block}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.page{height:var(--vh);display:flex;flex-direction:column;padding-bottom:calc(23 * var(--u));overflow:hidden}
+
+.nav{position:relative;display:flex;align-items:center;height:calc(63 * var(--u));padding:calc(14 * var(--u)) calc(51 * var(--u)) 0 calc(52 * var(--u));align-items:flex-start}
+.logo{display:block;width:calc(100 * var(--u));height:calc(33 * var(--u));margin-top:calc(8 * var(--u));flex:none}
+.logo svg{width:100%;height:100%}
+.links{display:flex;margin-left:calc(339.361 * var(--u))}
+.links a+a{margin-left:calc(35.195 * var(--u))}
+.links a:nth-child(2){margin-left:calc(34.569 * var(--u));letter-spacing:calc(-1.637 * var(--u))}
+.links a:nth-child(3){margin-left:calc(36.091 * var(--u));letter-spacing:calc(-1.166 * var(--u))}
+.links a:nth-child(4){margin-left:calc(35.379 * var(--u));letter-spacing:calc(-0.9 * var(--u))}
+.actions .signin{letter-spacing:calc(-0.419 * var(--u))}
+.links a,.signin{font-size:calc(18.684 * var(--u));line-height:1;letter-spacing:calc(-0.893 * var(--u));color:var(--ink-nav);margin-top:calc(16.718 * var(--u));font-weight:400;white-space:nowrap}
+.actions{display:flex;align-items:flex-start;margin-left:auto}
+.signin{color:var(--ink-nav)}
+.btn-demo{display:inline-flex;align-items:center;justify-content:center;height:calc(49 * var(--u));width:calc(144 * var(--u));margin-left:calc(32.954 * var(--u));border-radius:999px;
+  background:var(--btn-dark);color:#fff;font-size:calc(17.193 * var(--u));letter-spacing:calc(-0.176 * var(--u));font-weight:500;white-space:nowrap;padding-top:calc(-3.48 * var(--u))}
+.menu{display:none}
+.links a:hover,.signin:hover{opacity:.65}
+.btn-demo:hover{background:#000}
+
+.hero{display:flex;flex-direction:column;align-items:center;text-align:center}
+.rating{display:flex;align-items:flex-start;gap:0;margin-top:calc(63.576 * var(--u));font-size:calc(20.309 * var(--u));line-height:calc(24 * var(--u));letter-spacing:calc(-0.098 * var(--u));font-weight:480;white-space:nowrap;transform:translateX(calc(-0.787 * var(--u)))}
+.rating svg{width:calc(17 * var(--u));height:calc(17 * var(--u));margin-top:calc(4.3 * var(--u));margin-right:calc(10.8 * var(--u));flex:none}
+h1{margin-top:calc(13.114 * var(--u));font-size:calc(109.832 * var(--u));line-height:calc(106 * var(--u));letter-spacing:calc(-4.276 * var(--u));font-weight:480;font-feature-settings:"ss01" 1;white-space:nowrap;transform:translateX(calc(-1.026 * var(--u)))}
+h1 .l2{display:block;letter-spacing:calc(-3.584 * var(--u));transform:translateX(calc(8.415 * var(--u)))}
+.lede{margin-top:calc(17.411 * var(--u));font-size:calc(26.19 * var(--u));line-height:calc(30 * var(--u));letter-spacing:calc(-0.569 * var(--u));font-weight:400;white-space:nowrap}
+.cta{display:flex;gap:calc(8 * var(--u));margin-top:calc(30.899 * var(--u))}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:calc(63 * var(--u));border-radius:999px;white-space:nowrap;transition:background .2s,color .2s}
+.btn-primary{width:calc(248 * var(--u));background:#000;color:#fff;font-size:calc(20.07 * var(--u));letter-spacing:calc(-0.425 * var(--u));font-weight:425;padding-top:calc(2.071 * var(--u))}
+.btn-ghost{width:calc(253 * var(--u));border:calc(1.6 * var(--u)) solid #1c1c1c;color:#000;font-size:calc(19.096 * var(--u));letter-spacing:calc(-0.737 * var(--u));font-weight:430;padding-top:calc(5.938 * var(--u))}
+.btn-primary:hover{background:#222}.btn-ghost:hover{background:#f5f5f5}
+
+.cards{flex:1 1 0;min-height:0;display:grid;grid-template-columns:439fr 423fr 439fr;gap:var(--gap);padding:0 calc(47 * var(--u));margin-top:calc(42 * var(--u))}
+.card{position:relative;background:var(--card);border-radius:calc(10 * var(--u));overflow:hidden;isolation:isolate;container-type:size;min-width:0;min-height:0}
+
+.stage{position:absolute;inset:0;--cu:min(calc(100cqw / 439), calc(100cqh / 520))}
+.c2 .stage{--cu:min(calc(100cqw / 423), calc(100cqh / 520))}
+.panel{background:var(--panel);-webkit-backdrop-filter:blur(calc(18 * var(--cu))) saturate(1.2);backdrop-filter:blur(calc(18 * var(--cu))) saturate(1.2)}
+
+.c1 h2{position:absolute;left:calc(25.228 * var(--cu));top:calc(26.83 * var(--cu));font-size:calc(35.143 * var(--cu));line-height:calc(40 * var(--cu));letter-spacing:calc(-0.81 * var(--cu));font-weight:415;white-space:nowrap}
+.c1 p{position:absolute;left:calc(25.37 * var(--cu));top:calc(79.288 * var(--cu));width:calc(380 * var(--cu));font-size:calc(20.859 * var(--cu));line-height:calc(33 * var(--cu));letter-spacing:calc(0.005 * var(--cu));color:var(--ink-muted);font-weight:400}
+.task{position:absolute;left:calc(56 * var(--cu));bottom:calc(152 * var(--cu));width:calc(330 * var(--cu));height:calc(132 * var(--cu));border-radius:calc(5 * var(--cu))}
+.task h3{position:absolute;left:calc(20.877 * var(--cu));top:calc(18.56 * var(--cu));font-size:calc(30.148 * var(--cu));line-height:calc(36.178 * var(--cu));letter-spacing:calc(-1.254 * var(--cu));font-weight:415;white-space:nowrap}
+.task .who{position:absolute;left:calc(22 * var(--cu));top:calc(68 * var(--cu));display:flex;align-items:center}
+.task .who img{width:calc(42 * var(--cu));height:calc(43 * var(--cu));border-radius:calc(4 * var(--cu));object-fit:cover}
+.task .who span{margin-left:calc(16.817 * var(--cu));font-size:calc(17.786 * var(--cu));letter-spacing:calc(-0.566 * var(--cu));color:#1a1a1a;white-space:nowrap;font-weight:415;transform:translateY(calc(-0.277 * var(--cu)))}
+.typing{position:absolute;left:calc(324 * var(--cu));bottom:calc(73 * var(--cu));width:calc(62 * var(--cu));height:calc(62 * var(--cu));border-radius:calc(4 * var(--cu));display:flex;align-items:center;justify-content:center;gap:calc(4.25 * var(--cu))}
+.typing i{width:calc(8 * var(--cu));height:calc(8 * var(--cu));border-radius:50%;background:var(--violet)}
+.typing i:nth-child(2){background:#e1dafe}.typing i:nth-child(3){background:#e8e5fe}
+
+.people{position:absolute;left:calc(50% - calc(165.5 * var(--cu)));top:calc(54 * var(--cu));width:calc(331 * var(--cu));display:flex;flex-direction:column;gap:calc(8 * var(--cu))}
+.person{position:relative;height:calc(85 * var(--cu));border-radius:calc(5 * var(--cu));display:flex;align-items:center}
+.person img{position:absolute;left:calc(7 * var(--cu));top:calc(7.5 * var(--cu));width:calc(69 * var(--cu));height:calc(69 * var(--cu));border-radius:calc(8 * var(--cu));object-fit:cover}
+.person .tile{position:absolute;left:calc(86 * var(--cu));top:calc(8 * var(--cu));width:calc(71 * var(--cu));height:calc(69 * var(--cu));border-radius:calc(6 * var(--cu));background:var(--tile);display:flex;align-items:center;justify-content:center}
+.person .tile svg{width:calc(29 * var(--cu));height:calc(29 * var(--cu))}
+.person .dots{display:flex;gap:calc(5 * var(--cu))}.person .dots i{width:calc(7 * var(--cu));height:calc(7 * var(--cu));border-radius:50%;background:#c0c0c1}
+.person .meta{position:absolute;left:calc(181.176 * var(--cu));top:calc(22.16 * var(--cu));white-space:nowrap}
+.person .name,.person .role{width:max-content}
+.person .name{display:block;font-size:calc(21.008 * var(--cu));line-height:1.2;letter-spacing:calc(-0.58 * var(--cu));font-weight:440}
+.person .role{display:block;margin-top:calc(1.567 * var(--cu));font-size:calc(15.325 * var(--cu));line-height:1.2;letter-spacing:calc(-0.286 * var(--cu));color:var(--ink-soft);font-weight:455}
+.person.adam .meta{left:calc(183.406 * var(--cu));top:calc(20.966 * var(--cu))}
+.person.adam .name{font-weight:405;font-size:calc(21.981 * var(--cu));letter-spacing:calc(-1.016 * var(--cu))}
+.person.adam .role{font-weight:440;margin-top:calc(1.095 * var(--cu));font-size:calc(15.789 * var(--cu));letter-spacing:calc(-0.833 * var(--cu))}
+.flow{position:absolute;left:calc(50% - calc(0.5 * var(--cu)));top:calc(233 * var(--cu));width:calc(2.2 * var(--cu));height:calc(126 * var(--cu));background:var(--line);transform:translateX(-50%)}
+.next{position:absolute;left:calc(50% + calc(0.75 * var(--cu)));top:calc(359 * var(--cu));width:calc(33 * var(--cu));height:calc(33 * var(--cu));border-radius:50%;background:var(--arrow);transform:translateX(-50%);display:flex;align-items:center;justify-content:center}
+.next svg{width:calc(14 * var(--cu));height:calc(14 * var(--cu))}
+
+.badge{position:absolute;left:calc(19 * var(--cu));top:calc(19 * var(--cu));width:calc(68 * var(--cu));height:calc(69 * var(--cu));border-radius:50%;background:#fff;z-index:2;display:flex;align-items:center;justify-content:center}
+.badge svg{width:calc(30.5 * var(--cu));height:calc(32 * var(--cu));transform:translate(calc(-1.2 * var(--cu)),calc(-0.2 * var(--cu)))}
+.portrait{position:absolute;left:calc(-39 * var(--cu));bottom:calc(-32.156 * var(--cu));width:calc(462 * var(--cu));height:auto;max-width:none;z-index:1;user-select:none;-webkit-user-drag:none}
+.calc{position:absolute;left:calc(139 * var(--cu));width:calc(281 * var(--cu));bottom:calc(149 * var(--cu));height:calc(79 * var(--cu));border-radius:calc(6 * var(--cu));z-index:3}
+.calc .spark{position:absolute;left:calc(16 * var(--cu));top:calc(16 * var(--cu));width:calc(48 * var(--cu));height:calc(47 * var(--cu));border-radius:calc(4 * var(--cu));background:var(--blue);display:flex;align-items:center;justify-content:center}
+.calc .spark svg{width:calc(20 * var(--cu));height:calc(20 * var(--cu));transform:translateY(calc(-0.6 * var(--cu)))}
+.calc span{position:absolute;left:calc(77.049 * var(--cu));top:calc(27.384 * var(--cu));font-size:calc(21.677 * var(--cu));line-height:1.2;letter-spacing:calc(-0.629 * var(--cu));font-weight:435;white-space:nowrap}
+.score{position:absolute;left:calc(139 * var(--cu));width:calc(281 * var(--cu));bottom:calc(20 * var(--cu));height:calc(121 * var(--cu));border-radius:calc(6 * var(--cu));z-index:3}
+.score .spin{position:absolute;left:calc(17 * var(--cu));top:calc(14.5 * var(--cu));width:calc(17 * var(--cu));height:calc(17 * var(--cu));display:block;animation:none}
+.score span{position:absolute;left:calc(45.011 * var(--cu));top:calc(16.599 * var(--cu));font-size:calc(15.643 * var(--cu));line-height:1.2;letter-spacing:calc(-0.328 * var(--cu));color:#0a0a0a;font-weight:455;white-space:nowrap}
+.bar{position:absolute;left:calc(16 * var(--cu));right:calc(17 * var(--cu));top:calc(47 * var(--cu));height:calc(60 * var(--cu));border-radius:calc(3 * var(--cu));background:var(--yellow-soft);overflow:hidden}
+.bar i{position:absolute;inset:0 auto 0 0;width:31.9%;background:var(--yellow)}
+
+.pager{display:none}
+
+/* =====================================================================
+   Tablets & portrait screens: hero on top, cards in a 2-up swipe row
+   that fills whatever height is left in the viewport
+   ===================================================================== */
+@media (max-width:1023.98px), (max-aspect-ratio:1/1){
+  :root{--u:min(calc(100vw / 960), 1.12px, calc(var(--vh) / 1180));--gut:calc(28 * var(--u));--gap:calc(16 * var(--u))}
+  .page{padding-bottom:calc(var(--gut) * .7)}
+  .nav{padding:calc(18 * var(--u)) var(--gut) 0;height:auto;align-items:center}
+  .logo{margin-top:0}
+  .links{margin:0 auto}
+  .links a,.signin{margin-top:0}
+  .actions{align-items:center;margin-left:0}
+  .hero{padding:0 var(--gut)}
+  .rating{margin-top:calc(56 * var(--u))}
+  .cards{display:flex;gap:var(--gap);padding:0 var(--gut);margin-top:calc(40 * var(--u));overflow-x:auto;overflow-y:hidden;
+    scroll-snap-type:x mandatory;scroll-padding:0 var(--gut);overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .cards::-webkit-scrollbar{display:none}
+  .card{flex:0 0 calc((100% - var(--gap)) / 2);scroll-snap-align:start;border-radius:12px}
+  .pager{display:flex;justify-content:center;gap:8px;padding-top:12px;flex:none}
+  .pager button{width:7px;height:7px;border-radius:99px;background:#d4d4d4;transition:width .25s,background .25s}
+  .pager button[aria-current="true"]{width:22px;background:#111}
+}
+@media (max-width:899.98px){
+  .links,.signin{display:none}
+  .actions{margin-left:auto}
+  .menu{display:inline-flex;align-items:center;justify-content:center;width:calc(49 * var(--u));height:calc(49 * var(--u));margin-left:calc(10 * var(--u));border-radius:50%;background:#f2f2f2}
+  .menu svg{width:calc(20 * var(--u));height:calc(20 * var(--u))}
+}
+/* =====================================================================
+   Phones: compact hero sized by the screen height, one card at a time
+   (the next card peeks in so it reads as swipeable)
+   ===================================================================== */
+@media (max-width:639.98px){
+  :root{--gut:16px;--u:1px;--gap:10px}
+  .page{padding-bottom:max(14px, env(safe-area-inset-bottom))}
+  .nav{padding:12px var(--gut) 0;align-items:center}
+  .logo{width:82px;height:27px}
+  .signin{display:none}
+  .btn-demo{height:40px;width:auto;padding:1px 18px 0;font-size:15px;margin-left:0}
+  .menu{width:40px;height:40px;margin-left:8px}
+  .menu svg{width:18px;height:18px}
+  .hero{padding:0 var(--gut)}
+  .rating{margin-top:clamp(12px, calc(var(--vh) * .032), 40px);font-size:14px;line-height:20px;transform:none}
+  .rating svg{width:14px;height:14px;margin-top:2px;margin-right:7px}
+  h1{margin-top:clamp(6px, calc(var(--vh) * .012), 14px);font-size:min(calc((100vw - 2 * var(--gut)) * .142), calc(var(--vh) * .064));line-height:.965;letter-spacing:-.036em;white-space:normal;transform:none}
+  h1 .l2{transform:none;letter-spacing:-.034em}
+  .lede{margin-top:clamp(8px, calc(var(--vh) * .018), 18px);font-size:clamp(14px, calc(var(--vh) * .02), 17px);line-height:1.4;white-space:normal;max-width:30em;letter-spacing:0}
+  .cta{margin-top:clamp(12px, calc(var(--vh) * .026), 26px);width:100%;gap:8px}
+  .btn{flex:1 1 0;min-width:0;height:clamp(42px, calc(var(--vh) * .06), 52px);width:auto!important;font-size:15px!important;padding:1px 6px 0!important}
+  .cards{margin-top:clamp(14px, calc(var(--vh) * .028), 30px)}
+  .card{flex:0 0 calc(100% - 26px);border-radius:12px}
+  .pager{padding-top:10px}
+}
+/* very short landscape screens (phones on their side): a one-screen fit would make the
+   text unreadably small, so the page scrolls instead */
+@media (max-height:519.98px) and (min-aspect-ratio:1/1){
+  :root{--u:min(calc(100vw / 1427), 1px)}
+  body{overflow:auto}
+  .page{height:auto;min-height:var(--vh)}
+  .cards{flex:none;height:calc(520 * var(--u))}
+}
+@media (max-height:519.98px) and (min-aspect-ratio:1/1) and (max-width:1023.98px){
+  :root{--u:min(calc(100vw / 960), 1px)}
+  .cards{height:calc(480 * var(--u))}
+}
+
+.drawer{display:none}
+@media (max-width:899.98px){
+  .drawer{position:absolute;left:var(--gut);right:var(--gut);top:calc(100% + 10px);z-index:20;display:grid;gap:2px;padding:8px;border-radius:14px;background:rgba(255,255,255,.86);
+    -webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);box-shadow:0 12px 40px rgba(0,0,0,.12),0 0 0 1px rgba(0,0,0,.05);
+    opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s}
+  .drawer a{padding:12px 14px;border-radius:10px;font-size:17px}
+  .drawer a:hover{background:#f2f2f2}
+  .nav.open .drawer{opacity:1;visibility:visible;transform:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  /* Trust signal, proposition, actions, then the three product surfaces. */
+  @keyframes total-nav{from{opacity:0;translate:0 -6px}to{opacity:1;translate:0 0}}
+  @keyframes total-title{from{opacity:0;clip-path:inset(0 0 100% 0);translate:0 10px}to{opacity:1;clip-path:inset(0);translate:0 0}}
+  @keyframes total-copy{from{opacity:0;translate:0 7px}to{opacity:1;translate:0 0}}
+  @keyframes total-panel{from{opacity:0;translate:0 11px}to{opacity:1;translate:0 0}}
+  .nav .logo{animation:total-nav .58s cubic-bezier(.2,.8,.2,1) .04s backwards}
+  .links a{animation:total-nav .46s cubic-bezier(.2,.8,.2,1) backwards}
+  .links a:nth-child(1){animation-delay:.12s}.links a:nth-child(2){animation-delay:.18s}
+  .links a:nth-child(3){animation-delay:.24s}.links a:nth-child(4){animation-delay:.3s}
+  .nav .actions{animation:total-nav .53s cubic-bezier(.2,.8,.2,1) .32s backwards}
+  .hero .rating{animation:total-copy .52s cubic-bezier(.2,.8,.2,1) .18s backwards}
+  .hero h1{animation:total-title .91s cubic-bezier(.16,.82,.22,1) .32s backwards}
+  .hero .lede{animation:total-copy .61s cubic-bezier(.2,.8,.2,1) .67s backwards}
+  .hero .cta .btn{animation:total-copy .53s cubic-bezier(.2,.8,.2,1) backwards}
+  .hero .cta .btn:first-child{animation-delay:.84s}.hero .cta .btn:last-child{animation-delay:.94s}
+  .cards .c1{animation:total-panel .76s cubic-bezier(.2,.8,.2,1) .95s backwards}
+}
+@media (min-width:600px) and (prefers-reduced-motion:no-preference){
+  .cards .c2{animation:total-panel .76s cubic-bezier(.2,.8,.2,1) 1.08s backwards}
+}
+@media (min-width:1100px) and (prefers-reduced-motion:no-preference){
+  .cards .c3{animation:total-panel .76s cubic-bezier(.2,.8,.2,1) 1.21s backwards}
+}
+:focus-visible{outline:2px solid var(--arrow);outline-offset:2px}
+html.entry-complete :is(.nav .logo,.links a,.nav .actions,.hero .rating,.hero h1,.hero .lede,.hero .cta .btn,.cards .c1,.cards .c2,.cards .c3){animation:none!important}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="nav" id="nav">
+    <a class="logo" href="#" aria-label="Total — home"><svg viewBox="52 22 100 33" aria-hidden="true" fill="#000"><path d="M52.6 24.2a.5.5 0 0 1 .5-.5H63.9l-.6 4.7H53.1a.5.5 0 0 1-.5-.5z"/><path d="M64.3 53.5V28.5a4.8 4.8 0 0 1 4.8-4.8H80.6v4.7H69.5v25.1z"/><path fill-rule="evenodd" d="M86.9 30.5a11.45 11.6 0 1 1 0 23.2a11.45 11.6 0 1 1 0-23.2zm0 3.9a6.5 7.7 0 1 0 0 15.4a6.5 7.7 0 1 0 0-15.4z"/><path d="M101.9 25.2l4.9 2.1v3.5h7v4.2h-7v8.7a5.3 5.3 0 0 0 5.3 5.3h1.7v4.5h-1.9a10 10 0 0 1-10-10z"/><path fill-rule="evenodd" d="M127.7 30.5a11.45 11.6 0 0 1 6.6 2.1v-2.3h4.9v19.3c0 1.5.7 2.4 1.8 3.1l-.6 1.1c-2.2-.3-3.9-1.3-4.9-2.9a11.45 11.6 0 1 1-7.8-20.4zm0 3.9a6.5 7.7 0 1 0 0 15.4a6.5 7.7 0 1 0 0-15.4z"/><rect x="144.6" y="23.6" width="5.2" height="29.9" rx=".6"/></svg></a>
+    <nav class="links" aria-label="Primary">
+      <a href="#">Platform</a><a href="#">Customers</a><a href="#">About</a><a href="#">Resources</a>
+    </nav>
+    <div class="actions">
+      <a class="signin" href="#">Sign in</a>
+      <a class="btn-demo" href="#">Get a Demo</a>
+      <button class="menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer"><svg viewBox="0 0 18 18" aria-hidden="true" fill="none" stroke="#000" stroke-width="1.8" stroke-linecap="round"><path d="M2 5.5h14M2 12.5h14"/></svg></button>
+    </div>
+    <div class="drawer" id="drawer">
+      <a href="#">Platform</a><a href="#">Customers</a><a href="#">About</a><a href="#">Resources</a><a href="#">Sign in</a>
+    </div>
+  </header>
+
+  <main class="hero">
+    <p class="rating"><svg viewBox="0 0 17 17" aria-hidden="true"><path d="M8.50 0.50 L10.79 5.94 L16.68 6.44 L12.21 10.31 L13.55 16.06 L8.50 13.00 L3.45 16.06 L4.79 10.31 L0.32 6.44 L6.21 5.94z" fill="#000" stroke="#000" stroke-width=".5" stroke-linejoin="round"/></svg><span>4.9 Rating on Trustpilot</span></p>
+    <h1>Mortgages Built <span class="l2">Around AI.</span></h1>
+    <p class="lede">We've reimagined mortgage by eliminating complexity and unlocking efficiency.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#">See if you Qualify</a>
+      <a class="btn btn-ghost" href="#">Estimate Payment</a>
+    </div>
+  </main>
+
+  <section class="cards" aria-label="How Total works">
+    <article class="card c1"><div class="stage">
+      <h2>Real experts, every step</h2>
+      <p>Iterate on your creation with simple feedback and deploy it</p>
+      <div class="task panel">
+        <h3>Analyse the loan</h3>
+        <div class="who"><img src="assets/image-01.webp" alt="" width="42" height="43"><span>AI Agent - Verification</span></div>
+      </div>
+      <div class="typing panel" role="img" aria-label="Agent is typing"><i></i><i></i><i></i></div>
+    </div></article>
+
+    <article class="card c2"><div class="stage">
+      <div class="people">
+        <div class="person panel">
+          <img src="assets/image-02.webp" alt="Samantha" width="69" height="69">
+          <span class="tile"><svg viewBox="-1 -1 29 29" aria-hidden="true"><defs><linearGradient id="ol" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#89856c"/><stop offset="1" stop-color="#6d6a50"/></linearGradient></defs><circle cx="13.5" cy="13.5" r="13.5" fill="url(#ol)"/><circle cx="13.5" cy="13.5" r="13.6" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="1.1"/><path d="M13.50 5.90 L15.79 10.94 L21.30 11.57 L17.21 15.31 L18.32 20.73 L13.50 18.00 L8.68 20.73 L9.79 15.31 L5.70 11.57 L11.21 10.94z" fill="none" stroke="#fff" stroke-width="1.55" stroke-linejoin="round"/></svg></span>
+          <div class="meta"><span class="name">Samantha</span><span class="role">AI Agent</span></div>
+        </div>
+        <div class="person panel adam">
+          <img src="assets/image-03.webp" alt="Adam Blue" width="69" height="69">
+          <span class="tile"><span class="dots"><i></i><i></i><i></i></span></span>
+          <div class="meta"><span class="name">Adam Blue</span><span class="role">Client</span></div>
+        </div>
+      </div>
+      <span class="flow" aria-hidden="true"></span>
+      <span class="next" aria-hidden="true"><svg viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 1.6v10.4M2.6 7.7L7 12.1l4.4-4.4"/></svg></span>
+    </div></article>
+
+    <article class="card c3">
+      <div class="stage">
+        <div class="badge" aria-hidden="true"><svg viewBox="0 0 30.5 32" aria-hidden="true" fill="#000"><path d="M0 .9A.9.9 0 0 1 .9 0H11.6l-.9 6.6H.9A.9.9 0 0 1 0 5.7z"/><path d="M12.2 32V6.9A6.9 6.9 0 0 1 19.1 0H30.5V6.6H18.4V32z"/></svg></div>
+        <img class="portrait" src="assets/image-04.webp" alt="Smiling Total customer" width="1209" height="1301">
+        <div class="calc panel"><span class="spark"><svg viewBox="0 0 22 22" aria-hidden="true" fill="#0b0f14"><path d="M11 2.4C11.65 7.6 13 9.5 18.1 10.75 13 12 11.65 13.9 11 19.1 10.35 13.9 9 12 3.9 10.75 9 9.5 10.35 7.6 11 2.4z"/><circle cx="17.7" cy="4.3" r="1.2"/><circle cx="4.4" cy="17.5" r="1.2"/></svg></span><span>Calculation Limit</span></div>
+        <div class="score panel">
+          <span class="spin"><svg viewBox="0 0 17 17" aria-hidden="true" fill="#3a3b3b"><circle cx="8.50" cy="1.40" r="1.75" opacity="0.7"/><circle cx="13.52" cy="3.48" r="1.75" opacity="0.92"/><circle cx="15.60" cy="8.50" r="1.75" opacity="1"/><circle cx="13.52" cy="13.52" r="1.75" opacity="0.76"/><circle cx="8.50" cy="15.60" r="1.75" opacity="0.58"/><circle cx="3.48" cy="13.52" r="1.75" opacity="0.17"/><circle cx="1.40" cy="8.50" r="1.75" opacity="0.07"/><circle cx="3.48" cy="3.48" r="1.75" opacity="0.13"/></svg></span>
+          <span>Searching your Credit Score</span>
+          <div class="bar" role="progressbar" aria-label="Credit score search progress" aria-valuenow="32" aria-valuemin="0" aria-valuemax="100"><i></i></div>
+        </div>
+      </div>
+    </article>
+  </section>
+  <div class="pager" role="tablist" aria-label="Cards"><button type="button" aria-label="Card 1" aria-current="true"></button><button type="button" aria-label="Card 2"></button><button type="button" aria-label="Card 3"></button></div>
+</div>
+<script>
+(function(){var n=document.getElementById('nav'),b=n.querySelector('.menu');
+b.addEventListener('click',function(){var o=n.classList.toggle('open');b.setAttribute('aria-expanded',o)});
+document.addEventListener('click',function(e){if(!n.contains(e.target)){n.classList.remove('open');b.setAttribute('aria-expanded',false)}});
+var rail=document.querySelector('.cards'),cards=rail.querySelectorAll('.card'),dots=document.querySelectorAll('.pager button');
+function sync(){var x=rail.scrollLeft,best=0,d=1e9;cards.forEach(function(c,i){var k=Math.abs(c.offsetLeft-rail.offsetLeft-parseFloat(getComputedStyle(rail).paddingLeft)-x);if(k<d){d=k;best=i}});
+ if(rail.scrollLeft+rail.clientWidth>=rail.scrollWidth-2)best=cards.length-1;
+ dots.forEach(function(t,i){t.setAttribute('aria-current',i===best)})}
+rail.addEventListener('scroll',function(){requestAnimationFrame(sync)},{passive:true});
+dots.forEach(function(t,i){t.addEventListener('click',function(){rail.scrollTo({left:cards[i].offsetLeft-rail.offsetLeft-parseFloat(getComputedStyle(rail).paddingLeft),behavior:'smooth'})})});})();
+</script>
+<script>setTimeout(function(){document.documentElement.classList.add("entry-complete")},2300)</script>
+</body>
+</html>

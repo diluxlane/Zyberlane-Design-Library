@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="/previews/REF-142/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Starform — Cinematic mockups</title>
+<script>
+/* Entrance gate: hide the foreground only when JS runs and motion is allowed.
+   Failsafe reveals everything if the entrance script never starts. */
+(function(d){try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('intro');
+window.__introFailsafe=setTimeout(function(){d.classList.remove('intro')},4000);}}catch(e){}})(document.documentElement);
+</script>
+<style>
+@font-face{font-family:"Starform Sans";src:url(assets/starform-sans-regular.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:"Starform Sans";src:url(assets/starform-sans-bold.woff2) format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:"Starform Narrow";src:url(assets/starform-narrow-regular.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:"Starform Display";src:url(assets/starform-display-variable.woff2) format("woff2");font-weight:100 900;font-display:block}
+
+/* ---------------------------------------------------------------
+   Design grid: reference frame is 1280 x 914.
+   --u  = one design pixel for content (fits inside the viewport)
+   --c  = one design pixel for the backdrop (always covers)
+---------------------------------------------------------------- */
+:root{
+  --u: min(calc(100vw / 1280), calc(100vh / 914));
+  --hu: var(--u);
+  --ink:#ffffff;
+  --line:rgba(255,255,255,.9);
+  --ember:#ffbc78;
+  --space:#030204;
+  --sans:"Starform Sans","Liberation Sans",Arimo,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --narrow:"Starform Narrow","Liberation Sans Narrow","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  --display:"Starform Display",Jost,Futura,"Century Gothic",sans-serif;
+}
+@supports (height:100dvh){ :root{ --u: min(calc(100vw / 1280), calc(100dvh / 914)); --hu: var(--u); } }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--space)}
+body{color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--ember);outline-offset:3px}
+
+.hero{position:relative;isolation:isolate;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
+
+/* ---------- Backdrop ---------- */
+.backdrop{position:absolute;inset:0;z-index:-1;overflow:hidden;background:var(--space);container-type:size;pointer-events:none}
+.backdrop img{
+  --c: max(calc(100cqw / 1280), calc(100cqh / 914));
+  --bw: max(calc(1270.64 * var(--c)), calc(100cqw - 9.36 * var(--c)));
+  --bh: max(calc(963.82 * var(--c)), calc(100cqh + .97 * var(--c)));
+  position:absolute;display:block;max-width:none;
+  width:var(--bw);height:var(--bh);
+  left:calc((100cqw - var(--bw)) * var(--bgx, 0) + .25 * var(--c) * (1 - var(--bgx, 0)));
+  top:calc(-.97 * var(--c));
+  filter:saturate(0.85) blur(calc(.7 * var(--c)));
+  user-select:none;
+}
+.backdrop::after{
+  --c: max(calc(100cqw / 1280), calc(100cqh / 914));
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,0.25) 0, rgba(0,0,0,0) calc(340 * var(--c))),
+    linear-gradient(0deg, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0) 86.9%);
+}
+
+/* ---------- Header ---------- */
+.bar{position:absolute;inset:0 0 auto 0;z-index:5;height:calc(80 * var(--hu))}
+.logo{position:absolute;left:calc(66.75 * var(--hu));top:calc(11 * var(--hu));width:calc(24.5625 * var(--hu));height:calc(40.0625 * var(--hu));display:block}
+.logo svg{display:block;width:100%;height:100%;fill:#fff}
+.nav{position:absolute;right:calc(63 * var(--hu));top:calc(32 * var(--hu));height:calc(24.7 * var(--hu));display:flex;align-items:center}
+.nav ul{display:flex;list-style:none;gap:calc(22.9 * var(--hu));margin-right:calc(18.5 * var(--hu))}
+.nav li a{display:block;font-weight:700;font-size:calc(15.55 * var(--hu));line-height:calc(24.7 * var(--hu));transform:translateY(calc(-1.2 * var(--hu)));white-space:nowrap}
+.btn-line{--cap-shift:-.018em;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);font-family:var(--narrow);color:var(--ink);white-space:nowrap;transition:background-color .2s ease}
+.nav .get{width:calc(84.2 * var(--hu));height:calc(24.7 * var(--hu));font-size:calc(14.6 * var(--hu))}
+.nav .get span,.cta .t,.sheet .btn-line span{display:block;line-height:1;transform:translateY(var(--cap-shift))}
+/* Exact optical centring: trim the label box to cap-height so flex centres the capitals themselves */
+@supports (text-box:trim-both cap alphabetic){
+  .nav .get span,.cta .t,.sheet .btn-line span{text-box:trim-both cap alphabetic;transform:none}
+}
+.menu-btn{display:none}
+
+/* ---------- Copy column ---------- */
+.stage{flex:1;display:flex;align-items:center;justify-content:center;
+  padding:calc(40.6 * var(--u)) 0 0 49.62%}
+.copy{width:calc(560 * var(--u));text-align:center;display:flex;flex-direction:column;align-items:center}
+.title{font-family:var(--display);font-weight:350;font-size:calc(76.5 * var(--u));line-height:1;letter-spacing:calc(7 * var(--u));margin-right:calc(-7 * var(--u));white-space:nowrap;font-kerning:none;transform:translate(calc(-1 * var(--u)),calc(1.5 * var(--u)))}
+.lede{margin-top:calc(30.5 * var(--u));font-size:calc(17.25 * var(--u));line-height:calc(28.33 * var(--u));color:rgba(255,255,255,1)}
+.lede span{display:block;white-space:nowrap}
+.pitch{margin-top:calc(87 * var(--u));font-size:calc(41.05 * var(--u));line-height:calc(46 * var(--u));font-weight:400;white-space:nowrap}
+.pitch span{display:block}
+.pitch b{font-weight:700;font-size:calc(41 * var(--u))}
+.cta{margin-top:calc(20.6 * var(--u));display:flex;transform:translateX(calc(-2 * var(--u)))}
+.cta a{width:calc(133 * var(--u));height:calc(31.3 * var(--u));justify-content:flex-start;font-size:calc(17.3 * var(--u))}
+.cta a + a{margin-left:-1px;width:calc(134 * var(--u))}
+.cta .ico{flex:none;display:block}
+.cta .v{padding-left:calc(12.7 * var(--u))}
+.cta .v .ico{width:calc(7 * var(--u));height:calc(7 * var(--u));margin-right:calc(8.5 * var(--u));transform:translateY(calc(0 * var(--u)))}
+.cta .g{padding-left:calc(16.6 * var(--u))}
+.cta .g .ico{width:calc(12.4 * var(--u));height:calc(12.4 * var(--u));margin-right:calc(20 * var(--u));transform:translateY(calc(0 * var(--u)))}
+.cta .v:hover .ico circle{fill:#ffd2a4}
+@media (hover:hover){
+  .nav li a:hover,.sheet li a:hover{color:var(--ember)}
+  .btn-line:hover{background:rgba(255,255,255,.08)}
+}
+/* Touch: enlarge hit areas invisibly, no visual change */
+@media (pointer:coarse){
+  .nav li a{position:relative}
+  .nav li a::after{content:"";position:absolute;inset:-10px calc(22.9 * -.5 * var(--hu))}
+  .nav .get{position:relative}
+  .nav .get::after{content:"";position:absolute;inset:-10px -4px}
+}
+
+/* ---------- Tablet composition ----------
+   The split layout is kept while it still works:
+   - width-scaled type stays readable: u = 100vw/1280 >= .78  ->  width >= 998px
+     (below that, holding type at a readable floor pushes the copy into the rings)
+   - the copy block still commands the height: 0.388 x aspect >= 45%  ->  aspect >= 1.15
+   Past either limit the planet moves above and the copy settles on its dark limb. */
+@media (min-width:416px) and (max-aspect-ratio:23/20), (min-width:416px) and (max-width:997px) and (min-height:561px){
+  :root{
+    --u: clamp(.8px, min(calc(100vw / 640), calc(100dvh / 1000)), 1.5px);
+    --hu: clamp(.78px, min(calc((100vw - 48px) / 766.3), var(--u)), 1px);
+  }
+  .backdrop{--bgx:.42}
+  .backdrop::before{content:"";position:absolute;inset:0;z-index:1;
+    background:linear-gradient(0deg, rgba(3,2,4,.8) 0%, rgba(3,2,4,.58) 34%, rgba(3,2,4,.26) 56%, rgba(3,2,4,0) 76%)}
+  .stage{align-items:flex-end;
+    padding:calc(88 * var(--hu) + env(safe-area-inset-top,0px)) clamp(24px, 5vw, 56px) calc(clamp(40px, 8dvh, 104px) + env(safe-area-inset-bottom,0px))}
+  .copy{width:min(calc(560 * var(--u)), 100%)}
+  .title{transform:none}
+  .lede{font-size:max(14px, calc(17.25 * var(--u)));line-height:max(23px, calc(28.33 * var(--u)))}
+  .cta{transform:none}
+  .cta a,.cta a + a{width:max(150px, calc(133 * var(--u)));height:max(40px, calc(31.3 * var(--u)))}
+}
+
+/* ---------- Compact navigation: only when the desktop bar no longer fits ----------
+   Bar needs 766.3 design px (logo + links + GET ART + margins) + 48px breathing gap
+   at the smallest readable scale (.78)  ->  646px. */
+.menu-btn{display:none}
+.sheet{display:none}
+@media (max-width:645px),(max-height:560px){
+  .nav{display:none}
+  .logo{left:calc(22px + env(safe-area-inset-left,0px));top:calc(16px + env(safe-area-inset-top,0px));width:24.56px;height:40.06px}
+  .menu-btn{display:flex;position:absolute;right:calc(18px + env(safe-area-inset-right,0px));top:calc(14px + env(safe-area-inset-top,0px));
+    width:44px;height:44px;align-items:center;justify-content:center;flex-direction:column;gap:6px;cursor:pointer;
+    background:transparent;border:1px solid var(--line);border-radius:0;color:#fff}
+  .menu-btn i{display:block;width:18px;height:1.5px;background:#fff;transition:transform .25s ease}
+  .menu-btn[aria-expanded="true"] i:nth-child(1){transform:translateY(3.75px) rotate(45deg)}
+  .menu-btn[aria-expanded="true"] i:nth-child(2){transform:translateY(-3.75px) rotate(-45deg)}
+  .sheet{display:block;position:fixed;z-index:6;
+    top:calc(68px + env(safe-area-inset-top,0px));right:calc(18px + env(safe-area-inset-right,0px));
+    width:min(280px, calc(100vw - 36px));padding:10px 22px 22px;
+    background:rgba(3,2,4,.74);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+    border:1px solid var(--line);
+    opacity:0;visibility:hidden;transform:translateY(-6px);
+    transition:opacity .2s ease,transform .2s ease,visibility 0s linear .2s}
+  .sheet.open{opacity:1;visibility:visible;transform:none;transition:opacity .2s ease,transform .2s ease}
+  .sheet ul{list-style:none}
+  .sheet li a{display:block;font-weight:700;font-size:15.55px;line-height:40px}
+  .sheet .btn-line{display:flex;margin-top:12px;height:40px;font-size:14.6px}
+}
+@media (max-height:560px) and (min-width:480px){
+  .sheet{width:min(420px, calc(100vw - 36px))}
+  .sheet ul{display:grid;grid-template-columns:1fr 1fr;column-gap:22px}
+}
+
+/* Short landscape screens: keep type readable, let the hero grow if it must */
+@media (max-height:560px) and (min-aspect-ratio:1/1){
+  :root{--u:max(.58px, min(calc(100vw / 1280), calc(100dvh / 914)))}
+  .stage{padding-top:calc(56px + 18 * var(--u));padding-bottom:calc(12 * var(--u))}
+}
+
+/* ---------- Mobile, portrait ----------
+   Tablet type bottoms out at u = .8, where the headline's longest line
+   ("crafted in one vivid world.") is 460 x .8 = 368px; with two 24px gutters
+   that needs 416px. Below it the column becomes the unit: that line always spans
+   gutter to gutter, so the whole composition keeps its proportions.
+   At 416px both systems give u = .8 and 24px gutters, so the hand-off is seamless. */
+@media (max-width:415px) and (max-aspect-ratio:23/20){
+  :root{
+    --g: clamp(16px, 5.78vw, 24px);
+    --u: min(calc((100vw - 2 * var(--g)) / 460), calc((100dvh - 150px) / 540));
+    --hu: .78px;
+  }
+  .backdrop{--bgx:.42}
+  .backdrop::before{content:"";position:absolute;inset:0;z-index:1;
+    background:linear-gradient(0deg, rgba(3,2,4,.8) 0%, rgba(3,2,4,.58) 34%, rgba(3,2,4,.26) 56%, rgba(3,2,4,0) 76%)}
+  .stage{align-items:flex-end;
+    padding:calc(88 * var(--hu) + env(safe-area-inset-top,0px)) var(--g) calc(clamp(40px, 8dvh, 104px) + env(safe-area-inset-bottom,0px))}
+  .copy{width:100%}
+  .title{transform:none}
+  .lede{font-size:max(14px, calc(17.25 * var(--u)));line-height:max(23px, calc(28.33 * var(--u)))}
+  .cta{transform:none}
+  .cta a,.cta a + a{width:min(150px, calc((100vw - 2 * var(--g)) / 2));height:44px;font-size:max(14px, calc(17.3 * var(--u)))}
+  .cta .v .ico{width:max(6px, calc(7 * var(--u)));height:max(6px, calc(7 * var(--u)))}
+  .cta .g .ico{width:max(10px, calc(12.4 * var(--u)));height:max(10px, calc(12.4 * var(--u)))}
+  .cta .v,.cta .g{justify-content:center;padding-left:0;padding-right:0}
+}
+/* Narrow phones: the lede's longest designed line ("Your artwork finds a place in
+   every new setting here,") is 325px at 14px; with gutters it needs 361px.
+   Below that the four lines reflow instead of shrinking the type. */
+@media (max-width:360px) and (max-aspect-ratio:23/20){
+  .lede{max-width:23em;text-wrap:pretty}
+  .lede span{display:inline;white-space:normal}
+  .lede span::after{content:" "}
+}
+
+/* ---------- Mobile, landscape ----------
+   Under the desktop range (<998px) a short screen (<=560px) cannot hold the split
+   copy at a readable size: scaled by height, the lede drops to ~10px. The split
+   stays (planet left, copy right), but the copy gets a compact rhythm and readable
+   floors, and its column widens leftward so the lede keeps its four designed lines. */
+@media (max-width:997px) and (max-height:560px) and (min-aspect-ratio:23/20){
+  :root{--u: clamp(.45px, calc((100dvh - 96px) / 490), .8px)}
+  .stage{align-items:center;
+    padding:calc(48px + env(safe-area-inset-top,0px)) calc(16px + env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) 40%}
+  .copy{width:auto;max-width:100%}
+  .title{font-size:max(34px, calc(76.5 * var(--u)));transform:none}
+  .lede{margin-top:max(12px, calc(30.5 * var(--u)));font-size:max(12.5px, calc(17.25 * var(--u)));line-height:1.5}
+  .pitch{margin-top:max(16px, calc(40 * var(--u)));font-size:max(20px, calc(41.05 * var(--u)));line-height:1.12}
+  .pitch b{font-size:max(20px, calc(41 * var(--u)))}
+  .cta{margin-top:max(12px, calc(20.6 * var(--u)));transform:none}
+  .cta a,.cta a + a{width:max(128px, calc(133 * var(--u)));height:max(36px, calc(31.3 * var(--u)));font-size:max(13px, calc(17.3 * var(--u)))}
+  .cta .v .ico{width:max(6px, calc(7 * var(--u)));height:max(6px, calc(7 * var(--u)))}
+  .cta .g .ico{width:max(10px, calc(12.4 * var(--u)));height:max(10px, calc(12.4 * var(--u)))}
+  .cta .v,.cta .g{justify-content:center;padding-left:0;padding-right:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* Entrance: foreground waits for the timeline; the backdrop is the stage and never moves */
+html.intro .bar,html.intro .copy{opacity:0}
+</style>
+</head>
+<body>
+<main class="hero">
+  <div class="backdrop" aria-hidden="true"><img alt="" src="assets/starform-background.jpg" width="1448" height="1086" decoding="sync"></div>
+
+  <header class="bar">
+    <a class="logo" href="#" aria-label="Starform home">
+      <svg viewBox="66.75 11 24.5625 40.0625" aria-hidden="true"><path d="M78.88 11.00C78.11 11.01 77.28 11.11 76.62 11.25C75.97 11.39 75.66 11.48 74.94 11.81C74.22 12.15 73.01 12.77 72.31 13.25C71.61 13.73 71.22 14.18 70.75 14.69C70.28 15.20 69.89 15.60 69.50 16.31C69.11 17.02 68.69 18.07 68.44 18.94C68.19 19.80 68.06 20.73 68.00 21.50C67.94 22.27 67.97 22.89 68.06 23.56C68.16 24.24 68.35 24.96 68.56 25.56C68.77 26.17 68.99 26.62 69.31 27.19C69.64 27.75 70.02 28.38 70.50 28.94C70.98 29.50 71.14 29.90 72.19 30.56C73.24 31.23 75.61 32.40 76.81 32.94C78.01 33.48 78.60 33.51 79.38 33.81C80.15 34.11 80.83 34.39 81.44 34.75C82.04 35.11 82.59 35.56 83.00 36.00C83.41 36.44 83.67 36.94 83.88 37.38C84.08 37.81 84.18 38.20 84.25 38.62C84.32 39.05 84.35 39.49 84.31 39.94C84.27 40.39 84.18 40.88 84.00 41.31C83.82 41.75 83.55 42.21 83.25 42.56C82.95 42.92 82.65 43.18 82.19 43.44C81.73 43.70 81.06 43.99 80.50 44.12C79.94 44.26 79.36 44.27 78.81 44.25C78.26 44.23 77.70 44.17 77.19 44.00C76.68 43.83 76.16 43.57 75.75 43.25C75.34 42.93 75.06 42.61 74.75 42.06C74.44 41.51 74.12 40.38 73.88 39.94C73.62 39.50 74.25 39.53 73.25 39.44C72.25 39.34 68.91 39.32 67.88 39.38C66.84 39.43 67.24 39.61 67.06 39.75C66.89 39.89 66.86 39.98 66.81 40.19C66.76 40.40 66.69 40.56 66.75 41.00C66.81 41.44 66.95 42.12 67.19 42.81C67.43 43.50 67.77 44.39 68.19 45.12C68.60 45.86 69.26 46.74 69.69 47.25C70.11 47.76 70.28 47.82 70.75 48.19C71.22 48.55 71.71 49.04 72.50 49.44C73.29 49.83 74.70 50.31 75.50 50.56C76.30 50.81 76.53 50.85 77.31 50.94C78.09 51.02 79.43 51.08 80.19 51.06C80.95 51.04 81.25 50.96 81.88 50.81C82.50 50.67 83.23 50.49 83.94 50.19C84.65 49.89 85.43 49.48 86.12 49.00C86.82 48.52 87.54 47.93 88.12 47.31C88.71 46.70 89.18 46.08 89.62 45.31C90.07 44.54 90.53 43.48 90.81 42.69C91.09 41.90 91.23 41.45 91.31 40.56C91.40 39.68 91.39 38.28 91.31 37.38C91.24 36.47 91.14 35.93 90.88 35.12C90.61 34.32 90.31 33.40 89.75 32.56C89.19 31.73 88.29 30.79 87.50 30.12C86.71 29.46 86.62 29.31 85.00 28.56C83.38 27.81 79.11 26.22 77.75 25.62C76.39 25.03 77.17 25.31 76.81 25.00C76.46 24.69 75.86 24.04 75.62 23.75C75.39 23.46 75.46 23.60 75.38 23.25C75.29 22.90 75.05 22.24 75.12 21.62C75.20 21.01 75.50 20.10 75.81 19.56C76.12 19.02 76.53 18.66 77.00 18.38C77.47 18.09 78.12 17.95 78.62 17.88C79.12 17.80 79.54 17.84 80.00 17.94C80.46 18.03 80.97 18.16 81.38 18.44C81.78 18.72 82.16 19.15 82.44 19.62C82.72 20.10 82.81 20.94 83.06 21.31C83.31 21.69 82.92 21.77 83.94 21.88C84.96 21.98 88.18 21.97 89.19 21.94C90.20 21.91 89.80 21.81 90.00 21.69C90.20 21.56 90.38 21.69 90.38 21.19C90.38 20.69 90.20 19.44 90.00 18.69C89.80 17.94 89.64 17.43 89.19 16.69C88.74 15.95 87.94 14.91 87.31 14.25C86.69 13.59 86.16 13.19 85.44 12.75C84.72 12.31 83.71 11.89 83.00 11.62C82.29 11.36 81.88 11.29 81.19 11.19C80.50 11.08 79.64 10.99 78.88 11.00Z"/></svg>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <ul>
+        <li><a href="#">Paperworks</a></li>
+        <li><a href="#">Screens</a></li>
+        <li><a href="#">Editorial</a></li>
+        <li><a href="#">Prints</a></li>
+        <li><a href="#">Tins</a></li>
+        <li><a href="#">Archive</a></li>
+        <li><a href="#">Ask</a></li>
+      </ul>
+      <a class="btn-line get" href="#"><span>GET ART</span></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="sheet" aria-label="Open menu"><i></i><i></i></button>
+  </header>
+
+  <nav class="sheet" id="sheet" aria-label="Menu">
+    <ul>
+      <li><a href="#">Paperworks</a></li>
+      <li><a href="#">Screens</a></li>
+      <li><a href="#">Editorial</a></li>
+      <li><a href="#">Prints</a></li>
+      <li><a href="#">Tins</a></li>
+      <li><a href="#">Archive</a></li>
+      <li><a href="#">Ask</a></li>
+    </ul>
+    <a class="btn-line" href="#"><span>GET ART</span></a>
+  </nav>
+
+  <section class="stage">
+    <div class="copy">
+      <h1 class="title">STARFORM</h1>
+      <p class="lede"><span>Starform brings cinematic mockups into your orbit</span><span>with rich detail, built to give every project fresh life.</span><span>Your artwork finds a place in every new setting here,</span><span>ready to glow in the dark.</span></p>
+      <h2 class="pitch"><span>Your work takes shape</span><span><b>with each mockup</b></span><span>crafted in one vivid world.</span></h2>
+      <div class="cta">
+        <a class="btn-line v" href="#"><svg class="ico" viewBox="0 0 7 7" aria-hidden="true"><circle cx="3.5" cy="3.5" r="3.5" fill="var(--ember)"/></svg><span class="t">VIEW MORE</span></a>
+        <a class="btn-line g" href="#"><svg class="ico" viewBox="0 0 12.4 12.4" aria-hidden="true"><path d="M6.2 .7 11.7 6.2 6.2 11.7 .7 6.2Z" fill="none" stroke="#e2e2e4" stroke-width="1"/></svg><span class="t">GET ART</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+(function(){
+  var btn=document.querySelector('.menu-btn'), sheet=document.getElementById('sheet');
+  var compact=window.matchMedia('(max-width:645px),(max-height:560px)');
+  function isOpen(){return btn.getAttribute('aria-expanded')==='true';}
+  function set(open,returnFocus){
+    btn.setAttribute('aria-expanded',open);
+    btn.setAttribute('aria-label',open?'Close menu':'Open menu');
+    sheet.classList.toggle('open',open);
+    if(open){var first=sheet.querySelector('a');if(first)first.focus({preventScroll:true});}
+    else if(returnFocus){btn.focus({preventScroll:true});}
+  }
+  btn.addEventListener('click',function(){set(!isOpen(),true);});
+  sheet.addEventListener('click',function(e){if(e.target.closest('a'))set(false,false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&isOpen())set(false,true);});
+  document.addEventListener('pointerdown',function(e){if(isOpen()&&!sheet.contains(e.target)&&!btn.contains(e.target))set(false,false);});
+  sheet.addEventListener('focusout',function(e){if(isOpen()&&e.relatedTarget&&!sheet.contains(e.relatedTarget)&&e.relatedTarget!==btn)set(false,false);});
+  (compact.addEventListener?compact.addEventListener.bind(compact,'change'):compact.addListener.bind(compact))(function(m){if(!m.matches&&isOpen())set(false,false);});
+})();
+</script>
+<script>
+/* ---------- Entrance: one timeline, runs once, then everything is static ----------
+   Motion language (4 behaviours, no transform overrides — uses the individual
+   translate/scale properties so authored transforms stay untouched):
+   A  OPEN   - centre-out clip, for the wide-tracked title and the hairline CTA frame
+   B  RISE   - line rises through a fixed mask (lede + headline lines)
+   C  SETTLE - small opacity + 6-8px drift for the header
+   D  IGNITE - the two CTA accents light up last                                    */
+(function(){
+  var html=document.documentElement;
+  if(!html.classList.contains('intro'))return;
+  var q=function(s){return document.querySelector(s)}, qa=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
+  var EXPO='cubic-bezier(.16,1,.3,1)', QUINT='cubic-bezier(.22,1,.36,1)', OPEN='cubic-bezier(.7,0,.2,1)';
+  function shown(el){return !!el&&el.getClientRects().length>0&&getComputedStyle(el).display!=='none';}
+  function reveal(){html.classList.remove('intro');clearTimeout(window.__introFailsafe);}
+  if(!Element.prototype.animate){reveal();return;}
+
+  var img=q('.backdrop img');
+  var ready=Promise.all([document.fonts?document.fonts.ready:0, img&&img.decode?img.decode().catch(function(){}):0]);
+  Promise.race([ready,new Promise(function(r){setTimeout(r,1200)})]).then(function(){requestAnimationFrame(start)});
+
+  function start(){
+    var k=matchMedia('(max-width:415px)').matches?.9:1, anims=[];
+    function play(el,kf,at,dur,ease){
+      if(!shown(el))return;
+      anims.push(el.animate(kf,{delay:at*1000*k,duration:dur*1000*k,easing:ease,fill:'backwards'}));
+    }
+    var OPEN_KF=function(v){return [{clipPath:'inset('+v+' 50% '+v+' 50%)',opacity:0},{opacity:1,offset:.3},{clipPath:'inset('+v+' -2% '+v+' -2%)',opacity:1}]};
+    var RISE_KF=[{translate:'0 100%',clipPath:'inset(-10% -4% 100% -4%)'},{translate:'0 0',clipPath:'inset(-10% -4% -10% -4%)'}];
+    function lines(block,spanSel){var s=qa(spanSel);return s.length&&getComputedStyle(s[0]).display!=='inline'?s:[q(block)];}
+
+    /* 01  brand mark establishes the page */
+    play(q('.logo'),[{opacity:0,translate:'0 -8px'},{opacity:1,translate:'0 0'}],.05,.8,EXPO);
+    /* 02  STARFORM opens from its centre, like the rim light widening */
+    play(q('.title'),OPEN_KF('-25%'),.1,1.15,'cubic-bezier(.65,0,.2,1)');
+    /* 03  the lede rises line by line through its own masks */
+    lines('.lede','.lede span').forEach(function(el,i){play(el,RISE_KF,.62+i*.07,.85,QUINT)});
+    /* 04  the headline follows with more weight */
+    lines('.pitch','.pitch span').forEach(function(el,i){play(el,RISE_KF,.92+i*.1,1,EXPO)});
+    /* 05  header settles in quietly once the message is established */
+    qa('.nav li, .nav .get, .menu-btn').forEach(function(el,i){play(el,[{opacity:0,translate:'0 -6px'},{opacity:1,translate:'0 0'}],1.02+i*.04,.7,EXPO)});
+    /* 06  the hairline CTA frame opens from the centre, echoing the title */
+    play(q('.cta'),OPEN_KF('-12%'),1.3,.9,OPEN);
+    /* 07  accents ignite last */
+    qa('.cta .ico').forEach(function(el,i){play(el,[{opacity:0,scale:'.3'},{opacity:1,scale:'1'}],1.62+i*.06,.6,EXPO)});
+
+    reveal();
+    Promise.all(anims.map(function(a){return a.finished})).then(function(){
+      anims.forEach(function(a){a.cancel()});
+      /* Hand back to the static page: one synchronous re-layout (no frame is painted in
+         between) so text is rasterised exactly as on a page that never animated. */
+      var hero=q('.hero'), f=document.activeElement, x=scrollX, y=scrollY;
+      hero.style.display='none'; void hero.offsetHeight; hero.style.display='';
+      if(f&&f!==document.body&&f.focus)f.focus({preventScroll:true});
+      scrollTo(x,y);
+    },function(){});
+  }
+})();
+</script>
+</body>
+</html>

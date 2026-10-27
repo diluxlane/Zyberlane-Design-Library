@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-126/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Oryn Studio</title>
+<meta name="description" content="Oryn Studio — we transform ambitious ideas into immersive digital products, brands and experiences.">
+<script>
+/* Set the opening state before first paint; the timeout restores content if setup fails. */
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches && Element.prototype.animate) {
+  document.documentElement.classList.add('oryn-entering');
+  window.orynEntranceFallback = setTimeout(function () {
+    document.documentElement.classList.remove('oryn-entering');
+  }, 3600);
+}
+</script>
+<style>
+@font-face{font-family:"Inter Tight";font-weight:400;font-style:normal;font-display:block;src:url(assets/inter-tight-400.woff2) format("woff2")}
+@font-face{font-family:"Inter Tight";font-weight:500;font-style:normal;font-display:block;src:url(assets/inter-tight-500.woff2) format("woff2")}
+@font-face{font-family:"Inter Tight";font-weight:600;font-style:normal;font-display:block;src:url(assets/inter-tight-600.woff2) format("woff2")}
+
+/* ───────── Design tokens (sampled from the reference) ───────── */
+:root{
+  --bg:#fafafa;            /* page background      rgb(250,250,250) */
+  --ink:#000;              /* display headline     rgb(0,0,0)       */
+  --ink-2:#181818;         /* brand / labels       rgb(24,24,24)    */
+  --ink-3:#262626;         /* nav + list labels    rgb(38,38,38)    */
+  --ink-mute:#767676;      /* list counters        rgb(118,118,118) */
+  --accent:#d94400;        /* brand orange         rgb(217,68,0)    */
+  --rule:#9c9c9c;          /* list dividers                         */
+  --dash:#d4d4d4;          /* frame dashes                          */
+  --glass:rgba(255,255,255,.94);
+  --white:#fff;
+  --font:"Inter Tight","Helvetica Neue",Helvetica,Arial,sans-serif;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg)}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-family:var(--font);color:var(--ink);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision}
+img{display:block;max-width:none}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+ul{list-style:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* Width container: 100cqw is the page width WITHOUT the scrollbar, so no
+   layout below can be sized wider than the visible page. */
+.viewport{container-type:inline-size;width:100%}
+
+/* ═════════════════════════════════════════════════════════════════
+   DESKTOP (locked) — exact replica of the 843 × 617 reference.
+   calc(var(--u) * 1) = one reference pixel. --u fits BOTH axes; leftover width (--ex)
+   goes to elastic gutters, leftover height to elastic spacers.
+   ═════════════════════════════════════════════════════════════════ */
+.site{
+  --u:min(calc(100cqw / 843), calc(100vh / 617));
+  --u:min(calc(100cqw / 843), calc(100svh / 617));
+  --ex:calc(100cqw - 843 * var(--u));
+  position:relative;display:flex;flex-direction:column;
+  min-height:100vh;min-height:100svh;
+  width:100%;
+}
+.abs{position:absolute}
+
+/* ── header (y 0 → 41) ── */
+.hdr{position:relative;height:calc(var(--u) * 41);flex:none;z-index:5}
+.nav{
+  left:calc(var(--u) * 170);top:calc(var(--u) * 12);width:calc(var(--u) * 503);height:calc(var(--u) * 28);
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(calc(var(--u) * 14)) saturate(140%);backdrop-filter:blur(calc(var(--u) * 14)) saturate(140%);
+  box-shadow:0 calc(var(--u) * 25) calc(var(--u) * 14) 0 rgba(0,0,0,.047);
+}
+.brand{display:flex;align-items:center;left:calc(var(--u) * 14);top:0;height:calc(var(--u) * 28);gap:0}
+.brand svg{position:absolute;left:calc(var(--u) * -1);top:calc(var(--u) * 5);width:calc(var(--u) * 15);height:calc(var(--u) * 17)}
+.brand span{position:absolute;left:calc(var(--u) * 19);top:calc(var(--u) * 9.3);font-size:calc(var(--u) * 10.9);line-height:1;font-weight:600;letter-spacing:calc(var(--u) * -.35);color:var(--ink-2);white-space:nowrap}
+.burger{display:none}
+.menu{display:contents}
+.links a{position:absolute;top:calc(var(--u) * 9.2);font-size:calc(var(--u) * 10.8);line-height:1;font-weight:400;color:var(--ink-3);letter-spacing:calc(var(--u) * -.25);white-space:nowrap;transition:color .2s}
+.links li:nth-child(1) a{left:calc(var(--u) * 156.5)}
+.links li:nth-child(2) a{left:calc(var(--u) * 212)}
+.links li:nth-child(3) a{left:calc(var(--u) * 264.5)}
+.links li:nth-child(4) a{left:calc(var(--u) * 326)}
+.links li:nth-child(5) a{left:calc(var(--u) * 394)}
+.links li:nth-child(6) a{left:calc(var(--u) * 449)}
+.cta{
+  left:calc(var(--u) * 725.5);top:calc(var(--u) * 11.5);width:calc(var(--u) * 100);height:calc(var(--u) * 30);
+  background:var(--accent);color:#fff;
+  font-size:calc(var(--u) * 11.6);font-weight:500;line-height:calc(var(--u) * 30);text-align:center;letter-spacing:calc(var(--u) * -.15);white-space:nowrap;
+  box-shadow:0 calc(var(--u) * 25) calc(var(--u) * 14) 0 rgba(0,0,0,.047);
+  transition:filter .2s;
+}
+
+.sp-a{flex:1 0 calc(var(--u) * 50)}      /* 41 → 91  */
+.sp-b{flex:1 0 calc(var(--u) * 41)}      /* 366 → 407 */
+.sp-c{flex:none;height:calc(var(--u) * 10)} /* 607 → 617 */
+
+/* ── hero (y 91 → 366), children positioned at (y − 91) ── */
+.hero{position:relative;height:calc(var(--u) * 275);flex:none}
+.reel{left:calc(var(--u) * 17);top:0;width:calc(var(--u) * 138);height:calc(var(--u) * 156);overflow:hidden;border-radius:calc(var(--u) * 1)}
+.reel img{width:100%;height:100%;object-fit:cover;filter:url(#cm-reel)}
+.play{
+  left:calc(var(--u) * 65);top:calc(var(--u) * 57);width:calc(var(--u) * 42);height:calc(var(--u) * 42);border-radius:50%;
+  background:rgba(60,32,17,.96);
+  -webkit-backdrop-filter:blur(calc(var(--u) * 6));backdrop-filter:blur(calc(var(--u) * 6));
+  display:grid;place-items:center;pointer-events:none;
+}
+.play svg{width:calc(var(--u) * 12);height:calc(var(--u) * 12);margin-left:calc(var(--u) * 1.6)}
+.watch{left:calc(var(--u) * 17);top:calc(var(--u) * 171.9);font-size:calc(var(--u) * 10.1);line-height:1;font-weight:400;letter-spacing:calc(var(--u) * .13);color:var(--ink-2);white-space:nowrap}
+
+.tag{top:calc(var(--u) * 4.4);font-size:calc(var(--u) * 10.3);line-height:1;font-weight:400;letter-spacing:calc(var(--u) * -.15);color:var(--ink-2);white-space:nowrap}
+.tag-ag{left:calc(var(--u) * 182.6)}
+.tag-tc{left:calc(var(--u) * 753.4);letter-spacing:calc(var(--u) * -.05)}
+.tag-ic{left:calc(var(--u) * -15.2);top:calc(var(--u) * -.9);width:calc(var(--u) * 9.3);height:calc(var(--u) * 10.5)}
+.avatars{left:calc(var(--u) * 703);top:calc(var(--u) * 0);width:calc(var(--u) * 48);height:calc(var(--u) * 18)}
+.avatars i{position:absolute;top:0;width:calc(var(--u) * 18);height:calc(var(--u) * 18);border-radius:50%;background-image:url(assets/avatar-sprite.png);background-size:calc(var(--u) * 54.34) calc(var(--u) * 18);background-repeat:no-repeat}
+.avatars i:nth-child(1){left:calc(var(--u) * 1);background-position:0 0}
+.avatars i:nth-child(2){left:calc(var(--u) * 10);background-position:calc(var(--u) * -12.12) 0}
+.avatars i:nth-child(3){left:calc(var(--u) * 19);background-position:calc(var(--u) * -24.25) 0}
+.avatars i:nth-child(4){left:calc(var(--u) * 28);background-position:calc(var(--u) * -36.34) 0}
+
+.frame{left:calc(var(--u) * 174);top:calc(var(--u) * 35);width:calc(var(--u) * 618);height:calc(var(--u) * 235);pointer-events:none}
+.frame .box{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.frame .star{position:absolute;width:calc(var(--u) * 11);height:calc(var(--u) * 11);margin:calc(var(--u) * -5.5) 0 0 calc(var(--u) * -5.5)}
+.frame .tl{left:0;top:0}.frame .tr{left:100%;top:0}.frame .bl{left:0;top:100%}.frame .br{left:100%;top:100%}
+
+.h1{font-size:calc(var(--u) * 71.3);line-height:1;font-weight:500;letter-spacing:0;color:var(--ink);white-space:nowrap}
+.ln1{left:calc(var(--u) * 183.2);top:calc(var(--u) * 44.8);word-spacing:-.0295em}
+.ln2{left:calc(var(--u) * 183.6);top:calc(var(--u) * 121.4)}
+.ln3{left:calc(var(--u) * 676.6);top:calc(var(--u) * 121.4);word-spacing:-.056em}
+.ln4{left:calc(var(--u) * 400.2);top:calc(var(--u) * 194.8);word-spacing:-.039em}
+.w-elevating{letter-spacing:.0123em}
+.w-brands{letter-spacing:.021em}
+.w-thrive{letter-spacing:.0028em}
+.w-in{letter-spacing:.014em}
+.w-digital{letter-spacing:.0093em}
+.w-world{letter-spacing:.0158em}
+.wide-a{display:inline-block;transform:scaleX(1.12);transform-origin:0 0}
+.chip{top:calc(var(--u) * 144);height:calc(var(--u) * 37.8);overflow:hidden;border-radius:calc(var(--u) * 1.5)}
+.chip-a{left:calc(var(--u) * 445);width:calc(var(--u) * 111)}
+.chip-b{left:calc(var(--u) * 560);width:calc(var(--u) * 112)}
+.chip img{width:100%;height:100%;object-fit:cover}
+.chip.who::after{content:"";position:absolute;inset:0;background:rgba(24,6,0,.17);box-shadow:inset 0 0 0 calc(var(--u) * .6) rgba(255,255,255,.14)}
+.chip.who span{position:absolute;inset:0;display:grid;place-items:center;z-index:1;color:#fff;font-size:calc(var(--u) * 13.2);font-weight:500;letter-spacing:calc(var(--u) * .42);line-height:1;padding:calc(var(--u) * 4.3) calc(var(--u) * .4) 0 0}
+.intro{
+  left:calc(var(--u) * 183);top:calc(var(--u) * 203.5);width:calc(var(--u) * 212);height:calc(var(--u) * 53);background:var(--accent);color:#fff;
+  padding:calc(var(--u) * 5.1) calc(var(--u) * 2) 0 calc(var(--u) * 5.4);font-size:calc(var(--u) * 12.9);line-height:calc(var(--u) * 15.5);font-weight:400;letter-spacing:calc(var(--u) * .19);
+  box-shadow:0 calc(var(--u) * 26) calc(var(--u) * 16) 0 rgba(0,0,0,.048);
+}
+
+/* ── lower band (y 407 → 607); it is the elastic row ── */
+.band{position:relative;flex:2 0 calc(var(--u) * 200)}
+.svc{left:calc(var(--u) * 17);top:calc(var(--u) * -5);width:calc(var(--u) * 194.5)}
+.svc li{position:relative;height:calc(var(--u) * 28.3);border-bottom:calc(var(--u) * 1) solid var(--rule)}
+.svc li:last-child{border-bottom-color:#bdbdbd}
+.svc .n,.svc .l{position:absolute;top:calc(var(--u) * 9.2);font-size:calc(var(--u) * 11.2);line-height:1;letter-spacing:calc(var(--u) * .08);white-space:nowrap}
+.svc .n{left:0;color:var(--ink-mute)}
+.svc .l{right:0;color:var(--ink-3)}
+.tile{top:0;bottom:0;overflow:hidden}
+.gal{left:calc(var(--u) * 242);width:calc(calc(var(--u) * 208) + var(--ex) * .3562);display:grid;grid-template-columns:1fr 1fr;grid-template-rows:99fr 101fr}
+.gal span{position:relative;overflow:hidden}
+.gal img{position:absolute;object-fit:cover}
+.gal .t1 img{width:104%;height:104%;left:-1.9%;top:0}
+.gal .t2 img{width:108%;height:108%;left:-3.8%;top:-6%}
+.gal .t3 img{width:102%;height:102%;left:0;top:0}
+.gal .t4 img{width:104%;height:104%;left:-2.9%;top:0}
+.lap img{width:100%;height:100%;object-fit:cover}
+.lap{left:calc(calc(var(--u) * 459) + var(--ex) * .3562);width:calc(calc(var(--u) * 179) + var(--ex) * .3065)}
+.card{left:calc(calc(var(--u) * 648.4) + var(--ex) * .6627);width:calc(calc(var(--u) * 177.2) + var(--ex) * .3373);top:calc(var(--u) * .6);background:var(--accent);color:#fff;box-shadow:0 calc(var(--u) * 12) calc(var(--u) * 18) 0 rgba(0,0,0,.05);border-radius:calc(var(--u) * .5);transition:filter .2s}
+.card svg{position:absolute;right:calc(var(--u) * 12);top:calc(var(--u) * 12.5);width:calc(var(--u) * 23);height:calc(var(--u) * 23)}
+.card p{position:absolute;left:calc(var(--u) * 11.6);bottom:calc(var(--u) * 10.4);font-size:calc(var(--u) * 17.4);line-height:calc(var(--u) * 21);font-weight:500;letter-spacing:calc(var(--u) * -.1);white-space:nowrap}
+
+/* horizontal anchoring for wide screens: k5 = centred group, k1 = right-anchored group */
+.k5{margin-left:calc(var(--ex) * .5)}
+.k1{margin-left:var(--ex)}
+.trust,.copy,.h1-wrap,.reelbox{display:contents}
+
+/* hover effects only where a real pointer can hover (touch keeps the tap) */
+@media (hover:hover){
+  .links a:hover{color:var(--accent)}
+  .cta:hover{filter:brightness(1.08)}
+  .card:hover{filter:brightness(1.06)}
+}
+
+/* ═════════════════════════════════════════════════════════════════
+   TABLET — everything that is NOT the desktop condition.
+   Desktop holds while its scale keeps the smallest labels ≥ 9.5px
+   (u ≥ .94 → ≥ 793 × 580) and the screen is landscape; past that the
+   elastic spacers balloon and the labels fall below legibility.
+
+   Architecture: the page becomes a grid. The hero STAGE (frame +
+   headline + chips + intro) keeps its exact desktop composition and is
+   scaled so the frame spans the content width. The desktop left column
+   (reel, services) pairs with the work band in a 2-row asymmetric grid
+   that absorbs the remaining height, so a portrait tablet shows the
+   whole composition in one screen.
+   ═════════════════════════════════════════════════════════════════ */
+@media (max-width:792.98px), (max-height:579.98px), (max-aspect-ratio:1/1){
+  .site{
+    --g:clamp(18px, 3.4cqw, 40px);                 /* outer gutter          */
+    --cw:calc(100cqw - 2 * var(--g));              /* content width         */
+    /* stage scale: frame = content width; capped so the whole composition
+       (≈calc(var(--u) * 740) tall) fits the screen; floored at desktop-reference size     */
+    --u:min(calc(var(--cw) / 618), max(calc(100vh / 740), 1px), 1.7px);
+    --u:min(calc(var(--cw) / 618), max(calc(100svh / 740), 1px), 1.7px);
+    --ex:0px;
+    display:grid;
+    grid-template-columns:minmax(0,195fr) minmax(0,179fr) minmax(0,177fr);
+    grid-template-rows:auto auto auto minmax(min-content,1.25fr) minmax(min-content,1fr);
+    grid-template-areas:
+      "hdr   hdr  hdr"
+      "ag    tr   tr"
+      "stage stage stage"
+      "reel  gal  gal"
+      "svc   lap  card";
+    column-gap:calc(var(--u) * 10);
+    padding:0 var(--g) calc(var(--u) * 12);
+  }
+  .sp-a,.sp-b,.sp-c{display:none}
+  .hero,.band{display:contents}
+  .nav,.brand,.tag,.avatars,.frame,.reel,.watch,.svc,.tile{position:relative;left:auto;top:auto;bottom:auto}
+
+  /* header — desktop bar + separate CTA, re-flowed along the width */
+  .hdr{grid-area:hdr;height:auto;padding-top:calc(var(--u) * 12)}
+  .nav{width:auto;height:calc(var(--u) * 28);margin-right:calc(var(--u) * 112);display:flex;align-items:center;padding:0 calc(var(--u) * 21) 0 calc(var(--u) * 14)}
+  .brand{height:100%;flex:none}
+  .brand svg{position:static;width:calc(var(--u) * 15);height:calc(var(--u) * 17);margin:0 calc(var(--u) * 4) 0 calc(var(--u) * -1)}
+  .brand span{position:static}
+  .links{display:flex;margin-left:auto;gap:calc(var(--u) * 30.5)}
+  .links a{position:static;display:block;padding:calc(var(--u) * 8) 0;font-size:max(calc(var(--u) * 10.8), 12px)}
+  .cta{position:absolute;left:auto;right:0;top:calc(var(--u) * 11.5)}
+
+  /* tag row */
+  .tag-ag{grid-area:ag;margin:calc(var(--u) * 26) 0 0 calc(var(--u) * 8.6);font-size:max(calc(var(--u) * 10.3), 11px)}
+  .tag-ic{position:absolute}
+  .trust{grid-area:tr;display:flex;align-items:center;justify-content:flex-end;gap:calc(var(--u) * 6);margin-top:calc(var(--u) * 26)}
+  .tag-tc{font-size:max(calc(var(--u) * 10.3), 11px)}
+
+  /* stage — desktop coordinates re-based to the frame's origin */
+  .frame,.copy{grid-area:stage;justify-self:center;margin:calc(var(--u) * 17) 0 calc(var(--u) * 41)}
+  .copy{display:block;position:relative;width:calc(var(--u) * 618);height:calc(var(--u) * 235)}
+  .copy .abs{translate:calc(var(--u) * -174) calc(var(--u) * -35)}
+
+  /* left column: reel above services, as on desktop */
+  .reelbox{grid-area:reel;display:flex;flex-direction:column;position:relative;margin:0 calc(var(--u) * 20) calc(var(--u) * 10) 0;min-height:calc(var(--u) * 150)}
+  .reel{flex:1 1 auto;width:100%;height:auto;min-height:calc(var(--u) * 110)}
+  .play{left:calc(50% - calc(var(--u) * 21));top:calc((100% - calc(var(--u) * 22.1)) / 2 - calc(var(--u) * 21))}
+  .watch{margin-top:calc(var(--u) * 12);font-size:max(calc(var(--u) * 10.1), 11px)}
+  .svc{grid-area:svc;width:auto;margin-right:calc(var(--u) * 20);align-self:start}
+  .svc .n,.svc .l{font-size:max(calc(var(--u) * 11.2), 11.5px)}
+
+  /* work band */
+  .gal{grid-area:gal;width:auto;margin-bottom:calc(var(--u) * 10)}
+  .lap{grid-area:lap;width:auto;min-height:calc(var(--u) * 150)}
+  .card{grid-area:card;width:auto;min-height:calc(var(--u) * 150);top:auto}
+  /* media never dictate track size: the grid distributes the height */
+  .reel,.tile{contain:size}
+}
+
+/* ── navigation collapses where the link row would drop below ~11.5px
+      text in a ~30px bar. The glass bar itself becomes an EXPANDING
+      navigation surface: links + CTA (same single markup) unfold in it. ── */
+@media (max-width:743.98px){
+  .hdr{
+    display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;
+    margin-top:calc(var(--u) * 12);padding:0 4px 0 calc(var(--u) * 14);
+    background:var(--glass);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);
+    box-shadow:0 calc(var(--u) * 25) calc(var(--u) * 14) 0 rgba(0,0,0,.047);
+  }
+  .nav{display:contents}
+  .brand{grid-column:1;height:44px}
+  .burger{grid-column:2;display:grid;place-items:center;width:44px;height:44px}
+  .burger i,.burger i::before,.burger i::after{display:block;width:18px;height:1.5px;background:var(--ink-2);transition:transform .2s,background-color .2s}
+  .burger i{position:relative}
+  .burger i::before,.burger i::after{content:"";position:absolute;left:0}
+  .burger i::before{top:-5px}
+  .burger i::after{top:5px}
+  .hdr.open .burger i{background-color:transparent}
+  .hdr.open .burger i::before{transform:translateY(5px) rotate(45deg)}
+  .hdr.open .burger i::after{transform:translateY(-5px) rotate(-45deg)}
+
+  .menu,.cta{display:none}
+  .hdr.open{padding-bottom:18px}
+  .hdr.open .menu{display:block;grid-column:1/-1;margin-right:calc(calc(var(--u) * 14) - 4px);animation:menu-in .2s ease both}
+  .links{display:block;margin:0}
+  .links li{border-top:1px solid var(--rule)}
+  .links li:first-child{border-top-color:#bdbdbd}
+  .links a{padding:15px 0;font-size:16px;letter-spacing:-.01em}
+  .hdr.open .cta{display:block;position:static;grid-column:1/-1;justify-self:start;width:auto;height:44px;line-height:44px;padding:0 20px;margin:6px 0 0;font-size:14px;animation:menu-in .2s .04s ease both}
+}
+@keyframes menu-in{from{opacity:0;translate:0 -6px}to{opacity:1;translate:0 0}}
+
+/* ═════════════════════════════════════════════════════════════════
+   MOBILE — below the width where the stage's intro copy would drop
+   under ~12px (stage scale < .965, i.e. < 640px).
+   Architecture: the stage becomes a flowing headline in the same
+   frame (3 controlled lines, chips kept inline, intro beneath); reel
+   and services stay SIDE BY SIDE as a mini-grid; the band keeps its
+   gallery / laptop / card relationship as 1 + 2.
+   calc(var(--u) * 1) becomes a fluid mobile scale so every ratio of the type system
+   is kept.
+   ═════════════════════════════════════════════════════════════════ */
+@media (max-width:639.98px){
+  .site{
+    --g:clamp(14px, 4.2cqw, 24px);
+    --u:clamp(1.06px, calc(100cqw / 340), 1.5px);
+    --pad:calc(var(--g) * .9);
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    grid-template-rows:none;
+    grid-template-areas:
+      "hdr   hdr"
+      "ag    tr"
+      "stage stage"
+      "reel  svc"
+      "gal   gal"
+      "lap   card";
+    column-gap:12px;
+    padding-bottom:var(--g);
+  }
+  .hdr{margin-top:var(--g);padding-left:16px}
+  .brand,.burger{height:48px}
+  .brand svg{width:17px;height:19px;margin-right:6px}
+  .brand span{font-size:14.5px;letter-spacing:-.02em}
+  .tag-ag{margin:22px 0 0 calc(var(--g) * .5 + 2px)}
+  .trust{margin-top:22px}
+
+  /* stage → flowing headline inside the same dashed frame */
+  .frame,.copy{justify-self:stretch;margin:20px 0 34px}
+  .frame{width:auto;height:auto;align-self:stretch}
+  .copy{width:auto;height:auto;padding:calc(var(--pad) * 1.3) var(--pad) calc(var(--pad) * 1.5)}
+  .copy .abs{position:static;translate:none}
+  .h1-wrap{display:block;font-size:calc((var(--cw) - 2 * var(--pad)) / 7.62);line-height:1.02;font-weight:500}
+  .h1{display:inline;font-size:inherit;line-height:inherit}
+  .ln3::before{content:"\A";white-space:pre}           /* line 3 starts at "in a" */
+  .copy .chip{display:inline-block;position:relative;left:auto;top:auto;width:1.557em;height:.53em;vertical-align:.04em;margin:0 .03em}
+  .chip.who span{font-size:.185em;letter-spacing:.03em;padding:.25em 0 0}
+  .copy .intro{display:block;width:auto;height:auto;margin-top:.9em;padding:calc(var(--u) * 14) calc(var(--u) * 14) calc(var(--u) * 15);font-size:calc(var(--u) * 12.9);line-height:1.38;box-shadow:0 calc(var(--u) * 18) calc(var(--u) * 22) calc(var(--u) * -6) rgba(0,0,0,.08)}
+
+  /* reel ⟷ services mini-grid */
+  .reelbox{margin:0 0 24px;min-height:0}
+  .reel{flex:none;aspect-ratio:138/156;min-height:0}
+  .watch{margin-top:calc(var(--u) * 10)}
+  .svc{grid-area:svc;margin:calc(var(--u) * -1) 0 24px}
+  .svc li{height:calc(var(--u) * 31)}
+  .svc .n,.svc .l{top:calc(var(--u) * 10.4);font-size:calc(var(--u) * 11.2)}
+
+  /* band: gallery, then laptop + card */
+  .gal{aspect-ratio:208/200;margin-bottom:12px}
+  .lap,.card{aspect-ratio:179/200;min-height:0}
+  .card p{white-space:normal;right:calc(var(--u) * 6);font-size:calc(var(--u) * 16);line-height:1.22}
+}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Opening states only. Removing the class restores every authored style. */
+html.oryn-entering .tag-ag,
+html.oryn-entering .avatars,
+html.oryn-entering .tag-tc,
+html.oryn-entering .chip,
+html.oryn-entering .intro,
+html.oryn-entering .reel,
+html.oryn-entering .play,
+html.oryn-entering .watch,
+html.oryn-entering .svc{opacity:0}
+html.oryn-entering .intro{clip-path:inset(0 100% 0 0)}
+@media (min-width:640px){
+  html.oryn-entering .nav,
+  html.oryn-entering #hdr-cta,
+  html.oryn-entering .gal,
+  html.oryn-entering .lap,
+  html.oryn-entering .card{opacity:0}
+  html.oryn-entering .ln1,
+  html.oryn-entering .ln2,
+  html.oryn-entering .ln3,
+  html.oryn-entering .ln4{clip-path:inset(0 0 100% 0);transform:translateY(14px)}
+}
+@media (max-width:639.98px){
+  html.oryn-entering .hdr{opacity:0}
+  html.oryn-entering .h1-wrap{clip-path:inset(0 0 100% 0);transform:translateY(10px)}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="oryn-mark" viewBox="0 0 15 17"><g fill="#d94400"><rect x="6.3" y=".8" width="6.4" height="9.5" rx="2.6"/><rect x="6.3" y="3.9" width="8.4" height="6.4" rx="2.4"/><rect x="1" y="6.8" width="9" height="6.8" rx="2.4"/><rect x="3.2" y="9" width="6.8" height="7.3" rx="2.6"/></g><path d="M7.3 7.1l1.2 2.4" stroke="#fff" stroke-opacity=".8" stroke-width="1" stroke-linecap="round"/></symbol>
+  <filter id="cm-reel" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0.759 0.096 0.068 0 0.052 0.047 0.801 0.076 0 0.042 -0.006 0.122 0.766 0 0.065 0 0 0 1 0"/></filter>
+</svg>
+<div class="viewport">
+<div class="site">
+
+  <!-- ───────── Header ───────── -->
+  <header class="hdr" id="hdr">
+    <nav class="nav abs k5" aria-label="Primary">
+      <a class="brand abs" href="#" aria-label="Oryn Studio home">
+        <svg viewBox="0 0 15 17" aria-hidden="true"><use href="#oryn-mark"/></svg>
+        <span>ORYN STUDIO</span>
+      </a>
+      <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu hdr-cta"><i></i></button>
+      <div class="menu" id="menu">
+        <ul class="links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Work</a></li>
+          <li><a href="#">Insights</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Studio</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+    <a class="cta abs k1" id="hdr-cta" href="#work">View Our Work</a>
+  </header>
+
+  <div class="sp-a"></div>
+
+  <!-- ───────── Hero ───────── -->
+  <section class="hero" aria-label="Introduction">
+    <p class="tag tag-ag abs k5"><svg class="tag-ic abs" viewBox="0 0 15 17" aria-hidden="true"><use href="#oryn-mark"/></svg>[Oryn Agency]</p>
+    <div class="trust">
+      <div class="avatars abs k1" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <p class="tag tag-tc abs k1">[Trusted Clients]</p>
+    </div>
+
+    <div class="frame abs k5" aria-hidden="true">
+      <svg class="box" preserveAspectRatio="none">
+        <rect x="0" y="0" width="100%" height="100%" fill="none" stroke="var(--dash)" stroke-width="1" stroke-dasharray="2.6 2" shape-rendering="crispEdges" vector-effect="non-scaling-stroke"/>
+      </svg>
+      <svg class="star tl" viewBox="0 0 10 10"><path fill="#d94400" d="M5 0Q5.6 4.4 10 5 5.6 5.6 5 10 4.4 5.6 0 5 4.4 4.4 5 0z"/></svg>
+      <svg class="star tr" viewBox="0 0 10 10"><path fill="#d94400" d="M5 0Q5.6 4.4 10 5 5.6 5.6 5 10 4.4 5.6 0 5 4.4 4.4 5 0z"/></svg>
+      <svg class="star bl" viewBox="0 0 10 10"><path fill="#d94400" d="M5 0Q5.6 4.4 10 5 5.6 5.6 5 10 4.4 5.6 0 5 4.4 4.4 5 0z"/></svg>
+      <svg class="star br" viewBox="0 0 10 10"><path fill="#d94400" d="M5 0Q5.6 4.4 10 5 5.6 5.6 5 10 4.4 5.6 0 5 4.4 4.4 5 0z"/></svg>
+    </div>
+
+    <div class="copy">
+      <h1 class="h1-wrap">
+        <span class="h1 ln1 abs k5"><span class="w-elevating">Elevating</span> <span class="w-brands">Brands</span></span>
+        <span class="h1 ln2 abs k5">to <span class="w-thrive">thrive</span></span>
+        <span class="chip chip-a abs k5"><img src="assets/chip-a.webp" alt=""></span>
+        <span class="chip chip-b who abs k5"><img src="assets/chip-who-we-are.webp" alt=""><span>WHO WE ARE</span></span>
+        <span class="h1 ln3 abs k5"><span class="w-in">in</span> <span class="wide-a">a</span></span>
+        <span class="h1 ln4 abs k5"><span class="w-digital">digital</span> <span class="w-world">world</span></span>
+      </h1>
+      <p class="intro abs k5">We transform ambitious ideas into immersive digital products, brands and experiences.</p>
+    </div>
+
+    <div class="reelbox">
+      <a class="reel abs" href="#work" aria-label="Watch our work"><img src="assets/work-reel.webp" alt="Abstract iridescent fan-shaped artwork"></a>
+      <span class="play abs" aria-hidden="true"><svg viewBox="0 0 12 12"><path fill="#fff" d="M2.2 1.4c0-.9 1-1.4 1.7-.9l6.6 4.4c.7.5.7 1.4 0 1.9l-6.6 4.4c-.7.5-1.7 0-1.7-.9z"/></svg></span>
+      <p class="watch abs">WATCH OUR WORK</p>
+    </div>
+  </section>
+
+  <div class="sp-b"></div>
+
+  <!-- ───────── Work band ───────── -->
+  <section class="band" id="work" aria-label="Selected work">
+    <ul class="svc abs" aria-label="Services">
+      <li><span class="n">(1)</span><span class="l">Branding</span></li>
+      <li><span class="n">(2)</span><span class="l">UI/UX Design</span></li>
+      <li><span class="n">(3)</span><span class="l">Web Development</span></li>
+      <li><span class="n">(4)</span><span class="l">Motion Graphics</span></li>
+      <li><span class="n">(5)</span><span class="l">Digital Marketing</span></li>
+    </ul>
+    <div class="tile gal abs">
+      <span class="t1"><img src="assets/portrait.webp" alt="Neon-blurred profile portrait"></span>
+      <span class="t2"><img src="assets/orange-haze.webp" alt="Figure walking through an orange haze"></span>
+      <span class="t3"><img src="assets/fabric-wave.webp" alt="Abstract flowing fabric wave"></span>
+      <span class="t4"><img src="assets/chrome-helmet.webp" alt="Futuristic chrome-helmet bust"></span>
+    </div>
+    <div class="tile lap abs"><img src="assets/developer-laptop.webp" alt="Developer coding on a laptop"></div>
+    <a class="tile card abs" href="#contact">
+      <svg viewBox="0 0 23 23" aria-hidden="true"><path d="M1.3 21.7L21 2M5.6 1.6h16v16" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="square"/></svg>
+      <p>LETS<br>START A PROJECT</p>
+    </a>
+  </section>
+
+  <div class="sp-c"></div>
+</div>
+</div>
+<script>
+/* Menu behaviour only (layout is pure CSS): toggle, Esc, outside tap,
+   link tap, focus hand-off, and auto-close when the layout widens. */
+(function(){
+  var hdr=document.getElementById('hdr'),btn=hdr.querySelector('.burger'),menu=document.getElementById('menu');
+  function set(open,focusBack){
+    hdr.classList.toggle('open',open);
+    btn.setAttribute('aria-expanded',String(open));
+    btn.setAttribute('aria-label',open?'Close menu':'Open menu');
+    if(open){var first=menu.querySelector('a');if(first)first.focus({preventScroll:true});}
+    else if(focusBack){btn.focus({preventScroll:true});}
+  }
+  btn.addEventListener('click',function(){set(!hdr.classList.contains('open'));});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&hdr.classList.contains('open'))set(false,true);});
+  document.addEventListener('click',function(e){if(hdr.classList.contains('open')&&!hdr.contains(e.target))set(false);});
+  hdr.addEventListener('click',function(e){var a=e.target.closest('a');if(a&&!a.classList.contains('brand')&&hdr.classList.contains('open'))set(false);});
+  var mq=window.matchMedia('(max-width:743.98px)');
+  (mq.addEventListener?mq.addEventListener.bind(mq,'change'):mq.addListener.bind(mq))(function(){set(false);});
+})();
+</script>
+<script>
+/* One finite entrance sequence. All effects are cancelled at their authored final state. */
+(function () {
+  var root = document.documentElement;
+  if (!root.classList.contains('oryn-entering')) return;
+
+  var effects = [];
+  var done = false;
+  var ease = 'cubic-bezier(.22,1,.36,1)';
+  var mobileQuery = matchMedia('(max-width:639.98px)');
+  if (mobileQuery.addEventListener) mobileQuery.addEventListener('change', finish);
+  else mobileQuery.addListener(finish);
+  function finish() {
+    if (done) return;
+    done = true;
+    clearTimeout(window.orynEntranceFallback);
+    if (mobileQuery.removeEventListener) mobileQuery.removeEventListener('change', finish);
+    else mobileQuery.removeListener(finish);
+    root.classList.remove('oryn-entering');
+    effects.forEach(function (effect) { effect.cancel(); });
+  }
+  function add(selector, frames, start, duration, visibleOnly) {
+    var element = document.querySelector(selector);
+    if (!element) return;
+    if (visibleOnly && element.getBoundingClientRect().top >= innerHeight) return;
+    effects.push(element.animate(frames, {
+      delay: start, duration: duration, easing: ease, fill: 'both'
+    }));
+  }
+  function settle(selector, start, duration, distance, visibleOnly) {
+    add(selector, [
+      {opacity: 0, transform: 'translateY(' + distance + 'px)'},
+      {opacity: 1, transform: 'none'}
+    ], start, duration, visibleOnly);
+  }
+  function start() {
+    if (!root.classList.contains('oryn-entering')) return;
+    clearTimeout(window.orynEntranceFallback);
+    window.orynEntranceFallback = setTimeout(finish, 3000);
+    try {
+      var mobile = mobileQuery.matches;
+
+      if (mobile) settle('.hdr', 40, 530, -7);
+      else {
+        settle('.nav', 40, 530, -7);
+        settle('#hdr-cta', 1110, 480, 7);
+      }
+
+      settle('.tag-ag', 170, 470, 7);
+      settle('.avatars', 280, 430, 5);
+      settle('.tag-tc', 300, 430, 5);
+
+      var typeFrames = [
+        {clipPath: 'inset(0 0 100% 0)', transform: mobile ? 'translateY(10px)' : 'translateY(14px)'},
+        {clipPath: 'inset(0 0 0% 0)', transform: 'none'}
+      ];
+      if (mobile) add('.h1-wrap', typeFrames, 340, 900);
+      else {
+        add('.ln1', typeFrames, 340, 770);
+        add('.ln2', typeFrames, 500, 750);
+        add('.ln3', typeFrames, 670, 690);
+        add('.ln4', typeFrames, 770, 780);
+      }
+
+      add('.chip-a', [{opacity: 0, transform: 'scale(.985)'}, {opacity: 1, transform: 'none'}], 880, 540);
+      add('.chip-b', [{opacity: 0, transform: 'scale(.985)'}, {opacity: 1, transform: 'none'}], 970, 540);
+      add('.intro', [
+        {opacity: 0, clipPath: 'inset(0 100% 0 0)'},
+        {opacity: 1, clipPath: 'inset(0 0% 0 0)'}
+      ], 1080, 620);
+
+      add('.reel', [{opacity: 0, transform: 'scale(.985)'}, {opacity: 1, transform: 'none'}], 970, 780, true);
+      settle('.play', 1320, 390, 5, true);
+      settle('.watch', 1290, 450, 6, true);
+      settle('.svc', 1230, 610, 9, true);
+      if (!mobile) {
+        add('.gal', [{opacity: 0, transform: 'translateY(12px) scale(.99)'}, {opacity: 1, transform: 'none'}], 1310, 790, true);
+        add('.lap', [{opacity: 0, transform: 'translateY(12px) scale(.99)'}, {opacity: 1, transform: 'none'}], 1420, 780, true);
+        settle('.card', 1510, 670, 11, true);
+      }
+
+      Promise.all(effects.map(function (effect) { return effect.finished.catch(function () {}); })).then(finish, finish);
+    } catch (error) {
+      finish();
+    }
+  }
+  Promise.resolve(document.fonts.ready).then(start, finish);
+})();
+</script>
+</body>
+</html>

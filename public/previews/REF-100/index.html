@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-100/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>KaultAI — Own Your Professional Edge</title>
+<script>
+/* Arm the first entrance before the page can paint; a watchdog restores content if loading stalls. */
+(function(){
+  if(!Element.prototype.animate || matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var root=document.documentElement;
+  root.classList.add('entrance-pending');
+  if(!matchMedia('(max-width:639px), (min-aspect-ratio:6/5) and (max-height:559px), (min-aspect-ratio:6/5) and (max-width:919px)').matches){
+    root.classList.add('entrance-card');
+  }
+  window.__entranceWatchdog=setTimeout(function(){
+    root.classList.remove('entrance-pending','entrance-card');
+  },4500);
+})();
+</script>
+<style>
+/* ---------- Embedded fonts (offline) ---------- */
+@font-face{font-family:"KDisplay";src:url(assets/kdisplay-500.woff2) format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:"KDisplay";src:url(assets/kdisplay-600.woff2) format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:"KDisplay";src:url(assets/kdisplay-300.woff2) format("woff2");font-weight:300;font-display:block}
+@font-face{font-family:"KDisplay";src:url(assets/kdisplay-400.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:"KText";src:url(assets/ktext-300.woff2) format("woff2");font-weight:300;font-display:block}
+@font-face{font-family:"KText";src:url(assets/ktext-400.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:"KText";src:url(assets/ktext-500.woff2) format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:"KCond";src:url(assets/kcond-300.woff2) format("woff2");font-weight:300;font-display:block}
+
+/* ---------- Design tokens (sampled from reference, 1582×994) ---------- */
+:root{
+  --ink:#ffffff;
+  --label:#eeeff0;
+  --rule:rgba(255,255,255,.56);
+  --muted:rgba(255,255,255,.585);
+  --orange:#f67a06;
+  --glass-menu:rgba(255,255,255,.145);
+  --glass-tile:rgba(232,224,255,.028);
+  --glass-input:rgba(12,12,14,.3);
+  --glass-pill:rgba(255,255,255,.048);
+  --input-stroke:rgba(255,236,226,.17);
+  /* 1 design px. Desktop: fit the 1582×994 artboard; bg uses cover so no bands */
+  --vh:1vh;
+  --u:min(calc(100vw / 1582), calc(var(--vh) * 100 / 994));
+  --c:max(calc(100vw / 1582), calc(var(--vh) * 100 / 994));
+  /* card scale: identical to --u at/above the 1582×994 artboard; below it the card keeps a readable floor
+     (0.9 → 12px UI text) as long as the viewport height can hold its 653-unit content stack */
+  --k:max(var(--u), min(.9px, calc((var(--vh) * 100 - 45 * var(--u)) / 653)));
+  /* card's left edge expressed inside the background/label box */
+  --card-left:calc(100vw - 17 * var(--u) - 494 * var(--k) - (100vw - 1582 * var(--c)) * .35);
+}
+@supports (height:1dvh){:root{--vh:1dvh}}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#000;color:var(--ink);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision}
+button,input,textarea{font:inherit;color:inherit;background:none;border:0;outline:0}
+button{cursor:pointer}
+svg{display:block}
+
+/* ================= DESKTOP / LANDSCAPE ================= */
+.stage{position:fixed;inset:0;overflow:hidden;background:#000}
+.bgbox,.tags{position:absolute;width:calc(1582 * var(--c));height:calc(994 * var(--c));
+  left:calc((100vw - 1582 * var(--c)) * .35);top:calc((var(--vh) * 100 - 994 * var(--c)) * .5)}
+.tags{pointer-events:none}
+.bgbox img{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;pointer-events:none}
+
+.tag{position:absolute;display:flex;align-items:center;font-family:"KCond",sans-serif;font-weight:300;
+  font-size:calc(17.6 * var(--c));line-height:1;letter-spacing:calc(.2 * var(--c));color:var(--label);white-space:nowrap}
+.tag i{display:block;height:max(1px,calc(1 * var(--c)));background:var(--rule)}
+.tag--vel{left:min(calc(767 * var(--c)), calc(var(--card-left) - 191 * var(--c) - 28 * var(--u)));top:max(calc(110 * var(--c)), calc((994 * var(--c) - var(--vh) * 100) * .5 + 96 * var(--u)))}
+.tag--vel i{width:calc(70 * var(--c));margin-left:calc(18 * var(--c))}
+.tag--deep{left:min(calc(398 * var(--c)), calc(var(--card-left) - 354 * var(--c) - 28 * var(--u)));top:calc(473 * var(--c))}
+.tag--deep i{width:calc(180 * var(--c));margin-right:calc(12 * var(--c))}
+.tag--flow{left:min(calc(691 * var(--c)), calc(var(--card-left) - 196 * var(--c) - 28 * var(--u)));top:calc(749 * var(--c))}
+.tag--flow i{width:calc(64 * var(--c));margin-right:calc(12 * var(--c))}
+
+.hero h1{position:absolute;left:calc(51 * var(--u));top:calc(68 * var(--u));
+  font-family:"KDisplay",sans-serif;font-weight:600;font-size:calc(110 * var(--u));
+  line-height:calc(100 * var(--u));letter-spacing:-.035em;white-space:nowrap}
+.hero p{position:absolute;left:calc(52 * var(--u));bottom:calc(41 * var(--u));
+  font-family:"KDisplay",sans-serif;font-weight:300;font-size:calc(25 * var(--u));
+  line-height:calc(30 * var(--u));letter-spacing:.003em;color:#fff}
+
+/* ---------- Card ---------- */
+.card{position:absolute;top:calc(26 * var(--u));bottom:calc(19 * var(--u));right:calc(17 * var(--u));
+  width:calc(494 * var(--k));border-radius:calc(40 * var(--k));overflow:hidden;isolation:isolate;
+  display:flex;flex-direction:column;padding:0 calc(32 * var(--k)) calc(36 * var(--k)) calc(34 * var(--k));
+  background:#1a0500 url(assets/card-background.jpg) center / 100% 100% no-repeat;
+  box-shadow:inset 0 0 0 calc(1 * var(--k)) rgba(255,150,90,.10)}
+.card__head{display:flex;align-items:center;justify-content:space-between;height:calc(55 * var(--k));
+  margin-top:calc(25 * var(--k));margin-right:calc(-7 * var(--k))}
+.brand{display:flex;align-items:center;gap:calc(13.5 * var(--k));text-decoration:none;color:#fff}
+.brand svg{width:calc(35.56 * var(--k));height:calc(33.94 * var(--k));margin-left:calc(-1 * var(--k))}
+.brand span{font-family:"KDisplay",sans-serif;font-weight:500;font-size:calc(23.6 * var(--k));letter-spacing:-.02em;line-height:1}
+.menu{display:flex;align-items:center;gap:calc(15 * var(--k));height:calc(55 * var(--k));width:calc(102 * var(--k));
+  padding:0 0 0 calc(18 * var(--k));border-radius:calc(12 * var(--k));background:var(--glass-menu);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  font-family:"KDisplay",sans-serif;font-weight:400;font-size:calc(14.4 * var(--k));letter-spacing:-.005em;color:#fff}
+.menu svg{width:calc(18 * var(--k));height:calc(16 * var(--k))}
+.card__spacer{flex:1 1 auto;min-height:calc(24 * var(--k))}
+.card h2{font-family:"KDisplay",sans-serif;font-weight:600;font-size:calc(50 * var(--k));
+  line-height:calc(51 * var(--k));letter-spacing:-.024em;margin:0 0 calc(25 * var(--k)) calc(1 * var(--k))}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(9 * var(--k));margin:0 0 calc(21 * var(--k)) calc(3 * var(--k))}
+.tile{position:relative;display:flex;align-items:flex-start;justify-content:flex-start;height:calc(113 * var(--k));border-radius:calc(14 * var(--k));background:var(--glass-tile);
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);text-align:left;
+  padding:calc(13 * var(--k)) calc(8 * var(--k)) 0 calc(12 * var(--k));
+  font-family:"KDisplay",sans-serif;font-weight:400;font-size:calc(13.4 * var(--k));line-height:calc(15.6 * var(--k));
+  letter-spacing:-.01em;color:#f5f7f7;transition:background .25s}
+.tile:nth-child(2){padding-left:calc(8.5 * var(--k))}.tile:nth-child(3){padding-left:calc(10.5 * var(--k))}
+.tile:nth-child(2) svg{left:calc(8.8 * var(--k));bottom:calc(10 * var(--k))}
+.tile:nth-child(3) svg{left:calc(9.4 * var(--k));bottom:calc(11 * var(--k));width:calc(16 * var(--k));height:calc(16 * var(--k))}
+
+.tile svg{position:absolute;left:calc(11.5 * var(--k));bottom:calc(14 * var(--k));width:calc(17 * var(--k));height:calc(17 * var(--k));color:var(--orange)}
+.ask{position:relative;height:calc(227 * var(--k));border-radius:calc(22 * var(--k));
+  background:var(--glass-input);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  box-shadow:inset 0 0 0 calc(1.2 * var(--k)) var(--input-stroke)}
+.ask__icon{position:absolute;left:calc(17 * var(--k));top:calc(21 * var(--k));width:calc(20 * var(--k));height:calc(20 * var(--k))}
+.ask textarea{position:absolute;left:calc(49 * var(--k));right:calc(18 * var(--k));top:calc(19.5 * var(--k));height:calc(120 * var(--k));
+  resize:none;font-family:"KDisplay",sans-serif;font-weight:400;font-size:calc(14.2 * var(--k));line-height:calc(22 * var(--k));
+  letter-spacing:-.008em;color:#fff;caret-color:var(--orange)}
+.ask textarea::placeholder{color:#f9fafa;opacity:1}
+.ask__tools{position:absolute;left:calc(16 * var(--k));bottom:calc(14 * var(--k));display:flex;gap:calc(6 * var(--k))}
+.pill{display:flex;align-items:center;height:calc(33 * var(--k));border-radius:calc(9 * var(--k));background:var(--glass-pill);
+  font-family:"KDisplay",sans-serif;font-weight:400;font-size:calc(13.4 * var(--k));letter-spacing:-.008em;color:var(--muted);transition:background .2s,color .2s}
+
+.pill--attach{width:calc(82 * var(--k));padding-left:calc(10 * var(--k));gap:calc(10 * var(--k))}
+.pill--attach svg{width:calc(15 * var(--k));height:calc(16 * var(--k))}
+.pill--model{width:calc(122 * var(--k));padding:0 calc(11 * var(--k)) 0 calc(12 * var(--k));justify-content:space-between}
+.pill--model svg{width:calc(11 * var(--k));height:calc(7 * var(--k))}
+.send{position:absolute;right:calc(15 * var(--k));bottom:calc(15.5 * var(--k));width:calc(49 * var(--k));height:calc(49 * var(--k));
+  border-radius:50%;background:#fff;display:grid;place-items:center;transition:transform .2s}
+
+.send svg{width:calc(14 * var(--k));height:calc(16 * var(--k))}
+
+@media (hover:hover){
+  .tile:hover{background:rgba(255,255,255,.06)}
+  .pill:hover{background:rgba(255,255,255,.1);color:#ddd}
+  .send:hover{transform:scale(1.05)}
+}
+.tile:active{background:rgba(255,255,255,.06)}
+.tile:focus-visible,.pill:focus-visible,.send:focus-visible,.menu:focus-visible,.brand:focus-visible{outline:2px solid rgba(255,255,255,.7);outline-offset:2px}
+
+/* =====================================================================
+   RESPONSIVE ARCHITECTURE
+   Desktop (side-by-side artboard) holds while the viewport is landscape-ish
+   (aspect > 6:5), ≥ 920px wide (card 445 + headline column never touch) and
+   ≥ 560px tall (card stack still fits). Outside that:
+     • TABLET  — portrait-ish (aspect ≤ 6:5) and ≥ 640px wide: one-screen
+                 asymmetric composition, card docked bottom-right.
+     • MOBILE  — < 640px wide, or short / narrow landscape: hero screen + card.
+   ===================================================================== */
+
+/* ---------- SMALL DESKTOP / TABLET LANDSCAPE (≤1199px, landscape) ----------
+   Fluid extension of the desktop architecture. The card already holds its 0.9 floor (see --k);
+   here the label lane and copy get matching floors so nothing drops below ~12px or slides under the card.
+   Wider viewports never enter this block, so the desktop artboard is untouched. */
+@media (min-aspect-ratio:6/5) and (max-width:1199px){
+  /* on 4:3-ish screens the background scales by height; keep label type in step with the layout */
+  .tags{--tc:min(var(--c), calc(1.06 * var(--u)))}
+  .tag{font-size:max(12px, calc(17.6 * var(--tc)))}
+  /* label widths in em (text + gap + rule, measured at the artboard) so the card guard tracks the real size */
+  .tag--vel{left:min(calc(767 * var(--c)), calc(var(--card-left) - 10.85em - 28 * var(--u)))}
+  .tag--vel i{width:3.98em;margin-left:1.02em}
+  .tag--deep{left:min(calc(398 * var(--c)), calc(var(--card-left) - 20.1em - 28 * var(--u)))}
+  .tag--deep i{width:10.23em;margin-right:.68em}
+  .tag--flow{left:min(calc(691 * var(--c)), calc(var(--card-left) - 11.14em - 28 * var(--u)))}
+  .tag--flow i{width:3.64em;margin-right:.68em}
+  .hero p{font-size:max(calc(25 * var(--u)), 15px);line-height:max(calc(30 * var(--u)), 18px)}
+}
+
+/* ---------- TABLET (portrait-ish, one viewport) ---------- */
+@media (max-aspect-ratio:6/5) and (min-width:640px){
+  :root{
+    --m:clamp(24px, 4.4vw, 48px);                       /* outer margin   */
+    --edge:clamp(14px, 2.2vw, 24px);                    /* card inset (desktop: 17/19) */
+    --cw:clamp(380px, 58vw, 560px);                     /* card width     */
+    --k:calc(var(--cw) / 494);
+    --hfs:clamp(64px, 11.4vw, 128px);                   /* headline size  */
+    --sfs:clamp(17px, 2.5vw, 25px);                     /* subtitle size  */
+    --tfs:clamp(14px, 1.95vw, 19px);                    /* label size     */
+    --ch:max(calc(var(--vh) * 56), calc(660 * var(--k)));/* card height    */
+  }
+  html,body{height:auto}
+  .stage{position:relative;inset:auto;min-height:max(calc(var(--vh) * 100), calc(var(--ch) + var(--edge) + 3.5 * var(--hfs)))}
+  .bgbox{width:auto;height:100%;aspect-ratio:1582/994;min-width:100%;left:0;top:0;transform:translateX(-10%)}
+  .bgbox img{object-fit:cover;object-position:30% 100%}
+  /* same scrim language as the phone hero: keeps the closing copy legible where the knot passes behind it */
+  .bgbox::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,0) 28%,rgba(0,0,0,0) 66%,rgba(0,0,0,.72))}
+  .hero h1,.hero p{text-shadow:0 2px 28px rgba(0,0,0,.5)}
+  .tags{inset:0;width:auto;height:auto}
+  .tag{font-size:var(--tfs);letter-spacing:.012em}
+  .tag i{height:1px}
+  .tag--vel{left:auto;right:var(--m);top:calc(var(--m) + .3 * var(--hfs))}
+  .tag--vel i{width:clamp(40px, 7vw, 70px);margin-left:.9em}
+  .tag--deep{left:var(--m);top:calc(var(--m) + 3.15 * var(--hfs))}
+  .tag--deep i{width:clamp(90px, 18vw, 180px);margin-right:.7em}
+  .tag--flow{left:var(--m);bottom:calc(var(--edge) + 3.6 * var(--sfs) + clamp(28px, 4vh, 56px));top:auto}
+  .tag--flow i{width:clamp(36px, 6vw, 64px);margin-right:.7em}
+  .hero h1{left:var(--m);top:var(--m);font-size:var(--hfs);line-height:.91}
+  .hero p{left:var(--m);bottom:calc(var(--edge) + 6px);max-width:calc(100% - var(--cw) - var(--edge) - var(--m) - 16px);
+    font-size:var(--sfs);line-height:1.2}
+  .card{top:auto;bottom:var(--edge);right:var(--edge);width:var(--cw);height:var(--ch)}
+  .tile{font-size:max(12px, calc(13.4 * var(--k)));line-height:1.17}
+  .ask textarea{font-size:max(13px, calc(14.2 * var(--k)))}
+  .pill{font-size:max(12px, calc(13.4 * var(--k)));height:max(36px, calc(33 * var(--k)))}
+  .pill--attach{width:auto;padding-right:calc(14 * var(--k))}
+  .pill--model{width:auto;gap:calc(14 * var(--k))}
+  .send{width:max(44px, calc(49 * var(--k)));height:max(44px, calc(49 * var(--k)))}
+  .menu{min-height:44px}
+}
+
+/* ---------- MOBILE (narrow, or short / narrow landscape) ---------- */
+@media (max-width:639px), (min-aspect-ratio:6/5) and (max-height:559px), (min-aspect-ratio:6/5) and (max-width:919px){
+  :root{
+    --m:clamp(16px, 5.4vw, 28px);
+    --k:clamp(.8px, calc((100vw - 24px) / 494), 1.3px);
+    --tfs:clamp(12.5px, 3.5vw, 15px);
+  }
+  html,body{height:auto}
+  .stage{position:relative;inset:auto;display:flex;flex-direction:column;min-height:calc(var(--vh) * 100);overflow:visible}
+  .hero{position:relative;height:calc(var(--vh) * 100);min-height:540px;overflow:hidden}
+  .bgbox{width:auto;height:100%;aspect-ratio:1582/994;min-width:100%;left:0;top:0;transform:translateX(-24%)}
+  .bgbox img{object-fit:cover;object-position:30% 100%}
+  .bgbox::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,0) 30%,rgba(0,0,0,0) 62%,rgba(0,0,0,.78))}
+  .tags{inset:0;width:auto;height:auto;z-index:2}
+  .tag{font-size:var(--tfs);letter-spacing:.012em}
+  .tag i{height:1px}
+  /* labels keep their desktop roles: VELOCITY trails the headline, DEEP WORK cuts in
+     from the left over the wires, FLOW_LOCKED sits right above the closing copy */
+  .tag--vel{left:auto;right:var(--m);top:calc(max(var(--m), env(safe-area-inset-top)) + 2.73 * var(--hfs) + 18px)}
+  .tag--vel i{width:clamp(28px, 9vw, 70px);margin-left:.8em}
+  .tag--deep{left:0;top:52%}
+  .tag--deep i{width:clamp(56px, 22vw, 180px);margin-right:.7em}
+  .tag--flow{left:auto;right:var(--m);top:auto;bottom:calc(max(calc(var(--m) + 8px), env(safe-area-inset-bottom)) + 3.6 * var(--sfs) + 28px)}
+  .tag--flow i{width:clamp(28px, 9vw, 64px);margin-right:.7em}
+  .hero{--hfs:clamp(40px, min(13.4vw, 15.5vh), 104px);--sfs:clamp(17px, 5vw, 25px)}
+  .hero h1{left:var(--m);top:max(var(--m), env(safe-area-inset-top));font-size:var(--hfs);line-height:.91;white-space:nowrap;z-index:2;
+    text-shadow:0 2px 28px rgba(0,0,0,.45)}
+  .hero p{left:var(--m);right:var(--m);bottom:max(calc(var(--m) + 8px), env(safe-area-inset-bottom));font-size:var(--sfs);line-height:1.2;z-index:2}
+  .card{position:relative;inset:auto;margin:12px;width:auto;min-height:calc(var(--vh) * 100 - 24px);border-radius:32px;
+    padding:0 calc(20 * var(--k)) calc(22 * var(--k)) calc(22 * var(--k))}
+  .card__head{margin-right:calc(-4 * var(--k));margin-top:calc(18 * var(--k))}
+  .menu{min-height:44px}
+  .card h2{font-size:clamp(36px, 10.4vw, 54px);line-height:1.03}
+  .tile{font-size:max(13px, calc(14 * var(--k)));line-height:1.18;height:auto;min-height:calc(113 * var(--k));padding-bottom:42px}
+  .ask{min-height:calc(227 * var(--k))}
+  .ask textarea{font-size:max(15px, calc(15 * var(--k)))}
+  .pill{font-size:max(13px, calc(13.4 * var(--k)));height:max(36px, calc(33 * var(--k)))}
+  .pill--attach{width:auto;padding-right:calc(14 * var(--k))}
+  .pill--model{width:auto;gap:calc(14 * var(--k))}
+  .send{width:max(44px, calc(49 * var(--k)));height:max(44px, calc(49 * var(--k)))}
+}
+/* landscape phones / narrow landscape windows: headline column left, labels ride the wires on the right.
+   The art is framed from its left edge so only the wire composition (never the area behind the desktop card) shows. */
+@media (min-aspect-ratio:6/5) and (max-height:559px), (min-aspect-ratio:6/5) and (max-width:919px){
+  .hero{min-height:340px;--hfs:clamp(38px, min(16.5vh, 10.6vw), 96px);--sfs:clamp(15px, min(4.6vh, 2.6vw), 22px)}
+  .bgbox{transform:none;left:0;min-width:0;width:max(100%, 150.7vw);aspect-ratio:auto}
+  .bgbox img{object-position:0% 100%}
+  /* headline column sits over the wire arcs here: lean the scrim toward the copy side */
+  .bgbox::after{background:linear-gradient(90deg,rgba(0,0,0,.62),rgba(0,0,0,.28) 42%,rgba(0,0,0,0) 62%)}
+  .hero p{text-shadow:0 2px 20px rgba(0,0,0,.55)}
+  .tag--vel{top:max(var(--m), env(safe-area-inset-top))}
+  .tag--deep{left:auto;right:0;top:56%}
+  .tag--flow{bottom:max(calc(var(--m) + 8px), env(safe-area-inset-bottom))}
+  .hero p{right:auto;max-width:58%}
+}
+/* narrowest phones: third suggestion spans the row so labels never wrap mid-word */
+@media (max-width:359px){ .tiles{grid-template-columns:1fr 1fr} .tile:last-child{grid-column:span 2;min-height:calc(86 * var(--k))} }
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Initial foreground states. The hero and card artwork never receives an animation. */
+html.entrance-pending .hero h1{clip-path:inset(0 0 100% 0);transform:translateY(10px)}
+html.entrance-pending .tag{opacity:0;transform:translateX(-8px)}
+html.entrance-pending .hero p{opacity:0;transform:translateY(10px)}
+html.entrance-pending.entrance-card .card__head,
+html.entrance-pending.entrance-card .card h2,
+html.entrance-pending.entrance-card .tile,
+html.entrance-pending.entrance-card .ask{opacity:0;transform:translateY(9px)}
+@media (prefers-reduced-motion:reduce){
+  html.entrance-pending .hero h1{clip-path:none;transform:none}
+  html.entrance-pending .tag,
+  html.entrance-pending .hero p,
+  html.entrance-pending.entrance-card .card__head,
+  html.entrance-pending.entrance-card .card h2,
+  html.entrance-pending.entrance-card .tile,
+  html.entrance-pending.entrance-card .ask{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<main class="stage">
+  <section class="hero" aria-label="Introduction">
+    <div class="bgbox" aria-hidden="true"><img src="assets/hero-background.jpg" alt="" decoding="sync"></div>
+    <div class="tags" aria-hidden="true">
+      <div class="tag tag--vel">[ VELOCITY_X ]<i></i></div>
+      <div class="tag tag--deep"><i></i>[ INITIATE DEEP WORK ]</div>
+      <div class="tag tag--flow"><i></i>[ FLOW_LOCKED ]</div>
+    </div>
+    <h1>Own Your<br>Professional<br>Edge</h1>
+    <p>Transforming complex<br>AI implementation into<br>autonomous workflows.</p>
+  </section>
+
+  <aside class="card" aria-label="KaultAI assistant">
+    <header class="card__head">
+      <a class="brand" href="#" aria-label="KaultAI home">
+        <svg viewBox="0 0 35.56 33.94" fill="#fff" aria-hidden="true"><path d="M0.69 1.00 L0.19 2.31 L0.12 10.19 L0.69 11.31 L2.69 12.38 L11.00 12.50 L12.69 13.88 L13.50 15.88 L13.25 19.25 L12.00 20.81 L10.00 21.12 L3.25 20.88 L1.75 21.38 L0.69 22.25 L0.12 23.75 L0.19 31.31 L0.44 32.56 L1.06 33.38 L2.56 33.94 L9.94 33.94 L12.38 33.38 L13.50 32.12 L14.00 30.88 L13.88 25.69 L14.25 24.06 L15.50 22.56 L17.62 21.88 L21.75 22.12 L23.06 22.69 L24.38 23.94 L25.38 26.06 L25.31 31.19 L26.56 33.38 L27.81 33.81 L34.12 33.75 L35.19 33.12 L35.38 31.62 L34.88 28.69 L33.62 26.31 L32.25 25.38 L28.75 24.56 L27.00 23.56 L25.88 22.38 L25.31 20.75 L25.50 18.75 L26.38 17.44 L27.69 17.06 L33.19 17.06 L34.44 16.50 L35.44 15.06 L35.56 2.75 L34.44 0.69 L33.00 0.06 L19.12 0.19 L17.75 1.19 L17.25 2.19 L17.12 8.06 L16.00 9.25 L15.06 9.06 L14.44 8.31 L14.06 2.31 L13.50 1.00 L12.62 0.31 L11.56 0.00 L2.50 0.00Z"/></svg>
+        <span>KaultAI</span>
+      </a>
+      <button class="menu" type="button" aria-label="Open menu">
+        <svg viewBox="0 0 18 16" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M1 1.5h16M1 8h16M1 14.5h16"/></svg>
+        Menu
+      </button>
+    </header>
+
+    <div class="card__spacer"></div>
+
+    <h2>What’s on you<br>build today?</h2>
+
+    <div class="tiles">
+      <button class="tile" type="button"><span>Write a function<br>from specs</span>
+        <svg viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.3" y="1.3" width="14.4" height="13.8" rx="2.6"/><path d="M5 5.8l2.7 2.4L5 10.6M8.6 11.6h3.6"/></svg>
+      </button>
+      <button class="tile" type="button"><span>Set up your<br>environment</span>
+        <svg viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.4" y="1.4" width="5.8" height="5.8" rx="1.5"/><path d="M10.2 1.6h1.9a1.5 1.5 0 0 1 1.5 1.5v1.8a1.5 1.5 0 0 1-1.5 1.5"/><rect x="1.4" y="9.6" width="5.8" height="6" rx="1.5"/><rect x="9.4" y="9.6" width="6.2" height="6" rx="1.5"/><path d="M11.6 11.8l1.8 1.8"/></svg>
+      </button>
+      <button class="tile" type="button"><span>Test coverage<br>strategy</span>
+        <svg viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.7 8.5A7.2 7.2 0 1 0 8.5 15.7h7.2z"/><circle cx="8.3" cy="8.2" r="2.6"/><path d="M10.2 10.1l1.8 1.8"/></svg>
+      </button>
+    </div>
+
+    <form class="ask" onsubmit="event.preventDefault()">
+      <svg class="ask__icon" viewBox="0 0 20 20" aria-hidden="true"><path fill="#fff" d="M4.2 0.8h11.6a3.4 3.4 0 0 1 3.4 3.4v8.2a3.4 3.4 0 0 1-3.4 3.4h-3.3L10 19.2l-2.5-3.4H4.2A3.4 3.4 0 0 1 .8 12.4V4.2A3.4 3.4 0 0 1 4.2.8z"/><path fill="#111" d="M7.2 9.6l3.2-3.8v2.3h2.5v3.1h-2.5v2.3z"/></svg>
+      <textarea aria-label="Ask AI a question or make a code" placeholder="Ask AI a question or make a code"></textarea>
+      <div class="ask__tools">
+        <button class="pill pill--attach" type="button">
+          <svg viewBox="0 0 15 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M13.2 7.4l-5.6 5.8a3.6 3.6 0 0 1-5.1-5.1L8.3 2.3a2.4 2.4 0 0 1 3.4 3.4L6 11.4a1.2 1.2 0 0 1-1.7-1.7l5.2-5.2"/></svg>
+          Attach
+        </button>
+        <button class="pill pill--model" type="button">ChatGPT 5.1
+          <svg viewBox="0 0 11 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 1.5l4 4 4-4"/></svg>
+        </button>
+      </div>
+      <button class="send" type="submit" aria-label="Send">
+        <svg viewBox="0 0 14 16" fill="none" stroke="#0d0b0c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 15V1.5M1.8 6.6L7 1.4l5.2 5.2"/></svg>
+      </button>
+    </form>
+  </aside>
+</main>
+<script>
+/* Stable viewport height on browsers without dvh (older iOS) */
+(function(){if(CSS&&CSS.supports&&CSS.supports('height','1dvh'))return;
+function s(){document.documentElement.style.setProperty('--vh',(innerHeight/100)+'px')}s();addEventListener('resize',s)})();
+
+/* A single entrance clock. Every effect is cancelled after it settles, restoring authored styles. */
+(function(){
+  var root=document.documentElement;
+  if(!root.classList.contains('entrance-pending'))return;
+  var active=[];
+  var done=false;
+  function finish(){
+    if(done)return;
+    done=true;
+    clearTimeout(window.__entranceWatchdog);
+    root.classList.remove('entrance-pending','entrance-card');
+    active.forEach(function(animation){animation.cancel()});
+  }
+  function play(selector,frames,start,duration,easing){
+    var element=document.querySelector(selector);
+    if(!element)return;
+    active.push(element.animate(frames,{
+      delay:start,duration:duration,easing:easing,fill:'both'
+    }));
+  }
+  function start(){
+    if(done || !root.classList.contains('entrance-pending') || matchMedia('(prefers-reduced-motion: reduce)').matches){finish();return}
+    try{
+      var ease='cubic-bezier(.22,1,.36,1)';
+      var quiet='cubic-bezier(.25,.8,.25,1)';
+      play('.hero h1',[
+        {clipPath:'inset(0 0 100% 0)',transform:'translateY(10px)'},
+        {clipPath:'inset(0 0 0 0)',transform:'none'}
+      ],0,1000,ease);
+      play('.tag--vel',[
+        {opacity:0,transform:'translateX(-8px)'},{opacity:1,transform:'none'}
+      ],430,480,quiet);
+      play('.tag--deep',[
+        {opacity:0,transform:'translateX(-8px)'},{opacity:1,transform:'none'}
+      ],580,480,quiet);
+      play('.tag--flow',[
+        {opacity:0,transform:'translateX(-8px)'},{opacity:1,transform:'none'}
+      ],730,480,quiet);
+      play('.hero p',[
+        {opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'none'}
+      ],870,630,ease);
+      if(root.classList.contains('entrance-card')){
+        play('.card__head',[
+          {opacity:0,transform:'translateY(7px)'},{opacity:1,transform:'none'}
+        ],180,550,quiet);
+        play('.card h2',[
+          {opacity:0,transform:'translateY(9px)'},{opacity:1,transform:'none'}
+        ],800,680,ease);
+        ['.tile:nth-child(1)','.tile:nth-child(2)','.tile:nth-child(3)'].forEach(function(selector,index){
+          play(selector,[
+            {opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'none'}
+          ],1240+index*85,490,ease);
+        });
+        play('.ask',[
+          {opacity:0,transform:'translateY(9px)'},{opacity:1,transform:'none'}
+        ],1560,620,ease);
+      }
+      Promise.allSettled(active.map(function(animation){return animation.finished})).then(finish);
+    }catch(error){finish()}
+  }
+  if(document.readyState==='complete')start();
+  else addEventListener('load',start,{once:true});
+})();
+</script>
+</body>
+</html>

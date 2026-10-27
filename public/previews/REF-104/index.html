@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-104/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Lab — Post-train self-improving agents</title>
+<script>(function(){var d=document.documentElement;if(!d.animate||!window.matchMedia||matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('intro');window.__introFailsafe=setTimeout(function(){d.classList.remove('intro')},2500);})();</script>
+<style>@font-face{font-family:'News';src:url(assets/news-regular.woff2) format('woff2');font-weight:200 800;font-style:normal;font-display:block}@font-face{font-family:'News';src:url(assets/news-italic.woff2) format('woff2');font-weight:200 800;font-style:italic;font-display:block}@font-face{font-family:'InterV';src:url(assets/inter-variable.woff2) format('woff2');font-weight:100 900;font-display:block}@font-face{font-family:'Mono';src:url(assets/mono-variable.woff2) format('woff2');font-weight:100 800;font-display:block}
+/* ==========================================================================
+   Lab — reference-measured layout
+   All numbers are reference pixels (3388 x 3698 reference = 2x of 1694 css).
+   --r  page scale  : 1 ref px at the current page width   (100cqw / 3388)
+   --c  card scale  : 1 ref px at the current card width   (100cqw / 1289)
+   ========================================================================== */
+@property --r { syntax: '<length>'; inherits: true; initial-value: 0.5px; }
+@property --c { syntax: '<length>'; inherits: true; initial-value: 0.5px; }
+
+:root {
+  --bg: #0f1112;
+  --ink: #ffffff;
+  --body: rgba(255, 255, 255, .58);
+  --serif: 'News', 'Newsreader', Georgia, 'Times New Roman', serif;
+  --sans: 'InterV', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'Mono', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--bg); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ---------- page frame : fills the viewport, no letterboxing ---------- */
+.page {
+  container: page / inline-size;
+  min-height: 100vh; min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.frame {
+  --r: calc(100cqw / 3388);
+  padding: calc(265.9 * var(--r)) 0 calc(266 * var(--r));
+}
+
+/* ---------- hero ---------- */
+.hero { text-align: center; }
+.hero__title {
+  margin: 0;
+  font-family: var(--serif); font-weight: 380; font-style: normal;
+  font-variation-settings: 'opsz' 48;
+  font-size: calc(117.6 * var(--r));
+  line-height: calc(149 * var(--r));
+  letter-spacing: -0.007em;
+  color: var(--ink);
+  font-kerning: normal;
+}
+.hero__title em { font-style: italic; }
+.hero__cta {
+  display: flex; justify-content: center; align-items: center;
+  gap: calc(27.5 * var(--r));
+  margin-top: calc(79.5 * var(--r));
+  --c: max(var(--r), 0.44px);   /* hero buttons never smaller than card buttons */
+}
+
+/* ---------- buttons (sizes in --c so they live in cards and hero alike) ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: calc(13 * var(--c));
+  height: calc(84 * var(--c));
+  padding: calc(6 * var(--c)) calc(49 * var(--c)) 0 calc(39 * var(--c));
+  border-radius: calc(14 * var(--c));
+  font-family: var(--mono); font-weight: 650;
+  font-size: calc(21.2 * var(--c));
+  letter-spacing: .018em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color .2s ease, transform .2s ease, box-shadow .2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn .arw { width: calc(18 * var(--c)); height: calc(16.5 * var(--c)); flex: none; display: block; margin-top: calc(-4 * var(--c)); }
+.btn--light { background: #fff; color: #0c0c0c; box-shadow: 0 0 0 calc(1 * var(--c)) rgba(255,255,255,.4); }
+.btn--light:hover { background: #e9e9e9; }
+.btn--dark {
+  height: calc(87 * var(--c));
+  padding: calc(6 * var(--c)) calc(40.5 * var(--c)) 0;
+  background: #262626; color: #f2f2f2;
+  border: calc(2 * var(--c)) solid rgba(255, 255, 255, .17);
+  box-shadow: inset 0 calc(2 * var(--c)) 0 rgba(255, 255, 255, .04);
+}
+.btn--dark:hover { background: #2f2f2f; }
+.btn:focus-visible { outline: 2px solid #8fd18f; outline-offset: 3px; }
+
+/* ---------- grid ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: calc(36 * var(--r));
+  row-gap: calc(38 * var(--r));
+  /* exact 2613-ref-px board at >=1694px; on smaller desktops the outer
+     margins give way first so card interiors keep their exact proportions */
+  width: max(calc(2613 * var(--r)), min(100cqw - 80px, 1306.5px));
+  margin: calc(138 * var(--r)) auto 0;
+}
+
+/* ---------- card ---------- */
+.card {
+  container: card / inline-size;
+  position: relative;
+  border-radius: calc(30 * var(--r));
+  background: linear-gradient(to bottom right, #292929 0%, #141414 100%);
+  isolation: isolate;
+  overflow: hidden;
+}
+.card::after {               /* hairline glass edge */
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  border: calc(2 * var(--r)) solid rgba(255, 255, 255, .095);
+  z-index: 3;
+}
+.card__in {
+  --c: calc(100cqw / 1289);
+  position: relative;
+  display: flex; flex-direction: column; align-items: flex-start;
+  height: 100%;
+  padding: calc(71 * var(--c));
+}
+.card__fx { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.deco { position: absolute; pointer-events: none; z-index: 0; }
+
+.panel {
+  position: relative; z-index: 1;
+  width: 100%;
+  aspect-ratio: 1147 / 681;
+  border-radius: calc(25 * var(--c));
+  overflow: hidden;
+  background: linear-gradient(to bottom right, #424242 0%, #323232 45%, #1c1c1c 100%);
+  box-shadow: 0 calc(10 * var(--c)) calc(40 * var(--c)) rgba(0, 0, 0, .18);
+}
+.panel__fx { position: absolute; inset: 0; pointer-events: none; }
+.art { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
+
+.card__title {
+  position: relative; z-index: 1;
+  margin: calc(82.8 * var(--c)) 0 0;
+  font-family: var(--serif); font-weight: 380;
+  font-variation-settings: 'opsz' 36;
+  font-size: calc(69.4 * var(--c));
+  line-height: calc(73.8 * var(--c));
+  letter-spacing: -0.006em;
+  color: var(--ink);
+}
+.card__title em { font-style: italic; }
+.card__body {
+  position: relative; z-index: 1;
+  margin: calc(24.4 * var(--c)) 0 0;
+  max-width: calc(1147 * var(--c));
+  font-family: var(--sans); font-weight: 340;
+  font-variation-settings: 'opsz' 32;
+  font-size: calc(28.9 * var(--c));
+  line-height: calc(45 * var(--c));
+  letter-spacing: 0;
+  color: var(--body);
+}
+.card__body b { font-weight: inherit; color: #fff; }
+.card--train .card__body, .card--infer .card__body { font-weight: 450; letter-spacing: .012em; color: rgba(255, 255, 255, .70); }
+.card__cta { position: relative; z-index: 1; margin-top: calc(39 * var(--c)); }
+
+/* ---------- SVG typography (user units = ref px of the panel) ---------- */
+.art text { fill: #fff; }
+.art .lb { font: 600 22px var(--mono); letter-spacing: -.01em; }
+.art .cm { font: 400 21px var(--mono); fill: rgba(255,255,255,.5); letter-spacing: 0; }
+.art .dl { fill: #7fce7f; }
+.art .et { font: 350 30.6px var(--sans); font-variation-settings: 'opsz' 32; fill: rgba(255,255,255,.8); }
+.art .es { font-family: var(--serif); font-variation-settings: 'opsz' 72; font-size: 28.6px; fill: #fff; letter-spacing: -.01em; }
+.art .ev { font: 400 22.5px var(--sans); fill: rgba(255,255,255,.62); }
+.art .eo { font: 400 22px var(--sans); fill: rgba(255,255,255,.82); letter-spacing: 0; }
+.art .eb { font: 600 19.5px var(--mono); fill: #111; letter-spacing: .04em; }
+.art .cr { font: 600 20px var(--serif); font-variation-settings: 'opsz' 24; }
+.art .cv { font: 500 22px var(--sans); }
+.art .cy { font: 300 16.5px var(--sans); fill: rgba(255,255,255,.62); }
+.art .tk { font: 400 21.9px var(--sans); fill: rgba(255,255,255,.66); }
+.art .tv { font: 600 21.4px var(--sans); fill: rgba(255,255,255,.95); }
+.art .ml text { font: 450 22.9px var(--sans); fill: rgba(255,255,255,.95); letter-spacing: 0; }
+
+/* ---------- per-card atmosphere ---------- */
+.card--env .card__fx::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    linear-gradient(to right, rgba(255,255,255,.07) calc(2 * var(--c)), transparent 0) calc(1 * var(--c)) 0 / calc(75.7 * var(--c)) 100%,
+    linear-gradient(to bottom, rgba(255,255,255,.07) calc(2 * var(--c)), transparent 0) 0 calc(1 * var(--c)) / 100% calc(68 * var(--c));
+  -webkit-mask: radial-gradient(calc(1500 * var(--c)) calc(900 * var(--c)) at 0 0, #000 0%, rgba(0,0,0,.6) 45%, transparent 85%);
+          mask: radial-gradient(calc(1500 * var(--c)) calc(900 * var(--c)) at 0 0, #000 0%, rgba(0,0,0,.6) 45%, transparent 85%);
+}
+.card--eval .card__fx::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,.10) calc(1.6 * var(--c)), transparent calc(2.4 * var(--c))) 0 0 / calc(19 * var(--c)) calc(19 * var(--c));
+  -webkit-mask: radial-gradient(calc(560 * var(--c)) calc(520 * var(--c)) at 100% 0, #000, transparent 80%);
+          mask: radial-gradient(calc(560 * var(--c)) calc(520 * var(--c)) at 100% 0, #000, transparent 80%);
+}
+.card--train .deco--stars { left: 0; top: 0; width: calc(400 * var(--c)); height: calc(420 * var(--c)); }
+.card--infer .card__fx::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,.06) calc(1.6 * var(--c)), transparent calc(2.4 * var(--c))) 0 0 / calc(19 * var(--c)) calc(19 * var(--c));
+  -webkit-mask: radial-gradient(calc(500 * var(--c)) calc(700 * var(--c)) at 0 0, #000, transparent 80%);
+          mask: radial-gradient(calc(500 * var(--c)) calc(700 * var(--c)) at 0 0, #000, transparent 80%);
+}
+
+/* panel lighting is generated (fitted glows). Panels are their own size
+   container so their lighting & ornament scale with the panel itself —
+   identical to the card scale on desktop (panel = 1147 card units wide). */
+.panel { container-type: inline-size; }
+.panel__fx { --c: calc(100cqw / 1147); }
+
+/* hover only where hover exists — touch devices never get stuck states */
+@media (hover: none) {
+  .btn--light:hover { background: #fff; }
+  .btn--dark:hover  { background: #262626; }
+}
+
+/* ==========================================================================
+   RESPONSIVE ARCHITECTURE
+   Desktop (>= 1164px)  : locked 2x2 board, exact reference proportions.
+                          1164px is where card body copy would fall under
+                          12px and card CTAs under ~35px — the first real
+                          failure of the 2-column board.
+   Tablet  (< 1164px,   : one card per row, card re-composed horizontally —
+            card >= 784)  illustration left, title/copy/CTA right. 784px is
+                          the narrowest card that still gives the
+                          illustration >= 380px and the copy >= 320px.
+   Mobile  (card < 784) : the card's own native vertical composition
+                          (illustration above copy), full width.
+   All three share one DOM; only placement and scale change.
+   ========================================================================== */
+@container page (width < 1164px) {
+  .frame {
+    --gutter: clamp(16px, 4.2cqw, 40px);          /* = desktop's 40px margin at the switch */
+    padding: max(calc(265.9 * var(--r)), 52px) var(--gutter) max(calc(266 * var(--r)), 56px);
+  }
+
+  /* hero — same centred serif statement, same two CTAs */
+  .hero__title {
+    font-size: clamp(31px, 2.4cqw + 22px, 41px);   /* 41px meets desktop at the switch */
+    line-height: 1.24;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  .hero__cta {
+    --c: 0.52px;                                    /* 44px touch-height buttons */
+    gap: clamp(8px, 3cqw, 12px);                    /* lets both CTAs share a row down to 320px */
+    flex-wrap: wrap;
+    margin-top: clamp(26px, 3.4cqw, 36px);
+  }
+
+  /* board — one card per row, same gap rhythm */
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    row-gap: clamp(14px, 2cqw, 22px);
+    margin-top: max(calc(138 * var(--r)), 40px);
+  }
+  .card { border-radius: clamp(14px, 1.4cqw, 16px); }
+  .card::after { border-width: 1px; }
+
+  /* card content — readable floors, same families/weights/colours */
+  .card__in { padding: clamp(18px, 4cqw, 44px); }
+  .panel { border-radius: clamp(10px, 1.6cqw, 14px); }
+  .card__title { font-size: clamp(27px, 2.6cqw + 17px, 36px); line-height: 1.1; }
+  .card__body  { font-size: clamp(15px, 0.5cqw + 13px, 16px); line-height: 1.6; max-width: none; }
+  .card .btn   { --c: 0.52px; }
+  .card__cta   { margin-top: 26px; }
+
+  /* MOBILE (default inside this range): the card's native vertical stack */
+  .card__title { margin-top: clamp(22px, 5.5cqw, 34px); }
+  .card__body  { margin-top: 12px; }
+
+  /* TABLET: wide card → horizontal composition */
+  @container card (width >= 784px) {
+    .card__in {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+      grid-template-rows: 1fr auto auto auto 1fr;
+      grid-template-areas:
+        "panel ."
+        "panel title"
+        "panel body"
+        "panel cta"
+        "panel .";
+      column-gap: clamp(32px, 4.4cqw, 52px);
+      align-items: start;
+    }
+    .panel       { grid-area: panel; align-self: center; }
+    .card__title { grid-area: title; margin-top: 0; }
+    .card__body  { grid-area: body; margin-top: 14px; }
+    .card__cta   { grid-area: cta; justify-self: start; margin-top: 26px; }
+  }
+}
+
+/* narrow phones: hero keeps a single natural line structure */
+@container page (width < 600px) {
+  .br-wide { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+
+/* fitted lighting (ref px, see fitglow.py) */
+.panel--env .panel__fx { background: radial-gradient(calc(648.4 * var(--c)) calc(481.6 * var(--c)) at calc(257.2 * var(--c)) calc(241.7 * var(--c)), rgba(255,255,255,0.079), rgba(255,255,255,0) 72%), radial-gradient(calc(405.3 * var(--c)) calc(394.8 * var(--c)) at calc(70.0 * var(--c)) calc(21.6 * var(--c)), rgba(255,255,255,0.162), rgba(255,255,255,0) 72%); }
+.panel--eval .panel__fx { background: radial-gradient(calc(1540.0 * var(--c)) calc(936.4 * var(--c)) at calc(1434.8 * var(--c)) calc(-276.0 * var(--c)), rgba(255,255,255,0.227), rgba(255,255,255,0) 72%), radial-gradient(calc(2118.6 * var(--c)) calc(623.4 * var(--c)) at calc(-398.4 * var(--c)) calc(350.9 * var(--c)), rgba(255,255,255,0.022), rgba(255,255,255,0) 72%); }
+.panel--train .panel__fx { background: radial-gradient(calc(953.2 * var(--c)) calc(906.5 * var(--c)) at calc(-16.3 * var(--c)) calc(1.0 * var(--c)), rgba(255,255,255,0.072), rgba(255,255,255,0) 72%), radial-gradient(calc(314.4 * var(--c)) calc(343.2 * var(--c)) at calc(1096.5 * var(--c)) calc(33.3 * var(--c)), rgba(255,255,255,0.120), rgba(255,255,255,0) 72%); }
+.panel--infer .panel__fx { background: radial-gradient(calc(727.0 * var(--c)) calc(856.2 * var(--c)) at calc(759.7 * var(--c)) calc(-118.8 * var(--c)), rgba(255,255,255,0.237), rgba(255,255,255,0) 72%), radial-gradient(calc(884.2 * var(--c)) calc(593.5 * var(--c)) at calc(406.5 * var(--c)) calc(303.5 * var(--c)), rgba(255,255,255,0.053), rgba(255,255,255,0) 72%); }
+.card--env .card__fx { background: radial-gradient(calc(368.6 * var(--c)) calc(338.7 * var(--c)) at calc(96.7 * var(--c)) calc(41.6 * var(--c)), rgba(255,247,238,0.219), rgba(255,247,238,0) 72%), radial-gradient(calc(1327.2 * var(--c)) calc(690.4 * var(--c)) at calc(504.9 * var(--c)) calc(373.6 * var(--c)), rgba(255,247,238,0.030), rgba(255,247,238,0) 72%); }
+.card--eval .card__fx { background: radial-gradient(calc(657.8 * var(--c)) calc(497.9 * var(--c)) at calc(1195.5 * var(--c)) calc(17.5 * var(--c)), rgba(255,255,255,0.139), rgba(255,255,255,0) 72%), radial-gradient(calc(1345.1 * var(--c)) calc(700.5 * var(--c)) at calc(563.0 * var(--c)) calc(378.8 * var(--c)), rgba(255,255,255,0.026), rgba(255,255,255,0) 72%); }
+.card--train .card__fx { background: radial-gradient(calc(333.5 * var(--c)) calc(291.2 * var(--c)) at calc(38.4 * var(--c)) calc(59.2 * var(--c)), rgba(255,247,238,0.179), rgba(255,247,238,0) 72%), radial-gradient(calc(304.0 * var(--c)) calc(332.6 * var(--c)) at calc(1256.5 * var(--c)) calc(23.1 * var(--c)), rgba(255,247,238,0.197), rgba(255,247,238,0) 72%); }
+.card--infer .card__fx { background: radial-gradient(calc(691.7 * var(--c)) calc(532.1 * var(--c)) at calc(882.3 * var(--c)) calc(32.2 * var(--c)), rgba(255,255,255,0.189), rgba(255,255,255,0) 72%), radial-gradient(calc(1023.8 * var(--c)) calc(759.6 * var(--c)) at calc(664.2 * var(--c)) calc(314.0 * var(--c)), rgba(255,255,255,0.064), rgba(255,255,255,0) 72%); }
+
+/* ---------- entrance (pre-paint state + masks; removed when it ends) ---------- */
+html.intro .hero__title, html.intro .hero__cta, html.intro .card { opacity: 0; }
+.card--await { opacity: 0; }                       /* PC: below-fold card waiting for its entrance */
+.iw { display: inline-block; clip-path: inset(0); vertical-align: baseline;   /* clip-path keeps the text baseline */
+      padding: .04em .09em .02em; margin: -.04em -.09em -.02em; }   /* descenders already sit inside the line box */
+.iw__in { display: inline-block; }
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="frame">
+    <header class="hero">
+      <h1 class="hero__title"><em>Lab.</em>&nbsp; Post-train your own self<br class="br-wide"> improving agents</h1>
+      <div class="hero__cta">
+        <a class="btn btn--light" href="#">Start training<svg class="arw" viewBox="0 0 18 16.5" aria-hidden="true"><path d="M1 8.25H16.5M9.5 1.5l6.9 6.75L9.5 15" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="square" stroke-linejoin="miter"/></svg></a>
+        <a class="btn btn--dark" href="#">Book a demo</a>
+      </div>
+    </header>
+    <section class="grid" aria-label="Lab products">
+      <article class="card card--env"><div class="card__in"><div class="card__fx" aria-hidden="true"></div><div class="panel panel--env"><div class="panel__fx" aria-hidden="true"></div><svg class="art" viewBox="0 0 1147 681" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Environment lifecycle: init, develop, eval, push"><defs><linearGradient id="dmF" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".10"/><stop offset=".55" stop-color="#fff" stop-opacity=".04"/><stop offset="1" stop-color="#fff" stop-opacity=".015"/></linearGradient></defs><circle data-a="ring" data-i="0" cx="556" cy="190.5" r="125" fill="none" stroke="#fff" stroke-opacity="0.09" stroke-width="2"/><circle data-a="ring" data-i="1" cx="707.5" cy="341.5" r="125" fill="none" stroke="#fff" stroke-opacity="0.09" stroke-width="2"/><circle data-a="ring" data-i="2" cx="556" cy="492.5" r="125" fill="none" stroke="#fff" stroke-opacity="0.09" stroke-width="2"/><circle data-a="ring" data-i="3" cx="404.5" cy="341.5" r="125" fill="none" stroke="#fff" stroke-opacity="0.09" stroke-width="2"/><polygon data-a="loop" pathLength="1" points="556,190.5 707.5,341.5 556,492.5 404.5,341.5" fill="url(#dmF)" stroke="#e8e8e8" stroke-width="2.6" stroke-linejoin="round"/><path data-a="cross" d="M487 341.5H630M556 265.5V420.5" stroke="#fff" stroke-opacity=".16" stroke-width="2" stroke-dasharray="2 4"/><path data-a="x" d="M543 328.5l26 26M569 328.5l-26 26" stroke="#fff" stroke-opacity=".7" stroke-width="2.2"/><circle data-a="node" data-i="0" cx="556" cy="190.5" r="14" fill="#0e0e0e" stroke="#ececec" stroke-width="2.6"/><circle data-a="node" data-i="1" cx="707.5" cy="341.5" r="14" fill="#0e0e0e" stroke="#ececec" stroke-width="2.6"/><circle data-a="node" data-i="2" cx="556" cy="492.5" r="14" fill="#0e0e0e" stroke="#ececec" stroke-width="2.6"/><circle data-a="node" data-i="3" cx="404.5" cy="341.5" r="14" fill="#0e0e0e" stroke="#ececec" stroke-width="2.6"/><g data-a="label" data-i="0"><text class="lb" x="556.5" y="124.5" text-anchor="middle">INIT</text><text class="cm" x="556.5" y="154.5" text-anchor="middle"><tspan class="dl">$</tspan> prime env init</text></g><g data-a="label" data-i="3"><text class="lb" x="372" y="334.5" text-anchor="end">PUSH</text><text class="cm" x="372" y="364.5" text-anchor="end"><tspan class="dl">$</tspan> prime env push</text></g><g data-a="label" data-i="1"><text class="lb" x="737" y="334.5" text-anchor="start">DEVELOP</text><text class="cm" x="737" y="364.5" text-anchor="start"><tspan class="dl">$</tspan> uv pip install -e</text></g><g data-a="label" data-i="2"><text class="lb" x="553.5" y="548" text-anchor="middle">EVAL</text><text class="cm" x="553.5" y="578.5" text-anchor="middle"><tspan class="dl">$</tspan> uv run vf-eval</text></g></svg></div><h2 class="card__title"><em>RL</em> Environments</h2><p class="card__body">Turn any task into an RL environment. Init, develop, eval, and push with the Prime CLI. <b>11.</b> Built on the open-source Verifiers library. <b>12.</b> One CLI loop: init, develop, eval, push. <b>13.</b> 2,500+ community environments on the Hub</p><a class="btn btn--light card__cta" href="#">Create environments<svg class="arw" viewBox="0 0 18 16.5" aria-hidden="true"><path d="M1 8.25H16.5M9.5 1.5l6.9 6.75L9.5 15" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="square" stroke-linejoin="miter"/></svg></a></div></article><article class="card card--eval"><div class="card__in"><div class="card__fx" aria-hidden="true"></div><div class="panel panel--eval"><div class="panel__fx" aria-hidden="true"></div><svg class="art" viewBox="0 0 1147 681" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Hosted evaluation environments list"><defs><linearGradient id="fadeE" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#fff"/><stop offset=".80" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="mE" maskUnits="userSpaceOnUse" x="0" y="0" width="1147" height="681"><rect width="1147" height="681" fill="url(#fadeE)"/></mask></defs><g mask="url(#mE)"><g data-a="item" data-i="0" opacity="1"><rect x="139" y="72.0" width="870" height="264" rx="17" fill="#fff" fill-opacity=".025" stroke="#fff" stroke-opacity=".17" stroke-width="2"/><text class="et" x="174" y="133.5">prime intellect/<tspan class="es">logic-env</tspan></text><text class="ev" x="174" y="196.5">0.2.21</text><text class="eo" x="973" y="196.5" text-anchor="end">PRIME INTELLECT</text><g data-a="evbtn"><rect x="172" y="242.5" width="801" height="61" rx="8.5" fill="#fff"/><text class="eb" x="560" y="280.5" text-anchor="middle">EVALUATE</text><path transform="translate(617 266.0)" d="M0.5 7.5H15M8.5 1l6.5 6.5L8.5 14" fill="none" stroke="#111" stroke-width="2.3"/></g></g><g data-a="item" data-i="1" opacity="0.42"><rect x="139" y="360.0" width="870" height="161" rx="17" fill="#fff" fill-opacity=".025" stroke="#fff" stroke-opacity=".17" stroke-width="2"/><text class="et" x="174" y="421.5">arcee-al/ifeval</text><text class="ev" x="174" y="484.5">00.1.1</text><text class="eo" x="973" y="484.5" text-anchor="end">ARCER-A</text></g><g data-a="item" data-i="2" opacity="0.26"><rect x="139" y="544.0" width="870" height="161" rx="17" fill="#fff" fill-opacity=".025" stroke="#fff" stroke-opacity=".17" stroke-width="2"/><text class="et" x="174" y="605.5">hud/hud-text-2048</text></g></g></svg></div><h2 class="card__title">Evaluations</h2><p class="card__body">Hosted evaluations for you to benchmark the performance of your models. <b>21.</b> 100+ open-source models. <b>22.</b> No commitment, just performance. <b>23.</b> Compete, improve, and dominate the leaderboard.</p><a class="btn btn--light card__cta" href="#">Run your first eval<svg class="arw" viewBox="0 0 18 16.5" aria-hidden="true"><path d="M1 8.25H16.5M9.5 1.5l6.9 6.75L9.5 15" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="square" stroke-linejoin="miter"/></svg></a></div></article><article class="card card--train"><div class="card__in"><div class="card__fx" aria-hidden="true"></div><svg class="deco deco--stars" viewBox="0 0 400 420" aria-hidden="true"><g fill="none" stroke="#fff" stroke-opacity=".12" stroke-width="2"><path d="M95 -95Q105 -10 180 0Q105 10 95 95Q85 10 10 0Q85 -10 95 -95Z"/><path d="M-5 190Q5 255 60 265Q5 275 -5 340Q-15 275 -70 265Q-15 255 -5 190Z"/></g></svg><div class="panel panel--train"><div class="panel__fx" aria-hidden="true"></div><svg class="art" viewBox="0 0 1147 681" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Reward curve rising to 0.92 with training configuration"><g data-a="grid"><line x1="329" y1="132" x2="329" y2="366" stroke="#fff" stroke-opacity=".07" stroke-width="2"/><line x1="323" y1="248" x2="335" y2="248" stroke="#fff" stroke-opacity=".07" stroke-width="2"/><line x1="510" y1="132" x2="510" y2="366" stroke="#fff" stroke-opacity=".07" stroke-width="2"/><line x1="504" y1="248" x2="516" y2="248" stroke="#fff" stroke-opacity=".07" stroke-width="2"/><line x1="691" y1="132" x2="691" y2="366" stroke="#fff" stroke-opacity=".07" stroke-width="2"/><line x1="685" y1="248" x2="697" y2="248" stroke="#fff" stroke-opacity=".07" stroke-width="2"/><line x1="872" y1="132" x2="872" y2="366" stroke="#fff" stroke-opacity=".07" stroke-width="2"/><line x1="866" y1="248" x2="878" y2="248" stroke="#fff" stroke-opacity=".07" stroke-width="2"/></g><g data-a="axis"><text class="cr" x="84" y="101">Reward</text><text class="cy" x="82" y="146.0">1</text><text class="cy" x="82" y="190.4">0.8</text><text class="cy" x="82" y="234.8">0.6</text><text class="cy" x="82" y="279.2">0.4</text><text class="cy" x="82" y="323.6">0.2</text><text class="cy" x="82" y="368.0">0</text></g><text data-a="value" class="cv" x="1063" y="101" text-anchor="end">0.92</text><path data-a="curve" pathLength="1" d="M149.5 366.5L149.5 366.5L150.5 366.0L150.5 366.0L151.5 365.0L151.5 365.0L152.5 364.5L152.5 364.5L153.5 363.5L153.5 363.5L154.5 363.5L154.5 363.5L155.5 364.0L155.5 364.0L156.5 364.5L156.5 364.5L157.5 363.0L157.5 359.0L158.5 358.0L158.5 362.0L159.5 356.5L159.5 356.5L160.5 356.0L160.5 356.0L161.5 355.5L161.5 355.5L162.5 355.5L162.5 355.5L163.5 358.0L163.5 352.0L164.5 350.0L164.5 358.0L165.5 348.5L165.5 348.5L166.5 347.0L166.5 347.0L167.5 347.0L167.5 347.0L168.5 347.0L168.5 347.0L169.5 348.5L169.5 348.5L170.5 350.0L170.5 350.0L171.5 350.0L171.5 350.0L172.5 349.0L172.5 348.0L173.5 346.0L173.5 346.0L174.5 346.0L174.5 347.0L175.5 346.0L175.5 354.0L176.5 355.0L176.5 350.0L177.5 357.0L177.5 360.0L178.5 358.0L178.5 363.0L179.5 363.0L179.5 356.0L180.5 363.0L180.5 345.0L181.5 341.0L181.5 353.0L182.5 345.0L182.5 338.0L183.5 338.0L183.5 330.0L184.5 327.0L184.5 334.0L185.5 325.0L185.5 325.0L186.5 325.0L186.5 325.0L187.5 325.0L187.5 325.0L188.5 326.0L188.5 340.0L189.5 327.0L189.5 356.0L190.5 357.0L190.5 346.0L191.5 358.5L191.5 358.5L192.5 358.0L192.5 355.0L193.5 358.0L193.5 336.0L194.5 333.0L194.5 356.0L195.5 332.0L195.5 330.0L196.5 330.0L196.5 328.0L197.5 326.0L197.5 325.0L198.5 324.0L198.5 324.0L199.5 323.0L199.5 323.0L200.5 323.5L200.5 323.5L201.5 324.0L201.5 324.0L202.5 324.0L202.5 324.0L203.5 323.5L203.5 323.5L204.5 322.5L204.5 322.5L205.5 321.0L205.5 317.0L206.5 320.0L206.5 306.0L207.5 304.0L207.5 319.0L208.5 303.5L208.5 303.5L209.5 303.5L209.5 303.5L210.5 304.0L210.5 304.0L211.5 306.0L211.5 309.0L212.5 305.0L212.5 315.0L213.5 316.0L213.5 302.0L214.5 300.0L214.5 315.0L215.5 298.5L215.5 298.5L216.5 297.5L216.5 297.5L217.5 295.0L217.5 289.0L218.5 295.0L218.5 266.0L219.5 260.0L219.5 293.0L220.5 275.0L220.5 259.0L221.5 258.0L221.5 258.0L222.5 258.0L222.5 258.0L223.5 260.0L223.5 276.0L224.5 288.0L224.5 260.0L225.5 272.0L225.5 288.0L226.5 287.0L226.5 285.0L227.5 285.5L227.5 285.5L228.5 286.0L228.5 286.0L229.5 288.0L229.5 288.0L230.5 288.0L230.5 288.0L231.5 287.0L231.5 280.0L232.5 284.0L232.5 274.0L233.5 279.0L233.5 256.0L234.5 254.0L234.5 273.0L235.5 252.5L235.5 252.5L236.5 252.0L236.5 252.0L237.5 252.0L237.5 252.0L238.5 254.0L238.5 258.0L239.5 261.0L239.5 254.0L240.5 254.0L240.5 261.0L241.5 253.0L241.5 248.0L242.5 250.0L242.5 238.0L243.5 232.0L243.5 246.0L244.5 241.0L244.5 231.0L245.5 230.0L245.5 230.0L246.5 230.0L246.5 230.0L247.5 231.0L247.5 238.0L248.5 232.0L248.5 247.0L249.5 237.0L249.5 263.0L250.5 265.0L250.5 248.0L251.5 250.0L251.5 265.0L252.5 258.0L252.5 251.0L253.5 250.5L253.5 250.5L254.5 251.0L254.5 251.0L255.5 254.0L255.5 254.0L256.5 254.0L256.5 254.0L257.5 254.0L257.5 254.0L258.5 253.5L258.5 253.5L259.5 252.0L259.5 244.0L260.5 244.0L260.5 250.0L261.5 242.5L261.5 242.5L262.5 242.5L262.5 242.5L263.5 244.0L263.5 255.0L264.5 255.0L264.5 243.0L265.5 242.0L265.5 254.0L266.5 251.0L266.5 242.0L267.5 240.5L267.5 240.5L268.5 240.0L268.5 240.0L269.5 239.0L269.5 238.0L270.5 237.0L270.5 239.0L271.5 235.0L271.5 235.0L272.5 234.5L272.5 234.5L273.5 234.0L273.5 234.0L274.5 234.0L274.5 234.0L275.5 235.0L275.5 266.0L276.5 270.0L276.5 236.0L277.5 237.0L277.5 271.0L278.5 271.0L278.5 237.0L279.5 235.0L279.5 235.0L280.5 235.0L280.5 235.0L281.5 235.0L281.5 235.0L282.5 236.0L282.5 236.0L283.5 238.0L283.5 246.0L284.5 246.0L284.5 238.0L285.5 246.0L285.5 228.0L286.5 227.0L286.5 241.0L287.5 226.0L287.5 226.0L288.5 225.0L288.5 225.0L289.5 225.0L289.5 225.0L290.5 225.5L290.5 225.5L291.5 227.0L291.5 228.0L292.5 229.0L292.5 230.0L293.5 232.0L293.5 235.0L294.5 233.0L294.5 239.0L295.5 242.0L295.5 232.0L296.5 229.0L296.5 242.0L297.5 227.0L297.5 226.0L298.5 226.0L298.5 221.0L299.5 220.0L299.5 222.0L300.5 218.5L300.5 218.5L301.5 218.5L301.5 218.5L302.5 218.5L302.5 218.5L303.5 220.0L303.5 239.0L304.5 242.0L304.5 221.0L305.5 244.0L305.5 244.0L306.5 243.5L306.5 243.5L307.5 243.0L307.5 236.0L308.5 235.0L308.5 243.0L309.5 233.0L309.5 233.0L310.5 232.5L310.5 232.5L311.5 233.0L311.5 233.0L312.5 233.0L312.5 233.0L313.5 234.0L313.5 234.0L314.5 234.5L314.5 234.5L315.5 234.0L315.5 234.0L316.5 234.0L316.5 234.0L317.5 233.0L317.5 233.0L318.5 233.0L318.5 223.0L319.5 217.0L319.5 231.0L320.5 223.0L320.5 216.0L321.5 215.0L321.5 215.0L322.5 215.0L322.5 215.0L323.5 216.0L323.5 216.0L324.5 217.0L324.5 225.0L325.5 222.0L325.5 232.0L326.5 234.0L326.5 225.0L327.5 235.0L327.5 236.0L328.5 237.5L328.5 237.5L329.5 240.0L329.5 241.0L330.5 240.0L330.5 243.0L331.5 243.0L331.5 206.0L332.5 205.0L332.5 243.0L333.5 203.0L333.5 203.0L334.5 202.5L334.5 202.5L335.5 203.0L335.5 203.0L336.5 204.0L336.5 217.0L337.5 218.0L337.5 202.0L338.5 201.0L338.5 218.0L339.5 200.0L339.5 200.0L340.5 200.0L340.5 200.0L341.5 200.5L341.5 200.5L342.5 202.0L342.5 214.0L343.5 219.0L343.5 203.0L344.5 211.0L344.5 220.0L345.5 221.0L345.5 221.0L346.5 220.5L346.5 220.5L347.5 219.0L347.5 219.0L348.5 217.5L348.5 217.5L349.5 217.5L349.5 217.5L350.5 218.0L350.5 218.0L351.5 218.0L351.5 218.0L352.5 220.0L352.5 221.0L353.5 222.0L353.5 229.0L354.5 231.0L354.5 221.0L355.5 231.0L355.5 190.0L356.5 190.0L356.5 230.0L357.5 187.5L357.5 187.5L358.5 187.0L358.5 187.0L359.5 188.0L359.5 188.0L360.5 189.0L360.5 206.0L361.5 191.0L361.5 222.0L362.5 228.0L362.5 193.0L363.5 223.0L363.5 230.0L364.5 231.0L364.5 224.0L365.5 229.0L365.5 215.0L366.5 214.0L366.5 222.0L367.5 212.5L367.5 212.5L368.5 212.0L368.5 212.0L369.5 212.5L369.5 212.5L370.5 214.0L370.5 189.0L371.5 180.0L371.5 214.0L372.5 192.0L372.5 178.0L373.5 176.0L373.5 176.0L374.5 175.5L374.5 175.5L375.5 175.0L375.5 175.0L376.5 176.0L376.5 176.0L377.5 177.0L377.5 181.0L378.5 178.0L378.5 184.0L379.5 184.0L379.5 191.0L380.5 193.0L380.5 187.0L381.5 196.0L381.5 202.0L382.5 202.0L382.5 196.0L383.5 193.0L383.5 202.0L384.5 201.0L384.5 192.0L385.5 190.0L385.5 190.0L386.5 190.0L386.5 190.0L387.5 190.0L387.5 190.0L388.5 191.0L388.5 192.0L389.5 193.0L389.5 184.0L390.5 183.0L390.5 192.0L391.5 182.0L391.5 182.0L392.5 182.0L392.5 182.0L393.5 182.5L393.5 182.5L394.5 183.0L394.5 194.0L395.5 199.0L395.5 200.0L396.5 198.0L396.5 204.0L397.5 205.0L397.5 196.0L398.5 192.0L398.5 205.0L399.5 193.0L399.5 191.0L400.5 189.5L400.5 189.5L401.5 188.0L401.5 175.0L402.5 174.0L402.5 187.0L403.5 186.0L403.5 173.0L404.5 171.5L404.5 171.5L405.5 171.0L405.5 171.0L406.5 172.0L406.5 172.0L407.5 173.0L407.5 179.0L408.5 180.0L408.5 174.0L409.5 181.0L409.5 181.0L410.5 181.5L410.5 181.5L411.5 183.0L411.5 188.0L412.5 183.0L412.5 197.0L413.5 185.0L413.5 219.0L414.5 220.0L414.5 193.0L415.5 193.0L415.5 220.0L416.5 191.0L416.5 191.0L417.5 191.0L417.5 191.0L418.5 191.0L418.5 191.0L419.5 192.0L419.5 206.0L420.5 208.0L420.5 194.0L421.5 209.5L421.5 209.5L422.5 210.5L422.5 210.5L423.5 212.0L423.5 213.0L424.5 214.5L424.5 214.5L425.5 216.0L425.5 216.0L426.5 215.5L426.5 215.5L427.5 214.0L427.5 192.0L428.5 190.0L428.5 213.0L429.5 200.0L429.5 189.0L430.5 188.0L430.5 188.0L431.5 188.0L431.5 188.0L432.5 188.5L432.5 188.5L433.5 190.0L433.5 210.0L434.5 211.0L434.5 191.0L435.5 190.0L435.5 211.0L436.5 211.0L436.5 190.0L437.5 188.0L437.5 188.0L438.5 188.0L438.5 188.0L439.5 189.0L439.5 191.0L440.5 190.0L440.5 199.0L441.5 200.0L441.5 192.0L442.5 201.0L442.5 201.0L443.5 201.0L443.5 201.0L444.5 201.0L444.5 201.0L445.5 201.0L445.5 195.0L446.5 193.0L446.5 201.0L447.5 195.0L447.5 192.0L448.5 190.0L448.5 190.0L449.5 190.0L449.5 190.0L450.5 191.0L450.5 191.0L451.5 192.0L451.5 193.0L452.5 193.5L452.5 193.5L453.5 195.0L453.5 195.0L454.5 195.5L454.5 195.5L455.5 195.0L455.5 184.0L456.5 182.0L456.5 195.0L457.5 180.5L457.5 180.5L458.5 180.0L458.5 180.0L459.5 180.0L459.5 180.0L460.5 180.5L460.5 180.5L461.5 182.0L461.5 193.0L462.5 193.0L462.5 192.0L463.5 193.0L463.5 193.0L464.5 192.0L464.5 192.0L465.5 189.0L465.5 184.0L466.5 187.0L466.5 178.0L467.5 179.0L467.5 174.0L468.5 174.0L468.5 173.0L469.5 173.5L469.5 173.5L470.5 174.0L470.5 174.0L471.5 175.5L471.5 175.5L472.5 176.5L472.5 176.5L473.5 178.5L473.5 178.5L474.5 178.5L474.5 178.5L475.5 178.0L475.5 174.0L476.5 172.0L476.5 176.0L477.5 171.0L477.5 171.0L478.5 170.5L478.5 170.5L479.5 170.5L479.5 170.5L480.5 172.0L480.5 174.0L481.5 174.0L481.5 172.0L482.5 173.0L482.5 174.0L483.5 172.0L483.5 172.0L484.5 171.5L484.5 171.5L485.5 172.0L485.5 172.0L486.5 172.5L486.5 172.5L487.5 174.0L487.5 174.0L488.5 174.0L488.5 174.0L489.5 174.0L489.5 174.0L490.5 174.0L490.5 174.0L491.5 175.0L491.5 181.0L492.5 181.0L492.5 175.0L493.5 182.5L493.5 182.5L494.5 183.0L494.5 183.0L495.5 183.0L495.5 184.0L496.5 184.0L496.5 178.0L497.5 176.0L497.5 182.0L498.5 177.0L498.5 176.0L499.5 176.0L499.5 176.0L500.5 176.0L500.5 176.0L501.5 176.5L501.5 176.5L502.5 176.0L502.5 176.0L503.5 175.0L503.5 175.0L504.5 174.0L504.5 174.0L505.5 172.5L505.5 172.5L506.5 172.0L506.5 172.0L507.5 172.0L507.5 172.0L508.5 171.0L508.5 171.0L509.5 170.0L509.5 170.0L510.5 169.5L510.5 169.5L511.5 170.0L511.5 173.0L512.5 172.0L512.5 177.0L513.5 177.0L513.5 181.0L514.5 181.0L514.5 177.0L515.5 176.0L515.5 179.0L516.5 175.0L516.5 175.0L517.5 174.5L517.5 174.5L518.5 173.5L518.5 173.5L519.5 172.0L519.5 172.0L520.5 171.0L520.5 171.0L521.5 170.0L521.5 170.0L522.5 170.0L522.5 170.0L523.5 171.0L523.5 178.0L524.5 178.0L524.5 172.0L525.5 173.0L525.5 176.0L526.5 172.0L526.5 172.0L527.5 172.0L527.5 172.0L528.5 172.0L528.5 172.0L529.5 174.0L529.5 184.0L530.5 185.0L530.5 177.0L531.5 180.0L531.5 185.0L532.5 184.0L532.5 179.0L533.5 177.0L533.5 169.0L534.5 165.0L534.5 174.0L535.5 166.0L535.5 163.0L536.5 161.5L536.5 161.5L537.5 161.0L537.5 161.0L538.5 161.5L538.5 161.5L539.5 163.0L539.5 163.0L540.5 164.5L540.5 164.5L541.5 165.0L541.5 165.0L542.5 165.5L542.5 165.5L543.5 166.0L543.5 166.0L544.5 167.0L544.5 167.0L545.5 167.0L545.5 174.0L546.5 174.0L546.5 157.0L547.5 155.0L547.5 173.0L548.5 154.5L548.5 154.5L549.5 154.0L549.5 154.0L550.5 154.0L550.5 154.0L551.5 156.0L551.5 161.0L552.5 156.0L552.5 166.0L553.5 165.0L553.5 167.0L554.5 168.0L554.5 168.0L555.5 169.0L555.5 169.0L556.5 170.0L556.5 171.0L557.5 171.0L557.5 171.0L558.5 173.0L558.5 173.0L559.5 174.5L559.5 174.5L560.5 175.0L560.5 175.0L561.5 175.0L561.5 175.0L562.5 173.5L562.5 173.5L563.5 173.0L563.5 173.0L564.5 173.5L564.5 173.5L565.5 174.0L565.5 175.0L566.5 175.0L566.5 176.0L567.5 177.5L567.5 177.5L568.5 178.0L568.5 178.0L569.5 179.0L569.5 181.0L570.5 181.0L570.5 174.0L571.5 172.0L571.5 181.0L572.5 172.0L572.5 172.0L573.5 170.5L573.5 170.5L574.5 170.5L574.5 170.5L575.5 171.0L575.5 171.0L576.5 172.0L576.5 180.0L577.5 181.0L577.5 173.0L578.5 175.0L578.5 180.0L579.5 175.5L579.5 175.5L580.5 175.0L580.5 175.0L581.5 176.0L581.5 176.0L582.5 175.5L582.5 175.5L583.5 175.0L583.5 175.0L584.5 174.5L584.5 174.5L585.5 174.0L585.5 175.0L586.5 176.0L586.5 176.0L587.5 177.5L587.5 177.5L588.5 177.5L588.5 177.5L589.5 176.0L589.5 176.0L590.5 175.0L590.5 173.0L591.5 173.0L591.5 172.0L592.5 172.0L592.5 171.0L593.5 171.0L593.5 166.0L594.5 166.0L594.5 166.0L595.5 165.0L595.5 165.0L596.5 165.0L596.5 165.0L597.5 167.0L597.5 173.0L598.5 173.0L598.5 168.0L599.5 174.0L599.5 174.0L600.5 174.0L600.5 174.0L601.5 174.0L601.5 174.0L602.5 172.5L602.5 172.5L603.5 172.5L603.5 172.5L604.5 172.5L604.5 172.5L605.5 174.0L605.5 175.0L606.5 176.0L606.5 173.0L607.5 171.0L607.5 176.0L608.5 173.0L608.5 170.0L609.5 169.0L609.5 169.0L610.5 168.0L610.5 168.0L611.5 167.5L611.5 167.5L612.5 166.5L612.5 166.5L613.5 166.0L613.5 166.0L614.5 165.5L614.5 165.5L615.5 167.0L615.5 171.0L616.5 168.0L616.5 178.0L617.5 180.0L617.5 174.0L618.5 175.0L618.5 180.0L619.5 179.0L619.5 170.0L620.5 173.0L620.5 164.0L621.5 162.5L621.5 162.5L622.5 162.0L622.5 162.0L623.5 162.0L623.5 162.0L624.5 163.0L624.5 166.0L625.5 167.0L625.5 164.0L626.5 166.0L626.5 166.0L627.5 165.0L627.5 165.0L628.5 165.0L628.5 165.0L629.5 165.5L629.5 165.5L630.5 166.0L630.5 169.0L631.5 169.0L631.5 172.0L632.5 171.5L632.5 171.5L633.5 172.0L633.5 172.0L634.5 172.5L634.5 172.5L635.5 172.5L635.5 172.5L636.5 173.0L636.5 173.0L637.5 172.0L637.5 167.0L638.5 172.0L638.5 160.0L639.5 157.0L639.5 169.0L640.5 157.0L640.5 156.0L641.5 155.0L641.5 155.0L642.5 155.5L642.5 155.5L643.5 157.0L643.5 161.0L644.5 158.0L644.5 170.0L645.5 172.0L645.5 164.0L646.5 173.5L646.5 173.5L647.5 175.0L647.5 175.0L648.5 174.5L648.5 174.5L649.5 174.0L649.5 175.0L650.5 175.0L650.5 170.0L651.5 169.0L651.5 169.0L652.5 169.0L652.5 169.0L653.5 170.0L653.5 170.0L654.5 170.0L654.5 170.0L655.5 171.5L655.5 171.5L656.5 172.0L656.5 172.0L657.5 173.0L657.5 173.0L658.5 174.0L658.5 174.0L659.5 173.5L659.5 173.5L660.5 174.5L660.5 174.5L661.5 175.0L661.5 175.0L662.5 175.0L662.5 178.0L663.5 178.0L663.5 175.0L664.5 178.0L664.5 169.0L665.5 166.0L665.5 172.0L666.5 168.0L666.5 166.0L667.5 164.5L667.5 164.5L668.5 164.0L668.5 164.0L669.5 164.0L669.5 164.0L670.5 164.0L670.5 166.0L671.5 167.0L671.5 161.0L672.5 160.0L672.5 167.0L673.5 166.0L673.5 160.0L674.5 158.0L674.5 158.0L675.5 158.5L675.5 158.5L676.5 159.0L676.5 161.0L677.5 160.0L677.5 167.0L678.5 167.0L678.5 162.0L679.5 162.0L679.5 167.0L680.5 166.0L680.5 162.0L681.5 160.5L681.5 160.5L682.5 160.0L682.5 160.0L683.5 158.5L683.5 158.5L684.5 157.5L684.5 157.5L685.5 157.0L685.5 157.0L686.5 157.0L686.5 157.0L687.5 157.5L687.5 157.5L688.5 159.0L688.5 166.0L689.5 166.0L689.5 161.0L690.5 164.0L690.5 166.0L691.5 165.5L691.5 165.5L692.5 166.5L692.5 166.5L693.5 169.0L693.5 169.0L694.5 170.0L694.5 171.0L695.5 173.5L695.5 173.5L696.5 173.5L696.5 173.5L697.5 173.0L697.5 173.0L698.5 172.5L698.5 172.5L699.5 172.5L699.5 172.5L700.5 173.0L700.5 173.0L701.5 173.0L701.5 173.0L702.5 172.5L702.5 172.5L703.5 171.0L703.5 161.0L704.5 159.0L704.5 169.0L705.5 160.0L705.5 157.0L706.5 155.5L706.5 155.5L707.5 154.5L707.5 154.5L708.5 154.5L708.5 154.5L709.5 156.0L709.5 156.0L710.5 157.0L710.5 158.0L711.5 159.0L711.5 159.0L712.5 161.0L712.5 161.0L713.5 162.0L713.5 171.0L714.5 175.0L714.5 163.0L715.5 175.5L715.5 175.5L716.5 175.5L716.5 175.5L717.5 175.5L717.5 175.5L718.5 174.5L718.5 174.5L719.5 173.0L719.5 172.0L720.5 171.5L720.5 171.5L721.5 171.5L721.5 171.5L722.5 171.0L722.5 171.0L723.5 169.5L723.5 169.5L724.5 168.0L724.5 168.0L725.5 166.0L725.5 155.0L726.5 154.0L726.5 165.0L727.5 152.5L727.5 152.5L728.5 152.5L728.5 152.5L729.5 153.0L729.5 153.0L730.5 154.0L730.5 162.0L731.5 163.0L731.5 156.0L732.5 159.0L732.5 163.0L733.5 158.0L733.5 158.0L734.5 158.5L734.5 158.5L735.5 159.5L735.5 159.5L736.5 160.0L736.5 161.0L737.5 162.0L737.5 162.0L738.5 163.0L738.5 163.0L739.5 165.0L739.5 175.0L740.5 175.0L740.5 166.0L741.5 165.0L741.5 165.0L742.5 164.5L742.5 164.5L743.5 164.5L743.5 164.5L744.5 165.0L744.5 184.0L745.5 185.0L745.5 154.0L746.5 153.0L746.5 185.0L747.5 151.0L747.5 151.0L748.5 151.0L748.5 151.0L749.5 151.0L749.5 151.0L750.5 152.0L750.5 155.0L751.5 153.0L751.5 164.0L752.5 165.0L752.5 155.0L753.5 166.0L753.5 166.0L754.5 168.0L754.5 168.0L755.5 168.0L755.5 169.0L756.5 169.0L756.5 168.0L757.5 167.0L757.5 166.0L758.5 164.0L758.5 164.0L759.5 163.5L759.5 163.5L760.5 164.0L760.5 164.0L761.5 166.0L761.5 166.0L762.5 167.0L762.5 167.0L763.5 168.0L763.5 168.0L764.5 169.0L764.5 169.0L765.5 170.0L765.5 170.0L766.5 171.0L766.5 171.0L767.5 173.0L767.5 173.0L768.5 173.5L768.5 173.5L769.5 175.0L769.5 180.0L770.5 180.0L770.5 177.0L771.5 180.0L771.5 180.0L772.5 179.5L772.5 179.5L773.5 178.0L773.5 164.0L774.5 162.0L774.5 178.0L775.5 161.0L775.5 161.0L776.5 160.0L776.5 160.0L777.5 160.0L777.5 160.0L778.5 161.0L778.5 174.0L779.5 175.0L779.5 156.0L780.5 156.0L780.5 175.0L781.5 154.0L781.5 154.0L782.5 154.0L782.5 154.0L783.5 155.0L783.5 160.0L784.5 161.0L784.5 156.0L785.5 159.0L785.5 161.0L786.5 160.0L786.5 159.0L787.5 158.0L787.5 158.0L788.5 158.5L788.5 158.5L789.5 161.0L789.5 168.0L790.5 174.0L790.5 160.0L791.5 155.0L791.5 175.0L792.5 175.0L792.5 154.0L793.5 153.0L793.5 153.0L794.5 152.5L794.5 152.5L795.5 153.0L795.5 153.0L796.5 153.5L796.5 153.5L797.5 155.0L797.5 177.0L798.5 177.0L798.5 157.0L799.5 168.0L799.5 176.0L800.5 173.0L800.5 172.0L801.5 165.0L801.5 165.0L802.5 165.0L802.5 165.0L803.5 165.0L803.5 165.0L804.5 164.5L804.5 164.5L805.5 166.0L805.5 140.0L806.5 139.0L806.5 166.0L807.5 138.0L807.5 138.0L808.5 138.0L808.5 138.0L809.5 139.0L809.5 153.0L810.5 164.0L810.5 140.0L811.5 154.0L811.5 164.0L812.5 164.0L812.5 159.0L813.5 158.5L813.5 158.5L814.5 157.0L814.5 157.0L815.5 156.0L815.5 156.0L816.5 155.0L816.5 150.0L817.5 149.0L817.5 153.0L818.5 151.0L818.5 148.0L819.5 147.0L819.5 147.0L820.5 147.0L820.5 147.0L821.5 147.5L821.5 147.5L822.5 147.0L822.5 148.0L823.5 147.0L823.5 146.0L824.5 145.0L824.5 145.0L825.5 145.0L825.5 145.0L826.5 145.5L826.5 145.5L827.5 146.0L827.5 146.0L828.5 146.5L828.5 146.5L829.5 148.0L829.5 149.0L830.5 148.0L830.5 154.0L831.5 154.0L831.5 143.0L832.5 141.5L832.5 141.5L833.5 141.0L833.5 141.0L834.5 141.0L834.5 141.0L835.5 142.0L835.5 159.0L836.5 166.0L836.5 143.0L837.5 164.0L837.5 181.0L838.5 182.0L838.5 163.0L839.5 155.0L839.5 174.0L840.5 165.0L840.5 149.0L841.5 148.0L841.5 154.0L842.5 147.0L842.5 147.0L843.5 146.5L843.5 146.5L844.5 146.5L844.5 146.5L845.5 149.0L845.5 151.0L846.5 149.0L846.5 153.0L847.5 153.0L847.5 142.0L848.5 138.0L848.5 152.0L849.5 137.0L849.5 137.0L850.5 136.5L850.5 136.5L851.5 136.5L851.5 136.5L852.5 138.0L852.5 160.0L853.5 161.0L853.5 139.0L854.5 156.0L854.5 161.0L855.5 155.5L855.5 155.5L856.5 155.5L856.5 155.5L857.5 156.5L857.5 156.5L858.5 158.0L858.5 158.0L859.5 159.0L859.5 160.0L860.5 161.5L860.5 161.5L861.5 164.0L861.5 168.0L862.5 169.0L862.5 165.0L863.5 170.0L863.5 170.0L864.5 170.5L864.5 170.5L865.5 172.0L865.5 194.0L866.5 173.0L866.5 218.0L867.5 219.0L867.5 173.0L868.5 153.0L868.5 218.0L869.5 173.0L869.5 152.0L870.5 151.0L870.5 159.0L871.5 148.0L871.5 148.0L872.5 148.0L872.5 148.0L873.5 147.5L873.5 147.5L874.5 148.0L874.5 151.0L875.5 152.0L875.5 155.0L876.5 156.0L876.5 156.0L877.5 159.0L877.5 159.0L878.5 160.0L878.5 161.0L879.5 161.0L879.5 157.0L880.5 154.0L880.5 161.0L881.5 154.0L881.5 151.0L882.5 150.0L882.5 150.0L883.5 149.5L883.5 149.5L884.5 150.0L884.5 150.0L885.5 151.0L885.5 160.0L886.5 167.0L886.5 152.0L887.5 160.0L887.5 173.0L888.5 173.0L888.5 164.0L889.5 164.0L889.5 166.0L890.5 162.5L890.5 162.5L891.5 162.5L891.5 162.5L892.5 163.0L892.5 163.0L893.5 164.0L893.5 175.0L894.5 176.0L894.5 165.0L895.5 170.0L895.5 176.0L896.5 175.0L896.5 162.0L897.5 153.0L897.5 174.0L898.5 161.0L898.5 151.0L899.5 150.0L899.5 150.0L900.5 148.5L900.5 148.5L901.5 147.5L901.5 147.5L902.5 147.0L902.5 147.0L903.5 148.0L903.5 151.0L904.5 153.0L904.5 148.0L905.5 153.5L905.5 153.5L906.5 154.0L906.5 154.0L907.5 153.5L907.5 153.5L908.5 154.5L908.5 154.5L909.5 156.0L909.5 162.0L910.5 163.0L910.5 155.0L911.5 163.0L911.5 144.0L912.5 136.0L912.5 156.0L913.5 144.0L913.5 132.0L914.5 132.0L914.5 134.0L915.5 130.5L915.5 130.5L916.5 130.5L916.5 130.5L917.5 132.0L917.5 150.0L918.5 151.0L918.5 133.0L919.5 152.5L919.5 152.5L920.5 153.5L920.5 153.5L921.5 155.5L921.5 155.5L922.5 157.5L922.5 157.5L923.5 158.0L923.5 158.0L924.5 157.5L924.5 157.5L925.5 156.0L925.5 143.0L926.5 142.0L926.5 155.0L927.5 140.5L927.5 140.5L928.5 140.5L928.5 140.5L929.5 142.0L929.5 143.0L930.5 142.0L930.5 150.0L931.5 148.0L931.5 160.0L932.5 161.0L932.5 148.0L933.5 148.0L933.5 160.0L934.5 150.0L934.5 147.0L935.5 146.0L935.5 146.0L936.5 146.0L936.5 146.0L937.5 147.0L937.5 167.0L938.5 171.0L938.5 148.0L939.5 172.5L939.5 172.5L940.5 173.0L940.5 173.0L941.5 173.0L941.5 173.0L942.5 172.0L942.5 172.0L943.5 170.0L943.5 151.0L944.5 150.0L944.5 166.0L945.5 148.0L945.5 148.0L946.5 148.0L946.5 148.0L947.5 148.0L947.5 148.0L948.5 149.0L948.5 149.0L949.5 149.5L949.5 149.5L950.5 149.5L950.5 149.5L951.5 150.0L951.5 150.0L952.5 150.0L952.5 149.0L953.5 147.0L953.5 147.0L954.5 146.0L954.5 146.0L955.5 145.0L955.5 145.0L956.5 145.0L956.5 145.0L957.5 146.0L957.5 152.0L958.5 153.0L958.5 147.0L959.5 154.0L959.5 154.0L960.5 154.0L960.5 154.0L961.5 153.0L961.5 153.0L962.5 152.0L962.5 152.0L963.5 152.0L963.5 152.0L964.5 151.5L964.5 151.5L965.5 151.5L965.5 151.5L966.5 151.5L966.5 151.5L967.5 152.0L967.5 152.0L968.5 153.0L968.5 183.0L969.5 189.0L969.5 154.0L970.5 159.0L970.5 189.0L971.5 158.5L971.5 158.5L972.5 157.0L972.5 157.0L973.5 155.0L973.5 141.0L974.5 140.0L974.5 154.0L975.5 139.0L975.5 139.0L976.5 139.0L976.5 139.0L977.5 139.0L977.5 139.0L978.5 138.5L978.5 138.5L979.5 137.5L979.5 137.5L980.5 137.5L980.5 137.5L981.5 139.0L981.5 151.0L982.5 152.0L982.5 140.0L983.5 153.0L983.5 153.0L984.5 154.0L984.5 154.0L985.5 156.0L985.5 177.0L986.5 181.0L986.5 156.0L987.5 176.0L987.5 181.0L988.5 183.0L988.5 183.0L989.5 185.0L989.5 198.0L990.5 185.0L990.5 214.0L991.5 214.0L991.5 161.0L992.5 156.0L992.5 214.0L993.5 177.0L993.5 156.0L994.5 155.5L994.5 155.5L995.5 156.5L995.5 156.5L996.5 157.0L996.5 157.0L997.5 157.0L997.5 157.0L998.5 156.5L998.5 156.5L999.5 154.0L999.5 154.0L1000.5 153.5L1000.5 153.5L1001.5 153.0L1001.5 153.0L1002.5 153.5L1002.5 153.5L1003.5 154.0L1003.5 154.0L1004.5 154.5L1004.5 154.5L1005.5 155.5L1005.5 155.5L1006.5 156.5L1006.5 156.5L1007.5 157.0L1007.5 157.0L1008.5 158.0L1008.5 158.0L1009.5 158.5L1009.5 158.5L1010.5 160.0L1010.5 164.0L1011.5 162.0L1011.5 183.0L1012.5 183.0L1012.5 163.0L1013.5 163.0L1013.5 182.0L1014.5 161.5L1014.5 161.5L1015.5 161.5L1015.5 161.5L1016.5 162.0L1016.5 177.0L1017.5 177.0L1017.5 156.0L1018.5 152.0L1018.5 177.0L1019.5 154.0L1019.5 152.0L1020.5 151.0L1020.5 151.0L1021.5 150.5L1021.5 150.5L1022.5 150.5L1022.5 150.5L1023.5 150.0L1023.5 144.0L1024.5 143.0L1024.5 149.0L1025.5 142.0L1025.5 142.0L1026.5 142.0L1026.5 142.0L1027.5 142.0L1027.5 142.0L1028.5 143.0L1028.5 145.0L1029.5 145.0L1029.5 143.0L1030.5 145.0L1030.5 135.0L1031.5 133.0L1031.5 139.0L1032.5 132.5L1032.5 132.5L1033.5 131.5L1033.5 131.5L1034.5 132.0L1034.5 132.0L1035.5 133.0L1035.5 143.0L1036.5 143.0L1036.5 134.0L1037.5 138.0L1037.5 143.0L1038.5 137.0L1038.5 137.0L1039.5 137.5L1039.5 137.5L1040.5 139.0L1040.5 142.0L1041.5 140.0L1041.5 150.0L1042.5 151.0L1042.5 142.0L1043.5 149.0L1043.5 151.0L1044.5 151.0L1044.5 149.0L1045.5 146.0L1045.5 145.0L1046.5 145.0L1046.5 144.0L1047.5 142.0L1047.5 142.0L1048.5 141.0L1048.5 141.0L1049.5 140.5L1049.5 140.5L1050.5 140.5L1050.5 140.5" fill="none" stroke="#fff" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><line data-a="rule" x1="54" y1="402" x2="1096" y2="402" stroke="#fff" stroke-opacity=".12" stroke-width="3"/><g data-a="row" data-i="0"><text class="tk" x="83" y="452">max_steps</text><line x1="494" y1="446" x2="654" y2="446" stroke="#fff" stroke-opacity=".28" stroke-width="1.6" stroke-dasharray="1.6 2.6"/><text class="tv" x="1065" y="452" text-anchor="end">10,000</text></g><g data-a="row" data-i="1"><text class="tk" x="83" y="506.5">rollouts_per_example</text><line x1="494" y1="500.5" x2="654" y2="500.5" stroke="#fff" stroke-opacity=".28" stroke-width="1.6" stroke-dasharray="1.6 2.6"/><text class="tv" x="1065" y="506.5" text-anchor="end">19</text></g><g data-a="row" data-i="2"><text class="tk" x="83" y="559">seq_len</text><line x1="494" y1="553" x2="654" y2="553" stroke="#fff" stroke-opacity=".28" stroke-width="1.6" stroke-dasharray="1.6 2.6"/><text class="tv" x="1065" y="559" text-anchor="end">4</text></g><g data-a="row" data-i="3"><text class="tk" x="83" y="612.5">batch_size</text><line x1="494" y1="606.5" x2="654" y2="606.5" stroke="#fff" stroke-opacity=".28" stroke-width="1.6" stroke-dasharray="1.6 2.6"/><text class="tv" x="1065" y="612.5" text-anchor="end">65536</text></g></svg></div><h2 class="card__title">Hosted Training</h2><p class="card__body">Train large-scale models optimized for agentic workflows. <b>31.</b> Train on 2,500+ RL environme. <b>32.</b> Managed training workflows with full visibility and control. <b>33.</b> Hands on support from our applied research team</p><a class="btn btn--light card__cta" href="#">Start training<svg class="arw" viewBox="0 0 18 16.5" aria-hidden="true"><path d="M1 8.25H16.5M9.5 1.5l6.9 6.75L9.5 15" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="square" stroke-linejoin="miter"/></svg></a></div></article><article class="card card--infer"><div class="card__in"><div class="card__fx" aria-hidden="true"></div><div class="panel panel--infer"><div class="panel__fx" aria-hidden="true"></div><svg class="art" viewBox="0 0 1147 681" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Model deployment globe"><defs><linearGradient id="hf1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity=".15"/></linearGradient><linearGradient id="sideFade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".25" stop-color="#fff" stop-opacity="1"/><stop offset=".75" stop-color="#fff" stop-opacity="1"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><g data-a="globe"><path d="M568.0,260.0 L536.7,267.0 L523.9,274.0 L514.1,281.1 L505.9,288.1 L498.7,295.1 L492.2,302.1 L486.3,309.1 L480.9,316.1 L475.8,323.1 L471.0,330.2 L466.5,337.2 L462.2,344.2 L458.1,351.2 L454.2,358.2 L450.5,365.2 L446.9,372.3 L443.5,379.3 L440.1,386.3 L436.9,393.3 L433.8,400.3 L430.8,407.4 L427.9,414.4 L425.1,421.4 L422.4,428.4 L419.7,435.4 L417.1,442.4 L414.6,449.4 L412.1,456.5 L409.8,463.5 L407.4,470.5 L405.2,477.5 L403.0,484.5 L400.8,491.6 L398.7,498.6 L396.6,505.6 L394.6,512.6 L392.7,519.6 L390.8,526.6 L388.9,533.6 L387.1,540.7 L385.3,547.7 L383.5,554.7 L381.8,561.7 L380.1,568.7 L378.5,575.8 L376.9,582.8 L375.3,589.8 L373.8,596.8 L372.3,603.8 L370.8,610.8 L369.4,617.9 L368.0,624.9 L366.6,631.9 L365.2,638.9 L363.9,645.9 L362.6,652.9 L361.4,660.0 L360.1,667.0 L358.9,674.0 L357.7,681.0 M568.0,260.0 L599.3,267.0 L612.1,274.0 L621.9,281.1 L630.1,288.1 L637.3,295.1 L643.8,302.1 L649.7,309.1 L655.1,316.1 L660.2,323.1 L665.0,330.2 L669.5,337.2 L673.8,344.2 L677.9,351.2 L681.8,358.2 L685.5,365.2 L689.1,372.3 L692.5,379.3 L695.9,386.3 L699.1,393.3 L702.2,400.3 L705.2,407.4 L708.1,414.4 L710.9,421.4 L713.6,428.4 L716.3,435.4 L718.9,442.4 L721.4,449.4 L723.9,456.5 L726.2,463.5 L728.6,470.5 L730.8,477.5 L733.0,484.5 L735.2,491.6 L737.3,498.6 L739.4,505.6 L741.4,512.6 L743.3,519.6 L745.2,526.6 L747.1,533.6 L748.9,540.7 L750.7,547.7 L752.5,554.7 L754.2,561.7 L755.9,568.7 L757.5,575.8 L759.1,582.8 L760.7,589.8 L762.2,596.8 L763.7,603.8 L765.2,610.8 L766.6,617.9 L768.0,624.9 L769.4,631.9 L770.8,638.9 L772.1,645.9 L773.4,652.9 L774.6,660.0 L775.9,667.0 L777.1,674.0 L778.3,681.0 M568.0,260.0 L506.6,267.0 L481.4,274.0 L462.1,281.1 L446.0,288.1 L431.9,295.1 L419.2,302.1 L407.7,309.1 L396.9,316.1 L387.0,323.1 L377.6,330.2 L368.7,337.2 L360.3,344.2 L352.3,351.2 L344.7,358.2 L337.3,365.2 L330.3,372.3 L323.5,379.3 L317.0,386.3 L310.7,393.3 L304.6,400.3 L298.7,407.4 L293.0,414.4 L287.5,421.4 L282.1,428.4 L276.9,435.4 L271.8,442.4 L266.9,449.4 L262.1,456.5 L257.4,463.5 L252.8,470.5 L248.4,477.5 L244.0,484.5 L239.8,491.6 L235.7,498.6 L231.6,505.6 L227.7,512.6 L223.8,519.6 L220.1,526.6 L216.4,533.6 L212.8,540.7 L209.3,547.7 L205.9,554.7 L202.5,561.7 L199.2,568.7 L196.0,575.8 L192.8,582.8 L189.8,589.8 L186.7,596.8 L183.8,603.8 L180.9,610.8 L178.1,617.9 L175.3,624.9 L172.6,631.9 L170.0,638.9 L167.4,645.9 L164.8,652.9 L162.4,660.0 L159.9,667.0 L157.6,674.0 L155.2,681.0 M568.0,260.0 L629.4,267.0 L654.6,274.0 L673.9,281.1 L690.0,288.1 L704.1,295.1 L716.8,302.1 L728.3,309.1 L739.1,316.1 L749.0,323.1 L758.4,330.2 L767.3,337.2 L775.7,344.2 L783.7,351.2 L791.3,358.2 L798.7,365.2 L805.7,372.3 L812.5,379.3 L819.0,386.3 L825.3,393.3 L831.4,400.3 L837.3,407.4 L843.0,414.4 L848.5,421.4 L853.9,428.4 L859.1,435.4 L864.2,442.4 L869.1,449.4 L873.9,456.5 L878.6,463.5 L883.2,470.5 L887.6,477.5 L892.0,484.5 L896.2,491.6 L900.3,498.6 L904.4,505.6 L908.3,512.6 L912.2,519.6 L915.9,526.6 L919.6,533.6 L923.2,540.7 L926.7,547.7 L930.1,554.7 L933.5,561.7 L936.8,568.7 L940.0,575.8 L943.2,582.8 L946.2,589.8 L949.3,596.8 L952.2,603.8 L955.1,610.8 L957.9,617.9 L960.7,624.9 L963.4,631.9 L966.0,638.9 L968.6,645.9 L971.2,652.9 L973.6,660.0 L976.1,667.0 L978.4,674.0 L980.8,681.0 M568.0,260.0 L485.5,267.0 L451.6,274.0 L425.7,281.1 L404.1,288.1 L385.1,295.1 L368.1,302.1 L352.5,309.1 L338.1,316.1 L324.7,323.1 L312.1,330.2 L300.2,337.2 L288.9,344.2 L278.1,351.2 L267.9,358.2 L258.0,365.2 L248.6,372.3 L239.5,379.3 L230.7,386.3 L222.2,393.3 L214.1,400.3 L206.1,407.4 L198.5,414.4 L191.0,421.4 L183.8,428.4 L176.8,435.4 L170.0,442.4 L163.3,449.4 L156.9,456.5 L150.6,463.5 L144.4,470.5 L138.5,477.5 L132.6,484.5 L127.0,491.6 L121.4,498.6 L116.0,505.6 L110.7,512.6 L105.5,519.6 L100.5,526.6 L95.5,533.6 L90.7,540.7 L86.0,547.7 L81.3,554.7 L76.8,561.7 L72.4,568.7 L68.1,575.8 L63.8,582.8 L59.7,589.8 L55.7,596.8 L51.7,603.8 L47.8,610.8 L44.0,617.9 L40.3,624.9 L36.7,631.9 L33.1,638.9 L29.6,645.9 L26.2,652.9 L22.9,660.0 L19.6,667.0 L16.4,674.0 L13.3,681.0 M568.0,260.0 L650.5,267.0 L684.4,274.0 L710.3,281.1 L731.9,288.1 L750.9,295.1 L767.9,302.1 L783.5,309.1 L797.9,316.1 L811.3,323.1 L823.9,330.2 L835.8,337.2 L847.1,344.2 L857.9,351.2 L868.1,358.2 L878.0,365.2 L887.4,372.3 L896.5,379.3 L905.3,386.3 L913.8,393.3 L921.9,400.3 L929.9,407.4 L937.5,414.4 L945.0,421.4 L952.2,428.4 L959.2,435.4 L966.0,442.4 L972.7,449.4 L979.1,456.5 L985.4,463.5 L991.6,470.5 L997.5,477.5 L1003.4,484.5 L1009.0,491.6 L1014.6,498.6 L1020.0,505.6 L1025.3,512.6 L1030.5,519.6 L1035.5,526.6 L1040.5,533.6 L1045.3,540.7 L1050.0,547.7 L1054.7,554.7 L1059.2,561.7 L1063.6,568.7 L1067.9,575.8 L1072.2,582.8 L1076.3,589.8 L1080.3,596.8 L1084.3,603.8 L1088.2,610.8 L1092.0,617.9 L1095.7,624.9 L1099.3,631.9 L1102.9,638.9 L1106.4,645.9 L1109.8,652.9 L1113.1,660.0 L1116.4,667.0 L1119.6,674.0 L1122.7,681.0 M568.0,260.0 L464.4,267.0 L421.8,274.0 L389.3,281.1 L362.1,288.1 L338.3,295.1 L316.9,302.1 L297.4,309.1 L279.3,316.1 L262.5,323.1 L246.6,330.2 L231.7,337.2 L217.5,344.2 L204.0,351.2 L191.1,358.2 L178.7,365.2 L166.8,372.3 L155.4,379.3 L144.4,386.3 L133.8,393.3 L123.5,400.3 L113.6,407.4 L103.9,414.4 L94.6,421.4 L85.5,428.4 L76.7,435.4 L68.1,442.4 L59.8,449.4 L51.7,456.5 L43.8,463.5 L36.1,470.5 L28.6,477.5 L21.3,484.5 L14.1,491.6 L7.1,498.6 L0.3,505.6 L-6.3,512.6 L-12.8,519.6 L-19.2,526.6 L-25.4,533.6 L-31.4,540.7 L-37.4,547.7 L-43.2,554.7 L-48.8,561.7 L-54.4,568.7 L-59.8,575.8 L-65.1,582.8 L-70.3,589.8 L-75.4,596.8 L-80.4,603.8 L-85.3,610.8 L-90.0,617.9 L-94.7,624.9 L-99.3,631.9 L-103.7,638.9 L-108.1,645.9 L-112.4,652.9 L-116.6,660.0 L-120.7,667.0 L-124.7,674.0 L-128.6,681.0 M568.0,260.0 L671.6,267.0 L714.2,274.0 L746.7,281.1 L773.9,288.1 L797.7,295.1 L819.1,302.1 L838.6,309.1 L856.7,316.1 L873.5,323.1 L889.4,330.2 L904.3,337.2 L918.5,344.2 L932.0,351.2 L944.9,358.2 L957.3,365.2 L969.2,372.3 L980.6,379.3 L991.6,386.3 L1002.2,393.3 L1012.5,400.3 L1022.4,407.4 L1032.1,414.4 L1041.4,421.4 L1050.5,428.4 L1059.3,435.4 L1067.9,442.4 L1076.2,449.4 L1084.3,456.5 L1092.2,463.5 L1099.9,470.5 L1107.4,477.5 L1114.7,484.5 L1121.9,491.6 L1128.9,498.6 L1135.7,505.6 L1142.3,512.6 L1148.8,519.6 L1155.2,526.6 L1161.4,533.6 L1167.4,540.7 L1173.4,547.7 L1179.2,554.7 L1184.8,561.7 L1190.4,568.7 L1195.8,575.8 L1201.1,582.8 L1206.3,589.8 L1211.4,596.8 L1216.4,603.8 L1221.3,610.8 L1226.0,617.9 L1230.7,624.9 L1235.3,631.9 L1239.7,638.9 L1244.1,645.9 L1248.4,652.9 L1252.6,660.0 L1256.7,667.0 L1260.7,674.0 L1264.6,681.0" fill="none" stroke="#fff" stroke-opacity="0.085" stroke-width="2"/><path d="M568 260V681M80 434.5H1056M0 608.5H1147" fill="none" stroke="#fff" stroke-opacity="0.085" stroke-width="2"/></g><defs><linearGradient id="rt0" gradientUnits="userSpaceOnUse" x1="278" y1="434.5" x2="420" y2="434.5"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity=".12"/></linearGradient><linearGradient id="rt1" gradientUnits="userSpaceOnUse" x1="420" y1="434.5" x2="503" y2="290"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity=".12"/></linearGradient><linearGradient id="rt2" gradientUnits="userSpaceOnUse" x1="568" y1="434.5" x2="568" y2="594"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity=".12"/></linearGradient><linearGradient id="rt3" gradientUnits="userSpaceOnUse" x1="716" y1="434.5" x2="933" y2="576"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity=".12"/></linearGradient><linearGradient id="rt4" gradientUnits="userSpaceOnUse" x1="176" y1="608.5" x2="257" y2="465"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity=".12"/></linearGradient></defs><path data-a="route" data-i="0" pathLength="1" d="M278 434.5H420" fill="none" stroke="url(#rt0)" stroke-width="2.6" stroke-linecap="round"/><path data-a="route" data-i="1" pathLength="1" d="M503.8,290.0 L497.8,296.0 L492.3,302.0 L487.2,308.1 L482.4,314.1 L477.9,320.1 L473.7,326.1 L469.7,332.1 L465.9,338.2 L462.2,344.2 L458.7,350.2 L455.3,356.2 L452.1,362.2 L448.9,368.3 L445.9,374.3 L443.0,380.3 L440.1,386.3 L437.4,392.4 L434.7,398.4 L432.1,404.4 L429.5,410.4 L427.1,416.4 L424.7,422.5 L422.3,428.5 L420.0,434.5" fill="none" stroke="url(#rt1)" stroke-width="2.6" stroke-linecap="round"/><path data-a="route" data-i="2" pathLength="1" d="M568 434.5V594" fill="none" stroke="url(#rt2)" stroke-width="2.6" stroke-linecap="round"/><path data-a="route" data-i="3" pathLength="1" d="M716 434.5C790 460 870 515 933 576" fill="none" stroke="url(#rt3)" stroke-width="2.6" stroke-linecap="round"/><path data-a="route" data-i="4" pathLength="1" d="M256.4,465.0 L252.5,471.0 L248.7,477.0 L245.0,482.9 L241.4,488.9 L237.8,494.9 L234.3,500.9 L230.9,506.9 L227.6,512.8 L224.3,518.8 L221.1,524.8 L217.9,530.8 L214.8,536.8 L211.8,542.7 L208.8,548.7 L205.9,554.7 L203.0,560.7 L200.2,566.6 L197.4,572.6 L194.7,578.6 L192.0,584.6 L189.4,590.6 L186.8,596.5 L184.3,602.5 L181.9,608.5" fill="none" stroke="url(#rt4)" stroke-width="2.6" stroke-linecap="round"/><rect data-a="vertex" data-i="0" x="563" y="255" width="10" height="10" fill="#fff" stroke="#151515" stroke-width="2"/><rect data-a="vertex" data-i="1" x="273" y="429.5" width="10" height="10" fill="#fff" stroke="#151515" stroke-width="2"/><rect data-a="vertex" data-i="2" x="415" y="429.5" width="10" height="10" fill="#fff" stroke="#151515" stroke-width="2"/><rect data-a="vertex" data-i="3" x="563" y="429.5" width="10" height="10" fill="#fff" stroke="#151515" stroke-width="2"/><rect data-a="vertex" data-i="4" x="711" y="429.5" width="10" height="10" fill="#fff" stroke="#151515" stroke-width="2"/><rect data-a="vertex" data-i="5" x="171" y="603.5" width="10" height="10" fill="#fff" stroke="#151515" stroke-width="2"/><rect data-a="vertex" data-i="6" x="563" y="603.5" width="10" height="10" fill="#fff" stroke="#151515" stroke-width="2"/><rect data-a="vertex" data-i="7" x="957" y="603.5" width="10" height="10" fill="#fff" stroke="#151515" stroke-width="2"/><g data-a="model" data-i="1"><g opacity=".34" transform="translate(106 101) scale(.72 .78) translate(-106 -101)"><path transform="translate(106 101)" d="M-3 0C-7 -8 -11 -11 -14 -11C-19 -11 -21 -5 -21 0C-21 6 -18 10 -14 10C-10 10 -6 5 0 -3C5 -10 9 -11 12 -11C17 -11 20 -6 20 0C20 6 17 10 13 10C9 10 6 7 2 0" fill="none" stroke="#fff" stroke-width="3"/></g><g opacity=".34" transform="translate(1031 101) scale(1.2 1.1) translate(-1031 -101)"><path transform="translate(1031 101)" d="M13 -10L-4 -2C-9 0 -9 1 -4 3L13 11M13 -4L1 0.5L13 5" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/></g><g class="ml" opacity=".16"><rect x="-93" y="149" width="6" height="6" fill="#62c46a"/><text x="-63" y="162">swe-grep-env--allen-4b-instruct-2...</text></g><g class="ml" opacity=".16"><rect x="835" y="149" width="6" height="6" fill="#62c46a"/><text x="853" y="162">swe-grep-env--allen-4b-instruct-2...</text></g></g><g data-a="model" data-i="0"><g transform="translate(569 101) scale(.9) translate(-569 -101)"><path d="M569.00,83.30 L570.52,83.66 L571.88,84.65 L573.01,86.03 L573.93,87.47 L574.75,88.68 L575.65,89.48 L576.80,89.86 L578.26,89.97 L579.96,90.04 L581.72,90.33 L583.26,91.02 L584.33,92.15 L584.77,93.64 L584.60,95.32 L583.97,96.99 L583.18,98.50 L582.54,99.82 L582.30,101.00 L582.54,102.18 L583.18,103.50 L583.97,105.01 L584.60,106.68 L584.77,108.36 L584.33,109.85 L583.26,110.98 L581.72,111.67 L579.96,111.96 L578.26,112.03 L576.80,112.14 L575.65,112.52 L574.75,113.32 L573.93,114.53 L573.01,115.97 L571.88,117.35 L570.52,118.34 L569.00,118.70 L567.48,118.34 L566.12,117.35 L564.99,115.97 L564.07,114.53 L563.25,113.32 L562.35,112.52 L561.20,112.14 L559.74,112.03 L558.04,111.96 L556.28,111.67 L554.74,110.98 L553.67,109.85 L553.23,108.36 L553.40,106.68 L554.03,105.01 L554.82,103.50 L555.46,102.18 L555.70,101.00 L555.46,99.82 L554.82,98.50 L554.03,96.99 L553.40,95.32 L553.23,93.64 L553.67,92.15 L554.74,91.02 L556.28,90.33 L558.04,90.04 L559.74,89.97 L561.20,89.86 L562.35,89.48 L563.25,88.68 L564.07,87.47 L564.99,86.03 L566.12,84.65 L567.48,83.66 L569.00,83.30Z" fill="#fff"/><path d="M561 95L577 95L569 109Z" fill="none" stroke="#111" stroke-width="2.6" stroke-linejoin="round"/><path d="M566 90L561 95M579 99L577 95M565 110L569 109" stroke="#111" stroke-width="2.6"/></g><g class="ml"><rect x="370" y="149" width="6" height="6" fill="#62c46a"/><text x="388" y="162">swe-grep-env--allen-4b-instruct-2...</text></g></g></svg></div><h2 class="card__title">Inference</h2><p class="card__body">Dedicated or serverless inference for your custom models, with native LoRA support. <b>41.</b> 1-click deployment for any fine-tuned model. <b>42.</b> LoRA adapters served alongside base models. <b>44.</b> Zero config. No setup.</p><a class="btn btn--light card__cta" href="#">Book a call<svg class="arw" viewBox="0 0 18 16.5" aria-hidden="true"><path d="M1 8.25H16.5M9.5 1.5l6.9 6.75L9.5 15" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="square" stroke-linejoin="miter"/></svg></a></div></article>
+    </section>
+  </div>
+</main>
+<script>/* ==========================================================================
+   ENTRANCE — plays once on first load, then the page is completely static.
+   One master timeline built with the Web Animations API (no dependency).
+
+   Story (desktop, seconds):
+   0.00  headline — words rise out of per-line masks, "Lab." first
+   0.11  headline line 2
+   0.52  primary CTA settles, secondary 0.08s later
+   0.62  opening-viewport cards arrive in reading order (stagger 0.11)
+         +0.12  illustration panel settles inside the card (depth)
+         +0.30  the drawing builds itself (one bespoke build per panel)
+         +0.40  title → copy → CTA settle under the panel
+   ≈2.6  everything resolved; animations end, headline masks are unwrapped,
+         no transform / opacity / filter is left behind.
+   PC mode only: cards that start below the fold play this same card
+   entrance once, the first time they are scrolled into view.
+
+   Motion vocabulary (4 behaviours):
+   A  mask rise   — headline words, expo-out, inside overflow masks
+   B  settle      — copy & CTAs: short rise + opacity, expo-out
+   C  surface     — cards & panels: small rise / scale settle + opacity
+   D  build       — drawings: stroke draw-on, nodes/vertices pop to size,
+                    labels settle — each in the order the diagram "reads"
+   Background (page colour, card lighting textures) is never animated on its
+   own. On tablet / mobile, cards below the fold are left static.
+   ========================================================================== */
+(function () {
+  var root = document.documentElement;
+  if (!root.classList.contains('intro')) return;          // reduced motion / no WAAPI
+  var started = false;
+
+  function start() {
+    if (started) return;
+    started = true;
+    clearTimeout(window.__introFailsafe);
+    if (!root.classList.contains('intro')) return;         // failsafe already revealed the page: never re-hide it
+    try { run(); } catch (e) { root.classList.remove('intro'); }
+  }
+
+  function run() {
+    var EXPO = 'cubic-bezier(0.16, 1, 0.3, 1)';           // confident, long settle
+    var QUART = 'cubic-bezier(0.25, 1, 0.5, 1)';          // quicker settle for small parts
+    var DRAW = 'cubic-bezier(0.65, 0, 0.25, 1)';          // even, deliberate line draw
+    var vw = window.innerWidth, vh = window.innerHeight;
+    var k = vw < 700 ? 0.62 : vw < 1164 ? 0.8 : 1;       // calmer distances on small screens
+    var anims = [];
+    var undo = [];
+
+    function px(n) { return (n * k).toFixed(1) + 'px'; }
+    function authoredOpacity(el) {
+      var o = parseFloat(getComputedStyle(el).opacity);
+      return isNaN(o) ? 1 : o;
+    }
+    function play(el, frames, delay, dur, ease) {
+      var a = el.animate(frames, {
+        delay: delay * 1000, duration: dur * 1000,
+        easing: ease || EXPO, fill: 'backwards'          // holds the first frame during the delay only
+      });
+      anims.push(a);
+      return a;
+    }
+    function svgPivot(el, origin) {                      // transforms about the element's own box
+      var prev = el.getAttribute('style');
+      el.style.transformBox = 'fill-box';
+      el.style.transformOrigin = origin || '50% 50%';
+      undo.push(function () { prev === null ? el.removeAttribute('style') : el.setAttribute('style', prev); });
+    }
+    function $(sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); }
+    function byIndex(a, b) { return (+a.dataset.i) - (+b.dataset.i); }
+
+    /* ---------------- A. headline: per-line word masks ---------------- */
+    var h1 = document.querySelector('.hero__title');
+    var original = h1.innerHTML;
+    var tokens = [];                                       // [{node|range, rect}]
+    (function collect(node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+        if (n.nodeType === 3) {
+          var parts = n.textContent.split(/(\s+)/);
+          var frag = document.createDocumentFragment();
+          parts.forEach(function (p) {
+            if (!p) return;
+            if (/^\s+$/.test(p)) { frag.appendChild(document.createTextNode(p)); return; }
+            var t = document.createTextNode(p);
+            frag.appendChild(t);
+            tokens.push({ text: t });
+          });
+          n.parentNode.replaceChild(frag, n);
+        } else if (n.nodeType === 1 && n.tagName === 'EM') {
+          tokens.push({ el: n });                          // "Lab." is one brand word
+        }
+      });
+    })(h1);
+    // where every word sits in the untouched layout
+    tokens.forEach(function (t) {
+      var r = document.createRange();
+      if (t.el) r.selectNode(t.el); else r.selectNode(t.text);
+      t.before = r.getBoundingClientRect();
+    });
+    var masks = tokens.map(function (t) {
+      var m = document.createElement('span'); m.className = 'iw';
+      var inner = document.createElement('span'); inner.className = 'iw__in';
+      var target = t.el || t.text;
+      target.parentNode.replaceChild(m, target);
+      inner.appendChild(target); m.appendChild(inner);
+      return m;
+    });
+    // safety: masks must not change a single line break or position
+    var stable = tokens.every(function (t) {               // same glyph boxes as before wrapping
+      var r = document.createRange();
+      if (t.el) r.selectNode(t.el); else r.selectNode(t.text);
+      var a = t.before, b = r.getBoundingClientRect();
+      return Math.abs(a.left - b.left) < 1 && Math.abs(a.top - b.top) < 1;
+    });
+    if (stable) {
+      var lineTops = [];
+      masks.forEach(function (m) {
+        var top = Math.round(m.getBoundingClientRect().top);
+        if (lineTops.indexOf(top) < 0) lineTops.push(top);
+        m._line = lineTops.indexOf(top);
+      });
+      var count = {};
+      masks.forEach(function (m) {
+        var j = count[m._line] = (count[m._line] || 0) + 1;
+        play(m.firstChild,
+          [{ transform: 'translateY(112%)' }, { transform: 'translateY(0)' }],
+          0.08 + m._line * 0.11 + (j - 1) * 0.034, 1.05, EXPO);
+      });
+      undo.push(function () { h1.innerHTML = original; });
+    } else {                                              // fallback: one clean masked block
+      h1.innerHTML = original;
+      play(h1, [{ clipPath: 'inset(0 0 100% 0)', transform: 'translateY(' + px(18) + ')' },
+                { clipPath: 'inset(0 0 0% 0)', transform: 'none' }], 0.08, 1.1, EXPO);
+    }
+
+    /* ---------------- B. hero CTAs ---------------- */
+    $('.hero__cta .btn').forEach(function (b, i) {
+      play(b, [{ opacity: 0, transform: 'translateY(' + px(14) + ')' },
+               { opacity: 1, transform: 'none' }], 0.52 + i * 0.08, 0.85, EXPO);
+    });
+
+    /* ---------------- D. drawing builds (SVG user units) ---------------- */
+    function drawOn(el, delay, dur, extra) {
+      var from = { strokeDasharray: '1 1', strokeDashoffset: '1' };
+      var to = { strokeDasharray: '1 1', strokeDashoffset: '0' };
+      if (extra) { for (var key in extra[0]) from[key] = extra[0][key]; for (key in extra[1]) to[key] = extra[1][key]; }
+      play(el, [from, to], delay, dur, DRAW);
+    }
+    function settle(el, delay, dur, dy) {
+      var o = authoredOpacity(el);
+      play(el, [{ opacity: 0, transform: 'translateY(' + (dy || 0) + 'px)' },
+                { opacity: o, transform: 'translateY(0)' }], delay, dur, EXPO);
+    }
+    function fade(el, delay, dur) {
+      var o = authoredOpacity(el);
+      play(el, [{ opacity: 0 }, { opacity: o }], delay, dur, QUART);
+    }
+    function pop(el, delay, dur, from) {
+      svgPivot(el);
+      var o = authoredOpacity(el);
+      play(el, [{ opacity: 0, transform: 'scale(' + (from || 0.4) + ')' },
+                { opacity: o, transform: 'scale(1)' }], delay, dur, EXPO);
+    }
+
+    var build = {
+      /* RL loop: rings bloom, the loop draws itself INIT → DEVELOP → EVAL → PUSH,
+         each node + its command lands as the line reaches it, centre mark last. */
+      env: function (svg, d) {
+        $('[data-a="ring"]', svg).sort(byIndex).forEach(function (el, i) {
+          svgPivot(el);
+          play(el, [{ opacity: 0, transform: 'scale(0.86)' }, { opacity: 1, transform: 'scale(1)' }],
+               d + i * 0.06, 1.2, EXPO);
+        });
+        drawOn(svg.querySelector('[data-a="loop"]'), d + 0.12, 1.15,
+               [{ fillOpacity: 0 }, { fillOpacity: 1 }]);
+        var hits = [0.10, 0.40, 0.66, 0.92];               // where the draw passes each vertex
+        $('[data-a="node"]', svg).sort(byIndex).forEach(function (el, i) { pop(el, d + hits[i], 0.6, 0.35); });
+        $('[data-a="label"]', svg).sort(byIndex).forEach(function (el, i) { settle(el, d + hits[i] + 0.06, 0.75, 8); });
+        fade(svg.querySelector('[data-a="cross"]'), d + 1.0, 0.7);
+        pop(svg.querySelector('[data-a="x"]'), d + 1.02, 0.7, 0.6);
+      },
+      /* Evaluations: list items cascade into their depth-faded stack,
+         the EVALUATE action lands last inside the first item. */
+      eval: function (svg, d) {
+        $('[data-a="item"]', svg).sort(byIndex).forEach(function (el, i) { settle(el, d + i * 0.12, 0.95, 22); });
+        settle(svg.querySelector('[data-a="evbtn"]'), d + 0.34, 0.75, 8);
+      },
+      /* Training: axes appear, the reward curve is plotted left → right,
+         the 0.92 readout lands as the curve arrives, config rows follow. */
+      train: function (svg, d) {
+        fade(svg.querySelector('[data-a="grid"]'), d, 0.8);
+        fade(svg.querySelector('[data-a="axis"]'), d + 0.05, 0.7);
+        drawOn(svg.querySelector('[data-a="curve"]'), d + 0.10, 1.45);
+        settle(svg.querySelector('[data-a="value"]'), d + 1.25, 0.7, 6);
+        var rule = svg.querySelector('[data-a="rule"]');
+        svgPivot(rule, '0% 50%');
+        var ro = authoredOpacity(rule);
+        play(rule, [{ opacity: 0, transform: 'scaleX(0)' }, { opacity: ro, transform: 'scaleX(1)' }], d + 0.2, 1.0, EXPO);
+        $('[data-a="row"]', svg).sort(byIndex).forEach(function (el, i) { settle(el, d + 0.38 + i * 0.07, 0.7, 8); });
+      },
+      /* Inference: the selected model surfaces, the globe forms from the
+         horizon up, vertices land, then deployment routes trace out. */
+      infer: function (svg, d) {
+        $('[data-a="model"]', svg).sort(byIndex).forEach(function (el, i) { settle(el, d + i * 0.12, 0.8, 8); });
+        var globe = svg.querySelector('[data-a="globe"]');
+        svgPivot(globe, '50% 100%');
+        play(globe, [{ opacity: 0, transform: 'scale(0.965)' }, { opacity: 1, transform: 'scale(1)' }], d + 0.1, 1.1, EXPO);
+        $('[data-a="vertex"]', svg).sort(byIndex).forEach(function (el, i) { pop(el, d + 0.32 + i * 0.045, 0.55, 0.3); });
+        $('[data-a="route"]', svg).sort(byIndex).forEach(function (el, i) { drawOn(el, d + 0.55 + i * 0.08, 0.8); });
+      }
+    };
+    /* ---------------- C + D. one card's entrance (shared by load + scroll) ---------------- */
+    function cardEntrance(card, t) {
+      play(card, [{ opacity: 0, transform: 'translateY(' + px(26) + ')' },
+                  { opacity: 1, transform: 'none' }], t, 1.15, EXPO);
+
+      var panel = card.querySelector('.panel');
+      play(panel, [{ opacity: 0, transform: 'translateY(' + px(10) + ') scale(0.975)' },
+                   { opacity: 1, transform: 'none' }], t + 0.12, 1.15, EXPO);
+
+      [['.card__title', 0.40], ['.card__body', 0.48], ['.card__cta', 0.58]].forEach(function (p) {
+        var el = card.querySelector(p[0]);
+        play(el, [{ opacity: 0, transform: 'translateY(' + px(12) + ')' },
+                  { opacity: 1, transform: 'none' }], t + p[1], 0.85, EXPO);
+      });
+
+      var kind = (card.className.match(/card--(\w+)/) || [])[1];
+      if (build[kind]) build[kind](card.querySelector('.art'), t + 0.30);   // drawing build
+    }
+    function readingOrder(a, b) {
+      var ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect();
+      return Math.abs(ra.top - rb.top) > 8 ? ra.top - rb.top : ra.left - rb.left;
+    }
+    // runs one group of animations to completion, then hands every element
+    // back to its authored state (no transforms / opacity / styles left behind)
+    function settleGroup(list, undoList, then) {
+      Promise.all(list.map(function (a) { return a.finished; })).then(done, done);
+      function done() {
+        if (done.ran) return; done.ran = true;
+        list.forEach(function (a) { try { a.cancel(); } catch (e) {} });
+        undoList.forEach(function (f) { f(); });
+        if (then) then();
+      }
+    }
+
+    /* opening viewport: every card the first view shows enters with the hero */
+    var allCards = $('.card');
+    var firstView = allCards.filter(function (c) {
+      return c.getBoundingClientRect().top < vh - 24;
+    }).sort(readingOrder);
+    firstView.forEach(function (card, n) { cardEntrance(card, 0.62 + n * 0.11); });
+
+    /* PC mode (2x2 board, >= 1164px): cards below the fold wait, then play the
+       very same entrance once, the first time they are scrolled into view.
+       Tablet / mobile keep them static. */
+    var deferred = vw >= 1164 && 'IntersectionObserver' in window
+      ? allCards.filter(function (c) { return firstView.indexOf(c) < 0; }) : [];
+    deferred.forEach(function (c) { c.classList.add('card--await'); });
+
+    root.classList.remove('intro');                        // first frames already applied
+
+    var initialAnims = anims, initialUndo = undo;
+    settleGroup(initialAnims, initialUndo, function () { root.classList.add('intro-done'); });
+
+    if (deferred.length) {
+      var lastStart = -1;                                  // keeps a row arriving together staggered
+      var io = new IntersectionObserver(function (entries) {
+        entries.filter(function (e) { return e.isIntersecting; })
+               .map(function (e) { return e.target; })
+               .sort(readingOrder)
+               .forEach(function (card) {
+          io.unobserve(card);                              // once per card, ever
+          var now = performance.now() / 1000;
+          var delay = Math.max(0, lastStart + 0.11 - now);
+          lastStart = now + delay;
+          anims = []; undo = [];
+          try {
+            cardEntrance(card, delay);
+          } catch (e) {
+            anims.forEach(function (a) { a.cancel(); });
+            anims = [];
+          }
+          card.classList.remove('card--await');           // first frame is already applied
+          settleGroup(anims, undo);
+        });
+        if (!deferred.some(function (c) { return c.classList.contains('card--await'); })) io.disconnect();
+      }, { rootMargin: '0px 0px -6% 0px', threshold: 0 });
+      deferred.forEach(function (c) { io.observe(c); });
+    }
+  }
+
+  var fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+  Promise.race([fontsReady, new Promise(function (r) { setTimeout(r, 700); })]).then(function () {
+    requestAnimationFrame(start);
+  });
+})();
+</script>
+</body>
+</html>

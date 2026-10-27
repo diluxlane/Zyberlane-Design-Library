@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-073/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#020305">
+<title>Clawd — We already picked the best one</title>
+<script>
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('entrance-pending');
+    window.__clawdEntranceFallback = setTimeout(function () {
+      document.documentElement.classList.remove('entrance-pending');
+    }, 4000);
+  }
+</script>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<main class="hero" aria-labelledby="hero-title">
+  <img class="hero__art" src="assets/clawd-hero.webp" alt="" width="1570" height="1002" decoding="async" fetchpriority="high">
+  <div class="hero__scrim" aria-hidden="true"></div>
+
+  <div class="stage">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Clawd home">
+        <svg class="brand__mark" viewBox="0 0 44 38" aria-hidden="true" focusable="false">
+          <defs><linearGradient id="clawd-mark" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff7d14"/><stop offset=".55" stop-color="#f96b03"/><stop offset="1" stop-color="#ef6200"/></linearGradient></defs>
+          <g fill="url(#clawd-mark)" stroke="url(#clawd-mark)" stroke-width="1.6" stroke-linejoin="round"><path d="M0.80 1.20H21.32L23.74 4.00L21.32 6.80H0.80Z"/><path d="M29.48 1.20H43.20V6.80H29.48L27.06 4.00Z"/><path d="M0.80 11.20H14.62L17.04 14.00L14.62 16.80H0.80Z"/><path d="M22.78 11.20H43.20V16.80H22.78L20.36 14.00Z"/><path d="M0.80 21.20H21.32L23.74 24.00L21.32 26.80H0.80Z"/><path d="M29.48 21.20H43.20V26.80H29.48L27.06 24.00Z"/><path d="M0.80 31.20H14.62L17.04 34.00L14.62 36.80H0.80Z"/><path d="M22.78 31.20H43.20V36.80H22.78L20.36 34.00Z"/></g>
+        </svg>
+        <span class="brand__name">Clawd</span>
+      </a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Open menu"><span class="burger__lines" aria-hidden="true"></span></button>
+      <div class="menu" id="site-menu">
+        <nav class="navwrap" aria-label="Primary">
+          <ul class="nav">
+            <li><a class="pill" style="--w:87.5" href="#features">Features</a></li>
+            <li><a class="pill" style="--w:69.5" href="#cards">Cards</a></li>
+            <li><a class="pill" style="--w:95.5" href="#spending">Spending</a></li>
+          </ul>
+        </nav>
+        <a class="cta-ghost" href="#early-access">Get Early Access</a>
+      </div>
+    </header>
+
+    <h1 class="headline" id="hero-title"><span class="l1" style="--ls:-0.0487">We already</span><span style="--ls:-0.0417">picked the</span><span style="--ls:-0.0432">best one</span></h1>
+
+    <div class="spacer" aria-hidden="true"></div>
+
+    <div class="pitch">
+      <p class="pitch__copy">The claw always lands on the same card <span class="dash">–</span> because there's only one that actually pays you back.</p>
+    </div>
+    <div class="cta-row" id="early-access">
+      <a class="cta-primary" href="#signup">Get Early Access</a>
+      <a class="cta-arrow" href="#signup" aria-label="Get early access">
+        <svg viewBox="0 0 17 13" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.2 6.5h14.3M10.4 1.4l5.1 5.1-5.1 5.1"/></svg>
+      </a>
+    </div>
+
+    <div class="bottom">
+      <p class="tagline"><span style="--ls:0.0074">For people who</span> <span style="--ls:0.0017">actually track their</span> <span style="--ls:0.023">spending</span></p>
+      <ul class="stats">
+        <li class="stat"><span class="stat__value">0%</span><span class="stat__label">APR for 15 months</span></li>
+        <li class="stat"><span class="stat__value">5%</span><span class="stat__label">Cashback on all</span></li>
+      </ul>
+    </div>
+  </div>
+</main>
+<script src="assets/entrance.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

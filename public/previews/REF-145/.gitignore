@@ -1,0 +1,6 @@
+# Only deployable client files are tracked.
+*
+!.gitignore
+!index.html
+!assets/
+!assets/**

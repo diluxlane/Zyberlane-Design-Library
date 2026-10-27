@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-086/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Create Finance account</title>
+<script>
+if ('animate' in Element.prototype && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.documentElement.classList.add('entrance-pending');
+  window.__financeEntranceFallback = setTimeout(() => {
+    if (window.__financeEntranceFinish) window.__financeEntranceFinish();
+    else document.documentElement.classList.remove('entrance-pending');
+  }, 3200);
+}
+</script>
+<style>
+/* Urbanist font assets */
+@font-face{font-family:"Urbanist";font-style:normal;font-weight:300;font-display:block;src:url(assets/urbanist-300.woff2) format("woff2");}
+@font-face{font-family:"Urbanist";font-style:normal;font-weight:400;font-display:block;src:url(assets/urbanist-400.woff2) format("woff2");}
+@font-face{font-family:"Urbanist";font-style:normal;font-weight:500;font-display:block;src:url(assets/urbanist-500.woff2) format("woff2");}
+@font-face{font-family:"Urbanist";font-style:normal;font-weight:600;font-display:block;src:url(assets/urbanist-600.woff2) format("woff2");}
+
+/* ─────────────────────────────────────────────────────────────
+   SCALE ARCHITECTURE
+   Every measurement below is the measured reference value in
+   design pixels (canvas 847 × 590), written as "Nu".  The build
+   step expands "Nu" → calc(N * var(--u)).  --u is one design
+   pixel expressed in real CSS px, derived from the viewport:
+
+   • Desktop / landscape: --u = min(vw/847, vh/590) — the whole
+     composition scales uniformly.  The shell is always at least
+     100dvh tall and the cards absorb any extra height (content
+     stays optically centred), so there is never empty space
+     above or below the layout.
+   • Portrait / narrow: the two panels stack; the sign-up card
+     fills the first screen, the showcase panel follows.
+   ───────────────────────────────────────────────────────────── */
+:root{
+  --u: min(calc(100vw / 847), calc(100dvh / 590));
+  --bg:#05060f;
+  --card:#0a0b14;
+  --panel:#090a13;
+  --field:#10111a;
+  --field-line:rgba(255,255,255,.075);
+  --accent:#c0b4ff;
+  --accent-ink:#22203b;
+  --lilac:#c9c1f7;
+  color-scheme: dark;
+}
+@supports not (height: 100dvh){
+  :root{ --u: min(calc(100vw / 847), calc(100vh / 590)); }
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; background:var(--bg); }
+body{
+  font-family:"Urbanist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color:#fff;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:geometricPrecision;
+  overflow-x:hidden;
+}
+
+/* Page: full-bleed background, composition centred horizontally */
+.page{
+  position:relative;
+  min-height:100vh;
+  min-height:100dvh;
+  display:flex;
+  justify-content:center;
+  overflow:hidden;
+  isolation:isolate;
+}
+
+/* Shell = the 847-wide design canvas. Height never shorter than the viewport. */
+.shell{
+  position:relative;
+  width:calc(847 * var(--u));
+  min-height:100vh;
+  min-height:100dvh;
+  height:max(100vh, calc(590 * var(--u)));
+  height:max(100dvh, calc(590 * var(--u)));
+  flex:none;
+}
+
+/* ── Ambient glows living on the page canvas ── */
+/* Glow layers bleed 100vw past both sides of the shell so wide screens never show a seam */
+.glow{ position:absolute; top:0; bottom:0; left:-100vw; right:-100vw; pointer-events:none; z-index:0; }
+/* Fitted to the reference: elliptical falloff, alpha stops sampled every 1/11 of the radius */
+.glow--top{
+  background:radial-gradient(calc(420 * var(--u)) calc(155 * var(--u)) at calc(100vw + calc(100 * var(--u))) calc(-60 * var(--u)),
+    rgba(170,159,226,1) 0%, rgba(170,159,226,1) 36.4%, rgba(170,159,226,.83) 45.5%,
+    rgba(170,159,226,.551) 54.5%, rgba(170,159,226,.273) 63.6%, rgba(170,159,226,.073) 72.7%, rgba(170,159,226,0) 81.8%);
+}
+.glow--bottom{
+  background:radial-gradient(calc(330 * var(--u)) calc(240 * var(--u)) at calc(100vw + calc(660 * var(--u))) calc(100% - calc(130 * var(--u))),
+    rgba(120,112,175,.62) 0%, rgba(120,112,175,.518) 36.4%, rgba(120,112,175,.367) 45.5%, rgba(120,112,175,.231) 54.5%,
+    rgba(120,112,175,.136) 63.6%, rgba(120,112,175,.081) 72.7%, rgba(120,112,175,.047) 81.8%, rgba(120,112,175,.033) 90.9%, rgba(120,112,175,0) 100%);
+}
+
+/* ── Two panels ── */
+.panel{
+  position:absolute;
+  top:calc(50 * var(--u));
+  bottom:calc(45 * var(--u));
+  width:calc(357 * var(--u));
+  z-index:1;
+  overflow:hidden;
+}
+.panel--form{
+  left:calc(49 * var(--u));
+  background:var(--card);
+  border-radius:calc(6 * var(--u));
+}
+.panel--show{
+  left:calc(436.5 * var(--u));
+  border-radius:calc(6 * var(--u));
+  background-color:var(--panel);
+  /* Both layers are a fixed 357×495 plate pinned to the panel bottom, so a
+     taller (stretched) panel only adds plain surface above — the glow never distorts. */
+  background-image:
+    radial-gradient(calc(210.0 * var(--u)) calc(200 * var(--u)) at calc(179 * var(--u)) calc(330 * var(--u)),
+      rgba(5,6,15,1) 0%, rgba(5,6,15,.95) 25%, rgba(5,6,15,calc(.72 * 1)) 47%, rgba(5,6,15,calc(.6 * 1)) 57%, rgba(5,6,15,calc(.34 * 1)) 77%, rgba(5,6,15,0) 100%),
+    linear-gradient(180deg, #090a13 0, #090a13 calc(235 * var(--u)), #0a0b16 calc(245 * var(--u)), #0c0d18 calc(265 * var(--u)), #0f0f1a calc(285 * var(--u)), #13141f calc(305 * var(--u)), #191929 calc(325 * var(--u)),
+      #232234 calc(345 * var(--u)), #2f2e43 calc(365 * var(--u)), #3f3d5b calc(385 * var(--u)), #535073 calc(405 * var(--u)), #6a658e calc(425 * var(--u)), #7e78ae calc(445 * var(--u)), #9288c2 calc(465 * var(--u)), #a096d0 calc(485 * var(--u)), #a59bd6 calc(495 * var(--u)));
+  background-size:100% calc(495 * var(--u)), 100% calc(495 * var(--u));
+  background-position:0 100%, 0 100%;
+  background-repeat:no-repeat;
+}
+/* Fixed 357×495 design frame, kept vertically centred in each panel */
+.frame{
+  position:absolute;
+  left:0; top:calc(50% - calc(247.5 * var(--u)));
+  width:calc(357 * var(--u)); height:calc(495 * var(--u));
+}
+.panel--show .frame{ z-index:1; }
+
+/* ── Sign-up form ── */
+.title{
+  position:absolute; left:0; right:0; top:calc(54 * var(--u)); margin:0;
+  font-size:calc(19.4 * var(--u)); line-height:calc(20 * var(--u)); font-weight:500; letter-spacing:0;
+  text-align:center; color:#fff;
+}
+.sub{
+  position:absolute; left:0; right:0; top:calc(88 * var(--u)); margin:0;
+  font-size:calc(14.5 * var(--u)); line-height:calc(17 * var(--u)); font-weight:300;
+  text-align:center; color:#eceef2;
+}
+form{ margin:0; }
+.label{
+  position:absolute; left:calc(61 * var(--u)); display:block;
+  font-size:calc(10.7 * var(--u)); line-height:calc(12 * var(--u)); font-weight:400; color:#d3d5d9;
+}
+.field{
+  position:absolute; left:calc(60 * var(--u)); width:calc(238 * var(--u)); height:calc(29 * var(--u));
+  border-radius:calc(6 * var(--u));
+  background:var(--field);
+  border:calc(1 * var(--u)) solid var(--field-line);
+  font:inherit;
+  font-size:calc(9.7 * var(--u)); font-weight:300;
+  color:#e8e9ee;
+  padding:0 0 0 calc(7 * var(--u));
+  outline:none;
+  transition:border-color .2s, box-shadow .2s;
+  -webkit-appearance:none; appearance:none;
+}
+.field::placeholder{ color:#83838c; opacity:1; }
+.field:focus{ border-color:rgba(192,180,255,.55); box-shadow:0 0 0 calc(3 * var(--u)) rgba(192,180,255,.12); }
+.btn{
+  position:absolute; left:calc(60 * var(--u)); width:calc(238 * var(--u));
+  display:flex; align-items:center; justify-content:center;
+  font:inherit; cursor:pointer;
+  border-radius:calc(6 * var(--u));
+  -webkit-appearance:none; appearance:none;
+  transition:filter .2s, background-color .2s, border-color .2s, transform .1s;
+}
+.btn:active{ transform:translateY(calc(.5 * var(--u))); }
+.btn--primary{
+  height:calc(30 * var(--u)); border:0;
+  background:var(--accent); color:var(--accent-ink);
+  font-size:calc(9.5 * var(--u)); font-weight:400;
+}
+.btn--primary:hover{ filter:brightness(1.05); }
+.btn--ghost{
+  height:calc(29 * var(--u));
+  background:var(--field);
+  border:calc(1 * var(--u)) solid var(--field-line);
+  color:#dcdde1;
+  font-size:calc(9.5 * var(--u)); font-weight:400;
+  gap:calc(8 * var(--u));
+}
+.btn--ghost:hover{ background:#14151f; border-color:rgba(255,255,255,.12); }
+.btn--ghost svg{ width:calc(12 * var(--u)); height:calc(12 * var(--u)); flex:none; display:block; }
+.btn:focus-visible,.legal a:focus-visible{ outline:calc(1.5 * var(--u)) solid var(--accent); outline-offset:calc(2 * var(--u)); }
+.legal{
+  position:absolute; left:0; right:0; top:calc(434 * var(--u)); margin:0;
+  text-align:center; font-size:calc(9.68 * var(--u)); line-height:calc(12 * var(--u)); font-weight:300; color:#70717a;
+}
+.legal a{ color:#d6d3f2; font-weight:600; text-decoration:underline; text-underline-offset:calc(1.5 * var(--u)); text-decoration-thickness:calc(.8 * var(--u)); }
+
+/* ── Showcase panel ── */
+.rule{ position:absolute; left:calc(247 * var(--u)); right:0; top:calc(152 * var(--u)); height:calc(1 * var(--u)); background:rgba(255,255,255,.075); }
+.card-a{
+  position:absolute; left:calc(55 * var(--u)); top:calc(57 * var(--u)); width:calc(193 * var(--u)); height:calc(137 * var(--u));
+  border-radius:calc(10 * var(--u)); overflow:hidden; z-index:2;
+  background:radial-gradient(calc(65.0 * var(--u)) calc(50.0 * var(--u)) at calc(2.0 * var(--u)) calc(17.0 * var(--u)), rgba(160,150,220,0.27) 0%, rgba(160,150,220,calc(0.27 * .55)) 45%, rgba(160,150,220,0) 100%), #0a0b14;
+  box-shadow:inset 0 0 0 calc(1 * var(--u)) rgba(255,255,255,.1), 0 calc(6 * var(--u)) calc(18 * var(--u)) rgba(0,0,0,.45);
+}
+.card-a__sheen{
+  position:absolute; left:calc(2.0 * var(--u)); top:calc(-9.0 * var(--u)); width:calc(220.0 * var(--u)); height:calc(156 * var(--u)); border-radius:50%;
+  border:calc(10.0 * var(--u)) solid rgba(178,168,240,1);
+  filter:blur(calc(6.75 * var(--u)));
+  -webkit-mask:linear-gradient(90deg, #000 30%, rgba(0,0,0,0.23) 85%);
+          mask:linear-gradient(90deg, #000 30%, rgba(0,0,0,0.23) 85%);
+}
+/* Glass sheen: blurred elliptical rim light, faded out below the mid-line */
+.card-a__glow{
+  position:absolute; inset:0; pointer-events:none;
+  -webkit-mask:linear-gradient(180deg, #000 0, #000 calc(36 * var(--u)), rgba(0,0,0,0) calc(70 * var(--u)));
+          mask:linear-gradient(180deg, #000 0, #000 calc(36 * var(--u)), rgba(0,0,0,0) calc(70 * var(--u)));
+}
+.card-a__haze{
+  position:absolute; left:calc(-6 * var(--u)); top:calc(-18 * var(--u)); width:calc(234 * var(--u)); height:calc(176 * var(--u)); border-radius:50%;
+  border:calc(16.0 * var(--u)) solid rgba(178,168,240,0.56);
+  filter:blur(calc(14 * var(--u)));
+  -webkit-mask:linear-gradient(90deg, #000 30%, rgba(0,0,0,0.23) 85%);
+          mask:linear-gradient(90deg, #000 30%, rgba(0,0,0,0.23) 85%);
+}
+.card-a__label{ position:absolute; left:calc(14 * var(--u)); top:calc(18.5 * var(--u)); font-size:calc(7.4 * var(--u)); line-height:calc(8 * var(--u)); font-weight:400; color:#dcdbe8; }
+.card-a__value{ position:absolute; left:calc(13.5 * var(--u)); top:calc(35 * var(--u)); font-size:calc(20.8 * var(--u)); line-height:calc(20 * var(--u)); font-weight:300; color:var(--lilac); letter-spacing:calc(-.2 * var(--u)); }
+.card-a__tip{
+  position:absolute; left:calc(90 * var(--u)); top:calc(70 * var(--u)); width:calc(61 * var(--u)); height:calc(28 * var(--u));
+  background:linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,calc(0.09 * .6)));
+  filter:blur(calc(1.4 * var(--u)));
+}
+.card-a__tiptext{ position:absolute; left:calc(107 * var(--u)); top:calc(71 * var(--u)); font-size:calc(8.5 * var(--u)); line-height:calc(8 * var(--u)); font-weight:400; color:#d6d1f6; }
+.card-a svg, .card-b svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+
+.card-b{
+  position:absolute; left:calc(111 * var(--u)); top:calc(186 * var(--u)); width:calc(270 * var(--u)); height:calc(100 * var(--u));
+  border-radius:calc(8 * var(--u)); overflow:hidden; z-index:1;
+  background:
+    radial-gradient(53.0% 105.0% at -2.0% 100%, rgba(140,131,190,0.9) 0%, rgba(110,103,160,calc(0.9 * .7)) 30%, rgba(60,57,92,calc(0.9 * .35)) 65%, rgba(10,11,20,0) 100%),
+    radial-gradient(30.0% 87.5% at 100% 100%, rgba(120,113,165,0.94) 0%, rgba(70,67,104,calc(0.94 * .5)) 50%, rgba(10,11,20,0) 100%),
+    linear-gradient(180deg, #07080f 0%, #090a12 65.0%, #1c1c2c 80%, #3a3853 100%);
+  box-shadow:inset 0 calc(1 * var(--u)) 0 rgba(255,255,255,.07), inset calc(1 * var(--u)) 0 0 rgba(255,255,255,.07);
+}
+.card-b text{ font-family:"Urbanist", sans-serif; }
+
+.hero{
+  position:absolute; left:0; right:0; top:calc(339 * var(--u)); margin:0;
+  font-size:calc(14.6 * var(--u)); line-height:calc(20 * var(--u)); font-weight:500; text-align:center; color:#f1f1f4;
+}
+.blurb{
+  position:absolute; left:0; right:0; top:calc(387.5 * var(--u)); margin:0;
+  font-size:calc(9.8 * var(--u)); line-height:calc(13 * var(--u)); font-weight:300; text-align:center; color:#9c99b6;
+  white-space:nowrap;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Portrait / narrow screens — stacked composition.
+   One design pixel = available width / 357 (capped so the card
+   never grows past a comfortable reading size).
+   ───────────────────────────────────────────────────────────── */
+@media (max-aspect-ratio: 1/1), (max-width: 700px){
+  :root{ --u: min(calc((100vw - 32px) / 357), 1.45px); }
+  body{ overflow-y:auto; }
+  .page{ overflow:hidden; }
+  .shell{
+    width:calc(357 * var(--u));
+    height:auto;
+    min-height:100dvh;
+    display:flex; flex-direction:column; gap:calc(30 * var(--u));
+    padding:16px 0;
+  }
+  .panel{ position:relative; top:auto; bottom:auto; left:auto; flex:none; }
+  .panel--form{ min-height:max(calc(495 * var(--u)), calc(100dvh - 32px)); }
+  .panel--show{ height:calc(495 * var(--u)); }
+  .glow--bottom{
+    background:radial-gradient(calc(330 * var(--u)) calc(240 * var(--u)) at calc(100vw + calc(178 * var(--u))) calc(100% - calc(140 * var(--u))),
+      rgba(120,112,175,.62) 0%, rgba(120,112,175,.518) 36.4%, rgba(120,112,175,.367) 45.5%, rgba(120,112,175,.231) 54.5%,
+      rgba(120,112,175,.136) 63.6%, rgba(120,112,175,.081) 72.7%, rgba(120,112,175,.047) 81.8%, rgba(120,112,175,.033) 90.9%, rgba(120,112,175,0) 100%);
+  }
+}
+
+/* Short landscape screens (phones on their side): don't shrink below a legible
+   size — the shell grows past 100dvh and the page scrolls instead. */
+@media (max-height: 520px) and (min-aspect-ratio: 1/1) and (min-width: 701px){
+  :root{ --u: min(calc(100vw / 847), max(calc(100dvh / 590), 0.9px)); }
+}
+
+/* Initial states only. Removing entrance-pending restores every authored style. */
+.entrance-pending .title{
+  opacity:0; transform:translateY(calc(8 * var(--u)));
+  clip-path:inset(0 0 100% 0);
+}
+.entrance-pending .sub,
+.entrance-pending .label,
+.entrance-pending .field,
+.entrance-pending .btn{
+  opacity:0; transform:translateY(calc(5 * var(--u)));
+}
+.entrance-pending .legal{ opacity:0; }
+@media (min-width:701px) and (min-aspect-ratio:1/1){
+  .entrance-pending .card-a{
+    opacity:0; transform:translateY(calc(6 * var(--u))) scale(.97);
+  }
+  .entrance-pending .card-b{
+    opacity:0; transform:translateY(calc(8 * var(--u))) scale(.985);
+  }
+  .entrance-pending .hero{
+    opacity:0; transform:translateY(calc(6 * var(--u)));
+    clip-path:inset(0 0 100% 0);
+  }
+  .entrance-pending .blurb{
+    opacity:0; transform:translateY(calc(5 * var(--u)));
+  }
+}
+@media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="shell">
+    <div class="glow glow--top" aria-hidden="true"></div>
+    <div class="glow glow--bottom" aria-hidden="true"></div>
+
+    <!-- ── Sign-up ── -->
+    <section class="panel panel--form" aria-labelledby="t">
+      <div class="frame">
+        <h1 class="title" id="t">Create Finance account</h1>
+        <p class="sub">Start your experience with Finance<br>by signing in or signing up.</p>
+
+        <form action="#" onsubmit="return false" novalidate>
+          <label class="label" for="email" style="top:calc(151 * var(--u))">Email address</label>
+          <input class="field" id="email" type="email" name="email" autocomplete="email" placeholder="Enter your email address" style="top:calc(169 * var(--u))">
+
+          <label class="label" for="password" style="top:calc(206 * var(--u))">Password</label>
+          <input class="field" id="password" type="password" name="password" autocomplete="new-password" placeholder="Enter your password" style="top:calc(223 * var(--u))">
+
+          <button class="btn btn--primary" type="submit" style="top:calc(270 * var(--u))">Sign up</button>
+        </form>
+
+        <button class="btn btn--ghost" type="button" style="top:calc(343 * var(--u))">
+          <!-- Neutral sign-in glyph: replace with the provider's official mark -->
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="#e7e6f5" stroke-width="2.2"/><path d="M12 7v10M7 12h10" stroke="#c0b4ff" stroke-width="2.2" stroke-linecap="round"/></svg>
+          <span>Continue with Google</span>
+        </button>
+        <button class="btn btn--ghost" type="button" style="top:calc(379 * var(--u))">
+          <!-- Neutral sign-in glyph: replace with the provider's official mark -->
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="#e7e6f5" stroke-width="2.2"/><path d="M8 12.5l2.6 2.6L16 9.5" fill="none" stroke="#c0b4ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Continue with Microsoft</span>
+        </button>
+
+        <p class="legal">By creating an account, you agree to our <a href="#">Privacy Policy</a></p>
+      </div>
+    </section>
+
+    <!-- ── Showcase ── -->
+    <section class="panel panel--show" aria-labelledby="h">
+      <div class="frame">
+        <div class="rule" aria-hidden="true"></div>
+
+        <div class="card-b" aria-hidden="true">
+          <svg viewBox="0 0 270 100" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="hf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".0"/><stop offset=".35" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity=".0"/></linearGradient>
+    <mask id="hm"><rect x="0" y="0" width="270" height="100" fill="url(#hf)"/></mask>
+  </defs>
+  <g stroke="#ffffff" stroke-opacity=".045" stroke-width=".55" mask="url(#hm)"><line x1="21.0" y1="14" x2="21.0" y2="86"/><line x1="23.2" y1="14" x2="23.2" y2="86"/><line x1="25.4" y1="14" x2="25.4" y2="86"/><line x1="27.6" y1="14" x2="27.6" y2="86"/><line x1="29.8" y1="14" x2="29.8" y2="86"/><line x1="32.0" y1="14" x2="32.0" y2="86"/><line x1="34.2" y1="14" x2="34.2" y2="86"/><line x1="36.4" y1="14" x2="36.4" y2="86"/><line x1="38.6" y1="14" x2="38.6" y2="86"/><line x1="40.8" y1="14" x2="40.8" y2="86"/><line x1="43.0" y1="14" x2="43.0" y2="86"/><line x1="45.2" y1="14" x2="45.2" y2="86"/><line x1="47.4" y1="14" x2="47.4" y2="86"/><line x1="49.6" y1="14" x2="49.6" y2="86"/><line x1="51.8" y1="14" x2="51.8" y2="86"/><line x1="54.0" y1="14" x2="54.0" y2="86"/><line x1="56.2" y1="14" x2="56.2" y2="86"/><line x1="58.4" y1="14" x2="58.4" y2="86"/><line x1="60.6" y1="14" x2="60.6" y2="86"/><line x1="62.8" y1="14" x2="62.8" y2="86"/><line x1="65.0" y1="14" x2="65.0" y2="86"/><line x1="67.2" y1="14" x2="67.2" y2="86"/><line x1="69.4" y1="14" x2="69.4" y2="86"/><line x1="71.6" y1="14" x2="71.6" y2="86"/><line x1="73.8" y1="14" x2="73.8" y2="86"/><line x1="76.0" y1="14" x2="76.0" y2="86"/><line x1="78.2" y1="14" x2="78.2" y2="86"/><line x1="80.4" y1="14" x2="80.4" y2="86"/><line x1="82.6" y1="14" x2="82.6" y2="86"/><line x1="84.8" y1="14" x2="84.8" y2="86"/><line x1="87.0" y1="14" x2="87.0" y2="86"/><line x1="89.2" y1="14" x2="89.2" y2="86"/><line x1="91.4" y1="14" x2="91.4" y2="86"/><line x1="93.6" y1="14" x2="93.6" y2="86"/><line x1="95.8" y1="14" x2="95.8" y2="86"/><line x1="98.0" y1="14" x2="98.0" y2="86"/><line x1="100.2" y1="14" x2="100.2" y2="86"/><line x1="102.4" y1="14" x2="102.4" y2="86"/><line x1="104.6" y1="14" x2="104.6" y2="86"/><line x1="106.8" y1="14" x2="106.8" y2="86"/><line x1="109.0" y1="14" x2="109.0" y2="86"/><line x1="111.2" y1="14" x2="111.2" y2="86"/><line x1="113.4" y1="14" x2="113.4" y2="86"/><line x1="115.6" y1="14" x2="115.6" y2="86"/><line x1="117.8" y1="14" x2="117.8" y2="86"/><line x1="120.0" y1="14" x2="120.0" y2="86"/><line x1="122.2" y1="14" x2="122.2" y2="86"/><line x1="124.4" y1="14" x2="124.4" y2="86"/><line x1="126.6" y1="14" x2="126.6" y2="86"/><line x1="128.8" y1="14" x2="128.8" y2="86"/><line x1="131.0" y1="14" x2="131.0" y2="86"/><line x1="133.2" y1="14" x2="133.2" y2="86"/><line x1="135.4" y1="14" x2="135.4" y2="86"/><line x1="137.6" y1="14" x2="137.6" y2="86"/><line x1="139.8" y1="14" x2="139.8" y2="86"/><line x1="142.0" y1="14" x2="142.0" y2="86"/><line x1="144.2" y1="14" x2="144.2" y2="86"/><line x1="146.4" y1="14" x2="146.4" y2="86"/><line x1="148.6" y1="14" x2="148.6" y2="86"/><line x1="150.8" y1="14" x2="150.8" y2="86"/><line x1="153.0" y1="14" x2="153.0" y2="86"/><line x1="155.2" y1="14" x2="155.2" y2="86"/><line x1="157.4" y1="14" x2="157.4" y2="86"/><line x1="159.6" y1="14" x2="159.6" y2="86"/><line x1="161.8" y1="14" x2="161.8" y2="86"/><line x1="164.0" y1="14" x2="164.0" y2="86"/><line x1="166.2" y1="14" x2="166.2" y2="86"/><line x1="168.4" y1="14" x2="168.4" y2="86"/><line x1="170.6" y1="14" x2="170.6" y2="86"/><line x1="172.8" y1="14" x2="172.8" y2="86"/><line x1="175.0" y1="14" x2="175.0" y2="86"/><line x1="177.2" y1="14" x2="177.2" y2="86"/><line x1="179.4" y1="14" x2="179.4" y2="86"/><line x1="181.6" y1="14" x2="181.6" y2="86"/><line x1="183.8" y1="14" x2="183.8" y2="86"/><line x1="186.0" y1="14" x2="186.0" y2="86"/><line x1="188.2" y1="14" x2="188.2" y2="86"/><line x1="190.4" y1="14" x2="190.4" y2="86"/><line x1="192.6" y1="14" x2="192.6" y2="86"/><line x1="194.8" y1="14" x2="194.8" y2="86"/><line x1="197.0" y1="14" x2="197.0" y2="86"/><line x1="199.2" y1="14" x2="199.2" y2="86"/><line x1="201.4" y1="14" x2="201.4" y2="86"/><line x1="203.6" y1="14" x2="203.6" y2="86"/><line x1="205.8" y1="14" x2="205.8" y2="86"/><line x1="208.0" y1="14" x2="208.0" y2="86"/><line x1="210.2" y1="14" x2="210.2" y2="86"/><line x1="212.4" y1="14" x2="212.4" y2="86"/><line x1="214.6" y1="14" x2="214.6" y2="86"/><line x1="216.8" y1="14" x2="216.8" y2="86"/><line x1="219.0" y1="14" x2="219.0" y2="86"/><line x1="221.2" y1="14" x2="221.2" y2="86"/><line x1="223.4" y1="14" x2="223.4" y2="86"/><line x1="225.6" y1="14" x2="225.6" y2="86"/><line x1="227.8" y1="14" x2="227.8" y2="86"/><line x1="230.0" y1="14" x2="230.0" y2="86"/><line x1="232.2" y1="14" x2="232.2" y2="86"/><line x1="234.4" y1="14" x2="234.4" y2="86"/><line x1="236.6" y1="14" x2="236.6" y2="86"/><line x1="238.8" y1="14" x2="238.8" y2="86"/><line x1="241.0" y1="14" x2="241.0" y2="86"/><line x1="243.2" y1="14" x2="243.2" y2="86"/><line x1="245.4" y1="14" x2="245.4" y2="86"/><line x1="247.6" y1="14" x2="247.6" y2="86"/><line x1="249.8" y1="14" x2="249.8" y2="86"/><line x1="252.0" y1="14" x2="252.0" y2="86"/><line x1="254.2" y1="14" x2="254.2" y2="86"/><line x1="256.4" y1="14" x2="256.4" y2="86"/><line x1="258.6" y1="14" x2="258.6" y2="86"/><line x1="260.8" y1="14" x2="260.8" y2="86"/><line x1="263.0" y1="14" x2="263.0" y2="86"/><line x1="265.2" y1="14" x2="265.2" y2="86"/><line x1="267.4" y1="14" x2="267.4" y2="86"/><line x1="269.6" y1="14" x2="269.6" y2="86"/><line x1="271.8" y1="14" x2="271.8" y2="86"/></g>
+  <g stroke="#ffffff" stroke-opacity=".05" stroke-width=".5">
+    <line x1="21" y1="18.5" x2="270" y2="18.5"/><line x1="21" y1="37" x2="270" y2="37"/><line x1="21" y1="54.5" x2="270" y2="54.5"/><line x1="21" y1="72" x2="270" y2="72"/>
+  </g>
+  <g font-size="5" fill="#ffffff" fill-opacity=".38" font-weight="400">
+    <text x="6" y="20.2">30K</text><text x="6" y="39.0">20K</text><text x="6" y="56.2">10K</text><text x="6" y="73.8">0K</text>
+  </g>
+  <g font-size="5" fill="#ffffff" fill-opacity=".5" font-weight="400" text-anchor="middle">
+    <text x="25.5" y="93.4">Jan</text><text x="48" y="93.4">Feb</text><text x="71" y="93.4">Mar</text><text x="94" y="93.4">Apr</text><text x="118.5" y="93.4">May</text><text x="143" y="93.4">June</text><text x="167" y="93.4">July</text><text x="191" y="93.4">Aug</text><text x="215" y="93.4">Sept</text><text x="239" y="93.4">Oct</text>
+  </g>
+  <path d="M21.00 45.50 C24.67 45.04 36.83 43.75 43.00 42.75 C49.17 41.75 53.00 40.54 58.00 39.50 C63.00 38.46 68.83 36.50 73.00 36.50 C77.17 36.50 79.25 37.83 83.00 39.50 C86.75 41.17 91.75 44.71 95.50 46.50 C99.25 48.29 101.75 49.33 105.50 50.25 C109.25 51.17 114.25 51.46 118.00 52.00 C121.75 52.54 125.00 53.50 128.00 53.50 C131.00 53.50 133.50 54.17 136.00 52.00 C138.50 49.83 140.17 42.67 143.00 40.50 C145.83 38.33 149.67 39.50 153.00 39.00 C156.33 38.50 159.67 38.42 163.00 37.50 C166.33 36.58 169.67 34.50 173.00 33.50 C176.33 32.50 179.67 31.58 183.00 31.50 C186.33 31.42 189.25 32.33 193.00 33.00 C196.75 33.67 202.08 35.42 205.50 35.50 C208.92 35.58 210.17 35.50 213.50 33.50 C216.83 31.50 221.42 25.67 225.50 23.50 C229.58 21.33 234.46 20.33 238.00 20.50 C241.54 20.67 244.67 23.58 246.75 24.50 C248.83 25.42 249.88 25.75 250.50 26.00" fill="none" stroke="#d9d4f0" stroke-opacity=".75" stroke-width=".8" stroke-dasharray="1 1.6" stroke-linecap="round"/>
+  <path d="M21.00 39.00 C24.67 38.92 37.67 39.33 43.00 38.50 C48.33 37.67 50.08 35.00 53.00 34.00 C55.92 33.00 58.00 32.08 60.50 32.50 C63.00 32.92 65.50 33.96 68.00 36.50 C70.50 39.04 72.58 45.04 75.50 47.75 C78.42 50.46 82.17 52.62 85.50 52.75 C88.83 52.88 91.33 50.38 95.50 48.50 C99.67 46.62 105.92 42.25 110.50 41.50 C115.08 40.75 119.67 42.96 123.00 44.00 C126.33 45.04 128.08 47.62 130.50 47.75 C132.92 47.88 135.42 46.12 137.50 44.75 C139.58 43.38 140.75 41.71 143.00 39.50 C145.25 37.29 148.42 32.75 151.00 31.50 C153.58 30.25 155.67 30.83 158.50 32.00 C161.33 33.17 164.75 36.92 168.00 38.50 C171.25 40.08 174.67 41.42 178.00 41.50 C181.33 41.58 185.08 39.75 188.00 39.00 C190.92 38.25 192.17 37.17 195.50 37.00 C198.83 36.83 204.67 38.17 208.00 38.00 C211.33 37.83 212.79 37.58 215.50 36.00 C218.21 34.42 221.12 31.25 224.25 28.50 C227.38 25.75 231.46 21.17 234.25 19.50 C237.04 17.83 238.92 18.42 241.00 18.50 C243.08 18.58 245.17 19.50 246.75 20.00 C248.33 20.50 249.88 21.25 250.50 21.50" fill="none" stroke="#c6bef4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="143" y1="19" x2="143" y2="88" stroke="#e9e6fb" stroke-opacity=".8" stroke-width=".7"/>
+  <rect x="117.2" y="23.4" width="25.8" height="13.6" rx="2.6" fill="#0d0e18" fill-opacity=".92" stroke="#ffffff" stroke-opacity=".14" stroke-width=".5"/>
+  <text x="130" y="31.2" font-size="5" fill="#f2f1f8" text-anchor="middle" font-weight="500">2 June</text>
+  <text x="130" y="35" font-size="2.6" fill="#b7b4c8" text-anchor="middle">9:30</text>
+  <circle cx="143" cy="39.6" r="1.6" fill="#121320" stroke="#e5e1fb" stroke-width=".7"/>
+</svg>
+        </div>
+
+        <div class="card-a" aria-hidden="true">
+          <div class="card-a__glow"><div class="card-a__haze"></div><div class="card-a__sheen"></div></div>
+          <div class="card-a__tip"></div>
+          <span class="card-a__label">Reinvestment rate</span>
+          <span class="card-a__value">126.6%</span>
+          <span class="card-a__tiptext">126.6%</span>
+          <svg viewBox="0 0 193 137" preserveAspectRatio="none">
+  <path d="M14.50 110.00 C16.25 107.92 22.00 100.29 25.00 97.50 C28.00 94.71 30.33 94.42 32.50 93.25 C34.67 92.08 35.92 89.71 38.00 90.50 C40.08 91.29 42.50 95.92 45.00 98.00 C47.50 100.08 50.58 101.83 53.00 103.00 C55.42 104.17 57.08 103.83 59.50 105.00 C61.92 106.17 64.50 109.92 67.50 110.00 C70.50 110.08 74.50 106.96 77.50 105.50 C80.50 104.04 83.50 102.67 85.50 101.25 C87.50 99.83 87.08 98.88 89.50 97.00 C91.92 95.12 96.50 91.58 100.00 90.00 C103.50 88.42 107.17 87.25 110.50 87.50 C113.83 87.75 116.75 89.21 120.00 91.50 C123.25 93.79 127.00 100.67 130.00 101.25 C133.00 101.83 135.50 98.04 138.00 95.00 C140.50 91.96 143.21 85.58 145.00 83.00 C146.79 80.42 146.67 80.25 148.75 79.50 C150.83 78.75 154.38 80.50 157.50 78.50 C160.62 76.50 164.92 71.42 167.50 67.50 C170.08 63.58 171.12 57.92 173.00 55.00 C174.88 52.08 177.79 50.83 178.75 50.00" fill="none" stroke="#c3bbf2" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="89.50" cy="97.00" r="3.3" fill="#bdb3f2"/>
+  <circle cx="148.75" cy="79.50" r="3.6" fill="#bdb3f2"/>
+</svg>
+        </div>
+
+        <h2 class="hero" id="h">A Unified Hub for Smarter Financial<br>Decision-Making</h2>
+        <p class="blurb">Finance empower you with a unified financial command centre<span style="letter-spacing:calc(-3.2 * var(--u))">––</span><br>delivering deep insights and&nbsp; a 360 view of your entire economic world.</p>
+      </div>
+    </section>
+  </div>
+</main>
+<script>
+(() => {
+  if (!document.documentElement.classList.contains('entrance-pending')) return;
+
+  const animations = [];
+  let finished = false;
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    clearTimeout(window.__financeEntranceFallback);
+    document.documentElement.classList.remove('entrance-pending');
+    animations.forEach(animation => animation.cancel());
+    delete window.__financeEntranceFinish;
+    delete window.__financeEntranceFallback;
+  };
+  window.__financeEntranceFinish = finish;
+
+  const start = () => {
+    try {
+      const unit = document.querySelector('.panel--form .frame').getBoundingClientRect().width / 357;
+      const y = amount => `translateY(${(amount * unit).toFixed(2)}px)`;
+      const curve = 'cubic-bezier(.22,.72,.18,1)';
+      const reveal = (selector, from, delay, duration) => {
+        const element = document.querySelector(selector);
+        if (!element) return;
+        animations.push(element.animate([from, { opacity:1, transform:'none', clipPath:'none' }], {
+          delay, duration, easing:curve, fill:'both'
+        }));
+      };
+
+      // The form establishes the purpose, then controls settle in related pairs.
+      reveal('.title', { opacity:0, transform:y(8), clipPath:'inset(0 0 100% 0)' }, 70, 720);
+      reveal('.sub', { opacity:0, transform:y(5) }, 290, 570);
+      reveal('label[for="email"]', { opacity:0, transform:y(5) }, 550, 480);
+      reveal('#email', { opacity:0, transform:y(5) }, 550, 540);
+      reveal('label[for="password"]', { opacity:0, transform:y(5) }, 690, 480);
+      reveal('#password', { opacity:0, transform:y(5) }, 690, 540);
+      reveal('.btn--primary', { opacity:0, transform:y(5) }, 940, 480);
+      reveal('.btn--ghost:nth-of-type(1)', { opacity:0, transform:y(5) }, 1090, 480);
+      reveal('.btn--ghost:nth-of-type(2)', { opacity:0, transform:y(5) }, 1170, 480);
+      reveal('.legal', { opacity:0, transform:'none' }, 1340, 340);
+
+      // The showcase is below the opening viewport on narrow screens.
+      if (matchMedia('(min-width:701px) and (min-aspect-ratio:1/1)').matches) {
+        reveal('.card-b', { opacity:0, transform:`${y(8)} scale(.985)` }, 440, 780);
+        reveal('.card-a', { opacity:0, transform:`${y(6)} scale(.97)` }, 610, 760);
+        reveal('.hero', { opacity:0, transform:y(6), clipPath:'inset(0 0 100% 0)' }, 900, 660);
+        reveal('.blurb', { opacity:0, transform:y(5) }, 1160, 520);
+      }
+
+      Promise.all(animations.map(animation => animation.finished)).then(finish, finish);
+    } catch (_) {
+      finish();
+    }
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start, { once:true });
+  } else {
+    start();
+  }
+})();
+</script>
+</body>
+</html>

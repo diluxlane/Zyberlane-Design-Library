@@ -1,0 +1,67 @@
+/* The revenue photograph remains fixed; only the foreground data enters. */
+@keyframes dashboard-ui {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes dashboard-title {
+  from { opacity: 0; clip-path: inset(100% 0 0); transform: translateY(12px); }
+  to { opacity: 1; clip-path: inset(0); transform: none; }
+}
+@keyframes dashboard-reveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0); }
+}
+@keyframes dashboard-panel {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0); }
+}
+@keyframes dashboard-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+html.entry-motion .nav .tab,
+html.entry-motion .nav-right {
+  animation: dashboard-ui .52s cubic-bezier(.22,1,.36,1) both;
+}
+html.entry-motion .nav .tab:nth-child(1) { animation-delay: .04s; }
+html.entry-motion .nav .tab:nth-child(2) { animation-delay: .09s; }
+html.entry-motion .nav .tab:nth-child(3) { animation-delay: .14s; }
+html.entry-motion .nav .tab:nth-child(4) { animation-delay: .19s; }
+html.entry-motion .nav-right { animation-delay: .19s; }
+html.entry-motion .titlebar h1 {
+  animation: dashboard-title .78s cubic-bezier(.19,1,.22,1) .18s both;
+}
+html.entry-motion .titlebar .actions {
+  animation: dashboard-ui .56s cubic-bezier(.22,1,.36,1) .43s both;
+}
+html.entry-motion .rev-head {
+  animation: dashboard-ui .62s cubic-bezier(.22,1,.36,1) .45s both;
+}
+html.entry-motion .rev .plot {
+  animation: dashboard-reveal .86s cubic-bezier(.19,1,.22,1) .70s both;
+}
+html.entry-motion .rev .tip,
+html.entry-motion .rev .dot {
+  animation: dashboard-fade .42s cubic-bezier(.22,1,.36,1) 1.05s both;
+}
+html.entry-motion .status {
+  animation: dashboard-panel .72s cubic-bezier(.19,1,.22,1) .57s both;
+}
+html.entry-motion .status .bplot {
+  animation: dashboard-ui .57s cubic-bezier(.22,1,.36,1) .93s both;
+}
+html.entry-motion .kpi .val {
+  animation: dashboard-ui .62s cubic-bezier(.22,1,.36,1) both;
+}
+html.entry-motion .kpi:nth-child(1) .val { animation-delay: 1.02s; }
+html.entry-motion .kpi:nth-child(2) .val { animation-delay: 1.09s; }
+html.entry-motion .kpi:nth-child(3) .val { animation-delay: 1.16s; }
+html.entry-motion .kpi:nth-child(4) .val { animation-delay: 1.23s; }
+
+@media (max-width:699.98px) {
+  html.entry-motion .kpi .val { animation: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.entry-motion * { animation: none !important; }
+}

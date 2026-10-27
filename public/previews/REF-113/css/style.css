@@ -1,0 +1,1821 @@
+/* ==========================================================================
+   Meridial
+   --------------------------------------------------------------------------
+   Every measurement in this file is stated in *artboard units* — the numbers
+   read directly out of the Figma document — and multiplied by `--u`, the
+   length that one artboard unit occupies on screen. Nothing is expressed in
+   fixed pixels, so the composition holds its proportions at any viewport and
+   new sections can reuse the same unit.
+
+   Scope: laptop and desktop. Tablet and handheld are deliberately not
+   addressed yet; see §10.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Typeface
+   The artboard is set in Suisse Intl — Regular for body and UI, Book for the
+   panel heading. Drop the licensed files into assets/fonts/ and uncomment the
+   two rules below; the stack already prefers them, so nothing else changes.
+
+   @font-face {
+     font-family: 'Suisse Intl';
+     src: url('../assets/fonts/SuisseIntl-Regular.otf') format('opentype');
+     font-weight: 400;
+     font-style: normal;
+     font-display: swap;
+   }
+   @font-face {
+     font-family: 'Suisse Intl';
+     src: url('../assets/fonts/SuisseIntl-Book.otf') format('opentype');
+     font-weight: 500;
+     font-style: normal;
+     font-display: swap;
+   }
+
+   Until then Geist stands in — it is the closest open face by measured
+   advance width (see docs/typography.md).
+   -------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Geist';
+  src: url('../assets/fonts/geist-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('../assets/fonts/geist-latin-500-normal.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* The signal section's radar is set in DM Sans Medium — a second face the
+   artboard uses for the month axis and the chart chips only. Open licence,
+   so it ships with the site rather than standing in. */
+@font-face {
+  font-family: 'DM Sans';
+  src: url('../assets/fonts/dm-sans-latin-500-normal.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --------------------------------------------------------------------------
+   2. Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* --- artboard ------------------------------------------------------- */
+  --artboard-w: 1606;      /* hero artboard width,  in units */
+  --artboard-h: 1161;      /* hero artboard height, in units */
+  --column-content: 1037;  /* left column,  in units */
+  --column-panel: 569;     /* right column, in units */
+
+  /* --- the design unit -------------------------------------------------
+     One artboard unit on screen. This is a *scale*, not a layout: it sizes
+     type, controls, radii and card geometry, and nothing else. Structure is
+     expressed as fractions of the viewport (see --split-panel), which is
+     what lets the hero fill any screen instead of sitting in a fixed box.
+
+     Taking the smaller of the two viewport ratios keeps the vertical stack
+     inside one screen at any aspect. The ceiling stops type from ballooning
+     on very large displays. */
+  --u-max: 1.35px;
+  --u: min(
+    calc(100vh / var(--artboard-h)),
+    calc(100vw / var(--artboard-w)),
+    var(--u-max)
+  );
+
+  /* --- layout ----------------------------------------------------------
+     The panel's share of the width, held at every viewport. Derived from the
+     artboard columns, so changing those changes the layout with them. */
+  --split-panel: calc(var(--column-panel) / var(--artboard-w));
+
+  /* The one deliberate constant in this file. Below this width the hero
+     fills the viewport edge to edge; above it the composition centres while
+     the gradient and the glow keep bleeding to both edges, so no letterbox
+     ever appears. */
+  --shell-max: 2560px;
+
+  /* --- motion ----------------------------------------------------------
+     One second for the panel to take the screen, measured off the reference
+     recording (frames 272 to 332 at 60fps).
+
+     `--morph` is the stylesheet telling the script whether the travel applies
+     at this size. Every size runs it today; the hook stays because the
+     decision belongs with the media queries, not with a width check in the
+     script. */
+  --morph: 1;
+  --morph-dur: 1000ms;
+  --morph-ease: cubic-bezier(0.33, 0, 0.2, 1);
+
+  /* Page gutter — the artboard sets the brand at x35. */
+  --gutter: calc(35 * var(--u));
+
+  /* --- hairlines -------------------------------------------------------
+     1-unit strokes would land below one device pixel at most scales and
+     render inconsistently, so they hold a one-pixel floor. */
+  --hairline: max(1px, calc(1 * var(--u)));
+
+  /* --- colour ---------------------------------------------------------- */
+  --surface-top: #06080A;
+  --surface-bottom: #191919;
+  --white: #ffffff;
+  --text-muted: #c1c1c1;
+  --ink: #111111;
+  --ink-strong: #000000;
+
+  /* --- radii ----------------------------------------------------------- */
+  --radius-card: calc(25 * var(--u));
+  --radius-control: calc(3 * var(--u));
+  --radius-glow: calc(10 * var(--u));
+
+  /* --- type ------------------------------------------------------------ */
+  --font-sans: 'Suisse Intl', 'Geist', 'Helvetica Neue', Arial, sans-serif;
+
+  /* Tracking is expressed as a ratio of the type size, exactly as Figma
+     stores it, so it needs no scaling. */
+  --track-tight: -0.04em;   /* -4%  display and captions */
+  --track-snug: -0.03em;    /* -3%  navigation */
+  --track-narrow: -0.02em;  /* -2%  figures and controls */
+  --track-wide: 0.07em;     /*  7%  uppercase labels */
+}
+
+/* --------------------------------------------------------------------------
+   3. Base
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  block-size: 100%;
+}
+
+/* The site is exactly one screen and never scrolls. Moving between the two
+   sections is a transition, not a scroll position, so no scrollbar exists in
+   either axis at any point. */
+body {
+  margin: 0;
+  block-size: 100%;
+  overflow: hidden;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  color: var(--white);
+  background: var(--surface-bottom);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+}
+
+p, h1, ul { margin: 0; }
+ul { padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; }
+
+/* --------------------------------------------------------------------------
+   4. Section shell
+   Every section is full bleed and lays its content out inside a shell that
+   fills the viewport up to --shell-max, then centres. Sections after the hero
+   reuse `.section` and set their own block size.
+   -------------------------------------------------------------------------- */
+.section { position: relative; }
+
+/* The hero owns exactly one screen. `min-block-size` rather than a fixed
+   height so a section that grows past the viewport is never clipped. */
+.section--hero {
+  display: flex;
+  min-block-size: 100vh;
+  min-block-size: 100svh;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--surface-top) 0%, var(--surface-bottom) 100%);
+}
+
+/* Two columns holding the artboard's proportion at every width. The fixed
+   1037 / 569 unit widths this replaces are what produced the fixed-size box. */
+.hero__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr calc(var(--split-panel) * 100%);
+  inline-size: 100%;
+  max-inline-size: var(--shell-max);
+  margin-inline: auto;
+}
+
+/* Grid children default to min-content width, which lets long words push a
+   column wider than its track. Zeroing that keeps the columns honest. */
+.hero__content,
+.hero__panel { min-inline-size: 0; }
+
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  padding: calc(46 * var(--u)) var(--gutter) calc(59 * var(--u));
+}
+
+.hero__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: calc(46 * var(--u)) calc(59 * var(--u));
+}
+
+/* The glow starts at the panel column's left edge and runs to the viewport's
+   right edge, so it still bleeds once the shell stops growing. */
+.hero__glow {
+  position: absolute;
+  inset-block: 0;
+  right: 0;
+  left: calc(50%
+             + min(100%, var(--shell-max)) / 2
+             - min(100%, var(--shell-max)) * var(--split-panel));
+}
+
+/* --------------------------------------------------------------------------
+   5. Masthead
+   Artboard: brand at x35, navigation centred on x520, call to action flush
+   with the content column's right edge — all optically centred on y58.
+   A three-track grid reproduces that centring by construction, so the row
+   holds at any column width instead of carrying fixed coordinates.
+   -------------------------------------------------------------------------- */
+.masthead {
+  flex: none;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: calc(24 * var(--u));
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: calc(9 * var(--u));
+}
+.brand__mark {
+  width: calc(29 * var(--u));
+  height: calc(24 * var(--u));
+}
+.brand__mark svg { width: 100%; height: 100%; }
+.brand__name {
+  font-size: calc(23.12195 * var(--u));
+  line-height: 0.99473;                 /* 23 / 23.12195 */
+  letter-spacing: var(--track-tight);
+  color: var(--white);
+}
+
+.mainnav { justify-self: center; }
+.mainnav__list {
+  display: flex;
+  gap: calc(44 * var(--u));
+}
+.mainnav__list a {
+  display: block;
+  font-size: calc(16 * var(--u));
+  line-height: 1.1875;                  /* 19 / 16 */
+  letter-spacing: var(--track-snug);
+  color: var(--white);
+  opacity: 0.5;
+  white-space: pre;                     /* the labels carry authored spaces */
+  transition: opacity 0.2s ease;
+}
+.mainnav__list a:hover,
+.mainnav__list a:focus-visible { opacity: 1; }
+
+.btn-nav {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  padding: calc(10.37 * var(--u)) calc(15.83 * var(--u));
+  border-radius: var(--radius-control);
+  background: var(--white);
+  color: var(--ink);
+  font-size: calc(16 * var(--u));
+  line-height: 1.1875;
+  letter-spacing: var(--track-snug);
+  transition: background-color 0.2s ease;
+}
+.btn-nav:hover,
+.btn-nav:focus-visible { background: #e6e6e6; }
+
+/* --------------------------------------------------------------------------
+   6. Hero body
+   Artboard: an 842-unit block, stack is head, 54, subtitle, 54, actions.
+   The artboard's x99 offset is (1037 - 842) / 2 — it was centring written as
+   a coordinate, so it is written as centring here. `margin-block: auto` takes
+   the leftover height between masthead and marquee, which is what lets the
+   column breathe with the viewport instead of overflowing it.
+   -------------------------------------------------------------------------- */
+.hero__body {
+  inline-size: min(calc(842 * var(--u)), 100%);
+  margin-block: auto;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.hero__head { margin-bottom: calc(54 * var(--u)); }
+
+/* Eyebrow — gradient wash inside a 1-unit gradient hairline. The artboard
+   draws it with square corners. */
+.pill {
+  position: relative;
+  display: block;
+  width: calc(279 * var(--u));
+  margin-inline: auto;
+  padding: calc(10 * var(--u));
+  text-align: left;
+  font-size: calc(12 * var(--u));
+  line-height: 1.05;                    /* the artboard's raw line height */
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--white);
+  background: linear-gradient(90deg,
+    rgba(153, 153, 153, 0.1) 0%,
+    rgba(255, 255, 255, 0.2) 45.55%,
+    rgba(153, 153, 153, 0.1) 100%);
+}
+.pill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: var(--hairline);
+  background: linear-gradient(90deg,
+    rgba(152, 152, 152, 0.1) 0%,
+    rgba(102, 102, 102, 0.1) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Display — 96/96, -4% tracking, white-to-grey vertical wash.
+   The box is the artboard's 842 less one trailing tracking step: CSS adds
+   letter-spacing after a line's last glyph where Figma does not, and without
+   the deduction every centred line would sit half a step to the right. */
+.hero__title {
+  inline-size: min(calc((842 - 96 * 0.04) * var(--u)), 100%);
+  margin: calc(45 * var(--u)) auto 0;
+  font-size: calc(96 * var(--u));
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: var(--track-tight);
+  background: linear-gradient(180deg, #ffffff 0%, #999999 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+}
+
+.hero__sub {
+  inline-size: min(calc((472 - 20 * 0.04) * var(--u)), 100%);
+  margin-inline: auto;
+  font-size: calc(20 * var(--u));
+  line-height: 1.4;
+  letter-spacing: var(--track-tight);
+  color: var(--text-muted);
+}
+
+.hero__actions {
+  display: flex;
+  gap: calc(18 * var(--u));
+  width: calc(372 * var(--u));
+  margin: calc(54 * var(--u)) auto 0;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(177 * var(--u));
+  height: calc(62 * var(--u));
+  border-radius: var(--radius-control);
+  font-size: calc(18 * var(--u));
+  line-height: 1;
+  letter-spacing: var(--track-narrow);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.btn--solid {
+  background: var(--white);
+  color: var(--ink-strong);
+}
+.btn--solid:hover,
+.btn--solid:focus-visible { background: #e6e6e6; }
+
+.btn--ghost {
+  border: var(--hairline) solid rgba(255, 255, 255, 0.1);
+  color: var(--white);
+}
+.btn--ghost:hover,
+.btn--ghost:focus-visible { border-color: rgba(255, 255, 255, 0.35); }
+
+/* --------------------------------------------------------------------------
+   7. Trusted-by marquee
+   Artboard: a 645-unit group holding a 606-unit clipping frame, which carries
+   the five marks twice, one cycle apart. Sits at the foot of the column; the
+   space above it is whatever `.hero__body` does not take.
+   -------------------------------------------------------------------------- */
+.trusted {
+  flex: none;
+  inline-size: min(calc(645 * var(--u)), 100%);
+  margin-inline: auto;
+}
+
+.trusted__label {
+  inline-size: min(calc((227 + 12 * 0.07) * var(--u)), 100%);
+  margin-inline: auto;
+  font-size: calc(12 * var(--u));
+  line-height: 1.08333;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--white);
+  opacity: 0.4;
+}
+
+/* The artboard fades the row's ends with two solid #161617 rectangles laid
+   over the gradient. That only works while the marquee sits at one fixed
+   height; once it moves with the viewport the flat colour no longer matches
+   the gradient behind it and shows as a seam. A mask fades whatever is
+   actually there, at any position. 112 of 606 units ≈ 18%. */
+.marquee {
+  inline-size: min(calc(606 * var(--u)), 100%);
+  height: calc(25.351 * var(--u));
+  margin: calc(44 * var(--u)) auto 0;
+  overflow: hidden;
+  opacity: 0.4;
+  -webkit-mask-image: linear-gradient(90deg,
+    transparent 0%, #000 18%, #000 82%, transparent 100%);
+          mask-image: linear-gradient(90deg,
+    transparent 0%, #000 18%, #000 82%, transparent 100%);
+}
+
+.marquee__track {
+  --marquee-shift: calc(-644.104 * var(--u));  /* set precisely by script.js */
+  display: flex;
+  align-items: center;
+  gap: calc(49 * var(--u));
+  width: max-content;
+  height: 100%;
+  animation: marquee-scroll 32s linear infinite;
+}
+.marquee:hover .marquee__track { animation-play-state: paused; }
+
+@keyframes marquee-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(var(--marquee-shift), 0, 0); }
+}
+
+.marquee__logo { flex: none; }
+.marquee__logo--intel  { width: calc(52.015 * var(--u)); height: calc(21.940 * var(--u)); }
+.marquee__logo--google { width: calc(77.195 * var(--u)); height: calc(25.351 * var(--u)); }
+.marquee__logo--sony   { width: calc(96.000 * var(--u)); height: calc(17.000 * var(--u)); }
+.marquee__logo--amazon { width: calc(80.446 * var(--u)); height: calc(24.151 * var(--u)); }
+.marquee__logo--adobe  { width: calc(93.448 * var(--u)); height: calc(24.766 * var(--u)); }
+
+/* --------------------------------------------------------------------------
+   8. Panel column
+   Artboard: the glow fills the column; cards sit centred on it. The card stack
+   centres vertically rather than starting at a fixed y213.
+   -------------------------------------------------------------------------- */
+
+/* The wash is the source bitmap with Figma's vibrance at -100, which resolves
+   fully desaturated; the filter reproduces that without altering the asset.
+   Geometry lives in §4 — it is a full-bleed layer, not a panel child. */
+.hero__glow {
+  border-radius: var(--radius-glow) 0 0 var(--radius-glow);
+  background: #ffffff url('../assets/images/gradient-08.png') center / cover no-repeat;
+  filter: grayscale(1);
+}
+
+.panel {
+  position: relative;
+  inline-size: min(calc(328 * var(--u)), 100%);
+  margin-inline: auto;
+}
+
+/* The card is two black layers over a blurred backdrop, not one. Figma's
+   BACKGROUND_BLUR on both rectangles carries `#000000 a=0.25` alongside its
+   155.3 radius, and the node's own fill adds 10% black on top of that. Two
+   pure blacks compose exactly as one, so the pair is a single declaration:
+   1 - 0.75 x 0.90 = 0.325. It is the difference the eye reads first — with the
+   fill alone the card barely separates from the wash. Measured against the
+   reference render at the left edge, where the wash is brightest, the card
+   darkens its backdrop by ~45 luminance; the fill on its own gives ~21.
+
+   Figma states blur as twice the Gaussian sigma CSS wants, hence 155.3 / 2. */
+.card {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-card);
+  background: rgba(0, 0, 0, 0.325);
+  -webkit-backdrop-filter: blur(calc(77.65 * var(--u)));
+          backdrop-filter: blur(calc(77.65 * var(--u)));
+}
+/* Inside hairline, gradient at 10%; artboard stroke runs at ~127.6°. */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: var(--hairline);
+  background: linear-gradient(127.6deg,
+    rgba(0, 0, 0, 0.1) 4.14%,
+    rgba(102, 102, 102, 0.1) 54.67%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+
+.card--allocation { height: calc(386 * var(--u)); }
+.card--value {
+  height: calc(264 * var(--u));
+  margin-top: calc(11 * var(--u));
+}
+
+/* Card children carry their artboard coordinates as unitless --x / --y. */
+.card__item {
+  position: absolute;
+  left: calc(var(--x) * var(--u));
+  top: calc(var(--y) * var(--u));
+  margin: 0;
+}
+
+/* The artboard's figures sit in auto-width boxes set to CENTER: Figma measures
+   the box to the glyphs, so the alignment costs nothing there. It costs
+   something here, because a substituted face measures wider than Suisse Intl.
+   Carrying the box (--w) and the centring keeps each figure growing about the
+   artboard's centre instead of pushing right, which is what holds the
+   60 / 40 row balanced around its separator. */
+.fig-box {
+  inline-size: calc(var(--w) * var(--u));
+  text-align: center;
+  white-space: nowrap;
+}
+
+.dot {
+  width: calc(22 * var(--u));
+  height: calc(22 * var(--u));
+  border-radius: 50%;
+}
+.dot::after {
+  content: '';
+  position: absolute;
+  left: calc(8 * var(--u));
+  top: calc(8 * var(--u));
+  width: calc(6 * var(--u));
+  height: calc(6 * var(--u));
+  border-radius: 50%;
+  background: var(--white);
+}
+.dot--filled { background: rgba(255, 255, 255, 0.11); }
+.dot--hollow { border: var(--hairline) solid rgba(255, 255, 255, 0.1); }
+.dot--hollow::after {
+  left: calc(8 * var(--u) - var(--hairline));
+  top: calc(8 * var(--u) - var(--hairline));
+  opacity: 0.23;
+}
+
+/* Timeline connectors — 1-unit stroke, 2 on / 6 off. */
+.tl-line {
+  width: var(--hairline);
+  height: calc(var(--len) * var(--u));
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--white) 0 calc(2 * var(--u)),
+    transparent calc(2 * var(--u)) calc(8 * var(--u)));
+}
+.tl-line--dim { --o: 0.2; opacity: var(--o); }
+
+.card__label {
+  font-size: calc(12 * var(--u));
+  line-height: 1.05;                    /* the artboard's raw line height */
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--white);
+  white-space: nowrap;
+}
+.card__label--dim { --o: 0.2; opacity: var(--o); }
+
+.stat {
+  font-size: calc(32 * var(--u));
+  line-height: 1;
+  letter-spacing: var(--track-narrow);
+  color: var(--white);
+}
+.stat--sep { --o: 0.3; opacity: var(--o); }
+
+.stat__unit {
+  font-size: calc(14 * var(--u));
+  line-height: 1;
+  letter-spacing: var(--track-narrow);
+  color: var(--white);
+}
+
+.pill--card {
+  width: calc(152 * var(--u));
+  margin-inline: 0;
+  padding: calc(7 * var(--u)) calc(8 * var(--u));
+  white-space: nowrap;
+}
+
+.card__note {
+  font-size: calc(14 * var(--u));
+  line-height: 1;
+  letter-spacing: var(--track-narrow);
+  color: var(--white);
+  --o: 0.4;
+  opacity: var(--o);
+  white-space: nowrap;
+}
+
+.value {
+  font-size: calc(32 * var(--u));
+  line-height: 1;
+  letter-spacing: var(--track-narrow);
+  color: var(--white);
+}
+.value__delta {
+  font-size: calc(14 * var(--u));
+  line-height: 1;
+  letter-spacing: var(--track-narrow);
+  color: var(--white);
+}
+
+.chart {
+  width: calc(290 * var(--u));
+  height: calc(117 * var(--u));
+  overflow: visible;
+}
+.chart-grid {
+  width: calc(274 * var(--u));
+  height: calc(120 * var(--u));
+  --o: 0.45;
+  opacity: var(--o);
+}
+
+.panel__title {
+  inline-size: min(calc((290 - 28 * 0.04) * var(--u)), 100%);
+  margin: calc(96 * var(--u)) auto 0;
+  font-size: calc(28 * var(--u));
+  font-weight: 500;                     /* Suisse Intl Book */
+  line-height: 1;
+  letter-spacing: var(--track-tight);
+  text-align: center;
+  white-space: nowrap;
+  color: var(--white);
+}
+
+.panel__caption {
+  inline-size: min(calc((220 - 16 * 0.04) * var(--u)), 100%);
+  margin: calc(16 * var(--u)) auto 0;
+  font-size: calc(16 * var(--u));
+  line-height: 1.375;                   /* 22 / 16 */
+  letter-spacing: var(--track-tight);
+  text-align: center;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   9. Motion preferences
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation: none; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}
+
+/* --------------------------------------------------------------------------
+   10. Viewport scope
+
+   Laptop and desktop are the supported range, and within it the hero is
+   resolution-independent: the columns are proportions, the vertical stack
+   distributes leftover height, and only the type scale reads the viewport.
+   Nothing carries a fixed coordinate, so there is no breakpoint to maintain.
+
+   Narrower viewports still render intact — `--u` becomes width-driven and the
+   whole composition scales down — but the two-column split holds all the way
+   down, which is wrong below roughly 900 units of width. Tablet and handheld
+   want the panel stacked under the content rather than beside it; that is the
+   one reflow this file still owes, and it belongs here.
+
+   Adding a section:
+     <section class="section"> … </section>
+   `.section` gives full-bleed positioning; give the section its own block
+   size and lay its content out in a shell capped at --shell-max, the way
+   `.hero__grid` does. Sizes inside it are `calc(<artboard number> * var(--u))`;
+   structure is fractions and auto margins, never fixed offsets.
+   -------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------
+   11. Signal shell — section two
+   Artboard: the same 1606 x 1161 board as the hero. A 1573 x 1138 wash sits at
+   x11/y8 inside it, with the masthead, the dashboard and the closing line laid
+   on top at their artboard coordinates. Widths are proportions of the shell so
+   the section fills the viewport; heights are units.
+   -------------------------------------------------------------------------- */
+.section--signal {
+  display: flex;
+  align-items: center;
+  min-block-size: 100vh;
+  min-block-size: 100svh;
+  overflow: hidden;
+  background: var(--surface-bottom);
+}
+
+.signal {
+  position: relative;
+  inline-size: 100%;
+  max-inline-size: var(--shell-max);
+  block-size: calc(var(--artboard-h) * var(--u));
+  margin-inline: auto;
+}
+
+/* The section's background is the hero's glow, expanded — the reference keeps
+   the texture at the glow's full strength (its margins measure 131-146 in
+   luminance, where the artboard's 0.2 wash over dark would sit near 50). The
+   declaration is the glow's own, so the handover renders identically. */
+.signal__wash {
+  position: absolute;
+  inset: 0;
+  background: #ffffff url('../assets/images/gradient-08.png') center / cover no-repeat;
+  filter: grayscale(1);
+}
+
+/* Artboard: brand at x34, navigation centred on the board's own centre, call
+   to action ending 43.34 from the right. Unlike the hero's, this masthead
+   spans the full width — the same three-track grid does both.
+
+   The insets are units, not percentages of the board, because the hero states
+   its own gutter in units (§4, `.hero__content` padding). Both mastheads sit
+   in the same box — the shell, capped and centred — so stating one in units
+   and the other as a fraction of 1606 made them agree only at the artboard's
+   own aspect and drift apart everywhere else: 3 px at 1280x800, 11 px at
+   2560x1440. The travel slides the navigation and the call to action onto
+   their signal positions, so that drift landed entirely on the wordmark, which
+   snapped sideways at the swap. Held in units, the two boxes differ by the one
+   unit the artboards actually differ by. */
+.signal__masthead {
+  position: absolute;
+  left: calc(34 * var(--u));
+  right: calc(43.34 * var(--u));
+  /* 46 units from the *section's* top, not the shell's.
+
+     The shell is 1161 units tall and centres inside the screen, so whenever
+     the viewport is proportionally taller than the artboard — any aspect below
+     1606/1161 — it sits inset from the top and carries everything with it. The
+     hero's masthead is anchored to the section, so the two disagreed by that
+     inset and the navigation stepped down at the swap: 13.9px at 1024x768,
+     nothing at 1920x1080. Subtracting the inset back out anchors both to the
+     same edge, and at the aspects where there is no inset the value is
+     unchanged. */
+  top: calc(46 * var(--u)
+            - max(0px, (100svh - var(--artboard-h) * var(--u)) / 2));
+}
+
+/* Artboard: 847 units, centred. */
+.signal__title {
+  position: absolute;
+  top: calc(1008 * var(--u));
+  left: 0;
+  right: 0;
+  margin: 0;
+  font-size: calc(48 * var(--u));
+  line-height: 1;
+  letter-spacing: var(--track-tight);
+  text-align: center;
+}
+
+/* The wash lives on the inner span, not the paragraph. The span is what the
+   closing wipe masks (§18), and a masked child cannot show through an
+   ancestor's `background-clip: text` — the same trap the hero's title lines
+   hit. Clipping the gradient to the span's own text keeps both. */
+.signal__title > span {
+  display: inline-block;
+  background-image: linear-gradient(180deg, #ffffff 0%, #999999 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   12. Board
+   Artboard: 1198 x 689 at x204/y236 of the board — very nearly centred, 204
+   against 204 on the right. Columns hold the artboard's 328 / 407 / 407.
+   -------------------------------------------------------------------------- */
+.board {
+  position: absolute;
+  top: calc(236 * var(--u));
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  /* The artboard's own geometry: 1198 units, centred (204 clear each side).
+     Fixed in units — not stretched — so the dashboard's cards are the same
+     size as the hero panel's, and the travel between them is translate-only.
+     Stretching the columns made the cards scale 1.29x during the travel and
+     the type visibly jumped at the handover. */
+  inline-size: calc(1198 * var(--u));
+  block-size: calc(689 * var(--u));
+  display: flex;
+  padding: calc(13 * var(--u)) calc(20 * var(--u)) calc(15 * var(--u)) calc(14 * var(--u));
+  border-radius: calc(39 * var(--u));
+}
+
+.board__col {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+.board__col--allocation { flex: none; inline-size: calc(328 * var(--u)); gap: calc(11 * var(--u)); }
+.board__col--mid        { flex: none; inline-size: calc(407 * var(--u)); gap: calc(12 * var(--u)); margin-inline-start: calc(13 * var(--u)); }
+.board__col--end        { flex: none; inline-size: calc(407 * var(--u)); gap: calc(12 * var(--u)); margin-inline-start: calc(9 * var(--u)); }
+
+/* --------------------------------------------------------------------------
+   13. Board cards
+   The same shell as the hero's panel cards, and the same on every one of the
+   six: each board rectangle in the artboard carries the identical
+   BACKGROUND_BLUR — radius 155.3, tinted 25% black — over its own 10% fill.
+   See §8 for how the two blacks compose to 0.325.
+   -------------------------------------------------------------------------- */
+.board-card {
+  position: relative;
+  flex: none;
+  border-radius: calc(25 * var(--u));
+  background: rgba(0, 0, 0, 0.325);
+  -webkit-backdrop-filter: blur(calc(77.65 * var(--u)));
+          backdrop-filter: blur(calc(77.65 * var(--u)));
+}
+.board-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: var(--hairline);
+  background: linear-gradient(127.6deg,
+    rgba(0, 0, 0, 0.1) 4.14%,
+    rgba(102, 102, 102, 0.1) 54.67%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+.board-card--allocation  { block-size: calc(386 * var(--u)); }
+.board-card--value       { block-size: calc(264 * var(--u)); }
+.board-card--composition { block-size: calc(264 * var(--u)); }
+.board-card--activity    { block-size: calc(385 * var(--u)); }
+.board-card--digest      { block-size: calc(264 * var(--u)); }
+.board-card--assets      { block-size: calc(385 * var(--u)); }
+
+/* Card children carry their artboard coordinates, as in the hero. Left-anchored
+   by default so a card that stretches only gains space on its right; --end
+   anchors to the right edge for the items the artboard hangs there. */
+.bc__item {
+  position: absolute;
+  left: calc(var(--x) * var(--u));
+  top: calc(var(--y) * var(--u));
+  margin: 0;
+}
+.bc__item--end {
+  left: auto;
+  right: calc(var(--x) * var(--u));
+}
+.bc__stack { inline-size: calc(94 * var(--u)); }
+
+/* The artboard runs these at full strength, unlike the hero's dimmed note. */
+.board-card .card__note--bright { opacity: 1; }
+
+/* 290, matching the hero's card rather than this artboard's 260. The two are
+   the same card — it travels from the panel into this column — so a differing
+   chart width would show as a jump at the handover. The artboards disagree
+   with each other here; the hero's is the one the card arrives with. */
+.board-card .trend {
+  inline-size: calc(290 * var(--u));
+  block-size: calc(117 * var(--u));
+  overflow: visible;
+}
+
+.digest__detail {
+  inline-size: calc(298 * var(--u));
+  font-size: calc(14 * var(--u));
+  line-height: 1.5;
+  letter-spacing: var(--track-narrow);
+  color: var(--white);
+  opacity: 0.4;
+}
+
+.bc__tag { inline-size: calc(104 * var(--u)); }
+
+/* --------------------------------------------------------------------------
+   14. Composition bars
+   Artboard: three bars from x18.02 to x361.2, widths in the ratio the figures
+   quote. Proportional so they stretch with the card.
+   -------------------------------------------------------------------------- */
+.bars {
+  position: absolute;
+  top: calc(var(--y) * var(--u));
+  left: calc(18.02 * var(--u));
+  right: calc(45.8 * var(--u));
+  display: flex;
+  block-size: calc(37 * var(--u));
+}
+/* The artboard steps the bars back by opacity rather than by colour —
+   100%, 40%, 20% — so the three read as one falling series. */
+.bars__bar {
+  flex: var(--w) 1 0;
+  background: var(--white);
+}
+.bars__bar:nth-child(2) { opacity: 0.4; }
+.bars__bar:nth-child(3) { opacity: 0.2; }
+.bars__bar + .bars__bar { margin-inline-start: calc(5.9 * var(--u)); }
+.bars__bar:last-child   { margin-inline-start: calc(4.91 * var(--u)); }
+
+/* --------------------------------------------------------------------------
+   15. Asset-class chart
+   Artboard: four bars on a 144.45 baseline, the leading one solid; the rest
+   carry the file's diagonal hatch — 2-unit stripes on a 4-unit period at
+   -20.209 degrees.
+   -------------------------------------------------------------------------- */
+.allocation {
+  inline-size: calc(356.98 * var(--u));
+  block-size: calc(172 * var(--u));
+}
+.allocation__value {
+  font-size: calc(20 * var(--u));
+  line-height: 1;
+  letter-spacing: var(--track-narrow);
+  color: var(--white);
+}
+.allocation__bar {
+  position: absolute;
+  left: calc(var(--x) * var(--u));
+  bottom: calc(27.55 * var(--u));
+  inline-size: calc(68.83 * var(--u));
+  block-size: calc(var(--h) * var(--u));
+  border-radius: calc(12 * var(--u));
+  /* The hatch is an instance of the same line component the radar uses, so its
+     stored colour is themed away too. Measured off the reference instead: a
+     horizontal scan across a bar sweeps 0 to 82 of 255 with a period of 11.5
+     units, which is a 4-unit perpendicular period at this angle
+     (4 / sin 20.209 = 11.58) peaking at 0.32 white. The ramp is soft, not
+     switched — the artboard's lines are feathered at this scale, so the stops
+     ramp to the peak and back rather than stepping on and off. */
+  background:
+    repeating-linear-gradient(-20.209deg,
+      rgba(255, 255, 255, 0) 0,
+      rgba(255, 255, 255, 0.32) calc(2 * var(--u)),
+      rgba(255, 255, 255, 0) calc(4 * var(--u))),
+    #0B0B0B;
+}
+.allocation__bar--lead {
+  inline-size: calc(70 * var(--u));
+  background: #D2D2D2;
+}
+.allocation__tick {
+  position: absolute;
+  top: calc(160 * var(--u));
+  left: calc(var(--x) * var(--u));
+  font-size: calc(12 * var(--u));
+  line-height: 1;
+  letter-spacing: var(--track-narrow);
+  color: var(--white);
+}
+
+/* --------------------------------------------------------------------------
+   16. Radar
+   Artboard: 275 x 250. Seven axes — Jan to Jul — over five rings.
+   -------------------------------------------------------------------------- */
+.radar {
+  inline-size: calc(275 * var(--u));
+  block-size: calc(250 * var(--u));
+}
+.radar > svg {
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: visible;
+}
+.radar__rings path {
+  fill: none;
+  stroke: #383838;
+  stroke-width: 1.202;
+}
+.radar__area2 {
+  fill: rgba(255, 255, 255, 0.2);
+  stroke: rgba(255, 255, 255, 0.1);
+}
+/* White, not the `#4AFAA9` the file stores. That stroke is bound to a library
+   variable and the artboard resolves it monochrome — the same is true of the
+   hatch bitmap it outlines (stored chartreuse) and the indicator chips (stored
+   `#32A7D4`). Sampled off the reference render, every channel in this region
+   comes back equal: the outline and the hatch both paint pure white. Stored
+   colour is not painted colour anywhere in this file. */
+.radar__area1 {
+  fill: none;
+  stroke: var(--white);
+  stroke-width: 2;
+}
+.radar__months text {
+  fill: #C6C6C6;
+  font-family: 'DM Sans', var(--font-sans);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: -0.02em;
+  text-anchor: middle;
+}
+
+/* Artboard: chips at x120.5 / y25 of the radar, 12 units tall, 32 apart. */
+.radar__chips {
+  position: absolute;
+  left: calc(120.5 * var(--u));
+  top: calc(25 * var(--u));
+}
+/* Each chip is an instance of the same indicator component, and each overrides
+   the master's fill: the first to `#1C1C1C`, which all but disappears against
+   the card, the other two to white. The master's own `#32A7D4` is never
+   painted — reading it instead of the overrides is what put three blue pills
+   on a monochrome board. */
+.radar__chips li {
+  position: absolute;
+  top: calc(var(--y) * var(--u));
+  display: flex;
+  align-items: center;
+  padding: calc(2 * var(--u)) calc(4 * var(--u));
+  border-radius: calc(6 * var(--u));
+  background: #1C1C1C;
+  font-family: 'DM Sans', var(--font-sans);
+  font-weight: 500;
+  font-size: calc(12 * var(--u));
+  line-height: 1;
+  letter-spacing: var(--track-narrow);
+  color: var(--white);
+  white-space: nowrap;
+}
+.radar__chips li + li {
+  background: var(--white);
+  color: #0B0B0B;                       /* measured 9/255 in the reference */
+}
+
+/* --------------------------------------------------------------------------
+   17. Reveal
+   The hero plays itself in on load. Every delay and duration below was read
+   off the reference recording frame by frame at 60fps — an edge-energy curve
+   per element per frame, normalised against the settled hero and crossed at
+   5% and 95% — and together they are the whole timing specification. Nothing
+   else in the file schedules the load.
+
+   The reveal is opacity only. Measured against elements whose ink fills their
+   band, the luminance centroid holds to under a pixel through the whole rise,
+   so nothing travels; adding a rise would be an invention.
+
+   The ramp is linear. Sampled at each tenth of their rise, the masthead, the
+   glow, the subtitle and the buttons all track a straight line to within 0.02
+   — where the eased curve this replaces was already at 0.42 by three tenths.
+   -------------------------------------------------------------------------- */
+.js [data-reveal]:not(.is-revealed) {
+  opacity: 0;
+  will-change: opacity;
+}
+
+/* Only once the page has decided it can animate — without this the content is
+   invisible to anything that never runs the script.
+
+   `is-revealed` is added when each reveal ends (main.js) and hands the
+   property back to the cascade. A filled animation outranks a normal
+   declaration for as long as it is attached, so without this the travel could
+   not fade the marquee or the panel's caption out afterwards — they would
+   stay pinned at the opacity the reveal left them. */
+/* `--rv-scale` multiplies the whole timeline. The delays and durations stay
+   the measured ones — one set of numbers, read off the recording — and a
+   smaller screen simply plays them through faster (§22). */
+.is-ready [data-reveal]:not(.is-revealed) {
+  animation: reveal calc(var(--rv-dur, 600ms) * var(--rv-scale, 1)) linear
+             calc(var(--rv-delay, 0ms) * var(--rv-scale, 1)) both;
+}
+
+/* The reveal ends at the element's own resting opacity, not at 1. The
+   artboard rests several of these below full — the drift note at 0.4, the
+   two future reviews and their connectors at 0.2, the separator at 0.3, the
+   chart grid at 0.45 — and animating them to 1 made each overshoot and then
+   snap back the moment the cascade took over. `--o` is the single source for
+   both the resting value and the keyframe's target. */
+@keyframes reveal {
+  from { opacity: 0; }
+  to   { opacity: var(--o, 1); }
+}
+
+/* The hero's own column, then the glow behind it. The glow is the longest
+   thing on screen — it takes nearly a second to reach strength while the
+   masthead and the first title line come and go. */
+.is-ready [data-reveal='masthead'] { --rv-delay:   70ms; --rv-dur: 615ms; }
+.is-ready [data-reveal='glow']     { --rv-delay:   90ms; --rv-dur: 970ms; }
+.is-ready [data-reveal='title-1']  { --rv-delay:  267ms; --rv-dur: 483ms; }
+.is-ready [data-reveal='title-2']  { --rv-delay:  417ms; --rv-dur: 450ms; }
+.is-ready [data-reveal='title-3']  { --rv-delay:  567ms; --rv-dur: 467ms; }
+.is-ready [data-reveal='sub']      { --rv-delay:  833ms; --rv-dur: 617ms; }
+.is-ready [data-reveal='actions']  { --rv-delay:  833ms; --rv-dur: 600ms; }
+.is-ready [data-reveal='marquee']  { --rv-delay:  850ms; --rv-dur: 600ms; }
+/* Last, and by far the fastest — three frames, where everything else takes
+   thirty. It reads as a snap, and that is what the recording shows. */
+.is-ready [data-reveal='eyebrow']  { --rv-delay: 1017ms; --rv-dur:  50ms; }
+
+/* The panel is a second act, and it starts only once the hero column has
+   settled. Its caption arrives before the cards it describes; the two card
+   shells then land, and their contents follow one at a time (see the per-item
+   delays in the markup, which are data in the same sense as --x and --y). */
+.is-ready [data-reveal='panel-note'] { --rv-delay: 1675ms; --rv-dur: 760ms; }
+.is-ready [data-reveal='card-1']     { --rv-delay: 1783ms; --rv-dur: 350ms; }
+.is-ready [data-reveal='card-2']     { --rv-delay: 1867ms; --rv-dur: 350ms; }
+
+/* The title's lines are laid out as blocks so each can hold its own delay.
+   The rendered wrapping is what the artboard already produced.
+
+   Each line also carries its own slice of the title's gradient. Animating
+   opacity on a line gives it its own stacking context, and a composited child
+   cannot show through an ancestor's `background-clip: text` — the text simply
+   vanishes. Sizing the gradient to three line-heights and stepping the position
+   0% / 50% / 100% reproduces the single wash across the three lines exactly. */
+.hero__line {
+  display: block;
+  background-image: linear-gradient(180deg, #ffffff 0%, #999999 100%);
+  background-size: 100% 300%;
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+}
+.hero__line:nth-child(1) { background-position: 0 0%; }
+.hero__line:nth-child(2) { background-position: 0 50%; }
+.hero__line:nth-child(3) { background-position: 0 100%; }
+
+/* --------------------------------------------------------------------------
+   18. Morph
+   The recording does not scroll from the hero to the signal section — the
+   hero's glow expands into the signal's wash, and the hero's two panel cards
+   travel into the board's first column. Both are the same elements in both
+   artboards, which is why they match.
+
+   The section is pinned for one screen of scroll and `--morph` runs 0 to 1
+   across it, so the transition scrubs with the scroll rather than firing once.
+   Geometry comes from measuring both ends at runtime (see js/main.js); nothing
+   here carries a coordinate.
+   -------------------------------------------------------------------------- */
+.page {
+  position: relative;
+  block-size: 100svh;
+  overflow: hidden;
+}
+
+/* Both sections occupy the same screen. The site never scrolls — moving
+   between them is a transition, so no scrollbar exists at any point. */
+.section--hero,
+.section--signal {
+  position: absolute;
+  inset: 0;
+  block-size: 100svh;
+}
+
+/* Only one section is ever on screen. The signal section does not exist until
+   the travel has finished, so nothing of it can overlap the hero or double any
+   of the hero's elements — the hero is exactly the design, untouched. */
+.section--signal { visibility: hidden; }
+.signal-shown .section--signal { visibility: visible; }
+.signal-shown .section--hero { visibility: hidden; }
+
+/* --------------------------------------------------------------------------
+   18. The travel
+   The hero's own glow expands until it owns the screen, and the hero's own
+   panel carries its two cards left into the board's first column. Nothing is
+   duplicated: these are the hero's elements moving. The swap to the signal
+   section happens in a single frame at the end, when the two are
+   geometrically identical and the change cannot be seen.
+
+   JavaScript measures where each element has to land and writes that
+   transform inline — it is measured, not authorable. Duration and easing
+   live here.
+   -------------------------------------------------------------------------- */
+/* Only the two cards travel. The panel's title and caption stay where they
+   are and fade out during the travel's second half — measured: the caption's
+   edge energy holds at its own position until ~350ms in, then decays over
+   ~500ms, completing before the swap. */
+.morph-ready .panel .card {
+  transition: transform var(--morph-dur) var(--morph-ease);
+  will-change: transform;
+}
+.morph-ready .panel__title,
+.morph-ready .panel__caption {
+  transition: opacity 500ms var(--morph-ease) 350ms;
+}
+.to-signal .panel__title,
+.to-signal .panel__caption { opacity: 0; }
+
+/* The glow expands by widening — its left edge travels to the viewport's,
+   while its top, bottom and right are already there. The background's cover
+   crop recomputes as it widens, so the texture is progressively revealed the
+   way the recording shows, never stretched; and at left 0 it renders
+   identically to the signal wash, which is what makes the swap invisible. */
+.morph-ready .hero__glow {
+  transition: left var(--morph-dur) var(--morph-ease),
+              border-radius var(--morph-dur) var(--morph-ease);
+}
+.to-signal .hero__glow {
+  left: 0;
+  border-radius: 0;
+}
+
+/* The recording keeps the masthead on screen through the whole travel — its
+   navigation and call-to-action slide right, from the hero's column-bound
+   layout to the signal section's full-width one, and hand over at the swap.
+   Only the hero's body and marquee clear out, and they go fast: the title's
+   edge energy collapses within twenty frames. */
+.morph-ready .hero__body,
+.morph-ready .trusted {
+  transition: opacity 330ms var(--morph-ease),
+              transform 500ms var(--morph-ease);
+}
+.to-signal .hero__body,
+.to-signal .trusted {
+  opacity: 0;
+  transform: translateX(var(--hero-out-x, -12vw));
+}
+
+/* The wordmark travels on the same terms. Its delta is small — the artboards
+   put it at x35 in the hero and x34 here — but it is not zero, and anything in
+   the masthead that is not carried across the swap arrives by teleporting.
+   Measured like the other two, so it stays right at every viewport. */
+.morph-ready .section--hero .brand,
+.morph-ready .section--hero .mainnav,
+.morph-ready .section--hero .btn-nav {
+  transition: transform 850ms var(--morph-ease) 150ms;
+  will-change: transform;
+}
+.to-signal .section--hero .brand   { transform: translateX(var(--brand-dx, 0px)); }
+.to-signal .section--hero .mainnav { transform: translateX(var(--nav-dx, 0px)); }
+.to-signal .section--hero .btn-nav { transform: translateX(var(--cta-dx, 0px)); }
+
+/* The board's first column is a spacer while the travel runs: the hero's panel
+   stands in its place, so painting it too would double the cards. */
+.morph-ready:not(.signal-shown) [data-board-col1] { visibility: hidden; }
+
+/* Everything the signal section adds arrives after the swap — the new content
+   coming in once the panel has taken the screen. */
+/* Measured off the recording, frame by frame, from the moment the travel lands
+   (f332): the cards sit alone for 8 frames, the box then grows in from its top
+   edge over 18 frames, and the section's own elements arrive 26 frames after
+   that. The box arrives *behind* the settled cards — it is a layer of its own
+   so that growing it cannot squash the column standing on top of it. */
+.board { background: none; }
+
+.board::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, var(--surface-top) 0%, rgba(25, 25, 25, 0.4) 100%);
+  transform-origin: 50% 0;
+}
+
+/* Measured from the newly-dark-pixel bounds at full rate: the box's top edge
+   is pinned from its first visible frame while its bottom sweeps down —
+   132→350 across ~22 frames, accelerating then decelerating. A top-anchored
+   downward reveal, starting 170ms after the cards land. */
+.morph-ready .board::before {
+  clip-path: inset(0 0 100% 0);
+}
+.signal-in .board::before {
+  clip-path: inset(0 0 0% 0);
+  transition: clip-path 370ms var(--morph-ease) 170ms;
+}
+
+/* The cards keep their own stacking above the box that arrives behind them. */
+.morph-ready [data-board-col1] { position: relative; z-index: 1; }
+
+.morph-ready [data-reveal='board-mid'],
+.morph-ready [data-reveal='board-end'] {
+  animation: none;
+  opacity: 0;
+}
+/* The signal masthead is not revealed — it is the hero's masthead, handed
+   over mid-slide at the swap. It must be there the moment the section is. */
+.morph-ready [data-reveal='signal-masthead'] { animation: none; opacity: 1; }
+.signal-in [data-reveal='board-mid'],
+.signal-in [data-reveal='board-end'] {
+  opacity: 1;
+  transition: opacity 200ms var(--morph-ease) 390ms;
+}
+
+/* The closing line is not a fade. Tracked in ten vertical slices across the
+   line, it is *uncovered* left to right: the band's edge energy holds flat at
+   the wash's own value for 900ms after the swap, then the leading 57% arrives
+   in a single frame and the remainder sweeps in at a steady 1.36% of the line
+   per frame, the last slice completing 566ms later. Each 87px slice takes
+   ~167ms to go from nothing to full while the edge advances ~11px per frame,
+   which puts the edge's softness at about 110px — 12.5% of the line.
+
+   So: a mask whose soft edge travels, not an opacity. `--wipe` is the position
+   of the transparent end; the opaque end trails it by the measured 12.5%, so
+   the edge's midpoint sits 6.25% behind. It starts at 63.25% — midpoint 57% —
+   and runs to 112.5%, where the whole line is clear.
+
+   `forwards` rather than `both` on purpose: through the 900ms delay the
+   element keeps its own `--wipe: 0%` and stays fully covered. `backwards`
+   would apply the keyframe's start value and show 57% of the line early. */
+@property --wipe {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+
+.morph-ready [data-reveal='signal-title'] {
+  animation: none;
+  opacity: 1;
+  --wipe: 0%;
+  -webkit-mask-image: linear-gradient(90deg,
+    #000 0 calc(var(--wipe) - 12.5%), transparent var(--wipe));
+          mask-image: linear-gradient(90deg,
+    #000 0 calc(var(--wipe) - 12.5%), transparent var(--wipe));
+}
+.signal-in [data-reveal='signal-title'] {
+  animation: signal-wipe 566ms linear 900ms forwards;
+}
+@keyframes signal-wipe {
+  from { --wipe: 63.25%; }
+  to   { --wipe: 112.5%; }
+}
+
+/* --------------------------------------------------------------------------
+   19. Motion preferences, continued
+   Reduced motion gets the settled page: everything visible, nothing timed.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] { opacity: 1; }
+  .is-ready [data-reveal] { animation: none; }
+  .morph-ready [data-reveal='board-mid'],
+  .morph-ready [data-reveal='board-end'],
+  .morph-ready [data-reveal='signal-masthead'] { opacity: 1; }
+  .morph-ready [data-reveal='signal-title'] { --wipe: 112.5%; }
+  .morph-ready .hero__glow { transition: none; }
+  .morph-ready .panel { transform: none !important; }
+  .morph-ready .hero__content { opacity: 1; transform: none; }
+}
+
+/* --------------------------------------------------------------------------
+   20. Tablet architecture
+
+   THE BREAKPOINT, AND WHY IT IS WHERE IT IS
+
+   Measured rather than assumed. The composition is a pure scale — every
+   length is `<artboard number> x --u` — so walking the viewport down from
+   1920 to 744 produces no collision, no overflow and no wrapping fault at any
+   width. Nothing breaks geometrically. What degrades is `--u` itself, and with
+   it legibility and touch size:
+
+     viewport            --u     subtitle   card label   button
+     1366 x 768 *      0.661       13.2px       7.9px      41px
+     1194 x 834        0.718       14.4px       8.6px      45px
+     1080 x 810        0.642       13.4px       8.1px      42px
+     1024 x 768        0.638       12.8px       7.7px      40px
+      962 x 601        0.518       10.4px       6.2px      32px
+      834 x 1194       0.519       10.4px       6.2px      32px
+      768 x 1024       0.478        9.6px       5.7px      30px
+                                          * the smallest shipping desktop size
+
+   Two things follow. First, the landscape tablets are *better* than the
+   smallest size this design already ships at — 1194 x 834 beats 1366 x 768 —
+   so switching them to another architecture would be a downgrade, not a fix.
+   Second, `--u` is `min(100vh/1161, 100vw/1606, 1.35px)`, so it is the
+   viewport's *aspect* that decides which term wins: below the artboard's own
+   1606/1161, width drives it and the design shrinks into a tall screen while
+   the vertical slack goes to waste. That is precisely what a portrait tablet
+   does, and it is the real failure.
+
+   So the transition is not a width. It is: narrow enough that the two-column
+   split can no longer hold a legible content column, *and* proportioned such
+   that stacking is the better use of the space.
+
+       max-width: 1023px     — 1024 x 768 still measures 0.638, within the
+                               range this design already ships
+       max-aspect-ratio: 5/4 — below the artboard's 1.383; above it there is
+                               no vertical room to stack into, and the desktop
+                               split is the right composition anyway
+
+   A short landscape window (962 x 601) therefore keeps the desktop
+   architecture: stacking needs height it does not have. Everything at or above
+   1024px wide is untouched, which is the whole verified desktop range.
+
+   THE TABLET UNIT
+
+   Desktop fits the whole 1606 x 1161 artboard on screen. Tablet cannot — the
+   aspect is wrong — so it stops fitting the artboard and fits the *tablet
+   composition* instead. Across, that is 917 units: the closing line's 847 plus
+   a gutter each side, which is wider than the card pair's 737 and is what
+   actually binds — at 800 x 1280 the line wrapped to two lines and pushed the
+   section 15px past the screen. Down, 1400 units: the signal section's three
+   rows, its masthead and its closing line, which is the taller of the two
+   sections — its three rows at 386 + 385 + 385, their gaps, the board's own
+   padding, its masthead and its closing line, with 40 held back so the line
+   clears the bottom edge rather than sitting on it. The unit is still one number and
+   every length still reads from it, so nothing below this comment needed a
+   second set of sizes.
+   -------------------------------------------------------------------------- */
+@media (max-width: 1023px) and (max-aspect-ratio: 5/4) {
+
+  :root {
+    --u: min(calc(100vw / 917), calc(100vh / 1470), var(--u-max));
+    --gutter: calc(35 * var(--u));
+  }
+
+  /* ---- hero: one column, the panel below the words --------------------
+     The title keeps its three authored lines because the content column is
+     now the full width: 842 units of title inside ~890 of column. Stacking
+     is what buys that back — in two columns at this width the same title
+     wraps to six lines and the section no longer fits a screen. */
+  /* Content to the top, panel to the bottom. Centring the pair instead let the
+     masthead float down the screen — which put the burger underneath the menu
+     it opens — and left the panel adrift of the band it is supposed to sit in.
+     Distributed, the panel row's height (30 above the cards, 386 of card, then
+     the caption's 34 + 28 + 16 + 44, then 40 below) is exactly the band's 578,
+     so the two agree by construction at every size. */
+  .hero__grid {
+    grid-template-columns: 100%;
+    align-content: space-between;
+  }
+
+  .hero__content {
+    padding-block: calc(40 * var(--u)) 0;
+  }
+
+  /* The stack's own rhythm, tightened from the desktop's 54 to 34 units. The
+     ratios between the blocks are unchanged; only the slack is smaller,
+     because a tablet screen has less of it to give away. */
+  .hero__body { gap: calc(34 * var(--u)); }
+  .hero__head { margin-block-end: 0; }
+  .trusted { margin-block-start: calc(34 * var(--u)); }
+
+  .hero__panel {
+    padding-block: calc(30 * var(--u)) calc(40 * var(--u));
+    justify-content: flex-start;
+  }
+
+  /* The two cards move from a stack to a pair. Section two's first column
+     does the same (below), so the travel between them stays a single
+     translate — the handover is measured at runtime and the two ends remain
+     geometrically identical, exactly as on desktop. */
+  .panel {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: calc(11 * var(--u));
+    inline-size: min(calc(667 * var(--u)), 100%);
+    flex-wrap: wrap;
+  }
+  .panel .card { inline-size: calc(328 * var(--u)); flex: none; }
+  .card--value { margin-block-start: 0; }
+
+  /* The panel's caption belongs under the pair, not beside it. */
+  .panel__title,
+  .panel__caption { flex-basis: 100%; }
+  .panel__title { margin-block-start: calc(34 * var(--u)); }
+
+  /* The glow was the right-hand column; it becomes the band the panel sits
+     in, bleeding to the bottom and both sides. Same declaration, same
+     texture, same radius treatment — a different edge. */
+  .hero__glow {
+    inset-inline: 0;
+    inset-block: auto 0;
+    /* The panel's own content — 386 of card, 34 + 28 of title, 16 + 44 of
+       caption — plus its 30 above and 40 below. Sizing the band from what it
+       holds puts its edge a clear 30 units above the cards rather than hard
+       against the marquee. */
+    block-size: calc(578 * var(--u));
+    border-radius: var(--radius-glow) var(--radius-glow) 0 0;
+  }
+
+  /* ---- masthead: the navigation moves into the menu ------------------- */
+  .masthead { grid-template-columns: 1fr auto; }
+  .masthead .mainnav,
+  .masthead .btn-nav { display: none; }
+  /* Two classes, so it outranks the base `display: none` in §21 regardless of
+     which section of the file comes last. */
+  .masthead .burger { display: flex; }
+
+  /* ---- signal: three rows of two ---------------------------------------
+     The board's 328 / 407 / 407 columns become pairs. The first row is the
+     pair the hero hands over, so it keeps the artboard's card width; the
+     remaining four share the row evenly. */
+  .signal { block-size: auto; }
+
+  /* The signal shell is a centred column here, so the masthead has to be told
+     to span it — left to itself a flex item shrinks to its content and the
+     wordmark ends up in the middle of the screen. */
+  /* Top-anchored, so the masthead lands on the hero's own 40 units rather
+     than being carried down by a shell that centres what it holds. */
+  .section--signal { align-items: flex-start; }
+
+  .signal__masthead {
+    position: static;
+    align-self: stretch;
+    margin-block-start: calc(40 * var(--u));
+    padding-inline: var(--gutter);
+  }
+
+  /* Every card keeps its artboard width. Their contents are positioned at
+     fixed artboard coordinates (--x), so a card narrower than the artboard
+     draws its own text past its edge — which is what shrinking the 407-unit
+     cards to share a 667-unit row did to 'Cash & alt', to the activity
+     figures and to the asset-class heading. The board is therefore as wide as
+     its widest row: 407 + 12 + 407, plus its own padding.
+
+     That leaves the travelling pair's row narrower than the two below it, by
+     the same 159 units the artboard's own first column is narrower than the
+     others. Centred, it reads as the composition it is rather than as a row
+     that failed to fill. */
+  /* `relative`, not `static`. The board's surface is an absolutely-positioned
+     ::before inset to it, and a static board hands that pseudo-element to the
+     nearest positioned ancestor instead — the whole signal shell. It then drew
+     from above the masthead to below the closing line, which both hid the
+     navigation and made the panel look far larger than the cards it holds. */
+  .board {
+    position: relative;
+    /* The artboard's absolute offsets were inert while the board was static;
+       they are not once it is positioned, and top: 236u would push it 236
+       units down its own flow position. */
+    inset: auto;
+    block-size: auto;
+    inline-size: min(calc(854 * var(--u)), 100%);
+    margin-block-start: calc(24 * var(--u));
+    flex-direction: column;
+    gap: calc(12 * var(--u));
+    padding: calc(14 * var(--u));
+  }
+  .board__col {
+    flex: none;
+    inline-size: 100%;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: calc(12 * var(--u));
+    /* The artboard nudges the second and third columns right of the first;
+       stacked, that offset would push whole rows out of alignment. */
+    margin-inline-start: 0;
+  }
+  .board__col--allocation { gap: calc(11 * var(--u)); }
+  .board__col--allocation .board-card { inline-size: calc(328 * var(--u)); }
+  .board__col--mid .board-card,
+  .board__col--end .board-card { flex: none; inline-size: calc(407 * var(--u)); }
+
+  .signal__title {
+    position: static;
+    align-self: stretch;
+    margin-block-start: calc(24 * var(--u));
+    padding-inline: var(--gutter);
+  }
+
+  /* The signal section lays out in flow rather than absolutely, so it needs
+     to centre what it now stacks. */
+  .signal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ---- the travel, adapted ---------------------------------------------
+     Identical logic: the glow expands to own the screen while the cards
+     carry across. Only the edge it expands from changes — it grows upward
+     here because it entered from the bottom. */
+  .to-signal .hero__glow {
+    left: 0;
+    block-size: 100%;
+    border-radius: 0;
+  }
+  .morph-ready .hero__glow {
+    transition: block-size var(--morph-dur) var(--morph-ease),
+                border-radius var(--morph-dur) var(--morph-ease);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   21. The menu
+
+   Not a new visual language: the surface is the card's — 10% black over a
+   background blur, a 10% gradient hairline, the 25-unit radius — and the
+   links carry the masthead's own size, tracking and 50% rest opacity. The
+   call to action is the masthead's `.btn-nav`, unchanged.
+   -------------------------------------------------------------------------- */
+.burger {
+  display: none;
+  justify-self: end;
+  align-items: center;
+  justify-content: center;
+  inline-size: calc(40 * var(--u));
+  block-size: calc(40 * var(--u));
+  min-inline-size: 44px;
+  min-block-size: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+/* Two rules and a gap, at the brand mark's own stroke weight. */
+.burger__lines,
+.burger__lines::before {
+  display: block;
+  inline-size: calc(22 * var(--u));
+  block-size: max(1.5px, calc(2 * var(--u)));
+  border-radius: 999px;
+  background: var(--white);
+  transition: transform 260ms var(--morph-ease), opacity 200ms var(--morph-ease);
+}
+.burger__lines { position: relative; }
+.burger__lines::before {
+  content: '';
+  position: absolute;
+  inset-block-start: calc(-7 * var(--u));
+  inset-inline-start: 0;
+}
+.menu-open .burger__lines { transform: rotate(45deg); }
+.menu-open .burger__lines::before {
+  transform: translateY(calc(7 * var(--u))) rotate(-90deg);
+}
+
+.menu {
+  position: fixed;
+  z-index: 20;
+  inset-block-start: calc(104 * var(--u));
+  inset-inline: var(--gutter);
+  display: flex;
+  flex-direction: column;
+  gap: calc(20 * var(--u));
+  padding: calc(28 * var(--u));
+  border-radius: var(--radius-card);
+  background: rgba(0, 0, 0, 0.325);
+  -webkit-backdrop-filter: blur(calc(77.65 * var(--u)));
+          backdrop-filter: blur(calc(77.65 * var(--u)));
+  /* Closed is `visibility: hidden`, not an attribute and not `display: none`.
+     It keeps the panel out of the accessibility tree and out of the way of
+     pointer events — a closed menu that still owns its box swallows every
+     click aimed at the control that opens it — while leaving the fade
+     something to animate. The delayed visibility step holds it painted until
+     the fade has finished. */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(calc(-8 * var(--u)));
+  transition: opacity 220ms var(--morph-ease),
+              transform 220ms var(--morph-ease),
+              visibility 0s linear 220ms;
+}
+.menu::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: var(--hairline);
+  background: linear-gradient(127.6deg,
+    rgba(0, 0, 0, 0.1) 4.14%,
+    rgba(102, 102, 102, 0.1) 54.67%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+.menu-open .menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: none;
+  transition: opacity 220ms var(--morph-ease),
+              transform 220ms var(--morph-ease),
+              visibility 0s;
+}
+
+.menu__list {
+  display: flex;
+  flex-direction: column;
+  gap: calc(18 * var(--u));
+}
+.menu__list a {
+  display: block;
+  padding-block: calc(6 * var(--u));
+  font-size: calc(16 * var(--u));
+  line-height: 1.1875;
+  letter-spacing: var(--track-snug);
+  color: var(--white);
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+.menu__list a:hover,
+.menu__list a:focus-visible { opacity: 1; }
+
+.menu__cta {
+  justify-self: stretch;
+  justify-content: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu,
+  .burger__lines,
+  .burger__lines::before { transition-duration: 0.01ms; }
+}
+
+/* --------------------------------------------------------------------------
+   22. Mobile
+
+   Not a third architecture — the tablet one, tuned. The tablet query
+   `(max-width: 1023px) and (max-aspect-ratio: 5/4)` already matches every
+   phone, so everything below inherits it: one screen that never scrolls, the
+   content above and the panel in its glow band below, the card pair, the board
+   as three rows of two, the burger and its menu, and the travel between the
+   two sections exactly as it is there. This block changes the unit and a
+   handful of proportions, nothing else.
+
+   WHERE IT STARTS
+
+     viewport          subtitle   card label   button
+      600 x 960 *        13.1px       7.8px      40px
+      500 x 890          10.9px       6.5px      34px
+      430 x 932           9.4px       5.6px      29px
+      390 x 844           8.5px       5.1px      26px
+      844 x 390 **        6.7px       4.0px      21px
+                             * the narrowest size the tablet unit holds at
+                            ** a phone on its side, which falls to desktop
+
+   The tablet unit fits 917 units across — the closing line, which on a phone
+   is free to take two lines — and 1470 down. Below 600 that leaves too little,
+   so the references tighten: 866 across, which is the board's two 407-unit
+   cards plus their gap, padding and gutter and is now the widest thing on
+   screen; and 1450 down, the same stack with its gaps drawn in. The second
+   clause of the query catches a phone on its side, which is wider than 600 but
+   far too short for the desktop composition.
+
+   WHAT THE TWEAKS BUY
+
+   The board's two 407-unit cards set the width, and they cannot be narrowed —
+   their contents sit at fixed artboard coordinates, so a narrower card draws
+   its own text past its edge. What is left to claw back is the space around
+   them: the gutter drops from 35 units to 14, the board's padding from 14 to
+   8, its gaps from 12 to 8. The display and the closing line step down because
+   at their artboard sizes a single line is wider than the phone.
+   -------------------------------------------------------------------------- */
+@media (max-width: 599px), (max-height: 479px) and (max-width: 1023px) {
+
+  :root {
+    --u: min(calc(100vw / 866), calc(100vh / 1450), var(--u-max));
+    --gutter: calc(14 * var(--u));
+
+    /* The entry at 60% of its measured length. A phone is held closer and read
+       faster, and three seconds of it is a long wait on a screen this size;
+       every element keeps its place in the order and its share of the whole. */
+    --rv-scale: 0.6;
+  }
+
+  /* On a phone the width binds the unit, not the height, so the composition is
+     shorter than the screen — about 190px spare at 390 x 844. The tablet grid
+     hands all of that to the space between the content and the panel, which
+     opens a hole above the band. Letting the content row take the slack
+     instead puts it back where the desktop column already spends it: through
+     `.hero__body`'s auto margins, between the masthead, the words and the
+     marquee. */
+  .hero__grid {
+    grid-template-rows: 1fr auto;
+    align-content: stretch;
+  }
+
+  /* The stack draws in with the unit rather than in proportion to it, so the
+     composition keeps its own rhythm instead of tightening everywhere at once. */
+  /* The bottom padding is the band's clearance: with the content row taking
+     the slack, the marquee otherwise finishes exactly on the glow's edge. */
+  .hero__content { padding-block: calc(30 * var(--u)) calc(40 * var(--u)); }
+  .hero__body { gap: calc(26 * var(--u)); }
+  .trusted { margin-block-start: calc(26 * var(--u)); }
+  .hero__panel { padding-block: calc(24 * var(--u)) calc(28 * var(--u)); }
+
+  /* 578 units of band, less the 30 above and 40 below the tablet gives it. */
+  .hero__glow { block-size: calc(556 * var(--u)); }
+  .panel__title { margin-block-start: calc(26 * var(--u)); }
+
+  /* At 96 units a single line of the display is wider than the phone. 72 keeps
+     it dominant — five times the subtitle, where the artboard has six — and
+     keeps the authored three lines. */
+  .hero__title { font-size: calc(72 * var(--u)); }
+  .signal__title { font-size: calc(40 * var(--u)); }
+
+  /* The space around the board, since the cards inside it cannot give any. */
+  .board {
+    padding: calc(8 * var(--u));
+    gap: calc(8 * var(--u));
+    margin-block-start: calc(18 * var(--u));
+    inline-size: min(calc(838 * var(--u)), 100%);
+  }
+  .board__col { gap: calc(8 * var(--u)); }
+  .board__col--allocation { gap: calc(8 * var(--u)); }
+
+  .signal__masthead { margin-block-start: calc(30 * var(--u)); }
+  .signal__title { margin-block-start: calc(18 * var(--u)); }
+
+  .menu { inset-block-start: calc(96 * var(--u)); }
+}

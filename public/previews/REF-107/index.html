@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-107/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lumen — Timeless Style</title>
+<style>
+@font-face{font-family:"Inter Tight";font-style:normal;font-weight:300;font-display:block;src:url(assets/inter-tight-300.woff2) format("woff2")}
+@font-face{font-family:"Inter Tight";font-style:normal;font-weight:400;font-display:block;src:url(assets/inter-tight-400.woff2) format("woff2")}
+@font-face{font-family:"Inter Tight";font-style:normal;font-weight:500;font-display:block;src:url(assets/inter-tight-500.woff2) format("woff2")}
+@font-face{font-family:"Playfair Display";font-style:italic;font-weight:400;font-display:block;src:url(assets/playfair-display-italic-400.woff2) format("woff2")}
+@font-face{font-family:"Playfair Display";font-style:italic;font-weight:500;font-display:block;src:url(assets/playfair-display-italic-500.woff2) format("woff2")}
+
+/* ------------------------------------------------------------------
+   LAYOUT SYSTEM
+   The reference frame is 1155 × 767 design px.
+   --u  = one design px, scaled so the whole composition fits the
+          viewport (min of width / height ratio).
+   Positions: horizontal anchors are grid lines expressed as % of the
+   viewport width; vertical anchors are the top edge, the bottom edge
+   or the mid grid line (% of height). Sizes are in --u.
+   At exactly 1155:767 every value collapses to the reference pixels;
+   at any other aspect the grid stretches to fill the screen edge to
+   edge (no letterboxing, no blank bands) while type keeps its scale.
+   ------------------------------------------------------------------ */
+:root{
+  --ink:#0b0521;
+  --line:rgba(255,255,255,.24);
+  --line-soft:rgba(255,255,255,.20);
+  --glass-tint:rgba(42,84,120,.34);
+  --star:#8cbae2;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0d1b2a;overflow:hidden}
+body{font-family:"Inter Tight",system-ui,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
+
+.hero{
+  --u:min(calc(100vw / 1155), calc(100vh / 767));
+  --u:min(calc(100vw / 1155), calc(100dvh / 767));
+  /* grid lines (fractions of the frame) */
+  --gx1:calc(200.6 / 1155 * 100%);   /* left column edge  */
+  --gx2:calc(843.6 / 1155 * 100%);   /* right column edge */
+  --gy1:calc(405.2 / 767 * 100%);    /* mid row line      */
+  /* small type never drops below a legible floor; boxes are sized in em so they grow with it */
+  --fn:max(calc(13.6 * var(--u)), 9.5px);   /* nav      */
+  --ic:max(calc(28.6 * var(--u)), 24px);    /* icon btn */
+  --fb:max(calc(16.4 * var(--u)), 10.5px);  /* badge    */
+  --fs:max(calc(16.2 * var(--u)), 10.5px);  /* label    */
+  --fp:max(calc(15.4 * var(--u)), 11px);    /* copy     */
+  --fc:max(calc(14.9 * var(--u)), 10.5px);  /* button   */
+  position:relative;width:100vw;height:100vh;height:100dvh;overflow:hidden;
+  color:#fff;isolation:isolate;
+}
+.u{position:absolute}
+
+/* ---------- photography ---------- */
+.bg{
+  position:absolute;left:50%;top:0;
+  /* reference: photo drawn 1155 × 794 from the top-left (cover, slight v-stretch of the comp) */
+  width:max(100%, calc(100vh * 1155 / 767));
+  width:max(100%, calc(100dvh * 1155 / 767));
+  aspect-ratio:1155 / 794;
+  transform:translateX(-50%);
+  /* keep the face in frame on ultra-wide screens */
+  top:min(0px, calc((100% - max(100vw, 100dvh * 1155 / 767) * 794 / 1155 + 27 * var(--u)) * .3));
+  object-fit:fill;filter:saturate(.8);z-index:0;user-select:none;pointer-events:none
+}
+/* tonal grade: light top vignette + deepening floor */
+.shade{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+   linear-gradient(180deg,rgba(11,14,18,.16) 0%,rgba(11,14,18,0) 15%,rgba(11,14,18,0) 40%,rgba(11,14,18,.08) 50%,
+     rgba(11,14,18,.16) 63%,rgba(11,14,18,.27) 76%,rgba(11,14,18,.38) 88%,rgba(11,14,18,.40) 95%,rgba(11,14,18,.44) 100%)}
+
+/* ---------- frosted glass columns ---------- */
+.glass{position:absolute;top:0;bottom:0;z-index:2;
+  background:var(--glass-tint);
+  -webkit-backdrop-filter:blur(calc(2 * var(--u))) saturate(.92);
+  backdrop-filter:blur(calc(2 * var(--u))) saturate(.92)}
+.glass.l{left:0;width:var(--gx1);bottom:auto;height:var(--gy1);
+  -webkit-mask-image:linear-gradient(180deg,#000 79%,rgba(0,0,0,.35) 93%,transparent 100%);mask-image:linear-gradient(180deg,#000 79%,rgba(0,0,0,.35) 93%,transparent 100%)}
+.glass.r{left:var(--gx2);right:0;bottom:auto;height:calc(520 / 767 * 100%);background:rgba(40,95,145,.34);
+  -webkit-mask-image:linear-gradient(180deg,#000 83%,transparent 100%);mask-image:linear-gradient(180deg,#000 83%,transparent 100%)}
+/* brighter frost strip behind the header actions */
+.hx{position:absolute;z-index:2;left:var(--gx2);right:0;top:0;height:calc(53.3 * var(--u));background:rgba(110,160,210,.14);pointer-events:none}
+/* progressive frost behind the collection label */
+.glass.lb{left:0;width:var(--gx1);top:calc(540 / 767 * 100%);background:rgba(42,84,120,.06);
+  -webkit-backdrop-filter:blur(calc(3 * var(--u)));backdrop-filter:blur(calc(3 * var(--u)));
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 calc(30 * var(--u)));mask-image:linear-gradient(180deg,transparent 0,#000 calc(30 * var(--u)))}
+.glass.m{left:var(--gx1);right:calc(100% - var(--gx2));top:calc(53.3 * var(--u));bottom:auto;height:calc(var(--gy1) - 53.3 * var(--u));background:rgba(40,32,26,.08);-webkit-backdrop-filter:none;backdrop-filter:none}
+.glass.h{left:var(--gx1);right:calc(100% - var(--gx2));height:calc(53.3 * var(--u));bottom:auto;background:rgba(42,84,120,.08);-webkit-backdrop-filter:none;backdrop-filter:none}
+
+/* ---------- hairline grid ---------- */
+.ln{position:absolute;z-index:3;background:var(--line);pointer-events:none}
+.ln.h1{left:0;right:0;top:calc(53.2 * var(--u));height:calc(1 * var(--u));min-height:1px;background:var(--line-soft)}
+.ln.h2{left:0;width:var(--gx2);top:calc(var(--gy1));height:calc(1 * var(--u));min-height:1px}
+.ln.v1{left:var(--gx2);top:0;bottom:calc(74.5 * var(--u));width:calc(1 * var(--u));min-width:1px;transform:translateX(-50%)}
+.ln.v2{left:var(--gx1);top:var(--gy1);bottom:0;width:calc(1 * var(--u));min-width:1px;transform:translateX(-50%)}
+.ln.v3{left:calc(var(--gx2) + 6.9485 * var(--fn));top:0;height:calc(53.5 * var(--u));width:calc(1 * var(--u));min-width:1px;transform:translateX(-50%);background:var(--line-soft)}
+
+/* ---------- header ---------- */
+.logo{position:absolute;z-index:5;left:calc(44.3 * var(--u));top:calc(11.6 * var(--u));
+  font:italic 500 calc(27.5 * var(--u))/1 "Playfair Display",serif;letter-spacing:calc(-.2 * var(--u));color:#fff;text-decoration:none}
+.nav{position:absolute;z-index:5;top:calc(26.65 * var(--u) - .4559 * var(--fn));left:var(--gx2);height:0}
+.nav a{position:absolute;top:0;white-space:nowrap;color:rgba(255,255,255,.75);text-decoration:none;
+  font:400 var(--fn)/1 "Inter Tight",sans-serif;letter-spacing:-.0331em;text-transform:uppercase}
+.nav a:nth-child(1){left:-3.6029em;font-size:var(--fn)}
+.nav a:nth-child(2){left:1.3235em;font-size:var(--fn)}
+.nav a:nth-child(3){left:8.1618em;font-size:var(--fn)}
+.icons{position:absolute;z-index:5;left:max(calc(100% - 53.4 * var(--u) - 2 * var(--ic)), calc(var(--gx2) + 12.28 * var(--fn) + 18 * var(--u)));top:calc(11 * var(--u));display:flex;gap:calc(7.8 * var(--u))}
+.ic{width:var(--ic);height:var(--ic);border-radius:50%;display:grid;place-items:center;
+  background:rgba(255,255,255,.64);-webkit-backdrop-filter:blur(calc(6 * var(--u)));backdrop-filter:blur(calc(6 * var(--u)));
+  border:0;cursor:pointer;color:#2a2b2e}
+.ic svg{width:calc(var(--ic) * .612);height:calc(var(--ic) * .612);display:block}
+
+/* ---------- headline ---------- */
+.h1{position:absolute;z-index:4;left:calc(var(--gx1) + .5 * var(--u));top:calc(108.9 * var(--u));
+  font:400 calc(97 * var(--u))/calc(95 * var(--u)) "Inter Tight",sans-serif;letter-spacing:calc(-1.7 * var(--u));white-space:nowrap}
+.h1 span{display:block;position:relative}
+.h1 span+span{top:calc(-1.3 * var(--u));left:calc(-.2 * var(--u))}
+.h1 em{display:block;font:italic 400 calc(101 * var(--u))/calc(94 * var(--u)) "Playfair Display",serif;letter-spacing:calc(-2 * var(--u));margin-left:calc(-.3 * var(--u));margin-top:calc(-7.2 * var(--u));word-spacing:calc(-5.3 * var(--u))}
+
+/* ---------- season badge ---------- */
+.badge{position:absolute;z-index:4;left:calc(var(--gx2) + 31 * var(--u));top:calc(var(--gy1) - 77 * var(--u));
+  display:flex;align-items:center;gap:.39em;color:rgba(255,255,255,.85);
+  font:400 var(--fb)/1 "Inter Tight",sans-serif;letter-spacing:-.0366em;white-space:nowrap}
+.badge svg{width:1.0976em;height:1.0976em;color:var(--star);flex:none}
+
+/* ---------- collection label ---------- */
+.season{position:absolute;z-index:4;color:rgba(255,255,255,.85);left:calc(43.7 * var(--u));bottom:calc(74.6 * var(--u));
+  font:400 var(--fs)/1.142 "Inter Tight",sans-serif;letter-spacing:-.0204em;text-transform:uppercase}
+
+/* ---------- right column copy + CTA ---------- */
+.cta{position:absolute;z-index:4;left:calc(var(--gx2) + 32.4 * var(--u));bottom:calc(75.2 * var(--u));
+  display:flex;flex-direction:column;align-items:flex-start;gap:calc(22.5 * var(--u))}
+.cta p{width:14.026em;font:400 var(--fp)/1.2208 "Inter Tight",sans-serif;letter-spacing:0;color:rgba(255,255,255,.82)}
+.btns{display:flex;gap:calc(1.8 * var(--u));font-size:var(--fc)}
+.btn{height:2.6846em;border-radius:1.3423em;background:#fff;color:var(--ink);border:0;cursor:pointer;
+  font:500 var(--fc)/1 "Inter Tight",sans-serif;letter-spacing:0;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.btn.main{width:8.2819em;letter-spacing:-.0302em;padding:.2148em 0 0 .1208em}
+.btn.go{width:1.6644em;border-radius:.8322em}
+.btn.go svg{width:.8054em;height:.8054em}
+
+/* ---------- watermark ---------- */
+.wm{position:absolute;z-index:3;left:calc(var(--gx1) + 12.2 * var(--u));bottom:calc(-17 * var(--u));
+  font:italic 400 calc(175 * var(--u))/1 "Playfair Display",serif;letter-spacing:calc(-4 * var(--u));color:rgba(255,255,255,.19);white-space:nowrap;pointer-events:none;user-select:none}
+
+/* ---------- polaroid ---------- */
+.pol{position:absolute;z-index:6;left:calc(var(--gx1) + 61.4 * var(--u));bottom:calc(68.3 * var(--u));
+  width:calc(126.7 * var(--u));height:calc(158.3 * var(--u));background:#fff;transform:rotate(-15deg);transform-origin:50% 50%;
+  padding:calc(5.9 * var(--u)) calc(5.9 * var(--u)) 0;box-shadow:0 calc(2 * var(--u)) calc(10 * var(--u)) rgba(0,0,0,.12)}
+.pol img{display:block;width:100%;height:calc(130.5 * var(--u));object-fit:cover;object-position:50% 66%}
+.pol b{position:absolute;left:0;right:0;bottom:calc(6.2 * var(--u));text-align:center;color:#000;
+  font:500 calc(18.3 * var(--u))/1 "Inter Tight",sans-serif;letter-spacing:calc(-.2 * var(--u));-webkit-text-stroke:calc(.22 * var(--u)) currentColor;white-space:nowrap}
+
+/* ==================================================================
+   PORTRAIT / MOBILE  — reflowed composition, still full-bleed.
+   Unit --m is one design px of a 390 × 844 phone frame.
+   ================================================================== */
+@media (max-aspect-ratio: 9/10){
+  .hero{
+    --m:min(calc(100vw / 390), calc(100dvh / 844));
+    --m:min(calc(100vw / 390), calc(100vh / 844));
+    --m:min(calc(100vw / 390), calc(100dvh / 844));
+    --gx1:calc(20 / 390 * 100%);
+    --gx2:100%;
+    --gy1:calc(560 / 844 * 100%);
+  }
+  .bg{width:auto;height:100%;aspect-ratio:1155 / 794;left:58%;top:0}
+  .shade{background:linear-gradient(180deg,rgba(11,14,18,.28) 0%,rgba(11,14,18,0) 22%,rgba(11,14,18,0) 42%,rgba(11,14,18,.18) 58%,rgba(11,14,18,.42) 100%)}
+  .glass.l{width:var(--gx1)}
+  .glass.r{left:0;right:0;top:auto;height:calc(100% - var(--gy1))}
+  .glass.h{left:0;right:0;height:calc(58 * var(--m));background:rgba(42,84,120,.30);
+    -webkit-backdrop-filter:blur(calc(2 * var(--m)));backdrop-filter:blur(calc(2 * var(--m)))}
+  .ln.h1{top:calc(58 * var(--m));height:1px}
+  .ln.h2{width:auto;right:0;top:var(--gy1);height:1px}
+  .ln.v1{display:none}
+  .ln.v2{top:calc(58 * var(--m));bottom:0;width:1px}
+  .ln.v3{display:none}
+  .logo{left:calc(36 * var(--m));top:calc(15 * var(--m));font-size:calc(28 * var(--m))}
+  .icons{left:auto;right:calc(18 * var(--m));top:calc(13.5 * var(--m));gap:calc(8 * var(--m))}
+  .ic{--ic:calc(31 * var(--m))}
+  .nav{left:var(--gx1);right:0;top:calc(58 * var(--m));height:calc(38 * var(--m));display:flex;border-bottom:1px solid var(--line-soft)}
+  .nav a{position:static;flex:1;display:flex;align-items:center;justify-content:center;font-size:calc(12.5 * var(--m))!important;letter-spacing:.02em}
+  .nav a+a{border-left:1px solid var(--line-soft)}
+  .h1{left:calc(var(--gx1) + 16 * var(--m));top:calc(122 * var(--m));font-size:calc(56 * var(--m));line-height:calc(54 * var(--m));letter-spacing:calc(-2 * var(--m))}
+  .h1 em{font-size:calc(58 * var(--m));line-height:calc(56 * var(--m));letter-spacing:calc(-.8 * var(--m));margin-left:calc(-2 * var(--m));margin-top:0}
+  .badge{left:calc(var(--gx1) + 18 * var(--m));top:calc(var(--gy1) - 40 * var(--m));font-size:calc(14 * var(--m));gap:calc(6 * var(--m))}
+  .season{left:auto;right:calc(18 * var(--m));bottom:auto;top:calc(var(--gy1) + 18 * var(--m));text-align:right;font-size:calc(13 * var(--m))}
+  .cta{left:calc(var(--gx1) + 18 * var(--m));right:calc(18 * var(--m));bottom:max(calc(30 * var(--m)), env(safe-area-inset-bottom));gap:calc(20 * var(--m))}
+  .cta p{width:auto;max-width:16.6em;font-size:calc(15 * var(--m));line-height:1.3}
+  .btn{font-size:calc(15.5 * var(--m))}
+  .btns{font-size:calc(15.5 * var(--m))}
+  .btn.main{width:9.6774em}
+
+  .wm{left:calc(var(--gx1) - 4 * var(--m));bottom:calc(-30 * var(--m));font-size:calc(118 * var(--m));color:rgba(255,255,255,.14)}
+  .pol{left:auto;right:calc(22 * var(--m));bottom:calc(100% - var(--gy1) + 26 * var(--m));width:calc(104 * var(--m));height:calc(130 * var(--m));padding:calc(6 * var(--m)) calc(6 * var(--m)) 0}
+  .pol img{height:calc(98 * var(--m))}
+  .pol b{font-size:calc(14 * var(--m));bottom:calc(7.5 * var(--m))}
+}
+@media (max-aspect-ratio: 9/10) and (max-height: 640px){
+  .pol{display:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  .btn,.ic,.nav a{transition:transform .25s ease,opacity .25s ease}
+  .btn:hover,.ic:hover{transform:translateY(-1px)}
+  .nav a:hover{opacity:.7}
+}
+
+/* One opening sequence. Backwards fill holds each opening pose only until its cue;
+   afterward the original authored styles take over without a lingering effect. */
+@media (prefers-reduced-motion:no-preference){
+  @keyframes entrance-header{
+    from{opacity:0;transform:translateY(-7px)}
+    to{opacity:1;transform:none}
+  }
+  @keyframes entrance-line{
+    from{opacity:0;clip-path:inset(100% 0 0 0);transform:translateY(14px)}
+    to{opacity:1;clip-path:inset(0 0 0 0);transform:none}
+  }
+  @keyframes entrance-support{
+    from{opacity:0;transform:translateY(8px)}
+    to{opacity:1;transform:none}
+  }
+  @keyframes entrance-polaroid{
+    from{opacity:0;transform:translateY(12px) rotate(-15deg) scale(.975)}
+    to{opacity:1;transform:rotate(-15deg)}
+  }
+
+  .logo{animation:entrance-header .56s cubic-bezier(.22,1,.36,1) .04s backwards}
+  .nav{animation:entrance-header .56s cubic-bezier(.22,1,.36,1) .15s backwards}
+  .icons{animation:entrance-header .56s cubic-bezier(.22,1,.36,1) .23s backwards}
+
+  .h1 span:first-child{animation:entrance-line .78s cubic-bezier(.16,1,.3,1) .31s backwards}
+  .h1 span:nth-child(2){animation:entrance-line .82s cubic-bezier(.16,1,.3,1) .46s backwards}
+  .h1 em{animation:entrance-line .88s cubic-bezier(.16,1,.3,1) .62s backwards}
+
+  .badge{animation:entrance-support .57s cubic-bezier(.22,1,.36,1) .91s backwards}
+  .cta p{animation:entrance-support .62s cubic-bezier(.22,1,.36,1) .98s backwards}
+  .season{animation:entrance-support .54s cubic-bezier(.22,1,.36,1) 1.07s backwards}
+  .btns{animation:entrance-support .58s cubic-bezier(.22,1,.36,1) 1.21s backwards}
+  .pol{animation:entrance-polaroid .76s cubic-bezier(.22,1,.36,1) 1.05s backwards}
+}
+</style>
+</head>
+<body>
+<main class="hero">
+  <img class="bg" alt="" src="assets/hero-background.jpg">
+  <div class="shade"></div>
+  <div class="glass l"></div><div class="glass r"></div><div class="glass lb"></div><div class="glass m"></div><div class="hx"></div><div class="glass h"></div>
+  <i class="ln h1"></i><i class="ln h2"></i><i class="ln v1"></i><i class="ln v2"></i><i class="ln v3"></i>
+
+  <a class="logo" href="#" aria-label="Lumen home">LUMEN</a>
+  <nav class="nav" aria-label="Primary"><a href="#">Shop</a><a href="#">Editorial</a><a href="#">Journal</a></nav>
+  <div class="icons">
+    <button class="ic" aria-label="Wishlist"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.05" stroke-linejoin="round"><path d="M8 13.4 2.6 8.2a3.2 3.2 0 0 1 0-4.6 3.3 3.3 0 0 1 4.6 0L8 4.4l.8-.8a3.3 3.3 0 0 1 4.6 0 3.2 3.2 0 0 1 0 4.6Z"/></svg></button>
+    <button class="ic" aria-label="Bag"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.05" stroke-linejoin="round"><path d="M3.6 5.4h8.8l.6 8.6H3Z"/><path d="M5.8 7.2V4.3a2.2 2.2 0 0 1 4.4 0v2.9"/></svg></button>
+  </div>
+
+  <h1 class="h1"><span>Timeless</span><span>Style for</span><em>Modern You</em></h1>
+
+  <div class="badge"><svg viewBox="0 0 18 18" fill="currentColor" aria-hidden="true"><g transform="translate(9 9)"><rect x="-.9" y="-9" width="1.8" height="18" rx=".9"/><rect x="-.9" y="-9" width="1.8" height="18" rx=".9" transform="rotate(30)"/><rect x="-.9" y="-9" width="1.8" height="18" rx=".9" transform="rotate(60)"/><rect x="-.9" y="-9" width="1.8" height="18" rx=".9" transform="rotate(90)"/><rect x="-.9" y="-9" width="1.8" height="18" rx=".9" transform="rotate(120)"/><rect x="-.9" y="-9" width="1.8" height="18" rx=".9" transform="rotate(150)"/><circle r="2.6"/></g></svg>WINTER 2027</div>
+
+  <p class="season">New<br>Season<br>Collection</p>
+
+  <div class="wm" aria-hidden="true">LUMEN</div>
+
+  <figure class="pol"><img alt="Model wearing the stylist T-shirt" src="assets/stylist-t-shirt.jpg"><b>Stylist T-shirt</b></figure>
+
+  <div class="cta">
+    <p>Discover fashion that blends comfort, quality, and confidence. Crafted for your everyday moments and life’s special ones.</p>
+    <div class="btns"><a class="btn main" href="#">View Product</a><a class="btn go" href="#" aria-label="View product"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 6h9M6.8 2.3 10.5 6l-3.7 3.7"/></svg></a></div>
+  </div>
+</main>
+</body>
+</html>

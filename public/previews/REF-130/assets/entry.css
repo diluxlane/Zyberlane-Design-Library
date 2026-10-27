@@ -1,0 +1,57 @@
+/* The portrait and its background treatment never animate. */
+@keyframes pulse-quiet {
+  from { opacity: 0; transform: translateY(7px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes pulse-title {
+  from { opacity: 0; clip-path: inset(100% 0 0); transform: translateY(14px); }
+  to { opacity: 1; clip-path: inset(0); transform: none; }
+}
+@keyframes pulse-card {
+  from { opacity: 0; transform: translateX(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+html.entry-motion .g-hl,
+html.entry-motion .g-nav,
+html.entry-motion .g-hr {
+  animation: pulse-quiet .57s cubic-bezier(.22,1,.36,1) both;
+}
+html.entry-motion .g-hl { animation-delay: .03s; }
+html.entry-motion .g-nav { animation-delay: .12s; }
+html.entry-motion .g-hr { animation-delay: .20s; }
+html.entry-motion .tagpill {
+  animation: pulse-quiet .55s cubic-bezier(.22,1,.36,1) .22s both;
+}
+html.entry-motion h1 .t-h1a,
+html.entry-motion h1 .t-h1b,
+html.entry-motion h1 .t-h1c {
+  animation: pulse-title .76s cubic-bezier(.19,1,.22,1) both;
+}
+html.entry-motion h1 .t-h1a { animation-delay: .36s; }
+html.entry-motion h1 .t-h1b { animation-delay: .53s; }
+html.entry-motion h1 .t-h1c { animation-delay: .70s; }
+html.entry-motion .g-bot {
+  animation: pulse-quiet .65s cubic-bezier(.22,1,.36,1) 1.00s both;
+}
+html.entry-motion .g-cta {
+  animation: pulse-quiet .63s cubic-bezier(.22,1,.36,1) 1.20s both;
+}
+html.entry-motion .panel .card {
+  animation: pulse-card .69s cubic-bezier(.22,1,.36,1) both;
+}
+html.entry-motion .panel .g-c1 { animation-delay: .82s; }
+html.entry-motion .panel .g-c2 { animation-delay: .99s; }
+html.entry-motion .panel .g-c3 { animation-delay: 1.16s; }
+
+@media (max-aspect-ratio:31/50) {
+  html.entry-motion .panel .card {
+    animation-name: pulse-quiet;
+  }
+  html.entry-motion .panel .g-c1 { animation-delay: 1.36s; }
+  html.entry-motion .panel .g-c2 { animation-delay: 1.51s; }
+  html.entry-motion .panel .g-c3 { animation: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.entry-motion * { animation: none !important; }
+}

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="/previews/REF-082/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ATRIUM MTL — An archive of light cast in stone</title>
+<style>
+@font-face{font-family:"Archivo";font-style:normal;font-weight:100 900;font-stretch:62% 125%;font-display:block;src:url(assets/fonts/archivo.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:100 900;font-display:block;src:url(assets/fonts/inter.woff2) format("woff2")}
+
+/* ---------- Tokens (sampled from the reference) ---------- */
+:root{
+  --paper:#f5f4ef;       /* page background        245,244,239 */
+  --ink:#0f0f0e;         /* headline / body text   15,15,14   */
+  --bar:#141517;         /* utility bar            20,21,23   */
+  --head:#0f1011;        /* main header            15,16,17   */
+  --card-dark:#151515;
+  --card-cream:#f9f6f1;
+  --pill:#f9f6ef;        /* Tickets pill            */
+  --pill-circle:#fbf9f4; /* ticket circle           */
+  --search:#4c4c4d;
+  --red:#ef5d44; --yellow:#fcdd71; --blue:#9fd5f7;
+  --tag:#d5d5d5;
+  /* navbar theme (white) — every header colour comes from these */
+  --nav-bg:#ffffff;              /* header surface */
+  --nav-bar:#ffffff;             /* utility strip: same white as the header */
+  --nav-fg:#0f0f0e;              /* text, logo, icons (= --ink) */
+  --nav-muted:#62615d;           /* tagline */
+  --nav-line:rgba(15,15,14,.08); /* strip divider, header edge */
+  --nav-rule:rgba(15,15,14,.16); /* separators inside the header */
+  --nav-search:#e8e7e2;          /* search button */
+  --nav-cta:var(--ink); --nav-cta-fg:#fff;   /* Tickets + ticket: same as the hero CTA */
+  --display:"Archivo","Arial Black",Impact,system-ui,sans-serif;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --img-sculpt:url(assets/images/sculpture.webp);--img-man:url(assets/images/man.webp);--img-visit:url(assets/images/visit.webp);--img-sil:url(assets/images/silhouette.webp);--grain:url("assets/images/grain.svg");--col:205.33px; --gap:13px; --pitch:282.5px; --r:22px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--paper)}
+body{color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+a:focus-visible,button:focus-visible{outline:2px solid #3b82f6;outline-offset:3px;border-radius:6px}
+svg{display:block}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* =====================================================================
+   DESKTOP / LANDSCAPE: a 1280-unit design canvas.
+   JS sets --s (scale), --W and --H (canvas size in design px).
+   At 1280×800 the canvas is 1:1 with the reference.
+   Wider screens grow W (grid stays right-anchored, hero left-anchored);
+   taller screens grow H (grid columns keep flowing, hero re-centres).
+   No letterboxing: the canvas always covers the full viewport.
+   ===================================================================== */
+.stage{position:relative;width:1280px;height:800px;overflow:hidden;background:var(--paper)}
+html.desk,html.desk body{overflow:hidden}
+html.desk .stage{position:fixed;left:0;top:0;width:calc(var(--W)*1px);height:calc(var(--H)*1px);transform:scale(var(--s));transform-origin:0 0}
+
+/* ---------- Image grid ---------- */
+/* grid ends where the header's flat bottom edge ends (header inset 40px + its 22px corner radius),
+   so tiles always tuck fully under the header and never show past its rounded corner */
+.grid{position:absolute;right:62px;top:0;bottom:0;width:calc(var(--col)*3 + var(--gap)*2)}
+.col{position:absolute;width:var(--col);display:flex;flex-direction:column}
+/* ---------- Continuous column scroll (measured from the reference video) ----------
+   Pure vertical translation, linear, one shared clock. Outer columns travel down,
+   the middle column travels up, at 0.342 card-heights per second (one card every
+   2.92s). Each column holds its 5 cards twice (cloned in JS), so moving by one set
+   = 50% of the column height loops seamlessly: 5 cards x 2.92s = 14.6s per cycle.
+   Speed is expressed in card heights, so it matches the video at every size. */
+@keyframes colUp{from{transform:translate3d(0,0,0)}to{transform:translate3d(0,-50%,0)}}
+@keyframes colDown{from{transform:translate3d(0,-50%,0)}to{transform:translate3d(0,0,0)}}
+.col{animation:colDown 14.6s linear infinite both;will-change:transform}
+.col.c2,.col.x1,.col.x3{animation-name:colUp}
+@media (prefers-reduced-motion:reduce){.col{animation:none}}
+.col.c1{left:0;top:86px}
+.col.c2{left:calc(var(--col) + var(--gap));top:-11.5px}
+.col.c3{left:calc(var(--col)*2 + var(--gap)*2);top:86.5px}
+/* Extra columns: only revealed on very wide screens so the grid keeps filling the space */
+.col.x1{left:calc((var(--col) + var(--gap))*-1);top:-11.5px}
+.col.x2{left:calc((var(--col) + var(--gap))*-2);top:86px}
+.col.x3{left:calc((var(--col) + var(--gap))*-3);top:-11.5px}
+.col.x1,.col.x2,.col.x3{display:none}
+html.desk.ex1 .x1,html.desk.ex2 .x1,html.desk.ex2 .x2,
+html.desk.ex3 .x1,html.desk.ex3 .x2,html.desk.ex3 .x3{display:flex}
+.cell{flex:none;height:var(--pitch);border-radius:var(--r);overflow:hidden;position:relative}
+/* Photos: each image is embedded once as a custom property and painted by a pseudo-element */
+.ph::before{content:"";position:absolute;inset:0;background:var(--pic) 50% 50%/cover no-repeat}
+.i-sculpt{--pic:var(--img-sculpt)} .i-man{--pic:var(--img-man)} .i-visit{--pic:var(--img-visit)} .i-sil{--pic:var(--img-sil)}
+/* Crops fitted numerically against the reference (image placement inside each tile, in % of the tile) */
+.f-sculpt::before{inset:auto;width:124.19%;height:112.57%;left:-16.07%;top:-8.5%;background-size:100% 100%}
+.f-man::before{inset:auto;width:113.48%;height:103.36%;left:-5.36%;top:-3.54%;background-size:100% 100%}
+.f-visit::before{inset:auto;width:110.07%;height:100%;left:-3.9%;top:8.5%;background-size:100% 100%}
+.f-visit{background:linear-gradient(90deg,#c6c5c3,#9b9a98 55%,#7a7977)}
+.f-visit::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.26),rgba(0,0,0,0) 13%);pointer-events:none}
+.f-sil::before{inset:auto;width:139.29%;height:126.37%;left:-8.77%;top:-56.64%;background-size:100% 100%}
+/* When the whole tile becomes visible (tall screens / mobile), fall back to full-cover crops */
+html.mob .f-visit::before{inset:0;width:auto;height:auto;background-size:cover}
+html.mob .f-visit::after{display:none}
+html.tall .f-sil::before,html.mob .f-sil::before{inset:0;width:auto;height:auto;background-size:cover;background-position:50% 75%}
+.cell.red{background:var(--red)} .cell.yellow{background:var(--yellow)} .cell.blue{background:var(--blue)}
+.cell.cream{background:var(--card-cream);box-shadow:inset 0 0 0 1px #e9e6df}
+.cell.dark{background:var(--card-dark);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+/* paper grain on the flat colour tiles, as in the reference */
+.cell.red::after,.cell.yellow::after,.cell.blue::after,.cell.cream::after,.cell.dark::after{content:"";position:absolute;inset:0;background-image:var(--grain);opacity:.13;mix-blend-mode:multiply;pointer-events:none}
+.cell.dark::after{mix-blend-mode:screen;opacity:.035}
+
+/* ---------- Header ---------- */
+.hdr{position:absolute;left:40px;right:40px;top:0;height:142px;background:var(--nav-bg);border-radius:0 0 22px 22px;color:var(--nav-fg);z-index:5;
+  box-shadow:0 0 0 1px var(--nav-line),0 16px 36px -24px rgba(15,15,14,.30)}
+.util{position:absolute;left:0;right:0;top:0;height:40px;background:var(--nav-bar);border-bottom:1px solid var(--nav-line)}
+.util .ph{position:absolute;top:0;display:flex;align-items:flex-start;font-size:14px;font-weight:500;line-height:15.5px;letter-spacing:-.005em}
+.util .ph svg{position:absolute;left:-2px;top:13px;width:16px;height:16px}
+.util .ph span{position:absolute;top:5.5px;white-space:nowrap}
+.util .ph.p1{left:34px}.util .ph.p1 span{left:23px;letter-spacing:.004em}
+.util .ph.p2{left:348px}.util .ph.p2 span{left:22px;letter-spacing:-.008em}
+.util .vr{position:absolute;left:313px;top:7px;width:1px;height:26px;background:var(--nav-rule)}
+.util nav{position:absolute;right:0;top:0;height:39px;width:560px}
+.u1{left:14px}.u2{left:131px}.u3{left:211px}.u4{left:331px}.u5{left:408px}
+.util nav a{position:absolute;top:0;font-size:14px;font-weight:500;line-height:15.5px;white-space:nowrap;letter-spacing:-.005em}
+.util nav a.one{top:13.5px}
+.util nav a.two{top:5.5px}
+.util .search{position:absolute;right:0;top:0;width:39px;height:39px;background:var(--nav-search);color:var(--nav-fg);border-radius:5px 0 0 5px;display:grid;place-items:center}
+
+.main{position:absolute;left:0;right:0;top:40px;bottom:0}
+.logo{position:absolute;left:31px;top:32px;width:180px;color:var(--nav-fg)}
+.logo b{display:block;font-family:var(--display);font-weight:900;font-stretch:85%;font-size:31px;line-height:31px;letter-spacing:-.016em;white-space:nowrap;-webkit-text-stroke:.35px currentColor}
+.logo small{display:block;margin-top:-1px;font-size:8.6px;font-weight:600;line-height:10px;color:var(--nav-muted);letter-spacing:.03em;white-space:nowrap}
+.mnav a,.mnav button{position:absolute;font-size:17px;font-weight:500;line-height:20px;white-space:nowrap;letter-spacing:-.01em}
+.mnav .go{display:flex;align-items:center}
+.circ{display:grid;place-items:center;border-radius:50%}
+.mnav .go .circ{position:absolute;width:24px;height:24px;background:var(--nav-fg);color:var(--nav-bg)}
+.mnav .sep{position:absolute;left:439.5px;top:40px;width:1px;height:24px;background:var(--nav-rule)}
+.mnav .m1{left:252px;top:42px} .mnav .m1 .circ{left:calc(100% + 22px);top:-3.5px}  /* 22px after the word, whatever its width */
+.mnav .m2{left:473px;top:41.5px;letter-spacing:-.028em}
+.mnav .m3{left:590.5px;top:42px;letter-spacing:-.027em}
+.mnav .menu-btn{right:252px;top:39px;width:90px;height:24px}
+.menu-btn svg{position:absolute;left:1px;top:6px}
+.menu-btn .lbl{position:absolute;left:43px;top:2px}
+.cta{position:absolute;right:33px;top:19px;height:64px;width:181px}
+.pill{position:absolute;display:grid;place-items:center;font-weight:600;letter-spacing:-.01em}
+.cta .pill{left:0;top:1px;width:116px;height:63px;background:var(--nav-cta);color:var(--nav-cta-fg);border-radius:22px;font-size:17.4px;letter-spacing:-.012em;padding-left:5px}
+.cta .tix{position:absolute;right:0;top:0;width:64px;height:64px;background:var(--nav-cta);color:var(--nav-cta-fg)}
+
+/* ---------- Hero ---------- */
+.hero{position:absolute;left:86px;top:calc(200px + (var(--H,800) - 800) * .5px);width:480px}
+.hero h1{margin:0;font-family:var(--display);font-weight:900;font-stretch:89%;font-size:80px;line-height:75.3px;letter-spacing:-.06em;word-spacing:.1em;text-transform:uppercase;-webkit-text-stroke:1.1px currentColor;margin-left:-1px}
+.hero p{margin:0;position:absolute;left:1px;top:344px;width:460px;font-size:18px;line-height:26.6px;letter-spacing:0;font-weight:400}
+.hero h1 > span{display:block;white-space:nowrap}
+.hero h1 .ln{display:block}
+/* one even treatment for all four lines (the old per-line values were fitted to the French glyphs) */
+.hero h1 > span{font-size:.95em;letter-spacing:-.05em;margin-left:-1px}
+.hero p strong{font-weight:700;letter-spacing:.006em}
+.acts{position:absolute;left:0;top:460px;height:65px;width:420px}
+.acts .pill.dk{left:0;top:1px;width:116px;height:63px;background:var(--ink);color:#fff;border-radius:24px;font-size:16.5px;padding-left:4px}
+.acts .tix{position:absolute;left:117px;top:0;width:64px;height:65px;background:var(--ink);color:#fff}
+.acts .more{position:absolute;left:215px;top:19px;display:flex;align-items:center;font-size:18px;font-weight:700;letter-spacing:-.01em;line-height:34px;height:34px}
+.acts .more .circ{position:absolute;left:calc(100% + 22px);top:-2px;width:32px;height:32px;background:var(--ink);color:#fff}
+
+/* =====================================================================
+   MOBILE (mob + mob-l) — below the tablet's limits (<600px wide, or too
+   short for the 142px tablet header). Same components, same tokens:
+   header collapses to Logo · Menu; the hero keeps its reading order;
+   the photo grid stays a 3-column staggered grid of cards.
+   Viewport-locked like desktop/tablet: every vertical size is a token
+   that also answers to viewport height (svh), so the whole composition
+   (and the open menu) always fits one screen — no page scrolling.
+   ===================================================================== */
+html.mob{
+  --tm:max(clamp(10px,3.2vw,20px),env(safe-area-inset-left,0px),env(safe-area-inset-right,0px)); /* outer margin */
+  --hp:18px;                                          /* header inner padding */
+  --row:clamp(50px,9svh,76px);                        /* header bar height */
+  --hh:calc(var(--row) + env(safe-area-inset-top,0px));
+  --h1:clamp(26px,min(15vw,6.9svh),64px);             /* 4 fixed lines; width- and height-aware */
+  --fp:clamp(12px,min(4.1vw,1.95svh),17px);           /* body copy */
+  --btn:clamp(36px,6.6svh,56px);                      /* hero CTA height */
+  --mf:clamp(14px,2svh,17px); --mc:clamp(28px,3.8svh,32px);   /* "Installations" link + circle */
+  --pt:clamp(10px,3.2svh,40px); --pb:clamp(10px,3.2svh,40px); --rg:clamp(8px,1.9svh,16px);
+  /* menu panel rhythm */
+  --m-ph:clamp(38px,6svh,52px); --m-u:clamp(34px,5.4svh,46px); --m-p:clamp(38px,6.4svh,54px);
+  --m-fu:clamp(14px,1.8svh,15px); --m-fp:clamp(19px,2.9svh,24px);
+}
+html.mob,html.mob body,html.tab,html.tab body{overflow:hidden}
+html.mob .stage{width:100%;height:100vh;height:100svh;overflow:visible;display:flex;flex-direction:column}
+
+/* ---- Header: Logo · Menu. Everything else lives in the Menu panel ---- */
+html.mob .hdr{left:var(--tm);right:var(--tm);height:auto;max-height:100svh;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-rows:var(--row);column-gap:16px;padding:env(safe-area-inset-top,0px) var(--hp) 0;border-radius:0 0 22px 22px}
+html.mob .util,html.mob .main,html.mob .unav,html.mob .mnav{display:contents}
+html.mob .logo{position:relative;left:auto;top:auto;width:auto;grid-row:1;grid-column:1;justify-self:start;align-self:center;margin-left:-1px}
+html.mob .logo b{font-size:clamp(28px,9.2vw,31px)}
+html.mob .logo small{font-size:calc(clamp(28px,9.2vw,31px)*.2774)}
+html.mob .mnav .menu-btn{position:relative;right:auto;top:auto;grid-row:1;grid-column:-2;justify-self:end;align-self:center;
+  width:auto;height:min(48px,var(--row) - 4px);margin-right:-10px;padding:0 10px;display:flex;align-items:center;gap:12px;border-radius:14px}
+html.mob .menu-btn svg,html.mob .menu-btn .lbl{position:static}
+
+/* Panel items (hidden until open). Visual order = DOM order = focus order. */
+html.mob .util .ph,html.mob .util .vr,html.mob .unav a,html.mob .util .search,
+html.mob .mnav a,html.mob .mnav .sep,html.mob .cta{display:none;position:static;left:auto;top:auto;right:auto}
+html.mob .hdr[data-open]{padding-bottom:calc(var(--m-u)*.45)}
+html.mob .hdr[data-open] .util .ph{display:flex;align-items:center;gap:12px;grid-column:1/-1;min-height:var(--m-ph);font-size:var(--m-fu);line-height:1.35}
+html.mob .hdr[data-open] .util .ph svg,html.mob .hdr[data-open] .util .ph span{position:static}
+html.mob .hdr[data-open] .p1{grid-row:2}
+html.mob .hdr[data-open] .util .vr{display:block;grid-row:3;grid-column:1/-1;width:auto;height:1px;background:var(--nav-rule)}
+html.mob .hdr[data-open] .p2{grid-row:4}
+html.mob .hdr[data-open] .unav a{display:flex;align-items:center;min-height:var(--m-u);font-size:var(--m-fu);line-height:1.2}
+html.mob .hdr[data-open] .unav a br{display:none}
+html.mob .hdr[data-open] .u1{grid-row:5;grid-column:1}
+html.mob .hdr[data-open] .u2{grid-row:5;grid-column:2}
+html.mob .hdr[data-open] .u3{grid-row:6;grid-column:1}
+html.mob .hdr[data-open] .u4{grid-row:6;grid-column:2}
+html.mob .hdr[data-open] .u5{grid-row:7;grid-column:1}
+html.mob .hdr[data-open] .util .search{display:grid;grid-row:7;grid-column:2;justify-self:start;align-self:center;
+  width:min(44px,var(--m-u));height:min(44px,var(--m-u));border-radius:5px}
+html.mob .hdr[data-open] .mnav .sep{display:block;grid-row:8;grid-column:1/-1;width:auto;height:1px;
+  margin:calc(var(--m-u)*.25) 0 calc(var(--m-u)*.1);background:var(--nav-rule)}
+html.mob .hdr[data-open] .mnav .m1,html.mob .hdr[data-open] .mnav .m2,html.mob .hdr[data-open] .mnav .m3{
+  display:flex;align-items:center;grid-column:1/-1;min-height:var(--m-p);font-size:var(--m-fp);line-height:1.2;letter-spacing:-.012em}
+html.mob .hdr[data-open] .m1{grid-row:9}
+html.mob .hdr[data-open] .m2{grid-row:10}
+html.mob .hdr[data-open] .m3{grid-row:11}
+html.mob .hdr[data-open] .mnav .m1 .circ{position:static;margin-left:16px}
+/* header Tickets + ticket: same components, sized by the CTA token */
+html.mob .hdr[data-open] .cta{display:flex;gap:1px;grid-row:12;grid-column:1/-1;justify-self:start;align-self:center;
+  width:auto;height:auto;margin-top:calc(var(--m-u)*.3)}
+html.mob .hdr[data-open] .cta .pill{position:static;width:calc(var(--btn)*1.84);height:var(--btn);border-radius:calc(var(--btn)*.35);
+  font-size:clamp(14px,calc(var(--btn)*.3),17.4px);padding-left:3px}
+html.mob .hdr[data-open] .cta .tix{position:static;width:calc(var(--btn) + 1px);height:calc(var(--btn) + 1px)}
+html.mob .cta .tix svg,html.mob .acts .tix svg{width:calc(var(--btn)*.41);height:calc(var(--btn)*.41)}
+@media (prefers-reduced-motion:no-preference){
+  html.mob .hdr[data-open] :is(.ph,.vr,.unav a,.search,.mnav a,.sep,.cta){animation:navIn .28s cubic-bezier(.2,.7,.2,1) both}
+  html.mob .hdr[data-open] :is(.vr,.p2){animation-delay:.03s}
+  html.mob .hdr[data-open] :is(.u1,.u2,.u3,.u4,.u5,.search){animation-delay:.06s}
+  html.mob .hdr[data-open] :is(.sep,.m1){animation-delay:.09s}
+  html.mob .hdr[data-open] .m2{animation-delay:.12s}
+  html.mob .hdr[data-open] :is(.m3,.cta){animation-delay:.15s}
+}
+
+/* ---- Hero ---- */
+html.mob .hero{order:1;position:relative;left:auto;top:auto;width:auto;flex:none;
+  padding:calc(var(--hh) + var(--pt)) calc(var(--tm) + var(--hp)) var(--pb)}
+html.mob .hero p{position:static;width:auto;max-width:25.6em;margin-top:calc(var(--h1)*.5);font-size:var(--fp);line-height:1.478}
+/* CTA row: pill + ticket stay welded; the link wraps below only when it must, with no indent */
+html.mob .acts{position:relative;left:auto;top:auto;width:auto;height:auto;margin-top:calc(var(--h1)*.48);
+  display:flex;flex-wrap:wrap;align-items:center;row-gap:var(--rg)}
+html.mob .acts .pill.dk{position:static;width:calc(var(--btn)*1.857);height:var(--btn);border-radius:calc(var(--btn)*.375);
+  font-size:clamp(13.5px,calc(var(--btn)*.277),15.5px);padding-left:3px}
+html.mob .acts .tix{position:static;width:calc(var(--btn) + 1px);height:calc(var(--btn) + 1px);margin-left:1px;margin-right:clamp(16px,5vw,30px)}
+html.mob .acts .more{position:static;height:max(var(--mc),40px);gap:12px;font-size:var(--mf)}
+html.mob .acts .more .circ{position:static;width:var(--mc);height:var(--mc)}
+
+/* ---- Grid: full-width band that takes whatever height is left ---- */
+html.mob .grid{order:2;--gw:calc(100vw - var(--tm)*2);--gap:clamp(6px,2vw,10px);position:relative;right:auto;top:auto;bottom:auto;
+  flex:1 1 0;min-height:0;width:auto;margin:0 var(--tm)}
+html.mob .col.c1{top:calc(var(--pitch)*-.65)}
+html.mob .col.c2{top:calc(var(--pitch)*-1.01)}
+html.mob .col.c3{top:calc(var(--pitch)*-.648)}
+
+/* ---- mob-l: landscape phones — desktop's side-by-side composition ---- */
+html.mob-l{
+  --row:clamp(48px,14svh,76px);
+  --h1:clamp(28px,min(6.25vw,9.7svh),64px);
+  --fp:clamp(12px,min(1.6vw,3.4svh),17px);
+  --btn:clamp(40px,11svh,56px);
+  --mf:clamp(14px,3.8svh,17px); --mc:clamp(28px,7svh,32px);
+  --pt:clamp(6px,3.2svh,40px); --pb:clamp(6px,3.2svh,40px);
+  /* grid column: wide enough that its 5-tile columns always reach the bottom edge */
+  --lgw:clamp(calc((100svh - var(--hh))*.53 + 22px),40vw,100vw - 420px);
+}
+html.mob-l .stage{display:grid;grid-template-columns:minmax(0,1fr) var(--lgw);grid-template-rows:100%;column-gap:clamp(16px,2.6vw,24px);padding-right:calc(var(--tm) + 22px)}
+html.mob-l .hero{grid-column:1;grid-row:1;display:flex;flex-direction:column;justify-content:safe center;min-height:0;padding-right:0}
+html.mob-l .hero p{max-width:30em}
+html.mob-l .acts .tix{margin-right:clamp(10px,2.6vw,30px)}
+html.mob-l .acts .more{gap:clamp(9px,1.6vw,12px)}
+html.mob-l .grid{--gw:var(--lgw);grid-column:2;grid-row:1;margin:0;min-height:0}
+html.mob-l .col.c1{top:calc(var(--hh) - var(--pitch)*.198)}
+html.mob-l .col.c2{top:calc(var(--hh) - var(--pitch)*.543)}
+html.mob-l .col.c3{top:calc(var(--hh) - var(--pitch)*.196)}
+/* landscape menu: two zones side by side so it fits a short screen */
+@media (min-aspect-ratio:1/1){
+html.mob{--m-ph:clamp(34px,10svh,48px); --m-u:clamp(30px,9svh,44px); --m-p:clamp(32px,10svh,50px);
+  --m-fu:clamp(13px,3.6svh,15px); --m-fp:clamp(17px,5.2svh,22px)}
+html.mob .hdr{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 1px minmax(0,1.25fr);column-gap:clamp(12px,2.6vw,28px)}
+html.mob .logo{grid-column:1/3}
+html.mob .hdr[data-open] .util .ph{grid-column:1/3}
+html.mob .hdr[data-open] .util .vr{grid-column:1/3}
+html.mob .hdr[data-open] .mnav .sep{grid-row:2/8;grid-column:3;width:1px;height:auto;margin:6px 0}
+html.mob .hdr[data-open] .mnav .m1,html.mob .hdr[data-open] .mnav .m2,html.mob .hdr[data-open] .mnav .m3{grid-column:4;min-height:0}
+html.mob .hdr[data-open] .m1{grid-row:2/4}
+html.mob .hdr[data-open] .m2{grid-row:4}
+html.mob .hdr[data-open] .m3{grid-row:5}
+html.mob .hdr[data-open] .cta{grid-row:6/8;grid-column:4;margin-top:0}
+}
+
+/* =====================================================================
+   LAYOUT MODES — breakpoints live here only; JS reads --mode.
+   desk : scaled 1280 canvas. Kept until its smallest functional text
+          (14px utility bar) would drop under 12px: 1280 × 12/14 ≈ 1097px.
+   tab-l: tablet landscape — two-column composition at native size.
+          Needs ≥900px so text column and 3-column grid both keep scale.
+   tab-p: tablet portrait — headline block over a full-width grid band.
+          Needs ≥820px height so the band still shows a full tile row.
+   mob  : everything below those limits — phone architecture.
+   mob-l: mobile, landscape (≥560px wide): side-by-side composition.
+   ===================================================================== */
+:root{--mode:mob}
+@media (min-width:560px) and (min-aspect-ratio:1/1){:root{--mode:mob-l}}
+@media (min-width:600px) and (min-height:820px) and (max-aspect-ratio:21/20){:root{--mode:tab-p}}
+@media (min-width:900px) and (min-height:540px) and (min-aspect-ratio:21/20){:root{--mode:tab-l}}
+@media (min-width:1097px) and (min-aspect-ratio:27/25){:root{--mode:desk}}
+
+/* =====================================================================
+   TABLET (tab-l + tab-p) — same components, native CSS px, re-architected.
+   ===================================================================== */
+html.tab{
+  --tm:clamp(20px,3.125vw,40px);               /* outer margin: 40px at 1280, eases down */
+  --hh:142px;                                  /* header height = desktop */
+  --h1:clamp(52px,min(9.4vw,6.4vh),80px);      /* headline size (portrait) */
+}
+html.tab .stage{position:relative;width:100%;height:100vh;height:100svh;overflow:visible}
+
+/* ---- Header: logo · Menu · Tickets stay; links move into the Menu panel ---- */
+html.tab .hdr{left:var(--tm);right:var(--tm);height:auto;display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:40px 102px;
+  column-gap:24px;padding:0 32px}
+html.tab .hdr::before{content:"";position:absolute;left:0;right:0;top:0;height:40px;background:var(--nav-bar);border-bottom:1px solid var(--nav-line);border-radius:0}
+html.tab .util,html.tab .main,html.tab .unav,html.tab .mnav{display:contents}
+html.tab .util .ph,html.tab .util .vr,html.tab .util .search{z-index:1}
+/* utility strip keeps desktop coordinates, but never runs under the search button */
+html.tab .util .vr{left:min(313px,calc(50% - 8px))}
+html.tab .util .ph.p2{left:min(348px,calc(50% + 27px))}
+html.tab .logo{position:relative;left:auto;top:auto;grid-row:2;grid-column:1/-1;justify-self:start;align-self:center;margin:1px 0 0 -1px}
+html.tab .cta{position:relative;right:auto;top:auto;grid-row:2;grid-column:1/-1;justify-self:end;align-self:center;margin-right:1px}
+html.tab .mnav .menu-btn{position:relative;right:auto;top:auto;grid-row:2;grid-column:1/-1;justify-self:end;align-self:center;
+  width:auto;height:48px;margin-right:calc(181px + clamp(10px,2vw,22px));padding:0 10px;display:flex;align-items:center;gap:clamp(16px,2.6vw,24px);border-radius:14px}
+html.tab .menu-btn svg,html.tab .menu-btn .lbl{position:static}
+
+/* Panel items: hidden until the menu opens */
+html.tab .unav a,html.tab .mnav a,html.tab .mnav .sep{display:none;position:static;left:auto;top:auto}
+html.tab .hdr[data-open]{padding-bottom:22px}
+html.tab .hdr[data-open] .unav a{display:flex;align-items:center;min-height:48px;grid-column:span 1;font-size:15px;line-height:1.2}
+html.tab .hdr[data-open] .unav a br{display:none}
+html.tab .hdr[data-open] .u1,html.tab .hdr[data-open] .u2,html.tab .hdr[data-open] .u3{grid-row:3;margin-top:10px}
+html.tab .hdr[data-open] .u4,html.tab .hdr[data-open] .u5{grid-row:4}
+html.tab .hdr[data-open] .u1,html.tab .hdr[data-open] .u4{grid-column:1}
+html.tab .hdr[data-open] .u2,html.tab .hdr[data-open] .u5{grid-column:2}
+html.tab .hdr[data-open] .u3{grid-column:3}
+html.tab .hdr[data-open] .mnav .sep{display:block;grid-row:5;grid-column:1/-1;width:auto;height:1px;margin:14px 0 6px;background:var(--nav-rule)}
+html.tab .hdr[data-open] .mnav .m1,html.tab .hdr[data-open] .mnav .m2,html.tab .hdr[data-open] .mnav .m3{
+  display:flex;align-items:center;grid-column:1/-1;min-height:56px;font-size:22px;line-height:1.2;letter-spacing:-.012em}
+html.tab .hdr[data-open] .m1{grid-row:6}
+html.tab .hdr[data-open] .m2{grid-row:7}
+html.tab .hdr[data-open] .m3{grid-row:8}
+html.tab .hdr[data-open] .mnav .m1 .circ{position:static;margin-left:16px}
+@keyframes navIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:no-preference){
+  html.tab .hdr[data-open] .unav a,html.tab .hdr[data-open] .mnav a,html.tab .hdr[data-open] .mnav .sep{animation:navIn .28s cubic-bezier(.2,.7,.2,1) both}
+  html.tab .hdr[data-open] .u2,html.tab .hdr[data-open] .u5{animation-delay:.03s}
+  html.tab .hdr[data-open] .u3,html.tab .hdr[data-open] .mnav .sep{animation-delay:.06s}
+  html.tab .hdr[data-open] .m1{animation-delay:.08s}
+  html.tab .hdr[data-open] .m2{animation-delay:.11s}
+  html.tab .hdr[data-open] .m3{animation-delay:.14s}
+}
+
+/* ---- Hero: same type system, sized from one --h1 token ---- */
+html.tab .hero h1,html.mob .hero h1{font-size:var(--h1);line-height:calc(var(--h1)*.94125);-webkit-text-stroke:calc(var(--h1)*.01375) currentColor}
+html.tab .hero p{position:static;width:auto;max-width:25.6em;font-size:clamp(16px,1.406vw,18px);line-height:1.478}
+html.tab .acts{position:relative;left:auto;top:auto;width:386px;flex:none}
+
+/* ---- Grid: identical tiles, proportions derived from the desktop grid ---- */
+html.tab .grid{--gap:clamp(8px,calc(var(--gw)*.02025),13px)}
+html.tab .grid,html.mob .grid{--col:calc((var(--gw) - var(--gap)*2)/3);
+  --pitch:calc(var(--col)*1.3758);--r:clamp(14px,calc(var(--col)*.107),22px);overflow:clip}
+html.tab .cell.f-sil::before{inset:0;width:auto;height:auto;background-size:cover;background-position:50% 75%}
+
+/* ---- tab-l: desktop's two-column composition, rebuilt at native size ---- */
+html.tab-l{--h1:clamp(46px,min(6.25vw,8.6vh),80px);--gw:max(min(50.16vw,100vw - 570px),calc((100vh - var(--hh))*.5 + 22px))}  /* wide enough for the text, tall enough to reach the bottom */
+html.tab-l .grid{right:calc(var(--tm) + 22px);top:0;bottom:0;width:var(--gw)}
+html.tab-l .col.c1{top:calc(var(--hh) - var(--pitch)*.198)}
+html.tab-l .col.c2{top:calc(var(--hh) - var(--pitch)*.543)}
+html.tab-l .col.c3{top:calc(var(--hh) - var(--pitch)*.196)}
+html.tab-l .hero{left:calc(var(--tm) + 46px);right:calc(var(--gw) + var(--tm) + 22px + 24px);top:var(--hh);bottom:0;width:auto;
+  display:flex;flex-direction:column;justify-content:center;padding-bottom:calc(var(--h1)*.1)}
+html.tab-l .hero p{margin-top:calc(var(--h1)*.54)}
+html.tab-l .acts{margin-top:calc(var(--h1)*.45)}
+
+/* ---- tab-p: headline block, then the grid as a full-width band ---- */
+html.tab-p .stage{display:grid;grid-template-rows:var(--hh) auto minmax(0,1fr)}
+html.tab-p .hero{grid-row:2;position:relative;left:auto;top:auto;width:auto;
+  padding:clamp(28px,4.2vh,56px) calc(var(--tm) + 46px) clamp(28px,3.8vh,48px);
+  display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;row-gap:clamp(24px,calc(var(--h1)*.5),40px);column-gap:48px}
+html.tab-p .hero h1{flex:0 0 100%}
+html.tab-p .hero p{flex:0 1 25.6em}
+html.tab-p .grid{--gw:calc(100vw - var(--tm)*2);grid-row:3;position:relative;right:auto;top:auto;bottom:auto;width:auto;margin:0 var(--tm)}
+html.tab-p .col.c1{top:calc(var(--pitch)*-.65)}
+html.tab-p .col.c2{top:calc(var(--pitch)*-1.01)}
+html.tab-p .col.c3{top:calc(var(--pitch)*-.648)}
+
+/* ---------- Entrance (runs once on load; see script) ----------
+   html.intro exists only for the first frames, so nothing flashes before the
+   timeline takes over. Every animation releases its styles when it ends. */
+html.intro .hdr{transform:translateY(calc(-100% - 48px))}
+html.intro :is(.util .ph,.util .vr,.unav a,.util .search,.logo,.mnav a,.mnav .sep,.menu-btn,.cta,.hero p,.acts > *,.grid .col){opacity:0}
+html.intro .hero h1 .ln{transform:translateY(110%)}
+.hero h1.masking > span{clip-path:inset(-40% -12% 0 -12%)}   /* each line's own baseline is the mask edge */
+</style>
+</head>
+<body>
+<script>
+/* Entrance guard: hide the opening composition only if the entrance will run. */
+(function(){var d=document.documentElement;
+  if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  d.classList.add('intro');
+  setTimeout(function(){ d.classList.remove('intro'); }, 4000); /* safety: never leave content hidden */
+})();
+</script>
+<div class="stage" id="stage">
+
+  <!-- Image grid (behind header) -->
+  <div class="grid" aria-hidden="true">
+    <div class="col x3">
+      <div class="cell ph i-man"></div>
+      <div class="cell blue"></div>
+      <div class="cell dark"></div>
+      <div class="cell ph i-sculpt"></div>
+      <div class="cell yellow"></div>
+    </div>
+    <div class="col x2">
+      <div class="cell yellow"></div>
+      <div class="cell ph i-sil"></div>
+      <div class="cell cream"></div>
+      <div class="cell red"></div>
+      <div class="cell ph i-visit"></div>
+    </div>
+    <div class="col x1">
+      <div class="cell blue"></div>
+      <div class="cell ph i-man"></div>
+      <div class="cell red"></div>
+      <div class="cell ph i-sculpt"></div>
+      <div class="cell cream"></div>
+    </div>
+    <div class="col c1">
+      <div class="cell red"></div>
+      <div class="cell ph i-sculpt f-sculpt"></div>
+      <div class="cell ph i-man f-man"></div>
+      <div class="cell blue"></div>
+      <div class="cell ph i-visit"></div>
+    </div>
+    <div class="col c2">
+      <div class="cell yellow"></div>
+      <div class="cell visit ph i-visit f-visit"></div>
+      <div class="cell dark"></div>
+      <div class="cell ph i-sil"></div>
+      <div class="cell red"></div>
+    </div>
+    <div class="col c3">
+      <div class="cell blue"></div>
+      <div class="cell cream"></div>
+      <div class="cell ph i-sil f-sil"></div>
+      <div class="cell yellow"></div>
+      <div class="cell ph i-sculpt"></div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="hdr">
+    <div class="util">
+      <a class="ph p1" href="tel:+14188386000">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+        <span>House of Brutalism : 418<br>838-6000</span>
+      </a>
+      <i class="vr" aria-hidden="true"></i>
+      <a class="ph p2" href="tel:+14188386001">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+        <span>Studio Exhibitions : 418<br>838-6001</span>
+      </a>
+      <nav class="unav" id="nav-util" aria-label="Useful links">
+        <a class="one u1" href="#">Programmes</a>
+        <a class="one u2" href="#">Events</a>
+        <a class="two u3" href="#">Photo-<br>prints</a>
+        <a class="one u4" href="#">Visits</a>
+        <a class="two u5" href="#">Help <br>preserve</a>
+        <button class="search" aria-label="Search">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="5.4" cy="5.4" r="4.1"/><path d="M8.5 8.5l3.3 3.3"/></svg>
+        </button>
+      </nav>
+    </div>
+
+    <div class="main">
+      <a class="logo" href="#" aria-label="ATRIUM MTL — home"><b>ATRIUM MTL</b><small>AN ARCHIVE OF LIGHT CAST IN STONE</small></a>
+      <nav class="mnav" id="nav-main" aria-label="Main navigation">
+        <a class="go m1" href="#">Installations<span class="circ" aria-hidden="true"><svg width="13" height="12" viewBox="0 0 13 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 6h10M7 1.5 11.5 6 7 10.5"/></svg></span></a>
+        <i class="sep" aria-hidden="true"></i>
+        <a class="m2" href="#">Interviews</a>
+        <a class="m3" href="#">Photographs</a>
+        <button class="menu-btn" type="button" aria-label="Menu" aria-controls="nav-util nav-main">
+          <svg class="burger" width="19" height="14" viewBox="0 0 19 14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M1 1.4h17M1 7h17M1 12.6h17"/></svg>
+          <span class="lbl">Menu</span>
+        </button>
+      </nav>
+      <div class="cta">
+        <a class="pill" href="#">Tickets</a>
+        <a class="tix circ" href="#" aria-label="Buy tickets"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><g transform="rotate(-45 12 12)" fill="currentColor"><path d="M2.6 7h11.2v10H2.6a1.2 1.2 0 0 1-1.2-1.2v-2.3a1.6 1.6 0 0 0 0-3V8.2A1.2 1.2 0 0 1 2.6 7z"/><path d="M15.4 7h6a1.2 1.2 0 0 1 1.2 1.2v2.3a1.6 1.6 0 0 0 0 3v2.3a1.2 1.2 0 0 1-1.2 1.2h-6z"/></g></svg></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main class="hero">
+    <h1><span class="l1"><span class="ln">An archive</span></span><span class="l2"><span class="ln">of light</span></span><span class="l3"><span class="ln">cast in</span></span><span class="l4"><span class="ln">stone</span></span></h1>
+    <p>ATRIUM MTL archives old structures as raw photographs from across Montreal, a collection at an <strong>Annual Photography Retrospective</strong>, autumn 2026.</p>
+    <div class="acts">
+      <a class="pill dk" href="#">Tickets</a>
+      <a class="tix circ" href="#" aria-label="Buy tickets"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><g transform="rotate(-45 12 12)" fill="currentColor"><path d="M2.6 7h11.2v10H2.6a1.2 1.2 0 0 1-1.2-1.2v-2.3a1.6 1.6 0 0 0 0-3V8.2A1.2 1.2 0 0 1 2.6 7z"/><path d="M15.4 7h6a1.2 1.2 0 0 1 1.2 1.2v2.3a1.6 1.6 0 0 0 0 3v2.3a1.2 1.2 0 0 1-1.2 1.2h-6z"/></g></svg></a>
+      <a class="more" href="#">Installations<span class="circ" aria-hidden="true"><svg width="16" height="14" viewBox="0 0 16 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h12M8.5 1.8 14 7l-5.5 5.2"/></svg></span></a>
+    </div>
+  </main>
+</div>
+
+<script>
+/* Layout controller. Breakpoints are defined once, in CSS (--mode);
+   JS only mirrors the mode as a class and computes the desktop canvas scale. */
+(function(){
+  var root=document.documentElement, BASE_W=1280, BASE_H=800, MODES=['desk','mob','mob-l','tab','tab-l','tab-p'];
+  var hdr=document.querySelector('.hdr'), btn=hdr.querySelector('.menu-btn'), current='', currentFamily='';
+  function readMode(){ return getComputedStyle(root).getPropertyValue('--mode').trim() || 'mob'; }
+  function fit(){
+    var mode=readMode(), vw=window.innerWidth, vh=window.innerHeight;
+    if(mode!==current){
+      MODES.forEach(function(m){ root.classList.remove(m); });
+      root.classList.add(mode);
+      var family = mode.indexOf('tab')===0 ? 'tab' : mode.indexOf('mob')===0 ? 'mob' : '';
+      if(family){ root.classList.add(family); if(family!==currentFamily && isOpen()) setOpen(false); btn.setAttribute('aria-expanded', isOpen() ? 'true' : 'false'); }
+      else { setOpen(false); btn.removeAttribute('aria-expanded'); }
+      current=mode; currentFamily=family;
+    }
+    if(mode!=='desk'){ root.style.removeProperty('--s'); root.classList.remove('tall','ex1','ex2','ex3'); return; }
+    var s = (vw/vh > BASE_W/BASE_H) ? vh/BASE_H : vw/BASE_W; // cover, never letterbox
+    root.style.setProperty('--s', s);
+    root.style.setProperty('--W', vw/s);
+    root.style.setProperty('--H', vh/s);
+    root.classList.toggle('tall', vh/s > 845);
+    // reveal extra grid columns when the canvas is wider than the reference
+    var extra = Math.max(0, Math.min(3, Math.floor((vw/s - 1294) / 218.33)));
+    root.classList.remove('ex1','ex2','ex3');
+    if(extra) root.classList.add('ex'+extra);
+  }
+
+  /* Tablet menu: the header surface expands to reveal the hidden links. */
+  function isOpen(){ return hdr.hasAttribute('data-open'); }
+  function hasMenu(){ return root.classList.contains('tab') || root.classList.contains('mob'); }
+  function setOpen(open, focusFirst){
+    if(open && !hasMenu()) return;
+    hdr.toggleAttribute('data-open', open);
+    if(hasMenu()) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if(open && focusFirst){ var first=hdr.querySelector(root.classList.contains('mob') ? '.util .ph' : '.unav a'); if(first) first.focus({preventScroll:true}); }
+  }
+  btn.addEventListener('click', function(e){
+    if(!hasMenu()) return;
+    setOpen(!isOpen(), e.detail===0);   // keyboard activation moves focus into the menu
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape' && isOpen()){ setOpen(false); btn.focus(); }
+  });
+  document.addEventListener('pointerdown', function(e){
+    if(isOpen() && !hdr.contains(e.target)) setOpen(false);
+  });
+  hdr.addEventListener('click', function(e){
+    if(isOpen() && e.target.closest('.unav a, .mnav a, .cta a, .util .ph')) setOpen(false);
+  });
+
+  /* Column scroll: duplicate each column's cards once so a 50% translation loops seamlessly */
+  document.querySelectorAll('.grid .col').forEach(function(col){
+    Array.prototype.slice.call(col.children).forEach(function(cell){ col.appendChild(cell.cloneNode(true)); });
+  });
+
+  fit();
+
+  /* ================= ENTRANCE — one master timeline, runs once ================= */
+  (function entrance(){
+    if(!root.classList.contains('intro')) return;          // reduced motion or already shown
+    var h1=document.querySelector('.hero h1');
+    var EXPO='cubic-bezier(0.16,1,0.3,1)', QUART='cubic-bezier(0.25,1,0.5,1)', QUINT='cubic-bezier(0.22,1,0.36,1)';
+    var anims=[], marquee=[];
+    function play(el,frames,at,dur,ease){
+      if(!el) return;
+      anims.push(el.animate(frames,{delay:at*1000,duration:dur*1000,easing:ease,fill:'backwards'}));
+    }
+    function all(sel){ return Array.prototype.slice.call(document.querySelectorAll(sel)); }
+    var drop=function(px){ return [{opacity:0,transform:'translateY(-'+px+'px)'},{opacity:1,transform:'none'}]; };
+    var rise=function(px){ return [{opacity:0,transform:'translateY('+px+'px)'},{opacity:1,transform:'none'}]; };
+
+    // 1 — FRAME: the header bar hangs from the top edge, so it arrives from there
+    play(document.querySelector('.hdr'),[{transform:'translateY(calc(-100% - 48px))'},{transform:'none'}],0,0.95,EXPO);
+    //     its contents ride in with it: utility strip softly, then logo, nav, action
+    all('.util .ph,.util .vr,.unav a,.util .search').forEach(function(el,i){ play(el,[{opacity:0},{opacity:1}],0.32+i*0.02,0.5,QUART); });
+    play(document.querySelector('.logo'),drop(10),0.22,0.7,QUART);
+    all('.mnav .m1,.mnav .sep,.mnav .m2,.mnav .m3,.menu-btn').forEach(function(el,i){ play(el,drop(8),0.30+i*0.04,0.6,QUART); });
+    play(document.querySelector('.cta'),drop(8),0.44,0.6,QUART);
+
+    // 2 — MESSAGE: each headline line rises from behind its own baseline
+    h1.classList.add('masking');
+    all('.hero h1 .ln').forEach(function(ln,i){
+      play(ln,[{transform:'translateY(110%)'},{transform:'none'}],0.30+i*0.085,1.0,QUINT);
+    });
+
+    // 3 — VISUAL → CONTINUOUS: the columns glide in, then hand off to the endless scroll.
+    //     Handoff is exact: same moment, same position, same speed.
+    //     Glide = steady drift at cruising speed + a quick decaying slide (added together),
+    //     so each column arrives fast, decelerates, and leaves at exactly the cruise speed.
+    var HANDOFF=2.10;                 // s — every column finishes its entrance here
+    var CRUISE=3.42;                  // % of column height per second (= 0.342 card heights/s, from the video)
+    var EXTRA=8;                      // % — extra slide on top of the drift (0.8 card)
+    var cols=all('.grid .col').filter(function(c){ return c.offsetParent; })
+      .sort(function(a,b){ return a.getBoundingClientRect().left-b.getBoundingClientRect().left; });
+    var n=cols.length;
+    cols.forEach(function(col,i){
+      var up=col.classList.contains('c2')||col.classList.contains('x1')||col.classList.contains('x3');
+      var dir=up?1:-1;                                         // start below (+) for upward columns, above (−) for downward
+      var at=Math.max(0.05,0.35+(i-(n-3))*0.1);                // c1,c2,c3 at .35/.45/.55; wide-screen extras just before
+      var dur=HANDOFF-at;
+      var drift=CRUISE*dur;
+      // glide = steady drift at cruise speed + quint-out slide that decays to zero speed,
+      // baked into one finely sampled curve (no additive layers), so it ends at exactly cruise speed
+      var frames=[], N=72;
+      for(var k=0;k<=N;k++){
+        var u=k/N, decay=Math.pow(1-u,5);                     // slide still remaining (quint-out)
+        var remain=drift*(1-u)+EXTRA*decay;                    // % still to travel
+        frames.push({translate:'0 '+(dir*remain).toFixed(4)+'%',offset:u});
+      }
+      play(col,frames,at,dur,'linear');
+      play(col,[{opacity:0},{opacity:1}],at,0.9,QUART);
+      // (c) the endless scroll waits at its first frame, then starts at the handoff instant
+      col.getAnimations().forEach(function(a){ if(a.animationName) marquee.push(a); });
+    });
+    // 4 — SUPPORT + ACTION: copy settles, then the CTA pair, then the link
+    play(document.querySelector('.hero p'),rise(14),0.78,0.85,QUART);
+    all('.acts > *').forEach(function(el,i){ play(el,rise(12),0.98+[0,0.06,0.14][i],0.7,QUART); });
+
+    var T0=document.timeline.currentTime;
+    anims.forEach(function(a){ a.startTime=T0; });           // entrance delays are all measured from T0
+    marquee.forEach(function(a){ a.startTime=T0+HANDOFF*1000; }); // continuous scroll begins exactly at the handoff
+    root.classList.remove('intro');                         // WAAPI 'backwards' fill now holds the start states
+
+    // completion: release the headline masks; nothing from this timeline remains
+    Promise.all(anims.map(function(a){ return a.finished; })).then(function(){
+      h1.classList.remove('masking');
+      root.setAttribute('data-entrance','done');
+    },function(){ h1.classList.remove('masking'); });
+  })();
+
+  window.addEventListener('resize',fit,{passive:true});
+  window.addEventListener('orientationchange',fit);
+})();
+</script>
+</body>
+</html>
