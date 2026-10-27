@@ -2,28 +2,121 @@
   "version": 1,
   "purpose": "Build additional framework-based references into the existing Zyberlane Design Reference Library deployment. No separate hosting projects are created.",
   "candidates": [
-    {"id":"REF-001","repo":"-Gireesh-Portfolio","commit":"4133a153bd3c29894ee3794097ee6434c90107cc","strategy":"next","assetRoot":"public"},
-    {"id":"REF-002","repo":"-paradise","commit":"0629e251e3615531e6e107b6ec782ecdac07b9a0","strategy":"next","assetRoot":"public"},
-    {"id":"REF-005","repo":"Aivinci","commit":"71da3bd5c831d5ed6afdeafd5eecbc0d4724824f","strategy":"vite","assetRoot":"public"},
-    {"id":"REF-006","repo":"alluarjun","commit":"c21e201f2e076e5c850b4e3128d339bdeef3f73f","strategy":"next","assetRoot":"public"},
-    {"id":"REF-007","repo":"AVENGERS-DOOMSDAY-","commit":"b61cd6a7fdfa1dd2d639d425bf7f658a639c2a31","strategy":"next","assetRoot":"public"},
-    {"id":"REF-008","repo":"Bahubali","commit":"fd6a72c43356e4d5f443b60c088972f36be4b35f","strategy":"next","assetRoot":"public","timeoutMinutes":18},
-    {"id":"REF-012","repo":"Enigma","commit":"c604469013b00d1fe098c07cf1c3996b160b4bc0","strategy":"next","assetRoot":"public"},
-    {"id":"REF-020","repo":"HABU-","commit":"6e4254a96dc6b0648765ddd1e8099f875b1a1f8a","strategy":"next","assetRoot":"public","timeoutMinutes":18},
-    {"id":"REF-033","repo":"mamitha-baiju","commit":"74d3fd3cb522438f4d8c9fe4e13edec90a0c672b","strategy":"vite","assetRoot":"public"},
-    {"id":"REF-034","repo":"Minimalistic","commit":"13d1cc16aaeb4677988570b64e4412c8ce95c130","strategy":"vite","assetRoot":null,"timeoutMinutes":18},
-    {"id":"REF-038","repo":"pk","commit":"9458e8d8a9c2d29c9574d91dd668b27db47c821d","strategy":"next","assetRoot":"public"},
-    {"id":"REF-040","repo":"Priya","commit":"04b9f9c473b99b3c959de529e21b760760bf9376","strategy":"next","assetRoot":"public"},
-    {"id":"REF-052","repo":"thenga","commit":"0291e5c9ef6b406609864dcb635efa70592aafb5","strategy":"next","assetRoot":"public"},
-    {"id":"REF-055","repo":"velora","commit":"c73f218c9ce74d96610f196e5bd60ee5604ddd58","strategy":"next","assetRoot":"public"},
-    {"id":"REF-056","repo":"VISITE","commit":"e65b808f10cb58d2a2ffdfa36ae8908fbe5dce04","strategy":"next","assetRoot":"public"},
-    {"id":"REF-057","repo":"vistaRail","commit":"a87c6af7f07a29856b76b2973796bbaee25a1566","strategy":"next","assetRoot":"public"}
+    {
+      "id": "REF-001",
+      "repo": "-Gireesh-Portfolio",
+      "commit": "4133a153bd3c29894ee3794097ee6434c90107cc",
+      "strategy": "next",
+      "assetRoot": "public"
+    },
+    {
+      "id": "REF-002",
+      "repo": "-paradise",
+      "commit": "0629e251e3615531e6e107b6ec782ecdac07b9a0",
+      "strategy": "next",
+      "assetRoot": "public"
+    },
+    {
+      "id": "REF-005",
+      "repo": "Aivinci",
+      "commit": "71da3bd5c831d5ed6afdeafd5eecbc0d4724824f",
+      "strategy": "vite",
+      "assetRoot": "public"
+    },
+    {
+      "id": "REF-006",
+      "repo": "alluarjun",
+      "commit": "c21e201f2e076e5c850b4e3128d339bdeef3f73f",
+      "strategy": "next",
+      "assetRoot": "public"
+    },
+    {
+      "id": "REF-007",
+      "repo": "AVENGERS-DOOMSDAY-",
+      "commit": "b61cd6a7fdfa1dd2d639d425bf7f658a639c2a31",
+      "strategy": "next",
+      "assetRoot": "public"
+    },
+    {
+      "id": "REF-008",
+      "repo": "Bahubali",
+      "commit": "fd6a72c43356e4d5f443b60c088972f36be4b35f",
+      "strategy": "next",
+      "assetRoot": "public",
+      "timeoutMinutes": 18
+    },
+    {
+      "id": "REF-012",
+      "repo": "Enigma",
+      "commit": "c604469013b00d1fe098c07cf1c3996b160b4bc0",
+      "strategy": "next",
+      "assetRoot": "public"
+    },
+    {
+      "id": "REF-020",
+      "repo": "HABU-",
+      "commit": "6e4254a96dc6b0648765ddd1e8099f875b1a1f8a",
+      "strategy": "next",
+      "assetRoot": "public",
+      "timeoutMinutes": 18
+    },
+    {
+      "id": "REF-033",
+      "repo": "mamitha-baiju",
+      "commit": "74d3fd3cb522438f4d8c9fe4e13edec90a0c672b",
+      "strategy": "vite",
+      "assetRoot": "public"
+    },
+    {
+      "id": "REF-034",
+      "repo": "Minimalistic",
+      "commit": "13d1cc16aaeb4677988570b64e4412c8ce95c130",
+      "strategy": "vite",
+      "assetRoot": null,
+      "timeoutMinutes": 18
+    },
+    {
+      "id": "REF-038",
+      "repo": "pk",
+      "commit": "9458e8d8a9c2d29c9574d91dd668b27db47c821d",
+      "strategy": "next",
+      "assetRoot": "public"
+    },
+    {
+      "id": "REF-040",
+      "repo": "Priya",
+      "commit": "04b9f9c473b99b3c959de529e21b760760bf9376",
+      "strategy": "next",
+      "assetRoot": "public"
+    },
+    {
+      "id": "REF-052",
+      "repo": "thenga",
+      "commit": "0291e5c9ef6b406609864dcb635efa70592aafb5",
+      "strategy": "next",
+      "assetRoot": "public"
+    },
+    {
+      "id": "REF-055",
+      "repo": "velora",
+      "commit": "c73f218c9ce74d96610f196e5bd60ee5604ddd58",
+      "strategy": "next",
+      "assetRoot": "public"
+    },
+    {
+      "id": "REF-056",
+      "repo": "VISITE",
+      "commit": "e65b808f10cb58d2a2ffdfa36ae8908fbe5dce04",
+      "strategy": "next",
+      "assetRoot": "public"
+    },
+    {
+      "id": "REF-057",
+      "repo": "vistaRail",
+      "commit": "a87c6af7f07a29856b76b2973796bbaee25a1566",
+      "strategy": "next",
+      "assetRoot": "public"
+    }
   ],
-  "intentionallyNotBuilt": [
-    {"id":"REF-011","reason":"Required original images, video, audio and fonts are absent from the source repository."},
-    {"id":"REF-016","reason":"A centralized static route already exists, but the original opening is blocked when WebGL context creation fails; do not replace original behavior."},
-    {"id":"REF-018","reason":"Required chapter videos are Git LFS pointer files; playable LFS objects must be retrieved and verified first."},
-    {"id":"REF-046","reason":"A centralized static route already exists, but the original intro fails when WebGL is unavailable; do not fabricate a fallback."},
-    {"id":"REF-058","reason":"The complete storefront depends on Cloudflare Worker/D1 and optional Stripe merchant configuration. Do not activate production services for a reference preview."}
-  ]
+  "intentionallyNotBuilt": []
 }

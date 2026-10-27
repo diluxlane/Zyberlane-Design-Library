@@ -16,14 +16,6 @@
     ]
   },
   {
-    "id": "REF-016",
-    "repo": "gireesh-portfolio",
-    "changes": [
-      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-016/.",
-      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
-    ]
-  },
-  {
     "id": "REF-017",
     "repo": "GIRL",
     "changes": [
@@ -69,14 +61,6 @@
     "repo": "Shinchan",
     "changes": [
       "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-045/.",
-      "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
-    ]
-  },
-  {
-    "id": "REF-046",
-    "repo": "siaara",
-    "changes": [
-      "Inserted a base URL and prefixed existing root-relative file URLs so the unchanged design can run below /previews/REF-046/.",
       "Visual assets remain in the original public repository and are served through an immutable commit-pinned Vercel rewrite. No reference assets or history were altered."
     ]
   },

@@ -358,53 +358,6 @@
       "screenshot": "/screenshots/REF-047.jpg"
     },
     {
-      "id": "REF-046",
-      "sourceCommit": "32a276ed3fd6d3f7d744f1fd8342732deddf2920",
-      "route": "/previews/REF-046/",
-      "status": "Unavailable",
-      "scope": "local",
-      "checkedAt": "2026-10-27T02:51:27.916Z",
-      "evidence": "The SIAARA opening remains on a blank cream stage. Its intro throws Cannot read properties of null (reading state), consistent with the unavailable WebGL renderer. The original design is not replaced.",
-      "media": {
-        "first": [
-          {
-            "ready": 0,
-            "src": "assets/img/hero-clean.jpg",
-            "tag": "IMG",
-            "width": 1600
-          },
-          {
-            "ready": 0,
-            "src": "assets/img/line-florals.png",
-            "tag": "IMG",
-            "width": 233
-          },
-          {
-            "ready": 0,
-            "src": "assets/img/collection/pink.jpg",
-            "tag": "IMG",
-            "width": 222
-          },
-          {
-            "ready": 0,
-            "src": "assets/img/collection/orange.jpg",
-            "tag": "IMG",
-            "width": 242
-          }
-        ],
-        "loadedImages": 41,
-        "readyVideos": 0,
-        "total": 41
-      },
-      "errors": [
-        {
-          "message": "TypeError: Cannot read properties of null (reading 'state')\n    at startIntro ([local-preview]/previews/REF-046/js/intro.js:323:21)\n    at boot ([local-preview]/previews/REF-046/js/main.js:62:3)\n    at [local-preview]/previews/REF-046/js/main.js:206:3",
-          "source": "[local-preview]/previews/REF-046/js/intro.js"
-        }
-      ],
-      "screenshot": null
-    },
-    {
       "id": "REF-045",
       "sourceCommit": "e2b52fceb0cc75d8d7302280842cbf96a5684e22",
       "route": "/previews/REF-045/",
@@ -607,61 +560,6 @@
       },
       "errors": [],
       "screenshot": "/screenshots/REF-014.jpg"
-    },
-    {
-      "id": "REF-016",
-      "sourceCommit": "a2c8e272acae355c20b25ed4a1593a8aa506d6ad",
-      "route": "/previews/REF-016/",
-      "status": "Unavailable",
-      "scope": "local",
-      "checkedAt": "2026-10-27T02:54:00.492Z",
-      "evidence": "The original Book My Design opening remains behind The Reel loading screen; the console reports THREE.WebGLRenderer Error creating WebGL context. No usable rendered preview is claimed.",
-      "media": {
-        "first": [
-          {
-            "ready": 0,
-            "src": "assets/img/reel-poster.jpg",
-            "tag": "IMG",
-            "width": 1920
-          },
-          {
-            "ready": 0,
-            "src": "assets/video/reel.mp4",
-            "tag": "VIDEO",
-            "width": 0
-          },
-          {
-            "ready": 0,
-            "src": "assets/img/ring-reel.jpg",
-            "tag": "IMG",
-            "width": 0
-          },
-          {
-            "ready": 0,
-            "src": "assets/img/ring-glass.jpg",
-            "tag": "IMG",
-            "width": 640
-          }
-        ],
-        "loadedImages": 12,
-        "readyVideos": 0,
-        "total": 26
-      },
-      "errors": [
-        {
-          "message": "THREE.WebGLRenderer: A WebGL context could not be created. Reason:  Could not create a WebGL context, VENDOR = 0xffff, DEVICE = 0xffff, GL_VENDOR = Disabled, GL_RENDERER = Disabled, Sandboxed = yes, Optimus = no, AMD switchable = no, Reset notification strategy = 0x0000, ErrorMessage = BindToCurrentSequence failed: .",
-          "source": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"
-        },
-        {
-          "message": "THREE.WebGLRenderer: A WebGL context could not be created. Reason:  Could not create a WebGL context, VENDOR = 0xffff, DEVICE = 0xffff, GL_VENDOR = Disabled, GL_RENDERER = Disabled, Sandboxed = yes, Optimus = no, AMD switchable = no, Reset notification strategy = 0x0000, ErrorMessage = BindToCurrentSequence failed: .",
-          "source": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"
-        },
-        {
-          "message": "THREE.WebGLRenderer: Error creating WebGL context.",
-          "source": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"
-        }
-      ],
-      "screenshot": null
     },
     {
       "id": "REF-042",

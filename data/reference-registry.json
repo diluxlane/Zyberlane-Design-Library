@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "rule": "Append new IDs. Never renumber or reuse removed IDs. Key is repository name plus optional variant route.",
+  "rule": "Append new IDs above highestIssuedId. Never renumber existing references or reuse gaps.",
   "assignments": {
     "-Gireesh-Portfolio": "REF-001",
     "-paradise": "REF-002",
@@ -12,14 +12,11 @@
     "Bahubali": "REF-008",
     "CHERRY": "REF-009",
     "cinematic-portofilo": "REF-010",
-    "durga": "REF-011",
     "Enigma": "REF-012",
     "geetha": "REF-013",
     "Ghost-Rider-": "REF-014",
     "gireesh": "REF-015",
-    "gireesh-portfolio": "REF-016",
     "GIRL": "REF-017",
-    "GoT": "REF-018",
     "greenportfolio": "REF-019",
     "HABU-": "REF-020",
     "hidden": "REF-021",
@@ -47,7 +44,6 @@
     "REDDY": "REF-043",
     "Sedile": "REF-044",
     "Shinchan": "REF-045",
-    "siaara": "REF-046",
     "Software-Developer": "REF-047",
     "stepai": "REF-048",
     "streetfighter": "REF-049",
@@ -59,7 +55,7 @@
     "velora": "REF-055",
     "VISITE": "REF-056",
     "vistaRail": "REF-057",
-    "VYRN": "REF-058",
     "wall-lights": "REF-059"
-  }
+  },
+  "highestIssuedId": "REF-059"
 }

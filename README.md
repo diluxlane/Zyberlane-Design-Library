@@ -25,11 +25,11 @@ Publish the generated `dist/` using the included `vercel.json`. Managed local pr
 - `docs/preview-compatibility.json` documents compatibility changes to centralized static previews.
 - `docs/build-results.json` records the two additional original frontend builds.
 
-Discovery on 2026-10-24 found 68 accessible repositories. 59 contain a website implementation, including variants/redirects. 54 repository implementations were accepted; the six distinct landing-concepts sites receive separate IDs, making 59 catalogue entries. README-only claims are not treated as complete sites. Source classification and visual preview status are separate fields.
+The maintained library now contains 63 inventoried repositories. 54 contain a website implementation, including variants/redirects. 49 repository implementations are accepted; the six distinct landing-concepts sites receive separate IDs, making 54 catalogue entries. README-only claims are not treated as complete sites. Source classification and visual preview status are separate fields.
 
 The gallery supports search, categories, preview-status filters, sorting, browser-local saved references, details, source links, ID copying and a copyable brief for a new independent project. `/inventory` records excluded repositories and reasons. `/reference/ref-014` resolves the permanent ID independently of the current display order.
 
-The October 27 catalogue records 33 working, 21 partial and 5 unavailable previews. Framework-generated partial previews are build-verified inside this repository but remain Partial until browser rendering and hosted asset delivery are visually verified.
+The October 27 catalogue records 33 working and 21 partial previews, with no unavailable entries retained in the library. Framework-generated partial previews are build-verified inside this repository but remain Partial until browser rendering and hosted asset delivery are visually verified.
 
 ### Framework preview expansion
 
@@ -39,7 +39,7 @@ Framework-only references are prebuilt from immutable creator commits in GitHub 
 
 One gallery repository and one Vercel project. Existing creator-hosted URLs are retained only after visual verification. Compatible static sites and two original Vite builds are served below `/previews/REF-NNN/`.
 
-The build restores original static source files from their immutable public commits and verifies Git blob checksums. It uses a local ignored cache when available. Large visual assets stay in the original public repositories. Vercel fallback rewrites request exact pinned commits; no secret, authenticated source access, production database or creator deployment is needed. Local HTML/CSS/JS has only documented URL-prefix/base adjustments. Dependency licenses and source notices remain with the copies. Some source-only entries have no live preview because their required media or runtime is unavailable.
+The build restores original static source files from their immutable public commits and verifies Git blob checksums. It uses a local ignored cache when available. Large visual assets stay in the original public repositories. Vercel fallback rewrites request exact pinned commits; no secret, authenticated source access, production database or creator deployment is needed. Local HTML/CSS/JS has only documented URL-prefix/base adjustments. Dependency licenses and source notices remain with the copies. Every retained reference has at least a working or build-verified partial preview.
 
 Do not run the creator's deployment scripts, import their `.env` files, activate their contact/commerce integrations, or push to their repositories. Optional Hidden Stories service config is empty in this copy; it uses the original code's demo/keyless fallbacks.
 
@@ -55,4 +55,4 @@ The owner has chosen to keep this GitHub repository public. Its source, catalogu
 
 Select a reference, copy its ID/source link or project brief, then create a **new independent repository**. Never turn this library into a client site, replace a reference with a client identity, or integrate it into zyberlane.com.
 
-To refresh: inspect the original repository read-only, record a new source commit, recheck previews and screenshots, and update that reference without changing its ID. Unavailable previews must retain their actual reason; never substitute a generated image or claim a source-only build is working.
+To refresh: inspect the original repository read-only, record a new source commit, recheck previews and screenshots, and update that reference without changing its ID. If a future reference cannot produce a usable preview, remove it from the maintained library rather than substituting a generated image or claiming it is working.
