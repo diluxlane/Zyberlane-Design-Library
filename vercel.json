@@ -54,10 +54,6 @@
       "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/Ghost-Rider-/902e1d77b45dcce9ae00abb03b4260b84d289c7b/:path*"
     },
     {
-      "source": "/previews/REF-016/:path*",
-      "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/gireesh-portfolio/a2c8e272acae355c20b25ed4a1593a8aa506d6ad/:path*"
-    },
-    {
       "source": "/previews/REF-017/:path*",
       "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/GIRL/50109f5af3a48b534d517be161c1d2a10c61061a/:path*"
     },
@@ -80,10 +76,6 @@
     {
       "source": "/previews/REF-045/:path*",
       "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/Shinchan/e2b52fceb0cc75d8d7302280842cbf96a5684e22/:path*"
-    },
-    {
-      "source": "/previews/REF-046/:path*",
-      "destination": "https://raw.githubusercontent.com/gireeshkumarreddy/siaara/32a276ed3fd6d3f7d744f1fd8342732deddf2920/:path*"
     },
     {
       "source": "/previews/REF-047/:path*",
