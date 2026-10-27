@@ -7,7 +7,8 @@
       "idStart": 60,
       "output": "data/sources/magicinmybones.json",
       "designOnly": true,
-      "mirrorPolicy": "licensed-only",
+      "mirrorPolicy": "authorized",
+      "permissionNote": "The library owner states that permission was obtained from the source creator to recreate, study, host previews of, and use these repositories as source references.",
       "lastConfigured": "2026-10-27"
     }
   ]
