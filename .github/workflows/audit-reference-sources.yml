@@ -10,7 +10,6 @@ on:
       - scripts/audit-source-profile.mjs
       - scripts/build-authorized-central-previews.mjs
       - scripts/capture-authorized-previews.mjs
-      - scripts/patch-multisource-ui.mjs
       - .github/workflows/audit-reference-sources.yml
 
 permissions:
@@ -42,9 +41,6 @@ jobs:
 
       - name: Build authorized central previews
         run: node scripts/build-authorized-central-previews.mjs data/sources/magicinmybones.json public/previews
-
-      - name: Apply multi-source library labels
-        run: node scripts/patch-multisource-ui.mjs
 
       - name: Validate library build before browser checks
         run: |
