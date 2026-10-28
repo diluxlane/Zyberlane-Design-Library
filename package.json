@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Internal catalogue of authorized website design references, separate from Zyberlane production.",
+  "description": "Internal catalogue of authorized website, hero-page, and interface design references, separate from Zyberlane production.",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "test": "node --test tests/*.test.mjs",
+    "test": "node --check src/app.js && node --test tests/*.test.mjs",
     "dev": "node --use-env-proxy scripts/dev.mjs"
   },
   "engines": {
