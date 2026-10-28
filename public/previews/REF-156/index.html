@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-156/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Guraisu Fashion Studio</title>
+<meta name="description" content="Guraisu Fashion Studio — advanced concepts in design. Creative energy you can wear.">
+<meta name="theme-color" content="#040000">
+<link rel="preload" as="image" href="asset/image-07bf61f0dbd78cb9.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="asset/image-9f82caea736017f1.webp" fetchpriority="high">
+<script>
+if(matchMedia('(prefers-reduced-motion: no-preference)').matches){
+  document.documentElement.classList.add('guraisu-pending');
+  window.guraisuFallback=setTimeout(function(){document.documentElement.classList.remove('guraisu-pending')},4500);
+}
+</script>
+<style>
+/* =========================================================================
+   GURAISU — single-file build
+   Architecture
+   1. Tokens ............ colours, fonts, design-canvas size (1145 × 1374)
+   2. Base / reset
+   3. Shared components . logo, glass pill, chips, links, wordmark
+   4. FLUID layout ...... < 1024px, or any viewport taller than 4:3 portrait
+                          (phones, tablets, portrait monitors)
+   5. STAGE layout ...... ≥ 1024px and aspect ≥ 3:4 (desktop: the measured 1145×1374 canvas,
+                          scaled to the viewport width; extra viewport height
+                          is distributed into the sections so there is never
+                          a blank band above or below the page)
+   ========================================================================= */
+
+@font-face{font-family:"Archivo";src:url(asset/font-e3a28eade21a900c.woff2) format("woff2");font-weight:100 900;font-stretch:62% 125%;font-display:block}
+@font-face{font-family:"Inter";src:url(asset/font-2c295d99e26dcf35.woff2) format("woff2");font-weight:100 900;font-display:block}
+
+:root{
+  --ink:#ffffff;
+  --void:#040000;           /* page black sampled at y>820 */
+  --hero-deep:#2b0000;
+  --grey-1:#a9a9a9;         /* [BASED IN */
+  --grey-2:#bbbbbb;         /* YKC, INA] */
+  --display:"Archivo","Helvetica Neue","Arial Narrow",sans-serif;
+  --text:"Inter","Helvetica Neue",Arial,sans-serif;
+  --W:1145px; --H:1374px;   /* reference canvas */
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;background:var(--void)}
+body{margin:0;background:var(--void);color:var(--ink);font-family:var(--text);font-variation-settings:"opsz" 32;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
+img{display:block;max-width:none}
+a{color:inherit;text-decoration:none}
+ul{list-style:none;margin:0;padding:0}
+h1,h2,h3,p{margin:0;font-weight:inherit}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+.sr-only{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:4px}
+
+/* ---------- 3. Shared components ---------------------------------------- */
+.display{font-family:var(--display);font-weight:700;font-stretch:var(--ds,64%);text-transform:uppercase;color:var(--ink)}
+
+.brand{display:flex;align-items:flex-start;gap:9px}
+.brand svg{width:34px;height:33px;flex:none}
+.brand__name{font-family:var(--display);font-weight:700;font-stretch:62%;font-size:11.6px;line-height:11px;letter-spacing:0.25px;text-transform:uppercase;margin-top:0px}
+
+.link-arrow{display:inline-flex;align-items:center;gap:5px;font-weight:500;font-size:12px;line-height:1;text-transform:uppercase;letter-spacing:-0.1px;
+  padding-bottom:1px;border-bottom:1px solid currentColor}
+.link-arrow svg{width:10px;height:10px}
+.link-arrow:hover svg{transform:translate(2px,-2px)}
+.link-arrow svg{transition:transform .25s ease}
+
+.nav a{font-weight:500;font-size:14px;letter-spacing:-0.25px;transition:opacity .2s}
+.nav a:hover{opacity:.7}
+
+/* glass pill — measured: 424×46, r=23, 1px light rim + 1px dark outer rim */
+.pill{display:flex;align-items:center;height:44px;padding:0 6px 0 7px;border-radius:999px;
+  background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.06));
+  -webkit-backdrop-filter:blur(10px) saturate(1.0);backdrop-filter:blur(10px) saturate(1.0);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,0.2),inset 0 0 0 2px rgba(255,255,255,0.1),0 0 0 1px rgba(0,0,0,0.4)}
+.pill__mark{width:33px;height:33px;border-radius:50%;background:#fff;display:grid;place-items:center;flex:none}
+.pill__mark svg{width:33px;height:33px}
+.pill__links{display:flex;flex:1;justify-content:center;gap:0;padding-top:4px}
+.pill__links a{font-size:13px;font-weight:500;letter-spacing:0px;color:#f4f3f2}
+.pill__icon{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex:none;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,0.5);transition:background .2s}
+.pill__icon svg{width:34px;height:34px}
+.pill__icon:hover{background:rgba(255,255,255,.12)}
+
+.chip{display:inline-flex;align-items:center;gap:7px;height:22px;padding:0 7px 0 7px;border-radius:4px;background:#fff;color:#0a0a0a;
+  font-size:12px;font-weight:500;letter-spacing:-0.2px;text-transform:uppercase}
+.chip::before{content:"";width:7px;height:7px;background:#0a0a0a;border-radius:1px}
+
+.since{display:flex;align-items:center;gap:2px}
+.since span{display:grid;place-items:center;height:28px;border-radius:999px;font-size:11.5px;font-weight:500;letter-spacing:0.45px;text-transform:uppercase}
+.since span:first-child{padding:0 13.5px 0 10.5px;box-shadow:inset 0 0 0 1px #c9c9c9;color:#e0dfe0}
+.since b:first-of-type{margin-left:-1px}
+.since b{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#fff;color:#000;font-size:11.5px;font-weight:500}
+
+.copy{font-size:12px;line-height:17px;text-transform:uppercase;letter-spacing:-.012em}
+.copy .l{display:inline}
+
+/* Wordmark: solid gradient layer (behind model) + outline layer (in front) */
+.wm{position:absolute;inset:0;pointer-events:none;margin:0;--wm-a:#fff;--wm-t:44.1px;--wm-b:#000;--wm-bt:338.1px;--wm-stroke:1px;--wm-so:0.7;--wm-fa:0.02;--wm-fb:0.045}
+.wm span{position:absolute;top:0;font-family:var(--display);font-weight:800;font-stretch:62%;line-height:1;transform-origin:0 0;white-space:pre}
+.wm--solid span{background:linear-gradient(180deg,var(--wm-a) var(--wm-t),var(--wm-b) var(--wm-bt));-webkit-background-clip:text;background-clip:text;color:transparent}
+.wm--line span{color:transparent;-webkit-text-stroke:var(--wm-stroke) rgba(255,255,255,var(--wm-so));
+  background:linear-gradient(180deg,rgba(255,255,255,var(--wm-fa)) var(--wm-t),rgba(255,255,255,var(--wm-fb)) var(--wm-bt));-webkit-background-clip:text;background-clip:text}
+
+.copyright{position:absolute;pointer-events:none}
+.hero{isolation:isolate;--plate:url(asset/image-07bf61f0dbd78cb9.jpg)}
+.hero__plate{position:absolute;z-index:-2;pointer-events:none}
+/* model: one data-URI (custom property) feeds both the picture and its own alpha mask,
+   so the measured bottom shade is clipped to the figure exactly like the reference */
+.comp__model{--model:url(asset/image-9f82caea736017f1.webp);position:absolute;z-index:2;aspect-ratio:1145/1374;
+  background:linear-gradient(180deg,rgba(4,0,0,0) 65.7%,rgba(4,0,0,1) 105.4%),var(--model) 0 0/100% 100% no-repeat;
+  -webkit-mask:var(--model) 0 0/100% 100% no-repeat;mask:var(--model) 0 0/100% 100% no-repeat}
+.comp__wm.wm--solid{z-index:1}
+.comp__wm.wm--line{z-index:4}
+.comp__pill{z-index:6}
+.studio__photo img{width:100%;height:100%;object-fit:cover;filter:brightness(.855)}
+.studio__based{display:flex;align-items:center;font-size:14.5px;font-weight:400;letter-spacing:-0.35px;color:var(--grey-1);text-transform:uppercase}
+.studio__based i{width:11px;height:1px;background:rgba(255,255,255,.4)}
+.studio__based span:last-child{color:var(--grey-2);letter-spacing:calc(-0.35px + 0.3px)}
+.display .l{display:block}
+.studio__claim .l{display:inline}
+
+/* ---------- 4. FLUID layout (< 1024px or portrait) ----------------------------------
+   Same DOM, re-flowed. The hero "composition" (model + GURAISU wordmark +
+   outline overlay + headline) keeps the reference proportions: every piece is
+   expressed relative to the model canvas width (--mw) or the viewport (--k). */
+.drawer{display:none}
+@media not all and (min-width:1024px) and (min-aspect-ratio:3/4){
+  .page{--pad:clamp(20px,5.2vw,44px);min-height:100svh;display:flex;flex-direction:column}
+  .stage,.canvas{display:contents}
+  /* each section = exactly one viewport (grows only if the content physically cannot fit) */
+  .hero{position:relative;overflow:hidden;isolation:isolate;background:var(--void);padding-top:calc(var(--pad) * .8);
+    height:100svh;min-height:min-content;display:flex;flex-direction:column;justify-content:space-between;padding-bottom:clamp(14px,3svh,32px)}
+  .hero__plate{position:absolute;left:0;top:0;width:100%;height:min(100%,max(150vw,640px));background:#7a0d08 var(--plate) 58% 0/cover no-repeat;z-index:-2;
+    -webkit-mask:linear-gradient(#000 62%,transparent 100%);mask:linear-gradient(#000 62%,transparent 100%)}
+  .hero__top{position:relative;z-index:8;display:flex;justify-content:space-between;align-items:center;padding:0 var(--pad)}
+  .hero__top .nav{display:none}
+  .menu-btn{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;position:relative;z-index:60;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.4);background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+  .menu-btn i,.menu-btn i::before{display:block;width:16px;height:1.5px;background:#fff;transition:transform .3s ease}
+  .menu-btn i{position:relative;transform:translateY(-3px)}
+  .menu-btn i::before{content:"";position:absolute;left:0;top:6px}
+  .menu-open .menu-btn i{transform:translateY(0) rotate(45deg)}
+  .menu-open .menu-btn i::before{transform:translateY(-6px) rotate(-90deg)}
+  .drawer{display:flex;position:fixed;inset:0;z-index:50;flex-direction:column;justify-content:center;gap:6px;padding:96px var(--pad,24px) 48px;
+    background:rgba(18,0,0,.78);-webkit-backdrop-filter:blur(22px) saturate(120%);backdrop-filter:blur(22px) saturate(120%);
+    opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+  .drawer a{font-family:var(--display);font-weight:700;font-stretch:62%;font-size:clamp(46px,13vw,84px);line-height:.95;text-transform:uppercase;letter-spacing:-.01em}
+  .menu-open{overflow:hidden}
+  .menu-open .hero{z-index:20}
+  .menu-open .drawer{opacity:1;visibility:visible}
+
+  .frame{--k:tan(atan2(100vw,1145px));--mw:clamp(240px,calc((100svh - 262px - var(--pad)) / 1.116),min(118vw,760px));--mh:calc(var(--mw) * 1.2);position:relative;display:flex;flex-direction:column;margin-top:clamp(4px,2vw,20px)}
+  .comp{position:relative;order:1;height:calc(var(--mh) * .93)}
+  .comp__model{left:50%;top:0;width:var(--mw);margin-left:calc(var(--mw) * -.53)}
+  .comp__wm{left:0;top:auto;bottom:calc(var(--mh) * .025 - 8px * var(--k));width:1145px;height:330px;transform:scale(var(--k));transform-origin:0 100%}
+  .comp__wm.wm--solid{z-index:1}
+  .comp__wm.wm--line{z-index:4}
+  /* headline sits beside the head, exactly where the reference puts it relative to the figure */
+  .hero__title{position:absolute;z-index:1;margin:0;left:calc(50% + var(--mw) * .04);top:calc(var(--mw) * 1.2 * .1);
+    font-size:calc(var(--mw) * .082);line-height:.845;letter-spacing:-.016em;--ds:65%}
+  .comp__pill{position:absolute;left:50%;bottom:-22px;transform:translateX(-50%);width:min(calc(100% - var(--pad) * 2),424px)}
+  .pill__links{justify-content:space-evenly}
+  .pill__links a{padding:8px 2px}
+  .hero__intro{order:3;position:relative;z-index:5;padding:calc(22px + clamp(28px,7vw,44px)) var(--pad) 4px;max-width:calc(380px + var(--pad) * 2)}
+  .hero__intro .copy{margin-bottom:18px;font-size:12px;line-height:17.5px}
+  .hero__nav{display:none}
+
+  .studio{--pad:clamp(20px,5.2vw,44px);--gap:clamp(12px,min(7vw,3.4svh),44px);position:relative;overflow:hidden;isolation:isolate;
+    height:100svh;min-height:min-content;padding:clamp(28px,6svh,80px) var(--pad) clamp(24px,5svh,64px);display:flex;flex-direction:column;gap:var(--gap)}
+  .studio .copyright{width:max(190vw,900px);height:auto;left:50%;margin-left:calc(max(190vw,900px) * -.437);top:calc(max(190vw,900px) * -.6);z-index:-1}
+  .studio .copyright g{clip-path:none}
+  .studio__a,.studio__b{display:contents}
+  .studio__chip{align-self:flex-start;order:1}
+  .studio__title{order:2;align-self:flex-end;text-align:right;font-size:clamp(32px,min(11.6vw,6.6svh),86px);line-height:.855;letter-spacing:-.014em;margin-top:calc(var(--gap) * -.4)}
+  .studio__since{order:3;display:grid;gap:20px}
+  .studio__since .copy{font-size:12.5px;line-height:18.5px;max-width:360px;letter-spacing:.01em}
+  .studio__collab{order:4;flex:1 1 0;min-height:96px;display:grid;grid-template-columns:1fr minmax(0,min(52vw,300px));grid-template-rows:minmax(0,1fr);gap:14px;align-items:start}
+  .studio__collab h3{text-align:right;font-size:clamp(17px,4.6vw,22px);line-height:.92;letter-spacing:-.005em;padding-top:2px}
+  .studio__photo{margin:0;height:100%;max-height:min(70vw,520px);align-self:stretch;overflow:hidden}
+  .studio__more{order:5;align-self:flex-end;margin-top:calc(var(--gap) * -.5)}
+  .studio__claim{order:6;font-size:clamp(28px,min(10.6vw,5.8svh),84px);line-height:.85;letter-spacing:-.014em;text-wrap:balance}
+  .studio__based{order:7;align-self:flex-end;gap:12px;margin-top:calc(var(--gap) * -.4)}
+}
+@media not all and (min-width:1024px) and (min-aspect-ratio:3/4){ @media (min-width:640px){
+  .studio{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto minmax(0,1fr) auto auto auto;column-gap:clamp(24px,4vw,40px);align-items:start}
+  .studio__chip{grid-column:1;grid-row:1;justify-self:start}
+  .studio__title{grid-column:1/-1;grid-row:2;justify-self:end;margin-top:0}
+  .studio__since{grid-column:1;grid-row:3}
+  .studio__collab{grid-column:2;grid-row:3/span 2;grid-template-columns:auto minmax(0,1fr);align-self:stretch;min-height:160px}
+  .studio__more{grid-column:1;grid-row:4;justify-self:start;align-self:end;margin:0}
+  .studio__claim{grid-column:1/-1;grid-row:5}
+  .studio__based{grid-column:1/-1;grid-row:6;justify-self:end;margin:0}
+}}
+
+/* ---------- 5. STAGE layout: pixel-matched canvases, one per viewport ----
+   Each section is exactly 100svh tall. Its measured canvas (hero 1145×838,
+   studio 1145×536) is scaled by k = min(width fit, height fit) and centred,
+   so the whole section — first line to last — is always on screen.
+   Spare height (only when the window is taller than the canvas ratio) opens
+   between the top-anchored and bottom-anchored groups. */
+@media (min-width:1024px) and (min-aspect-ratio:3/4){
+  body{container-type:inline-size}
+  .page,.stage{display:block}
+  .hero,.studio{position:relative;width:100%;height:100svh;overflow:hidden;padding:0}
+  .hero{--k:min(tan(atan2(100cqw,1145px)),tan(atan2(100svh,838px)));background:var(--void) var(--plate) 50% 0/100% 100% no-repeat}
+  .studio{--k:min(tan(atan2(100cqw,1145px)),tan(atan2(100svh,536px)));background:var(--void)}
+  .canvas{position:absolute;left:50%;top:0;width:var(--W);height:calc(100svh / var(--k));transform:translateX(-50%) scale(var(--k));transform-origin:50% 0}
+  /* plate: bottom-aligned at canvas scale (exact reference alignment), stretched only sideways;
+     its top feathers into the same image stretched over any spare height */
+  .hero__plate{left:0;right:0;bottom:0;top:auto;width:100%;height:calc(840px * var(--k));background:var(--plate) 50% 100%/100% 100% no-repeat;
+    -webkit-mask:linear-gradient(transparent,#000 14%);mask:linear-gradient(transparent,#000 14%)}
+  .frame{position:absolute;left:0;bottom:0;width:var(--W);height:838px}
+  .hero__top{position:absolute;left:0;top:0;width:var(--W);height:80px;display:block}
+  .hero__top .brand{position:absolute;left:43px;top:25px}
+  .hero__top .nav{display:flex;position:absolute;left:407.5px;top:22.6px;gap:27px}
+  .menu-btn,.drawer{display:none}
+
+  .hero__title{position:absolute;margin:0;left:633px;top:118.6px;font-size:48px;line-height:40.5px;letter-spacing:-0.8px;--ds:65%;z-index:1}
+  .hero__intro{position:absolute;margin:0;left:43.5px;top:347.9px;width:260px;max-width:none}
+  .hero__intro .copy{margin:0 0 14.5px;font-size:11.5px;line-height:17px;letter-spacing:0.1px}
+  .copy .l{display:block;white-space:nowrap}
+  .display .l,.studio__claim .l{display:block;white-space:nowrap;position:relative;left:var(--dx,0px);letter-spacing:var(--ls);word-spacing:var(--ws,0px)}
+  .hero__nav{display:flex;position:absolute;left:43.5px;top:498.6px;gap:28px;z-index:5}
+
+  .comp{position:absolute;inset:0;margin:0;height:auto;--k:1}
+  .comp__model{left:0;top:0;width:1145px;height:1374px;margin:0;transform:matrix(0.53904,-0.00208,0.00208,0.53904,277.51,43.35);transform-origin:0 0}
+  .comp__wm{left:0;top:486.9px;bottom:auto;width:1145px;height:300px;transform:none}
+  .comp__pill{position:absolute;left:381px;top:718px;margin:0;width:423px}
+  .pill__links{justify-content:flex-start;padding-left:66px}
+  .pill .pill__links{justify-content:flex-start}
+  .pill__links a+a{margin-left:34px}
+  .pill__icon+.pill__icon{margin-left:10px}
+  .pill__links a+a+a{margin-left:35px}
+
+  .studio .canvas{display:block}
+  .studio__a,.studio__b{position:absolute;left:0;width:var(--W)}
+  .studio__a{top:0;height:420px}
+  .studio__b{bottom:0;height:140px}
+  .studio .copyright{left:0;top:-838px;width:1145px;max-width:none;height:1374px}
+  .studio__chip{position:absolute;left:42px;top:25px}
+  .studio__title{position:absolute;right:33px;top:13.1px;font-size:67px;line-height:57px;letter-spacing:-0.8px;--ds:64%;text-align:right}
+  .studio__since{position:absolute;left:44px;top:187px;display:block}
+  .studio__since .since{margin-bottom:20.3px}
+  .studio__since .copy{margin-left:-1px;font-size:12.5px;line-height:18.5px;letter-spacing:0.35px;width:340px;max-width:none}
+  .studio__collab{display:block}
+  .studio__collab h3{position:absolute;right:461.5px;top:148.9px;font-size:19px;line-height:17.5px;letter-spacing:-0.2px;--ds:64%;text-align:right}
+  .studio__photo{position:absolute;left:707.78px;top:145.6px;width:230.11px;height:265.38px;aspect-ratio:auto}
+  .studio__photo img{object-fit:fill}
+  .studio__more{position:absolute;left:1015px;top:303.4px;letter-spacing:0.25px;padding-bottom:3px}
+  .studio__claim{position:absolute;left:43px;bottom:45.4px;font-size:67px;line-height:56px;letter-spacing:-0.8px;--ds:64%;white-space:nowrap}
+  .studio__based{position:absolute;right:32px;bottom:55px;gap:0}
+  .studio__based i{margin:0 9px 0 13px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* Play once after the plate and masked foreground model have decoded. */
+@keyframes guraisu-soft{
+  from{opacity:0;transform:translate3d(0,6px,0)}
+  to{opacity:1;transform:none}
+}
+@keyframes guraisu-fade{
+  from{opacity:0}
+  to{opacity:1}
+}
+@media (prefers-reduced-motion:no-preference){
+  .guraisu-pending .comp,.guraisu-pending .hero__title,
+  .guraisu-pending .hero__intro .copy,.guraisu-pending .hero__intro .link-arrow,
+  .guraisu-pending .hero__nav,.guraisu-pending .comp__pill{opacity:0}
+  .guraisu-entering .comp{animation:guraisu-fade .72s cubic-bezier(.22,1,.36,1) .04s backwards}
+  .guraisu-entering .hero__title{animation:guraisu-soft .68s cubic-bezier(.22,1,.36,1) .26s backwards}
+  .guraisu-entering .hero__intro .copy{animation:guraisu-soft .55s cubic-bezier(.22,1,.36,1) .58s backwards}
+  .guraisu-entering .hero__intro .link-arrow{animation:guraisu-soft .5s cubic-bezier(.22,1,.36,1) .74s backwards}
+  .guraisu-entering .hero__nav{animation:guraisu-soft .5s cubic-bezier(.22,1,.36,1) .81s backwards}
+  .guraisu-entering .comp__pill{animation:guraisu-fade .6s cubic-bezier(.22,1,.36,1) .68s backwards}
+}
+</style>
+</head>
+<body>
+<div class="page" id="top">
+ <div class="stage">
+
+  <header class="hero" aria-label="Guraisu Fashion Studio">
+   <div class="hero__plate" aria-hidden="true"></div>
+   <div class="canvas">
+   <div class="hero__top">
+    <a class="brand" href="#top" aria-label="Guraisu Fashion Studio — home">
+     <svg viewBox="0 0 34 33" aria-hidden="true"><path fill="#fff" fill-rule="evenodd" d="M8 0H34V25A8 8 0 0 1 26 33H8A8 8 0 0 1 0 25V8A8 8 0 0 1 8 0Z M15.5 3H18.5A12.5 12.5 0 0 1 31 15.5V17.5A12.5 12.5 0 0 1 18.5 30H15.5A12.5 12.5 0 0 1 3 17.5V15.5A12.5 12.5 0 0 1 15.5 3Z"/></svg>
+     <span class="brand__name">Guraisu<br>Fashion<br>Studio.</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+     <a href="#studios">Studios</a><a href="#services">Services</a><a href="#projects">Projects</a><a href="#philosophy">Philosophy</a><a href="#about">About Us</a>
+    </nav>
+    <nav class="drawer" id="drawer" aria-label="Menu">
+     <a href="#studios">Studios</a><a href="#services">Services</a><a href="#projects">Projects</a><a href="#philosophy">Philosophy</a><a href="#about">About Us</a>
+    </nav>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Open menu"><i></i></button>
+   </div>
+
+   <div class="frame">
+    <h1 class="hero__title display"><span class="l" style="--ls:-1.057px;--ws:0.0px;--dx:0.0px">Advanced </span><span class="l" style="--ls:-1.572px;--ws:0.0px;--dx:-0.9px">concepts </span><span class="l" style="--ls:-0.9px;--ws:2px;--dx:0px">in design </span></h1>
+
+    <div class="hero__intro">
+     <p class="copy"><span class="l">As businesses evolved, financial </span><span class="l">workflows became more complex, and </span><span class="l">many companies found themselves </span><span class="l">bogged down by manual processes.</span></p>
+     <a class="link-arrow" href="#studios">View details <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1.2 8.8 8.6 1.4M2.6 1.2h6.2v6.2" fill="none" stroke="currentColor" stroke-width="1.25"/></svg></a>
+    </div>
+
+    <nav class="hero__nav nav" aria-label="Sections">
+     <a href="#studios">Studios</a><a href="#services">Services</a><a href="#projects">Projects</a><a href="#philosophy">Philosophy</a><a href="#about">About Us</a>
+    </nav>
+
+    <div class="comp">
+     <div class="wm wm--solid comp__wm" aria-hidden="true"><span style="left:4px;font-size:386px;font-weight:800;transform:scaleX(1)">G</span><span style="left:193.2px;font-size:386px;font-weight:725;transform:scaleX(1.108)">U</span><span style="left:382px;font-size:386px;font-weight:800;transform:scaleX(1)">R</span><span style="left:572px;font-size:386px;font-weight:800;transform:scaleX(1)">A</span><span style="left:742px;font-size:386px;font-weight:750;transform:scaleX(1)">I</span><span style="left:812px;font-size:386px;font-weight:700;transform:scaleX(1)">S</span><span style="left:971.5px;font-size:386px;font-weight:812;transform:scaleX(0.907)">U</span></div>
+     <div class="comp__model" role="img" aria-label="Model wearing an oversized, textured off-white jacket"></div>
+     <p class="wm wm--line comp__wm" aria-label="Guraisu"><span style="left:4px;font-size:386px;font-weight:800;transform:scaleX(1)">G</span><span style="left:193.2px;font-size:386px;font-weight:725;transform:scaleX(1.108)">U</span><span style="left:382px;font-size:386px;font-weight:800;transform:scaleX(1)">R</span><span style="left:572px;font-size:386px;font-weight:800;transform:scaleX(1)">A</span><span style="left:742px;font-size:386px;font-weight:750;transform:scaleX(1)">I</span><span style="left:812px;font-size:386px;font-weight:700;transform:scaleX(1)">S</span><span style="left:971.5px;font-size:386px;font-weight:812;transform:scaleX(0.907)">U</span></p>
+     <nav class="pill comp__pill" aria-label="Shop">
+      <a class="pill__mark" href="#top" aria-label="Guraisu"><svg viewBox="0 0 33 33" aria-hidden="true"><defs><linearGradient id="pm" x1="0" x2="1"><stop offset="0" stop-color="#000"/><stop offset="1" stop-color="#4b4b4b"/></linearGradient></defs><path d="M17.6 9.4V26.2C12.6 26.2 8.6 21.6 8.6 16.2V11.2C8.6 10.2 9.4 9.4 10.4 9.4Z" fill="url(#pm)"/><circle cx="22.6" cy="14.1" r="4.1" fill="#4d4d4d"/></svg></a>
+      <div class="pill__links"><a href="#shop">Shop</a><a href="#support">Support</a><a href="#blog">Blog</a></div>
+      <a class="pill__icon" href="#search" aria-label="Search"><svg viewBox="0 0 34 34" aria-hidden="true"><circle cx="14.6" cy="16" r="4.2" fill="none" stroke="#fff" stroke-width="1.7"/><path d="M17.7 19.1L21.6 23" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></a>
+      <a class="pill__icon" href="#cart" aria-label="Cart"><svg viewBox="0 0 34 34" aria-hidden="true" fill="#fff"><g transform="translate(10 10.6) scale(.86) translate(-9.4 -9.6)"><path d="M9.4 9.6h2.1l.6 1.5H24.6l-2.5 7.3H14.3l-.9 1.6h10.2v1.4H11.3l1.9-3.3-3-7.1H9.4z"/><circle cx="14.4" cy="22.9" r="1.35"/><circle cx="21.7" cy="22.9" r="1.35"/></g></svg></a>
+     </nav>
+    </div>
+   </div>
+   </div>
+  </header>
+
+  <main class="studio" id="studios">
+   <div class="canvas">
+   <svg class="copyright" viewBox="0 0 1145 1374" aria-hidden="true" focusable="false">
+<defs><clipPath id="cr"><rect x="0" y="812" width="1145" height="600"/></clipPath>
+<clipPath id="cc"><path d="M0 0H1145V976.5H560V1069.5H1145V1374H0Z"/></clipPath></defs>
+<g clip-path="url(#cr)" fill="rgba(255,255,255,0.035)" fill-rule="evenodd">
+<path d="M207.3 1032.5a291.7 273.9 0 1 0 583.4 0a291.7 273.9 0 1 0 -583.4 0Z
+M267.9 1030a232.9 223.5 0 1 0 465.8 0a232.9 223.5 0 1 0 -465.8 0Z"/>
+<path clip-path="url(#cc)" d="M337.3 1026.5a163.2 156.6 0 1 0 326.4 0a163.2 156.6 0 1 0 -326.4 0Z
+M399.1 1027.2a102.5 110 0 1 0 205.0 0a102.5 110 0 1 0 -205.0 0Z"/>
+</g></svg>
+   <div class="studio__a">
+    <span class="chip studio__chip">Featured listings</span>
+    <h2 class="studio__title display"><span class="l" style="--ls:-0.98px;--ws:3.78px;--dx:0.9px">It’s creative </span><span class="l" style="--ls:-2.0px;--ws:4.8px;--dx:1.8px">energy you can </span><span class="l" style="--ls:-0.575px;--ws:0.0px;--dx:0.9px">wear. </span></h2>
+    <div class="studio__since">
+     <div class="since" aria-label="Since 1994"><span>Since</span><b>9</b><b>4</b></div>
+     <p class="copy"><span class="l">We represent the new generation — bold, </span><span class="l">creative, and unapologetically original </span><span class="l">from local streets to international </span><span class="l">stages, our pieces carry the spirit of where </span><span class="l">we come from.</span></p>
+    </div>
+    <div class="studio__collab" id="projects">
+     <h3 class="display"><span class="l" style="--ls:-0.2px;--ws:0.0px;--dx:1.8px">Custom </span><span class="l" style="--ls:-0.35px;--ws:0.0px;--dx:0.9px">collaboration </span><span class="l" style="--ls:-0.2px;--ws:0.0px;--dx:0.9px">projects </span></h3>
+     <figure class="studio__photo" style="margin:0"><img src="asset/image-bdef817d4bba3ccb.webp" alt="Streetwear look: black cargo trousers and tee with a yellow flame graphic"></figure>
+    </div>
+    <a class="link-arrow studio__more" href="#projects">View details <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1.2 8.8 8.6 1.4M2.6 1.2h6.2v6.2" fill="none" stroke="currentColor" stroke-width="1.25"/></svg></a>
+   </div>
+   <div class="studio__b">
+    <p class="studio__claim display"><span class="l" style="--ls:-1.893px;--ws:4.993px;--dx:-0.9px">Every piece we create </span><span class="l" style="--ls:-1.475px;--ws:4.725px;--dx:-0.9px">reflects the grind behind it. </span></p>
+    <p class="studio__based"><span>[Based in</span><i aria-hidden="true"></i><span>YKC, INA]</span></p>
+   </div>
+   </div>
+  </main>
+
+ </div>
+</div>
+<script>
+(function(){
+  var b=document.querySelector('.menu-btn'),d=document.documentElement;
+  function set(o){d.classList.toggle('menu-open',o);b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Close menu':'Open menu')}
+  b.addEventListener('click',function(){set(!d.classList.contains('menu-open'))});
+  document.getElementById('drawer').addEventListener('click',function(e){if(e.target.closest('a'))set(false)});
+  addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+  /* fallback for engines without tan(atan2()) unit division */
+  if(!CSS.supports('width','calc(1px * tan(atan2(1px,1px)))')){
+    var r=function(){var w=document.body.clientWidth,h=innerHeight,s=matchMedia('(min-width:1024px) and (min-aspect-ratio:3/4)').matches;
+      document.querySelector('.frame').style.setProperty('--k',w/1145);
+      if(s){document.querySelector('.hero').style.setProperty('--k',Math.min(w/1145,h/838));document.querySelector('.studio').style.setProperty('--k',Math.min(w/1145,h/536))}};
+    r();addEventListener('resize',r);
+  }
+  if(d.classList.contains('guraisu-pending')){
+    Promise.all(['asset/image-07bf61f0dbd78cb9.jpg','asset/image-9f82caea736017f1.webp'].map(function(src){
+      var image=new Image();image.src=src;
+      return image.decode ? image.decode().catch(function(){}) : new Promise(function(resolve){image.onload=resolve;image.onerror=resolve});
+    })).then(function(){
+      if(!d.classList.contains('guraisu-pending'))return;
+      clearTimeout(window.guraisuFallback);
+      requestAnimationFrame(function(){
+        d.classList.remove('guraisu-pending');d.classList.add('guraisu-entering');
+        setTimeout(function(){d.classList.remove('guraisu-entering')},1600);
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>

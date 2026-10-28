@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-158/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sphere — Your Music. Your People. One App</title>
+<meta name="description" content="Sphere: your music and your people in one app. Join the waitlist.">
+<script>
+(function(d){try{if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+d.classList.add('intro');setTimeout(function(){if(!window.__sphereIntro)d.classList.remove('intro')},2500)}catch(e){d.classList.remove('intro')}})(document.documentElement);
+</script>
+<style>
+@font-face{font-family:'Anton';font-style:normal;font-weight:400;font-display:block;src:url(assets/anton-regular.woff2) format('woff2')}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:500;font-display:block;src:url(assets/barlow-condensed-medium.woff2) format('woff2')}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:600;font-display:block;src:url(assets/barlow-condensed-semibold.woff2) format('woff2')}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:700;font-display:block;src:url(assets/barlow-condensed-bold.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:block;src:url(assets/inter-semibold.woff2) format('woff2')}
+
+:root{--lime:#baf168;--bg:#000;--sn:1;--nx:0px}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);overflow:hidden}
+body{-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision;font-synthesis:none}
+#hero{position:fixed;inset:0;overflow:hidden;background:var(--bg)}
+
+/* ---------- nav: pinned to viewport edges, scaled ---------- */
+.nav{position:absolute;left:0;right:0;top:0;height:calc(100px*var(--sn));z-index:50;pointer-events:none}
+.logo{position:absolute;left:calc(100px*var(--sn) + var(--nx));top:calc(28px*var(--sn));width:120px;height:44px;
+  transform:scale(var(--sn));transform-origin:0 0;display:block;pointer-events:auto;color:#fff;text-decoration:none}
+.logo svg{position:absolute;left:0;top:0}
+.cta{position:absolute;right:calc(103px*var(--sn) + var(--nx));top:calc(23px*var(--sn));width:148px;height:54px;
+  transform:scale(var(--sn));transform-origin:100% 0;border-radius:27.0px;background:var(--lime);color:#000;border:0;cursor:pointer;
+  font:500 23px/1 'Barlow Condensed',sans-serif;letter-spacing:0em;padding-top:14.4px;pointer-events:auto;
+  display:flex;justify-content:center;align-items:flex-start;transition:filter .2s,box-shadow .2s}
+.cta:hover{filter:brightness(1.06);box-shadow:0 0 24px rgba(186,241,104,.35)}
+.cta:focus-visible,.logo:focus-visible{outline:2px solid #fff;outline-offset:3px}
+
+/* ---------- stage: 1584x993 design frame, uniformly scaled ---------- */
+.layer{position:absolute;left:0;top:0;width:1584px;height:993px;transform-origin:0 0}
+.stage{z-index:3}
+.stage>*{position:absolute}
+#ringLayer{z-index:1;overflow:visible;pointer-events:none}
+h1{z-index:2;font:400 1px/1 Anton,Impact,sans-serif;white-space:nowrap}
+h1.m{width:100%;height:100%}
+.gl{position:absolute;height:1px;transform-origin:0 0;font:400 1px/1 Anton,Impact,sans-serif;white-space:nowrap}
+.gl .g{position:absolute;line-height:1;display:block}
+.gl .dot{position:absolute;display:block;border-radius:50%;background:currentColor}
+.gl .stem{border-radius:0 0 1px 1px}
+.gl.disc .g{-webkit-text-stroke:1.15px #000;paint-order:normal}
+.card{position:absolute;left:0;top:0;transform-origin:0 0;overflow:hidden;backface-visibility:hidden;background:#111;
+  box-shadow:0 0 0 .5px rgba(255,255,255,.06)}
+.card img{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;display:block}
+.card i{position:absolute;inset:0}
+.sliver{left:0;top:0;width:1584px;height:993px;overflow:visible}
+
+/* phone */
+.phone{left:0;top:0;width:1584px;height:993px;z-index:6}
+.phone svg{position:absolute;left:0;top:0;overflow:visible}
+.ui{position:absolute;left:0;top:0;width:1584px;height:993px;transform-origin:0 0}
+.ui>*{position:absolute;white-space:nowrap}
+.t941{font:600 14px/1 Inter,system-ui,sans-serif;color:#fff;letter-spacing:-.01em}
+.status{overflow:visible}
+.cam{width:12.8px;height:12.8px;border-radius:50%;background:radial-gradient(circle at 50% 50%,#1c1c34 0 30%,#101018 55%,#08080c 100%);box-shadow:0 0 0 1px #0b0b10}
+.av{border-radius:50%;background:#d79ef4;color:#120a18;font:700 18px/1 'Barlow Condensed',sans-serif;display:flex;align-items:center;justify-content:center}
+.chip{border-radius:999px;background:#262626;color:#d7dad7;font:500 17px/1 'Barlow Condensed',sans-serif;display:flex;justify-content:center;align-items:flex-start}
+.chip.on{background:var(--lime);color:#000;font-weight:700}
+.pg{font:500 24px/1 'Barlow Condensed',sans-serif;color:#fff}
+.genre{height:150px;border-radius:12px;overflow:hidden}
+.fit{position:absolute;left:0;top:0;width:0;height:0;transform-origin:0 0}
+.lab{position:absolute;white-space:nowrap;display:block}
+
+/* entrance pre-state: only while html.intro is set (added by the head guard, removed by the timeline) */
+html.intro .logo,html.intro .cta,html.intro .gl.hl .gi,html.intro #phone,html.intro .oc{opacity:0}
+.oc{position:absolute;left:0;top:0;transform-origin:0 0;overflow:hidden;will-change:transform;backface-visibility:hidden;
+  box-shadow:0 0 0 1px rgba(255,255,255,.07) inset;background:#111}
+.oc img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.oc .sh{position:absolute;inset:0;background:#000;pointer-events:none}
+.oc::after{content:'';position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);pointer-events:none}
+.gl.hl .gi{position:absolute;left:0;top:0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+<main id="hero">
+  <header class="nav">
+    <a class="logo" href="#" aria-label="Sphere home">
+      <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">
+        <circle cx="22" cy="21.8" r="19" fill="#baf168"/>
+        <line x1="25.8" y1="10.3" x2="18.3" y2="32.8" stroke="#000" stroke-width="3.7" stroke-linecap="round"/>
+      </svg>
+      <div class="gl " id="LOGO" data-w="63" data-x="149" data-y="32" data-base="32.00" data-desc="8.0" data-f="36.9" aria-hidden="true" style="left:49px;top:4px;width:63px;color:#fff"><span class="g" style="left:-0.70px;top:-0.28px;font-size:36.9px;transform-origin:0.70px 34.08px;transform:scale(0.5581,0.9519)">s</span><i class="dot stem" style="left:10.00px;top:34.00px;width:4.46px;height:3.00px"></i><span class="g" style="left:8.70px;top:-2.08px;font-size:36.9px;transform-origin:1.30px 34.08px;transform:scale(0.6229,0.8860)">p</span><span class="g" style="left:19.70px;top:-0.28px;font-size:36.9px;transform-origin:1.30px 34.08px;transform:scale(0.6201,1.0091)">h</span><span class="g" style="left:30.92px;top:-0.28px;font-size:36.9px;transform-origin:1.08px 34.08px;transform:scale(0.5663,0.9519)">e</span><span class="g" style="left:41.70px;top:-1.18px;font-size:36.9px;transform-origin:1.30px 34.08px;transform:scale(0.8031,0.9177)">r</span><span class="g" style="left:52.92px;top:-0.28px;font-size:36.9px;transform-origin:1.08px 34.08px;transform:scale(0.5663,0.9519)">e</span></div>
+    </a>
+    <button class="cta" type="button" aria-label="Join waitlist"><div class="fit" style="transform:matrix(0.97917,0,0,1.00000,0.562,1.000)"><span class="lab" data-l="btn" style="left:26.00px;top:14.40px;font:500 23px/1 'Barlow Condensed',sans-serif;color:#000">Join waitlist</span></div></button>
+  </header>
+
+  <div id="ringLayer" class="layer" aria-hidden="true"><img alt="" src="assets/sphere-ring.webp" style="position:absolute;left:-40px;top:-40px;width:1664px;height:1073px;display:block;max-width:none"></div>
+  <h1 id="hl" class="layer" aria-label="Your Music. Your People. One App">
+    <div class="gl hl" id="L1" data-w="675" data-x="454" data-y="98" data-base="135.00" data-desc="4.0" data-f="154.8" aria-hidden="true" style="left:454px;top:98px;width:675px;color:#484848"><div class="gi"><span class="g" style="left:-0.76px;top:-7.07px;font-size:154.8px;transform-origin:0.76px 142.97px;transform:scale(1.1111,0.9998)">Y</span><span class="g" style="left:64.36px;top:-7.07px;font-size:154.8px;transform-origin:4.54px 142.97px;transform:scale(0.9734,0.9600)">o</span><span class="g" style="left:132.86px;top:-7.07px;font-size:154.8px;transform-origin:5.14px 142.97px;transform:scale(0.9750,0.9526)">u</span><span class="g" style="left:204.56px;top:-7.07px;font-size:154.8px;transform-origin:5.44px 142.97px;transform:scale(1.3613,0.9587)">r</span><span class="g" style="left:304.10px;top:-7.07px;font-size:154.8px;transform-origin:5.90px 142.97px;transform:scale(0.8196,0.9998)">M</span><span class="g" style="left:396.86px;top:-7.07px;font-size:154.8px;transform-origin:5.14px 142.97px;transform:scale(0.9750,0.9526)">u</span><span class="g" style="left:468.05px;top:-7.07px;font-size:154.8px;transform-origin:2.95px 142.97px;transform:scale(0.9756,0.9600)">s</span><span class="g" style="left:536.31px;top:-7.07px;font-size:154.8px;transform-origin:4.69px 142.97px;transform:scale(1.0717,0.9526)">ı</span><i class="dot" style="left:540.00px;top:0.00px;width:31.00px;height:22.00px"></i><span class="g" style="left:571.36px;top:-7.07px;font-size:154.8px;transform-origin:4.54px 142.97px;transform:scale(0.9926,0.9600)">c</span><i class="dot" style="left:644.00px;top:107.00px;width:31.00px;height:29.00px"></i></div></div><div class="gl hl" id="L2a" data-w="727" data-x="164" data-y="262" data-base="132.00" data-desc="36.0" data-f="153.6" aria-hidden="true" style="left:164px;top:262px;width:727px;color:#fefefe"><div class="gi"><span class="g" style="left:-0.75px;top:-8.96px;font-size:153.6px;transform-origin:0.75px 141.86px;transform:scale(1.1198,1.0000)">Y</span><span class="g" style="left:63.50px;top:-8.96px;font-size:153.6px;transform-origin:4.50px 141.86px;transform:scale(0.9810,0.9587)">o</span><span class="g" style="left:133.90px;top:-8.96px;font-size:153.6px;transform-origin:5.10px 141.86px;transform:scale(0.9826,0.9511)">u</span><span class="g" style="left:203.70px;top:-8.96px;font-size:153.6px;transform-origin:5.40px 141.86px;transform:scale(1.3934,0.9574)">r</span><span class="g" style="left:305.15px;top:-8.96px;font-size:153.6px;transform-origin:5.85px 141.86px;transform:scale(1.0592,1.0000)">P</span><span class="g" style="left:377.50px;top:-8.96px;font-size:153.6px;transform-origin:4.50px 141.86px;transform:scale(0.9826,0.9587)">e</span><span class="g" style="left:447.50px;top:-9.86px;font-size:153.6px;transform-origin:4.50px 141.86px;transform:scale(0.9810,0.9507)">o</span><i class="dot stem" style="left:523.00px;top:134.00px;width:28.99px;height:31.00px"></i><span class="g" style="left:517.60px;top:-9.86px;font-size:153.6px;transform-origin:5.40px 141.86px;transform:scale(0.9592,0.9507)">p</span><span class="g" style="left:588.60px;top:-9.86px;font-size:153.6px;transform-origin:5.40px 141.86px;transform:scale(1.0623,0.9932)">l</span><span class="g" style="left:623.50px;top:-9.86px;font-size:153.6px;transform-origin:4.50px 141.86px;transform:scale(0.9841,0.9507)">e</span><i class="dot" style="left:699.00px;top:102.00px;width:28.00px;height:30.00px"></i></div></div><div class="gl hl" id="L2b" data-w="456" data-x="928" data-y="260" data-base="134.00" data-desc="36.0" data-f="153.6" aria-hidden="true" style="left:928px;top:260px;width:456px;color:#fefefe"><div class="gi"><span class="g" style="left:-4.80px;top:-6.96px;font-size:153.6px;transform-origin:4.80px 141.86px;transform:scale(1.0599,1.0060)">O</span><span class="g" style="left:68.60px;top:-6.96px;font-size:153.6px;transform-origin:5.40px 141.86px;transform:scale(0.9837,0.9587)">n</span><span class="g" style="left:139.50px;top:-6.96px;font-size:153.6px;transform-origin:4.50px 141.86px;transform:scale(0.9977,0.9587)">e</span><span class="g" style="left:241.75px;top:-6.96px;font-size:153.6px;transform-origin:2.25px 141.86px;transform:scale(1.0278,1.0000)">A</span><i class="dot stem" style="left:319.00px;top:136.00px;width:29.44px;height:31.00px"></i><span class="g" style="left:313.60px;top:-7.86px;font-size:153.6px;transform-origin:5.40px 141.86px;transform:scale(0.9742,0.9507)">p</span><i class="dot stem" style="left:390.00px;top:136.00px;width:29.44px;height:31.00px"></i><span class="g" style="left:384.60px;top:-7.86px;font-size:153.6px;transform-origin:5.40px 141.86px;transform:scale(0.9877,0.9507)">p</span></div></div>
+  </h1>
+  <div class="layer stage" id="stage" aria-hidden="true">
+    <div class="phone" id="phone"><div class="pframe" style="position:absolute;left:0;top:0;width:360px;height:535px;transform-origin:0 0;transform:matrix3d(0.987817364,0.011764472,0,-1.95567139e-06,0.0322207124,0.955019995,0,-4.63970599e-05,0,0,1,0,617.700012,371.600006,0,1)">
+<svg width="360" height="535" viewBox="0 0 360 535" style="overflow:visible;position:absolute;left:0;top:0" aria-hidden="true">
+<defs>
+ <linearGradient id="pBand" gradientUnits="userSpaceOnUse" x1="-19" y1="0" x2="-8" y2="0">
+  <stop offset="0" stop-color="#25182a"/><stop offset=".1" stop-color="#9c8ab6"/><stop offset=".22" stop-color="#af97c8"/>
+  <stop offset=".8" stop-color="#b196c5"/><stop offset=".93" stop-color="#9b88ba"/><stop offset="1" stop-color="#544a70"/>
+ </linearGradient>
+ <linearGradient id="pRim" gradientUnits="userSpaceOnUse" x1="0" y1="-6" x2="0" y2="60">
+  <stop offset="0" stop-color="#6d6886"/><stop offset=".25" stop-color="#4a4568"/><stop offset="1" stop-color="#3e3a5b"/>
+ </linearGradient>
+ <linearGradient id="pRight" gradientUnits="userSpaceOnUse" x1="360" y1="0" x2="373" y2="0">
+  <stop offset="0" stop-color="#14111a"/><stop offset=".22" stop-color="#2a2633"/><stop offset=".36" stop-color="#3d394c"/>
+  <stop offset=".5" stop-color="#2a2633"/><stop offset=".8" stop-color="#1d1824"/><stop offset="1" stop-color="#100d14"/>
+ </linearGradient>
+ <linearGradient id="pRightFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".18" stop-color="#fff"/><stop offset="1" stop-color="#fff"/></linearGradient>
+ <mask id="pRM"><rect x="358" y="120" width="20" height="415" fill="url(#pRightFade)"/></mask>
+</defs>
+<path d="M36,-6.8 H300 A63,63 0 0 1 363,56.2 V494.20000000000005 A50,50 0 0 1 313,544.2 H30 A50,50 0 0 1 -20,494.20000000000005 V49.2 A56,56 0 0 1 36,-6.8 Z" fill="#16131d"/>
+<path d="M359,120 L372,180 L373,543 L359,543 Z" fill="#100d15" mask="url(#pRM)"/>
+<path d="M360,226 L372,234 L373,402 L360,402 Z" fill="url(#pRight)"/>
+<path d="M-19,541 L-19,60 C-19,26 7,-6.6 46,-6.6 L46,-4.2 C16,-4.2 -8,30 -8,64 L-8,541 Z" fill="url(#pBand)"/>
+<path d="M-19,85 L-8,78 L-8,80.6 L-19,87.6 Z" fill="#4a3f62"/>
+<rect x="-13.2" y="152" width="4" height="30" rx="2.0" fill="#2a2238" stroke="#9d8bb8" stroke-width=".7"/><rect x="-13.6" y="214" width="4" height="47" rx="2.0" fill="#2a2238" stroke="#9d8bb8" stroke-width=".7"/><rect x="-14" y="298" width="4" height="40" rx="2.0" fill="#2a2238" stroke="#9d8bb8" stroke-width=".7"/>
+<path d="M42.2,-5.4 H301.20000000000005 A61,61 0 0 1 362.20000000000005,55.6 V486.6 A53,53 0 0 1 309.20000000000005,539.6 H49.6 A53,53 0 0 1 -3.4,486.6 V40.2 A45.6,45.6 0 0 1 42.2,-5.4 Z" fill="none" stroke="url(#pRim)" stroke-width="2.4"/>
+<path d="M42,0 H303 A57,57 0 0 1 360,57 V485 A50,50 0 0 1 310,535 H50 A50,50 0 0 1 0,485 V42 A42,42 0 0 1 42,0 Z" fill="#000"/>
+</svg></div>
+<div class="ui" style="transform:none">
+  <svg class="status" style="left:897px;top:404.4px" width="62" height="13" viewBox="0 0 62 13">
+    <rect x="1" y="6.7" width="2.4" height="4.2" rx="1.1" fill="#fff"/>
+    <rect x="5.1" y="4.8" width="2.4" height="6.1" rx="1.1" fill="#fff"/>
+    <rect x="9.2" y="2.6" width="2.4" height="8.3" rx="1.1" fill="#fff"/>
+    <rect x="13.3" y="0.9" width="2.4" height="10" rx="1.1" fill="#fff"/>
+    <g fill="none" stroke="#fff" stroke-linecap="round" stroke-width="1.9">
+      <path d="M21.0 4.6 a8.6 8.6 0 0 1 11.6 0"/><path d="M23.2 7.0 a5.3 5.3 0 0 1 7.2 0"/>
+    </g>
+    <path d="M25.1 9.1 a2.4 2.4 0 0 1 3.4 0 L26.8 10.9 Z" fill="#fff"/>
+    <rect x="39.6" y="3.2" width="17.2" height="6.8" rx="2.2" fill="none" stroke="#fff" stroke-width="1.2"/>
+    <rect x="41.2" y="4.8" width="14" height="3.6" rx="1" fill="#fff"/>
+    <rect x="57.8" y="5.4" width="1.6" height="2.4" rx=".8" fill="#fff" opacity=".85"/>
+  </svg>
+  <i class="cam" style="left:832.2px;top:409.2px"></i>
+  <div class="gl disc" id="DISC" data-w="141" data-x="651" data-y="444" data-base="37.00" data-desc="5.0" data-f="43.6" aria-hidden="true" style="left:651px;top:444px;width:141px;color:#fff"><span class="g" style="left:-1.66px;top:-2.37px;font-size:43.6px;transform-origin:1.66px 40.27px;transform:scale(1.1824,0.9875)">D</span><span class="g" style="left:18.78px;top:-2.37px;font-size:43.6px;transform-origin:1.32px 40.27px;transform:scale(1.5483,0.9394)">ı</span><i class="dot" style="left:20.00px;top:0.00px;width:8.00px;height:6.00px"></i><span class="g" style="left:29.17px;top:-1.47px;font-size:43.6px;transform-origin:0.83px 40.27px;transform:scale(1.0917,0.9853)">s</span><span class="g" style="left:46.82px;top:-1.47px;font-size:43.6px;transform-origin:1.28px 40.27px;transform:scale(1.0941,0.9543)">c</span><span class="g" style="left:65.82px;top:0.33px;font-size:43.6px;transform-origin:1.28px 40.27px;transform:scale(1.0421,0.9822)">o</span><span class="g" style="left:84.63px;top:-1.47px;font-size:43.6px;transform-origin:0.47px 40.27px;transform:scale(0.9864,0.9050)">v</span><span class="g" style="left:102.82px;top:0.33px;font-size:43.6px;transform-origin:1.28px 40.27px;transform:scale(1.1024,0.9822)">e</span><span class="g" style="left:121.47px;top:0.33px;font-size:43.6px;transform-origin:1.53px 40.27px;transform:scale(1.4273,0.9500)">r</span></div>
+  <span class="av" style="left:928px;top:455px;width:29px;height:29px"></span>
+  <span class="chip on" style="left:656px;top:512px;width:59px;height:34px;">&#8203;</span><span class="chip" style="left:720px;top:512px;width:86px;height:35px;">&#8203;</span><span class="chip" style="left:810px;top:514px;width:93px;height:35px;">&#8203;</span><span class="chip" style="left:908px;top:516px;width:71px;height:35px;">&#8203;</span>
+  <div class="genre" style="left:664px;top:615.5px;width:152px;background:#9e68fd url(assets/genre-purple.webp) 0 -28px / 152px auto no-repeat"></div>
+  <div class="genre" style="left:823.75px;top:617.5px;width:148.5px;background:#726e74 url(assets/genre-gray.webp) 0 -14px / 148.5px auto no-repeat"></div>
+  <div class="fit" style="transform:matrix(0.96308,0,0,1.00000,24.368,2.000)"><span class="lab" data-l="t941" style="left:659.00px;top:396.13px;font:600 13.75px/1 Inter,sans-serif;color:#fff">9:41</span></div><div class="fit" style="transform:matrix(1.28571,0,0,1.08889,-267.714,-40.222)"><span class="lab" data-l="v" style="left:936.00px;top:459.40px;font:700 18px/1 'Barlow Condensed',sans-serif;color:#120a18">V</span></div><div class="fit" style="transform:matrix(0.81250,0,0,1.00000,128.125,1.000)"><span class="lab" data-l="all" style="left:678.00px;top:518.28px;font:700 18.6px/1 'Barlow Condensed',sans-serif;color:#000">All</span></div><div class="fit" style="transform:matrix(1.07895,0,0,1.08333,-57.500,-42.500)"><span class="lab" data-l="artists" style="left:741.00px;top:519.60px;font:500 17px/1 'Barlow Condensed',sans-serif;color:#d7dad7">Artists</span></div><div class="fit" style="transform:matrix(1.02083,0,0,1.00000,-17.333,1.000)"><span class="lab" data-l="playlists" style="left:831.00px;top:521.60px;font:500 17px/1 'Barlow Condensed',sans-serif;color:#d7dad7">Playlists</span></div><div class="fit" style="transform:matrix(0.97059,0,0,1.00000,27.324,1.000)"><span class="lab" data-l="songs" style="left:928.00px;top:523.60px;font:500 17px/1 'Barlow Condensed',sans-serif;color:#d7dad7">Songs</span></div><div class="fit" style="transform:matrix(1.03200,0,0,0.95694,-22.184,25.933)"><span class="lab" data-l="pg" style="left:660.00px;top:575.14px;font:500 24.3px/1 'Barlow Condensed',sans-serif;color:#fff">Popular Genres</span></div><div class="fit" style="transform:matrix(0.95652,0,0,0.88235,29.565,75.353)"><span class="lab" data-l="pop" style="left:679.00px;top:628.20px;font:500 19px/1 'Barlow Condensed',sans-serif;color:#fff">Pop</span></div><div class="fit" style="transform:matrix(0.93548,0,0,0.92308,54.129,48.692)"><span class="lab" data-l="rock" style="left:838.00px;top:629.20px;font:500 19px/1 'Barlow Condensed',sans-serif;color:#fff">Rock</span></div>
+</div></div>
+    <div class="oc" data-slot="0" style="width:313px;height:182px;border-radius:14px;transform:translate(814.80px,689.00px) perspective(1600px) translate3d(-27.90px,74.86px,510.05px) rotateY(-3.763deg) rotateZ(-6.477deg) translate(-156.5px,-91.0px);z-index:15"><img alt="" src="assets/card-1.webp" style="object-position:50% 30%"><i class="sh" style="opacity:0.001"></i></div>
+<div class="oc" data-slot="1" style="width:313px;height:182px;border-radius:14px;transform:translate(814.80px,689.00px) perspective(1600px) translate3d(-381.19px,108.38px,329.11px) rotateY(-29.267deg) rotateZ(-2.408deg) translate(-156.5px,-91.0px);z-index:13"><img alt="" src="assets/card-2.webp" style="object-position:50% 62%"><i class="sh" style="opacity:0.061"></i></div>
+<div class="oc" data-slot="2" style="width:313px;height:182px;border-radius:14px;transform:translate(814.80px,689.00px) perspective(1600px) translate3d(-655.50px,85.39px,-44.62px) rotateY(-38.041deg) rotateZ(-9.869deg) translate(-156.5px,-91.0px);z-index:5"><img alt="" src="assets/card-3.webp" style="object-position:45% 38%"><i class="sh" style="opacity:0.185"></i></div>
+<div class="oc" data-slot="3" style="width:313px;height:182px;border-radius:14px;transform:translate(814.80px,689.00px) perspective(1600px) translate3d(-525.41px,-23.62px,-392.21px) rotateY(-23.793deg) rotateZ(-10.856deg) translate(-156.5px,-91.0px);z-index:2"><img alt="" src="assets/card-4.webp" style="object-position:50% 40%"><i class="sh" style="opacity:0.300"></i></div>
+<div class="oc" data-slot="4" style="width:313px;height:182px;border-radius:14px;transform:translate(814.80px,689.00px) perspective(1600px) translate3d(54.02px,-144.93px,-510.05px) rotateY(3.763deg) rotateZ(-6.477deg) translate(-156.5px,-91.0px);z-index:1"><img alt="" src="assets/card-5.webp" style="object-position:50% 45%"><i class="sh" style="opacity:0.339"></i></div>
+<div class="oc" data-slot="5" style="width:313px;height:182px;border-radius:14px;transform:translate(814.80px,689.00px) perspective(1600px) translate3d(578.61px,-164.52px,-329.11px) rotateY(29.267deg) rotateZ(-2.408deg) translate(-156.5px,-91.0px);z-index:2"><img alt="" src="assets/card-6.webp" style="object-position:50% 28%"><i class="sh" style="opacity:0.279"></i></div>
+<div class="oc" data-slot="6" style="width:313px;height:182px;border-radius:14px;transform:translate(814.80px,689.00px) perspective(1600px) translate3d(619.93px,-80.76px,44.62px) rotateY(38.041deg) rotateZ(-9.869deg) translate(-156.5px,-91.0px);z-index:10"><img alt="" src="assets/card-7.webp" style="object-position:50% 40%"><i class="sh" style="opacity:0.155"></i></div>
+<div class="oc" data-slot="7" style="width:313px;height:182px;border-radius:14px;transform:translate(814.80px,689.00px) perspective(1600px) translate3d(318.53px,14.32px,392.21px) rotateY(23.793deg) rotateZ(-10.856deg) translate(-156.5px,-91.0px);z-index:14"><img alt="" src="assets/card-4.webp" style="object-position:50% 40%"><i class="sh" style="opacity:0.040"></i></div>
+
+  </div>
+</main>
+<script>
+(function () {
+  /* Design frame: 1584 x 993 (the reference). Every layer is authored in design px and
+     scaled uniformly, so all measured geometry/spacing is preserved at any size.
+       A) aspect >= 1.3 : composition locked to the viewport height (zero top/bottom gap),
+                          centred horizontally; nav pinned to the viewport edges.
+       B) aspect <  1.3 : stacked column - nav / headline (3 lines) / scene anchored to the
+                          bottom edge. Headline size and scene scale are solved together so
+                          the column is filled exactly: no empty band at top or bottom.     */
+  var DW = 1584, DH = 993, PHONE_TOP = 366, FOCUS_X = 800, F1 = 154.8;
+  var root = document.documentElement;
+  var stage = document.getElementById('stage');
+  var ring = document.getElementById('ringLayer');
+  var hl = document.getElementById('hl');
+  var L1 = document.getElementById('L1'), L2a = document.getElementById('L2a'), L2b = document.getElementById('L2b');
+  var lines = [L1, L2a, L2b];
+  function T(el, tx, ty, s) { el.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')'; }
+  function num(el, k) { return parseFloat(el.dataset[k]); }
+
+  function layout() {
+    var vw = root.clientWidth || window.innerWidth, vh = window.innerHeight, a = vw / vh;
+
+    if (a >= 1.3) {                                   /* ---------- A ---------- */
+      var s = vh / DH, tx = (vw - DW * s) / 2;
+      root.style.setProperty('--sn', s);
+      root.style.setProperty('--nx', '0px');
+      T(stage, tx, 0, s); T(ring, tx, 0, s); T(hl, tx, 0, s);
+      hl.classList.remove('m');
+      lines.forEach(function (l) { l.style.left = l.dataset.x + 'px'; l.style.top = l.dataset.y + 'px'; l.style.transform = ''; });
+      return;
+    }
+
+    /* ---------- B: stacked ---------- */
+    var sn = Math.min(0.95, Math.max(0.66, vw / 1000));
+    var margin = Math.max(16, Math.round(vw * 0.05));
+    root.style.setProperty('--sn', sn);
+    root.style.setProperty('--nx', (margin - 103 * sn) + 'px');
+    var navH = 92 * sn, AIR = 30, CAP = 133, PITCH = 160.7, OVER = 27, SCENE = DH - PHONE_TOP;
+    var sMin = vw / 1400, sMax = vw / 520;
+    function plan(nLines, rowW) {
+      var kw = (vw - 2 * margin) / rowW;
+      var over = nLines === 2 ? OVER : -14, pitch = nLines === 2 ? PITCH : 172;
+      var K = AIR + CAP + (nLines - 1) * pitch - over;          // nav-bottom .. phone-top, in design px
+      var s2 = Math.min(sMax, Math.max(sMin, (vh - navH - K * kw) / SCENE));
+      var phoneTop = vh - SCENE * s2;
+      var k = Math.min(kw, (phoneTop - navH) / K);
+      return { n: nLines, k: k, K: K, s2: s2, phoneTop: phoneTop, over: over, pitch: pitch };
+    }
+    var w2 = 1383 - 164, w3 = Math.max(num(L1, 'w'), num(L2a, 'w'), num(L2b, 'w'));
+    var a2 = plan(2, w2), a3 = plan(3, w3);
+    var pl = a2.k >= a3.k * 0.92 ? a2 : a3;                    // prefer the reference 2-line set when close
+    var k = pl.k, s2 = pl.s2;
+    var tx2 = vw / 2 - FOCUS_X * s2, ty2 = vh - DH * s2;
+    T(stage, tx2, ty2, s2); T(ring, tx2, ty2, s2);
+    hl.classList.add('m');
+    hl.style.transform = 'none';
+    // spare height (only when width-limited) is split evenly above/below the headline
+    var spare = Math.max(0, pl.phoneTop - navH - pl.K * k);
+    var lastBase = pl.phoneTop - spare / 2 + pl.over * k;
+    lines.forEach(function (l) { l.style.left = '0px'; l.style.top = '0px'; });
+    if (pl.n === 2) {
+      var x0 = (vw - w2 * k) / 2, b2 = lastBase, b1 = b2 - PITCH * k;
+      T(L1, x0 + (num(L1, 'x') - 164) * k, b1 - num(L1, 'base') * k, k);
+      T(L2a, x0 + (num(L2a, 'x') - 164) * k, b2 - num(L2a, 'base') * k, k);
+      T(L2b, x0 + (num(L2b, 'x') - 164) * k, b2 - num(L2b, 'base') * k, k);
+    } else {
+      [L1, L2a, L2b].forEach(function (l, i) {
+        var w = num(l, 'w') * k, base = lastBase - (2 - i) * pl.pitch * k;
+        T(l, (vw - w) / 2, base - num(l, 'base') * k, k);
+      });
+    }
+  }
+
+  var raf = 0;
+  function schedule() { cancelAnimationFrame(raf); raf = requestAnimationFrame(layout); }
+  window.addEventListener('resize', schedule);
+  window.addEventListener('orientationchange', schedule);
+  if (window.visualViewport) visualViewport.addEventListener('resize', schedule);
+  layout();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+})();
+
+</script>
+<script>
+/* ============================================================================
+   ORBIT CAROUSEL: nine cards ride the measured track around the phone in true
+   perspective (shared vanishing point at the track centre). Cards face outward,
+   so they turn edge-on at the limbs and pass behind the phone at the back.
+   One requestAnimationFrame loop; compositor-only properties (transform, opacity).
+   Entrance: a spin that decays (easeOutCubic) into the steady rotation, so the
+   velocity curve is continuous - no hand-off jolt. Reduced motion: static.
+   ========================================================================== */
+(function () {
+  var C = {"cx": 814.8, "cy": 689.0, "a": 645.5, "b": 103.3, "rot": -8.224, "P": 1600.0, "ZR": 512.0, "W": 313.0, "H": 182.0, "phase": 95.0, "step": 45.0, "yaw": 60.0, "period": 56.0, "lean": -7.0, "lean_k": 6.0, "shade": 0.34};
+  var root = document.documentElement;
+  var cards = [].slice.call(document.querySelectorAll('.oc'));
+  if (!cards.length) return;
+  var shades = cards.map(function (el) { return el.querySelector('.sh'); });
+  var slot = cards.map(function (el) { return parseFloat(el.dataset.slot); });
+  var lastZ = cards.map(function () { return -1; });
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var D2R = Math.PI / 180, ph = C.rot * D2R, cph = Math.cos(ph), sph = Math.sin(ph);
+
+  function place(i, thetaDeg) {
+    var th = thetaDeg * D2R, s = Math.sin(th), co = Math.cos(th);
+    var xr = C.a * co, yr = C.b * s;
+    var X = xr * cph - yr * sph, Y = xr * sph + yr * cph;
+    var z = C.ZR * s, k = (C.P - z) / C.P;
+    // apparent yaw = designed curve; subtract the off-axis viewing angle so the card never reads edge-on
+    var ry = C.yaw * co - Math.atan2(X * k, C.P - z) / D2R;
+    var rz = C.lean - C.lean_k * co * Math.tanh(6 * s);
+    var el = cards[i];
+    el.style.transform = 'translate(' + C.cx + 'px,' + C.cy + 'px) perspective(' + C.P + 'px) translate3d(' +
+      (X * k).toFixed(2) + 'px,' + (Y * k).toFixed(2) + 'px,' + z.toFixed(2) + 'px) rotateY(' + ry.toFixed(3) +
+      'deg) rotateZ(' + rz.toFixed(3) + 'deg) translate(' + (-C.W / 2) + 'px,' + (-C.H / 2) + 'px)';
+    var zi = s > 0 ? 10 + Math.round(5 * s) : 1 + Math.round(4 * (1 + s));
+    if (zi !== lastZ[i]) { el.style.zIndex = zi; lastZ[i] = zi; }   // phone sits at 6
+    shades[i].style.opacity = (C.shade * (1 - (s + 1) / 2)).toFixed(3);
+  }
+
+  if (reduce) { cards.forEach(function (_, i) { place(i, C.phase + slot[i] * C.step); }); return; }
+
+  var SPIN = 64, SPIN_MS = 2300, DELAY = 520, FADE = 600, STAGGER = 55;
+  var intro = root.classList.contains('intro'), t0 = null, introDone = !intro;
+  var easeOut = function (x) { x = Math.min(Math.max(x, 0), 1); return 1 - Math.pow(1 - x, 3); };
+  // draw opening pose immediately (entrance pre-state keeps cards hidden until the timeline starts)
+  cards.forEach(function (_, i) { place(i, C.phase + slot[i] * C.step - (intro ? SPIN : 0)); });
+
+  var last = null, t = 0;
+  function frame(now) {
+    if (last === null) last = now;
+    t += Math.min(now - last, 50); last = now;      // capped delta: no jump after a hidden tab
+    var spin = intro ? -SPIN * (1 - easeOut((t - DELAY) / SPIN_MS)) : 0;
+    var base = C.phase + (t / (C.period * 1000)) * 360 + spin;
+    for (var i = 0; i < cards.length; i++) {
+      place(i, base + slot[i] * C.step);
+      if (!introDone) {
+        // entrance fade, ordered round the orbit from the front card
+        var o = easeOut((t - DELAY - i * STAGGER) / FADE);
+        cards[i].style.opacity = o.toFixed(3);
+      }
+    }
+    if (!introDone && t > DELAY + SPIN_MS) {
+      introDone = true; cards.forEach(function (el) { el.style.opacity = ''; });
+    }
+    requestAnimationFrame(frame);
+  }
+  var started = false;
+  function go() {
+    if (started) return; started = true;
+    if (intro) cards.forEach(function (el) { el.style.opacity = '0'; });
+    requestAnimationFrame(frame);
+  }
+  if (intro) {
+    document.addEventListener('sphere:intro', go, { once: true });
+    setTimeout(function () { if (!started) { intro = false; introDone = true; go(); } }, 3000);   // failsafe: never strand the cards
+  } else go();
+})();
+
+</script>
+<script>
+/* ============================================================================
+   ENTRANCE — one master timeline, runs once on first load, then the page is static.
+   Web Animations API (no dependency). Only transform / translate / scale / opacity
+   are animated; clip-path is a static mask applied only while the entrance runs.
+   Background (#000) and the light ring are the stage: never animated.
+
+   0.00  stage already lit (static ring)
+   0.10  logo                       nav settle   (opacity, 10px drop)
+   0.18  "Your Music."              type mask    (rise from its own baseline)
+   0.32  "Your People."             type mask
+   0.40  "One App"                  type mask    (word group +80ms; own line +140ms when stacked)
+   0.62  phone                      device rise  (lift + 0.965 -> 1)
+   0.92  phone screen               lights up    (opacity)
+   0.52  carousel: spins in (easeOutCubic) and settles into its continuous rotation
+   1.45  Join waitlist              nav settle   (after the message has landed)
+   ~2.3  entrance complete -> its animations cancelled, masks removed; only the carousel keeps turning
+   ========================================================================== */
+(function () {
+  var root = document.documentElement;
+  if (!root.classList.contains('intro') || window.__sphereIntro) return;
+  window.__sphereIntro = true;
+
+  var QUINT = 'cubic-bezier(0.22, 1, 0.36, 1)';   // easeOutQuint - settles, never overshoots
+  var EXPO = 'cubic-bezier(0.16, 1, 0.3, 1)';     // easeOutExpo  - typographic snap
+  var SOFT = 'cubic-bezier(0.33, 0, 0.2, 1)';     // opacity ramps
+  var anims = [], masked = [];
+
+  function at(el, frames, t, dur, ease) {
+    if (!el) return;
+    anims.push(el.animate(frames, { delay: t * 1000, duration: dur * 1000, easing: ease || QUINT, fill: 'backwards' }));
+  }
+  function fade(el, t, dur) { at(el, [{ opacity: 0 }, { opacity: 1 }], t, dur, SOFT); }
+
+  function start() {
+    var sn = parseFloat(getComputedStyle(root).getPropertyValue('--sn')) || 1;
+
+    /* --- B. nav settle: logo first ---------------------------------------- */
+    var logo = document.querySelector('.logo');
+    at(logo, [{ translate: '0 ' + (-10 * sn) + 'px' }, { translate: '0 0' }], 0.10, 0.9);
+    fade(logo, 0.10, 0.6);
+
+    /* --- A. typographic mask: each line rises out of its own baseline ------ */
+    // "One App" is a word group when it shares the line (desktop), its own line when stacked
+    var a2 = document.getElementById('L2a'), b2 = document.getElementById('L2b');
+    var ownLine = a2 && b2 && b2.getBoundingClientRect().top > a2.getBoundingClientRect().top + 4;
+    [['L1', 0.18, 1.0], ['L2a', 0.32, 1.05], ['L2b', ownLine ? 0.46 : 0.40, 1.05]].forEach(function (d) {
+      var line = document.getElementById(d[0]); if (!line) return;
+      var gi = line.querySelector('.gi');
+      var w = parseFloat(line.dataset.w), base = parseFloat(line.dataset.base), desc = parseFloat(line.dataset.desc);
+      line.style.clipPath = 'polygon(-40px -40px,' + (w + 40) + 'px -40px,' + (w + 40) + 'px ' + (base + desc) + 'px,-40px ' + (base + desc) + 'px)';
+      masked.push(line);
+      at(gi, [{ transform: 'translateY(' + (base + desc + 6) + 'px)' }, { transform: 'none' }], d[1], d[2], EXPO);
+    });
+
+    /* --- C. device rise ---------------------------------------------------- */
+    var phone = document.getElementById('phone');
+    at(phone, [{ transform: 'translateY(48px) scale(0.965)' }, { transform: 'none' }], 0.62, 1.2);
+    fade(phone, 0.62, 0.4);
+    fade(phone && phone.querySelector('.ui'), 0.92, 0.55);
+
+    /* --- D. orbit: the carousel runs its own spin-in, started on this same frame ------- */
+    document.dispatchEvent(new CustomEvent('sphere:intro'));
+
+    /* --- B. nav settle: the call to action closes the sequence ------------- */
+    var cta = document.querySelector('.cta');
+    at(cta, [{ translate: '0 ' + (-8 * sn) + 'px', scale: '0.97' }, { translate: '0 0', scale: '1' }], 1.45, 0.85);
+    fade(cta, 1.45, 0.5);
+
+    // first keyframes are now held by fill:backwards -> drop the CSS pre-state in the same frame
+    root.classList.remove('intro');
+
+    Promise.all(anims.map(function (a) { return a.finished; })).then(finish, finish);
+  }
+
+  function finish() {
+    anims.forEach(function (a) { a.cancel(); });          // nothing left on the animation timeline
+    masked.forEach(function (l) { l.style.clipPath = ''; });
+    anims = []; masked = [];
+    root.classList.add('intro-done');
+  }
+
+  // Wait (briefly) for embedded fonts + images so the sequence never plays over a swap.
+  var ready = [document.fonts ? document.fonts.ready : null];
+  [].forEach.call(document.images, function (img) { if (img.decode) ready.push(img.decode().catch(function () {})); });
+  Promise.race([Promise.all(ready), new Promise(function (r) { setTimeout(r, 700); })])
+    .then(function () { requestAnimationFrame(start); });
+})();
+
+</script>
+</body>
+</html>

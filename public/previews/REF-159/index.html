@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-159/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wingly — Your Finance Freedom</title>
+<meta name="description" content="Give your money wings for seamless payments.">
+<meta name="theme-color" content="#0a6fd0">
+<style>
+@font-face{font-family:"Geist";src:url(asset/font-19f9c92546aa300c.woff2) format("woff2");font-weight:100 900;font-display:block}
+@font-face{font-family:"Anton";src:url(asset/font-d0fa07ff63dd60cb.woff2) format("woff2");font-weight:400;font-display:block}
+:root{
+  --lime:#DFFB72; --ink:#1A1A1A; --sky:#0a6fd0;
+  --sans:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --display:"Anton","Arial Narrow","Roboto Condensed",Impact,sans-serif;
+  /* viewport height that ignores mobile browser chrome where supported */
+  --vh:100vh;
+}
+@supports (height:100dvh){:root{--vh:100dvh}}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#7cc3ee}
+body{font-family:var(--sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;user-select:none;-webkit-user-drag:none}
+
+/* ============ Stage ============
+   Design canvas = 1448 × 1086. --u is one design pixel in CSS px, chosen so the
+   whole canvas fits the viewport (contain). Any leftover space (--ex / --ey) is
+   distributed per group via its anchor (--fx / --fy), so edge-anchored groups
+   stay on the edges, centred groups stay centred and the sky always bleeds to
+   every edge — no letterboxing, no blank bands.                              */
+.stage{position:relative;width:100%;isolation:isolate;overflow:clip}
+.sky{position:absolute;inset:0;z-index:-1;background:#58b2ea url(asset/image-80ae420aa9e577be.webp) center bottom/cover no-repeat}
+.g{position:absolute;width:calc(var(--gw)*var(--k));height:calc(var(--gh)*var(--k))}
+.g>*,.e,.g .t{position:absolute;left:calc(var(--x)*var(--k));top:calc(var(--y)*var(--k))}
+.e{width:calc(var(--w)*var(--k));height:calc(var(--h)*var(--k))}
+.t{font-size:calc(var(--fs)*var(--k));letter-spacing:calc(var(--ls)*var(--k));line-height:1;white-space:nowrap;font-kerning:normal;font-feature-settings:"kern" 1}
+.g img.e{max-width:none}
+.skew{transform-origin:0 0}
+.h1{display:contents;font:inherit}
+p.g-tag{margin:0}
+
+/* nav */
+.navlink{transition:opacity .2s}
+.navlink:hover{opacity:.75}
+.btn-outline{border:calc(var(--bw)*var(--k)) solid rgba(255,255,255,.96);border-radius:999px;transition:background-color .2s,color .2s}
+.btn-outline:hover{background:rgba(255,255,255,.12)}
+/* cards */
+.card{background:#1A1A1A;border-radius:calc(var(--r)*var(--k))}
+.pill{background:var(--lime);border-radius:999px}
+.vcard{border-radius:calc(var(--r)*var(--k));background:linear-gradient(71.7deg,rgb(143,219,129) 0%,rgb(116,207,136) 20%,rgb(79,192,140) 40%,rgb(64,185,142) 50%,rgb(36,173,144) 70%,rgb(8,163,147) 90%,rgb(0,158,148) 100%);box-shadow:0 6px 14px rgba(0,25,60,.22)}
+.tile{border-radius:calc(var(--r)*var(--k));background:#0C756B}
+.av{border-radius:50%;border:calc(2*var(--k)) solid #1A1A1A;background:#f4f4f4 50% 18%/114% no-repeat;background-clip:padding-box}
+.av.plus{background:linear-gradient(180deg,#E9EDF1,#DCE1E6);background-clip:padding-box}
+.cta{background:var(--lime);border-radius:999px;transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+.cta-dot{background:#1B1B1A;border-radius:50%;transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+.cta-link{position:absolute;inset:0;z-index:3;border-radius:999px}
+.cta-link:hover~.cta{transform:translateY(-1px)}
+.cta-link:hover~.cta-dot{transform:rotate(45deg)}
+svg.e{overflow:visible}
+:focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:999px}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- Desktop / landscape composition ---------- */
+@media (min-aspect-ratio:1/1) and (min-width:1000px) and (min-height:600px){
+  html,body{overflow:hidden}
+  .stage{height:var(--vh);
+    --u:min(calc(100vw / 1448), calc(var(--vh) / 1086));
+    --ex:calc(100vw - 1448 * var(--u));
+    --ey:calc(var(--vh) - 1086 * var(--u));
+    --k:var(--u)}
+  .g{left:calc(var(--gx)*var(--u) + var(--fx)*var(--ex));top:calc(var(--gy)*var(--u) + var(--fy)*var(--ey))}
+  header,nav,main,.cards{display:contents}
+}
+
+/* ---------- Portrait / small-screen composition ----------
+   Same groups, re-flowed into a single column. Each group keeps its exact
+   internal geometry and is scaled by its own unit.                         */
+@media not all and (min-aspect-ratio:1/1) and (min-width:1000px) and (min-height:600px){
+  .stage{min-height:var(--vh);display:flex;flex-direction:column;align-items:center;
+    --m:clamp(.72px, calc(100vw / 430), 1.35px);
+    padding:calc(18*var(--m)) 0 calc(40*var(--m))}
+  .g{position:relative;flex:none}
+  header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;width:min(100%, calc(430*var(--m)));padding:0 calc(14*var(--m))}
+  .g-logo{--k:calc(var(--m)*.82);margin-left:calc(-6*var(--k))}
+  .g-btn{--k:calc(var(--m)*.74);order:2;margin-right:calc(-6*var(--k))}
+  nav{order:3;flex-basis:100%;display:flex;justify-content:center;margin-top:calc(6*var(--m))}
+  .g-links{--k:calc(var(--m)*.86)}
+  main{display:flex;flex-direction:column;align-items:center;width:100%}
+  .g-center{--k:clamp(.42px, calc(100vw / 690), 1.02px);margin-top:calc(2*var(--m))}
+  .g-tag{--k:calc(var(--m)*.76);margin-top:calc(-10*var(--m))}
+  .cards{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:calc(22*var(--m)) calc(26*var(--m));margin-top:calc(30*var(--m));width:100%;padding:0 calc(12*var(--m))}
+  .g-right{--k:var(--m);order:1}
+  .g-left{--k:var(--m);order:2}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* First-load foreground sequence. The sky image remains completely still. */
+@keyframes wingly-quiet{
+  from{opacity:0;transform:translate3d(0,8px,0)}
+  to{opacity:1;transform:none}
+}
+@keyframes wingly-type{
+  from{clip-path:inset(0 0 100% 0)}
+  to{clip-path:inset(0 0 0 0)}
+}
+@keyframes wingly-fade{
+  from{opacity:0}
+  to{opacity:1}
+}
+@media (prefers-reduced-motion:no-preference){
+  .g-logo{animation:wingly-quiet .54s cubic-bezier(.22,1,.36,1) .05s backwards}
+  .g-links{animation:wingly-quiet .54s cubic-bezier(.22,1,.36,1) .12s backwards}
+  .g-btn{animation:wingly-quiet .54s cubic-bezier(.22,1,.36,1) .19s backwards}
+  .g-center .h1 .t:nth-of-type(2){animation:wingly-type .76s cubic-bezier(.19,1,.22,1) .25s backwards}
+  .g-center .h1 .t:nth-of-type(3){animation:wingly-type .76s cubic-bezier(.19,1,.22,1) .38s backwards}
+  .g-center > img.hero{animation:wingly-fade .9s cubic-bezier(.22,1,.36,1) .35s backwards}
+  .g-center > img.e:not(.hero){animation:wingly-fade .6s cubic-bezier(.22,1,.36,1) .48s backwards}
+  .g-center > .cta,.g-center > .cta-dot,.g-center > .t,.g-center > svg.e{animation:wingly-fade .6s cubic-bezier(.22,1,.36,1) .9s backwards}
+  .g-tag{animation:wingly-quiet .6s cubic-bezier(.22,1,.36,1) 1.05s backwards}
+  .g-right{animation:wingly-quiet .76s cubic-bezier(.22,1,.36,1) .78s backwards}
+}
+@media (prefers-reduced-motion:no-preference) and (min-aspect-ratio:1/1) and (min-width:1000px) and (min-height:600px){
+  .g-left{animation:wingly-quiet .76s cubic-bezier(.22,1,.36,1) .95s backwards}
+}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="sky" aria-hidden="true"></div>
+  <header>
+    <a class="g g-logo" href="#" style="--gx:66;--gy:46;--gw:186;--gh:50;--fx:0.0;--fy:0.0;" aria-label="wingly home">
+      <svg class="e" style="--x:6;--y:10;--w:50;--h:34;" viewBox="0 0 50 34" aria-hidden="true"><g fill="#E1FB72"><path d="M2.41 7.62 L9.98 29.30 L19.99 25.76 L12.24 4.14Z M18.51 31.53 L29.52 21.80 L20.40 12.90 L10.94 24.13Z M21.19 21.92 L32.37 31.26 L39.74 23.66 L30.06 12.77Z M40.79 28.93 L48.24 7.58 L38.44 4.11 L30.78 25.38Z"/><circle cx="7.33" cy="5.90" r="5.21"/><circle cx="14.99" cy="27.55" r="5.31"/><circle cx="25.29" cy="17.01" r="6.39"/><circle cx="35.77" cy="27.18" r="5.31"/><circle cx="43.33" cy="5.87" r="5.20"/></g></svg>
+      <span class="t" style="--x:68;--y:5;--fs:41.861;--ls:-3.724;font-family:var(--sans);font-weight:600;color:#F7FAFD;">wingly</span>
+    </a>
+    <nav aria-label="Primary">
+      <div class="g g-links" style="--gx:505;--gy:52;--gw:430;--gh:32;--fx:0.5;--fy:0.0;">
+        <a class="t navlink" style="--x:9;--y:8;--fs:18.521;--ls:-1.136;font-family:var(--sans);font-weight:400;color:#F3F8FB;" href="#how">How it works</a>
+        <a class="t navlink" style="--x:154;--y:8;--fs:18.521;--ls:-0.925;font-family:var(--sans);font-weight:400;color:#F3F8FB;" href="#cards">Cards</a>
+        <a class="t navlink" style="--x:251;--y:9;--fs:17.715;--ls:-0.418;font-family:var(--sans);font-weight:400;color:#F3F8FB;" href="#pricing">Pricing</a>
+        <a class="t navlink" style="--x:360;--y:8;--fs:18.521;--ls:-1.079;font-family:var(--sans);font-weight:400;color:#F3F8FB;" href="#contact">Contact</a>
+      </div>
+    </nav>
+    <a class="g g-btn" href="#start" style="--gx:1210;--gy:42;--gw:178;--gh:58;--fx:1.0;--fy:0.0;">
+      <span class="e btn-outline" style="--x:5.3;--y:5.25;--w:166.1;--h:47.9;--bw:1.6"></span>
+      <span class="t" style="--x:38;--y:20;--fs:21;--ls:-0.955;font-family:var(--sans);font-weight:500;color:#F6FAFD;">Get started</span>
+    </a>
+  </header>
+
+  <main>
+    <section class="g g-center" style="--gx:260;--gy:120;--gw:940;--gh:796;--fx:0.5;--fy:0.5;" aria-labelledby="h1">
+      <img class="e skew hero" style="--x:57.95;--y:197.557;--w:876.58;--h:601.487;transform:skew(-0.0341deg,-0.4036deg);" src="asset/image-d4e9ce2925bcc24d.webp" alt="Young man relaxing on a cloud with doodled wings, holding a payment card" draggable="false">
+      <h1 id="h1" class="h1"><span class="sr">Your finance freedom</span><span class="t" style="--x:222;--y:14;--fs:112.446;--ls:0;font-family:var(--display);font-weight:400;color:#DFFB72;transform:scaleX(0.8344);transform-origin:0 0;word-spacing:calc(8.3*var(--k));">YOUR FINANCE</span><span class="t" style="--x:309;--y:118;--fs:113.227;--ls:0;font-family:var(--display);font-weight:400;color:#DFFB72;transform:scaleX(0.8083);transform-origin:0 0;">FREEDOM</span></h1>
+      <img class="e skew" style="--x:21.752;--y:158.715;--w:70.061;--h:45.661;transform:skew(1.4752deg,-0.4887deg);" src="asset/image-3c36fa5306cfba77.webp" alt="" draggable="false">
+      <img class="e skew" style="--x:721.756;--y:409.153;--w:68.774;--h:39.657;transform:skew(-1.0383deg,-0.2534deg);" src="asset/image-498d55141b33bee8.webp" alt="" draggable="false">
+      <a class="cta-link" href="#start" style="left:calc(335.8*var(--k));top:calc(634.7*var(--k));right:auto;bottom:auto;width:calc(256*var(--k));height:calc(79.2*var(--k))" aria-label="Get started"></a>
+      <span class="e cta" style="--x:335.8;--y:634.7;--w:256;--h:79.2;"></span>
+      <span class="t" style="--x:374;--y:664;--fs:24;--ls:-1.2;font-family:var(--sans);font-weight:600;color:#171A12;">Get started</span>
+      <span class="e cta-dot" style="--x:517.6;--y:642.3;--w:65.6;--h:65;"></span>
+      <svg class="e" style="--x:538;--y:663;--w:24;--h:24;" viewBox="798 783 24 24" aria-hidden="true"><path d="M801.4 802.6 L816.6 787.4 M803 786.95 H817.5 V801.2" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="butt" stroke-linejoin="miter"/></svg>
+    </section>
+
+    <p class="g g-tag" style="--gx:460;--gy:940;--gw:530;--gh:102;--fx:0.5;--fy:1.0;"><span class="t" style="--x:115;--y:11;--fs:41.616;--ls:-1.33;font-family:var(--sans);font-weight:400;color:#191B18;">Give your money</span> <span class="t" style="--x:11;--y:49;--fs:42.471;--ls:-2.953;font-family:var(--sans);font-weight:400;color:#191B18;">wings for seamless payments.</span></p>
+
+    <div class="cards">
+      <aside class="g g-left" style="--gx:40;--gy:640;--gw:280;--gh:250;--fx:0.0;--fy:0.5;" aria-label="Highlights">
+        <div class="e card" style="--x:6.2;--y:6;--w:266.8;--h:88.5;--r:21"></div>
+        <div class="e tile" style="--x:19.9;--y:19.8;--w:62.4;--h:60.7;--r:12"></div>
+        <svg class="e" style="--x:32;--y:38;--w:36;--h:24;" viewBox="72 678 36 24" aria-hidden="true">
+          <defs><linearGradient id="ig" gradientUnits="userSpaceOnUse" x1="74" y1="0" x2="106" y2="0"><stop offset="0" stop-color="#2FE2C8"/><stop offset=".42" stop-color="#4AE3BC"/><stop offset=".64" stop-color="#DCF26A"/><stop offset="1" stop-color="#F3F35A"/></linearGradient></defs>
+          <g fill="none" stroke="url(#ig)" stroke-width="1.85" style="filter:drop-shadow(0 0 1.2px rgba(90,240,200,.55))"><rect x="74.6" y="680.9" width="30.8" height="18.3" rx="2.6"/><path d="M74.6 685.9 H105.4"/><path d="M84.3 690.1 H86.5" stroke-width="1.2"/></g>
+          <g fill="url(#ig)"><circle cx="93.2" cy="694.7" r="1.25"/><circle cx="97.6" cy="694.7" r="1.25"/></g>
+        </svg>
+        <span class="t" style="--x:106;--y:28;--fs:18.5;--ls:-0.578;font-family:var(--sans);font-weight:400;color:#F4F4F4;">Open a bank</span><span class="t" style="--x:106;--y:51;--fs:18.5;--ls:-0.578;font-family:var(--sans);font-weight:400;color:#F4F4F4;">card in 10 minutes.</span>
+        <div class="e card" style="--x:6.2;--y:104.5;--w:266.8;--h:139.8;--r:21"></div>
+        <span class="t" style="--x:28;--y:127;--fs:18.5;--ls:-0.578;font-family:var(--sans);font-weight:400;color:#F2F2F2;">Share bills with friends</span><span class="t" style="--x:27;--y:154;--fs:14.817;--ls:-0.63;font-family:var(--sans);font-weight:400;color:#6D6C6B;">3 recipients</span>
+        <span class="e av" role="img" aria-label="Recipient" style="--x:22.5;--y:184.5;--w:45;--h:45;background-image:url(asset/image-3a3e79b86d5fca82.webp)"></span><span class="e av" role="img" aria-label="Recipient" style="--x:58.7;--y:184.5;--w:45;--h:45;background-image:url(asset/image-e4e90b9a0f42b32b.webp)"></span><span class="e av plus" style="--x:95.5;--y:184.5;--w:45;--h:45;" aria-label="plus one more"></span>
+        <span class="t" style="--x:110.5;--y:200;--fs:15;--ls:0;font-family:var(--sans);font-weight:400;color:#1D1E20;">+1</span>
+        <span class="t" style="--x:177;--y:198;--fs:19;--ls:-0.433;font-family:var(--sans);font-weight:400;color:#E3F56A;">456 USD</span>
+      </aside>
+
+      <aside class="g g-right" style="--gx:1108;--gy:170;--gw:300;--gh:354;--fx:1.0;--fy:0.5;" aria-label="Your card">
+        <svg class="e" style="--x:4;--y:52;--w:44;--h:40;" viewBox="1112 222 44 40" aria-hidden="true"><path d="M1151.36 227.52 Q1120.4 228.46 1118.08 257.85" fill="none" stroke="#111" stroke-width="3.85" stroke-linecap="round"/></svg>
+        <img class="e" style="--x:61.04;--y:6.97;--w:77.32;--h:72.9;" src="asset/image-1e50acd1b475a0a1.webp" alt="">
+        <div class="e card" style="--x:24.3;--y:69.2;--w:270;--h:224.8;--r:23"></div>
+        <span class="t" style="--x:47;--y:93;--fs:19.309;--ls:-0.626;font-family:var(--sans);font-weight:400;color:#ECEBEB;">Spending power</span>
+        <span class="e pill" style="--x:202.3;--y:86.7;--w:71.4;--h:31.1;"></span>
+        <span class="t" style="--x:215;--y:94;--fs:17.869;--ls:-1.236;font-family:var(--sans);font-weight:500;color:#1F2410;">Active</span>
+        <span class="t" style="--x:47;--y:142;--fs:35.995;--ls:-0.513;font-family:var(--sans);font-weight:400;color:#E1F969;">1,206</span><span class="t" style="--x:139;--y:156;--fs:20.139;--ls:-0.844;font-family:var(--sans);font-weight:400;color:#E1F969;">USD</span>
+        <div class="e vcard" style="--x:47.3;--y:199.8;--w:226.3;--h:140.6;--r:13"></div>
+        <span class="t" style="--x:198;--y:216;--fs:12;--ls:-0.318;font-family:var(--sans);font-weight:400;color:#E2F9F1;">Virtual Card</span>
+        <svg class="e" style="--x:60;--y:312;--w:28;--h:8;" viewBox="1168 482 28 8" aria-hidden="true"><g fill="#EEFAF4"><circle cx="1172.6" cy="486.6" r="1.75"/><circle cx="1178.2" cy="486.6" r="1.75"/><circle cx="1183.8" cy="486.6" r="1.75"/><circle cx="1189.4" cy="486.6" r="1.75"/></g></svg>
+        <span class="t" style="--x:94;--y:307;--fs:18;--ls:-0.2;font-family:var(--sans);font-weight:400;color:#EEFAF4;">4441</span>
+        <svg class="e" style="--x:206;--y:295;--w:56;--h:36;" viewBox="1314 465 56 36" aria-hidden="true">
+          <defs><clipPath id="mcR"><circle cx="1353" cy="482.6" r="13.3"/></clipPath></defs>
+          <circle cx="1353" cy="482.6" r="13.3" fill="#72E3C9"/>
+          <circle cx="1332.3" cy="482.6" r="14" fill="#02735F"/>
+          <circle cx="1332.3" cy="482.6" r="14" fill="#26BC9E" clip-path="url(#mcR)"/>
+        </svg>
+      </aside>
+    </div>
+  </main>
+</div>
+</body>
+</html>

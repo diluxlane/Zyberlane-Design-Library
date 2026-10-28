@@ -282,6 +282,10 @@
       "destination": "https://raw.githubusercontent.com/Magicinmybones/framefutures/b35355e656c60d5b2bba76c97fd576822dabfd17/:path*"
     },
     {
+      "source": "/previews/REF-156/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/guraisu/c43941589449772a975697deaad4813819e97953/public/:path*"
+    },
+    {
       "source": "/previews/REF-091/:path*",
       "destination": "https://raw.githubusercontent.com/Magicinmybones/hero_section_09/d4081a499a1a3f1f647514f07e3c7b0d8a2b5202/:path*"
     },
@@ -402,6 +406,10 @@
       "destination": "https://raw.githubusercontent.com/Magicinmybones/Nike-Style-Shoe-Landing-Page/52306835dad2c1e81722987f5b84316aec9a0829/:path*"
     },
     {
+      "source": "/previews/REF-157/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/olympus-hero/b799de3a8e9a79e955605052948a4858dba7cc27/public/:path*"
+    },
+    {
       "source": "/previews/REF-121/:path*",
       "destination": "https://raw.githubusercontent.com/Magicinmybones/orbit-see-beyond/5cea7f97fa1913fb7574a54934022cacdd498228/public/:path*"
     },
@@ -482,6 +490,10 @@
       "destination": "https://raw.githubusercontent.com/Magicinmybones/soma-hero/d112d5b31404e684778dfb088af771f5caedb6d2/site/:path*"
     },
     {
+      "source": "/previews/REF-158/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/sphere-hero/00dd008b80df2a5ce20968b71ad0a7823003d337/public/:path*"
+    },
+    {
       "source": "/previews/REF-141/:path*",
       "destination": "https://raw.githubusercontent.com/Magicinmybones/stakekit/f1f59afdb7ab47e4093c9c07a33ab024359bd543/:path*"
     },
@@ -540,6 +552,10 @@
     {
       "source": "/previews/REF-155/:path*",
       "destination": "https://raw.githubusercontent.com/Magicinmybones/voicelab-login/2e8e915d6051b79f3242a04819b5204549f7049a/:path*"
+    },
+    {
+      "source": "/previews/REF-159/:path*",
+      "destination": "https://raw.githubusercontent.com/Magicinmybones/wingly-hero/5d7bfcc180700286c146b56f49b9b599dd8ca9c6/public/:path*"
     },
     {
       "source": "/reference/:id",

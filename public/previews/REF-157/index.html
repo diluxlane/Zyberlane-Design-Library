@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="/previews/REF-157/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Olympus Markets</title>
+<meta name="description" content="Trade global markets with confidence.">
+<meta name="theme-color" content="#3f86d6">
+<style>
+@font-face{font-family:"Anton";font-weight:400;font-style:normal;font-display:block;src:url(asset/font-d0fa07ff63dd60cb.woff2) format("woff2")}
+@font-face{font-family:"Manrope";font-weight:400;font-style:normal;font-display:block;src:url(asset/font-849290ef12a2eeb9.woff2) format("woff2")}
+@font-face{font-family:"Manrope";font-weight:500;font-style:normal;font-display:block;src:url(asset/font-19874318747181a6.woff2) format("woff2")}
+@font-face{font-family:"Manrope";font-weight:600;font-style:normal;font-display:block;src:url(asset/font-f7ac6258da20ab75.woff2) format("woff2")}
+@font-face{font-family:"Manrope";font-weight:700;font-style:normal;font-display:block;src:url(asset/font-d2a12c85a831e4b5.woff2) format("woff2")}
+
+:root{
+  /* ---- measured tokens (reference px @ 1448×1086) ---- */
+  --ink:#0e1011;            /* headline + primary button */
+  --paper:#fefeff;          /* white button / nav pill  */
+  --up:#8ef07a;             /* positive change          */
+  --down:#f8150c;           /* negative change          */
+  --sky:#4f93df;
+  --display:"Anton","Impact","Haettenschweiler","Arial Narrow Bold",sans-serif;
+  --text:"Manrope",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  /* written by the layout engine */
+  --s:1; --ox:0px; --oy:0px;    /* scene transform            */
+  --k:1;                        /* card magnification (stack) */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+html{background:var(--sky);-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  font-family:var(--text);color:#fff;background:var(--sky);
+  overflow:hidden;overscroll-behavior:none;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:geometricPrecision;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:12px}
+
+/* ============ HERO SHELL — always exactly one viewport, never a gap ============ */
+.hero{
+  position:fixed;inset:0;           /* pins to the real visible viewport on every browser */
+  overflow:hidden;isolation:isolate;
+  background:var(--sky);
+}
+
+/* Ambient extension (canvas, painted by the layout engine): when the viewport is wider or
+   taller than the photo can cover, the photo's own edge pixels are averaged, stretched and
+   softly blurred into the gap, and the photo is feathered into it — the frame never shows a
+   bare edge, a letterbox or a mirrored ghost. */
+.ambient{position:absolute;left:0;top:0;width:100%;height:100%;z-index:0;display:block}
+
+/* ============ SCENE — photo + glass laptop + glass cards, in reference px ============ */
+.scene{
+  position:absolute;left:0;top:0;z-index:1;
+  width:1448px;height:1086px;
+  transform-origin:0 0;
+  transform:translate3d(var(--ox),var(--oy),0) scale(var(--s));
+}
+.scene.painted .photo{visibility:hidden}  /* photo drawn (feathered) by the ambient canvas */
+.scene .photo{position:absolute;inset:0;width:1448px;height:1086px;display:block;user-select:none;-webkit-user-drag:none}
+.screen-glass{position:absolute;left:730px;top:292px;width:600px;height:446px;pointer-events:none;
+  clip-path:path("M156.0,12.1 L527.0,72.9 L588.0,74.0 C576.0,85.0 563.0,106.0 557.5,123.0 L456.4,420.0 C453.0,430.0 448.0,436.0 436.0,436.0 L24.0,436.0 C16.0,436.0 11.0,431.0 12.8,422.0 L123.7,33.0 C127.0,20.0 136.0,10.0 156.0,12.1 Z");
+  background:linear-gradient(150deg,rgba(255,255,255,var(--sg0,.07)) 0%,rgba(255,255,255,var(--sg1,.03)) 55%,rgba(255,255,255,var(--sg2,.06)) 100%);
+  -webkit-backdrop-filter:blur(var(--sgb,3.5px)) saturate(.96);backdrop-filter:blur(var(--sgb,3.5px)) saturate(.96)}
+.laptop{position:absolute;inset:0;width:1448px;height:1086px;overflow:visible;pointer-events:none}
+
+/* ---- glass ticker cards: 237×167, r18 ---- */
+.card{
+  position:absolute;width:237px;height:167px;border-radius:18px;
+  padding:0;color:#fff;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,var(--g0,.06)) 0%,rgba(255,255,255,var(--g1,.04)) 50%,rgba(255,255,255,var(--g2,.08)) 100%);
+  -webkit-backdrop-filter:blur(var(--gb,5px)) saturate(var(--gs,.93));
+          backdrop-filter:blur(var(--gb,5px)) saturate(var(--gs,.93));
+  box-shadow:
+    inset 0 1px 0 0 rgba(255,255,255,.62),
+    inset 0 -1px 0 0 rgba(255,255,255,.55),
+    inset 1px 0 0 0 rgba(255,255,255,.12),
+    inset -1px 0 0 0 rgba(255,255,255,.12);
+  transform-origin:var(--to,50% 50%);
+  transform:translate(var(--dx,0px),var(--dy,0px)) scale(var(--k));
+}
+.c1{left:773px;top:203px}
+.c2{left:1088px;top:365px}
+.c3{left:863px;top:591px;--g2:.30;--g1:.06}
+.c3::after{content:"";position:absolute;left:0;right:0;bottom:0;height:46px;border-radius:0 0 18px 18px;pointer-events:none;background:linear-gradient(to bottom,rgba(255,255,255,0),rgba(255,255,255,.28) 55%,rgba(255,255,255,.22))}
+.card .sym{position:absolute;left:23.5px;top:26.6px;font:700 15.5px/1 var(--text);letter-spacing:.1px}
+.card .chg{position:absolute;right:25px;top:27px;font:600 12.8px/1 var(--text);letter-spacing:-.1px}
+.card .chg.up{color:var(--up)} .card .chg.down{color:var(--down)}
+.card .pair{position:absolute;left:23px;top:48.6px;font:500 10.4px/1 var(--text);letter-spacing:-.05px;color:rgba(255,255,255,.86);text-transform:uppercase}
+.card .px{position:absolute;left:23px;top:74.6px;font:700 19px/1 var(--text);letter-spacing:-.3px}
+.card svg{position:absolute;left:0;top:0;width:237px;height:167px;overflow:visible}
+.card polyline{fill:none;stroke:#fff;stroke-width:1.55;stroke-linejoin:round;stroke-linecap:round}
+
+/* ============ UI LAYER ============ */
+.ui{position:absolute;z-index:2;left:0;top:0}
+
+/* --- CANVAS MODE: UI shares the scene transform → 1:1 with the reference --- */
+.mode-canvas .ui{
+  width:1448px;height:1086px;transform-origin:0 0;
+  transform:translate3d(var(--ox),var(--oy),0) scale(var(--s));
+}
+.mode-canvas .nav{position:absolute;left:0;top:0;width:1448px;height:80px}
+.mode-canvas .brand{position:absolute;left:121px;top:22px;height:32px;display:flex;align-items:center;gap:0}
+.brand .mark{width:32px;height:32px;flex:none;display:block}
+.brand .word{margin-left:13.5px;font:600 20.2px/1 var(--text);letter-spacing:.15px;color:#fff}
+.mode-canvas .links{position:absolute;left:434px;top:27px;display:flex;list-style:none;height:22px;align-items:center}
+.links a{font:500 14.5px/22px var(--text);letter-spacing:-.32px;color:rgba(255,255,255,.96);transition:opacity .2s}
+.mode-canvas .links li{position:absolute;top:0;white-space:nowrap}
+.links a[aria-current]{font-weight:600;color:#fff}
+.links a:hover{opacity:.75}
+.mode-canvas .cta-top{position:absolute;left:1206px;top:16px;width:125px;height:44px}
+.pill{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--paper);color:#0d0d0d;border-radius:13px;
+  font:600 14.4px/1 var(--text);letter-spacing:-.15px;
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.pill:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.12)}
+.menu-btn{display:none}
+
+.mode-canvas .copy{position:absolute;left:0;top:0}
+.mode-canvas h1{
+  position:absolute;left:121px;top:383px;white-space:nowrap;
+  font:400 97.7px/94.5px var(--display);letter-spacing:-3.72px;
+  color:var(--ink);text-transform:uppercase;
+}
+.mode-canvas .actions{position:absolute;left:121px;top:704px;display:flex;gap:26px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:184px;height:59px;border-radius:18px;
+  font:600 14.4px/1 var(--text);letter-spacing:-.2px;
+  transition:transform .2s ease,box-shadow .2s ease,background-color .2s;
+}
+.mode-canvas .btn{padding-top:2px}
+.btn:hover{transform:translateY(-1px)}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-dark:hover{box-shadow:0 10px 24px rgba(0,0,0,.25)}
+.btn-light{background:var(--paper);color:#131313}
+.btn-light:hover{box-shadow:0 10px 24px rgba(0,0,0,.12)}
+
+/* --- STACK MODE: fluid layout for phones / portrait / short landscape --- */
+.mode-stack .ui{position:absolute;inset:0;display:flex;flex-direction:column;
+  padding:max(env(safe-area-inset-top),0px) max(env(safe-area-inset-right),0px) max(env(safe-area-inset-bottom),0px) max(env(safe-area-inset-left),0px)}
+.mode-stack .nav{display:flex;align-items:center;height:var(--nav-h,64px);padding:0 var(--pad,20px);gap:12px;flex:none;position:relative}
+.mode-stack .brand{display:flex;align-items:center;margin-right:auto}
+.mode-stack .brand .mark{width:30px;height:30px}
+.mode-stack .brand .word{margin-left:11px;font-size:18px}
+.mode-stack .links{display:none}
+.mode-stack .cta-top{height:40px;padding:0 16px;font-size:14px;border-radius:12px}
+.mode-stack .menu-btn{
+  display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;
+  background:rgba(255,255,255,.16);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -1px 0 rgba(255,255,255,.35);
+}
+.menu-btn i{display:block;width:16px;height:1.6px;background:#fff;border-radius:2px;position:relative;transition:transform .25s}
+.menu-btn i::before,.menu-btn i::after{content:"";position:absolute;left:0;width:16px;height:1.6px;background:#fff;border-radius:2px;transition:transform .25s,top .25s}
+.menu-btn i::before{top:-5px}.menu-btn i::after{top:5px}
+.open .menu-btn i{background:transparent}
+.open .menu-btn i::before{top:0;transform:rotate(45deg)}
+.open .menu-btn i::after{top:0;transform:rotate(-45deg)}
+.mode-stack.open .links{
+  display:flex;flex-direction:column;list-style:none;position:absolute;right:var(--pad,20px);top:calc(var(--nav-h,64px) - 4px);
+  min-width:200px;padding:10px;border-radius:18px;z-index:5;
+  background:rgba(40,96,170,.32);-webkit-backdrop-filter:blur(22px) saturate(1.2);backdrop-filter:blur(22px) saturate(1.2);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -1px 0 rgba(255,255,255,.3),0 18px 40px rgba(10,40,90,.25);
+}
+.mode-stack.open .links li+li{margin:0}
+.mode-stack.open .links a{display:block;padding:10px 12px;border-radius:10px;font-size:15px}
+.mode-stack.open .links a:hover{background:rgba(255,255,255,.12);opacity:1}
+
+.mode-stack .copy{
+  position:absolute;left:0;right:0;bottom:0;
+  padding:0 var(--pad,20px) calc(var(--pad,20px) + max(env(safe-area-inset-bottom),0px));
+}
+.mode-stack h1{
+  font:400 var(--h1,48px)/.967 var(--display);letter-spacing:calc(var(--h1,48px) * -.038);
+  color:var(--ink);text-transform:uppercase;margin-bottom:calc(var(--h1,48px)*.36);
+}
+.mode-stack h1 br{display:var(--br,inline)}
+.mode-stack .actions{display:flex;gap:12px}
+.mode-stack .btn{flex:1 1 0;width:auto;max-width:200px;height:var(--btn-h,52px);border-radius:15px;font-size:var(--btn-fs,15px);white-space:nowrap;padding:0 10px}
+.mode-stack h1{white-space:nowrap}
+.pill{white-space:nowrap}
+.mode-stack.xs .brand .word{font-size:16px;margin-left:9px}
+.mode-stack.xs .cta-top{padding:0 12px;font-size:13px}
+.mode-stack.xs .nav{gap:10px}
+.mode-stack.side .copy{top:var(--nav-h,64px);bottom:0;right:auto;width:var(--copy-w,46%);display:flex;flex-direction:column;justify-content:center;padding-bottom:var(--pad,20px)}
+
+/* scrim behind the copy in stack mode: soft light veil over the blurred photo (keeps black type crisp) */
+.veil{position:absolute;z-index:1;pointer-events:none;display:none}
+.mode-stack .veil{display:block;left:0;right:0;bottom:0;height:var(--veil-h,40%);
+  background:linear-gradient(to bottom,rgba(238,230,220,0) 0%,rgba(238,230,220,.35) 45%,rgba(238,230,220,.55) 100%)}
+.mode-stack.side .veil{top:0;right:auto;height:auto;width:var(--veil-w,55%);
+  background:linear-gradient(to right,rgba(240,236,230,.55) 0%,rgba(240,236,230,.32) 60%,rgba(240,236,230,0) 100%)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* First-load foreground sequence; photo, canvas fill, and light beams stay fixed. */
+@keyframes olympus-soft{
+  from{opacity:0;transform:translate3d(0,7px,0)}
+  to{opacity:1;transform:none}
+}
+@keyframes olympus-title{
+  from{clip-path:inset(0 0 100% 0);transform:translate3d(0,10px,0)}
+  to{clip-path:inset(0 0 0 0);transform:none}
+}
+@keyframes olympus-card{
+  from{opacity:0;clip-path:inset(0 0 100% 0)}
+  to{opacity:1;clip-path:inset(0 0 0 0)}
+}
+@media (prefers-reduced-motion:no-preference){
+  .nav .brand{animation:olympus-soft .54s cubic-bezier(.22,1,.36,1) .06s backwards}
+  .nav .links{animation:olympus-soft .54s cubic-bezier(.22,1,.36,1) .15s backwards}
+  .nav .cta-top{animation:olympus-soft .54s cubic-bezier(.22,1,.36,1) .2s backwards}
+  .nav .menu-btn{animation:olympus-soft .54s cubic-bezier(.22,1,.36,1) .2s backwards}
+  .copy h1{animation:olympus-title .88s cubic-bezier(.19,1,.22,1) .28s backwards}
+  .actions .btn-dark{animation:olympus-soft .62s cubic-bezier(.22,1,.36,1) .92s backwards}
+  .actions .btn-light{animation:olympus-soft .62s cubic-bezier(.22,1,.36,1) 1.02s backwards}
+  .scene .c1{animation:olympus-card .72s cubic-bezier(.22,1,.36,1) .55s backwards}
+  .scene .c2{animation:olympus-card .72s cubic-bezier(.22,1,.36,1) .71s backwards}
+  .scene .c3{animation:olympus-card .72s cubic-bezier(.22,1,.36,1) .87s backwards}
+}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</head>
+<body>
+<main class="hero mode-canvas" id="hero">
+  <canvas class="ambient" id="ambient" aria-hidden="true"></canvas>
+
+  <div class="scene" id="scene" aria-hidden="true">
+    <img class="photo" src="asset/image-7d1c81d0d637be37.jpg" alt="" width="1448" height="1086" decoding="sync" fetchpriority="high">
+    <div class="screen-glass"></div>
+    <div class="card c2" style="--to:100% 30%">
+      <svg viewBox="0 0 237 167"><polyline points="23,140.0 24,139.5 26,138.5 28,138.0 30,138.0 32,137.5 34,136.5 36,136.5 38,136.0 40,134.5 42,132.5 44,131.0 46,130.5 48,131.0 50,131.5 52,132.0 54,132.5 56,128.0 58,126.0 60,126.0 62,125.5 64,120.0 66,109.5 68,108.0 71,107.0 73,106.0 77,105.0 81,105.0 88,107.0 90,110.0 92,116.0 94,117.0 96,118.0 98,123.0 100,130.0 102,136.0 104,140.5 106,142.0 108,139.5 110,137.0 112,137.0 114,136.0 116,134.0 118,133.0 120,131.5 122,127.5 124,125.0 126,125.5 128,125.5 130,125.5 132,124.0 134,124.5 136,128.5 138,131.5 140,131.0 142,124.0 144,121.0 146,121.0 148,122.5 150,123.5 152,123.0 154,121.5 156,120.0 158,120.0 160,119.5 162,117.5 164,117.0 166,117.5 168,119.0 170,120.5 173,126.0 192,128.5 194,131.0 196,129.5 198,127.0 200,126.0 202,127.0 204,126.0 206,127.5 209,125.5 211,121.0 212,119.0"/></svg>
+      <span class="sym">EURUSD</span><span class="chg up">+0.12%</span>
+      <span class="pair">Euro / US Dollar</span><span class="px">$1.0854</span>
+    </div>
+    <svg class="laptop" viewBox="0 0 1448 1086" aria-hidden="true">
+  <defs>
+    <filter id="bl1" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="bl2" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="11"/></filter>
+    <filter id="bl3" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="0.6"/></filter>
+    <filter id="bl6" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="0.9"/></filter>
+    <filter id="bl5" x="-5%" y="-50%" width="110%" height="200%"><feGaussianBlur stdDeviation="1.2"/></filter>
+    <filter id="bl4" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+    <linearGradient id="gScreen" x1="861" y1="300" x2="1184" y2="728" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.07"/>
+      <stop offset=".55" stop-color="#fff" stop-opacity="0.02"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="gLeft" x1="0" y1="331" x2="0" y2="704" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff" stop-opacity=".98"/><stop offset=".62" stop-color="#fff" stop-opacity=".95"/><stop offset=".86" stop-color="#fff" stop-opacity=".62"/><stop offset="1" stop-color="#fff" stop-opacity=".5"/>
+    </linearGradient>
+    <linearGradient id="gBot" x1="742" y1="0" x2="1166" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".08" stop-color="#fff" stop-opacity=".8"/><stop offset=".35" stop-color="#fff" stop-opacity=".45"/><stop offset="1" stop-color="#fff" stop-opacity=".6"/>
+    </linearGradient>
+    <linearGradient id="gDeck" x1="480" y1="0" x2="1187" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#cbd3f3" stop-opacity="0.62"/>
+      <stop offset=".36" stop-color="#dfe2f6" stop-opacity="0.62"/>
+      <stop offset=".5" stop-color="#f1eef2" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#f7f1ef" stop-opacity="0.84"/>
+    </linearGradient>
+  </defs>
+  <path d="M742.8,714 L853.7,325 C857,312 866,302 886,304.1 L1259,364.9" fill="none" stroke="#fff" stroke-opacity="0.24" stroke-width="20" filter="url(#bl2)"/>
+  <path d="M742.8,714 L853.7,325 C857,312 866,302 886,304.1 L1259,364.9" fill="none" stroke="#fff" stroke-opacity="0.42" stroke-width="9" filter="url(#bl1)"/>
+  <path d="M1316.5,367.5 C1306,377 1293,398 1287.5,415 L1186.4,712 C1184,719 1181,724 1176,725.5" fill="none" stroke="#fff" stroke-opacity="0.45" stroke-width="7" filter="url(#bl1)"/>
+  <path d="M745.5,704 L851.9,331.2" fill="none" stroke="#fff" stroke-opacity="0.45" stroke-width="18" stroke-linecap="round" filter="url(#bl1)"/>
+  <path d="M742.8,714 L853.7,325 C857,312 866,302 886,304.1 L1259,364.9" fill="none" stroke="#fdfeff" stroke-opacity="0.96" stroke-width="3.8" stroke-linejoin="round" stroke-linecap="butt" filter="url(#bl3)"/>
+  <path d="M1316.5,367.5 C1306,377 1293,398 1287.5,415 L1186.4,712 C1184,719 1181,724 1176,725.5" fill="none" stroke="#fdfeff" stroke-opacity="0.78" stroke-width="3.2" stroke-linecap="round" filter="url(#bl6)"/>
+  <path d="M745.5,704 L851.9,331.2" fill="none" stroke="#eef3ff" stroke-opacity=".22" stroke-width="14" stroke-linecap="round" filter="url(#bl6)"/>
+  <path d="M745.5,704 L851.9,331.2" fill="none" stroke="url(#gLeft)" stroke-width="8.6" stroke-linecap="round" filter="url(#bl3)"/>
+  <!-- keyboard deck: thick glass bar -->
+  <image href="asset/image-0920f60e17842ed5.png" x="855" y="752" width="165" height="50"/>
+  <path d="M488,782.5 L750,745 L1182,738.8" fill="none" stroke="#28406e" stroke-opacity="0.26" stroke-width="3.2" filter="url(#bl5)"/>
+  <path d="M486,763.5 L736,727 C739,726.4 742,726.2 746,726.2 L1176,723.6 C1182,722.6 1186.5,726 1186.5,730 C1186.5,734 1183,736.5 1178,736.5 L764,741 C758,741.2 754,741.6 750,742.2 L489,780.5 C484,781.2 480.5,778.5 480.5,773 L480.5,770 C480.5,766.5 482.5,764 486,763.5 Z" fill="url(#gDeck)"/>
+  <path d="M484,777 L750,739.6 L1180,734.4" fill="none" stroke="#fff" stroke-opacity="0.8" stroke-width="2.4" filter="url(#bl3)"/>
+  <path d="M482,767 C483,765 484.5,764 486,763.5 L736,727 C739,726.4 742,726.2 746,726.2 L1176,723.6 C1182,722.6 1186.5,726 1186.5,730" fill="none" stroke="#fff" stroke-opacity="0.85" stroke-width="1.8" stroke-linecap="round" filter="url(#bl3)"/>
+  <path d="M742.8,714 C741,723 746,727.6 754,727.6 L1166,727.6" fill="none" stroke="url(#gBot)" stroke-width="2.6" filter="url(#bl3)"/>
+  <ellipse cx="1030" cy="326" rx="14" ry="5" fill="#fff" fill-opacity="0.55" filter="url(#bl4)"/><ellipse cx="836" cy="392" rx="6" ry="16" fill="#fff" fill-opacity="0.35" filter="url(#bl4)"/><ellipse cx="742" cy="725" rx="8" ry="4" fill="#fff" fill-opacity="0.4" filter="url(#bl4)"/>
+</svg>
+    <div class="card c1" style="--to:100% 100%">
+      <svg viewBox="0 0 237 167"><polyline points="25,107.0 27,108.0 29,109.0 36,110.0 38,111.0 40,113.0 43,115.0 50,115.0 53,115.0 56,120.0 61,121.0 63,123.5 66,137.5 68,140.0 70,140.0 72,140.0 74,140.5 76,142.5 78,141.0 80,142.0 82,142.0 84,142.0 86,141.0 88,141.0 90,137.0 92,131.5 96,129.0 98,124.5 100,118.0 102,111.0 104,106.0 106,103.5 108,108.0 113,111.0 116,112.0 118,113.0 120,116.5 122,120.5 125,122.0 131,122.0 134,123.0 136,118.5 138,115.0 140,116.0 142,121.0 147,125.0 149,124.0 151,124.0 153,125.0 155,127.0 157,127.0 159,127.0 161,129.0 163,130.0 167,128.0 169,127.0 171,128.0 173,131.0 176,132.0 179,131.0 181,128.0 188,126.0 190,122.5 192,117.5 194,115.5 196,117.5 198,119.0 200,120.0 202,121.0 204,120.0 206,118.5 208,120.0 210,124.5 213,128.0"/></svg>
+      <span class="sym">XAUUSD</span><span class="chg up">+0.51%</span>
+      <span class="pair">Gold / US Dollar</span><span class="px">$2,318.40</span>
+    </div>
+    <div class="card c3" style="--to:30% 0%">
+      <svg viewBox="0 0 237 167"><polyline points="24,121.0 25,121.0 27,125.5 29,129.0 31,128.0 33,128.0 35,128.0 37,127.5 39,128.5 41,130.5 43,130.5 45,126.5 47,123.0 49,121.5 51,120.0 53,120.0 55,120.0 57,118.0 59,115.0 61,115.5 63,117.0 65,119.5 67,120.5 69,119.0 71,117.0 73,117.0 75,119.0 77,120.0 79,120.0 81,120.5 83,121.5 85,123.0 87,123.0 89,121.5 91,120.5 93,123.5 95,128.5 97,132.5 99,132.0 101,127.0 103,125.5 105,126.0 107,126.0 109,126.0 111,125.5 113,126.5 115,130.0 117,134.0 119,134.5 121,136.0 123,136.5 125,137.5 127,139.5 129,141.5 131,142.0 133,138.5 135,133.0 137,127.0 139,121.0 141,117.0 143,116.5 145,113.5 147,108.0 149,107.0 151,106.0 153,106.0 155,105.0 157,104.0 159,104.5 161,105.5 163,106.0 165,107.0 167,107.0 169,108.0 171,113.0 173,123.5 175,125.5 177,125.5 179,127.0 181,131.0 183,132.5 185,132.5 187,132.0 189,131.5 191,131.0 193,132.5 195,134.5 197,135.5 199,136.0 201,137.0 203,138.5 205,138.5 207,138.5 209,140.0 211,141.0 213,142.5"/></svg>
+      <span class="sym">GBPUSD</span><span class="chg down">-5.77%</span>
+      <span class="pair">Pound / US Dollar</span><span class="px">$1.2741</span>
+    </div>
+  </div>
+
+  <div class="veil" aria-hidden="true"></div>
+
+  <div class="ui" id="ui">
+    <header class="nav">
+      <a class="brand" href="#" aria-label="Olympus home">
+        <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+  <circle cx="16" cy="16" r="16" fill="#fdfdfd"/>
+  <g fill="none" stroke="#cfd0d0" stroke-width=".9" stroke-linecap="round" stroke-linejoin="round" opacity=".95">
+    <path d="M7.2 25.4V13.6c0-2.6 1.4-4.4 3.6-5.4"/>
+    <path d="M10.4 25.4v-6.6M13.0 25.4v-7.4M15.6 25.4v-8.6M18.2 25.4v-9.4M20.8 25.4v-10.2"/>
+    <path d="M24.4 25.4V8.6"/>
+    <path d="M10 20.6l5.4-3.2 3.4-1.6 5.6-6.8"/>
+    <path d="M6.6 25.6h18.6" stroke-opacity=".6"/>
+  </g>
+</svg>
+        <span class="word">OLYMPUS</span>
+      </a>
+      <nav aria-label="Primary">
+        <ul class="links" id="links">
+          <li style="left:1px"><a href="#" aria-current="page">Home</a></li>
+          <li style="left:65px"><a href="#">Account</a></li>
+          <li style="left:146px"><a href="#">Refer / B</a></li>
+          <li style="left:231px"><a href="#">Trading</a></li>
+          <li style="left:305px"><a href="#">Insights</a></li>
+          <li style="left:382px"><a href="#">Learn</a></li>
+          <li style="left:444px"><a href="#">About</a></li>
+          <li style="left:509px"><a href="#">Contact Us</a></li>
+        </ul>
+      </nav>
+      <a class="pill cta-top" href="#">Get Started</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i></i></button>
+    </header>
+
+    <section class="copy" aria-labelledby="h">
+      <h1 id="h">Trade global<br> markets with<br> confidence</h1>
+      <div class="actions">
+        <a class="btn btn-dark" href="#">Open Account</a>
+        <a class="btn btn-light" href="#">Explore Markets</a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script>
+/* Layout engine — every viewport gets a full-bleed composition.
+   CANVAS mode (landscape with room): the 1448×1086 reference is one rigid canvas — scaled,
+   top-anchored and centred on the content span, so it is 1:1 with the design at 1448×1086.
+   STACK mode (phones, portrait, short landscape): the UI reflows into a fluid layout and the
+   scene is fitted around the laptop + cards focus box.
+   In both, any area the photo cannot cover is painted from the photo's own edges. */
+(function(){
+  var DW=1448, DH=1086;
+  var hero=document.getElementById('hero'), scene=document.getElementById('scene');
+  var photo=scene.querySelector('.photo'), cv=document.getElementById('ambient'), cx=cv.getContext('2d');
+  var cards=[].slice.call(scene.querySelectorAll('.card'));
+  var FOCUS={x:452,y:196,w:888,h:600};          /* laptop + cards + hands (design px) */
+  var SPAN={x0:96,x1:1356};                     /* everything the canvas UI occupies */
+  var strips=null;
+  function set(k,v){hero.style.setProperty(k,v)}
+
+  /* pre-average the photo's edges into tiny strips (smooth when stretched) */
+  function makeStrips(){
+    function strip(sx,sy,sw,sh,dw,dh){var c=document.createElement('canvas');c.width=dw;c.height=dh;
+      var g=c.getContext('2d');g.imageSmoothingEnabled=true;g.imageSmoothingQuality='high';g.drawImage(photo,sx,sy,sw,sh,0,0,dw,dh);return c}
+    var E=90;
+    strips={l:strip(0,0,E,DH,1,18),r:strip(DW-E,0,E,DH,1,18),b:strip(0,DH-E,DW,E,24,1),t:strip(0,0,DW,E,24,1)};
+  }
+  function paint(W,H,s,ox,oy){
+    var sw=DW*s, sh=DH*s, gapL=ox>0.5, gapR=ox+sw<W-0.5, gapT=oy>0.5, gapB=oy+sh<H-0.5;
+    var need=gapL||gapR||gapT||gapB;
+    scene.classList.toggle('painted',need);
+    cv.style.display=need?'block':'none';
+    if(!need) return;
+    if(!photo.complete||!photo.naturalWidth){photo.addEventListener('load',layout,{once:true});return}
+    if(!strips) makeStrips();
+    var dpr=Math.min(window.devicePixelRatio||1,2);
+    cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
+    cx.setTransform(dpr,0,0,dpr,0,0); cx.imageSmoothingEnabled=true; cx.imageSmoothingQuality='high';
+    var x0=Math.max(0,ox), x1=Math.min(W,ox+sw), y0=Math.max(0,oy), y1=Math.min(H,oy+sh);
+    var bleed=60;                                   /* strips run under the feathered photo edge */
+    /* 1 — edge extensions */
+    cx.save(); if('filter' in cx) cx.filter='blur(28px)';
+    if(gapL) cx.drawImage(strips.l,0,0,1,18,-bleed,oy,x0+bleed*2,sh);
+    if(gapR) cx.drawImage(strips.r,0,0,1,18,x1-bleed,oy,W-x1+bleed*2,sh);
+    if(gapB) cx.drawImage(strips.b,0,0,24,1,ox-bleed,y1-bleed,sw+bleed*2,H-y1+bleed*2);
+    if(gapT) cx.drawImage(strips.t,0,0,24,1,ox-bleed,-bleed,sw+bleed*2,y0+bleed*2);
+    /* corners: corner colour of the strips */
+    if(gapB&&gapL) cx.drawImage(strips.b,0,0,1,1,-bleed,y1-bleed,x0+bleed*2,H-y1+bleed*2);
+    if(gapB&&gapR) cx.drawImage(strips.b,23,0,1,1,x1-bleed,y1-bleed,W-x1+bleed*2,H-y1+bleed*2);
+    if(gapT&&gapL) cx.drawImage(strips.t,0,0,1,1,-bleed,-bleed,x0+bleed*2,y0+bleed*2);
+    if(gapT&&gapR) cx.drawImage(strips.t,23,0,1,1,x1-bleed,-bleed,W-x1+bleed*2,y0+bleed*2);
+    cx.restore();
+    /* 2 — sharp photo, feathered only on the sides that meet a gap */
+    var f=Math.max(30,Math.min(140,sw*.08)), o=document.createElement('canvas');
+    o.width=cv.width; o.height=cv.height; var g=o.getContext('2d');
+    g.setTransform(dpr,0,0,dpr,0,0); g.imageSmoothingEnabled=true; g.imageSmoothingQuality='high';
+    g.drawImage(photo,ox,oy,sw,sh);
+    g.globalCompositeOperation='destination-in';
+    function fade(xa,ya,xb,yb,rx,ry,rw,rh){var gr=g.createLinearGradient(xa,ya,xb,yb);gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(1,'#000');g.fillStyle=gr;g.fillRect(rx,ry,rw,rh)}
+    if(gapL) fade(x0,0,x0+f,0,0,0,W,H);
+    if(gapR) fade(x1,0,x1-f,0,0,0,W,H);
+    if(gapB) fade(0,y1,0,y1-f*1.6,0,0,W,H);
+    if(gapT) fade(0,y0,0,y0+f,0,0,W,H);
+    cx.drawImage(o,0,0,W,H);
+  }
+
+  function layout(){
+    var W=hero.clientWidth, H=hero.clientHeight; if(!W||!H) return;
+    var cover=Math.max(W/DW,H/DH);
+    var s=Math.min(cover,H/800);                /* keep design y 0…800 (deck + CTAs) on screen */
+    var canvas = W/H>=1.18 && s>=0.66 && (SPAN.x1-SPAN.x0)*s<=W+1;
+    var ox,oy,k=1,dx=[0,0,0],dy=[0,0,0];
+    hero.classList.toggle('mode-canvas',canvas);
+    hero.classList.toggle('mode-stack',!canvas);
+    if(canvas){
+      hero.classList.remove('side','open');
+      ox = W>DW*s ? (W-DW*s)/2 : Math.min(0,Math.max(W-DW*s, W/2-726*s));
+      oy = 0;
+    }else{
+      var pad=Math.round(Math.max(18,Math.min(32,W*.05)));
+      var navH=W<380?58:64;
+      var side = W/H>1.25;                      /* short landscape: copy left, scene right */
+      hero.classList.toggle('side',side); hero.classList.toggle('xs',W<350);
+      set('--pad',pad+'px'); set('--nav-h',navH+'px');
+      var h1,G;
+      if(side){
+        var cw=Math.max(300,Math.min(W*.48,600)); set('--copy-w',cw+'px'); set('--veil-w',Math.min(W*.7,cw+220)+'px');
+        h1=Math.max(28,Math.min((cw-pad*2)/5.1,(H-navH)*.17,92));
+        set('--btn-h',(H<420?46:52)+'px'); set('--btn-fs',(cw<380?13.5:15)+'px');
+        G={x:cw*.8,y:navH*.5,w:W-cw*.8,h:H-navH*.5};
+      }else{
+        h1=Math.max(30,Math.min((W-pad*2)/5.1,H*.078,100));
+        set('--btn-h','52px'); set('--btn-fs',(W<360?14:15)+'px');
+        var copyH=h1*.967*3+h1*.36+52+pad+18;
+        set('--veil-h',Math.round(copyH+H*.14)+'px');
+        G={x:0,y:navH*.6,w:W,h:H-copyH-navH*.6};
+      }
+      set('--h1',h1.toFixed(2)+'px');
+      s=Math.min(G.w/FOCUS.w,G.h/FOCUS.h);
+      s=Math.max(s,H/DH*.5);
+      ox=G.x+(G.w-FOCUS.w*s)/2-FOCUS.x*s;
+      oy=G.y+(G.h-FOCUS.h*s)/2-FOCUS.y*s;
+      if(oy>0) oy=0;                            /* the head touches the photo's top: keep it attached */
+      if(ox>0 && ox+DW*s>W) ox=Math.max(0,W-DW*s);
+      if(ox+DW*s<W && ox<0) ox=Math.min(0,W-DW*s);
+      k=Math.max(1,Math.min(side?1.35:1.3,0.56/s));
+      var g=k-1; dx=[-20*g,-4*g,-40*g]; dy=[-6*g,16*g,40*g];
+    }
+    cards.forEach(function(c,i){var n=+c.className.match(/c(\d)/)[1]-1;c.style.setProperty('--dx',dx[n]+'px');c.style.setProperty('--dy',dy[n]+'px')});
+    set('--s',s); set('--ox',ox+'px'); set('--oy',oy+'px'); set('--k',k);
+    paint(W,H,s,ox,oy);
+  }
+  var raf; function q(){cancelAnimationFrame(raf);raf=requestAnimationFrame(layout)}
+  layout(); addEventListener('resize',q); addEventListener('orientationchange',q);
+  if(window.visualViewport) visualViewport.addEventListener('resize',q);
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(layout);
+  if(!photo.complete) photo.addEventListener('load',layout,{once:true});
+
+  var mb=document.getElementById('menuBtn');
+  function closeMenu(){hero.classList.remove('open');mb.setAttribute('aria-expanded','false');mb.setAttribute('aria-label','Open menu')}
+  mb.addEventListener('click',function(e){e.stopPropagation();var o=hero.classList.toggle('open');mb.setAttribute('aria-expanded',o);mb.setAttribute('aria-label',o?'Close menu':'Open menu')});
+  document.addEventListener('click',function(e){if(hero.classList.contains('open')&&!e.target.closest('.links'))closeMenu()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&hero.classList.contains('open')){closeMenu();mb.focus()}});
+})();
+</script>
+</body>
+</html>
