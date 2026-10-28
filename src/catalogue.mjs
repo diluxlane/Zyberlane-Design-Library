@@ -18,7 +18,7 @@ const CATEGORY_ALIASES={
   'AI / SaaS':'ai saas software startup technology product website'
 };
 const TYPE_ALIASES={
-  'Website':'website full website site web design landing page portfolio business agency ecommerce',
+  'Website':'website full website site web design web page',
   'Hero Page':'hero hero page hero section above the fold website hero landing hero',
   'Interface / Dashboard':'dashboard interface admin web app workspace product ui',
   'UI Page':'ui page login signup authentication standalone screen',
