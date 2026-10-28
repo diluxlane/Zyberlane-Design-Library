@@ -2,10 +2,10 @@ import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { normalizedReferenceType } from '../src/catalogue.mjs';
 
-function normalizeReference(reference){
+function normalizeSourceReference(reference){
   return {...reference,referenceType:normalizedReferenceType(reference)};
 }
-function normalizeInventory(row){
+function normalizeSourceInventory(row){
   if(!row.accepted)return row;
   return {...row,referenceType:row.referenceType||normalizedReferenceType({repo:row.name,categories:row.categories||[]})};
 }
@@ -21,11 +21,13 @@ export async function loadCatalogue(root=process.cwd()) {
     if(source.enabled===false)continue;
     sources.push(source);
   }
-  const references=[...(base.references||[]).map(normalizeReference)];
-  const inventory=[...(base.inventory||[]).map(normalizeInventory)];
+  // The legacy/base catalogue is the already-verified Gireesh Kumar Reddy website collection.
+  // Keep those entries as full Websites instead of applying heuristic reclassification.
+  const references=[...(base.references||[]).map(r=>({...r,referenceType:r.referenceType||'Website'}))];
+  const inventory=[...(base.inventory||[]).map(r=>r.accepted?{...r,referenceType:r.referenceType||'Website'}:r)];
   for(const source of sources){
-    references.push(...(source.references||[]).map(normalizeReference));
-    inventory.push(...(source.inventory||[]).map(normalizeInventory));
+    references.push(...(source.references||[]).map(normalizeSourceReference));
+    inventory.push(...(source.inventory||[]).map(normalizeSourceInventory));
   }
   const inspectedDates=[base.inspectedDate,...sources.map(s=>s.inspectedDate)].filter(Boolean).sort();
   const referenceTypeCounts=Object.fromEntries([...new Set(references.map(r=>r.referenceType))].sort().map(type=>[type,references.filter(r=>r.referenceType===type).length]));
