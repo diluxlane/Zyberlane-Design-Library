@@ -1,5 +1,14 @@
 import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
+import { normalizedReferenceType } from '../src/catalogue.mjs';
+
+function normalizeReference(reference){
+  return {...reference,referenceType:normalizedReferenceType(reference)};
+}
+function normalizeInventory(row){
+  if(!row.accepted)return row;
+  return {...row,referenceType:row.referenceType||normalizedReferenceType({repo:row.name,categories:row.categories||[]})};
+}
 
 export async function loadCatalogue(root=process.cwd()) {
   const base=JSON.parse(await readFile(path.join(root,'data/catalogue.json'),'utf8'));
@@ -12,17 +21,17 @@ export async function loadCatalogue(root=process.cwd()) {
     if(source.enabled===false)continue;
     sources.push(source);
   }
-  if(!sources.length)return base;
-  const references=[...base.references];
-  const inventory=[...base.inventory];
+  const references=[...(base.references||[]).map(normalizeReference)];
+  const inventory=[...(base.inventory||[]).map(normalizeInventory)];
   for(const source of sources){
-    references.push(...(source.references||[]));
-    inventory.push(...(source.inventory||[]));
+    references.push(...(source.references||[]).map(normalizeReference));
+    inventory.push(...(source.inventory||[]).map(normalizeInventory));
   }
   const inspectedDates=[base.inspectedDate,...sources.map(s=>s.inspectedDate)].filter(Boolean).sort();
+  const referenceTypeCounts=Object.fromEntries([...new Set(references.map(r=>r.referenceType))].sort().map(type=>[type,references.filter(r=>r.referenceType===type).length]));
   return {
     ...base,
-    creator:'multiple-sources',
+    creator:sources.length?'multiple-sources':base.creator,
     sources:[
       {owner:'gireeshkumarreddy',label:'Gireesh Kumar Reddy',repositoryCount:base.discoveredRepositories},
       ...sources.map(s=>({owner:s.owner,label:s.label,repositoryCount:(s.inventory||[]).length}))
@@ -30,7 +39,9 @@ export async function loadCatalogue(root=process.cwd()) {
     inspectedDate:inspectedDates.at(-1)||base.inspectedDate,
     discoveredRepositories:inventory.length,
     websiteRepositories:inventory.filter(r=>r.website).length,
-    acceptedWebsiteRepositories:inventory.filter(r=>r.accepted).length,
+    acceptedWebsiteRepositories:inventory.filter(r=>r.accepted&&r.referenceType==='Website').length,
+    acceptedReferences:inventory.filter(r=>r.accepted).length,
+    referenceTypeCounts,
     references,
     inventory
   };
