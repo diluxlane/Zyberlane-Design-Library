@@ -1,6 +1,6 @@
 # Zyberlane Design Reference Library
 
-An internal design-study and website-reference catalogue maintained for **Zyberlane** and Dilux.
+An internal design-study and reference catalogue maintained for **Zyberlane** and Dilux.
 
 **Live library:** https://zyberlane-design-library.vercel.app
 
@@ -10,7 +10,9 @@ An internal design-study and website-reference catalogue maintained for **Zyberl
 
 This project is a standalone reference and selection tool for studying permitted website designs, layouts and implementation patterns. It is **not** the Zyberlane production website, not a client project, and not a claim that the referenced designs were created by Zyberlane.
 
-Referenced work belongs to **Gireesh Kumar Reddy and the respective credited creators/rightsholders**. The library exists to organize authorized design references and centralized previews for study and future independent implementation work.
+Referenced work belongs to the respective credited creators/rightsholders. The library exists to organize authorized design references and centralized previews for study and future independent implementation work.
+
+The catalogue is organized by **reference type** as well as category. Full websites are kept in the main Website collection, focused hero-only studies are kept in a separate Hero Page collection, and smaller interface studies such as components, motion, typography, dashboards or data visualizations can remain searchable without polluting the default website gallery.
 
 ## Live Site and Deployment
 
@@ -35,28 +37,52 @@ For local development:
 npm run dev
 ```
 
-The project builds the catalogue and centralized static previews from the maintained source inventory.
+Both test and build paths syntax-check the browser client. The project builds the merged catalogue and centralized static previews from the maintained source inventories.
 
 ## Catalogue Architecture
 
-- `data/catalogue.json` — accepted references and source inventory
+- `data/catalogue.json` — verified base website collection and source inventory
+- `data/sources/*.json` — additional source collections with explicit reference types
 - `data/reference-registry.json` — permanent reference IDs; append only, never renumber or reuse
 - `data/preview-manifest.json` — mirrored text paths and source pins
 - `data/preview-snapshots.json` — immutable source restoration metadata and Git blob checksums
 - `encoded-assets/` — exact encoded screenshot/font bytes used for transport and checksum verification
 - `docs/preview-compatibility.json` — documented compatibility changes for centralized previews
-- `docs/build-results.json` — recorded build results for additional frontend references
+- `docs/build-results.json` and source-specific reports — recorded preview/build results
 - `public/previews/` — committed centralized preview output where applicable
+- `public/screenshots/` — verified browser thumbnails used by the library
 
-The maintained library currently inventories 63 repositories. Fifty-four contain a website implementation, including variants and redirects. Forty-nine repository implementations are accepted; six distinct landing-concept sites receive separate IDs, producing 54 catalogue entries.
+The generated `dist/data/catalogue.json` is the merged source of truth used by the UI. It includes current counts by reference type, all permanent IDs, categories, search metadata, preview status and source attribution.
 
-README-only claims are not treated as complete website implementations. Source classification and visual-preview status are tracked separately.
+README-only claims are not treated as complete website implementations. Source classification, reference type and visual-preview status are tracked separately.
 
-## Library Features
+## Reference Collections
+
+The default `/` route contains **full websites only**. The verified Gireesh Kumar Reddy base collection is intentionally preserved as Website references.
+
+The `/heroes` route contains **Hero Page** references. Focused hero implementations are not deleted; they are kept as useful studies with their existing IDs, previews, screenshots and source links.
+
+Other reference types can include:
+
+- Interface / Dashboard
+- UI Page
+- Component
+- Motion / Animation
+- Typography
+- Data Visualization
+
+These types are available to global search when relevant and can be expanded without changing the Website collection.
+
+## Search and Categories
 
 The interface supports:
 
-- Search and category filtering
+- Full-website browsing on the homepage
+- A separate Hero Page collection
+- Global intent-based search across all reference types
+- Search ordering by **Website → Hero Page → other relevant reference types**
+- Search aliases for common creative intents such as video-editor, filmmaker, photographer and portfolio searches
+- Dynamic category filters generated from catalogue data
 - Preview-status filtering
 - Sorting
 - Browser-local saved references
@@ -66,7 +92,7 @@ The interface supports:
 - Copyable project/reference briefs
 - Inventory views for excluded references and reasons
 
-The October 27 catalogue records 33 working and 21 partial previews, with no unavailable entries retained in the maintained library. Framework-generated previews remain marked **Partial** until browser rendering and hosted asset delivery are visually verified.
+Categories remain independent from reference type. Adding a new category to imported catalogue data automatically makes it available to the generated category filters and searchable metadata.
 
 ## Framework Preview Expansion
 
@@ -91,7 +117,7 @@ Do not:
 
 ## Permission, Credits and Rights
 
-The owner states that permission was obtained for this design-reference workflow. That permission does **not** establish a blanket license for every third-party font, image, video, trademark, dependency or other protected asset present in referenced projects.
+Recorded permissions and repository licenses are tracked per source collection. They do **not** establish a blanket license for every third-party font, image, video, trademark, dependency or other protected asset present in referenced projects.
 
 - Referenced project designs and source remain credited to their respective creators/rightsholders.
 - Third-party dependencies and assets retain their original licenses and terms.
@@ -104,7 +130,9 @@ The GitHub repository is intentionally public. Do not commit credentials or mate
 
 Use the library to select a reference, record its source/ID and then create a **new independent project**. Future implementations should preserve appropriate attribution and should not imply that reference designs are original Zyberlane work.
 
-To refresh a reference, inspect the original source read-only, record a new immutable source commit, recheck previews and screenshots, and update the existing reference without changing its permanent ID.
+To refresh a reference, inspect the original source read-only, record a new immutable source commit, recheck its reference type, previews and screenshots, and update the existing reference without changing its permanent ID.
+
+When adding future sources, classify each accepted reference by what it actually contains rather than assuming every frontend repository is a full website. New reference types and categories should remain data-driven so search can expand without weakening the Website collection.
 
 ## Copyright and License
 
