@@ -24,5 +24,6 @@ const html=await readFile(path.join(output,'index.html'),'utf8');
 await writeFile(path.join(output,'404.html'),html);
 await writeFile(path.join(output,'robots.txt'),'User-agent: *\nDisallow: /\n');
 await mkdir(path.join(output,'inventory'),{recursive:true});await writeFile(path.join(output,'inventory/index.html'),html);
+await mkdir(path.join(output,'heroes'),{recursive:true});await writeFile(path.join(output,'heroes/index.html'),html);
 for(const ref of catalogue.references){const dir=path.join(output,'reference',ref.id.toLowerCase());await mkdir(dir,{recursive:true});await writeFile(path.join(dir,'index.html'),html);}
-console.log(`Built ${catalogue.references.length} reference routes, inventory, static gallery and ${catalogue.references.filter(r=>r.previewType==='local').length} central previews.`);
+console.log(`Built ${catalogue.references.length} reference routes, website collection, hero collection, inventory and ${catalogue.references.filter(r=>r.previewType==='local').length} central previews.`);
